@@ -1,2 +1,1 @@
-# i2ds4scc_bookdown
-Development repo for Introduction to Data Science for Sensory and Consumer Science book
+This is a minimal example of a book based on R Markdown and **bookdown** (https://github.com/rstudio/bookdown). Please see the page "Get Started" at https://bookdown.org/home/about/ for how to compile this example.
