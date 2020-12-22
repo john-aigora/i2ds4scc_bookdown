@@ -1,1 +1,1 @@
-This is a minimal example of a book based on R Markdown and **bookdown** (https://github.com/rstudio/bookdown). Please see the page "Get Started" at https://bookdown.org/home/about/ for how to compile this example.
+[![Netlify Status](https://api.netlify.com/api/v1/badges/cb30689f-e860-4616-bf17-e77bd90f4bbc/deploy-status)](https://app.netlify.com/sites/data-science-for-sensory-test/deploys)
