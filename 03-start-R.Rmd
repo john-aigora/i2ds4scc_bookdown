@@ -1,7 +1,113 @@
 # Getting Started with R {#start-R}
 
 ## R
+
+R is an open-source programming language and software environment
+First released in 1995, R is an open-source implementation of S
+R was developed by Ross Ihaka and Robert Gentleman
+The name “R” is partly a play on Ihaka’s and Gentleman’s first names
+R is a scripting language (not a compiled language)
+Lines of R code run (mostly) in order
+R is currently the 7th most popular programming language in the world
+
+### Why Learn a Programming Language?
+
+Control
+Speed
+Reduced errors
+Increased capability
+Continuous improvement
+Improved collaboration
+Reproducible results
+
+### Why R?
+
+R originated as a statistical computing language
+It has a culture germane to sensory science
+R is well-supported with an active community
+Extensive online help is available
+Many books, courses, and other educational material exist
+The universe of available packages is vast
+R excels at data manipulation and results reporting
+R has more specialized tools for sensory analysis than other programming language
+
+### Steps to Install R
+
+https://cran.r-project.org/bin/windows/base/
+Download the latest version of R
+Install R with default options
+You will almost certainly be running 64-bit R
+Note: If you are running R 4.0 or higher, you might need to install Rtools:
+https://cran.r-project.org/bin/windows/Rtools/
+
+
 ## RStudio
-## Git
-## GitHub
+
+
+
+### Steps to Install RStudio
+
+https://www.rstudio.com/products/rstudio/download/#download
+Download and install the latest (almost certainly 64-bit) version of RStudio with default options
+Adjustments:
+Uncheck “Restore .RData into workspace at startup
+Select “Never” for “Save workspace to .RData on exit”
+Change color scheme to dark (e.g. “Idle Fingers”)
+Put console on right
+
+### Create a Local Project
+
+Always work in an RStudio project
+Projects keep your files (and activity) organized
+Projects help manage your file path (so your computer can find things)
+Projects allow for more advanced capabilities later (like GitHub or renv)
+We cover the use of GitHub in a future webinar
+For now we create projects locally
+
+### Install and Load Packages
+
+As you use R, you will want to make use of the many packages others (and perhaps you) have written
+Essential packages (or collections):
+tidyverse, readxl
+Custom Microsoft office document creation
+officer, flextable, rvg, openxlsx, extrafont, extrafontdb
+Sensory specific packages
+sensR , SensoMineR, FactoMineR, factoextra
+There are many more, for statistical tests of all varieties, to multivariate analysis, to machine learning, to text analysis, etc.
+
+You only need to install each package once per R version
+To install a package, you can:
+Type install.packages("[package name]")
+Use the RStudio dropdown
+In addition, if a script loads package that are not installed, RStudio will prompt you to install the package
+Notes: 
+If you do not have write access on your computer, you might need IT help to install packages
+You might need to safelist various R related tools and sites 
+
+### Run Sample Code
+
+Like any language, R is best learned first through example then through study
+We start with a series of examples to illustrate basic principles
+For this example, we analyze a series of Tetrad tests
+
+Suppose you have 15 out of 44 correct in a Tetrad test
+Using sensR, it’s easy to analyze these data:
+
+```{r first-example}
+
+library(sensR)
+
+num_correct <- 15  
+num_total <- 44  
+  
+discrim_res <- discrim(num_correct, num_total, method = "tetrad")  
+  
+print(discrim_res)  
+
+
+```
+
+## Git and GitHub
+
+MAKE COMMENTS BUT DON"T GO THROUGH SET UP.  INSTEAD REFER READER TO JENNY BRYANT'S BOOK.
 

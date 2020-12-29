@@ -41,6 +41,46 @@
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
 \urlstyle{same} % disable monospaced font for URLs
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 \usepackage{longtable,booktabs}
 % Correct order of tables after \paragraph or \subparagraph
 \usepackage{etoolbox}
@@ -333,14 +373,135 @@ We continue our discussion of getting started with R in the next chapter.
 \hypertarget{r}{%
 \section{R}\label{r}}
 
+R is an open-source programming language and software environment
+First released in 1995, R is an open-source implementation of S
+R was developed by Ross Ihaka and Robert Gentleman
+The name ``R'' is partly a play on Ihaka's and Gentleman's first names
+R is a scripting language (not a compiled language)
+Lines of R code run (mostly) in order
+R is currently the 7th most popular programming language in the world
+
+\hypertarget{why-learn-a-programming-language}{%
+\subsection{Why Learn a Programming Language?}\label{why-learn-a-programming-language}}
+
+Control
+Speed
+Reduced errors
+Increased capability
+Continuous improvement
+Improved collaboration
+Reproducible results
+
+\hypertarget{why-r-1}{%
+\subsection{Why R?}\label{why-r-1}}
+
+R originated as a statistical computing language
+It has a culture germane to sensory science
+R is well-supported with an active community
+Extensive online help is available
+Many books, courses, and other educational material exist
+The universe of available packages is vast
+R excels at data manipulation and results reporting
+R has more specialized tools for sensory analysis than other programming language
+
+\hypertarget{steps-to-install-r}{%
+\subsection{Steps to Install R}\label{steps-to-install-r}}
+
+\url{https://cran.r-project.org/bin/windows/base/}
+Download the latest version of R
+Install R with default options
+You will almost certainly be running 64-bit R
+Note: If you are running R 4.0 or higher, you might need to install Rtools:
+\url{https://cran.r-project.org/bin/windows/Rtools/}
+
 \hypertarget{rstudio}{%
 \section{RStudio}\label{rstudio}}
 
-\hypertarget{git}{%
-\section{Git}\label{git}}
+\hypertarget{steps-to-install-rstudio}{%
+\subsection{Steps to Install RStudio}\label{steps-to-install-rstudio}}
 
-\hypertarget{github}{%
-\section{GitHub}\label{github}}
+\url{https://www.rstudio.com/products/rstudio/download/\#download}
+Download and install the latest (almost certainly 64-bit) version of RStudio with default options
+Adjustments:
+Uncheck ``Restore .RData into workspace at startup
+Select ``Never'' for ``Save workspace to .RData on exit''
+Change color scheme to dark (e.g.~``Idle Fingers'')
+Put console on right
+
+\hypertarget{create-a-local-project}{%
+\subsection{Create a Local Project}\label{create-a-local-project}}
+
+Always work in an RStudio project
+Projects keep your files (and activity) organized
+Projects help manage your file path (so your computer can find things)
+Projects allow for more advanced capabilities later (like GitHub or renv)
+We cover the use of GitHub in a future webinar
+For now we create projects locally
+
+\hypertarget{install-and-load-packages}{%
+\subsection{Install and Load Packages}\label{install-and-load-packages}}
+
+As you use R, you will want to make use of the many packages others (and perhaps you) have written
+Essential packages (or collections):
+tidyverse, readxl
+Custom Microsoft office document creation
+officer, flextable, rvg, openxlsx, extrafont, extrafontdb
+Sensory specific packages
+sensR , SensoMineR, FactoMineR, factoextra
+There are many more, for statistical tests of all varieties, to multivariate analysis, to machine learning, to text analysis, etc.
+
+You only need to install each package once per R version
+To install a package, you can:
+Type install.packages(``{[}package name{]}'')
+Use the RStudio dropdown
+In addition, if a script loads package that are not installed, RStudio will prompt you to install the package
+Notes:
+If you do not have write access on your computer, you might need IT help to install packages
+You might need to safelist various R related tools and sites
+
+\hypertarget{run-sample-code}{%
+\subsection{Run Sample Code}\label{run-sample-code}}
+
+Like any language, R is best learned first through example then through study
+We start with a series of examples to illustrate basic principles
+For this example, we analyze a series of Tetrad tests
+
+Suppose you have 15 out of 44 correct in a Tetrad test
+Using sensR, it's easy to analyze these data:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(sensR)}
+
+\NormalTok{num\_correct }\OtherTok{\textless{}{-}} \DecValTok{15}  
+\NormalTok{num\_total }\OtherTok{\textless{}{-}} \DecValTok{44}  
+  
+\NormalTok{discrim\_res }\OtherTok{\textless{}{-}} \FunctionTok{discrim}\NormalTok{(num\_correct, num\_total, }\AttributeTok{method =} \StringTok{"tetrad"}\NormalTok{)  }
+  
+\FunctionTok{print}\NormalTok{(discrim\_res)  }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Estimates for the tetrad discrimination protocol with 15 correct
+## answers in 44 trials. One-sided p-value and 95 % two-sided confidence
+## intervals are based on the 'exact' binomial test. 
+## 
+##         Estimate Std. Error  Lower  Upper
+## pc       0.34091    0.07146 0.3333 0.4992
+## pd       0.01136    0.10719 0.0000 0.2488
+## d-prime  0.20363    0.96585 0.0000 1.0193
+## 
+## Result of difference test:
+## 'exact' binomial test:  p-value = 0.5141 
+## Alternative hypothesis: d-prime is greater than 0
+\end{verbatim}
+
+\hypertarget{git-and-github}{%
+\section{Git and GitHub}\label{git-and-github}}
+
+MAKE COMMENTS BUT DON"T GO THROUGH SET UP. INSTEAD REFER READER TO JENNY BRYANT'S BOOK.
 
 \hypertarget{part-data-scientific-workflow}{%
 \part*{Data Scientific Workflow}\label{part-data-scientific-workflow}}
@@ -431,8 +592,8 @@ We continue our discussion of getting started with R in the next chapter.
 \hypertarget{tools}{%
 \section{Tools}\label{tools}}
 
-\hypertarget{github-1}{%
-\subsection{GitHub}\label{github-1}}
+\hypertarget{github}{%
+\subsection{GitHub}\label{github}}
 
 \hypertarget{r-scripts}{%
 \subsection{R scripts}\label{r-scripts}}
@@ -616,6 +777,24 @@ We continue our discussion of getting started with R in the next chapter.
 \hypertarget{part-appendices}{%
 \part*{Appendices}\label{part-appendices}}
 \addcontentsline{toc}{part}{Appendices}
+
+Bryan, J. (2018).~Happy git and github for the useR. GitHub. Available from \url{https://happygitwithr.com/}
+Gillespie, C., \& Lovelace, R. (2016).~Efficient R programming: A practical guide to smarter programming. " O'Reilly Media, Inc.``.
+Grolemund, G. Getting Started with R. Rstudio Support. Available from \url{https://support.rstudio.com/hc/en-us/articles/201141096-Getting-Started-with-R}
+Norman, D. (2013).~The design of everyday things: Revised and expanded edition. Basic books.
+Peng, R., Caffo, B., \& Leek, J. Data Science Specialization {[}Online course{]}. Available from \url{https://www.coursera.org/specializations/jhu-data-science}
+Peng, R., Caffo, B., \& Leek, J. Executive data science specialization {[}Online course{]}. Available from \url{https://www.coursera.org/specializations/executive-data-science}
+Wickham, H., \& Grolemund, G. (2016).~R for data science: import, tidy, transform, visualize, and model data.'' O'Reilly Media, Inc.".
+Wickham, H. (2016).~ggplot2: elegant graphics for data analysis. Springer.
+Zuur, A., Ieno, E. N., \& Meesters, E. (2009).~A Beginner's Guide to R. Springer Science \& Business Media.
+
+Breiman, L. (2001). Statistical modeling: The two cultures (with comments and a rejoinder by the author).~Statistical science,~16(3), 199-231.
+Cleveland, W. S. (2001). Data science: an action plan for expanding the technical areas of the field of statistics.~International statistical review,~69(1), 21-26.
+Fayyad, U., Piatetsky-Shapiro, G., \& Smyth, P. (1996). From data mining to knowledge discovery in databases.~AI magazine,~17(3), 37-37.
+Naur, P. (1966). The science of datalogy.~Communications of the ACM,~9(7), 485.
+Tukey, J. W. (1962). The future of data analysis.~The annals of mathematical statistics,~33(1), 1-67.
+Tukey, J. W. (1977).~Exploratory data analysis. Reading, Mass: Addison-Wesley Pub. Co.
+Wu, C. F. J. (1997) ``Statistics = Data Science?'' Lecture notes available online at \url{http://www2.isye.gatech.edu/~jeffwu/presentations/datascience.pdf}
 
   \bibliography{book.bib,packages.bib}
 
