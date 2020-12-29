@@ -2,6 +2,8 @@
 
 To analyze data, one need *data*. If this data is already available in R, then the analysis can be performed directly. However, in much cases, the data is stored outside the R environment, and needs to be imported. 
 
+## Data Importation
+
 In practice, the data might be stored in as many format as one can imagine, whether it ends up being a fairly common solution (.txt file, .csv file, or .xls/.xlsx file), or software specific (e.g. Stata, SPSS, etc.).
 Since it is very common to store the data in Excel spreadsheets (.xlsx) due to its simplicity, the emphasis is on this solution. Fortunately, most generalities presented for Excel files also apply to other formats through `base::read.table()` for .txt files,  `base::read.csv()` and `base::read.csv2()` for .csv files, or through the `{read}` package (which is part of the `{tidyverse}`).
 
@@ -9,7 +11,7 @@ For other (less common) formats, the reader can find packages that would allow i
 
 Although Excel is most likely one of the most popular way of storing data, there are no `{base}` functions that allow importing such files easily. Fortunately, many packages have been developed in that purpose, including `{XLConnect}`, `{xlsx}`, `{gdata}`, and `{readxl}`. Due to its convenience and speed of execution, we will be using `{readxl}` here.
 
-## Importing Structured Excel File
+### Importing Structured Excel File
 
 First, let's import the *Sensory Profile.xlsx* workbook using the `readxl::read_xlsx()` file, by informing as parameter the location of the file (informed in `file_path` using the package `{here}`) and the `sheet` we want to read from.
 
@@ -52,7 +54,7 @@ This function provides an overview of the first element of each variables (and t
 
 Here, the data has been imported as expected.
 
-## Importing Unstructured Excel File
+### Importing Unstructured Excel File
 
 In some cases, the dataset is not so well organized/structured, and may need to be *decoded*. This is the case for the workbook entitled *TFEQ.xlsx*. For this file:
 
@@ -106,9 +108,9 @@ summary(TFEQ_data)
 
 The data has now the proper header, however each variable is still coded numerically. 
 
-# Data Inspection
+## Data Inspection
 
-## Data Type
+### Data Type
 
 In R, the variables can be of different types, going from numerical to nominal to binary etc. This section aims in presenting the most common types (and their properties) used in sensory and consumer studies, and in showing how to transform a variable from one type to another.
 
@@ -125,14 +127,14 @@ In sensory and consumer research, the four most common types are:
 
 R still has plenty of other types, for more information please visit: https://tibble.tidyverse.org/articles/types.html
 
-### Numerical Data
+#### Numerical Data
 
 Since a large proportion of the research done is quantitative, it is no surprise that our dataset are often dominated with numerical variables. In practice, numerical data includes integer (non-fractional number, e.g. 1, 2, -16, etc.), or decimal value (or double, e.g. 1.6, 2.333333, -3.2 etc.).
 By default, when reading data from an external file, R converts any numerical variables to integer unless decimal points are detected, in which case it is converted into double.
 
 **Do we want to show how to format R wrt the number of decimals? (e.g. options(digits=2))**
 
-### Binary Data
+#### Binary Data
 
 Another common type that seem to be numerical in appearance, but that has additional properties is the binary type. 
 Binary data is data that takes two possible values (`TRUE` or `FALSE`), and are often the results of a *test* (e.g. is `x>3`? Or is `MyVar` numerical?). A typical example of binary data in sensory and consumer research is data collected through Check-All-That-Apply (CATA) questionnaires.
@@ -154,8 +156,7 @@ test
 sum(test)
 ```
 
-
-### Nominal Data
+#### Nominal Data
 
 Nominal data is any data that is not numerical. In most cases, nominal data are defined through text, or strings. It can appear in some situations that nominal variables are still defined with numbers although they do not have a numerical meaning. This is for instance the case when the respondents or samples are identified through numerical codes: In that case, it is clear that respondent 2 is not twice larger than respondent 1 for instance. But since the software cannot guess that those numbers are *identifiers* rather than *numbers*, the variables should be declared as nominal. The procedure explaining how to convert the type of the variables will be explained in the next section. 
 
@@ -192,7 +193,6 @@ print("As Factor:")
 levels(example$Judge_fct)
 nlevels(example$Judge_fct)
 ```
-
 
 Although `Judge` and `Judge_fct` look the same, they are structurally different, and those differences play an important role that one should consider when running certain analyses, or building tables and graphs.
 
@@ -263,7 +263,6 @@ nlevels(example$Area)
 table(example$`Living area`, example$Area)
 ```
 
-
 This approach of renaming and re-ordering factor levels is very important as it simplifies the readability of tables and figures.
 Some other transformations can be applied to factors thanks to the `{forcats}` package. Amongst other relevant functions, particular attention can be given to:
 
@@ -279,7 +278,7 @@ Although it hasn't been done here, manipulating strings is also possible. To do 
  - `str_extract`, `str_replace`, `str_split` to extract, replace, or split strings or part of the strings.
  
  
-## Changing the type of a variable
+### Changing the type of a variable
 
 Transforming the type of variables using `mutate()`: 
 
@@ -287,13 +286,13 @@ Transforming the type of variables using `mutate()`:
  - from numerical to character/factor;
  - from character/factor to numerical
 
-# Data Organization
+## Data Organization
 
 Presentation of the different shapes of the tables based on objectives
 
-# Data Manipulation
+## Data Manipulation
 
-## Type of table
+### Type of table
 
 matrix, data frame, and tibble. 
 
@@ -303,33 +302,33 @@ how to convert it to another format? (see below)
 
 Note on `{FactoMineR}` and `{SensoMineR}` which require data frames or matrix (not tibble) so introduction to `column_to_rownames()` and `rownames_to_columns()` as well as `as.data.frame()` and `as_tibble()`.
 
-## Data organisation
+### Data organisation
 
 `select()`, `filter()`, `arrange()`
 `mutate()` and `transmute()`
 
-## Data re-structuration
+### Data re-structuration
 
 `pivot_wider()` and `pivot_longer()`
 `full_join()`, `inner_join()`, `left_join()` and `right_join()`
 
 `unnest_token()` from **{tidytext}**
 
-# Cleaning and Quality Assessment
+## Cleaning and Quality Assessment
 
-## Renaming
+### Renaming
 
 renaming columns using `rename()` or `select()`
 renaming elements using `factor()` and **{forcats}**
 
-## Recoding
+### Recoding
 
 Example of recoding (could be renaming, or replacing NAs, etc.) by combining `mutate()` and `ifelse()`
 
-## Handling Missing Values
+### Handling Missing Values
 
 Removing and replacing NAs
 
-## Quality Assessment
+### Quality Assessment
 
 Graphics?
