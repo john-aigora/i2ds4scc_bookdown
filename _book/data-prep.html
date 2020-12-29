@@ -193,11 +193,30 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="5" data-path="data-prep.html"><a href="data-prep.html"><i class="fa fa-check"></i><b>5</b> Data Preparation</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="data-prep.html"><a href="data-prep.html#importation"><i class="fa fa-check"></i><b>5.1</b> Importation</a></li>
-<li class="chapter" data-level="5.2" data-path="data-prep.html"><a href="data-prep.html#organization"><i class="fa fa-check"></i><b>5.2</b> Organization</a></li>
-<li class="chapter" data-level="5.3" data-path="data-prep.html"><a href="data-prep.html#inspection"><i class="fa fa-check"></i><b>5.3</b> Inspection</a></li>
-<li class="chapter" data-level="5.4" data-path="data-prep.html"><a href="data-prep.html#manipulation"><i class="fa fa-check"></i><b>5.4</b> Manipulation</a></li>
-<li class="chapter" data-level="5.5" data-path="data-prep.html"><a href="data-prep.html#cleaning"><i class="fa fa-check"></i><b>5.5</b> Cleaning</a></li>
+<li class="chapter" data-level="5.1" data-path="data-prep.html"><a href="data-prep.html#data-importation"><i class="fa fa-check"></i><b>5.1</b> Data Importation</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="data-prep.html"><a href="data-prep.html#importing-structured-excel-file"><i class="fa fa-check"></i><b>5.1.1</b> Importing Structured Excel File</a></li>
+<li class="chapter" data-level="5.1.2" data-path="data-prep.html"><a href="data-prep.html#importing-unstructured-excel-file"><i class="fa fa-check"></i><b>5.1.2</b> Importing Unstructured Excel File</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="data-prep.html"><a href="data-prep.html#data-inspection"><i class="fa fa-check"></i><b>5.2</b> Data Inspection</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="data-prep.html"><a href="data-prep.html#data-type"><i class="fa fa-check"></i><b>5.2.1</b> Data Type</a></li>
+<li class="chapter" data-level="5.2.2" data-path="data-prep.html"><a href="data-prep.html#changing-the-type-of-a-variable"><i class="fa fa-check"></i><b>5.2.2</b> Changing the type of a variable</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="data-prep.html"><a href="data-prep.html#data-organization"><i class="fa fa-check"></i><b>5.3</b> Data Organization</a></li>
+<li class="chapter" data-level="5.4" data-path="data-prep.html"><a href="data-prep.html#data-manipulation"><i class="fa fa-check"></i><b>5.4</b> Data Manipulation</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="data-prep.html"><a href="data-prep.html#type-of-table"><i class="fa fa-check"></i><b>5.4.1</b> Type of table</a></li>
+<li class="chapter" data-level="5.4.2" data-path="data-prep.html"><a href="data-prep.html#data-organisation"><i class="fa fa-check"></i><b>5.4.2</b> Data organisation</a></li>
+<li class="chapter" data-level="5.4.3" data-path="data-prep.html"><a href="data-prep.html#data-re-structuration"><i class="fa fa-check"></i><b>5.4.3</b> Data re-structuration</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="data-prep.html"><a href="data-prep.html#cleaning-and-quality-assessment"><i class="fa fa-check"></i><b>5.5</b> Cleaning and Quality Assessment</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="data-prep.html"><a href="data-prep.html#renaming"><i class="fa fa-check"></i><b>5.5.1</b> Renaming</a></li>
+<li class="chapter" data-level="5.5.2" data-path="data-prep.html"><a href="data-prep.html#recoding"><i class="fa fa-check"></i><b>5.5.2</b> Recoding</a></li>
+<li class="chapter" data-level="5.5.3" data-path="data-prep.html"><a href="data-prep.html#handling-missing-values"><i class="fa fa-check"></i><b>5.5.3</b> Handling Missing Values</a></li>
+<li class="chapter" data-level="5.5.4" data-path="data-prep.html"><a href="data-prep.html#quality-assessment"><i class="fa fa-check"></i><b>5.5.4</b> Quality Assessment</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="data-analysis.html"><a href="data-analysis.html"><i class="fa fa-check"></i><b>6</b> Data Analysis</a>
 <ul>
@@ -332,21 +351,610 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="data_prep" class="section level1" number="5">
 <h1><span class="header-section-number">Chapter 5</span> Data Preparation</h1>
-<div id="importation" class="section level2" number="5.1">
-<h2><span class="header-section-number">5.1</span> Importation</h2>
+<p>To analyze data, one need <em>data</em>. If this data is already available in R, then the analysis can be performed directly. However, in much cases, the data is stored outside the R environment, and needs to be imported.</p>
+<div id="data-importation" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> Data Importation</h2>
+<p>In practice, the data might be stored in as many format as one can imagine, whether it ends up being a fairly common solution (.txt file, .csv file, or .xls/.xlsx file), or software specific (e.g. Stata, SPSS, etc.).
+Since it is very common to store the data in Excel spreadsheets (.xlsx) due to its simplicity, the emphasis is on this solution. Fortunately, most generalities presented for Excel files also apply to other formats through <code>base::read.table()</code> for .txt files, <code>base::read.csv()</code> and <code>base::read.csv2()</code> for .csv files, or through the <code>{read}</code> package (which is part of the <code>{tidyverse}</code>).</p>
+<p>For other (less common) formats, the reader can find packages that would allow importing their files into R. Particular interest can be given to the package <code>{rio}</code> (<em>rio</em> stands for <em>R</em> <em>I</em>nput and <em>O</em>utput) which provides an easy solution that 1. can handle a large variety of files, 2. can actually guess the type of file it is, and 3. provides tools to import, export, and convert almost any type of data format, including .csv, .xls and .xlsx, or data from other statistical software such as SAS (.sas7bdat and .xpt), SPSS (.sav and .por), or Stata (.dta). As an alternative, the package <code>{foreign}</code> provides functions that allow importing data stored from other statistical software (incl. Minitab, S, SAS, Stata, SPSS, etc.)</p>
+<p>Although Excel is most likely one of the most popular way of storing data, there are no <code>{base}</code> functions that allow importing such files easily. Fortunately, many packages have been developed in that purpose, including <code>{XLConnect}</code>, <code>{xlsx}</code>, <code>{gdata}</code>, and <code>{readxl}</code>. Due to its convenience and speed of execution, we will be using <code>{readxl}</code> here.</p>
+<div id="importing-structured-excel-file" class="section level3" number="5.1.1">
+<h3><span class="header-section-number">5.1.1</span> Importing Structured Excel File</h3>
+<p>First, let’s import the <em>Sensory Profile.xlsx</em> workbook using the <code>readxl::read_xlsx()</code> file, by informing as parameter the location of the file (informed in <code>file_path</code> using the package <code>{here}</code>) and the <code>sheet</code> we want to read from.</p>
+<p>This file is called <em>structured</em> as all the relevant information is already stored in the same sheet in a structured way. In other words, no decoding is required here, and there are no ‘unexpected’ rows or columns (e.g. empty lines, or lines with additional information regarding the data but that is not data):</p>
+<ul>
+<li>The first row within the <em>Data</em> sheet of <em>Sensory Profile.xlsx</em> contains the headers,<br />
+</li>
+<li>From the second row onwards, only data is being stored.</li>
+</ul>
+<p>Since this data will be used for some analyses, it is assigned data to an R object called <code>sensory</code>.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="data-prep.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span></code></pre></div>
+<pre><code>## here() starts at C:/Aigora/books/intro to data science/i2ds4scc_bookdown</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="data-prep.html#cb5-1" aria-hidden="true" tabindex="-1"></a>file_path <span class="ot">&lt;-</span> <span class="fu">here</span>(<span class="st">&quot;data&quot;</span>,<span class="st">&quot;Sensory Profile.xlsx&quot;</span>) </span>
+<span id="cb5-2"><a href="data-prep.html#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="data-prep.html#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb5-4"><a href="data-prep.html#cb5-4" aria-hidden="true" tabindex="-1"></a>sensory <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(file_path, <span class="at">sheet=</span><span class="st">&quot;Data&quot;</span>)</span></code></pre></div>
+<p>To ensure that the importation went well, we print <code>sensory</code> to see how it looks like. Since <code>{readxl}</code> has been developed by Hadley Wickham and colleagues, its functions follow the <code>{tidyverse}</code> principles and the dataset thus imported is a <code>tibble</code>. Let’s take advantage of the printing properties of a <code>tibble</code> to evaluate <code>sensory</code>:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="data-prep.html#cb6-1" aria-hidden="true" tabindex="-1"></a>sensory</span></code></pre></div>
+<pre><code>## # A tibble: 99 x 35
+##    Judge Code  Product Shiny `External color~ `Color evenness` `Qtt of inclusi~
+##    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;
+##  1 J01   B     12GP_f   48.6             30               13.2             10.8
+##  2 J01   D     12GP16~  46.2             45.6             37.8              0  
+##  3 J01   C     12GP23~  48               45.6             17.4              7.8
+##  4 J01   G     12SA_f    5.4              6.6             17.4              0  
+##  5 J01   I     12SA23~   0               42.6             18               21  
+##  6 J01   E     16PPK_p   0               23.4             49.2              0  
+##  7 J01   New   23pK_p    4.8             33.6             15.6             32.4
+##  8 J01   H     23PLK_p   0               51.6             48.6             23.4
+##  9 J01   F     29PPK_p   0               50.4             24               27.6
+## 10 J01   A     ck1      52.8             30               22.8              9.6
+## # ... with 89 more rows, and 28 more variables: `Surface defects` &lt;dbl&gt;, `Print
+## #   quality` &lt;dbl&gt;, Thickness &lt;dbl&gt;, `Color constrast` &lt;dbl&gt;, `Overall odor
+## #   intensity` &lt;dbl&gt;, `Fatty odor` &lt;dbl&gt;, `Roasted odor` &lt;dbl&gt;, `Cereal
+## #   flavor` &lt;dbl&gt;, `Raw dough flavor` &lt;dbl&gt;, `Fatty flavor` &lt;dbl&gt;, `Dairy
+## #   flavor` &lt;dbl&gt;, `Roasted flavor` &lt;dbl&gt;, `Overall flavor persistence` &lt;dbl&gt;,
+## #   Salty &lt;dbl&gt;, Sweet &lt;dbl&gt;, Sour &lt;dbl&gt;, Bitter &lt;dbl&gt;, Astringent &lt;dbl&gt;,
+## #   Warming &lt;dbl&gt;, `Initial hardness` &lt;dbl&gt;, Brittle &lt;dbl&gt;, Crunchy &lt;dbl&gt;,
+## #   `Fatty in mouth` &lt;dbl&gt;, Light &lt;dbl&gt;, `Dry in mouth` &lt;dbl&gt;, `Qtt of
+## #   inclusions in mouth` &lt;dbl&gt;, Sticky &lt;dbl&gt;, Melting &lt;dbl&gt;</code></pre>
+<p><code>sensory</code> is a tibble with 99 rows and 35 columns that includes the <code>Judge</code> information (first column, defined as character), the <code>Product</code> information (second and third columns, defined as character), and the sensory attributes (fourth column onward, defined as numerical or <code>dbl</code>).</p>
+<p>Additionally, we can also print a <code>summary()</code> of <code>sensory</code> to get some extra information regarding the data (such as the minimum, maximum, mean and median for each numerical variable)"</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="data-prep.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(sensory)</span></code></pre></div>
+<pre><code>##     Judge               Code             Product              Shiny     
+##  Length:99          Length:99          Length:99          Min.   : 0.0  
+##  Class :character   Class :character   Class :character   1st Qu.: 9.3  
+##  Mode  :character   Mode  :character   Mode  :character   Median :21.0  
+##                                                           Mean   :23.9  
+##                                                           3rd Qu.:38.4  
+##                                                           Max.   :54.0  
+##  External color intensity Color evenness  Qtt of inclusions Surface defects
+##  Min.   : 6.60            Min.   : 6.60   Min.   : 0.00     Min.   : 4.80  
+##  1st Qu.:27.00            1st Qu.:19.50   1st Qu.:13.80     1st Qu.:15.30  
+##  Median :34.80            Median :26.40   Median :19.80     Median :21.00  
+##  Mean   :33.68            Mean   :28.19   Mean   :20.63     Mean   :23.35  
+##  3rd Qu.:42.60            3rd Qu.:37.20   3rd Qu.:29.10     3rd Qu.:30.60  
+##  Max.   :55.20            Max.   :53.40   Max.   :40.80     Max.   :51.60  
+##  Print quality     Thickness     Color constrast Overall odor intensity
+##  Min.   :12.00   Min.   : 7.80   Min.   : 5.40   Min.   : 0.00         
+##  1st Qu.:36.30   1st Qu.:18.30   1st Qu.:21.00   1st Qu.:10.20         
+##  Median :40.80   Median :25.80   Median :32.40   Median :18.00         
+##  Mean   :40.72   Mean   :25.48   Mean   :30.02   Mean   :18.67         
+##  3rd Qu.:47.10   3rd Qu.:32.10   3rd Qu.:40.20   3rd Qu.:26.10         
+##  Max.   :60.00   Max.   :52.80   Max.   :51.60   Max.   :40.20         
+##    Fatty odor     Roasted odor   Cereal flavor   Raw dough flavor
+##  Min.   : 0.00   Min.   : 0.00   Min.   : 0.00   Min.   : 0.00   
+##  1st Qu.: 0.00   1st Qu.: 8.10   1st Qu.:18.00   1st Qu.: 3.00   
+##  Median : 5.40   Median :15.00   Median :25.20   Median :13.20   
+##  Mean   : 6.81   Mean   :15.07   Mean   :24.99   Mean   :14.23   
+##  3rd Qu.:10.50   3rd Qu.:20.70   3rd Qu.:31.20   3rd Qu.:24.60   
+##  Max.   :27.00   Max.   :42.00   Max.   :48.00   Max.   :43.20   
+##   Fatty flavor     Dairy flavor    Roasted flavor  Overall flavor persistence
+##  Min.   : 0.000   Min.   : 0.000   Min.   : 0.00   Min.   : 0.00             
+##  1st Qu.: 0.000   1st Qu.: 0.000   1st Qu.: 9.00   1st Qu.:16.20             
+##  Median : 6.600   Median : 7.200   Median :17.40   Median :22.80             
+##  Mean   : 7.419   Mean   : 9.106   Mean   :17.68   Mean   :22.73             
+##  3rd Qu.:13.200   3rd Qu.:13.500   3rd Qu.:24.60   3rd Qu.:28.80             
+##  Max.   :24.000   Max.   :46.800   Max.   :51.60   Max.   :43.80             
+##      Salty            Sweet            Sour            Bitter      
+##  Min.   : 0.000   Min.   : 0.00   Min.   : 0.000   Min.   : 0.000  
+##  1st Qu.: 0.000   1st Qu.: 9.90   1st Qu.: 0.000   1st Qu.: 0.000  
+##  Median : 1.200   Median :18.00   Median : 0.000   Median : 7.800  
+##  Mean   : 5.027   Mean   :17.82   Mean   : 1.461   Mean   : 8.103  
+##  3rd Qu.:10.050   3rd Qu.:24.30   3rd Qu.: 0.000   3rd Qu.:14.100  
+##  Max.   :19.200   Max.   :43.20   Max.   :13.800   Max.   :27.600  
+##    Astringent       Warming      Initial hardness    Brittle     
+##  Min.   : 0.00   Min.   : 0.00   Min.   : 0.00    Min.   : 0.00  
+##  1st Qu.: 0.00   1st Qu.: 9.30   1st Qu.:19.50    1st Qu.:27.60  
+##  Median : 8.40   Median :16.80   Median :30.60    Median :34.80  
+##  Mean   :11.45   Mean   :16.76   Mean   :30.12    Mean   :31.77  
+##  3rd Qu.:19.50   3rd Qu.:25.20   3rd Qu.:39.30    3rd Qu.:39.14  
+##  Max.   :34.20   Max.   :47.40   Max.   :60.00    Max.   :57.00  
+##     Crunchy      Fatty in mouth      Light        Dry in mouth  
+##  Min.   : 8.40   Min.   : 0.00   Min.   : 5.40   Min.   :11.40  
+##  1st Qu.:23.25   1st Qu.: 0.00   1st Qu.:22.80   1st Qu.:39.00  
+##  Median :30.60   Median : 5.40   Median :31.80   Median :45.00  
+##  Mean   :29.62   Mean   : 7.32   Mean   :30.21   Mean   :42.99  
+##  3rd Qu.:36.30   3rd Qu.:12.90   3rd Qu.:37.20   3rd Qu.:49.80  
+##  Max.   :48.60   Max.   :27.00   Max.   :53.40   Max.   :58.80  
+##  Qtt of inclusions in mouth     Sticky         Melting    
+##  Min.   : 0.00              Min.   : 6.00   Min.   : 0.0  
+##  1st Qu.:15.90              1st Qu.:27.00   1st Qu.:13.2  
+##  Median :26.40              Median :33.60   Median :19.2  
+##  Mean   :24.92              Mean   :32.73   Mean   :20.5  
+##  3rd Qu.:35.40              3rd Qu.:39.60   3rd Qu.:27.3  
+##  Max.   :45.60              Max.   :52.80   Max.   :38.4</code></pre>
+<p>At last, we can list the structure of the dataset through the <code>str()</code> function.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="data-prep.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(sensory)</span></code></pre></div>
+<pre><code>## tibble [99 x 35] (S3: tbl_df/tbl/data.frame)
+##  $ Judge                     : chr [1:99] &quot;J01&quot; &quot;J01&quot; &quot;J01&quot; &quot;J01&quot; ...
+##  $ Code                      : chr [1:99] &quot;B&quot; &quot;D&quot; &quot;C&quot; &quot;G&quot; ...
+##  $ Product                   : chr [1:99] &quot;12GP_f&quot; &quot;12GP16PSL_m&quot; &quot;12GP23P_m&quot; &quot;12SA_f&quot; ...
+##  $ Shiny                     : num [1:99] 48.6 46.2 48 5.4 0 0 4.8 0 0 52.8 ...
+##  $ External color intensity  : num [1:99] 30 45.6 45.6 6.6 42.6 23.4 33.6 51.6 50.4 30 ...
+##  $ Color evenness            : num [1:99] 13.2 37.8 17.4 17.4 18 49.2 15.6 48.6 24 22.8 ...
+##  $ Qtt of inclusions         : num [1:99] 10.8 0 7.8 0 21 0 32.4 23.4 27.6 9.6 ...
+##  $ Surface defects           : num [1:99] 13.2 48.6 14.4 36 36 12.6 13.8 18 39.6 22.8 ...
+##  $ Print quality             : num [1:99] 54 45.6 49.2 42.6 51 47.4 43.8 45.6 53.4 48.6 ...
+##  $ Thickness                 : num [1:99] 35.4 43.2 25.8 32.4 31.8 29.4 36 31.2 36 38.4 ...
+##  $ Color constrast           : num [1:99] 40.2 45.6 17.4 41.4 41.4 12.6 36 5.4 21 37.8 ...
+##  $ Overall odor intensity    : num [1:99] 24.6 7.2 21.6 13.8 26.4 18 16.2 13.8 0 16.8 ...
+##  $ Fatty odor                : num [1:99] 5.4 0 0 0 6.6 8.4 7.8 7.8 0 6.6 ...
+##  $ Roasted odor              : num [1:99] 20.4 6 18.6 16.2 16.8 16.2 16.2 12.6 7.2 15.6 ...
+##  $ Cereal flavor             : num [1:99] 25.8 16.2 30 18 28.8 21.6 23.4 23.4 28.8 24.6 ...
+##  $ Raw dough flavor          : num [1:99] 28.8 28.2 26.4 21 26.4 27.6 31.2 27 27.6 28.2 ...
+##  $ Fatty flavor              : num [1:99] 7.2 0 0 6 7.2 6.6 10.8 7.2 0 13.8 ...
+##  $ Dairy flavor              : num [1:99] 0 0 0 0 0 0 4.8 0 0 0 ...
+##  $ Roasted flavor            : num [1:99] 19.2 28.2 27 21.6 25.8 20.4 26.4 24.6 22.2 24.6 ...
+##  $ Overall flavor persistence: num [1:99] 24.6 14.4 25.2 18 22.8 21 24 21.6 25.2 23.4 ...
+##  $ Salty                     : num [1:99] 0 0 0 0 0 0 3.6 0 0 0 ...
+##  $ Sweet                     : num [1:99] 19.2 11.4 9.6 10.8 21 20.4 21 10.2 21 13.8 ...
+##  $ Sour                      : num [1:99] 0 0 0 0 0 0 0.6 0 0 0 ...
+##  $ Bitter                    : num [1:99] 21.6 9 21 0 22.8 8.4 27.6 9.6 18.6 19.2 ...
+##  $ Astringent                : num [1:99] 0 18.6 25.8 21 26.4 16.2 31.8 23.4 25.2 0 ...
+##  $ Warming                   : num [1:99] 0 0 13.8 10.8 15 0 27.6 19.8 14.4 0 ...
+##  $ Initial hardness          : num [1:99] 17.4 19.8 33 10.2 29.4 16.2 18 34.2 28.2 11.4 ...
+##  $ Brittle                   : num [1:99] 35.4 33.6 27.6 29.4 34.8 38.4 35.4 35.4 33 39.6 ...
+##  $ Crunchy                   : num [1:99] 32.4 28.8 25.2 27 32.4 35.4 34.8 30.6 27.6 25.8 ...
+##  $ Fatty in mouth            : num [1:99] 9.6 9.6 6 5.4 12 7.2 14.4 5.4 0 0 ...
+##  $ Light                     : num [1:99] 21 40.5 20.4 25.8 21 ...
+##  $ Dry in mouth              : num [1:99] 25.8 28.2 31.2 22.2 27.6 34.2 31.8 37.8 33.6 27 ...
+##  $ Qtt of inclusions in mouth: num [1:99] 22.2 13.2 10.2 9 29.4 18 31.2 25.8 26.4 27.6 ...
+##  $ Sticky                    : num [1:99] 35.4 21.6 37.2 22.8 37.2 39 34.2 36.6 36 37.2 ...
+##  $ Melting                   : num [1:99] 36 34.2 8.4 34.8 19.8 34.8 36.6 19.2 21.6 33.6 ...</code></pre>
+<p>This function provides an overview of the first element of each variables (and the format they are in) as a list, and allows the user to have a first scan to eventually detect <em>errors</em> or <em>mishaps</em> during the importation.</p>
+<p>Here, the data has been imported as expected.</p>
 </div>
-<div id="organization" class="section level2" number="5.2">
-<h2><span class="header-section-number">5.2</span> Organization</h2>
+<div id="importing-unstructured-excel-file" class="section level3" number="5.1.2">
+<h3><span class="header-section-number">5.1.2</span> Importing Unstructured Excel File</h3>
+<p>In some cases, the dataset is not so well organized/structured, and may need to be <em>decoded</em>. This is the case for the workbook entitled <em>TFEQ.xlsx</em>. For this file:</p>
+<ul>
+<li>The variables’ name have been coded and their corresponding names (together with some other valuable information we will be using in the next chapter) are stored in a different sheet entitled <em>Variables</em>;</li>
+<li>The different levels of each variable (including their code and corresponding names) are stored in another sheet entitled <em>Levels</em>.</li>
+</ul>
+<p>To import and decode this dataset, multiple steps are required:</p>
+<ul>
+<li>Import the variables’ name only;</li>
+<li>Import the information regarding the levels;</li>
+<li>Import the dataset without the first line of header, but by providing the correct names obtained in the first step;</li>
+<li>Decode each question (when needed) by replacing the numerical code by their corresponding labels.</li>
+</ul>
+<p>Let’s start with importing the variables’ names from <em>TFEQ.xlsx</em> (sheet <em>Variables</em>)</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="data-prep.html#cb12-1" aria-hidden="true" tabindex="-1"></a>file_path <span class="ot">&lt;-</span> <span class="fu">here</span>(<span class="st">&quot;data&quot;</span>,<span class="st">&quot;TFEQ.xlsx&quot;</span>) </span>
+<span id="cb12-2"><a href="data-prep.html#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="data-prep.html#cb12-3" aria-hidden="true" tabindex="-1"></a>var_names <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(file_path, <span class="at">sheet=</span><span class="st">&quot;Variables&quot;</span>)</span>
+<span id="cb12-4"><a href="data-prep.html#cb12-4" aria-hidden="true" tabindex="-1"></a>var_names</span></code></pre></div>
+<pre><code>## # A tibble: 62 x 6
+##    Code  `Original Questions (French)`  Name     Direction Value `Full Question`
+##    &lt;chr&gt; &lt;chr&gt;                          &lt;chr&gt;    &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;          
+##  1 Q1    Où habitez-vous?               Living ~ &lt;NA&gt;         NA &lt;NA&gt;           
+##  2 Q2    Comment habitez-vous?          Housing  &lt;NA&gt;         NA &lt;NA&gt;           
+##  3 Q3    N° Juge                        Judge    &lt;NA&gt;         NA &lt;NA&gt;           
+##  4 Q4    Quelle est votre taille (en m~ Height   &lt;NA&gt;         NA &lt;NA&gt;           
+##  5 Q5    Quel est votre poids?          Weight   &lt;NA&gt;         NA &lt;NA&gt;           
+##  6 Q6    IMC                            BMI      &lt;NA&gt;         NA &lt;NA&gt;           
+##  7 Q7    Quelle est votre situation ma~ Marital~ &lt;NA&gt;         NA &lt;NA&gt;           
+##  8 Q8    Nombre de personnes vivant au~ Househo~ &lt;NA&gt;         NA &lt;NA&gt;           
+##  9 Q9    Dans quelle tranche de revenu~ Income ~ &lt;NA&gt;         NA &lt;NA&gt;           
+## 10 Q10   Dans quelle catégorie sociopr~ Occupat~ &lt;NA&gt;         NA &lt;NA&gt;           
+## # ... with 52 more rows</code></pre>
+<p>In a similar way, let’s import the information related to the levels of each variable, stored in the <em>Levels</em> sheet.
+A deeper look at the <em>Levels</em> sheet shows that only the coded names of the variables are available. In order to include the final names, <code>var_names</code> is joined (using <code>inner_join</code>).</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="data-prep.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<pre><code>## -- Attaching packages --------------------------------------- tidyverse 1.3.0 --</code></pre>
+<pre><code>## v ggplot2 3.3.2     v purrr   0.3.4
+## v tibble  3.0.4     v dplyr   1.0.2
+## v tidyr   1.1.2     v stringr 1.4.0
+## v readr   1.4.0     v forcats 0.5.0</code></pre>
+<pre><code>## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="data-prep.html#cb18-1" aria-hidden="true" tabindex="-1"></a>var_labels <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(file_path, <span class="at">sheet=</span><span class="st">&quot;Levels&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-2"><a href="data-prep.html#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(dplyr<span class="sc">::</span><span class="fu">select</span>(var_names, Code, Name), <span class="at">by=</span><span class="fu">c</span>(<span class="at">Question=</span><span class="st">&quot;Code&quot;</span>))</span>
+<span id="cb18-3"><a href="data-prep.html#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="data-prep.html#cb18-4" aria-hidden="true" tabindex="-1"></a>var_labels</span></code></pre></div>
+<pre><code>## # A tibble: 172 x 5
+##    Question  Code `Original Levels (French)` Levels            Name          
+##    &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;                      &lt;chr&gt;             &lt;chr&gt;         
+##  1 Q1           1 Zone urbaine               Urban Area        Living area   
+##  2 Q1           2 Zone rurbaine              Rurban Area       Living area   
+##  3 Q1           3 Zone rurale                Rural Area        Living area   
+##  4 Q2           1 Appartement                Apartment         Housing       
+##  5 Q2           2 Maison individuelle        House             Housing       
+##  6 Q7           1 Divorcé(e)                 Divorced          Marital status
+##  7 Q7           2 Marié(e)                   Married           Marital status
+##  8 Q7           3 Vivant maritalement        Conjugal          Marital status
+##  9 Q7           4 Célibataire                Single            Marital status
+## 10 Q7           5 Pacsé(e)                   Civil Partnership Marital status
+## # ... with 162 more rows</code></pre>
+<p><strong>Note</strong>: In some cases, this information is directly available in the dataset as sub-header: A solution is then to import the first rows of the dataset that contain this information using the parameter <code>n_max</code> from `readxl::read_xlsx``. For each variable (when information is available), store that information as a list of tables that contains the code and their corresponding label.</p>
+<p><strong>THIS SECTION BELOW MIGHT NEED TO GET PASSED ON TO THE EXERCISE</strong></p>
+<p>Since most likely this system of coding follow a fixed pattern, we strongly recommend the use of <code>{tidytext}</code> and its function <code>unnest_tokens()</code>.
+For example, let’s imagine that the our information is structured as <em>code1=label1,code2=label2,…</em> (e.g. <em>0=No,1=Yes</em>). In such case, first use <code>unnest_tokens()</code> to split this string by ‘,’ This creates a tibble with as many rows as there are <em>code=label</em> and one column. Next, split this column into two columns using <code>separate()</code> and <code>sep="="</code>.</p>
+<p><strong>(PREVIOUS PART) TO BE GIVEN AS AN EXAMPLE/EXERCISE</strong></p>
+<p>Finally, we import the dataset (<em>Data</em>) by substituting the coded names with their real names.
+To do so, we skip reading the first line (<code>skip=1</code>) that contains the coded names, and force the column names to be defined by <code>Name</code> from <code>var_names</code> (after ensuring that the names’ sequence perfectly match across the two tables!).</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="data-prep.html#cb20-1" aria-hidden="true" tabindex="-1"></a>TFEQ_data <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(file_path, <span class="at">sheet=</span><span class="st">&quot;Data&quot;</span>, <span class="at">col_names=</span>var_names<span class="sc">$</span>Name, <span class="at">skip=</span><span class="dv">1</span>)</span>
+<span id="cb20-2"><a href="data-prep.html#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(TFEQ_data)</span></code></pre></div>
+<pre><code>##   Living area       Housing         Judge               Height     
+##  Min.   :1.000   Min.   :1.000   Length:107         Min.   :1.450  
+##  1st Qu.:1.000   1st Qu.:1.000   Class :character   1st Qu.:1.600  
+##  Median :1.000   Median :2.000   Mode  :character   Median :1.630  
+##  Mean   :1.542   Mean   :1.682                      Mean   :1.634  
+##  3rd Qu.:2.000   3rd Qu.:2.000                      3rd Qu.:1.680  
+##  Max.   :3.000   Max.   :2.000                      Max.   :1.800  
+##      Weight           BMI        Marital status  Household size 
+##  Min.   :43.00   Min.   :17.63   Min.   :1.000   Min.   :0.000  
+##  1st Qu.:53.50   1st Qu.:20.30   1st Qu.:2.000   1st Qu.:2.000  
+##  Median :58.00   Median :21.63   Median :3.000   Median :3.000  
+##  Mean   :58.25   Mean   :21.79   Mean   :2.944   Mean   :2.944  
+##  3rd Qu.:62.35   3rd Qu.:23.33   3rd Qu.:4.000   3rd Qu.:4.000  
+##  Max.   :82.00   Max.   :26.47   Max.   :7.000   Max.   :6.000  
+##   Income range     Occupation     Highest degree       D1       
+##  Min.   :1.000   Min.   : 1.000   Min.   :1.00   Min.   :0.000  
+##  1st Qu.:2.000   1st Qu.: 2.000   1st Qu.:2.00   1st Qu.:0.000  
+##  Median :2.000   Median : 6.000   Median :3.00   Median :0.000  
+##  Mean   :2.421   Mean   : 6.486   Mean   :2.71   Mean   :0.215  
+##  3rd Qu.:3.000   3rd Qu.: 9.000   3rd Qu.:4.00   3rd Qu.:0.000  
+##  Max.   :4.000   Max.   :17.000   Max.   :6.00   Max.   :1.000  
+##        D2               H1              R1               H2        
+##  Min.   :0.0000   Min.   :0.000   Min.   :0.0000   Min.   :0.0000  
+##  1st Qu.:0.0000   1st Qu.:0.000   1st Qu.:0.0000   1st Qu.:0.0000  
+##  Median :1.0000   Median :0.000   Median :0.0000   Median :1.0000  
+##  Mean   :0.5794   Mean   :0.243   Mean   :0.4579   Mean   :0.5514  
+##  3rd Qu.:1.0000   3rd Qu.:0.000   3rd Qu.:1.0000   3rd Qu.:1.0000  
+##  Max.   :1.0000   Max.   :1.000   Max.   :1.0000   Max.   :1.0000  
+##        R2               D3               H3               D4        
+##  Min.   :0.0000   Min.   :0.0000   Min.   :0.0000   Min.   :0.0000  
+##  1st Qu.:0.0000   1st Qu.:0.5000   1st Qu.:0.0000   1st Qu.:0.0000  
+##  Median :0.0000   Median :1.0000   Median :0.0000   Median :1.0000  
+##  Mean   :0.2991   Mean   :0.7477   Mean   :0.3738   Mean   :0.5607  
+##  3rd Qu.:1.0000   3rd Qu.:1.0000   3rd Qu.:1.0000   3rd Qu.:1.0000  
+##  Max.   :1.0000   Max.   :1.0000   Max.   :1.0000   Max.   :1.0000  
+##        R3               D5               H4              D6        
+##  Min.   :0.0000   Min.   :0.0000   Min.   :0.000   Min.   :0.0000  
+##  1st Qu.:0.0000   1st Qu.:0.0000   1st Qu.:0.000   1st Qu.:0.0000  
+##  Median :1.0000   Median :0.0000   Median :0.000   Median :0.0000  
+##  Mean   :0.5327   Mean   :0.3551   Mean   :0.486   Mean   :0.3458  
+##  3rd Qu.:1.0000   3rd Qu.:1.0000   3rd Qu.:1.000   3rd Qu.:1.0000  
+##  Max.   :1.0000   Max.   :1.0000   Max.   :1.000   Max.   :1.0000  
+##        R4               D7               D8               H5        
+##  Min.   :0.0000   Min.   :0.0000   Min.   :0.0000   Min.   :0.0000  
+##  1st Qu.:0.0000   1st Qu.:0.0000   1st Qu.:0.0000   1st Qu.:0.0000  
+##  Median :0.0000   Median :0.0000   Median :1.0000   Median :1.0000  
+##  Mean   :0.4486   Mean   :0.3178   Mean   :0.5047   Mean   :0.6168  
+##  3rd Qu.:1.0000   3rd Qu.:1.0000   3rd Qu.:1.0000   3rd Qu.:1.0000  
+##  Max.   :1.0000   Max.   :1.0000   Max.   :1.0000   Max.   :1.0000  
+##        R5               H6               D9               R6        
+##  Min.   :0.0000   Min.   :0.0000   Min.   :0.0000   Min.   :0.0000  
+##  1st Qu.:0.0000   1st Qu.:0.0000   1st Qu.:0.0000   1st Qu.:0.0000  
+##  Median :0.0000   Median :1.0000   Median :1.0000   Median :1.0000  
+##  Mean   :0.4486   Mean   :0.5888   Mean   :0.5701   Mean   :0.5421  
+##  3rd Qu.:1.0000   3rd Qu.:1.0000   3rd Qu.:1.0000   3rd Qu.:1.0000  
+##  Max.   :1.0000   Max.   :1.0000   Max.   :1.0000   Max.   :1.0000  
+##        H7               R7               H8              D10        
+##  Min.   :0.0000   Min.   :0.0000   Min.   :0.0000   Min.   :0.0000  
+##  1st Qu.:0.0000   1st Qu.:0.0000   1st Qu.:0.0000   1st Qu.:0.0000  
+##  Median :0.0000   Median :0.0000   Median :0.0000   Median :0.0000  
+##  Mean   :0.3271   Mean   :0.2523   Mean   :0.2243   Mean   :0.4206  
+##  3rd Qu.:1.0000   3rd Qu.:0.5000   3rd Qu.:0.0000   3rd Qu.:1.0000  
+##  Max.   :1.0000   Max.   :1.0000   Max.   :1.0000   Max.   :1.0000  
+##        H9              D11              R8              H10       
+##  Min.   :0.0000   Min.   :0.000   Min.   :0.0000   Min.   :0.000  
+##  1st Qu.:0.0000   1st Qu.:0.000   1st Qu.:0.0000   1st Qu.:0.000  
+##  Median :0.0000   Median :0.000   Median :0.0000   Median :0.000  
+##  Mean   :0.1963   Mean   :0.486   Mean   :0.1963   Mean   :0.243  
+##  3rd Qu.:0.0000   3rd Qu.:1.000   3rd Qu.:0.0000   3rd Qu.:0.000  
+##  Max.   :1.0000   Max.   :1.000   Max.   :1.0000   Max.   :1.000  
+##        R9             D12              R10              R11        
+##  Min.   :0.000   Min.   :0.0000   Min.   :0.0000   Min.   :0.0000  
+##  1st Qu.:0.000   1st Qu.:0.0000   1st Qu.:0.0000   1st Qu.:0.0000  
+##  Median :1.000   Median :0.0000   Median :0.0000   Median :0.0000  
+##  Mean   :0.514   Mean   :0.2617   Mean   :0.1028   Mean   :0.4206  
+##  3rd Qu.:1.000   3rd Qu.:1.0000   3rd Qu.:0.0000   3rd Qu.:1.0000  
+##  Max.   :1.000   Max.   :1.0000   Max.   :1.0000   Max.   :1.0000  
+##       H11              R12              D13              R13       
+##  Min.   :0.0000   Min.   :0.0000   Min.   :0.0000   Min.   :1.000  
+##  1st Qu.:0.0000   1st Qu.:0.0000   1st Qu.:0.0000   1st Qu.:1.000  
+##  Median :0.0000   Median :1.0000   Median :0.0000   Median :1.000  
+##  Mean   :0.1589   Mean   :0.7103   Mean   :0.1028   Mean   :1.533  
+##  3rd Qu.:0.0000   3rd Qu.:1.0000   3rd Qu.:0.0000   3rd Qu.:2.000  
+##  Max.   :1.0000   Max.   :1.0000   Max.   :1.0000   Max.   :4.000  
+##       R14             H12             R15             H13       
+##  Min.   :1.000   Min.   :1.000   Min.   :1.000   Min.   :1.000  
+##  1st Qu.:2.000   1st Qu.:1.500   1st Qu.:2.000   1st Qu.:1.000  
+##  Median :3.000   Median :2.000   Median :2.000   Median :2.000  
+##  Mean   :2.589   Mean   :1.935   Mean   :2.121   Mean   :2.084  
+##  3rd Qu.:3.000   3rd Qu.:2.000   3rd Qu.:3.000   3rd Qu.:3.000  
+##  Max.   :4.000   Max.   :4.000   Max.   :4.000   Max.   :4.000  
+##       R16             R17             R18             D14       
+##  Min.   :2.000   Min.   :1.000   Min.   :1.000   Min.   :1.000  
+##  1st Qu.:3.000   1st Qu.:2.000   1st Qu.:1.000   1st Qu.:1.000  
+##  Median :3.000   Median :2.000   Median :2.000   Median :2.000  
+##  Mean   :3.252   Mean   :2.439   Mean   :1.869   Mean   :1.692  
+##  3rd Qu.:4.000   3rd Qu.:3.000   3rd Qu.:2.000   3rd Qu.:2.000  
+##  Max.   :4.000   Max.   :4.000   Max.   :4.000   Max.   :3.000  
+##       R19             H14             R20             D15       
+##  Min.   :1.000   Min.   :1.000   Min.   :1.000   Min.   :1.000  
+##  1st Qu.:1.000   1st Qu.:2.000   1st Qu.:1.000   1st Qu.:1.000  
+##  Median :1.000   Median :3.000   Median :2.000   Median :2.000  
+##  Mean   :1.542   Mean   :2.579   Mean   :1.841   Mean   :1.991  
+##  3rd Qu.:2.000   3rd Qu.:4.000   3rd Qu.:2.000   3rd Qu.:3.000  
+##  Max.   :4.000   Max.   :4.000   Max.   :4.000   Max.   :4.000  
+##       R21             D16       
+##  Min.   :0.000   Min.   :1.000  
+##  1st Qu.:1.000   1st Qu.:1.000  
+##  Median :2.000   Median :2.000  
+##  Mean   :2.215   Mean   :1.785  
+##  3rd Qu.:3.000   3rd Qu.:2.000  
+##  Max.   :5.000   Max.   :4.000</code></pre>
+<p>The data has now the proper header, however each variable is still coded numerically.</p>
 </div>
-<div id="inspection" class="section level2" number="5.3">
-<h2><span class="header-section-number">5.3</span> Inspection</h2>
 </div>
-<div id="manipulation" class="section level2" number="5.4">
-<h2><span class="header-section-number">5.4</span> Manipulation</h2>
+<div id="data-inspection" class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> Data Inspection</h2>
+<div id="data-type" class="section level3" number="5.2.1">
+<h3><span class="header-section-number">5.2.1</span> Data Type</h3>
+<p>In R, the variables can be of different types, going from numerical to nominal to binary etc. This section aims in presenting the most common types (and their properties) used in sensory and consumer studies, and in showing how to transform a variable from one type to another.</p>
+<p>Remember that when your dataset is a tibble (as is the case here), the type of each variable is provided as sub-header when printed on screen. This eases the work of the analyst as the variables’ type can be assessed at any moment.</p>
+<p>In case the dataset is not in a tibble, the use of the <code>str()</code> function used previously becomes handy as it provides this information.</p>
+<p>In sensory and consumer research, the four most common types are:</p>
+<ul>
+<li>Numerical (incl. integer or <code>int</code>, decimal or <code>dcl</code>, and double or <code>dbl</code>);</li>
+<li>Logical or <code>lgl</code>;</li>
+<li>Character or <code>char</code>;</li>
+<li>Factor or <code>fct</code>.</li>
+</ul>
+<p>R still has plenty of other types, for more information please visit: <a href="https://tibble.tidyverse.org/articles/types.html" class="uri">https://tibble.tidyverse.org/articles/types.html</a></p>
+<div id="numerical-data" class="section level4" number="5.2.1.1">
+<h4><span class="header-section-number">5.2.1.1</span> Numerical Data</h4>
+<p>Since a large proportion of the research done is quantitative, it is no surprise that our dataset are often dominated with numerical variables. In practice, numerical data includes integer (non-fractional number, e.g. 1, 2, -16, etc.), or decimal value (or double, e.g. 1.6, 2.333333, -3.2 etc.).
+By default, when reading data from an external file, R converts any numerical variables to integer unless decimal points are detected, in which case it is converted into double.</p>
+<p><strong>Do we want to show how to format R wrt the number of decimals? (e.g. options(digits=2))</strong></p>
 </div>
-<div id="cleaning" class="section level2" number="5.5">
-<h2><span class="header-section-number">5.5</span> Cleaning</h2>
+<div id="binary-data" class="section level4" number="5.2.1.2">
+<h4><span class="header-section-number">5.2.1.2</span> Binary Data</h4>
+<p>Another common type that seem to be numerical in appearance, but that has additional properties is the binary type.
+Binary data is data that takes two possible values (<code>TRUE</code> or <code>FALSE</code>), and are often the results of a <em>test</em> (e.g. is <code>x&gt;3</code>? Or is <code>MyVar</code> numerical?). A typical example of binary data in sensory and consumer research is data collected through Check-All-That-Apply (CATA) questionnaires.</p>
+<p>Note: Intrinsically, binary data is <em>numerical</em>, TRUE being assimilated to 1, FALSE to 0. If multiple tests are being performed, it is possible to sum the number of tests that pass using the <code>sum()</code> function, as shown in the simple example below:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="data-prep.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123456</span>)</span>
+<span id="cb22-2"><a href="data-prep.html#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Generating 10 random values between 1 and 10 using the uniform distribution</span></span>
+<span id="cb22-3"><a href="data-prep.html#cb22-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">10</span>, <span class="dv">1</span>, <span class="dv">10</span>)</span>
+<span id="cb22-4"><a href="data-prep.html#cb22-4" aria-hidden="true" tabindex="-1"></a>x</span></code></pre></div>
+<pre><code>##  [1] 8.180059 7.782086 4.521301 4.074010 4.251647 2.785103 5.813722 1.868736
+##  [9] 9.890622 2.508125</code></pre>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="data-prep.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Test whether the values generated are strictly larger than 5</span></span>
+<span id="cb24-2"><a href="data-prep.html#cb24-2" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> x<span class="sc">&gt;</span><span class="dv">5</span></span>
+<span id="cb24-3"><a href="data-prep.html#cb24-3" aria-hidden="true" tabindex="-1"></a>test</span></code></pre></div>
+<pre><code>##  [1]  TRUE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE</code></pre>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="data-prep.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Counting the number of values strictly larger than 5</span></span>
+<span id="cb26-2"><a href="data-prep.html#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(test)</span></code></pre></div>
+<pre><code>## [1] 4</code></pre>
+</div>
+<div id="nominal-data" class="section level4" number="5.2.1.3">
+<h4><span class="header-section-number">5.2.1.3</span> Nominal Data</h4>
+<p>Nominal data is any data that is not numerical. In most cases, nominal data are defined through text, or strings. It can appear in some situations that nominal variables are still defined with numbers although they do not have a numerical meaning. This is for instance the case when the respondents or samples are identified through numerical codes: In that case, it is clear that respondent 2 is not twice larger than respondent 1 for instance. But since the software cannot guess that those numbers are <em>identifiers</em> rather than <em>numbers</em>, the variables should be declared as nominal. The procedure explaining how to convert the type of the variables will be explained in the next section.</p>
+<p>For nominal data, two particular types of data are of interest:</p>
+<ul>
+<li>Character or <code>char</code>;</li>
+<li>Factor or <code>fct</code>.</li>
+</ul>
+<p>Variables defined as character or factor take strings as input. However, these two types differ in terms of structure of their levels:</p>
+<ul>
+<li>For <code>character</code>, there are no particular structure, and the variables can take any values (e.g. open-ended question);</li>
+<li>For <code>factor</code>, the inputs of the variables are structured into <code>levels</code>.</li>
+</ul>
+<p>To evaluate the number of levels, different procedure are required:</p>
+<ul>
+<li>For <code>character</code>, one should count the number of unique element using <code>length()</code> and <code>unique()</code>;</li>
+<li>For <code>factor</code>, the levels and the number of levels are direcly provided by <code>levels()</code> and <code>nlevels()</code>.</li>
+</ul>
+<p>Let’s compare a variable set as <code>factor</code> and <code>character</code> by using the <code>Judge</code> column from <code>TFEQ_data</code>:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="data-prep.html#cb28-1" aria-hidden="true" tabindex="-1"></a>example <span class="ot">&lt;-</span> TFEQ_data <span class="sc">%&gt;%</span> </span>
+<span id="cb28-2"><a href="data-prep.html#cb28-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Judge) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-3"><a href="data-prep.html#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Judge_fct =</span> <span class="fu">as.factor</span>(Judge))</span>
+<span id="cb28-4"><a href="data-prep.html#cb28-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-5"><a href="data-prep.html#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Summary:&quot;</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;Summary:&quot;</code></pre>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="data-prep.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(example)</span></code></pre></div>
+<pre><code>##     Judge             Judge_fct  
+##  Length:107         J1     :  1  
+##  Class :character   J10    :  1  
+##  Mode  :character   J100   :  1  
+##                     J101   :  1  
+##                     J103   :  1  
+##                     J105   :  1  
+##                     (Other):101</code></pre>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="data-prep.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;As Character:&quot;</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;As Character:&quot;</code></pre>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="data-prep.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(example<span class="sc">$</span>Judge)</span></code></pre></div>
+<pre><code>##   [1] &quot;J48&quot;  &quot;J61&quot;  &quot;J60&quot;  &quot;J97&quot;  &quot;J38&quot;  &quot;J26&quot;  &quot;J103&quot; &quot;J91&quot;  &quot;J13&quot;  &quot;J73&quot; 
+##  [11] &quot;J49&quot;  &quot;J62&quot;  &quot;J14&quot;  &quot;J98&quot;  &quot;J15&quot;  &quot;J39&quot;  &quot;J74&quot;  &quot;J64&quot;  &quot;J99&quot;  &quot;J75&quot; 
+##  [21] &quot;J108&quot; &quot;J76&quot;  &quot;J1&quot;   &quot;J65&quot;  &quot;J63&quot;  &quot;J2&quot;   &quot;J24&quot;  &quot;J27&quot;  &quot;J3&quot;   &quot;J50&quot; 
+##  [31] &quot;J4&quot;   &quot;J77&quot;  &quot;J66&quot;  &quot;J5&quot;   &quot;J67&quot;  &quot;J6&quot;   &quot;J100&quot; &quot;J90&quot;  &quot;J92&quot;  &quot;J7&quot;  
+##  [41] &quot;J79&quot;  &quot;J68&quot;  &quot;J69&quot;  &quot;J85&quot;  &quot;J101&quot; &quot;J70&quot;  &quot;J51&quot;  &quot;J52&quot;  &quot;J109&quot; &quot;J8&quot;  
+##  [51] &quot;J93&quot;  &quot;J53&quot;  &quot;J54&quot;  &quot;J110&quot; &quot;J94&quot;  &quot;J111&quot; &quot;J86&quot;  &quot;J16&quot;  &quot;J112&quot; &quot;J29&quot; 
+##  [61] &quot;J95&quot;  &quot;J96&quot;  &quot;J118&quot; &quot;J17&quot;  &quot;J117&quot; &quot;J55&quot;  &quot;J30&quot;  &quot;J40&quot;  &quot;J41&quot;  &quot;J9&quot;  
+##  [71] &quot;J31&quot;  &quot;J10&quot;  &quot;J56&quot;  &quot;J87&quot;  &quot;J71&quot;  &quot;J42&quot;  &quot;J43&quot;  &quot;J32&quot;  &quot;J81&quot;  &quot;J58&quot; 
+##  [81] &quot;J19&quot;  &quot;J33&quot;  &quot;J34&quot;  &quot;J44&quot;  &quot;J72&quot;  &quot;J113&quot; &quot;J45&quot;  &quot;J105&quot; &quot;J114&quot; &quot;J46&quot; 
+##  [91] &quot;J20&quot;  &quot;J82&quot;  &quot;J115&quot; &quot;J59&quot;  &quot;J116&quot; &quot;J21&quot;  &quot;J88&quot;  &quot;J83&quot;  &quot;J22&quot;  &quot;J11&quot; 
+## [101] &quot;J35&quot;  &quot;J89&quot;  &quot;J120&quot; &quot;J12&quot;  &quot;J36&quot;  &quot;J23&quot;  &quot;J119&quot;</code></pre>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="data-prep.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(example<span class="sc">$</span>Judge))</span></code></pre></div>
+<pre><code>## [1] 107</code></pre>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="data-prep.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;As Factor:&quot;</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;As Factor:&quot;</code></pre>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="data-prep.html#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(example<span class="sc">$</span>Judge_fct)</span></code></pre></div>
+<pre><code>##   [1] &quot;J1&quot;   &quot;J10&quot;  &quot;J100&quot; &quot;J101&quot; &quot;J103&quot; &quot;J105&quot; &quot;J108&quot; &quot;J109&quot; &quot;J11&quot;  &quot;J110&quot;
+##  [11] &quot;J111&quot; &quot;J112&quot; &quot;J113&quot; &quot;J114&quot; &quot;J115&quot; &quot;J116&quot; &quot;J117&quot; &quot;J118&quot; &quot;J119&quot; &quot;J12&quot; 
+##  [21] &quot;J120&quot; &quot;J13&quot;  &quot;J14&quot;  &quot;J15&quot;  &quot;J16&quot;  &quot;J17&quot;  &quot;J19&quot;  &quot;J2&quot;   &quot;J20&quot;  &quot;J21&quot; 
+##  [31] &quot;J22&quot;  &quot;J23&quot;  &quot;J24&quot;  &quot;J26&quot;  &quot;J27&quot;  &quot;J29&quot;  &quot;J3&quot;   &quot;J30&quot;  &quot;J31&quot;  &quot;J32&quot; 
+##  [41] &quot;J33&quot;  &quot;J34&quot;  &quot;J35&quot;  &quot;J36&quot;  &quot;J38&quot;  &quot;J39&quot;  &quot;J4&quot;   &quot;J40&quot;  &quot;J41&quot;  &quot;J42&quot; 
+##  [51] &quot;J43&quot;  &quot;J44&quot;  &quot;J45&quot;  &quot;J46&quot;  &quot;J48&quot;  &quot;J49&quot;  &quot;J5&quot;   &quot;J50&quot;  &quot;J51&quot;  &quot;J52&quot; 
+##  [61] &quot;J53&quot;  &quot;J54&quot;  &quot;J55&quot;  &quot;J56&quot;  &quot;J58&quot;  &quot;J59&quot;  &quot;J6&quot;   &quot;J60&quot;  &quot;J61&quot;  &quot;J62&quot; 
+##  [71] &quot;J63&quot;  &quot;J64&quot;  &quot;J65&quot;  &quot;J66&quot;  &quot;J67&quot;  &quot;J68&quot;  &quot;J69&quot;  &quot;J7&quot;   &quot;J70&quot;  &quot;J71&quot; 
+##  [81] &quot;J72&quot;  &quot;J73&quot;  &quot;J74&quot;  &quot;J75&quot;  &quot;J76&quot;  &quot;J77&quot;  &quot;J79&quot;  &quot;J8&quot;   &quot;J81&quot;  &quot;J82&quot; 
+##  [91] &quot;J83&quot;  &quot;J85&quot;  &quot;J86&quot;  &quot;J87&quot;  &quot;J88&quot;  &quot;J89&quot;  &quot;J9&quot;   &quot;J90&quot;  &quot;J91&quot;  &quot;J92&quot; 
+## [101] &quot;J93&quot;  &quot;J94&quot;  &quot;J95&quot;  &quot;J96&quot;  &quot;J97&quot;  &quot;J98&quot;  &quot;J99&quot;</code></pre>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="data-prep.html#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nlevels</span>(example<span class="sc">$</span>Judge_fct)</span></code></pre></div>
+<pre><code>## [1] 107</code></pre>
+<p>Although <code>Judge</code> and <code>Judge_fct</code> look the same, they are structurally different, and those differences play an important role that one should consider when running certain analyses, or building tables and graphs.</p>
+<p>When set as <code>character</code>, the number of levels of a variable is directly read from the data, and its levels’ order would either match the way they appear in the data, or are ordered alphabetically. This means that any data collected using a structured scale will lose its natural order.
+When set as <code>factor</code>, the number and order of the factor levels are informed, and does not depend on the data itself: If a level has never been selected, or if certain groups have been filtered, this information is still present in the data.</p>
+<p>To illustrate this, let’s re-arrange the levels from <code>Judge_fct</code> by ordering them numerically in such a way <code>J2</code> follows <code>J1</code> rather than <code>J10</code>.</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="data-prep.html#cb44-1" aria-hidden="true" tabindex="-1"></a>judge <span class="ot">&lt;-</span> <span class="fu">str_sort</span>(<span class="fu">levels</span>(example<span class="sc">$</span>Judge_fct),<span class="at">numeric=</span><span class="cn">TRUE</span>)</span>
+<span id="cb44-2"><a href="data-prep.html#cb44-2" aria-hidden="true" tabindex="-1"></a>judge</span></code></pre></div>
+<pre><code>##   [1] &quot;J1&quot;   &quot;J2&quot;   &quot;J3&quot;   &quot;J4&quot;   &quot;J5&quot;   &quot;J6&quot;   &quot;J7&quot;   &quot;J8&quot;   &quot;J9&quot;   &quot;J10&quot; 
+##  [11] &quot;J11&quot;  &quot;J12&quot;  &quot;J13&quot;  &quot;J14&quot;  &quot;J15&quot;  &quot;J16&quot;  &quot;J17&quot;  &quot;J19&quot;  &quot;J20&quot;  &quot;J21&quot; 
+##  [21] &quot;J22&quot;  &quot;J23&quot;  &quot;J24&quot;  &quot;J26&quot;  &quot;J27&quot;  &quot;J29&quot;  &quot;J30&quot;  &quot;J31&quot;  &quot;J32&quot;  &quot;J33&quot; 
+##  [31] &quot;J34&quot;  &quot;J35&quot;  &quot;J36&quot;  &quot;J38&quot;  &quot;J39&quot;  &quot;J40&quot;  &quot;J41&quot;  &quot;J42&quot;  &quot;J43&quot;  &quot;J44&quot; 
+##  [41] &quot;J45&quot;  &quot;J46&quot;  &quot;J48&quot;  &quot;J49&quot;  &quot;J50&quot;  &quot;J51&quot;  &quot;J52&quot;  &quot;J53&quot;  &quot;J54&quot;  &quot;J55&quot; 
+##  [51] &quot;J56&quot;  &quot;J58&quot;  &quot;J59&quot;  &quot;J60&quot;  &quot;J61&quot;  &quot;J62&quot;  &quot;J63&quot;  &quot;J64&quot;  &quot;J65&quot;  &quot;J66&quot; 
+##  [61] &quot;J67&quot;  &quot;J68&quot;  &quot;J69&quot;  &quot;J70&quot;  &quot;J71&quot;  &quot;J72&quot;  &quot;J73&quot;  &quot;J74&quot;  &quot;J75&quot;  &quot;J76&quot; 
+##  [71] &quot;J77&quot;  &quot;J79&quot;  &quot;J81&quot;  &quot;J82&quot;  &quot;J83&quot;  &quot;J85&quot;  &quot;J86&quot;  &quot;J87&quot;  &quot;J88&quot;  &quot;J89&quot; 
+##  [81] &quot;J90&quot;  &quot;J91&quot;  &quot;J92&quot;  &quot;J93&quot;  &quot;J94&quot;  &quot;J95&quot;  &quot;J96&quot;  &quot;J97&quot;  &quot;J98&quot;  &quot;J99&quot; 
+##  [91] &quot;J100&quot; &quot;J101&quot; &quot;J103&quot; &quot;J105&quot; &quot;J108&quot; &quot;J109&quot; &quot;J110&quot; &quot;J111&quot; &quot;J112&quot; &quot;J113&quot;
+## [101] &quot;J114&quot; &quot;J115&quot; &quot;J116&quot; &quot;J117&quot; &quot;J118&quot; &quot;J119&quot; &quot;J120&quot;</code></pre>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="data-prep.html#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(example<span class="sc">$</span>Judge_fct) <span class="ot">&lt;-</span> judge</span></code></pre></div>
+<p>Now the levels are sorted, let’s ‘remove’ some respondents by only keeping the 20 first ones (J1 to J20, as J18 does not exist), and re-run the previous code:</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="data-prep.html#cb47-1" aria-hidden="true" tabindex="-1"></a>example <span class="ot">&lt;-</span> TFEQ_data <span class="sc">%&gt;%</span> </span>
+<span id="cb47-2"><a href="data-prep.html#cb47-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Judge) <span class="sc">%&gt;%</span> </span>
+<span id="cb47-3"><a href="data-prep.html#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Judge_fct =</span> <span class="fu">as.factor</span>(Judge)) <span class="sc">%&gt;%</span> </span>
+<span id="cb47-4"><a href="data-prep.html#cb47-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Judge <span class="sc">%in%</span> <span class="fu">paste0</span>(<span class="st">&quot;J&quot;</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>))</span>
+<span id="cb47-5"><a href="data-prep.html#cb47-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-6"><a href="data-prep.html#cb47-6" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(example)</span></code></pre></div>
+<pre><code>## [1] 19  2</code></pre>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="data-prep.html#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;As Character:&quot;</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;As Character:&quot;</code></pre>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="data-prep.html#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(example<span class="sc">$</span>Judge)</span></code></pre></div>
+<pre><code>##  [1] &quot;J13&quot; &quot;J14&quot; &quot;J15&quot; &quot;J1&quot;  &quot;J2&quot;  &quot;J3&quot;  &quot;J4&quot;  &quot;J5&quot;  &quot;J6&quot;  &quot;J7&quot;  &quot;J8&quot;  &quot;J16&quot;
+## [13] &quot;J17&quot; &quot;J9&quot;  &quot;J10&quot; &quot;J19&quot; &quot;J20&quot; &quot;J11&quot; &quot;J12&quot;</code></pre>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="data-prep.html#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(example<span class="sc">$</span>Judge))</span></code></pre></div>
+<pre><code>## [1] 19</code></pre>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="data-prep.html#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;As Factor:&quot;</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;As Factor:&quot;</code></pre>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="data-prep.html#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(example<span class="sc">$</span>Judge_fct)</span></code></pre></div>
+<pre><code>##   [1] &quot;J1&quot;   &quot;J10&quot;  &quot;J100&quot; &quot;J101&quot; &quot;J103&quot; &quot;J105&quot; &quot;J108&quot; &quot;J109&quot; &quot;J11&quot;  &quot;J110&quot;
+##  [11] &quot;J111&quot; &quot;J112&quot; &quot;J113&quot; &quot;J114&quot; &quot;J115&quot; &quot;J116&quot; &quot;J117&quot; &quot;J118&quot; &quot;J119&quot; &quot;J12&quot; 
+##  [21] &quot;J120&quot; &quot;J13&quot;  &quot;J14&quot;  &quot;J15&quot;  &quot;J16&quot;  &quot;J17&quot;  &quot;J19&quot;  &quot;J2&quot;   &quot;J20&quot;  &quot;J21&quot; 
+##  [31] &quot;J22&quot;  &quot;J23&quot;  &quot;J24&quot;  &quot;J26&quot;  &quot;J27&quot;  &quot;J29&quot;  &quot;J3&quot;   &quot;J30&quot;  &quot;J31&quot;  &quot;J32&quot; 
+##  [41] &quot;J33&quot;  &quot;J34&quot;  &quot;J35&quot;  &quot;J36&quot;  &quot;J38&quot;  &quot;J39&quot;  &quot;J4&quot;   &quot;J40&quot;  &quot;J41&quot;  &quot;J42&quot; 
+##  [51] &quot;J43&quot;  &quot;J44&quot;  &quot;J45&quot;  &quot;J46&quot;  &quot;J48&quot;  &quot;J49&quot;  &quot;J5&quot;   &quot;J50&quot;  &quot;J51&quot;  &quot;J52&quot; 
+##  [61] &quot;J53&quot;  &quot;J54&quot;  &quot;J55&quot;  &quot;J56&quot;  &quot;J58&quot;  &quot;J59&quot;  &quot;J6&quot;   &quot;J60&quot;  &quot;J61&quot;  &quot;J62&quot; 
+##  [71] &quot;J63&quot;  &quot;J64&quot;  &quot;J65&quot;  &quot;J66&quot;  &quot;J67&quot;  &quot;J68&quot;  &quot;J69&quot;  &quot;J7&quot;   &quot;J70&quot;  &quot;J71&quot; 
+##  [81] &quot;J72&quot;  &quot;J73&quot;  &quot;J74&quot;  &quot;J75&quot;  &quot;J76&quot;  &quot;J77&quot;  &quot;J79&quot;  &quot;J8&quot;   &quot;J81&quot;  &quot;J82&quot; 
+##  [91] &quot;J83&quot;  &quot;J85&quot;  &quot;J86&quot;  &quot;J87&quot;  &quot;J88&quot;  &quot;J89&quot;  &quot;J9&quot;   &quot;J90&quot;  &quot;J91&quot;  &quot;J92&quot; 
+## [101] &quot;J93&quot;  &quot;J94&quot;  &quot;J95&quot;  &quot;J96&quot;  &quot;J97&quot;  &quot;J98&quot;  &quot;J99&quot;</code></pre>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="data-prep.html#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nlevels</span>(example<span class="sc">$</span>Judge_fct)</span></code></pre></div>
+<pre><code>## [1] 107</code></pre>
+<p>After filtering some respondents, it can be noticed that the variable set as character only contains 19 elements, whereas the column set as factor still contains the 107 respondents (most of them not having any recordings). This property can be seen as an advantage or a disadvantage depending on the situation:</p>
+<ul>
+<li>For frequencies, it may be relevant to remember all the options, including the ones that may never be selected, and to order the results logically (use of <code>factor</code>).</li>
+<li>For hypothesis testing (e.g. ANOVA) on subset of data (e.g. the data being split by gender), the <code>Judge</code> variable set as <code>character</code> would have the correct number of degrees of freedom (18 in our example) whereas the variable set as factor would use 106 degrees of freedom in all cases!</li>
+</ul>
+<p>The latter point is particularly critical since the analysis is incorrect and will either return an error or worse return erroneous results!</p>
+<p>Last but not least, variables defined as factor allow having their levels being renamed (and eventually combined) very easily.
+Let’s consider the <code>Living area</code> variable from <code>TFEQ_data</code> as example. From the original excel file, it can be seen that it has three levels, <code>1</code> corresponding to <em>urban area</em>, <code>2</code> to <em>rurban area</em>, and <code>3</code> to <em>rural area</em>.
+Let’s start by renaming this variable accordingly:</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="data-prep.html#cb61-1" aria-hidden="true" tabindex="-1"></a>example <span class="ot">=</span> TFEQ_data <span class="sc">%&gt;%</span> </span>
+<span id="cb61-2"><a href="data-prep.html#cb61-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Area =</span> <span class="fu">factor</span>(<span class="st">`</span><span class="at">Living area</span><span class="st">`</span>, <span class="at">levels=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;Urban&quot;</span>, <span class="st">&quot;Rurban&quot;</span>, <span class="st">&quot;Rural&quot;</span>)))</span>
+<span id="cb61-3"><a href="data-prep.html#cb61-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-4"><a href="data-prep.html#cb61-4" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(example<span class="sc">$</span>Area)</span></code></pre></div>
+<pre><code>## [1] &quot;Urban&quot;  &quot;Rurban&quot; &quot;Rural&quot;</code></pre>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="data-prep.html#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nlevels</span>(example<span class="sc">$</span>Area)</span></code></pre></div>
+<pre><code>## [1] 3</code></pre>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="data-prep.html#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(example<span class="sc">$</span><span class="st">`</span><span class="at">Living area</span><span class="st">`</span>, example<span class="sc">$</span>Area)</span></code></pre></div>
+<pre><code>##    
+##     Urban Rurban Rural
+##   1    72      0     0
+##   2     0     12     0
+##   3     0      0    23</code></pre>
+<p>As can be seen, the variable <code>Area</code> is the factor version (including its labels) of <code>Living area</code>.
+If we would also consider that <code>Rurban</code> should be combined with <code>Rural</code>, and that <code>Rural</code> should appear before <code>Urban</code>, we can simply modify the code as such:</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="data-prep.html#cb67-1" aria-hidden="true" tabindex="-1"></a>example <span class="ot">=</span> TFEQ_data <span class="sc">%&gt;%</span> </span>
+<span id="cb67-2"><a href="data-prep.html#cb67-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Area =</span> <span class="fu">factor</span>(<span class="st">`</span><span class="at">Living area</span><span class="st">`</span>, <span class="at">levels=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">1</span>), <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;Rural&quot;</span>, <span class="st">&quot;Rural&quot;</span>, <span class="st">&quot;Urban&quot;</span>)))</span>
+<span id="cb67-3"><a href="data-prep.html#cb67-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-4"><a href="data-prep.html#cb67-4" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(example<span class="sc">$</span>Area)</span></code></pre></div>
+<pre><code>## [1] &quot;Rural&quot; &quot;Urban&quot;</code></pre>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="data-prep.html#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nlevels</span>(example<span class="sc">$</span>Area)</span></code></pre></div>
+<pre><code>## [1] 2</code></pre>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="data-prep.html#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(example<span class="sc">$</span><span class="st">`</span><span class="at">Living area</span><span class="st">`</span>, example<span class="sc">$</span>Area)</span></code></pre></div>
+<pre><code>##    
+##     Rural Urban
+##   1     0    72
+##   2    12     0
+##   3    23     0</code></pre>
+<p>This approach of renaming and re-ordering factor levels is very important as it simplifies the readability of tables and figures.
+Some other transformations can be applied to factors thanks to the <code>{forcats}</code> package. Amongst other relevant functions, particular attention can be given to:</p>
+<ul>
+<li><code>fct_reorder</code>/<code>fct_reorder2</code> and <code>fct_relevel</code> which reorder the levels of a factor;</li>
+<li><code>fct_recode</code> which helps recoding a factor (as an alternative to <code>factor</code> used in the previous example);</li>
+<li><code>fct_collapse</code> and <code>fct_lump</code> which allows aggregating different levels together (<code>fct_lump</code> regroups automatically all the rare levels).</li>
+</ul>
+<p>Although it hasn’t been done here, manipulating strings is also possible. To do so, the <code>{stringr}</code> package provides a lot of of interesting functions, such as:</p>
+<ul>
+<li><code>str_to_upper</code>/<code>str_to_lower</code> which automatically convert strings to uppercase or lowercase;</li>
+<li><code>str_c</code>, <code>str_sub</code> which combine or subset strings;</li>
+<li><code>str_trim</code> and <code>str_squish</code> which help remove white spaces;</li>
+<li><code>str_extract</code>, <code>str_replace</code>, <code>str_split</code> to extract, replace, or split strings or part of the strings.</li>
+</ul>
+</div>
+</div>
+<div id="changing-the-type-of-a-variable" class="section level3" number="5.2.2">
+<h3><span class="header-section-number">5.2.2</span> Changing the type of a variable</h3>
+<p>Transforming the type of variables using <code>mutate()</code>:</p>
+<ul>
+<li>from logical to numerical;</li>
+<li>from numerical to character/factor;</li>
+<li>from character/factor to numerical</li>
+</ul>
+</div>
+</div>
+<div id="data-organization" class="section level2" number="5.3">
+<h2><span class="header-section-number">5.3</span> Data Organization</h2>
+<p>Presentation of the different shapes of the tables based on objectives</p>
+</div>
+<div id="data-manipulation" class="section level2" number="5.4">
+<h2><span class="header-section-number">5.4</span> Data Manipulation</h2>
+<div id="type-of-table" class="section level3" number="5.4.1">
+<h3><span class="header-section-number">5.4.1</span> Type of table</h3>
+<p>matrix, data frame, and tibble.</p>
+<p>how to check the type? <code>class()</code>
+how to test it? <code>is.data.frame()</code>, <code>is.matrix()</code>, <code>is_tibble()</code>
+how to convert it to another format? (see below)</p>
+<p>Note on <code>{FactoMineR}</code> and <code>{SensoMineR}</code> which require data frames or matrix (not tibble) so introduction to <code>column_to_rownames()</code> and <code>rownames_to_columns()</code> as well as <code>as.data.frame()</code> and <code>as_tibble()</code>.</p>
+</div>
+<div id="data-organisation" class="section level3" number="5.4.2">
+<h3><span class="header-section-number">5.4.2</span> Data organisation</h3>
+<p><code>select()</code>, <code>filter()</code>, <code>arrange()</code>
+<code>mutate()</code> and <code>transmute()</code></p>
+</div>
+<div id="data-re-structuration" class="section level3" number="5.4.3">
+<h3><span class="header-section-number">5.4.3</span> Data re-structuration</h3>
+<p><code>pivot_wider()</code> and <code>pivot_longer()</code>
+<code>full_join()</code>, <code>inner_join()</code>, <code>left_join()</code> and <code>right_join()</code></p>
+<p><code>unnest_token()</code> from <strong>{tidytext}</strong></p>
+</div>
+</div>
+<div id="cleaning-and-quality-assessment" class="section level2" number="5.5">
+<h2><span class="header-section-number">5.5</span> Cleaning and Quality Assessment</h2>
+<div id="renaming" class="section level3" number="5.5.1">
+<h3><span class="header-section-number">5.5.1</span> Renaming</h3>
+<p>renaming columns using <code>rename()</code> or <code>select()</code>
+renaming elements using <code>factor()</code> and <strong>{forcats}</strong></p>
+</div>
+<div id="recoding" class="section level3" number="5.5.2">
+<h3><span class="header-section-number">5.5.2</span> Recoding</h3>
+<p>Example of recoding (could be renaming, or replacing NAs, etc.) by combining <code>mutate()</code> and <code>ifelse()</code></p>
+</div>
+<div id="handling-missing-values" class="section level3" number="5.5.3">
+<h3><span class="header-section-number">5.5.3</span> Handling Missing Values</h3>
+<p>Removing and replacing NAs</p>
+</div>
+<div id="quality-assessment" class="section level3" number="5.5.4">
+<h3><span class="header-section-number">5.5.4</span> Quality Assessment</h3>
+<p>Graphics?</p>
 
+</div>
 </div>
 </div>
             </section>
