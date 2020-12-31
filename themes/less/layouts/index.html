@@ -1,0 +1,21 @@
+{{ define "main" }}
+    <div class="container">
+        <div class="main">
+            {{ range (where .Site.RegularPages "Type" "in" .Site.Params.mainSections).GroupByDate "2006" }}
+                <div class="posts">
+                    <div class="year">{{ .Key }}</div>
+                    {{ range .Pages }}
+                        <div class="post">
+                            <a class="post-title" href="{{ .Permalink }}">
+                                {{ .Title }}
+                            </a>
+                            <span class="post-date">
+                                {{ .Date.Format "Jan 02" }}
+                            </span>
+                        </div>
+                    {{ end }}
+                </div>
+            {{ end }}
+        </div>
+    </div>
+{{ end }}
