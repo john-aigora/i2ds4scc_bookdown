@@ -3,28 +3,9 @@ knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 ```
 # Automated Reporting {#auto-report}
 
-TUTORIAL TITLE
-Increasing Business Impact through Automated Reporting in R
-
-TUTORIAL DESCRIPTION
-With this tutorial, we help sensory scientists increase their business impact by leveraging tools for automated report production in R.
-
-ABSTRACT
 Effective communication of results is among the essential duties of the sensory scientist, but the sometimes tedious mechanics of report production together with the sheer volume of data that many scientists now must process combine to make reporting design an afterthought in too many cases.  In this tutorial, we review recent advances in automated report production that liberate resources for scientists to focus on the interpretation and communication of results, while simultaneously reducing errors and increasing the consistency of their analyses. We teach the tutorial through an extended example, cumulatively building an R script that takes participates from receipt of an example dataset to a beautifully-designed and nearly completed PowerPoint presentation automatically and using freely available, open-source packages.  Details of how to customize the final presentation to incorporate corporate branding - such as logos, font choices, and color palettes - will also be covered.
 
-TOPICS COVERED INCLUDE
-- What does automated reporting mean in practice?
-- Scripting analyses, tables, and charts
-- Automated production of PowerPoint presentations
-- Building a "cookbook" of reporting recipes
-- Font choices and color palettes
-- Layering storytelling onto an automated report
-
-SOFTWARE PACKAGES
-We use the R programming environment along with several freely available packages such as those that comprise the tidyverse, extrafont, officer,  openxlsx, and RColorBrewer.  Before the conference, we will provide a full list of packages and versions required to run the script created during the tutorial.
-Outline of Section
-
-What is Automated Reporting? [Pull from presentation]
+## What is Automated Reporting?
 Why Script?
 Save time
 Reduce errors
@@ -48,26 +29,7 @@ extrafont
 extrafontdb
 Rcolorbrewer
 
-### PowerPoint workflow
-Start with template
-Explain slide master
-How to adjust choices
-Internal naming (relevant later)
-Example
-Title slides
-Tables
-Charts
-Bullet points
-Images
-Layout discussion
-
-### Word
-Touch on but not in detail
-Shiny
-Make dashboards to help non-users (or self)
-
-
-### Excel
+## Excel
 
 ```{r analysis, echo=FALSE}
 library(readxl)
@@ -240,7 +202,19 @@ The file is created using `saveWorkbook()` by specifying the name of the workboo
 
 For more details on using **{openxlsx}** see <https://rdrr.io/cran/openxlsx/>.
 
-## MORE RAW MATERIAL
+## PowerPoint
+
+Start with template
+Explain slide master
+How to adjust choices
+Internal naming (relevant later)
+Example
+Title slides
+Tables
+Charts
+Bullet points
+Images
+Layout discussion
 
 
 ```{r}
@@ -249,9 +223,11 @@ library(officer)
 library(flextable)
 ```
 
-## PowerPint Slide Master
+### PowerPoint Formatting
 
-### Importing the Template 
+PowerPoint Slide Master
+
+#### Importing the Template 
 
 ```{r 1.1 importing the template}
 my_file <- file.path("input","templates","Tutorial Template.pptx") %>% 
@@ -263,7 +239,7 @@ my_file %>%
   layout_summary()
 ```
 
-### Creating a PowerPoint Deck
+#### Creating a PowerPoint Deck
 
 ```{r 1.2 creating a PPT deck}
 pptx_obj <- read_pptx () # new empty file
@@ -292,12 +268,12 @@ pptx_obj <- read_pptx(file.path("input","templates","multmasters.pptx"))
 layout_summary(pptx_obj)
 ```
 
-### Selection Pane
+#### Selection Pane
 
-### Key functions: read_pptx(path), layout_summary(x), layout_properties(x), add_slide(x, layout, master), on_slide(x, index), slide_summary(x, index = NULL)
+#### Key functions: read_pptx(path), layout_summary(x), layout_properties(x), add_slide(x, layout, master), on_slide(x, index), slide_summary(x, index = NULL)
 
 
-### Example Code
+#### Example Code
 ```{r 1.5 example code}
 pptx_obj <- read_pptx() # new empty file
 
@@ -312,9 +288,9 @@ pptx_obj <- pptx_obj %>%
 slide_summary(pptx_obj) # slide is empty
 ```
 
-## Placeholders
+### Placeholders
 
-### Placeholders and Shapes
+#### Placeholders and Shapes
 
 ```{r 2.1 shapes1}
 # Example 1
@@ -371,12 +347,12 @@ pptx_obj %>%
   print(target = "output/test2.3.pptx") 
 ```
 
-### Key functions: ph_with()
+#### Key functions: ph_with()
 
 
-## Text
+### Text
 
-### Working with Text
+#### Working with Text
 Each new text item added to a PowerPoint via officer is a paragraph object
 fpar() (“formatted paragraph”) creates this object
 
@@ -445,9 +421,9 @@ pptx_obj %>%
   print(target = "output/test3.3.pptx") 
 ```
 
-### Key functions: fpar(), ftext(), fp_text(), block_list()
+#### Key functions: fpar(), ftext(), fp_text(), block_list()
 
-### Example Code
+#### Example Code
 ```{r 3.4 example code}
 my_list <- block_list(
   fpar(ftext("Hello", prop = fp_text(color = "red", font.size = 16))) ,
@@ -466,8 +442,8 @@ pptx_obj <- read_pptx() %>%
   print(target = "output/test3.4.pptx") 
 ```
 
-## Tables
-### Basic Code
+### Tables
+#### Basic Code
 ```{r 4.1 basic code}
 my_data <- head(mtcars)
 
@@ -477,7 +453,7 @@ pptx_obj <- read_pptx() %>%
   print(target = "output/test4.1.pptx") 
 ```
 
-### Introduction to flextable
+#### Introduction to flextable
 ```{r 4.2 flextable1}
 base_table <- tutorial_data[["Age"]] %>%
   table() %>%
@@ -498,7 +474,7 @@ ft_table <- base_table %>%
 ft_table # see preliminary result in Viewer tab of RStudio
 ```
 
-### Demonstration
+#### Demonstration
 
 ```{r 4.4 demonstration}
 ft_table <- base_table %>%
@@ -558,9 +534,9 @@ ft_table <- ft_table %>%
 ft_table
 ```
 
-### Demonstration Output
+#### Demonstration Output
 
-### Reformat original example
+#### Reformat original example
 
 ```{r 4.7 original example}
 ## ft parameters
@@ -603,15 +579,15 @@ pptx_obj <- read_pptx() %>%
 # positions are fixed. We can find exact positions to center the table
 
 ```
-### key functions: flextable(), align(), bold(), font(), color(), bg(), height() & width(), border_outer() & border_inner() & border_inner_h() & border_inner_v(), autofit()
+#### key functions: flextable(), align(), bold(), font(), color(), bg(), height() & width(), border_outer() & border_inner() & border_inner_h() & border_inner_v(), autofit()
 
 Additional function to learn: merge(), compose() & as_chunk(), style()
 
 fix_border_issues()
 
-## Charts
+### Charts
 
-### Adding charts as images
+#### Adding charts as images
 
 ```{r 5.1 rvg package}
 # We have preloaded a function to plot the chart.

@@ -85,20 +85,20 @@ round(senso_adjmean2, 2)
 
 -->
 
-### Tidying Data - Pre-Requisite
+## Tidying Data
 
-#### Transformation without Altering the Data
+### Transformation without Altering the Data
 
 Transforming a data table without altering the data itself is done through pivoting, hence either creating a shorter and wider table (CREATE FIGURE), or a longer and thinner table (CREATE FIGURE). This is done through the `pivot_wider()` and `pivot_longer()` functions from the `{tidyr}` package.
 
-#### Transformation that Alters the Data
+### Transformation that Alters the Data
 
 In some cases, the final table to generate requires altering the data, by (say) computing the mean across multiple values, or counting the number of occurrences of factor levels for instance. In other words, we summarize the information, which also tend to reduce the size of the table. It is hence no surprise that the function used for such data reduction is called `summarise()` from the `{dplyr}` package.
 
 In practice, `summarise()` applies a function (whether it is the `mean()`, or a simple count using `n()`) on a set of values. When this set of values need to be aggregated based on another variable (say we do not want to compute the overall mean for the entire table, but the mean by product), `summarise()` is then coupled with `group_by()`. 
 
 
-#### Handling Lists of Tables
+### Handling Lists of Tables
 
 Create an example with multiple dataset in one excel sheet (could be different countries, or different sessions)
 Import the data using `map()` by reading the different tabs
@@ -114,7 +114,7 @@ Use `enframe()` to combine all the results
 
 `separate_rows()` to link to `unnest_tokens()`
 
-### Illustration
+## Illustration
 
 Although the solutions we just presented are simple and only involve a few lines of code, we propose other solutions using the **{tidyverse}**.  This will allow us introducing this philosophy of coding, and will provide you a first contact to some of the functions that we use. 
 
