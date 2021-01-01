@@ -1,24 +1,30 @@
 ```{r include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 ```
+
 # Data Manipulation {#data-manip}
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
-In sensory science, different data collection tools (whether it is device, software, or methodologies) may provide data in different formats. Also, different statistical analyses may require having the same data but structured differently. 
+In sensory science, different data collection tools (whether it is device, software, or methodologies) may provide data in different formats. Also, different statistical analyses may require having the same data structured in a different way. 
 
 A simple example to illustrate this later point is the analysis of liking data.
-Let C consumers provide their hedonic assessments of P samples. To evaluate if samples have been liked differently, an ANOVA is performed on a long thin table with (PxC) rows x 3 columns (consumer, sample, and the liking scores). However, to assess whether consumers have the same preference patterns at the indidual level, internal preference mapping or cluster analysis would be performed, and both these analyses require as input a short and large table with P rows and C columns. 
+Let C consumers provide their hedonic assessments of P samples. To evaluate if samples have been liked differently, an ANOVA is performed on a long thin table with (PxC) rows x 3 columns (consumer, sample, and the liking scores). 
+
+<!-- Insert Figure illustrating the data structure -->
+
+However, to assess whether consumers have the same preference patterns at the individual level, internal preference mapping or cluster analysis would be performed, and both these analyses require as input a short and large table with P rows and C columns. 
+
+<!-- Insert Figure illustrating the data structure -->
 
 Another example of data manipulation consists in summarizing data, by for instance computing the mean by product for each sensory attribute (hence creating the so-called sensory profiles), or to generate frequency tables (e.g. proportions of male/female, distribution of the liking scores by sample, contingency table for CATA data, etc.)
 
-For these reasons, it is hence essential to learn to manipulate data and transition from one structure to another one.
+<!-- Insert Figure illustrating the data structure -->
 
-For illustration, let's consider some sensory data stored in *Sensory Profile.xlsx*, which consists in 9 panellists evaluating 11 samples on 32 sensory attributes.
+For these reasons, it is hence essential to learn to manipulate data and transition from one structure to another.
 
-We importing this data using the `read_xlsx()` function from the `{readxl}` package (for more information on how to import data, see Section \@ref(data-collection)).
+For illustration, let's consider the data stored in *Sensory Profile.xlsx*, which consists in 9 panellists evaluating 11 samples on 32 sensory attributes. This dataset will be further analysed in the following sections. The aim here is not to interpret the results, but to show how data is being manipulated. 
+
+This data is imported using the `read_xlsx()` function from the `{readxl}` package (for more information on how to import data, see Section \@ref(data-collection)).
+
 
 ```{r import, echo=FALSE}
 library(tidyverse)
@@ -30,9 +36,12 @@ sensory <- read_xlsx(file_path, sheet="Data")
 sensory
 ```
 
+
 A first analysis that is commonly done on such table consists in computing the mean per sample for each attribute, hence generating the so-called sensory profiles of the samples. Such table (crossing the samples in rows and the sensory attributes in columns) gives a first impression at the differences between samples across attributes. 
 
-The principles of data manipulation will be illustrated here by generating the sensory profiles from the raw data using different approaches. This step consists in reducing the 99x35 table into a 11x32 table, i.e. a table with 11 rows (one per sample) and 32 columns (one per attribute). Note that here, we consider the sample information as row names, not as an extra column in the dataset, else we would have a 11x33 table.
+The principles of data manipulation will be illustrated here by generating the sensory profiles from the raw data using different approaches. This step consists in reducing the 99x35 table into a 11x33 table, i.e. a table with 11 rows (one per sample) and 32 columns (one per attribute) and one column with the sample information. An important message here is that most data transformation situation can be solved in different ways, so don't be afraid to open your mind and think differently by stimulating your imagination to solve any of your data challenge.
+
+Note that we could consider passing the sample names as row names rather than having it as an extra column. This extra step is required for certain functions from `{FactoMineR}` and `{SensoMineR}` for instance, and will be presented in Section \@ref(data-prep).
 
 <!-- 
 1. Using base R and 'regular' functions
@@ -76,9 +85,38 @@ round(senso_adjmean2, 2)
 
 -->
 
-### Using the `{tidyverse}`
+### Tidying Data - Pre-Requisite
 
-Although the solutions we just presented are simple and only involve a few lines of code, we propose other solutions using the **{tidyverse}**.  This will allow us introducing this philosophy of coding, and will provide you a first contact to some of the functions that we use. It will also show you that each situation can be solved in different ways, hence opening your mind and stimulating your creative imagination.
+#### Transformation without Altering the Data
+
+Transforming a data table without altering the data itself is done through pivoting, hence either creating a shorter and wider table (CREATE FIGURE), or a longer and thinner table (CREATE FIGURE). This is done through the `pivot_wider()` and `pivot_longer()` functions from the `{tidyr}` package.
+
+#### Transformation that Alters the Data
+
+In some cases, the final table to generate requires altering the data, by (say) computing the mean across multiple values, or counting the number of occurrences of factor levels for instance. In other words, we summarize the information, which also tend to reduce the size of the table. It is hence no surprise that the function used for such data reduction is called `summarise()` from the `{dplyr}` package.
+
+In practice, `summarise()` applies a function (whether it is the `mean()`, or a simple count using `n()`) on a set of values. When this set of values need to be aggregated based on another variable (say we do not want to compute the overall mean for the entire table, but the mean by product), `summarise()` is then coupled with `group_by()`. 
+
+
+#### Handling Lists of Tables
+
+Create an example with multiple dataset in one excel sheet (could be different countries, or different sessions)
+Import the data using `map()` by reading the different tabs
+Use `enframe()` to combine all the results
+(alternative: use `reduce()` with `bind_rows()`, but this version will lose the country names/session info if not already part of the dataset)
+
+`nest_by()` and `unnest_by()`
+`enframe()` and `deframe()`
+
+`reduce()`
+
+`rowwise()` and `mutate()`
+
+`separate_rows()` to link to `unnest_tokens()`
+
+### Illustration
+
+Although the solutions we just presented are simple and only involve a few lines of code, we propose other solutions using the **{tidyverse}**.  This will allow us introducing this philosophy of coding, and will provide you a first contact to some of the functions that we use. 
 
 The **{tidyverse}** operates 5 major transformations on a dataset:
 
