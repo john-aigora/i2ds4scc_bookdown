@@ -27,7 +27,7 @@ This file is called _structured_ as all the relevant information is already stor
  
 Since this data will be used for some analyses, it is assigned data to an R object called `sensory`.
 
-```{r import_sensory, echo=FASE}
+```{r import_sensory, echo=FALSE}
 library(here)
 file_path <- here("data","Sensory Profile.xlsx") 
 
@@ -60,7 +60,7 @@ To import and decode this dataset, multiple steps are required:
 
 Let's start with importing the variables' names from *TFEQ.xlsx* (sheet *Variables*)
 
-```{r import_TFEQ_labels, echo=FALSE}
+```{r import_TFEQ_labels1, echo=FALSE}
 file_path <- here("data","TFEQ.xlsx") 
 
 var_names <- read_xlsx(file_path, sheet="Variables")
@@ -71,7 +71,7 @@ var_names
 In a similar way, let's import the information related to the levels of each variable, stored in the *Levels* sheet. 
 A deeper look at the *Levels* sheet shows that only the coded names of the variables are available. In order to include the final names, `var_names` is joined (using `inner_join`).
 
-```{r import_TFEQ_labels}
+```{r import_TFEQ_labels2}
 library(tidyverse)
 var_labels <- read_xlsx(file_path, sheet="Levels") %>% 
   inner_join(dplyr::select(var_names, Code, Name), by=c(Question="Code"))
@@ -92,7 +92,7 @@ For example, let's imagine that the our information is structured as *code1=labe
 Finally, the dataset (*Data*) is imported by substituting the coded names with their corresponding names.
 This process can be done by skipping reading the first row of the dataset that contains the coded header (`skip=1`), and by passing `Var_names` as header or column names (after ensuring that the names' sequence perfectly match across the two tables!).
 
-```{r, import_TFEQ_data, echo=FALSE}
+```{r, import_TFEQ_data3, echo=FALSE}
 TFEQ_data <- read_xlsx(file_path, sheet="Data", col_names=var_names$Name, skip=1)
 
 ```
