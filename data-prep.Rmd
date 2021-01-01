@@ -1,117 +1,26 @@
 ```{r include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
+knitr::opts_chunk$set(echo=FALSE, eval=FALSE)
 ```
-# Data Preparation {#data_prep}
+# Data Preparation {#data-prep}
 
-To analyze data, one need *data*. If this data is already available in R, then the analysis can be performed directly. However, in much cases, the data is stored outside the R environment, and needs to be imported. 
-
-## Data Importation
-
-In practice, the data might be stored in as many format as one can imagine, whether it ends up being a fairly common solution (.txt file, .csv file, or .xls/.xlsx file), or software specific (e.g. Stata, SPSS, etc.).
-Since it is very common to store the data in Excel spreadsheets (.xlsx) due to its simplicity, the emphasis is on this solution. Fortunately, most generalities presented for Excel files also apply to other formats through `base::read.table()` for .txt files,  `base::read.csv()` and `base::read.csv2()` for .csv files, or through the `{read}` package (which is part of the `{tidyverse}`).
-
-For other (less common) formats, the reader can find packages that would allow importing their files into R. Particular interest can be given to the package `{rio}` (*rio* stands for *R* *I*nput and *O*utput) which provides an easy solution that 1. can handle a large variety of files, 2. can actually guess the type of file it is, and 3. provides tools to import, export, and convert almost any type of data format, including .csv, .xls and .xlsx, or data from other statistical software such as SAS (.sas7bdat and .xpt), SPSS (.sav and .por), or Stata (.dta). As an alternative, the package `{foreign}` provides functions that allow importing data stored from other statistical software (incl. Minitab, S, SAS, Stata, SPSS, etc.)
-
-Although Excel is most likely one of the most popular way of storing data, there are no `{base}` functions that allow importing such files easily. Fortunately, many packages have been developed in that purpose, including `{XLConnect}`, `{xlsx}`, `{gdata}`, and `{readxl}`. Due to its convenience and speed of execution, we will be using `{readxl}` here.
-
-### Importing Structured Excel File
-
-First, let's import the *Sensory Profile.xlsx* workbook using the `readxl::read_xlsx()` file, by informing as parameter the location of the file (informed in `file_path` using the package `{here}`) and the `sheet` we want to read from.
-
-This file is called _structured_ as all the relevant information is already stored in the same sheet in a structured way. In other words, no decoding is required here, and there are no 'unexpected' rows or columns (e.g. empty lines, or lines with additional information regarding the data but that is not data):
-
- - The first row within the *Data* sheet of *Sensory Profile.xlsx* contains the headers,  
- - From the second row onwards, only data is being stored.
- 
-Since this data will be used for some analyses, it is assigned data to an R object called `sensory`.
-
-```{r}
-library(here)
-file_path <- here("data","Sensory Profile.xlsx") 
-
-library(readxl)
-sensory <- read_xlsx(file_path, sheet="Data")
-```
-
-To ensure that the importation went well, we print `sensory` to see how it looks like. Since `{readxl}` has been developed by Hadley Wickham and colleagues, its functions follow the `{tidyverse}` principles and the dataset thus imported is a `tibble`. Let's take advantage of the printing properties of a `tibble` to evaluate `sensory`:
-
-```{r}
-sensory
-```
-
-`sensory` is a tibble with 99 rows and 35 columns that includes the `Judge` information (first column, defined as character), the `Product` information (second and third columns, defined as character), and the sensory attributes (fourth column onward, defined as numerical or `dbl`).
-
-Additionally, we can also print a `summary()` of `sensory` to get some extra information regarding the data (such as the minimum, maximum, mean and median for each numerical variable)"
-
-```{r}
-summary(sensory)
-```
-
-At last, we can list the structure of the dataset through the `str()` function.
-
-```{r}
-str(sensory)
-```
-
-This function provides an overview of the first element of each variables (and the format they are in) as a list, and allows the user to have a first scan to eventually detect *errors* or *mishaps* during the importation.
-
-Here, the data has been imported as expected.
-
-### Importing Unstructured Excel File
-
-In some cases, the dataset is not so well organized/structured, and may need to be *decoded*. This is the case for the workbook entitled *TFEQ.xlsx*. For this file:
-
- - The variables' name have been coded and their corresponding names (together with some other valuable information we will be using in the next chapter) are stored in a different sheet entitled _Variables_;
- - The different levels of each variable (including their code and corresponding names) are stored in another sheet entitled _Levels_.
-
-To import and decode this dataset, multiple steps are required:
-
- - Import the variables' name only;
- - Import the information regarding the levels;
- - Import the dataset without the first line of header, but by providing the correct names obtained in the first step;
- - Decode each question (when needed) by replacing the numerical code by their corresponding labels.
-
-Let's start with importing the variables' names from *TFEQ.xlsx* (sheet *Variables*)
-
-```{r}
-file_path <- here("data","TFEQ.xlsx") 
-
-var_names <- read_xlsx(file_path, sheet="Variables")
-var_names
-```
-
-In a similar way, let's import the information related to the levels of each variable, stored in the *Levels* sheet.
-A deeper look at the *Levels* sheet shows that only the coded names of the variables are available. In order to include the final names, `var_names` is joined (using `inner_join`).
-
-```{r}
-library(tidyverse)
-var_labels <- read_xlsx(file_path, sheet="Levels") %>% 
-  inner_join(dplyr::select(var_names, Code, Name), by=c(Question="Code"))
-
-var_labels
-```
-
-
-**Note**: In some cases, this information is directly available in the dataset as sub-header: A solution is then to import the first rows of the dataset that contain this information using the parameter `n_max` from `readxl::read_xlsx``. For each variable (when information is available), store that information as a list of tables that contains the code and their corresponding label.
-
-**THIS SECTION BELOW MIGHT NEED TO GET PASSED ON TO THE EXERCISE**
-
-Since most likely this system of coding follow a fixed pattern, we strongly recommend the use of `{tidytext}` and its function `unnest_tokens()`.
-For example, let's imagine that the our information is structured as *code1=label1,code2=label2,...* (e.g. *0=No,1=Yes*). In such case, first use `unnest_tokens()` to split this string by ','. This creates a tibble with as many rows as there are *code=label* and one column. Next, split this column into two columns using `separate()` and `sep="="`.
-
-**(PREVIOUS PART) TO BE GIVEN AS AN EXAMPLE/EXERCISE**
-
-Finally, we import the dataset (*Data*) by substituting the coded names with their real names.
-To do so, we skip reading the first line (`skip=1`) that contains the coded names, and force the column names to be defined by `Name` from `var_names` (after ensuring that the names' sequence perfectly match across the two tables!).
-
-```{r}
-TFEQ_data <- read_xlsx(file_path, sheet="Data", col_names=var_names$Name, skip=1)
-summary(TFEQ_data)
-```
-
-The data has now the proper header, however each variable is still coded numerically. 
+The data we will be using in this chapter is the one that you imported in Section \@ref(data-collection).
 
 ## Data Inspection
+
+To inspect the data, different steps can be used. 
+First, since `read_xlsx()` returns a tibble, we can take advantage of its printing properties to get a fill of the data at hand,
+
+```{r TFEQ_data}
+TFEQ_data
+```
+
+Other informative solutions consists in printing a summary of the data through the `summary()` function, or looking at its type and first values using `str()`. However, due to its richness of the outputs, we prefer to use the `skim()` function from the `{skimr}` package.
+
+```{r TFEQ_data_skim}
+library(skimr)
+skim(TFEQ_data)
+```
+
 
 ### Data Type
 
@@ -145,7 +54,7 @@ Binary data is data that takes two possible values (`TRUE` or `FALSE`), and are 
 Note: Intrinsically, binary data is *numerical*, TRUE being assimilated to 1, FALSE to 0. If multiple tests are being performed, it is possible to sum the number of tests that pass using the `sum()` function, as shown in the simple example below:
 
 
-```{r}
+```{r example_logical}
 set.seed(123456)
 # Generating 10 random values between 1 and 10 using the uniform distribution
 x <- runif(10, 1, 10)
@@ -157,6 +66,7 @@ test
 
 # Counting the number of values strictly larger than 5
 sum(test)
+
 ```
 
 #### Nominal Data
@@ -180,53 +90,50 @@ To evaluate the number of levels, different procedure are required:
  
 Let's compare a variable set as `factor` and `character` by using the `Judge` column from `TFEQ_data`:
 
-```{r}
+```{r char_vs_fctr1}
 example <- TFEQ_data %>% 
   dplyr::select(Judge) %>% 
   mutate(Judge_fct = as.factor(Judge))
-
-print("Summary:")
 summary(example)
 
-print("As Character:")
 unique(example$Judge)
 length(unique(example$Judge))
 
-print("As Factor:")
 levels(example$Judge_fct)
 nlevels(example$Judge_fct)
+
 ```
 
 Although `Judge` and `Judge_fct` look the same, they are structurally different, and those differences play an important role that one should consider when running certain analyses, or building tables and graphs.
 
 When set as `character`, the number of levels of a variable is directly read from the data, and its levels' order would either match the way they appear in the data, or are ordered alphabetically. This means that any data collected using a structured scale will lose its natural order. 
+
 When set as `factor`, the number and order of the factor levels are informed, and does not depend on the data itself: If a level has never been selected, or if certain groups have been filtered, this information is still present in the data. 
 
 To illustrate this, let's re-arrange the levels from `Judge_fct` by ordering them numerically in such a way `J2` follows `J1` rather than `J10`.
 
-```{r}
+```{r sorting_judge}
 judge <- str_sort(levels(example$Judge_fct),numeric=TRUE)
 judge
 levels(example$Judge_fct) <- judge
+
 ```
 
 Now the levels are sorted, let's 'remove' some respondents by only keeping the 20 first ones (J1 to J20, as J18 does not exist), and re-run the previous code:
 
-```{r}
+```{r char_vs_fctr2}
 example <- TFEQ_data %>% 
   dplyr::select(Judge) %>% 
   mutate(Judge_fct = as.factor(Judge)) %>% 
   filter(Judge %in% paste0("J",1:20))
-
 dim(example)
 
-print("As Character:")
 unique(example$Judge)
 length(unique(example$Judge))
 
-print("As Factor:")
 levels(example$Judge_fct)
 nlevels(example$Judge_fct)
+
 ```
 
 After filtering some respondents, it can be noticed that the variable set as character only contains 19 elements, whereas the column set as factor still contains the 107 respondents (most of them not having any recordings). This property can be seen as an advantage or a disadvantage depending on the situation:
@@ -241,7 +148,7 @@ Let's consider the `Living area` variable from `TFEQ_data` as example. From the 
 Let's start by renaming this variable accordingly:
 
 
-```{r}
+```{r area_recode1}
 example = TFEQ_data %>% 
   mutate(Area = factor(`Living area`, levels=c(1,2,3), labels=c("Urban", "Rurban", "Rural")))
 
@@ -256,7 +163,7 @@ As can be seen, the variable `Area` is the factor version (including its labels)
 If we would also consider that `Rurban` should be combined with `Rural`, and that `Rural` should appear before `Urban`, we can simply modify the code as such:
 
 
-```{r}
+```{r area_recode2}
 example = TFEQ_data %>% 
   mutate(Area = factor(`Living area`, levels=c(2,3,1), labels=c("Rural", "Rural", "Urban")))
 
@@ -267,27 +174,72 @@ table(example$`Living area`, example$Area)
 ```
 
 This approach of renaming and re-ordering factor levels is very important as it simplifies the readability of tables and figures.
-Some other transformations can be applied to factors thanks to the `{forcats}` package. Amongst other relevant functions, particular attention can be given to:
+Some other transformations can be applied to factors thanks to the `{forcats}` package. Particular attention can be given to the following functions:
 
- - `fct_reorder`/`fct_reorder2` and `fct_relevel` which reorder the levels of a factor;
- - `fct_recode` which helps recoding a factor (as an alternative to `factor` used in the previous example);
- - `fct_collapse` and `fct_lump` which allows aggregating different levels together (`fct_lump` regroups automatically all the rare levels).
+ - `fct_reorder`/`fct_reorder2` and `fct_relevel` reorder the levels of a factor;
+ - `fct_recode` renames the factor levels (as an alternative to `factor` used in the previous example);
+ - `fct_collapse` and `fct_lump` aggregate different levels together (`fct_lump` regroups automatically all the rare levels).
 
-Although it hasn't been done here, manipulating strings is also possible. To do so, the `{stringr}` package provides a lot of of interesting functions, such as:
+Although it hasn't been done here, manipulating strings is also possible through the `{stringr}` package, which provides interesting functions such as:
 
- - `str_to_upper`/`str_to_lower` which automatically convert strings to uppercase or lowercase;
- - `str_c`, `str_sub` which combine or subset strings;
- - `str_trim` and `str_squish` which help remove white spaces;
- - `str_extract`, `str_replace`, `str_split` to extract, replace, or split strings or part of the strings.
+ - `str_to_upper`/`str_to_lower` to convert strings to uppercase or lowercase;
+ - `str_c`, `str_sub` combine or subset strings;
+ - `str_trim` and `str_squish` remove white spaces;
+ - `str_extract`, `str_replace`, `str_split` extract, replace, or split strings or part of the strings.
+  
  
+### Converting to Other Types
+
+When importing data, variables may not always be associated to the right type. For instance, when respondents or products are numerically coded, they will be defined as integers rather than strings. Additionally, each variable type has its own property. To take full advantage of the different variable types, and to avoid wrong analyses (e.g considering a variable that is numerically coded as numeric when it is not), we need to convert them to other types.  
+
+In the following sections, we will `mutate()` a variable to create a new variable that corresponds to the original one after being converted to its new type (as in the previous example with `Area`). In case we want to overwrite a variable by only changing the type, the same name is used within `mutate()`.  
+
+Based on our variable types of interest, there are two main conversions to run:
+ - From numerical to character/factor;
+ - From character/factor to numerical.
  
-### Changing the type of a variable
+The conversion from numerical to character or factor is simply done using `as.character()` and `as.factor()` respectively. Note however that `as.factor()` only converts into factors without allowing to chose the order of the levels, nor to rename them. Alternatively, the use of `factor()` allows specifying the `levels` (and hence the order of the levels) and their corresponding `labels`. An example in the use of `as.character()` and `as.factor()` was provided in the previous section when we converted the `Respondent` variables to character and factor. The use of `factor()` was also used earlier when the variable `Living area` was converted from numerical to factor (called `Area`) with labels.
 
-Transforming the type of variables using `mutate()`: 
+To illustrate the following points, let's start with creating a tibble with two variables, one containing strings made of numbers, and one containing strings made of text.
 
- - from logical to numerical;
- - from numerical to character/factor;
- - from character/factor to numerical
+```{r simple_example}
+example <- tibble(Numbers = c("2","4","9","6","8","12","10"),
+                  Text = c("Data","Science","4","Sensory","and","Consumer","Research"))
+```
+
+The conversion from character to numerical is straight forward and requires the use of the function `as.numeric()`:
+
+```{r char_2_num}
+example %>% 
+  mutate(NumbersN = as.numeric(Numbers), TextN = as.numeric(Text))
+```
+
+As can be seen, when strings are made of numbers, the conversion works fine. However, the text are not converted properly and returns NAs.
+
+Now let's apply the same principle to a variable of the type factor. To do so, we will take the same example but first convert the variables from character to factor:
+
+```{r char_2_fctr}
+example <- example %>% 
+  mutate(Numbers = as.factor(Numbers)) %>% 
+  mutate(Text = factor(Text, levels=c("Data","Science","4","Sensory","and","Consumer","Research")))
+```
+
+Let's apply as.numeric() to these variables:
+
+```{r fctr_2_num}
+example %>% 
+  mutate(NumbersN = as.numeric(Numbers), TextN = as.numeric(Text))
+```
+
+We can notice here that the outcome is not really as expected as the numbers 2-4-9-6-8-12-10 becomes 3-4-7-5-6-2-1, and Data-Science-4-Sensory-and-Consumer-Research becomes 1-2-3-4-5-6-7. The rationale behind this conversion is that the numbers do not reflects the string itself, but the position of that level within the factor level structure.
+
+To convert properly numerical factor levels to number, the variable should first be converted as character:
+
+```{r fctr_2_char_2_num}
+example %>%
+  mutate(Numbers = as.numeric(as.character(Numbers)))
+```
+
 
 ## Data Organization
 
@@ -308,7 +260,7 @@ Note on `{FactoMineR}` and `{SensoMineR}` which require data frames or matrix (n
 ### Data organisation
 
 `select()`, `filter()`, `arrange()`
-`mutate()` and `transmute()`
+`mutate()`
 
 ### Data re-structuration
 
