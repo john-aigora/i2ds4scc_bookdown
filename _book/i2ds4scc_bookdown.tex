@@ -125,11 +125,11 @@
 \setcounter{tocdepth}{1}
 \tableofcontents
 }
-\hypertarget{cover}{%
-\chapter*{Cover}\label{cover}}
-\addcontentsline{toc}{chapter}{Cover}
+\hypertarget{cover-art}{%
+\chapter*{Cover Art}\label{cover-art}}
+\addcontentsline{toc}{chapter}{Cover Art}
 
-\begin{center}\includegraphics[width=9.68in]{images/digital_coffee} \end{center}
+\begin{center}\includegraphics[width=13.44in]{images/cover_art} \end{center}
 
 \hypertarget{preface}{%
 \chapter*{Preface}\label{preface}}
@@ -137,26 +137,8 @@
 
 Welcome to the website for \emph{Data Science for Sensory and Consumer Scientists}, a book in development and under contract for \href{https://www.routledge.com/}{CRC Press}
 
-\hypertarget{about-the-authors}{%
-\chapter*{About the Authors}\label{about-the-authors}}
-\addcontentsline{toc}{chapter}{About the Authors}
-
-John Ennis \ldots{}
-
-Julien Delarue \ldots{}
-
-Thierry Worch \ldots{}
-
-\hypertarget{acknowledgements}{%
-\chapter*{Acknowledgements}\label{acknowledgements}}
-\addcontentsline{toc}{chapter}{Acknowledgements}
-
-\hypertarget{part-introduction}{%
-\part*{Introduction}\label{part-introduction}}
-\addcontentsline{toc}{part}{Introduction}
-
-\hypertarget{intro}{%
-\chapter{Introduction}\label{intro}}
+\hypertarget{motivation}{%
+\section{Motivation}\label{motivation}}
 
 Sensory and consumer science (SCS) is consider as a pillar of food science and technology and is useful to product development, quality control and market research. Most scientific and methodological advances in the field are applied to food. This book makes no exception as we chose a cookie formulation dataset as a main thread. However, SCS widely applies to many other consumer goods so are the content of this book and the principles set out below.
 
@@ -185,6 +167,22 @@ Sensory and consumer researchers also borrow methods from other fields, in parti
 
 \hypertarget{example-projects}{%
 \section{Example projects}\label{example-projects}}
+
+\hypertarget{why-data-science}{%
+\section{Why Data Science?}\label{why-data-science}}
+
+\hypertarget{who-should-read-this-book}{%
+\section{Who Should Read This Book?}\label{who-should-read-this-book}}
+
+\hypertarget{acknowledgements}{%
+\section{Acknowledgements}\label{acknowledgements}}
+
+\hypertarget{how-to-contact-us}{%
+\section{How to Contact Us}\label{how-to-contact-us}}
+
+\hypertarget{part-setting-the-table}{%
+\part*{Setting the Table}\label{part-setting-the-table}}
+\addcontentsline{toc}{part}{Setting the Table}
 
 \hypertarget{data_science}{%
 \chapter{What is Data Science?}\label{data_science}}
@@ -420,256 +418,69 @@ We recommend following the instructions in Chapter \ref{start-R} to get started.
 
 We continue our discussion of getting started with R in the next chapter.
 
-\hypertarget{start-R}{%
-\chapter{Getting Started}\label{start-R}}
-
-\hypertarget{r}{%
-\section{R}\label{r}}
-
-R is an open-source programming language and software environment
-First released in 1995, R is an open-source implementation of S
-R was developed by Ross Ihaka and Robert Gentleman
-The name ``R'' is partly a play on Ihaka's and Gentleman's first names
-R is a scripting language (not a compiled language)
-Lines of R code run (mostly) in order
-R is currently the 7th most popular programming language in the world
-
-\hypertarget{why-learn-a-programming-language}{%
-\subsection{Why Learn a Programming Language?}\label{why-learn-a-programming-language}}
-
-Control
-Speed
-Reduced errors
-Increased capability
-Continuous improvement
-Improved collaboration
-Reproducible results
-
-\hypertarget{why-r}{%
-\subsection{Why R?}\label{why-r}}
-
-R originated as a statistical computing language
-It has a culture germane to sensory science
-R is well-supported with an active community
-Extensive online help is available
-Many books, courses, and other educational material exist
-The universe of available packages is vast
-R excels at data manipulation and results reporting
-R has more specialized tools for sensory analysis than other programming language
-
-\hypertarget{why-r-1}{%
-\section{Why R?}\label{why-r-1}}
-
-For sensory and consumer scientists, we recommend the R ecosystem of tools for three main reasons. The first reason is cultural - R has from its inception been oriented more towards statistics than to computer science, making the feeling of programming in R more natural (in our experience) for sensory and consumer scientists than programming in Python. This opinion of experience is not to say that a sensory and consumer scientist shouldn't learn Python if they are so inclined, or even that Python tools aren't sometimes superior to R tools (in fact, they sometimes are). This latter point leads to our second reason, which is that R tools are typically better suited to sensory and consumer science than are Python tools. Even when Python tools are superior, the R tools are still sufficient for sensory and consumer science purposes, plus there are many custom packages such as SensR, SensoMineR, and FactorMineR that have been specifically developed for sensory and consumer science. Finally, the recent work by the RStudio company, and especially the exceptional work of Hadley Wickham, has lead to a very low barrier to entry for programming within R together with exceptional tools for data manipulation.
-
-\hypertarget{steps-to-install-r}{%
-\subsection{Steps to Install R}\label{steps-to-install-r}}
-
-The first step in this journey is to install R. For this, visit \href{https://www.r-project.org/}{The R Project for Statistical Computing}. From there, follow the download instructions to install R for your particular platform.
-
-\url{https://cran.r-project.org/bin/windows/base/}
-Download the latest version of R
-Install R with default options
-You will almost certainly be running 64-bit R
-Note: If you are running R 4.0 or higher, you might need to install Rtools:
-\url{https://cran.r-project.org/bin/windows/Rtools/}
-
-\hypertarget{rstudio}{%
-\section{RStudio}\label{rstudio}}
-
-\hypertarget{steps-to-install-rstudio}{%
-\subsection{Steps to Install RStudio}\label{steps-to-install-rstudio}}
-
-Next you need to install RStudio, which is our recommended integrated development environment (IDE) for developing R code. To do so, visit the \href{https://rstudio.com/products/rstudio/download/}{RStudio desktop download page} and follow the installation instructions.
-
-Once you have installed R and RStudio, you should be able to open RStudio and enter the following into the Console to receive the number ``3'' as your output:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{x }\OtherTok{\textless{}{-}} \DecValTok{1}
-\NormalTok{y }\OtherTok{\textless{}{-}} \DecValTok{2}
-
-\NormalTok{x }\SpecialCharTok{+}\NormalTok{ y}
-\end{Highlighting}
-\end{Shaded}
-
-Some recommendations upon installing RStudio:
-
-\begin{itemize}
-\tightlist
-\item
-  Change the color scheme to dark.
-\item
-  Put the console on the right.
-\end{itemize}
-
-\url{https://www.rstudio.com/products/rstudio/download/\#download}
-Download and install the latest (almost certainly 64-bit) version of RStudio with default options
-Adjustments:
-Uncheck ``Restore .RData into workspace at startup
-Select ``Never'' for ``Save workspace to .RData on exit''
-Change color scheme to dark (e.g.~``Idle Fingers'')
-Put console on right
-
-\hypertarget{create-a-local-project}{%
-\subsection{Create a Local Project}\label{create-a-local-project}}
-
-Always work in an RStudio project
-Projects keep your files (and activity) organized
-Projects help manage your file path (so your computer can find things)
-Projects allow for more advanced capabilities later (like GitHub or renv)
-We cover the use of GitHub in a future webinar
-For now we create projects locally
-
-\hypertarget{install-and-load-packages}{%
-\subsection{Install and Load Packages}\label{install-and-load-packages}}
-
-As you use R, you will want to make use of the many packages others (and perhaps you) have written
-Essential packages (or collections):
-tidyverse, readxl
-Custom Microsoft office document creation
-officer, flextable, rvg, openxlsx, extrafont, extrafontdb
-Sensory specific packages
-sensR , SensoMineR, FactoMineR, factoextra
-There are many more, for statistical tests of all varieties, to multivariate analysis, to machine learning, to text analysis, etc.
-
-You only need to install each package once per R version
-To install a package, you can:
-Type install.packages(``{[}package name{]}'')
-Use the RStudio dropdown
-In addition, if a script loads package that are not installed, RStudio will prompt you to install the package
-Notes:
-If you do not have write access on your computer, you might need IT help to install packages
-You might need to safelist various R related tools and sites
-
-\hypertarget{run-sample-code}{%
-\subsection{Run Sample Code}\label{run-sample-code}}
-
-Like any language, R is best learned first through example then through study
-We start with a series of examples to illustrate basic principles
-For this example, we analyze a series of Tetrad tests
-
-Suppose you have 15 out of 44 correct in a Tetrad test
-Using sensR, it's easy to analyze these data:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(sensR)}
-
-\NormalTok{num\_correct }\OtherTok{\textless{}{-}} \DecValTok{15}  
-\NormalTok{num\_total }\OtherTok{\textless{}{-}} \DecValTok{44}  
-  
-\NormalTok{discrim\_res }\OtherTok{\textless{}{-}} \FunctionTok{discrim}\NormalTok{(num\_correct, num\_total, }\AttributeTok{method =} \StringTok{"tetrad"}\NormalTok{)  }
-  
-\FunctionTok{print}\NormalTok{(discrim\_res)  }
-\end{Highlighting}
-\end{Shaded}
-
-\hypertarget{git-and-github}{%
-\section{Git and GitHub}\label{git-and-github}}
-
-Git is a version control system that allows you to revert to earlier versions of your code, if necessary. GitHub is service that allows for online backups of your code and which facilitates collaboration between team members. We highly recommend that you integrate both Git and GitHub into your data scientific workflow. For a full review of Git and GitHub from an R programming perspective, we recommend \href{https://happygitwithr.com/}{Happy Git with R} by Jenny Bryant. In what follows, we simply provide the minimum information needed to get you up and running with Git and GitHub. Also, for an insightful discussion of the need for version control, please see {[}Cite bryan2018excuse{]}.
-
-\hypertarget{git}{%
-\subsection{Git}\label{git}}
-
-\begin{itemize}
-\tightlist
-\item
-  Install Git
-
-  \begin{itemize}
-  \tightlist
-  \item
-    Windows
-  \item
-    macOS
-  \end{itemize}
-\item
-  Register with RStudio
-\end{itemize}
-
-\hypertarget{github-1}{%
-\subsection{GitHub}\label{github-1}}
-
-\begin{itemize}
-\tightlist
-\item
-  Create a GitHub account
-\item
-  Register with RStudio
-\end{itemize}
-
-\hypertarget{raw-material}{%
-\section{RAW MATERIAL}\label{raw-material}}
-
-\hypertarget{principles-1}{%
-\subsection{Principles}\label{principles-1}}
-
-\hypertarget{tools-1}{%
-\subsection{Tools}\label{tools-1}}
-
-\hypertarget{github-2}{%
-\subsubsection{GitHub}\label{github-2}}
-
-\hypertarget{r-scripts-1}{%
-\subsubsection{R scripts}\label{r-scripts-1}}
-
-\hypertarget{rmarkdown-1}{%
-\subsubsection{RMarkdown}\label{rmarkdown-1}}
-
-\hypertarget{shiny-1}{%
-\subsubsection{Shiny}\label{shiny-1}}
-
-\hypertarget{documentation-1}{%
-\subsection{Documentation}\label{documentation-1}}
-
-\hypertarget{version-control-1}{%
-\subsection{Version control}\label{version-control-1}}
-
-\hypertarget{online-repositories-for-team-collaboration-1}{%
-\subsection{Online repositories for team collaboration}\label{online-repositories-for-team-collaboration-1}}
-
-\hypertarget{building-a-code-base-1}{%
-\subsection{Building a code base}\label{building-a-code-base-1}}
-
-\hypertarget{internal-functions-1}{%
-\subsubsection{Internal functions}\label{internal-functions-1}}
-
-\hypertarget{packages-1}{%
-\subsubsection{Packages}\label{packages-1}}
-
-\hypertarget{part-general-skills}{%
-\part*{General Skills}\label{part-general-skills}}
-\addcontentsline{toc}{part}{General Skills}
-
 \hypertarget{tidy-thoughts}{%
 \chapter{Tidy Thinking}\label{tidy-thoughts}}
 
 \hypertarget{data-manip}{%
 \chapter{Data Manipulation}\label{data-manip}}
 
-In sensory science, different data collection tools (whether it is device, software, or methodologies) may provide data in different formats. Also, different statistical analyses may require having the same data but structured differently.
+In sensory science, different data collection tools (whether it is device, software, or methodologies) may provide data in different formats. Also, different statistical analyses may require having the same data structured in a different way.
 
 A simple example to illustrate this later point is the analysis of liking data.
-Let C consumers provide their hedonic assessments of P samples. To evaluate if samples have been liked differently, an ANOVA is performed on a long thin table with (PxC) rows x 3 columns (consumer, sample, and the liking scores). However, to assess whether consumers have the same preference patterns at the indidual level, internal preference mapping or cluster analysis would be performed, and both these analyses require as input a short and large table with P rows and C columns.
+Let C consumers provide their hedonic assessments of P samples. To evaluate if samples have been liked differently, an ANOVA is performed on a long thin table with (PxC) rows x 3 columns (consumer, sample, and the liking scores).
+
+However, to assess whether consumers have the same preference patterns at the individual level, internal preference mapping or cluster analysis would be performed, and both these analyses require as input a short and large table with P rows and C columns.
 
 Another example of data manipulation consists in summarizing data, by for instance computing the mean by product for each sensory attribute (hence creating the so-called sensory profiles), or to generate frequency tables (e.g.~proportions of male/female, distribution of the liking scores by sample, contingency table for CATA data, etc.)
 
-For these reasons, it is hence essential to learn to manipulate data and transition from one structure to another one.
+For these reasons, it is hence essential to learn to manipulate data and transition from one structure to another.
 
-For illustration, let's consider some sensory data stored in \emph{Sensory Profile.xlsx}, which consists in 9 panellists evaluating 11 samples on 32 sensory attributes.
+For illustration, let's consider the data stored in \emph{Sensory Profile.xlsx}, which consists in 9 panellists evaluating 11 samples on 32 sensory attributes. This dataset will be further analysed in the following sections. The aim here is not to interpret the results, but to show how data is being manipulated.
 
-We importing this data using the \texttt{read\_xlsx()} function from the \texttt{\{readxl\}} package (for more information on how to import data, see Section \ref{data-collection}).
+This data is imported using the \texttt{read\_xlsx()} function from the \texttt{\{readxl\}} package (for more information on how to import data, see Section \ref{data-collection}).
 
 A first analysis that is commonly done on such table consists in computing the mean per sample for each attribute, hence generating the so-called sensory profiles of the samples. Such table (crossing the samples in rows and the sensory attributes in columns) gives a first impression at the differences between samples across attributes.
 
-The principles of data manipulation will be illustrated here by generating the sensory profiles from the raw data using different approaches. This step consists in reducing the 99x35 table into a 11x32 table, i.e.~a table with 11 rows (one per sample) and 32 columns (one per attribute). Note that here, we consider the sample information as row names, not as an extra column in the dataset, else we would have a 11x33 table.
+The principles of data manipulation will be illustrated here by generating the sensory profiles from the raw data using different approaches. This step consists in reducing the 99x35 table into a 11x33 table, i.e.~a table with 11 rows (one per sample) and 32 columns (one per attribute) and one column with the sample information. An important message here is that most data transformation situation can be solved in different ways, so don't be afraid to open your mind and think differently by stimulating your imagination to solve any of your data challenge.
 
-\hypertarget{using-the-tidyverse}{%
-\subsection{\texorpdfstring{Using the \texttt{\{tidyverse\}}}{Using the \{tidyverse\}}}\label{using-the-tidyverse}}
+Note that we could consider passing the sample names as row names rather than having it as an extra column. This extra step is required for certain functions from \texttt{\{FactoMineR\}} and \texttt{\{SensoMineR\}} for instance, and will be presented in Section \ref{data-prep}.
 
-Although the solutions we just presented are simple and only involve a few lines of code, we propose other solutions using the \textbf{\{tidyverse\}}. This will allow us introducing this philosophy of coding, and will provide you a first contact to some of the functions that we use. It will also show you that each situation can be solved in different ways, hence opening your mind and stimulating your creative imagination.
+\hypertarget{tidying-data---pre-requisite}{%
+\subsection{Tidying Data - Pre-Requisite}\label{tidying-data---pre-requisite}}
+
+\hypertarget{transformation-without-altering-the-data}{%
+\subsubsection{Transformation without Altering the Data}\label{transformation-without-altering-the-data}}
+
+Transforming a data table without altering the data itself is done through pivoting, hence either creating a shorter and wider table (CREATE FIGURE), or a longer and thinner table (CREATE FIGURE). This is done through the \texttt{pivot\_wider()} and \texttt{pivot\_longer()} functions from the \texttt{\{tidyr\}} package.
+
+\hypertarget{transformation-that-alters-the-data}{%
+\subsubsection{Transformation that Alters the Data}\label{transformation-that-alters-the-data}}
+
+In some cases, the final table to generate requires altering the data, by (say) computing the mean across multiple values, or counting the number of occurrences of factor levels for instance. In other words, we summarize the information, which also tend to reduce the size of the table. It is hence no surprise that the function used for such data reduction is called \texttt{summarise()} from the \texttt{\{dplyr\}} package.
+
+In practice, \texttt{summarise()} applies a function (whether it is the \texttt{mean()}, or a simple count using \texttt{n()}) on a set of values. When this set of values need to be aggregated based on another variable (say we do not want to compute the overall mean for the entire table, but the mean by product), \texttt{summarise()} is then coupled with \texttt{group\_by()}.
+
+\hypertarget{handling-lists-of-tables}{%
+\subsubsection{Handling Lists of Tables}\label{handling-lists-of-tables}}
+
+Create an example with multiple dataset in one excel sheet (could be different countries, or different sessions)
+Import the data using \texttt{map()} by reading the different tabs
+Use \texttt{enframe()} to combine all the results
+(alternative: use \texttt{reduce()} with \texttt{bind\_rows()}, but this version will lose the country names/session info if not already part of the dataset)
+
+\texttt{nest\_by()} and \texttt{unnest\_by()}
+\texttt{enframe()} and \texttt{deframe()}
+
+\texttt{reduce()}
+
+\texttt{rowwise()} and \texttt{mutate()}
+
+\texttt{separate\_rows()} to link to \texttt{unnest\_tokens()}
+
+\hypertarget{illustration}{%
+\subsection{Illustration}\label{illustration}}
+
+Although the solutions we just presented are simple and only involve a few lines of code, we propose other solutions using the \textbf{\{tidyverse\}}. This will allow us introducing this philosophy of coding, and will provide you a first contact to some of the functions that we use.
 
 The \textbf{\{tidyverse\}} operates 5 major transformations on a dataset:
 
@@ -792,8 +603,8 @@ Note that multiple analysis can be ordered together. Let's take back the example
 \hypertarget{data-viz}{%
 \chapter{Data Visualization}\label{data-viz}}
 
-\hypertarget{principles-2}{%
-\section{Principles}\label{principles-2}}
+\hypertarget{principles-1}{%
+\section{Principles}\label{principles-1}}
 
 \hypertarget{table-mechanics}{%
 \section{Table Mechanics}\label{table-mechanics}}
@@ -804,8 +615,8 @@ Note that multiple analysis can be ordered together. Let's take back the example
 \hypertarget{examples}{%
 \section{Examples}\label{examples}}
 
-\hypertarget{raw-material-1}{%
-\section{Raw Material}\label{raw-material-1}}
+\hypertarget{raw-material}{%
+\section{Raw Material}\label{raw-material}}
 
 \hypertarget{philosophy-of-ggplot2}{%
 \section{Philosophy of ggplot2}\label{philosophy-of-ggplot2}}
@@ -2838,8 +2649,8 @@ Note on \texttt{\{FactoMineR\}} and \texttt{\{SensoMineR\}} which require data f
 \hypertarget{bigrams-and-word-graphs}{%
 \subsection{Bigrams and word graphs}\label{bigrams-and-word-graphs}}
 
-\hypertarget{raw-material-2}{%
-\section{RAW MATERIAL}\label{raw-material-2}}
+\hypertarget{raw-material-1}{%
+\section{RAW MATERIAL}\label{raw-material-1}}
 
 Introduction to \textbf{\{tidytext\}} and \textbf{\{Xplortext\}}
 
@@ -2935,8 +2746,8 @@ Introduction to machine learning associated to text mining
 \hypertarget{next-steps}{%
 \chapter{What's Next?}\label{next-steps}}
 
-\hypertarget{shiny-2}{%
-\section{Shiny}\label{shiny-2}}
+\hypertarget{shiny-1}{%
+\section{Shiny}\label{shiny-1}}
 
 \hypertarget{graph-databases}{%
 \section{Graph Databases}\label{graph-databases}}
@@ -2953,6 +2764,225 @@ Introduction to machine learning associated to text mining
 \hypertarget{appendix-appendix}{%
 \appendix}
 
+
+\hypertarget{start-R}{%
+\chapter{Getting Started in R}\label{start-R}}
+
+\hypertarget{r}{%
+\section{R}\label{r}}
+
+R is an open-source programming language and software environment
+First released in 1995, R is an open-source implementation of S
+R was developed by Ross Ihaka and Robert Gentleman
+The name ``R'' is partly a play on Ihaka's and Gentleman's first names
+R is a scripting language (not a compiled language)
+Lines of R code run (mostly) in order
+R is currently the 7th most popular programming language in the world
+
+\hypertarget{why-learn-a-programming-language}{%
+\subsection{Why Learn a Programming Language?}\label{why-learn-a-programming-language}}
+
+Control
+Speed
+Reduced errors
+Increased capability
+Continuous improvement
+Improved collaboration
+Reproducible results
+
+\hypertarget{why-r}{%
+\subsection{Why R?}\label{why-r}}
+
+R originated as a statistical computing language
+It has a culture germane to sensory science
+R is well-supported with an active community
+Extensive online help is available
+Many books, courses, and other educational material exist
+The universe of available packages is vast
+R excels at data manipulation and results reporting
+R has more specialized tools for sensory analysis than other programming language
+
+\hypertarget{why-r-1}{%
+\section{Why R?}\label{why-r-1}}
+
+For sensory and consumer scientists, we recommend the R ecosystem of tools for three main reasons. The first reason is cultural - R has from its inception been oriented more towards statistics than to computer science, making the feeling of programming in R more natural (in our experience) for sensory and consumer scientists than programming in Python. This opinion of experience is not to say that a sensory and consumer scientist shouldn't learn Python if they are so inclined, or even that Python tools aren't sometimes superior to R tools (in fact, they sometimes are). This latter point leads to our second reason, which is that R tools are typically better suited to sensory and consumer science than are Python tools. Even when Python tools are superior, the R tools are still sufficient for sensory and consumer science purposes, plus there are many custom packages such as SensR, SensoMineR, and FactorMineR that have been specifically developed for sensory and consumer science. Finally, the recent work by the RStudio company, and especially the exceptional work of Hadley Wickham, has lead to a very low barrier to entry for programming within R together with exceptional tools for data manipulation.
+
+\hypertarget{steps-to-install-r}{%
+\subsection{Steps to Install R}\label{steps-to-install-r}}
+
+The first step in this journey is to install R. For this, visit \href{https://www.r-project.org/}{The R Project for Statistical Computing}. From there, follow the download instructions to install R for your particular platform.
+
+\url{https://cran.r-project.org/bin/windows/base/}
+Download the latest version of R
+Install R with default options
+You will almost certainly be running 64-bit R
+Note: If you are running R 4.0 or higher, you might need to install Rtools:
+\url{https://cran.r-project.org/bin/windows/Rtools/}
+
+\hypertarget{rstudio}{%
+\section{RStudio}\label{rstudio}}
+
+\hypertarget{steps-to-install-rstudio}{%
+\subsection{Steps to Install RStudio}\label{steps-to-install-rstudio}}
+
+Next you need to install RStudio, which is our recommended integrated development environment (IDE) for developing R code. To do so, visit the \href{https://rstudio.com/products/rstudio/download/}{RStudio desktop download page} and follow the installation instructions.
+
+Once you have installed R and RStudio, you should be able to open RStudio and enter the following into the Console to receive the number ``3'' as your output:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OtherTok{\textless{}{-}} \DecValTok{1}
+\NormalTok{y }\OtherTok{\textless{}{-}} \DecValTok{2}
+
+\NormalTok{x }\SpecialCharTok{+}\NormalTok{ y}
+\end{Highlighting}
+\end{Shaded}
+
+Some recommendations upon installing RStudio:
+
+\begin{itemize}
+\tightlist
+\item
+  Change the color scheme to dark.
+\item
+  Put the console on the right.
+\end{itemize}
+
+\url{https://www.rstudio.com/products/rstudio/download/\#download}
+Download and install the latest (almost certainly 64-bit) version of RStudio with default options
+Adjustments:
+Uncheck ``Restore .RData into workspace at startup
+Select ``Never'' for ``Save workspace to .RData on exit''
+Change color scheme to dark (e.g.~``Idle Fingers'')
+Put console on right
+
+\hypertarget{create-a-local-project}{%
+\subsection{Create a Local Project}\label{create-a-local-project}}
+
+Always work in an RStudio project
+Projects keep your files (and activity) organized
+Projects help manage your file path (so your computer can find things)
+Projects allow for more advanced capabilities later (like GitHub or renv)
+We cover the use of GitHub in a future webinar
+For now we create projects locally
+
+\hypertarget{install-and-load-packages}{%
+\subsection{Install and Load Packages}\label{install-and-load-packages}}
+
+As you use R, you will want to make use of the many packages others (and perhaps you) have written
+Essential packages (or collections):
+tidyverse, readxl
+Custom Microsoft office document creation
+officer, flextable, rvg, openxlsx, extrafont, extrafontdb
+Sensory specific packages
+sensR , SensoMineR, FactoMineR, factoextra
+There are many more, for statistical tests of all varieties, to multivariate analysis, to machine learning, to text analysis, etc.
+
+You only need to install each package once per R version
+To install a package, you can:
+Type install.packages(``{[}package name{]}'')
+Use the RStudio dropdown
+In addition, if a script loads package that are not installed, RStudio will prompt you to install the package
+Notes:
+If you do not have write access on your computer, you might need IT help to install packages
+You might need to safelist various R related tools and sites
+
+\hypertarget{run-sample-code}{%
+\subsection{Run Sample Code}\label{run-sample-code}}
+
+Like any language, R is best learned first through example then through study
+We start with a series of examples to illustrate basic principles
+For this example, we analyze a series of Tetrad tests
+
+Suppose you have 15 out of 44 correct in a Tetrad test
+Using sensR, it's easy to analyze these data:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(sensR)}
+
+\NormalTok{num\_correct }\OtherTok{\textless{}{-}} \DecValTok{15}  
+\NormalTok{num\_total }\OtherTok{\textless{}{-}} \DecValTok{44}  
+  
+\NormalTok{discrim\_res }\OtherTok{\textless{}{-}} \FunctionTok{discrim}\NormalTok{(num\_correct, num\_total, }\AttributeTok{method =} \StringTok{"tetrad"}\NormalTok{)  }
+  
+\FunctionTok{print}\NormalTok{(discrim\_res)  }
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{git-and-github}{%
+\section{Git and GitHub}\label{git-and-github}}
+
+Git is a version control system that allows you to revert to earlier versions of your code, if necessary. GitHub is service that allows for online backups of your code and which facilitates collaboration between team members. We highly recommend that you integrate both Git and GitHub into your data scientific workflow. For a full review of Git and GitHub from an R programming perspective, we recommend \href{https://happygitwithr.com/}{Happy Git with R} by Jenny Bryant. In what follows, we simply provide the minimum information needed to get you up and running with Git and GitHub. Also, for an insightful discussion of the need for version control, please see {[}Cite bryan2018excuse{]}.
+
+\hypertarget{git}{%
+\subsection{Git}\label{git}}
+
+\begin{itemize}
+\tightlist
+\item
+  Install Git
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Windows
+  \item
+    macOS
+  \end{itemize}
+\item
+  Register with RStudio
+\end{itemize}
+
+\hypertarget{github-1}{%
+\subsection{GitHub}\label{github-1}}
+
+\begin{itemize}
+\tightlist
+\item
+  Create a GitHub account
+\item
+  Register with RStudio
+\end{itemize}
+
+\hypertarget{raw-material-2}{%
+\section{RAW MATERIAL}\label{raw-material-2}}
+
+\hypertarget{principles-2}{%
+\subsection{Principles}\label{principles-2}}
+
+\hypertarget{tools-1}{%
+\subsection{Tools}\label{tools-1}}
+
+\hypertarget{github-2}{%
+\subsubsection{GitHub}\label{github-2}}
+
+\hypertarget{r-scripts-1}{%
+\subsubsection{R scripts}\label{r-scripts-1}}
+
+\hypertarget{rmarkdown-1}{%
+\subsubsection{RMarkdown}\label{rmarkdown-1}}
+
+\hypertarget{shiny-2}{%
+\subsubsection{Shiny}\label{shiny-2}}
+
+\hypertarget{documentation-1}{%
+\subsection{Documentation}\label{documentation-1}}
+
+\hypertarget{version-control-1}{%
+\subsection{Version control}\label{version-control-1}}
+
+\hypertarget{online-repositories-for-team-collaboration-1}{%
+\subsection{Online repositories for team collaboration}\label{online-repositories-for-team-collaboration-1}}
+
+\hypertarget{building-a-code-base-1}{%
+\subsection{Building a code base}\label{building-a-code-base-1}}
+
+\hypertarget{internal-functions-1}{%
+\subsubsection{Internal functions}\label{internal-functions-1}}
+
+\hypertarget{packages-1}{%
+\subsubsection{Packages}\label{packages-1}}
 
 \hypertarget{references}{%
 \chapter*{References}\label{references}}
