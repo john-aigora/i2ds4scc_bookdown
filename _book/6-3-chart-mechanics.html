@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="6.3 Chart Mechanics | Data Science for Sensory and Consumer Scientists" />
+<meta property="og:type" content="book" />
+
+
+<meta property="og:description" content="Open development of data science book for sensory and consumer scientists." />
+
+
+<meta name="author" content="John Ennis, Julien Delarue, and Thierry Worch" />
+
+<meta name="date" content="2020-12-31" />
+
+
+<meta name="description" content="Open development of data science book for sensory and consumer scientists.">
+
+<title>6.3 Chart Mechanics | Data Science for Sensory and Consumer Scientists</title>
+
+<script src="libs/header-attrs-2.6/header-attrs.js"></script>
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/darkly.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container-fluid main-container">
+
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul>
+<li><a href="index.html#preface">Preface</a></li>
+<li><a href="about-the-authors.html#about-the-authors">About the Authors</a></li>
+<li class="part"><span><b>Introduction</b></span></li>
+<li><a href="1-intro.html#intro"><span class="toc-section-number">1</span> Introduction</a>
+<ul>
+<li><a href="1-1-core-principles-in-sensory-and-consumer-science.html#core-principles-in-sensory-and-consumer-science"><span class="toc-section-number">1.1</span> Core principles in Sensory and Consumer Science</a>
+<ul>
+<li><a href="1-1-core-principles-in-sensory-and-consumer-science.html#measuring-and-analyzing-human-responses"><span class="toc-section-number">1.1.1</span> Measuring and analyzing human responses</a></li>
+</ul></li>
+<li><a href="1-2-how-should-sensory-and-consumer-scientists-learn-data-science.html#how-should-sensory-and-consumer-scientists-learn-data-science"><span class="toc-section-number">1.2</span> How should sensory and consumer scientists learn data science?</a></li>
+<li><a href="1-3-caution-dont-that-everybody-does.html#caution-dont-that-everybody-does"><span class="toc-section-number">1.3</span> Caution: Don’t that everybody does</a></li>
+<li><a href="1-4-example-projects.html#example-projects"><span class="toc-section-number">1.4</span> Example projects</a></li>
+</ul></li>
+<li><a href="2-data-science.html#data_science"><span class="toc-section-number">2</span> What is Data Science?</a>
+<ul>
+<li><a href="2-1-history-and-definition.html#history-and-definition"><span class="toc-section-number">2.1</span> History and Definition</a></li>
+<li><a href="2-2-data-scientific-workflow.html#data-scientific-workflow"><span class="toc-section-number">2.2</span> Data Scientific Workflow</a>
+<ul>
+<li><a href="2-2-data-scientific-workflow.html#data-collection"><span class="toc-section-number">2.2.1</span> Data Collection</a></li>
+<li><a href="2-2-data-scientific-workflow.html#data-preparation"><span class="toc-section-number">2.2.2</span> Data Preparation</a></li>
+<li><a href="2-2-data-scientific-workflow.html#data-analysis"><span class="toc-section-number">2.2.3</span> Data Analysis</a></li>
+<li><a href="2-2-data-scientific-workflow.html#value-delivery"><span class="toc-section-number">2.2.4</span> Value Delivery</a></li>
+</ul></li>
+<li><a href="2-3-reproducible-research.html#reproducible-research"><span class="toc-section-number">2.3</span> Reproducible Research</a>
+<ul>
+<li><a href="2-3-reproducible-research.html#principles"><span class="toc-section-number">2.3.1</span> Principles</a></li>
+<li><a href="2-3-reproducible-research.html#tools"><span class="toc-section-number">2.3.2</span> Tools</a></li>
+<li><a href="2-3-reproducible-research.html#documentation"><span class="toc-section-number">2.3.3</span> Documentation</a></li>
+<li><a href="2-3-reproducible-research.html#version-control"><span class="toc-section-number">2.3.4</span> Version control</a></li>
+<li><a href="2-3-reproducible-research.html#online-repositories-for-team-collaboration"><span class="toc-section-number">2.3.5</span> Online repositories for team collaboration</a></li>
+<li><a href="2-3-reproducible-research.html#building-a-code-base"><span class="toc-section-number">2.3.6</span> Building a code base</a></li>
+</ul></li>
+<li><a href="2-4-benefits-of-data-science.html#benefits-of-data-science"><span class="toc-section-number">2.4</span> Benefits of Data Science</a>
+<ul>
+<li><a href="2-4-benefits-of-data-science.html#data-driven-decision-making"><span class="toc-section-number">2.4.1</span> Data-Driven Decision Making</a></li>
+<li><a href="2-4-benefits-of-data-science.html#standardized-data-collection"><span class="toc-section-number">2.4.2</span> Standardized Data Collection</a></li>
+<li><a href="2-4-benefits-of-data-science.html#standardized-reporting"><span class="toc-section-number">2.4.3</span> Standardized Reporting</a></li>
+<li><a href="2-4-benefits-of-data-science.html#improved-business-impact"><span class="toc-section-number">2.4.4</span> Improved Business Impact</a></li>
+</ul></li>
+<li><a href="2-5-how-to-learn-data-science.html#how-to-learn-data-science"><span class="toc-section-number">2.5</span> How to Learn Data Science</a></li>
+<li><a href="2-6-how-to-use-this-book.html#how-to-use-this-book"><span class="toc-section-number">2.6</span> How to Use This Book</a></li>
+<li><a href="2-7-common-data-science-tools.html#common-data-science-tools"><span class="toc-section-number">2.7</span> Common Data Science Tools</a></li>
+</ul></li>
+<li><a href="3-start-R.html#start-R"><span class="toc-section-number">3</span> Getting Started</a>
+<ul>
+<li><a href="3-1-r.html#r"><span class="toc-section-number">3.1</span> R</a>
+<ul>
+<li><a href="3-1-r.html#why-learn-a-programming-language"><span class="toc-section-number">3.1.1</span> Why Learn a Programming Language?</a></li>
+<li><a href="3-1-r.html#why-r"><span class="toc-section-number">3.1.2</span> Why R?</a></li>
+</ul></li>
+<li><a href="3-2-why-r-1.html#why-r-1"><span class="toc-section-number">3.2</span> Why R?</a>
+<ul>
+<li><a href="3-2-why-r-1.html#steps-to-install-r"><span class="toc-section-number">3.2.1</span> Steps to Install R</a></li>
+</ul></li>
+<li><a href="3-3-rstudio.html#rstudio"><span class="toc-section-number">3.3</span> RStudio</a>
+<ul>
+<li><a href="3-3-rstudio.html#steps-to-install-rstudio"><span class="toc-section-number">3.3.1</span> Steps to Install RStudio</a></li>
+<li><a href="3-3-rstudio.html#create-a-local-project"><span class="toc-section-number">3.3.2</span> Create a Local Project</a></li>
+<li><a href="3-3-rstudio.html#install-and-load-packages"><span class="toc-section-number">3.3.3</span> Install and Load Packages</a></li>
+<li><a href="3-3-rstudio.html#run-sample-code"><span class="toc-section-number">3.3.4</span> Run Sample Code</a></li>
+</ul></li>
+<li><a href="3-4-git-and-github.html#git-and-github"><span class="toc-section-number">3.4</span> Git and GitHub</a>
+<ul>
+<li><a href="3-4-git-and-github.html#git"><span class="toc-section-number">3.4.1</span> Git</a></li>
+<li><a href="3-4-git-and-github.html#github-1"><span class="toc-section-number">3.4.2</span> GitHub</a></li>
+</ul></li>
+<li><a href="3-5-raw-material.html#raw-material"><span class="toc-section-number">3.5</span> RAW MATERIAL</a>
+<ul>
+<li><a href="3-5-raw-material.html#principles-1"><span class="toc-section-number">3.5.1</span> Principles</a></li>
+<li><a href="3-5-raw-material.html#tools-1"><span class="toc-section-number">3.5.2</span> Tools</a></li>
+<li><a href="3-5-raw-material.html#documentation-1"><span class="toc-section-number">3.5.3</span> Documentation</a></li>
+<li><a href="3-5-raw-material.html#version-control-1"><span class="toc-section-number">3.5.4</span> Version control</a></li>
+<li><a href="3-5-raw-material.html#online-repositories-for-team-collaboration-1"><span class="toc-section-number">3.5.5</span> Online repositories for team collaboration</a></li>
+<li><a href="3-5-raw-material.html#building-a-code-base-1"><span class="toc-section-number">3.5.6</span> Building a code base</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>General Skills</b></span></li>
+<li><a href="4-tidy-thoughts.html#tidy-thoughts"><span class="toc-section-number">4</span> Tidy Thinking</a></li>
+<li><a href="5-data-manip.html#data_manip"><span class="toc-section-number">5</span> Data Manipulation</a></li>
+<li><a href="6-data-viz.html#data-viz"><span class="toc-section-number">6</span> Data Visualization</a>
+<ul>
+<li><a href="6-1-principles-2.html#principles-2"><span class="toc-section-number">6.1</span> Principles</a></li>
+<li><a href="6-2-table-mechanics.html#table-mechanics"><span class="toc-section-number">6.2</span> Table Mechanics</a></li>
+<li><a href="6-3-chart-mechanics.html#chart-mechanics"><span class="toc-section-number">6.3</span> Chart Mechanics</a></li>
+<li><a href="6-4-examples.html#examples"><span class="toc-section-number">6.4</span> Examples</a></li>
+<li><a href="6-5-raw-material-1.html#raw-material-1"><span class="toc-section-number">6.5</span> Raw Material</a></li>
+<li><a href="6-6-philosophy-of-ggplot2.html#philosophy-of-ggplot2"><span class="toc-section-number">6.6</span> Philosophy of ggplot2</a>
+<ul>
+<li><a href="6-6-philosophy-of-ggplot2.html#aesthetics"><span class="toc-section-number">6.6.1</span> aesthetics</a></li>
+<li><a href="6-6-philosophy-of-ggplot2.html#geom_"><span class="toc-section-number">6.6.2</span> geom_</a></li>
+</ul></li>
+<li><a href="6-7-present-the-most-useful-graph.html#present-the-most-useful-graph"><span class="toc-section-number">6.7</span> Present the most useful graph</a>
+<ul>
+<li><a href="6-7-present-the-most-useful-graph.html#scatter-points"><span class="toc-section-number">6.7.1</span> Scatter points</a></li>
+<li><a href="6-7-present-the-most-useful-graph.html#line-charts"><span class="toc-section-number">6.7.2</span> Line charts</a></li>
+<li><a href="6-7-present-the-most-useful-graph.html#bar-charts"><span class="toc-section-number">6.7.3</span> Bar charts</a></li>
+<li><a href="6-7-present-the-most-useful-graph.html#distribution"><span class="toc-section-number">6.7.4</span> Distribution</a></li>
+<li><a href="6-7-present-the-most-useful-graph.html#text"><span class="toc-section-number">6.7.5</span> Text</a></li>
+<li><a href="6-7-present-the-most-useful-graph.html#rectangles"><span class="toc-section-number">6.7.6</span> Rectangles</a></li>
+<li><a href="6-7-present-the-most-useful-graph.html#themes-and-legend"><span class="toc-section-number">6.7.7</span> Themes and legend</a></li>
+</ul></li>
+<li><a href="6-8-interesting-addition.html#interesting-addition"><span class="toc-section-number">6.8</span> Interesting addition</a>
+<ul>
+<li><a href="6-8-interesting-addition.html#playing-around-with-axes"><span class="toc-section-number">6.8.1</span> Playing around with axes</a></li>
+<li><a href="6-8-interesting-addition.html#transposing-the-plot"><span class="toc-section-number">6.8.2</span> Transposing the plot</a></li>
+<li><a href="6-8-interesting-addition.html#splitting-plots"><span class="toc-section-number">6.8.3</span> Splitting plots</a></li>
+<li><a href="6-8-interesting-addition.html#combining-plots"><span class="toc-section-number">6.8.4</span> Combining plots</a></li>
+</ul></li>
+</ul></li>
+<li><a href="7-auto-report.html#auto-report"><span class="toc-section-number">7</span> Automated Reporting</a>
+<ul>
+<li><a href="7-auto-report.html#powerpoint-workflow"><span class="toc-section-number">7.0.1</span> PowerPoint workflow</a></li>
+<li><a href="7-auto-report.html#word"><span class="toc-section-number">7.0.2</span> Word</a></li>
+<li><a href="7-auto-report.html#excel"><span class="toc-section-number">7.0.3</span> Excel</a></li>
+<li><a href="7-1-more-raw-material.html#more-raw-material"><span class="toc-section-number">7.1</span> MORE RAW MATERIAL</a></li>
+<li><a href="7-2-powerpint-slide-master.html#powerpint-slide-master"><span class="toc-section-number">7.2</span> PowerPint Slide Master</a>
+<ul>
+<li><a href="7-2-powerpint-slide-master.html#importing-the-template"><span class="toc-section-number">7.2.1</span> Importing the Template</a></li>
+<li><a href="7-2-powerpint-slide-master.html#creating-a-powerpoint-deck"><span class="toc-section-number">7.2.2</span> Creating a PowerPoint Deck</a></li>
+<li><a href="7-2-powerpint-slide-master.html#selection-pane"><span class="toc-section-number">7.2.3</span> Selection Pane</a></li>
+<li><a href="7-2-powerpint-slide-master.html#key-functions-read_pptxpath-layout_summaryx-layout_propertiesx-add_slidex-layout-master-on_slidex-index-slide_summaryx-index-null"><span class="toc-section-number">7.2.4</span> Key functions: read_pptx(path), layout_summary(x), layout_properties(x), add_slide(x, layout, master), on_slide(x, index), slide_summary(x, index = NULL)</a></li>
+<li><a href="7-2-powerpint-slide-master.html#example-code"><span class="toc-section-number">7.2.5</span> Example Code</a></li>
+</ul></li>
+<li><a href="7-3-placeholders.html#placeholders"><span class="toc-section-number">7.3</span> Placeholders</a>
+<ul>
+<li><a href="7-3-placeholders.html#placeholders-and-shapes"><span class="toc-section-number">7.3.1</span> Placeholders and Shapes</a></li>
+<li><a href="7-3-placeholders.html#key-functions-ph_with"><span class="toc-section-number">7.3.2</span> Key functions: ph_with()</a></li>
+</ul></li>
+<li><a href="7-4-text-1.html#text-1"><span class="toc-section-number">7.4</span> Text</a>
+<ul>
+<li><a href="7-4-text-1.html#working-with-text"><span class="toc-section-number">7.4.1</span> Working with Text</a></li>
+<li><a href="7-4-text-1.html#key-functions-fpar-ftext-fp_text-block_list"><span class="toc-section-number">7.4.2</span> Key functions: fpar(), ftext(), fp_text(), block_list()</a></li>
+<li><a href="7-4-text-1.html#example-code-1"><span class="toc-section-number">7.4.3</span> Example Code</a></li>
+</ul></li>
+<li><a href="7-5-tables.html#tables"><span class="toc-section-number">7.5</span> Tables</a>
+<ul>
+<li><a href="7-5-tables.html#basic-code"><span class="toc-section-number">7.5.1</span> Basic Code</a></li>
+<li><a href="7-5-tables.html#introduction-to-flextable"><span class="toc-section-number">7.5.2</span> Introduction to flextable</a></li>
+<li><a href="7-5-tables.html#demonstration"><span class="toc-section-number">7.5.3</span> Demonstration</a></li>
+<li><a href="7-5-tables.html#demonstration-output"><span class="toc-section-number">7.5.4</span> Demonstration Output</a></li>
+<li><a href="7-5-tables.html#reformat-original-example"><span class="toc-section-number">7.5.5</span> Reformat original example</a></li>
+<li><a href="7-5-tables.html#key-functions-flextable-align-bold-font-color-bg-height-width-border_outer-border_inner-border_inner_h-border_inner_v-autofit"><span class="toc-section-number">7.5.6</span> key functions: flextable(), align(), bold(), font(), color(), bg(), height() &amp; width(), border_outer() &amp; border_inner() &amp; border_inner_h() &amp; border_inner_v(), autofit()</a></li>
+</ul></li>
+<li><a href="7-6-charts.html#charts"><span class="toc-section-number">7.6</span> Charts</a>
+<ul>
+<li><a href="7-6-charts.html#adding-charts-as-images"><span class="toc-section-number">7.6.1</span> Adding charts as images</a></li>
+<li><a href="7-6-charts.html#mschart-package"><span class="toc-section-number">7.6.2</span> mschart Package</a></li>
+</ul></li>
+<li><a href="7-7-word-1.html#word-1"><span class="toc-section-number">7.7</span> Word</a>
+<ul>
+<li><a href="7-7-word-1.html#word-documents"><span class="toc-section-number">7.7.1</span> Word documents</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>Workflow in Practice</b></span></li>
+<li><a href="2-2-data-scientific-workflow.html#data-collection"><span class="toc-section-number">8</span> Data Collection</a>
+<ul>
+<li><a href="8-1-background.html#background"><span class="toc-section-number">8.1</span> Background</a></li>
+<li><a href="8-2-other-details.html#other-details"><span class="toc-section-number">8.2</span> Other details</a></li>
+<li><a href="8-3-conclusions.html#conclusions"><span class="toc-section-number">8.3</span> Conclusions?</a></li>
+</ul></li>
+<li><a href="9-data-prep.html#data-prep"><span class="toc-section-number">9</span> Data Preparation</a>
+<ul>
+<li><a href="9-1-data-importation.html#data-importation"><span class="toc-section-number">9.1</span> Data Importation</a>
+<ul>
+<li><a href="9-1-data-importation.html#importing-structured-excel-file"><span class="toc-section-number">9.1.1</span> Importing Structured Excel File</a></li>
+<li><a href="9-1-data-importation.html#importing-unstructured-excel-file"><span class="toc-section-number">9.1.2</span> Importing Unstructured Excel File</a></li>
+</ul></li>
+<li><a href="9-2-data-inspection.html#data-inspection"><span class="toc-section-number">9.2</span> Data Inspection</a>
+<ul>
+<li><a href="9-2-data-inspection.html#data-type"><span class="toc-section-number">9.2.1</span> Data Type</a></li>
+<li><a href="9-2-data-inspection.html#changing-the-type-of-a-variable"><span class="toc-section-number">9.2.2</span> Changing the type of a variable</a></li>
+</ul></li>
+<li><a href="9-3-data-organization.html#data-organization"><span class="toc-section-number">9.3</span> Data Organization</a></li>
+<li><a href="9-4-data-manipulation.html#data-manipulation"><span class="toc-section-number">9.4</span> Data Manipulation</a>
+<ul>
+<li><a href="9-4-data-manipulation.html#type-of-table"><span class="toc-section-number">9.4.1</span> Type of table</a></li>
+<li><a href="9-4-data-manipulation.html#data-organisation"><span class="toc-section-number">9.4.2</span> Data organisation</a></li>
+<li><a href="9-4-data-manipulation.html#data-re-structuration"><span class="toc-section-number">9.4.3</span> Data re-structuration</a></li>
+</ul></li>
+<li><a href="9-5-cleaning-and-quality-assessment.html#cleaning-and-quality-assessment"><span class="toc-section-number">9.5</span> Cleaning and Quality Assessment</a>
+<ul>
+<li><a href="9-5-cleaning-and-quality-assessment.html#renaming"><span class="toc-section-number">9.5.1</span> Renaming</a></li>
+<li><a href="9-5-cleaning-and-quality-assessment.html#recoding"><span class="toc-section-number">9.5.2</span> Recoding</a></li>
+<li><a href="9-5-cleaning-and-quality-assessment.html#handling-missing-values"><span class="toc-section-number">9.5.3</span> Handling Missing Values</a></li>
+<li><a href="9-5-cleaning-and-quality-assessment.html#quality-assessment"><span class="toc-section-number">9.5.4</span> Quality Assessment</a></li>
+</ul></li>
+</ul></li>
+<li><a href="10-data-analysis.html#data_analysis"><span class="toc-section-number">10</span> Data Analysis</a>
+<ul>
+<li><a href="10-1-transformation.html#transformation"><span class="toc-section-number">10.1</span> Transformation</a></li>
+<li><a href="10-2-exploration.html#exploration"><span class="toc-section-number">10.2</span> Exploration</a></li>
+<li><a href="10-3-modeling.html#modeling"><span class="toc-section-number">10.3</span> Modeling</a></li>
+</ul></li>
+<li><a href="2-2-data-scientific-workflow.html#value-delivery"><span class="toc-section-number">11</span> Value Delivery</a>
+<ul>
+<li><a href="11-1-design-principles.html#design-principles"><span class="toc-section-number">11.1</span> Design principles</a></li>
+<li><a href="11-2-scientific-inquiry-vs-storytelling.html#scientific-inquiry-vs-storytelling"><span class="toc-section-number">11.2</span> Scientific inquiry vs storytelling</a></li>
+<li><a href="11-3-research-reformulation.html#research-reformulation"><span class="toc-section-number">11.3</span> Research reformulation</a></li>
+<li><a href="11-4-interactive-reporting.html#interactive-reporting"><span class="toc-section-number">11.4</span> Interactive reporting</a></li>
+<li><a href="11-5-excel-1.html#excel-1"><span class="toc-section-number">11.5</span> Excel</a></li>
+<li><a href="11-6-word-2.html#word-2"><span class="toc-section-number">11.6</span> Word</a></li>
+<li><a href="11-7-powerpoint.html#powerpoint"><span class="toc-section-number">11.7</span> PowerPoint</a>
+<ul>
+<li><a href="11-7-powerpoint.html#charts-1"><span class="toc-section-number">11.7.1</span> Charts</a></li>
+<li><a href="11-7-powerpoint.html#tables-1"><span class="toc-section-number">11.7.2</span> Tables</a></li>
+<li><a href="11-7-powerpoint.html#bullet-points"><span class="toc-section-number">11.7.3</span> Bullet Points</a></li>
+<li><a href="11-7-powerpoint.html#images"><span class="toc-section-number">11.7.4</span> Images</a></li>
+</ul></li>
+<li><a href="11-8-html.html#html"><span class="toc-section-number">11.8</span> HTML</a></li>
+</ul></li>
+<li class="part"><span><b>Additional Topics</b></span></li>
+<li><a href="12-machine-learning.html#machine_learning"><span class="toc-section-number">12</span> Machine Learning</a>
+<ul>
+<li><a href="12-1-concepts-and-general-workflow-trainingtest.html#concepts-and-general-workflow-trainingtest"><span class="toc-section-number">12.1</span> Concepts and general workflow (training/test)</a></li>
+<li><a href="12-2-unsupervised-learning.html#unsupervised-learning"><span class="toc-section-number">12.2</span> Unsupervised learning</a>
+<ul>
+<li><a href="12-2-unsupervised-learning.html#cluster-analysis"><span class="toc-section-number">12.2.1</span> Cluster analysis</a></li>
+<li><a href="12-2-unsupervised-learning.html#factor-analysis"><span class="toc-section-number">12.2.2</span> Factor analysis</a></li>
+<li><a href="12-2-unsupervised-learning.html#principle-components-analysis"><span class="toc-section-number">12.2.3</span> Principle components analysis</a></li>
+<li><a href="12-2-unsupervised-learning.html#t-sne"><span class="toc-section-number">12.2.4</span> t-SNE</a></li>
+</ul></li>
+<li><a href="12-3-semisupervised-learning.html#semisupervised-learning"><span class="toc-section-number">12.3</span> Semisupervised learning</a>
+<ul>
+<li><a href="12-3-semisupervised-learning.html#pls-regression"><span class="toc-section-number">12.3.1</span> PLS regression</a></li>
+</ul></li>
+<li><a href="12-4-supervised-learning.html#supervised-learning"><span class="toc-section-number">12.4</span> Supervised learning</a>
+<ul>
+<li><a href="12-4-supervised-learning.html#regression"><span class="toc-section-number">12.4.1</span> Regression</a></li>
+<li><a href="12-4-supervised-learning.html#k-nearest-neighbors"><span class="toc-section-number">12.4.2</span> K-nearest neighbors</a></li>
+<li><a href="12-4-supervised-learning.html#decision-trees"><span class="toc-section-number">12.4.3</span> Decision trees</a></li>
+<li><a href="12-4-supervised-learning.html#black-boxes"><span class="toc-section-number">12.4.4</span> Black boxes</a></li>
+</ul></li>
+<li><a href="12-5-predictive-modeling.html#predictive-modeling"><span class="toc-section-number">12.5</span> Predictive modeling</a>
+<ul>
+<li><a href="12-5-predictive-modeling.html#predicting-sensory-profiles-from-instrumental-data"><span class="toc-section-number">12.5.1</span> Predicting sensory profiles from instrumental data</a></li>
+<li><a href="12-5-predictive-modeling.html#predicting-consumer-response-from-sensory-profiles"><span class="toc-section-number">12.5.2</span> Predicting consumer response from sensory profiles</a></li>
+</ul></li>
+<li><a href="12-6-interpretability.html#interpretability"><span class="toc-section-number">12.6</span> Interpretability</a>
+<ul>
+<li><a href="12-6-interpretability.html#lime"><span class="toc-section-number">12.6.1</span> LIME</a></li>
+<li><a href="12-6-interpretability.html#dalex"><span class="toc-section-number">12.6.2</span> DALEX</a></li>
+<li><a href="12-6-interpretability.html#iml"><span class="toc-section-number">12.6.3</span> IML</a></li>
+</ul></li>
+<li><a href="12-7-cmputer-vision.html#cmputer-vision"><span class="toc-section-number">12.7</span> Cmputer vision</a></li>
+<li><a href="12-8-other-methods-and-resources.html#other-methods-and-resources"><span class="toc-section-number">12.8</span> Other methods and resources</a>
+<ul>
+<li><a href="12-8-other-methods-and-resources.html#data-prep-1"><span class="toc-section-number">12.8.1</span> Data Prep</a></li>
+<li><a href="12-8-other-methods-and-resources.html#classification-code"><span class="toc-section-number">12.8.2</span> Classification Code</a></li>
+<li><a href="12-8-other-methods-and-resources.html#regression-code"><span class="toc-section-number">12.8.3</span> Regression Code</a></li>
+</ul></li>
+</ul></li>
+<li><a href="13-text-analysis.html#text-analysis"><span class="toc-section-number">13</span> Text Analysis</a>
+<ul>
+<li><a href="13-1-data-import.html#data-import"><span class="toc-section-number">13.1</span> Data import</a>
+<ul>
+<li><a href="13-1-data-import.html#data-sources"><span class="toc-section-number">13.1.1</span> Data sources</a></li>
+<li><a href="13-1-data-import.html#tokenizing"><span class="toc-section-number">13.1.2</span> Tokenizing</a></li>
+<li><a href="13-1-data-import.html#lemmatization-stemming-and-stop-word-removal"><span class="toc-section-number">13.1.3</span> Lemmatization, stemming, and stop word removal</a></li>
+</ul></li>
+<li><a href="13-2-analysis.html#analysis"><span class="toc-section-number">13.2</span> Analysis</a>
+<ul>
+<li><a href="13-2-analysis.html#frequency-counts-and-summary-statistics"><span class="toc-section-number">13.2.1</span> Frequency counts and summary statistics</a></li>
+<li><a href="13-2-analysis.html#word-clouds"><span class="toc-section-number">13.2.2</span> Word clouds</a></li>
+<li><a href="13-2-analysis.html#contrast-plots"><span class="toc-section-number">13.2.3</span> Contrast plots</a></li>
+<li><a href="13-2-analysis.html#sentiment-analysis"><span class="toc-section-number">13.2.4</span> Sentiment analysis</a></li>
+<li><a href="13-2-analysis.html#bigrams-and-word-graphs"><span class="toc-section-number">13.2.5</span> Bigrams and word graphs</a></li>
+</ul></li>
+<li><a href="13-3-raw-material-2.html#raw-material-2"><span class="toc-section-number">13.3</span> RAW MATERIAL</a>
+<ul>
+<li><a href="13-3-raw-material-2.html#statistical-entities"><span class="toc-section-number">13.3.1</span> Statistical entities</a></li>
+<li><a href="13-3-raw-material-2.html#analysis-of-frequencies-and-term-frequency-document"><span class="toc-section-number">13.3.2</span> Analysis of Frequencies and term-frequency document</a></li>
+<li><a href="13-3-raw-material-2.html#futher-analysis-of-the-words"><span class="toc-section-number">13.3.3</span> Futher Analysis of the words</a></li>
+</ul></li>
+</ul></li>
+<li><a href="14-pipelines.html#pipelines"><span class="toc-section-number">14</span> Pipelines</a></li>
+<li><a href="15-next-steps.html#next-steps"><span class="toc-section-number">15</span> What’s Next?</a>
+<ul>
+<li><a href="15-1-shiny-2.html#shiny-2"><span class="toc-section-number">15.1</span> Shiny</a></li>
+<li><a href="15-2-graph-databases.html#graph-databases"><span class="toc-section-number">15.2</span> Graph Databases</a></li>
+<li><a href="15-3-sensory-analysis-in-r.html#sensory-analysis-in-r"><span class="toc-section-number">15.3</span> Sensory Analysis in R</a></li>
+<li><a href="15-4-learning-resources.html#learning-resources"><span class="toc-section-number">15.4</span> Learning Resources</a></li>
+<li><a href="15-5-python.html#python"><span class="toc-section-number">15.5</span> Python</a></li>
+</ul></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li><a href="references.html#references">References</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<div id="chart-mechanics" class="section level2" number="6.3">
+<h2><span class="header-section-number">6.3</span> Chart Mechanics</h2>
+</div>
+<p style="text-align: center;">
+<a href="6-2-table-mechanics.html"><button class="btn btn-default">Previous</button></a>
+<a href="6-4-examples.html"><button class="btn btn-default">Next</button></a>
+</p>
+</div>
+</div>
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+</body>
+</html>

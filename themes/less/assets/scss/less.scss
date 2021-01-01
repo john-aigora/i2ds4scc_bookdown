@@ -1,0 +1,124 @@
+@import "../../node_modules/@forever9/lego/lego";
+
+$breakpoints: (
+  md: 856px,
+);
+$container-max-widths: (
+  md: 800px,
+);
+@mixin mobile() {
+  @include media-down(map-get($breakpoints, md)) {
+    @content;
+  }
+}
+
+@import "font";
+@import "dark";
+@import "heaader";
+@import "single";
+@import "footer";
+@import "taxonomy";
+
+@include container($breakpoints: $breakpoints);
+@include row();
+@include column($grid-gap: 30px);
+@include gen-grids();
+
+@mixin offset(
+  $name: is-offset,
+  $column-number: 12,
+  $breakpoints: $breakpoints
+) {
+  @for $i from 1 through $column-number {
+    .#{$name}-#{$i} {
+      margin-left: percentage($i / $column-number);
+    }
+  }
+
+  @each $breakpoint, $width in $breakpoints {
+    @include media-up($width) {
+      @for $i from 1 through 12 {
+        .#{$name}-#{$breakpoint}-#{$i} {
+          margin-left: percentage($i / $column-number);
+        }
+      }
+    }
+  }
+}
+
+@include offset();
+
+html {
+  --theme-color: #5dc2c3;
+}
+
+body {
+  font-family: "Merriweather", -apple-system, BlinkMacSystemFont, PingFang SC,
+    Hiragino Sans GB, Microsoft YaHei, "\5FAE\8F6F\96C5\9ED1", helvetica neue,
+    helvetica, ubuntu, roboto, noto, segoe ui, Arial, sans-serif;
+  background: #fff;
+}
+
+.icon {
+  cursor: pointer;
+}
+
+.main {
+  padding-top: 40px;
+  max-width: 100%;
+  min-height: calc(100% - 160px);
+}
+
+a {
+  text-decoration: none;
+}
+
+.posts {
+  margin-bottom: 80px;
+}
+
+.post {
+  margin-bottom: 30px;
+}
+
+.post-title {
+  font-size: 20px;
+  color: #000;
+  display: block;
+  margin-bottom: 10px;
+  @include mobile {
+    font-size: 18px;
+  }
+}
+
+.post-date {
+  color: #999;
+  font-size: 12px;
+}
+
+.post-title,
+h2 {
+  font-family: "Monda", -apple-system, BlinkMacSystemFont, PingFang SC,
+    Hiragino Sans GB, Microsoft YaHei, "\5FAE\8F6F\96C5\9ED1", helvetica neue,
+    helvetica, ubuntu, roboto, noto, segoe ui, Arial, sans-serif;
+}
+
+.year {
+  font-size: 28px;
+  margin-bottom: 40px;
+  font-weight: 500;
+  padding-left: 20px;
+  position: relative;
+
+  &:before {
+    display: block;
+    content: "";
+    border-radius: 100%;
+    width: 8px;
+    height: 8px;
+    background: var(--theme-color);
+    position: absolute;
+    left: 0;
+    top: 12px;
+  }
+}

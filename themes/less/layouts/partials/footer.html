@@ -1,0 +1,18 @@
+<div class="container">
+    <footer>
+        <div>Less is More</div>
+        <span class="copyright">
+            {{ $year := "2020" }}
+            {{ $created := $.Site.Params.siteCreated }}
+            {{ if and $created (lt $created now.Year) }}
+                {{ $year = printf "%d - %d" $created now.Year }}
+                {{ else }}
+                {{ $year = printf "%d" now.Year }}
+            {{ end }}
+            © {{ $year }}
+        </span>
+    </footer>
+</div>
+<script src="https://cdn.staticfile.org/tocbot/4.11.2/tocbot.min.js"></script>
+{{ $built := resources.Get "js/less.js" | js.Build "less.js" }}
+<script type="text/javascript" src="{{ $built.RelPermalink }}"></script>
