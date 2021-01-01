@@ -5,7 +5,9 @@ knitr::opts_chunk$set(echo=FALSE, eval=FALSE)
 
 The data we will be using in this chapter is the one that you imported in Section \@ref(data-collection).
 
-## Data Inspection
+## Inspect
+
+### Data Inspection
 
 To inspect the data, different steps can be used. 
 First, since `read_xlsx()` returns a tibble, we can take advantage of its printing properties to get a fill of the data at hand,
@@ -13,6 +15,7 @@ First, since `read_xlsx()` returns a tibble, we can take advantage of its printi
 ```{r TFEQ_data}
 TFEQ_data
 ```
+
 
 Other informative solutions consists in printing a summary of the data through the `summary()` function, or looking at its type and first values using `str()`. However, due to its richness of the outputs, we prefer to use the `skim()` function from the `{skimr}` package.
 
@@ -22,7 +25,27 @@ skim(TFEQ_data)
 ```
 
 
-### Data Type
+### Design Inspection
+
+
+Evaluate if the design is complete/incomplete
+Frequencies and cross-frequencies (simple statistics and simple graphs)
+
+
+### Missing Data Inspection
+
+Are there NAs?
+If yes, are they structured of random?
+
+
+## Clean
+
+### Renaming Variables
+
+renaming columns using `rename()` or `select()`
+
+
+### Handling Data Type
 
 In R, the variables can be of different types, going from numerical to nominal to binary etc. This section aims in presenting the most common types (and their properties) used in sensory and consumer studies, and in showing how to transform a variable from one type to another.
 
@@ -69,6 +92,7 @@ sum(test)
 
 ```
 
+
 #### Nominal Data
 
 Nominal data is any data that is not numerical. In most cases, nominal data are defined through text, or strings. It can appear in some situations that nominal variables are still defined with numbers although they do not have a numerical meaning. This is for instance the case when the respondents or samples are identified through numerical codes: In that case, it is clear that respondent 2 is not twice larger than respondent 1 for instance. But since the software cannot guess that those numbers are *identifiers* rather than *numbers*, the variables should be declared as nominal. The procedure explaining how to convert the type of the variables will be explained in the next section. 
@@ -90,6 +114,7 @@ To evaluate the number of levels, different procedure are required:
  
 Let's compare a variable set as `factor` and `character` by using the `Judge` column from `TFEQ_data`:
 
+
 ```{r char_vs_fctr1}
 example <- TFEQ_data %>% 
   dplyr::select(Judge) %>% 
@@ -104,6 +129,7 @@ nlevels(example$Judge_fct)
 
 ```
 
+
 Although `Judge` and `Judge_fct` look the same, they are structurally different, and those differences play an important role that one should consider when running certain analyses, or building tables and graphs.
 
 When set as `character`, the number of levels of a variable is directly read from the data, and its levels' order would either match the way they appear in the data, or are ordered alphabetically. This means that any data collected using a structured scale will lose its natural order. 
@@ -112,6 +138,8 @@ When set as `factor`, the number and order of the factor levels are informed, an
 
 To illustrate this, let's re-arrange the levels from `Judge_fct` by ordering them numerically in such a way `J2` follows `J1` rather than `J10`.
 
+
+
 ```{r sorting_judge}
 judge <- str_sort(levels(example$Judge_fct),numeric=TRUE)
 judge
@@ -119,7 +147,10 @@ levels(example$Judge_fct) <- judge
 
 ```
 
+
+
 Now the levels are sorted, let's 'remove' some respondents by only keeping the 20 first ones (J1 to J20, as J18 does not exist), and re-run the previous code:
+
 
 ```{r char_vs_fctr2}
 example <- TFEQ_data %>% 
@@ -135,6 +166,8 @@ levels(example$Judge_fct)
 nlevels(example$Judge_fct)
 
 ```
+
+
 
 After filtering some respondents, it can be noticed that the variable set as character only contains 19 elements, whereas the column set as factor still contains the 107 respondents (most of them not having any recordings). This property can be seen as an advantage or a disadvantage depending on the situation:
 
@@ -173,6 +206,7 @@ nlevels(example$Area)
 table(example$`Living area`, example$Area)
 ```
 
+
 This approach of renaming and re-ordering factor levels is very important as it simplifies the readability of tables and figures.
 Some other transformations can be applied to factors thanks to the `{forcats}` package. Particular attention can be given to the following functions:
 
@@ -188,7 +222,7 @@ Although it hasn't been done here, manipulating strings is also possible through
  - `str_extract`, `str_replace`, `str_split` extract, replace, or split strings or part of the strings.
   
  
-### Converting to Other Types
+### Converting between Types
 
 When importing data, variables may not always be associated to the right type. For instance, when respondents or products are numerically coded, they will be defined as integers rather than strings. Additionally, each variable type has its own property. To take full advantage of the different variable types, and to avoid wrong analyses (e.g considering a variable that is numerically coded as numeric when it is not), we need to convert them to other types.  
 
@@ -202,21 +236,28 @@ The conversion from numerical to character or factor is simply done using `as.ch
 
 To illustrate the following points, let's start with creating a tibble with two variables, one containing strings made of numbers, and one containing strings made of text.
 
+
 ```{r simple_example}
 example <- tibble(Numbers = c("2","4","9","6","8","12","10"),
                   Text = c("Data","Science","4","Sensory","and","Consumer","Research"))
 ```
 
+
+
 The conversion from character to numerical is straight forward and requires the use of the function `as.numeric()`:
+
 
 ```{r char_2_num}
 example %>% 
   mutate(NumbersN = as.numeric(Numbers), TextN = as.numeric(Text))
 ```
 
+
+
 As can be seen, when strings are made of numbers, the conversion works fine. However, the text are not converted properly and returns NAs.
 
 Now let's apply the same principle to a variable of the type factor. To do so, we will take the same example but first convert the variables from character to factor:
+
 
 ```{r char_2_fctr}
 example <- example %>% 
@@ -224,16 +265,23 @@ example <- example %>%
   mutate(Text = factor(Text, levels=c("Data","Science","4","Sensory","and","Consumer","Research")))
 ```
 
+
+
 Let's apply as.numeric() to these variables:
+
+
 
 ```{r fctr_2_num}
 example %>% 
   mutate(NumbersN = as.numeric(Numbers), TextN = as.numeric(Text))
 ```
 
+
+
 We can notice here that the outcome is not really as expected as the numbers 2-4-9-6-8-12-10 becomes 3-4-7-5-6-2-1, and Data-Science-4-Sensory-and-Consumer-Research becomes 1-2-3-4-5-6-7. The rationale behind this conversion is that the numbers do not reflects the string itself, but the position of that level within the factor level structure.
 
 To convert properly numerical factor levels to number, the variable should first be converted as character:
+
 
 ```{r fctr_2_char_2_num}
 example %>%
@@ -241,13 +289,35 @@ example %>%
 ```
 
 
-## Data Organization
+#### Conditional Renaming?
+
+`mutate()` and `ifelse()`
+
+### Handling Missing Values
+
+
+Ignoring, removing, imputing
+
+
+
+### Restructuring Data
 
 Presentation of the different shapes of the tables based on objectives
 
-## Data Manipulation
+#### Variables Selection and Repositioning
 
-### Type of table
+`dplyr::select()` and `dplyr::arrange()`
+
+#### Data Filtering
+
+`dplyr::filter()`
+
+#### Data (Re)Shaping
+
+`pivot_wider()` and `pivot_longer()`
+`_join()`
+
+#### Preparing Data for FactoMineR and SensoMineR
 
 matrix, data frame, and tibble. 
 
@@ -257,33 +327,3 @@ how to convert it to another format? (see below)
 
 Note on `{FactoMineR}` and `{SensoMineR}` which require data frames or matrix (not tibble) so introduction to `column_to_rownames()` and `rownames_to_columns()` as well as `as.data.frame()` and `as_tibble()`.
 
-### Data organisation
-
-`select()`, `filter()`, `arrange()`
-`mutate()`
-
-### Data re-structuration
-
-`pivot_wider()` and `pivot_longer()`
-`full_join()`, `inner_join()`, `left_join()` and `right_join()`
-
-`unnest_token()` from **{tidytext}**
-
-## Cleaning and Quality Assessment
-
-### Renaming
-
-renaming columns using `rename()` or `select()`
-renaming elements using `factor()` and **{forcats}**
-
-### Recoding
-
-Example of recoding (could be renaming, or replacing NAs, etc.) by combining `mutate()` and `ifelse()`
-
-### Handling Missing Values
-
-Removing and replacing NAs
-
-### Quality Assessment
-
-Graphics?
