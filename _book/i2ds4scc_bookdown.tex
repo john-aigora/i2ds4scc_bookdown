@@ -125,11 +125,17 @@
 \setcounter{tocdepth}{1}
 \tableofcontents
 }
+\hypertarget{cover}{%
+\chapter*{Cover}\label{cover}}
+\addcontentsline{toc}{chapter}{Cover}
+
+\begin{center}\includegraphics[width=9.68in]{images/digital_coffee} \end{center}
+
 \hypertarget{preface}{%
 \chapter*{Preface}\label{preface}}
 \addcontentsline{toc}{chapter}{Preface}
 
-Welcome to the website for \emph{Data Science for Sensory and Consumer Scientists}. This book being written in the open and is currently under development.
+Welcome to the website for \emph{Data Science for Sensory and Consumer Scientists}, a book in development and under contract for \href{https://www.routledge.com/}{CRC Press}
 
 \hypertarget{about-the-authors}{%
 \chapter*{About the Authors}\label{about-the-authors}}
@@ -140,6 +146,10 @@ John Ennis \ldots{}
 Julien Delarue \ldots{}
 
 Thierry Worch \ldots{}
+
+\hypertarget{acknowledgements}{%
+\chapter*{Acknowledgements}\label{acknowledgements}}
+\addcontentsline{toc}{chapter}{Acknowledgements}
 
 \hypertarget{part-introduction}{%
 \part*{Introduction}\label{part-introduction}}
@@ -636,6 +646,9 @@ Git is a version control system that allows you to revert to earlier versions of
 \hypertarget{tidy-thoughts}{%
 \chapter{Tidy Thinking}\label{tidy-thoughts}}
 
+\hypertarget{data-manip}{%
+\chapter{Data Manipulation}\label{data-manip}}
+
 In sensory science, different data collection tools (whether it is device, software, or methodologies) may provide data in different formats. Also, different statistical analyses may require having the same data but structured differently.
 
 A simple example to illustrate this later point is the analysis of liking data.
@@ -775,9 +788,6 @@ Note that multiple analysis can be ordered together. Let's take back the example
 \FunctionTok{round}\NormalTok{(senso\_multifun, }\DecValTok{2}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
-
-\hypertarget{data-manip}{%
-\chapter{Data Manipulation}\label{data-manip}}
 
 \hypertarget{data-viz}{%
 \chapter{Data Visualization}\label{data-viz}}
@@ -1838,8 +1848,11 @@ The data has now the proper header, however each variable is still coded numeric
 
 The data we will be using in this chapter is the one that you imported in Section \ref{data-collection}.
 
+\hypertarget{inspect-1}{%
+\section{Inspect}\label{inspect-1}}
+
 \hypertarget{data-inspection}{%
-\section{Data Inspection}\label{data-inspection}}
+\subsection{Data Inspection}\label{data-inspection}}
 
 To inspect the data, different steps can be used.
 First, since \texttt{read\_xlsx()} returns a tibble, we can take advantage of its printing properties to get a fill of the data at hand,
@@ -1859,8 +1872,28 @@ Other informative solutions consists in printing a summary of the data through t
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{data-type}{%
-\subsection{Data Type}\label{data-type}}
+\hypertarget{design-inspection}{%
+\subsection{Design Inspection}\label{design-inspection}}
+
+Evaluate if the design is complete/incomplete
+Frequencies and cross-frequencies (simple statistics and simple graphs)
+
+\hypertarget{missing-data-inspection}{%
+\subsection{Missing Data Inspection}\label{missing-data-inspection}}
+
+Are there NAs?
+If yes, are they structured of random?
+
+\hypertarget{clean-1}{%
+\section{Clean}\label{clean-1}}
+
+\hypertarget{renaming-variables}{%
+\subsection{Renaming Variables}\label{renaming-variables}}
+
+renaming columns using \texttt{rename()} or \texttt{select()}
+
+\hypertarget{handling-data-type}{%
+\subsection{Handling Data Type}\label{handling-data-type}}
 
 In R, the variables can be of different types, going from numerical to nominal to binary etc. This section aims in presenting the most common types (and their properties) used in sensory and consumer studies, and in showing how to transform a variable from one type to another.
 
@@ -2072,8 +2105,8 @@ Although it hasn't been done here, manipulating strings is also possible through
   \texttt{str\_extract}, \texttt{str\_replace}, \texttt{str\_split} extract, replace, or split strings or part of the strings.
 \end{itemize}
 
-\hypertarget{converting-to-other-types}{%
-\subsection{Converting to Other Types}\label{converting-to-other-types}}
+\hypertarget{converting-between-types}{%
+\subsection{Converting between Types}\label{converting-between-types}}
 
 When importing data, variables may not always be associated to the right type. For instance, when respondents or products are numerically coded, they will be defined as integers rather than strings. Additionally, each variable type has its own property. To take full advantage of the different variable types, and to avoid wrong analyses (e.g considering a variable that is numerically coded as numeric when it is not), we need to convert them to other types.
 
@@ -2135,16 +2168,39 @@ To convert properly numerical factor levels to number, the variable should first
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{data-organization}{%
-\section{Data Organization}\label{data-organization}}
+\hypertarget{conditional-renaming}{%
+\subsubsection{Conditional Renaming?}\label{conditional-renaming}}
+
+\texttt{mutate()} and \texttt{ifelse()}
+
+\hypertarget{handling-missing-values}{%
+\subsection{Handling Missing Values}\label{handling-missing-values}}
+
+Ignoring, removing, imputing
+
+\hypertarget{restructuring-data}{%
+\subsection{Restructuring Data}\label{restructuring-data}}
 
 Presentation of the different shapes of the tables based on objectives
 
-\hypertarget{data-manipulation}{%
-\section{Data Manipulation}\label{data-manipulation}}
+\hypertarget{variables-selection-and-repositioning}{%
+\subsubsection{Variables Selection and Repositioning}\label{variables-selection-and-repositioning}}
 
-\hypertarget{type-of-table}{%
-\subsection{Type of table}\label{type-of-table}}
+\texttt{dplyr::select()} and \texttt{dplyr::arrange()}
+
+\hypertarget{data-filtering}{%
+\subsubsection{Data Filtering}\label{data-filtering}}
+
+\texttt{dplyr::filter()}
+
+\hypertarget{data-reshaping}{%
+\subsubsection{Data (Re)Shaping}\label{data-reshaping}}
+
+\texttt{pivot\_wider()} and \texttt{pivot\_longer()}
+\texttt{\_join()}
+
+\hypertarget{preparing-data-for-factominer-and-sensominer}{%
+\subsubsection{Preparing Data for FactoMineR and SensoMineR}\label{preparing-data-for-factominer-and-sensominer}}
 
 matrix, data frame, and tibble.
 
@@ -2153,44 +2209,6 @@ how to test it? \texttt{is.data.frame()}, \texttt{is.matrix()}, \texttt{is\_tibb
 how to convert it to another format? (see below)
 
 Note on \texttt{\{FactoMineR\}} and \texttt{\{SensoMineR\}} which require data frames or matrix (not tibble) so introduction to \texttt{column\_to\_rownames()} and \texttt{rownames\_to\_columns()} as well as \texttt{as.data.frame()} and \texttt{as\_tibble()}.
-
-\hypertarget{data-organisation}{%
-\subsection{Data organisation}\label{data-organisation}}
-
-\texttt{select()}, \texttt{filter()}, \texttt{arrange()}
-\texttt{mutate()}
-
-\hypertarget{data-re-structuration}{%
-\subsection{Data re-structuration}\label{data-re-structuration}}
-
-\texttt{pivot\_wider()} and \texttt{pivot\_longer()}
-\texttt{full\_join()}, \texttt{inner\_join()}, \texttt{left\_join()} and \texttt{right\_join()}
-
-\texttt{unnest\_token()} from \textbf{\{tidytext\}}
-
-\hypertarget{cleaning-and-quality-assessment}{%
-\section{Cleaning and Quality Assessment}\label{cleaning-and-quality-assessment}}
-
-\hypertarget{renaming}{%
-\subsection{Renaming}\label{renaming}}
-
-renaming columns using \texttt{rename()} or \texttt{select()}
-renaming elements using \texttt{factor()} and \textbf{\{forcats\}}
-
-\hypertarget{recoding}{%
-\subsection{Recoding}\label{recoding}}
-
-Example of recoding (could be renaming, or replacing NAs, etc.) by combining \texttt{mutate()} and \texttt{ifelse()}
-
-\hypertarget{handling-missing-values}{%
-\subsection{Handling Missing Values}\label{handling-missing-values}}
-
-Removing and replacing NAs
-
-\hypertarget{quality-assessment}{%
-\subsection{Quality Assessment}\label{quality-assessment}}
-
-Graphics?
 
 \hypertarget{data-analysis}{%
 \chapter{Data Analysis}\label{data-analysis}}
