@@ -5,12 +5,13 @@
 \documentclass[
 ]{book}
 \usepackage{lmodern}
-\usepackage{amssymb,amsmath}
+\usepackage{amsmath}
 \usepackage{ifxetex,ifluatex}
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
+  \usepackage{amssymb}
 \else % if luatex or xetex
   \usepackage{unicode-math}
   \defaultfontfeatures{Scale=MatchLowercase}
@@ -82,6 +83,7 @@
 \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 \usepackage{longtable,booktabs}
+\usepackage{calc} % for calculating minipage widths
 % Correct order of tables after \paragraph or \subparagraph
 \usepackage{etoolbox}
 \makeatletter
@@ -116,7 +118,7 @@
 
 \title{Data Science for Sensory and Consumer Scientists}
 \author{John Ennis, Julien Delarue, and Thierry Worch}
-\date{2021-01-11}
+\date{2021-01-28}
 
 \begin{document}
 \maketitle
@@ -125,13 +127,36 @@
 \setcounter{tocdepth}{1}
 \tableofcontents
 }
-\hypertarget{bienvenue}{%
-\chapter*{Bienvenue!}\label{bienvenue}}
-\addcontentsline{toc}{chapter}{Bienvenue!}
+\hypertarget{preface}{%
+\chapter*{Preface}\label{preface}}
+\addcontentsline{toc}{chapter}{Preface}
 
 Welcome to the website for \emph{Data Science for Sensory and Consumer Scientists}, a book in development and under contract for \href{https://www.routledge.com/}{CRC Press}.
 
 \begin{center}\includegraphics[width=13.44in]{images/cover_art} \end{center}
+
+\hypertarget{who-should-read-this-book}{%
+\section*{Who Should Read This Book?}\label{who-should-read-this-book}}
+\addcontentsline{toc}{section}{Who Should Read This Book?}
+
+\hypertarget{how-to-use-this-book}{%
+\section*{How to Use This Book}\label{how-to-use-this-book}}
+\addcontentsline{toc}{section}{How to Use This Book}
+
+\hypertarget{cautions-dont-that-everybody-does}{%
+\section*{Cautions: Don't that Everybody Does}\label{cautions-dont-that-everybody-does}}
+\addcontentsline{toc}{section}{Cautions: Don't that Everybody Does}
+
+\hypertarget{how-to-contact-us}{%
+\section*{How to Contact Us}\label{how-to-contact-us}}
+\addcontentsline{toc}{section}{How to Contact Us}
+
+\hypertarget{acknowledgements}{%
+\section*{Acknowledgements}\label{acknowledgements}}
+\addcontentsline{toc}{section}{Acknowledgements}
+
+\hypertarget{bienvenue}{%
+\chapter{Bienvenue!}\label{bienvenue}}
 
 \hypertarget{why-data-science-for-sensory-and-consumer-science}{%
 \section*{Why Data Science for Sensory and Consumer Science?}\label{why-data-science-for-sensory-and-consumer-science}}
@@ -177,26 +202,6 @@ Sensory and consumer researchers also borrow methods from other fields, in parti
 \subsection*{Computational Sensory Science}\label{computational-sensory-science}}
 \addcontentsline{toc}{subsection}{Computational Sensory Science}
 
-\hypertarget{who-should-read-this-book}{%
-\section*{Who Should Read This Book?}\label{who-should-read-this-book}}
-\addcontentsline{toc}{section}{Who Should Read This Book?}
-
-\hypertarget{how-to-use-this-book}{%
-\section*{How to Use This Book}\label{how-to-use-this-book}}
-\addcontentsline{toc}{section}{How to Use This Book}
-
-\hypertarget{cautions-dont-that-everybody-does}{%
-\section*{Cautions: Don't that Everybody Does}\label{cautions-dont-that-everybody-does}}
-\addcontentsline{toc}{section}{Cautions: Don't that Everybody Does}
-
-\hypertarget{how-to-contact-us}{%
-\section*{How to Contact Us}\label{how-to-contact-us}}
-\addcontentsline{toc}{section}{How to Contact Us}
-
-\hypertarget{acknowledgements}{%
-\section*{Acknowledgements}\label{acknowledgements}}
-\addcontentsline{toc}{section}{Acknowledgements}
-
 \hypertarget{part-hors-doeuvres}{%
 \part*{Hors d'Oeuvres}\label{part-hors-doeuvres}}
 \addcontentsline{toc}{part}{Hors d'Oeuvres}
@@ -204,16 +209,16 @@ Sensory and consumer researchers also borrow methods from other fields, in parti
 \hypertarget{data_science}{%
 \chapter{What is Data Science?}\label{data_science}}
 
-In this chapter we explain what is data science.
+In this chapter we explain what is data science. We will also talk about diverse data being the best part sensory science.
 
 \hypertarget{history-and-definition}{%
 \section{History and Definition}\label{history-and-definition}}
 
-Data science has been called the ``sexiest job of the 21st century'' by Harvard Business Review {[}insert DJ Patil reference{]}, but what is it? As with all rapidly growing fields, the definition depends on who you ask. Before we give our definition, however, we provide a brief history for context.
+You may know that data science has been called the ``sexiest job of the 21st century'' by Harvard Business Review. But what is data science? As with all rapidly growing fields, the definition depends on who you ask. Before we give our definition, however, we provide some brief history for context.
 
-To begin, we note that there was a movement in early computer science to call their field ``data science.'' Chief among the advocates for this viewpoint was Peter Naur, winner of the 2005 Turing award. This viewpoint is detailed in the preface to his 1974 book, ``Concise Survey of Computer Methods,'' where he states that data science is ``the science of dealing with data, once they have been established.'' From his perspective, this is the purpose of computer science. This viewpoint is echoed in the statement, often attributed to Edsger Dijkstr, that ``Computer science is no more about computers than astronomy is about telescopes.''
+To begin, there was a movement in early computer science to call their field ``data science.'' Chief among the advocates for this viewpoint was Peter Naur, winner of the 2005 Turing award (a prize roughly equivalent in prestige to a Nobel prize, but for computer science). This viewpoint is detailed in the preface to his 1974 book, ``Concise Survey of Computer Methods,'' where he states that data science is ``the science of dealing with data, once they have been established.'' {[}Reference Naur{]} According to Naur, this is the purpose of computer science. This viewpoint is echoed in the statement, often attributed to Edsger Dijkstr, that ``Computer science is no more about computers than astronomy is about telescopes.'' {[}Reference Naur{]}
 
-Interestingly, a similar movement arose in statistics, starting in 1962 with John Tukey's statements that ``Data analysis, and the parts of statistics which adhere to it, must \ldots{} take on the characteristics of science rather than those of mathematics'' and that ``data analysis is intrinsically an empirical science.'' This movement culminated in 1997 when Jeff Wu proposed during his inaugural lecture, upon becoming the chair of the University of Michigan's statistics department, that statistics should be called data science.
+Interestingly, a similar viewpoint arose in statistics, as reflected in John Tukey's statements that ``Data analysis, and the parts of statistics which adhere to it, must \ldots{} take on the characteristics of science rather than those of mathematics'' and that ``data analysis is intrinsically an empirical science.'' This movement culminated in 1997 when Jeff Wu proposed during his inaugural lecture, upon becoming the chair of the University of Michigan's statistics department, that statistics should be called data science.
 
 These two movements came together in 2001 in William S. Cleveland's paper ``Data Science: An Action Plan for Expanding the Technical Areas in the Field of Statistics.'' In this highly influential monograph, Cleveland makes the key assertion that ``The value of technical work is judged by the extent ot which it benefits the data analyst, either directly or indirectly.''
 
@@ -2566,11 +2571,17 @@ Note on \texttt{\{FactoMineR\}} and \texttt{\{SensoMineR\}} which require data f
 \hypertarget{data-sources}{%
 \subsection{Data Sources}\label{data-sources}}
 
+\hypertarget{working-with-strings}{%
+\subsection{Working with Strings}\label{working-with-strings}}
+
 \hypertarget{tokenizing}{%
 \subsection{Tokenizing}\label{tokenizing}}
 
 \hypertarget{lemmatization-stemming-and-stop-word-removal}{%
 \subsection{Lemmatization, stemming, and stop word removal}\label{lemmatization-stemming-and-stop-word-removal}}
+
+\hypertarget{part-of-speech-tagging}{%
+\subsection{Part of Speech Tagging}\label{part-of-speech-tagging}}
 
 \hypertarget{common-applications-1}{%
 \section{Common Applications}\label{common-applications-1}}
@@ -2586,6 +2597,9 @@ Note on \texttt{\{FactoMineR\}} and \texttt{\{SensoMineR\}} which require data f
 
 \hypertarget{sentiment-analysis}{%
 \subsection{Sentiment analysis}\label{sentiment-analysis}}
+
+\hypertarget{topic-modeling}{%
+\subsection{Topic Modeling}\label{topic-modeling}}
 
 \hypertarget{bigrams-and-word-graphs}{%
 \subsection{Bigrams and word graphs}\label{bigrams-and-word-graphs}}
