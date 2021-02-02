@@ -158,8 +158,31 @@ Since performing mathematical computation on non-numerical columns is not possib
 
 ##### Mergeing and Separating columns
 
+It can happen that some columns of a data set contain information (strings) that cover different types of information. For instance, we could imagine coding the name of our panelists as FirstName_LastName or Gender_Name, and we would want to separate them into two columns to make the distinction between the different information, i.e. FirstName and LastName or Gender and Last Name respectively. 
 
-`separate()` and `unite()`
+In other situations, we may want to merge information present in multiple columns in one. In our `sensory` data set, we can see that the sample information is spread through two columns, one containing the code (`Code`) and one the names (`Product`). To start, let's merge these two columns so that both information is stored in one column (called here `NewName`) as *code-name*. 
+To do so, we use the `unite()` function from the `{tidyr}` package, which takes as first element the name of the new variables, followed by all the columns to *unite*, and by providing the separation between the elements (here *-*):
+
+
+```{r}
+sensory2 <- sensory %>% 
+  unite(NewName, Code, Product, sep="-")
+sensory2
+
+```
+
+
+
+By default, `unite()` removes from the data set the individual variables that have been merged. To keep these original variables, the parameter `remove` should be set to `FALSE`. 
+
+To reverse the changes (saved here in `sensory2`) and to separate a column into different variables, the function `separate()` from the `{tidyr}` package is required. Similarly to `unite()`, `separate()` takes as first parameter the name of the variable to split, followed by the names for the different segments generated, and of course the separated defined by `sep`. In our example, this would be done as following:
+
+
+```{r}
+sensory2 %>% 
+  separate(NewName, c("Code","Product"), sep="-")
+```
+
 
 
 #### Handling Rows
@@ -271,7 +294,8 @@ sensory %>%
   pivot_longer(-c(Judge,Product), names_to=c("Attribute","Modality"), values_to="Score", names_sep=" ")
 ```
 
-Some more complex transformation through regular expressions and `names_pattern` can be considered. More information on this topic is provided in REF CHAPTER TEXTUAL.
+
+This parameter combines both the power of `pivot_longer()` and `separate()` in one unique process. Note that more complex transformations through the use of regular expressions and `names_pattern` can be considered. More information on this topic is provided in REF CHAPTER TEXTUAL.
 
 #### Pivotting Wider
 
@@ -407,9 +431,6 @@ sensory %>%
   dplyr::select(-c(Judge, Code)) %>% 
   pivot_wider(names_from=Attribute, values_from=Scores, values_fn=mean)
 ```
-
-
-
 
 
 
