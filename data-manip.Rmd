@@ -2,39 +2,52 @@
 knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 ```
 
+
 # Data Manipulation {#data-manip}
+
 
 In sensory science, different data collection tools (e.g. different devices, software, methodologies, etc.) may provide the same data in different ways. Also, different statistical analyses may require having the data structured in different formats. 
 
 A simple example to illustrate this later point is the analysis of liking data.
 Let C consumers provide their hedonic assessments of P samples. To evaluate if samples have been liked differently, an ANOVA is performed on a long thin table with (PxC) rows x 3 columns (consumer, sample, and the liking scores). 
 
+
 <!-- Insert Figure illustrating the data structure -->
+
 
 However, to assess whether consumers have the same preference patterns at the individual level, internal preference mapping or cluster analysis would be performed, and both these analyses require as input a short and large table with P rows and C columns. 
 
 <!-- Insert Figure illustrating the data structure -->
 
+
 Another example of data manipulation consists in summarizing data, by for instance computing the mean by product for each sensory attribute (hence creating the so-called sensory profiles), or to generate frequency tables (e.g. proportions of male/female, distribution of the liking scores by sample, contingency table for CATA data, etc.)
 
+
 <!-- Insert Figure illustrating the data structure -->
+
 
 For these reasons, it is hence essential to learn to manipulate data and transition from one structure to another. After presenting many different ways to transform your data, application through simple examples will be presented[^1].
 
 [^1]: Most of the examples presented in this chapter have no scientific meaning. This has been done on purpose to emphasize the "how to?", not the "why?"
 
+
 ## Tidying Data
+
 
 Hadley Wickham defined 'tidy data' as "data sets that are arranged such that each variable is a column and each observation (or case) is a row." Depending on the statistical unit to consider, and the analyses to perform, data hence need to be manipulated. 
 
+
 ### Simple Manipulations
+
 
 The notion of 'simple manipulations' is completely arbitrary and consists in simple data transformation that could easily be performed in other software such as Excel (although we strongly recommend performing any sorts of transformation in R, not in Excel, see...)
 
 
 #### Handling Columns
 
+
 ##### Renaming Variables
+
 
 The first simple transformation that one could consider consists in renaming one or multiple variables.
 This procedure can easily be done using the `rename()` function from the `{dplyr}` package.
@@ -59,7 +72,9 @@ sensory %>%
 
 Note that the `{janitor}` package offers many options, and although the transformation was performed to all the variables, it is possible to ignore certain variables for the transformation.
 
+
 ##### Re-Organizing Columns
+
 
 Another simple transformation consists in re-organizing the dataset, either by re-ordering (incl. removing) the columns, or by selecting some rows based on a certain criteria. 
 
@@ -85,8 +100,10 @@ sensory %>%
   dplyr::select(Judge, Product, Shiny)
 ```
 
+
 When a long series of variables should be kept in the same order, the use of the `:` is used.
 Here, we consider keeping the entire set of variables except for the variable `Code`:
+
 
 ```{r}
 sensory %>% 
@@ -105,6 +122,7 @@ sensory %>%
 
 The selection process of variables can be further informed through functions such as `starts_with()`, `ends_with()`, and `contains()`, which all select variables that either starts, ends, or contains a certain character or sequence of character. To illustrate this, let's only keep the variables that starts with 'Qtt':
 
+
 ```{r}
 sensory %>% 
   dplyr::select(starts_with("Qtt"))
@@ -112,6 +130,7 @@ sensory %>%
 
 
 Rather than selecting variables based on their names, we can also select them based on a certain 'rule' with the `where()` function. In that case, let's consider all the variables that are numerical, which automatically removes `Judge`, `Code`, and `Product` columns:
+
 
 ```{r}
 sensory %>% 
@@ -133,6 +152,7 @@ More examples illustrating the use of `select()` are provided throughout the boo
 
 ##### Creating Columns
 
+
 In some cases, new variables need to be created based on existing variables. Examples of such situations include taking the quadratic term of a sensory attribute to test for curvature, or simply considering a new variables as the sum or the subtraction between two (or more) variables. Such creation of a variable is through the `mutate()` function from the `{dplyr}` package. This function takes as inputs the name of the variable to create, and the formula to consider.
 Let's create two new variables, one called Shiny2 which corresponds to Shiny squared up, and one StiMelt which corresponds to Sticky + Melting. Since we will only be using these three variables, let's reduce the dataset to these three variables with `select()` first to improve readability:
 
@@ -143,7 +163,9 @@ sensory %>%
   mutate(Shiny2 = Shiny^2, StiMelt = Sticky + Melting)
 ```
 
+
 Tip: If you want to transform a variable, say by changing its type, or re-writing its content, you can use `mutate()` and assign to the new variable the same name as the original one. This will overwrite the existing column with the new one. To illustrate this, let's transform the sample codes (stored in `Code`) from upper case to lower case only. This can be done by mutating `Code` into the lowercase version of `Code` (`tolower(Code)`):
+
 
 ```{r}
 sensory %>% 
@@ -157,6 +179,7 @@ Since performing mathematical computation on non-numerical columns is not possib
 
 
 ##### Mergeing and Separating columns
+
 
 It can happen that some columns of a data set contain information (strings) that cover different types of information. For instance, we could imagine coding the name of our panelists as FirstName_LastName or Gender_Name, and we would want to separate them into two columns to make the distinction between the different information, i.e. FirstName and LastName or Gender and Last Name respectively. 
 
@@ -172,7 +195,6 @@ sensory2
 ```
 
 
-
 By default, `unite()` removes from the data set the individual variables that have been merged. To keep these original variables, the parameter `remove` should be set to `FALSE`. 
 
 To reverse the changes (saved here in `sensory2`) and to separate a column into different variables, the function `separate()` from the `{tidyr}` package is required. Similarly to `unite()`, `separate()` takes as first parameter the name of the variable to split, followed by the names for the different segments generated, and of course the separated defined by `sep`. In our example, this would be done as following:
@@ -184,8 +206,8 @@ sensory2 %>%
 ```
 
 
-
 #### Handling Rows
+
 
 The manipulation of rows is done through three aspects, 
 
@@ -201,7 +223,6 @@ The first step of re-arranging rows is done through the `arrange()` function fro
 
 [^3]: For numerical order, this is simply re-arranging the values from the lowest to the highest. For strings, the entries are then sorted alphabetically unless the variable is of type factor in which case the order of the levels for that factors are being used.
 
-
 Let's re-arrange the data by Judge and Product, the Judge being sorting in an ascending order whereas the product are being sorted in a descending order:
 
 
@@ -209,6 +230,7 @@ Let's re-arrange the data by Judge and Product, the Judge being sorting in an as
 sensory %>% 
   arrange(Judge, desc(Product))
 ```
+
 
 ##### Filtering Data
 
@@ -245,6 +267,7 @@ sensory_na %>%
 
 ```
 
+
 As we can see, this procedure removed 20 rows since the original table had 99 rows and 3 columns, whereas the 'clean' table has 79 rows and 3 columns.
 
 
@@ -260,33 +283,41 @@ sensory %>%
   split(.$Product)
 ```
 
+
 This function creates a list of *n* elements (*n* being the number of samples here), each element being the data related to one sample. 
 From there, automated analyses can be performed to each of the sub-data through the `map()` function, as it will be illustrated later. 
 
 
 ### Transformation without Altering the Data
 
+
 Transforming a data table without altering the data itself is done through pivoting, hence either creating a longer and thinner table (CREATE FIGURE), or a shorter and wider table (CREATE FIGURE). This is done through the `pivot_longer()` and `pivot_wider()` functions from the `{tidyr}` package.
 
+
 <!-- Insert Figure illustrating pivot_wider -->
+
 
 <!-- Insert Figure illustrating pivot_longer -->
 
 
 #### Pivotting Longer
 
+
 Currently, our `sensory` data table is a table in which we have as many rows as Judge x Product, the different attributes being spread across multiple columns. However, in certain situations, it is relevant to have all the attributes stacked vertically, meaning that the table will have Judge x Product x Attributes rows. Such simple transformation can be done through the `pivot_longer()` function from the `{dplyr}` package, which takes as inputs the attributes to pivot, the name of the variables that will contain these names (`names_to`), and the name of the column that will contain their entries (`values_to`)
+
 
 ```{r}
 sensory %>% 
   pivot_longer(Shiny:Melting, names_to="Attribute", values_to="Score")
 ```
 
+
 This transformation converts a table of 99 rows and 35 columns into a table with 3168 (99*32) rows and 5 columns in this example.
 
 TIPS: With `pivot_longer()` and any other function that requires selecting variables, it is often easier to deselect variables that we do not want to include rather than selecting all the variables of interest. Throughout the book, both solutions will be used.
 
 In case the attribute names are following a standard structure, say "attribute_name modality" as is the case in `sensory` for some attributes, an additional parameter of `pivot_longer()` becomes handy as it splits the Attribute variable just created into say 'Attribute' and 'Modality.' To illustrate this, let's reduce sensory to Judge, Product, and all the variables that end with odor or flavor (for clarity, all the other variables are being discarded). After pivoting the subset of columns, we automatically split the attribute names into attribute and modality by informing the separator between names (here, a space):
+
 
 ```{r}
 sensory %>% 
@@ -297,7 +328,9 @@ sensory %>%
 
 This parameter combines both the power of `pivot_longer()` and `separate()` in one unique process. Note that more complex transformations through the use of regular expressions and `names_pattern` can be considered. More information on this topic is provided in REF CHAPTER TEXTUAL.
 
+
 #### Pivotting Wider
+
 
 The complementary/opposite function to `pivot_longer()` is called `pivot_wider()`. This function pivots data horizontally, hence reducing the number of rows and increasing the number of columns. In this case, the two main parameters to provide is which column will provide the new column names to create (`name_from`), and what are the corresponding values to use (`values_from`). 
 
@@ -309,6 +342,7 @@ sensory %>%
   dplyr::select(Judge, Product, Shiny) %>% 
   pivot_wider(names_from = Judge, values_from = Shiny)
 ```
+
  
 This procedure creates a table with as many rows as there are products, and as many columns as there are panelists (+1 since the product information is in a column, not defined as row names).
 
@@ -318,6 +352,7 @@ Important remarks: Let's imagine the sensory test was performed following an inc
 
 
 ### Transformation that Alters the Data
+
 
 In some cases, the final table to generate requires altering the data, by (say) computing the mean across multiple values, or counting the number of occurrences of factor levels for instance. In other words, we summarize the information, which also tend to reduce the size of the table. It is hence no surprise that the function used for such data reduction is called `summarise()` (`{dplyr}` package).
 
@@ -343,6 +378,7 @@ sensory %>%
   summarise(across(where(is.numeric), list(min=min, max=max)))
 ```
 
+
 In this example, each attribute is duplicated with "_min" and "_max" to provide the minimum and maximum value for each attribute. By using a combination of `pivot_longer()` with `names_sep` and pivot_wider, we could easily restructure such table by showing for each attribute (presented in rows) the minimum and the maximum in two different columns.
 
 By following the same principles, many other functions can be performed, whether they are built-in R or created by the user. 
@@ -363,6 +399,7 @@ sensory %>%
   summarise(across(where(is.numeric), mean))
 ```
 
+
 This procedure creates a tibble with 11 rows (product) and 33 columns (32 sensory attributes + 1 column including the product information) which contains the mean per attribute for each sample, also known as the sensory profiles of the products.
 
 
@@ -375,13 +412,16 @@ Let's review the different transformations presented earlier by generating the s
 
 In the previous example, we've seen how to obtain the sensory profile using `summarise()` `across()` all numerical variables. In case a selection of the attributes should have been done, we could use the same process by simply informing which attributes to transform:
 
+
 ```{r}
 sensory %>% 
   group_by(Product) %>% 
   summarise(across(Shiny:Melting, mean))
 ```
 
+
 The list of attributes to include can also be stored in an external vector:
+
 
 ```{r}
 sensory_attr <- colnames(sensory)[4:ncol(sensory)]
@@ -393,7 +433,6 @@ sensory %>%
 
 
 Remark: It is important to notice that when `group_by()` is being called, the software will remember the groups unless stated otherwise. This means that any subsequent transformation performed on the previous table will be done by product. Such property can be causing unexpected results in case transformations should be performed across all samples. To avoid such behavior, we strongly recommend you to apply `ungroup()` as soon as the results per group has been generated.
-
 
 A different approach consists in combining `summarise()` to `pivot_longer()` and `pivot_wider()`. This process requires summarising only one column by Product and Attribute:
 
@@ -409,7 +448,6 @@ sensory %>%
 
 
 One can notice that through this procedure, the order of the attributes are no longer following the same sequence, and have been ordered in alphabetical order. To maintain the original order, the Attribute column should be transformed into a factor in which the levels are ordered following the original order.
-
 
 What would happen if we would omit to `summarise()` the data in between the two pivoting functions? In that case, we also remove Judge and Code which were lost in the process...
 
@@ -433,8 +471,8 @@ sensory %>%
 ```
 
 
-
 ### Handling Lists of Tables
+
 
 Create an example with multiple dataset in one excel sheet (could be different countries, or different sessions)
 Import the data using `map()` by reading the different tabs
