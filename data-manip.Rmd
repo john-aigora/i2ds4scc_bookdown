@@ -288,10 +288,10 @@ This function creates a list of *n* elements (*n* being the number of samples he
 From there, automated analyses can be performed to each of the sub-data through the `map()` function, as it will be illustrated later. 
 
 
-### Transformation without Altering the Data
+### Reshaping the Data
 
 
-Transforming a data table without altering the data itself is done through pivoting, hence either creating a longer and thinner table (CREATE FIGURE), or a shorter and wider table (CREATE FIGURE). This is done through the `pivot_longer()` and `pivot_wider()` functions from the `{tidyr}` package.
+Reshaping the data itself is done through pivoting, hence either creating a longer and thinner table (CREATE FIGURE), or a shorter and wider table (CREATE FIGURE). This is done through the `pivot_longer()` and `pivot_wider()` functions from the `{tidyr}` package.
 
 
 <!-- Insert Figure illustrating pivot_wider -->
@@ -471,19 +471,9 @@ sensory %>%
 ```
 
 
-### Handling Lists of Tables
+### Combining Data from Different Sources
 
 
-Create an example with multiple dataset in one excel sheet (could be different countries, or different sessions)
-Import the data using `map()` by reading the different tabs
-Use `enframe()` to combine all the results
-(alternative: use `reduce()` with `bind_rows()`, but this version will lose the country names/session info if not already part of the dataset)
+`full_join()` and derivatives
+`bind_rows()` and `bind_cols()`
 
-`nest_by()` and `unnest_by()`
-`enframe()` and `deframe()`
-
-`reduce()`
-
-`rowwise()` and `mutate()`
-
-`separate_rows()` to link to `unnest_tokens()`
