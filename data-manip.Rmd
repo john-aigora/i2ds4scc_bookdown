@@ -474,6 +474,35 @@ sensory %>%
 ### Combining Data from Different Sources
 
 
-`full_join()` and derivatives
-`bind_rows()` and `bind_cols()`
+It often happens that the data to analyze is stored in different files, and need to be combined or merged. Depending on the situations, different solutions are required.
+
+Let's start with a simple example where the tables match in terms of variables, and should be combined vertically. 
+To do so, we use the file *excel-scrap.xlsx* which contains a fake example in which 12 assessors evaluated 2 samples on 3 attributes in triplicate, each replication being stored in a different sheet.
+
+To combine the tables vertically, we could use the basic R function `rbind()`. However, we prefer the use of `bind_rows()` from the `{dplyr}` package since it better controls for the columns by ensuring that the order is well respected (in case one table contains a variable that the other tables do not, it will keep the variables and allocate NAs when this information is missing). To keep the distinction between the three tables, the parameter `.id` is used. This will create a column called `Session` in this example that will assign a 1 to the first table, a 2 to the second one, and a 3 to the third one (we do this here since this information was not available within the tables: If it were, the parameter `.id` could have been ignored).
+
+
+```{r}
+library(here)
+library(readxl)
+
+path <- file.path("data", "excel_scrap.xlsx")
+
+session1 <- read_xlsx(path, sheet=1)
+session2 <- read_xlsx(path, sheet=2) 
+session3 <- read_xlsx(path, sheet=3)
+
+all_data <- bind_rows(session1, session2, session3, .id = "Session")
+
+```
+
+
+Although this solution works fine, another neater and tidier solution will be presented in \@ref(import-mult-sheet).
+
+Similarly, tables can be combined horizontally using the corresponding function `cbind()` (`{base}`) and/or `bind_cols()` (`{dplyr}`). In this case, it is better to ensure that the rows' order is identical before combining them to ensure no mishaps.
+
+Alternatively it is possible to merge tables using `merge()` from `{base}`, or the different `*_join()` functions from 
+the `{dplyr}` package. In that case, the tables do not need to be in the same order, nor from the same size, since the function will handle it.
+
+
 
