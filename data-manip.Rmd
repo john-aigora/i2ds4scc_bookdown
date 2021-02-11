@@ -504,5 +504,21 @@ Similarly, tables can be combined horizontally using the corresponding function 
 Alternatively it is possible to merge tables using `merge()` from `{base}`, or the different `*_join()` functions from 
 the `{dplyr}` package. In that case, the tables do not need to be in the same order, nor from the same size, since the function will handle it.
 
+Depending on the merging process degree to consider between tables X and Y, there are four different `*_join()` versions to consider:
+
+ - `full_join()` keeps all the cases from X and Y regardless whether they are present in the other table or not (in case they are not present, NAs will be introduced) [corresponds to `merge()` with `all=TRUE`];
+ - `inner_join()` only keeps the common cases, i.e. cases that are present in both X and Y [corresponds to `merge()`with `all=FALSE`];
+ - `left_join()` keeps all the cases from X [corresponds to `merge()`with `all.x=TRUE` and `all.y=FALSE`];
+ - `right_join()` keeps all the cases from Y [corresponds to `merge()`with `all.x=FALSE` and `all.y=TRUE`].
+
+
+<!-- Add examples with X=ABC, Y=ABD and full = ABCD, inner=AB, left=ABC, right=ABD  -->
+
+
+The merging procedure requires the users to provide a *key*, i.e. a (set of) variable(s) used to combine the tables. For each unique element defined by the key, a line is being created. In needed, rows of a table are being duplicated. WIthin the different `*_join()` functions, the key is informed by the `by` parameter, which may contain one or more variables, which can be have the same or different names in X and Y.
+
+Let's imagine that a consumer test has been performed: In this consumer test, each consumer evaluated *P* samples, the *P* evaluations (provided by each consumer) is defined along *P* rows. Additionally, the consumer information (incl. gender, age, etc.) is stored in a separate file (in this case, each consumer is only associated with one row of data). When joining these two files together `by` consumer, the consumer information is duplicated *P* times to match the structure of the data provided from the consumer test.
+
+To illustrate, let's use the dataset ...
 
 
