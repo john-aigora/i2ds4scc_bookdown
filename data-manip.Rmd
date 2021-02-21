@@ -515,10 +515,60 @@ Depending on the merging process degree to consider between tables X and Y, ther
 <!-- Add examples with X=ABC, Y=ABD and full = ABCD, inner=AB, left=ABC, right=ABD  -->
 
 
-The merging procedure requires the users to provide a *key*, i.e. a (set of) variable(s) used to combine the tables. For each unique element defined by the key, a line is being created. In needed, rows of a table are being duplicated. WIthin the different `*_join()` functions, the key is informed by the `by` parameter, which may contain one or more variables, which can be have the same or different names in X and Y.
+The merging procedure requires the users to provide a *key*, i.e. a (set of) variable(s) used to combine the tables. For each unique element defined by the key, a line is being created. When needed, rows of a table are being duplicated. Within the different `*_join()` functions, the key is informed by the `by` parameter, which may contain one or more variables with the same or different names.
 
 Let's imagine that a consumer test has been performed: In this consumer test, each consumer evaluated *P* samples, the *P* evaluations (provided by each consumer) is defined along *P* rows. Additionally, the consumer information (incl. gender, age, etc.) is stored in a separate file (in this case, each consumer is only associated with one row of data). When joining these two files together `by` consumer, the consumer information is duplicated *P* times to match the structure of the data provided from the consumer test.
 
-To illustrate, let's use the dataset ...
+To illustrate, let's use the dataset called *Consumer Test.xlsx*, which contains three tabs:
 
 
+```{r}
+library(here)
+file_path <- here("data","Consumer Test.xlsx")
+
+library(readxl)
+excel_sheets(file_path)
+
+```
+
+
+The three sheets contain the following information, which will need to be combined:
+
+ - Biscuits: The consumers' evaluation of the 10 products and their assessment on liking, hunger, etc. at different moments of the test.
+ - Time Consumption: The amount of cookies and the time required to evaluate them in each sitting.
+ - Weight: The weight associated to each cookie.
+
+
+The goal here is to merge these three files in one. Let's start by combining *Time Consumption* and *Weight* so that we can compute the total weight of biscuits eaten by each respondent in each sitting. In this case, the joining procedure is done by `Product` since the weight is only provided for each product. The total weight eaten (`Amount`) is then computed by multiplying the number of cookies eaten (`Nb biscuits`) by `Weight`
+
+
+```{r}
+time <- read_xlsx(file_path, sheet="Time Consumption")
+weight <- read_xlsx(file_path, sheet="Weight")
+
+consumption <- time %>% 
+  full_join(weight, by="Product") %>% 
+  mutate(Amount = `Nb biscuits`*Weight)
+
+consumption
+```
+
+
+As can be seen, the `Weight` information stored in the *Weight* sheet has been replicated every time each sample has been evaluated by another respondent. 
+The next step is then to merge this table to `Biscuits`. In this case, since both dataset contains the full evaluation of the cookies (each consumer evaluating each product), the joining procedure needs to be done by product and by consumer simultaneously. A quick look at the data shows two important things:
+
+In *Biscuits*, the consumer names only contains the numbers whereas in `consumption`, they also contain a `J` in front of the name: This needs to be fixed as the names need to be identical to be merged, else they will be considered separately and NAs will be introduced. In practice, this will be done by mutating Consumer by pasting a J in fron of the number using the function `paste0()`.
+
+The names that contain the product (`Samples` and `Product`) and consumers (`Consumer` and `Judge`) information are different in both dataset. To simplify our work, we could rename these columns in one of the dataset so that it matches the other, but instead we will keep the two names and inform it within `full_join()`. This is done by informing within the `by` parameter how the column should connect following the structure: `"name in dataset 1" = "name in dataset 2"`
+ 
+ 
+```{r}
+biscuits <- read_xlsx(file_path, sheet="Biscuits") %>% 
+  mutate(Consumer = paste0("J",Consumer)) %>% 
+  full_join(consumption, by=c("Consumer"="Judge", "Samples"="Product"))
+
+biscuits
+```
+
+
+The three dataset are now joined in one and could be further processed for some analyses!
