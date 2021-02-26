@@ -78,21 +78,21 @@ Note that the `{janitor}` package offers many options, and although the transfor
 
 Another simple transformation consists in re-organizing the dataset, either by re-ordering (incl. removing) the columns, or by selecting some rows based on a certain criteria. 
 
-For re-ordering columns, `relocate()` is being used. This function allows re-positioning a variable before or after another variable. By re-using the `sensory` dataset, let's position `Code` between `Product` and `Shiny`. This can be specified into two different ways:
+For re-ordering columns, `relocate()` is being used. This function allows re-positioning a variable before or after another variable. By re-using the `sensory` dataset, let's position all the variables starting with 'Qtt' between `Product` and `Shiny`. This can be specified into two different ways:
 
 
 ```{r}
 sensory %>% 
-  relocate(Code, .after=Product)
+  relocate(starts_with("Qtt"), .after=Product)
 
 sensory %>% 
-  relocate(Code, .before=Shiny)
+  relocate(starts_with("Qtt"), .before=Shiny)
 ```
 
 
 Last but not least (regarding columns transformation) the `select()` function (from the `{dplyr}` package[^2]) allows selecting a set of variables, by simply informing the variables that should be kept in the dataset. Let's limit ourselves in selecting `Judge`, `Product`, and `Shiny`:
 
-[^2]: Many other packages include a function called `select()`, hence creating conflicts: To avoid any risks of errors, we recommend calling the `select()` function using `dplyr::select()` as it formally calls the `select()` function from `{dplyr}`, hence avoiding any risks of error! Of course, the same procedure applies to any other functions that may suffer the same issue.
+[^2]: Many other packages include a function called `select()`, hence creating conflicts: To avoid any risks of errors, we recommend calling the `select()` function using `dplyr::select()` as it formally calls the `select()` function from `{dplyr}`, hence avoiding any risks of error! Of course, the same procedure applies to any other functions that may suffer from the same issue.
 
 
 ```{r}

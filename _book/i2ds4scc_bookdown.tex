@@ -116,7 +116,7 @@
 
 \title{Data Science for Sensory and Consumer Scientists}
 \author{John Ennis, Julien Delarue, and Thierry Worch}
-\date{2021-02-09}
+\date{2021-02-21}
 
 \begin{document}
 \maketitle
@@ -852,10 +852,108 @@ As can be seen, each cell contains \texttt{dbl\ {[}9{]}} corresponding to the sc
 
 It often happens that the data to analyze is stored in different files, and need to be combined or merged. Depending on the situations, different solutions are required.
 
-Let's start with the simple example where the tables match in terms of variables, and should be combined vertically. This example can be applied to the example presented in \ref{import-mult-sheet}
+Let's start with a simple example where the tables match in terms of variables, and should be combined vertically.
+To do so, we use the file \emph{excel-scrap.xlsx} which contains a fake example in which 12 assessors evaluated 2 samples on 3 attributes in triplicate, each replication being stored in a different sheet.
 
-\texttt{full\_join()} and derivatives
-\texttt{bind\_rows()} and \texttt{bind\_cols()}
+To combine the tables vertically, we could use the basic R function \texttt{rbind()}. However, we prefer the use of \texttt{bind\_rows()} from the \texttt{\{dplyr\}} package since it better controls for the columns by ensuring that the order is well respected (in case one table contains a variable that the other tables do not, it will keep the variables and allocate NAs when this information is missing). To keep the distinction between the three tables, the parameter \texttt{.id} is used. This will create a column called \texttt{Session} in this example that will assign a 1 to the first table, a 2 to the second one, and a 3 to the third one (we do this here since this information was not available within the tables: If it were, the parameter \texttt{.id} could have been ignored).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(here)}
+\FunctionTok{library}\NormalTok{(readxl)}
+
+\NormalTok{path }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"excel\_scrap.xlsx"}\NormalTok{)}
+
+\NormalTok{session1 }\OtherTok{\textless{}{-}} \FunctionTok{read\_xlsx}\NormalTok{(path, }\AttributeTok{sheet=}\DecValTok{1}\NormalTok{)}
+\NormalTok{session2 }\OtherTok{\textless{}{-}} \FunctionTok{read\_xlsx}\NormalTok{(path, }\AttributeTok{sheet=}\DecValTok{2}\NormalTok{) }
+\NormalTok{session3 }\OtherTok{\textless{}{-}} \FunctionTok{read\_xlsx}\NormalTok{(path, }\AttributeTok{sheet=}\DecValTok{3}\NormalTok{)}
+
+\NormalTok{all\_data }\OtherTok{\textless{}{-}} \FunctionTok{bind\_rows}\NormalTok{(session1, session2, session3, }\AttributeTok{.id =} \StringTok{"Session"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Although this solution works fine, another neater and tidier solution will be presented in \ref{import-mult-sheet}.
+
+Similarly, tables can be combined horizontally using the corresponding function \texttt{cbind()} (\texttt{\{base\}}) and/or \texttt{bind\_cols()} (\texttt{\{dplyr\}}). In this case, it is better to ensure that the rows' order is identical before combining them to ensure no mishaps.
+
+Alternatively it is possible to merge tables using \texttt{merge()} from \texttt{\{base\}}, or the different \texttt{*\_join()} functions from
+the \texttt{\{dplyr\}} package. In that case, the tables do not need to be in the same order, nor from the same size, since the function will handle it.
+
+Depending on the merging process degree to consider between tables X and Y, there are four different \texttt{*\_join()} versions to consider:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{full\_join()} keeps all the cases from X and Y regardless whether they are present in the other table or not (in case they are not present, NAs will be introduced) {[}corresponds to \texttt{merge()} with \texttt{all=TRUE}{]};
+\item
+  \texttt{inner\_join()} only keeps the common cases, i.e.~cases that are present in both X and Y {[}corresponds to \texttt{merge()}with \texttt{all=FALSE}{]};
+\item
+  \texttt{left\_join()} keeps all the cases from X {[}corresponds to \texttt{merge()}with \texttt{all.x=TRUE} and \texttt{all.y=FALSE}{]};
+\item
+  \texttt{right\_join()} keeps all the cases from Y {[}corresponds to \texttt{merge()}with \texttt{all.x=FALSE} and \texttt{all.y=TRUE}{]}.
+\end{itemize}
+
+The merging procedure requires the users to provide a \emph{key}, i.e.~a (set of) variable(s) used to combine the tables. For each unique element defined by the key, a line is being created. When needed, rows of a table are being duplicated. Within the different \texttt{*\_join()} functions, the key is informed by the \texttt{by} parameter, which may contain one or more variables with the same or different names.
+
+Let's imagine that a consumer test has been performed: In this consumer test, each consumer evaluated \emph{P} samples, the \emph{P} evaluations (provided by each consumer) is defined along \emph{P} rows. Additionally, the consumer information (incl.~gender, age, etc.) is stored in a separate file (in this case, each consumer is only associated with one row of data). When joining these two files together \texttt{by} consumer, the consumer information is duplicated \emph{P} times to match the structure of the data provided from the consumer test.
+
+To illustrate, let's use the dataset called \emph{Consumer Test.xlsx}, which contains three tabs:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(here)}
+\NormalTok{file\_path }\OtherTok{\textless{}{-}} \FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{,}\StringTok{"Consumer Test.xlsx"}\NormalTok{)}
+
+\FunctionTok{library}\NormalTok{(readxl)}
+\FunctionTok{excel\_sheets}\NormalTok{(file\_path)}
+\end{Highlighting}
+\end{Shaded}
+
+The three sheets contain the following information, which will need to be combined:
+
+\begin{itemize}
+\tightlist
+\item
+  Biscuits: The consumers' evaluation of the 10 products and their assessment on liking, hunger, etc. at different moments of the test.
+\item
+  Time Consumption: The amount of cookies and the time required to evaluate them in each sitting.
+\item
+  Weight: The weight associated to each cookie.
+\end{itemize}
+
+The goal here is to merge these three files in one. Let's start by combining \emph{Time Consumption} and \emph{Weight} so that we can compute the total weight of biscuits eaten by each respondent in each sitting. In this case, the joining procedure is done by \texttt{Product} since the weight is only provided for each product. The total weight eaten (\texttt{Amount}) is then computed by multiplying the number of cookies eaten (\texttt{Nb\ biscuits}) by \texttt{Weight}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{time }\OtherTok{\textless{}{-}} \FunctionTok{read\_xlsx}\NormalTok{(file\_path, }\AttributeTok{sheet=}\StringTok{"Time Consumption"}\NormalTok{)}
+\NormalTok{weight }\OtherTok{\textless{}{-}} \FunctionTok{read\_xlsx}\NormalTok{(file\_path, }\AttributeTok{sheet=}\StringTok{"Weight"}\NormalTok{)}
+
+\NormalTok{consumption }\OtherTok{\textless{}{-}}\NormalTok{ time }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{full\_join}\NormalTok{(weight, }\AttributeTok{by=}\StringTok{"Product"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Amount =} \StringTok{\textasciigrave{}}\AttributeTok{Nb biscuits}\StringTok{\textasciigrave{}}\SpecialCharTok{*}\NormalTok{Weight)}
+
+\NormalTok{consumption}
+\end{Highlighting}
+\end{Shaded}
+
+As can be seen, the \texttt{Weight} information stored in the \emph{Weight} sheet has been replicated every time each sample has been evaluated by another respondent.
+The next step is then to merge this table to \texttt{Biscuits}. In this case, since both dataset contains the full evaluation of the cookies (each consumer evaluating each product), the joining procedure needs to be done by product and by consumer simultaneously. A quick look at the data shows two important things:
+
+In \emph{Biscuits}, the consumer names only contains the numbers whereas in \texttt{consumption}, they also contain a \texttt{J} in front of the name: This needs to be fixed as the names need to be identical to be merged, else they will be considered separately and NAs will be introduced. In practice, this will be done by mutating Consumer by pasting a J in fron of the number using the function \texttt{paste0()}.
+
+The names that contain the product (\texttt{Samples} and \texttt{Product}) and consumers (\texttt{Consumer} and \texttt{Judge}) information are different in both dataset. To simplify our work, we could rename these columns in one of the dataset so that it matches the other, but instead we will keep the two names and inform it within \texttt{full\_join()}. This is done by informing within the \texttt{by} parameter how the column should connect following the structure: \texttt{"name\ in\ dataset\ 1"\ =\ "name\ in\ dataset\ 2"}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{biscuits }\OtherTok{\textless{}{-}} \FunctionTok{read\_xlsx}\NormalTok{(file\_path, }\AttributeTok{sheet=}\StringTok{"Biscuits"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Consumer =} \FunctionTok{paste0}\NormalTok{(}\StringTok{"J"}\NormalTok{,Consumer)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{full\_join}\NormalTok{(consumption, }\AttributeTok{by=}\FunctionTok{c}\NormalTok{(}\StringTok{"Consumer"}\OtherTok{=}\StringTok{"Judge"}\NormalTok{, }\StringTok{"Samples"}\OtherTok{=}\StringTok{"Product"}\NormalTok{))}
+
+\NormalTok{biscuits}
+\end{Highlighting}
+\end{Shaded}
+
+The three dataset are now joined in one and could be further processed for some analyses!
 
 \hypertarget{data-viz}{%
 \chapter{Data Visualization}\label{data-viz}}
