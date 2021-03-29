@@ -224,7 +224,7 @@ library(agricolae)
 
 liking_start <- lm(`1stbite_liking` ~ Product + Judge, data=consumer)
 liking_start_hsd <- HSD.test(liking_start, "Product")$groups %>% 
-  as_tibble(rownames = "Product") %>% 
+  as_tibble(rownames = "Product")
 
 liking_end <- lm(`after_liking` ~ Product + Judge, data=consumer)
 liking_end_hsd <- HSD.test(liking_end, "Product")$groups %>% 
@@ -264,6 +264,9 @@ consumer %>%
   ggtitle("Overall Liking", "(Continuous scale vs. Categorical scale)")+
   facet_wrap(~Judge)
 
+
+#* Liking and Number of Biscuits Eaten ------------------------------------
+
 consumer %>% 
   dplyr::select(Judge, Product, Start=`1stbite_liking`, End=`after_liking`, Liking=`end_liking 9pt`, N) %>% 
   mutate(Judge = factor(Judge, levels=unique(str_sort(.$Judge, numeric=TRUE)))) %>% 
@@ -285,15 +288,24 @@ consumer %>%
   dplyr::select(Judge, Product, Start=`1stbite_liking`, End=`after_liking`, Liking=`end_liking 9pt`, N) %>% 
   mutate(Judge = factor(Judge, levels=unique(str_sort(.$Judge, numeric=TRUE)))) %>% 
   mutate(Liking = 10-Liking) %>% 
-  group_by(Judge) %>% 
-  nest() %>% 
+  group_by(Judge) %>%
+  nest() %>%
+  ungroup() %>%
   mutate(lm_obj = map(data, run_reg)) %>% 
   mutate(glance = map(lm_obj, broom::glance)) %>% 
   unnest(glance) %>% 
   filter(p.value <= 0.05) %>% 
+  arrange(p.value) %>% 
+  mutate(Judge = fct_reorder(Judge, p.value)) %>% 
   unnest(data) %>% 
   ggplot(aes(x=Liking, y=N))+
   geom_point(pch=20, cex=2)+
   geom_smooth(method="lm", formula="y~x", se=FALSE)+
   theme_bw()+
+  ggtitle("Number of Biscuits vs. Liking","(Consumers with a significant (5%) regression model are shown (ordered from the most to the least signif.)")+
   facet_wrap(~Judge, scales="free_y")
+
+
+# Combining Data ----------------------------------------------------------
+
+
