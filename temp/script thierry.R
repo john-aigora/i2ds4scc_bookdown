@@ -308,4 +308,63 @@ consumer %>%
 
 # Combining Data ----------------------------------------------------------
 
+#* Internal Preference Mapping --------------------------------------------
+consumer_wide <- consumer %>% 
+  separate(Product, into = c("P", "Number"), sep = 1) %>% 
+  mutate(Number = ifelse(nchar(Number) == 1, str_c("0", Number), Number)) %>% 
+  unite(Product, P, Number, sep="") %>% 
+  dplyr::select(Judge, Product, Liking=`end_liking 9pt`) %>% 
+  pivot_wider(names_from=Judge, values_from=Liking)
+
+data_mdpref <- senso_mean %>% 
+  inner_join(consumer_wide, by="Product")
+
+res_mdpref <- data_mdpref %>% 
+  as.data.frame() %>% 
+  column_to_rownames(var="Product") %>% 
+  PCA(., quali.sup=1:2, quanti.sup=3:35, graph=FALSE)
+
+fviz_pca_ind(res_mdpref, habillage=1)
+fviz_pca_var(res_mdpref, label="quanti.sup", select.var=list(cos2=0.5), repel=TRUE)
+
+#* Clustering -------------------------------------------------------------
+consumer_dist <- consumer_wide %>% 
+  as.data.frame() %>% 
+  column_to_rownames(var="Product") %>% 
+  scale(., center=TRUE, scale=FALSE) %>% 
+  t(.) %>% 
+  dist(., method="euclidean")
+
+library(cluster)
+res_hclust <- hclust(consumer_dist, method="ward.D2")
+fviz_dend(res_hclust, k=2)
+fviz_dend(res_hclust, k=2, type="phylogenic")
+
+res_clust <- cutree(res_hclust, k=2) %>% 
+  as_tibble(rownames="Judge") %>% 
+  rename(Cluster = value) %>% 
+  mutate(Cluster = as.character(Cluster))
+
+mean_cluster <- consumer %>% 
+  separate(Product, into = c("P", "Number"), sep = 1) %>% 
+  mutate(Number = ifelse(nchar(Number) == 1, str_c("0", Number), Number)) %>% 
+  unite(Product, P, Number, sep="") %>% 
+  dplyr::select(Judge, Product, Liking=`end_liking 9pt`) %>%
+  full_join(res_clust, by="Judge") %>% 
+  group_by(Product, Cluster) %>% 
+  summarize(Liking = mean(Liking), N=n())
+
+ggplot(mean_cluster, aes(x=Product, y=Liking, colour=Cluster, group=Cluster))+
+  geom_point(pch=20)+
+  geom_line(aes(group=Cluster), lwd=2)+
+  xlab("")+
+  scale_y_continuous(name="Average Liking Score", limits=c(1,9), breaks=seq(1,9,1))+
+  ggtitle("Cluster differences in the appreciation of the Products")+
+  theme_bw()
+
+## Extend to HCPC
+
+#* External Preference Mapping --------------------------------------------
+
+
 

@@ -27,9 +27,7 @@ Another example of data manipulation consists in summarizing data, by for instan
 <!-- Insert Figure illustrating the data structure -->
 
 
-For these reasons, it is hence essential to learn to manipulate data and transition from one structure to another. After presenting many different ways to transform your data, application through simple examples will be presented[^1].
-
-[^1]: Most of the examples presented in this chapter have no scientific meaning. This has been done on purpose to emphasize the "how to?", not the "why?"
+For these reasons, it is hence essential to learn to manipulate data and transition from one structure to another. After presenting many different ways to transform your data, application through simple examples will be presented^[Most of the examples presented in this chapter have no scientific meaning. This has been done on purpose to emphasize the "how to?", not the "why?"].
 
 
 ## Tidying Data
@@ -91,9 +89,8 @@ sensory %>%
 ```
 
 
-Last but not least (regarding columns transformation) the `select()` function (from the `{dplyr}` package[^2]) allows selecting a set of variables, by simply informing the variables that should be kept in the dataset. Let's limit ourselves in selecting `Judge`, `Product`, and `Shiny`:
+Last but not least (regarding columns transformation) the `select()` function (from the `{dplyr}` package^[Many other packages include a function called `select()`, hence creating conflicts: To avoid any risks of errors, we recommend calling the `select()` function using the notation `dplyr::select()` as it formally calls the `select()` function from `{dplyr}`. This avoids any risks of error! Of course, the same procedure applies to any other functions that may suffer from the same issue.]) allows selecting a set of variables, by simply informing the variables that should be kept in the dataset. Let's limit ourselves in selecting `Judge`, `Product`, and `Shiny`:
 
-[^2]: Many other packages include a function called `select()`, hence creating conflicts: To avoid any risks of errors, we recommend calling the `select()` function using the notation `dplyr::select()` as it formally calls the `select()` function from `{dplyr}`. This avoids any risks of error! Of course, the same procedure applies to any other functions that may suffer from the same issue.
 
 
 ```{r}
@@ -230,9 +227,7 @@ After manipulating columns, the next logical step is to handle rows. Such operat
 ##### Re-arranging Rows
 
 
-The first step of re-arranging rows is done through the `arrange()` function from the `{dplyr}` package. This function allows sorting the data in the ascending order[^3]. To arrange them in a descending order, the function `desc()` is also required.
-
-[^3]: For numerical order, this is simply re-arranging the values from the lowest to the highest. For strings, the entries are then sorted alphabetically unless the variable is of type factor in which case the order of the levels for that factors are being used.
+The first step of re-arranging rows is done through the `arrange()` function from the `{dplyr}` package. This function allows sorting the data in the ascending order^[For numerical order, this is simply re-arranging the values from the lowest to the highest. For strings, the entries are then sorted alphabetically unless the variable is of type factor in which case the order of the levels for that factors are being used.]. To arrange them in a descending order, the function `desc()` is also required.
 
 Let's re-arrange the data by Judge and Product, the Judge being sorting in an ascending order whereas the product are being sorted in a descending order:
 
@@ -417,9 +412,7 @@ This procedure creates a tibble with 11 rows (product) and 33 columns (32 sensor
 #### Illustrations of Data Manipulation
 
 
-Let's review the different transformations presented earlier by generating the sensory profiles of the samples through different approaches[^4].
-
-[^4]: It is important to realize that each 'data manipulation challenge' can be solved in many different ways, so don't be afraid to think out of the box when solving them...
+Let's review the different transformations presented earlier by generating the sensory profiles of the samples through different approaches^[It is important to realize that each 'data manipulation challenge' can be solved in many different ways, so don't be afraid to think out of the box when solving them...].
 
 In the previous example, we've seen how to obtain the sensory profile using `summarise()` `across()` all numerical variables. In case a selection of the attributes should have been done, we could use the same process by simply informing which attributes to transform:
 
