@@ -328,6 +328,8 @@ fviz_pca_ind(res_mdpref, habillage=1)
 fviz_pca_var(res_mdpref, label="quanti.sup", select.var=list(cos2=0.5), repel=TRUE)
 
 #* Clustering -------------------------------------------------------------
+
+  ## Using Cluster
 consumer_dist <- consumer_wide %>% 
   as.data.frame() %>% 
   column_to_rownames(var="Product") %>% 
@@ -340,10 +342,21 @@ res_hclust <- hclust(consumer_dist, method="ward.D2")
 fviz_dend(res_hclust, k=2)
 fviz_dend(res_hclust, k=2, type="phylogenic")
 
+res_agnes <- agnes(consumer_dist, method="ward")
+cutree(res_agnes, k=2) %>% 
+  as_tibble() %>% 
+  group_by(value) %>% 
+  count()
+
 res_clust <- cutree(res_hclust, k=2) %>% 
   as_tibble(rownames="Judge") %>% 
   rename(Cluster = value) %>% 
   mutate(Cluster = as.character(Cluster))
+
+res_clust %>% 
+  group_by(Cluster) %>% 
+  count() %>% 
+  ungroup()
 
 mean_cluster <- consumer %>% 
   separate(Product, into = c("P", "Number"), sep = 1) %>% 
@@ -352,17 +365,57 @@ mean_cluster <- consumer %>%
   dplyr::select(Judge, Product, Liking=`end_liking 9pt`) %>%
   full_join(res_clust, by="Judge") %>% 
   group_by(Product, Cluster) %>% 
-  summarize(Liking = mean(Liking), N=n())
+  summarize(Liking = mean(Liking), N=n()) %>% 
+  mutate(Cluster = str_c(Cluster," (",N,")"))
 
 ggplot(mean_cluster, aes(x=Product, y=Liking, colour=Cluster, group=Cluster))+
   geom_point(pch=20)+
   geom_line(aes(group=Cluster), lwd=2)+
   xlab("")+
   scale_y_continuous(name="Average Liking Score", limits=c(1,9), breaks=seq(1,9,1))+
-  ggtitle("Cluster differences in the appreciation of the Products")+
+  ggtitle("Cluster differences in the appreciation of the Products (using hclust)")+
   theme_bw()
 
-## Extend to HCPC
+  ## Extend to HCPC
+res_hcpc <- consumer_wide %>% 
+  as.data.frame() %>% 
+  column_to_rownames(var="Product") %>% 
+  scale(., center=TRUE, scale=FALSE) %>% 
+  t(.) %>% 
+  PCA(., scale.unit=FALSE, ncp=Inf, graph=FALSE) %>% 
+  HCPC(., nb.clust=2, consol=TRUE, graph=FALSE) %>% 
+  .$data.clust %>% 
+  as_tibble(rownames="Judge") %>% 
+  dplyr::select(Judge, Cluster=clust)
+
+res_hcpc %>% 
+  group_by(Cluster) %>% 
+  count()
+
+mean_cluster2 <- consumer %>% 
+  separate(Product, into = c("P", "Number"), sep = 1) %>% 
+  mutate(Number = ifelse(nchar(Number) == 1, str_c("0", Number), Number)) %>% 
+  unite(Product, P, Number, sep="") %>% 
+  dplyr::select(Judge, Product, Liking=`end_liking 9pt`) %>%
+  full_join(res_hcpc, by="Judge") %>% 
+  group_by(Product, Cluster) %>% 
+  summarize(Liking = mean(Liking), N=n()) %>% 
+  mutate(Cluster = str_c(Cluster," (",N,")"))
+
+ggplot(mean_cluster2, aes(x=Product, y=Liking, colour=Cluster, group=Cluster))+
+  geom_point(pch=20)+
+  geom_line(aes(group=Cluster), lwd=2)+
+  xlab("")+
+  scale_y_continuous(name="Average Liking Score", limits=c(1,9), breaks=seq(1,9,1))+
+  ggtitle("Cluster differences in the appreciation of the Products (using HCPC with consolidation)")+
+  theme_bw()
+
+
+#* Linear and Quadratic Relationship --------------------------------------
+
+  ## Correlation
+
+  ## Simple and Quadratic Regression
 
 #* External Preference Mapping --------------------------------------------
 
