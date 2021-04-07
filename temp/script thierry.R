@@ -338,16 +338,8 @@ consumer_dist <- consumer_wide %>%
   dist(., method="euclidean")
 
 library(cluster)
+
 res_hclust <- hclust(consumer_dist, method="ward.D2")
-fviz_dend(res_hclust, k=2)
-fviz_dend(res_hclust, k=2, type="phylogenic")
-
-res_agnes <- agnes(consumer_dist, method="ward")
-cutree(res_agnes, k=2) %>% 
-  as_tibble() %>% 
-  group_by(value) %>% 
-  count()
-
 res_clust <- cutree(res_hclust, k=2) %>% 
   as_tibble(rownames="Judge") %>% 
   rename(Cluster = value) %>% 
@@ -358,6 +350,15 @@ res_clust %>%
   count() %>% 
   ungroup()
 
+fviz_dend(res_hclust, k=2)
+fviz_dend(res_hclust, k=2, type="phylogenic")
+
+# res_agnes <- agnes(consumer_dist, method="ward")
+# cutree(res_agnes, k=2) %>% 
+#   as_tibble() %>% 
+#   group_by(value) %>% 
+#   count()
+
 mean_cluster <- consumer %>% 
   separate(Product, into = c("P", "Number"), sep = 1) %>% 
   mutate(Number = ifelse(nchar(Number) == 1, str_c("0", Number), Number)) %>% 
@@ -366,7 +367,8 @@ mean_cluster <- consumer %>%
   full_join(res_clust, by="Judge") %>% 
   group_by(Product, Cluster) %>% 
   summarize(Liking = mean(Liking), N=n()) %>% 
-  mutate(Cluster = str_c(Cluster," (",N,")"))
+  mutate(Cluster = str_c(Cluster," (",N,")")) %>% 
+  ungroup()
 
 ggplot(mean_cluster, aes(x=Product, y=Liking, colour=Cluster, group=Cluster))+
   geom_point(pch=20)+
@@ -400,7 +402,8 @@ mean_cluster2 <- consumer %>%
   full_join(res_hcpc, by="Judge") %>% 
   group_by(Product, Cluster) %>% 
   summarize(Liking = mean(Liking), N=n()) %>% 
-  mutate(Cluster = str_c(Cluster," (",N,")"))
+  mutate(Cluster = str_c(Cluster," (",N,")")) %>% 
+  ungroup()
 
 ggplot(mean_cluster2, aes(x=Product, y=Liking, colour=Cluster, group=Cluster))+
   geom_point(pch=20)+
@@ -414,8 +417,59 @@ ggplot(mean_cluster2, aes(x=Product, y=Liking, colour=Cluster, group=Cluster))+
 #* Linear and Quadratic Relationship --------------------------------------
 
   ## Correlation
+data_cor <- mean_cluster %>% 
+  dplyr::select(-N) %>% 
+  pivot_wider(names_from=Cluster, values_from=Liking) %>% 
+  inner_join(senso_mean %>% dplyr::select(-c(Protein, Fiber)), by="Product") %>% 
+  as.data.frame() %>% 
+  column_to_rownames(var="Product")
+
+library(ggcorrplot)
+
+res_cor <- cor(data_cor)
+res_cor_pmat <- cor_pmat(data_cor)
+
+ggcorrplot(res_cor, type="full", p.mat=res_cor_pmat, insig="blank", lab=TRUE, lab_size=2)
 
   ## Simple and Quadratic Regression
+data_reg <- mean_cluster %>% 
+  dplyr::select(-N) %>% 
+  pivot_wider(names_from=Cluster, values_from=Liking) %>% 
+  inner_join(senso_mean %>% dplyr::select(-c(Protein, Fiber)), by="Product") %>% 
+  pivot_longer(Shiny:Melting, names_to="Attribute", values_to="Score") %>% 
+  mutate(Attribute = factor(Attribute, levels=colnames(senso_mean)[4:ncol(senso_mean)])) %>% 
+  mutate(Score2 = Score^2)
+
+res_reg <- data_reg %>% 
+  nest_by(Attribute) %>% 
+  mutate(lin_mod = list(lm(`1 (74)`~Score, data=data)), quad_mod = list(lm(`1 (74)`~Score + Score2, data=data)))
+
+lin <- res_reg %>% 
+  summarise(broom::tidy(lin_mod)) %>% 
+  ungroup() %>% 
+  filter(term == "Score", p.value <= 0.05) %>% 
+  dplyr::select(Attribute) %>% 
+  unlist() %>% 
+  as.character()
+
+quad <- res_reg %>% 
+  summarise(broom::tidy(quad_mod)) %>% 
+  ungroup() %>% 
+  filter(term == "Score2", p.value <= 0.06) %>%
+  dplyr::select(Attribute) %>% 
+  unlist() %>% 
+  as.character()
+
+library(ggrepel)
+data_reg %>% 
+  filter(Attribute %in% unique(c(lin,quad))) %>% 
+  ggplot(aes(x=Score, y=`1 (74)`, label=Product))+
+  geom_point(pch=20, cex=2)+
+  geom_smooth(method="lm", formula="y~x", se=FALSE)+
+  geom_smooth(method="lm", formula="y~x+I(x^2)", se=FALSE, colour="red", lty=2)+
+  geom_text_repel()+
+  theme_bw()+
+  facet_wrap(~Attribute, scales="free_x")
 
 #* External Preference Mapping --------------------------------------------
 
