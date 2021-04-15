@@ -3,6 +3,169 @@ knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 ```
 # Data Analysis {#data-analysis}
 
-## Transform
-## Explore
-## Model
+In this chapter, the different techniques presented in \@ref(data-manip) will be applied to our biscuit data.
+The analyses presented are non-exhaustive, but tackle some well-known analyses often used in sensory and consumer science.
+
+The following sections are divided based on the type of data to consider and their corresponding analysis.
+
+
+## Sensory Data
+
+
+Let's start with the analysis of our sensory data. If not done already, import the file *Sensory Profile.xlsx*.
+To do so, we need the `{here}` and `{readxl}` packages. Since most of the analyses we are going to perform require tools from the `{tidyverse}`, we also load this group of packages.
+
+
+```{r}
+library(tidyverse)
+library(here)
+library(readxl)
+
+file_path <- here("data","Sensory Profile.xlsx") 
+p_info <- read_xlsx(file_path, sheet="Product Info") %>% 
+  dplyr::select(-Type)
+
+sensory <- read_xlsx(file_path, sheet="Data") %>% 
+  inner_join(p_info, by="Product") %>% 
+  relocate(Protein:Fiber, .after=Product)
+
+```
+
+
+The first analysis often done consists in evaluate whether there are differences between samples for the different attributes. This is done through Analysis of Variance (ANOVA) and can be done using the `lm()` or `aov()` functions.
+If we would want to run the ANOVA for `Shiny`, the code would look like this (here we consider the 2-way ANOVA evaluating the Product and Assessor effects):
+
+
+```{r}
+shiny_aov <- lm(Shiny ~ Product + Judge, data=sensory)
+anova(shiny_aov)
+```
+
+
+We could duplicate this code for each single attributes, but 1. this would be quite tedious if the number of attributes increase, 2. it is sensitive to the way the variables are being called, meaning that 3. it would usually not be applicable to other dataset. Instead, we propose two solutions, one using `split()` combined with `map()` and one involving `nest_by()` to run this analysis automatically.
+
+For both these solutions, the dataset should be in the long and short form, which can be obtained using `pivot_longer()`:
+
+```{r}
+senso_aov_data <- sensory %>% 
+  pivot_longer(Shiny:Melting, names_to="Attribute", values_to="Score")
+```
+
+
+From this structure, the first approach consists in splitting the data by attribute. Once done, we run for each sub-data the ANOVA (the model is then defined as `Score ~ Product + Judge`), and we extract the results of interest using the `{broom}` package^[The `{broom}` package is a very useful package that convert statistical objects into tidy tables.] 
+Ultimately, the results can be combined again using `enframe()` and `unnest()`.
+
+
+```{r}
+senso_aov1 <- senso_aov_data %>% 
+  split(.$Attribute) %>% 
+  map(function(data){
+    
+    res <- broom::tidy(anova(lm(Score ~ Product + Judge, data=data)))
+    return(res)
+    
+  }) %>% 
+  enframe(name="Attribute", value="res") %>% 
+  unnest(res)
+
+```
+
+
+The second approach nests the analysis by attribute (meaning the analysis is done for each attribute separately, a bit like `group_by()`): in this case, we create a new variable called `mod` which takes the results of the ANOVA.
+Once the analysis is done, we summarize the info stored in `mod` by converting into a tibble using `{broom}`:
+
+
+```{r}
+senso_aov2 <- senso_aov_data %>% 
+  nest_by(Attribute) %>% 
+  mutate(mod = list(lm(Score ~ Product + Judge, data=data))) %>% 
+  summarise(broom::tidy(anova(mod))) %>% 
+  ungroup()
+
+```
+
+
+The two approaches return the exact same results. Let's dig into the results by checking for which attributes there are no significant differences at 5%. Since the `tidy()` function from `{broom}` tidies the data, all the usual data transformation can be performed. Let's filter only the `Product` effect under `term`, and let's order decreasingly the `p.value`:
+
+
+```{r}
+senso_aov1 %>% 
+  filter(term == "Product") %>% 
+  dplyr::select(Attribute, statistic, p.value) %>% 
+  arrange(desc(p.value)) %>% 
+  mutate(p.value = round(p.value, 3))
+```
+
+
+As can be seen, the products do not show any significant differences at 5% for 4 attributes: `Cereal flavor` (p=0.294), `Roasted odor` (p=0.193), `Astrigent` (p=0.116), and `Sticky` (p=0.101).
+
+
+To visualize graphically the results of the ANOVA, a barchart representing the F-value can be generated. We recommend to order the attributes based on their decreasing F-values, and by colour-coding them based on their significance:
+
+
+```{r}
+senso_aov1 %>% 
+  filter(term == "Product") %>% 
+  dplyr::select(Attribute, statistic, p.value) %>% 
+  mutate(Signif = ifelse(p.value <= 0.05, "Signif.", "Not Signif.")) %>% 
+  mutate(Signif = factor(Signif, levels=c("Signif.", "Not Signif."))) %>% 
+  ggplot(aes(x=reorder(Attribute, statistic), y=statistic, fill=Signif))+
+  geom_bar(stat="identity")+
+  scale_fill_manual(values=c("Signif."="forestgreen", "Not Signif."="orangered2"))+
+  ggtitle("Sensory Attriubtes","(The attributes are sorted according to the F-values)")+
+  theme_bw()+
+  xlab("")+
+  ylab("F-values")+
+  coord_flip()
+
+```
+
+
+It appears that the different biscuits differ the most (top 5) for `Initial hardness`, `Shiny`, `Dairy flavor`, `External color intensity`, and `Thickness`. 
+
+Note that as an alternative, we could use the `decat()` function from the `{SensoMineR}` package. This function performs ANOVA on a set of attributes (presented in subsequent columns), followed by some t-test that highlights which samples are significantly more (or less) intense than average for each attribute.
+
+
+Once the significant differences have been checked, a follow-up analysis consists in visualizing these differences. Such visualization is often done through Principal Component Analysis (PCA).
+
+In practice, PCA is performed on the mean table crossing the products in rows, and the sensory attributes in columns. In \@ref(data-manip), many different approaches to generate such table have been proposed:
+
+
+```{r}
+senso_mean <- sensory %>% 
+  pivot_longer(Shiny:Melting, names_to="Attribute", values_to="Score") %>% 
+  dplyr::select(-Judge) %>% 
+  pivot_wider(names_from=Attribute, values_from=Score, values_fn=mean)
+
+```
+
+
+Such table can be submitted to PCA. To do so, the `PCA()` function from the `{FactoMineR}` is used. 
+Few important remarks: The `PCA()` function usually contains only numerical data, the product names being often set as row names in a data frame. This is something that can easily be taken care of through the `column_to_rownames()` function from the `{tibble}` package. Additionally, one might notice that we still have two qualitative variables: `Protein` and `Fiber`. These 2 variables can either be removed prior to running the analysis, or better, projected as supplementary variables through the `quali.sup` parameter from `PCA()`. 
+
+
+```{r}
+library(FactoMineR)
+
+senso_pca <- senso_mean %>% 
+  as.data.frame() %>% 
+  column_to_rownames(var="Product") %>% 
+  PCA(., quali.sup=1:2, graph=TRUE)
+
+```
+
+
+The `PCA()` function can generate the plots either in `{base}` R language, or in `{ggplot2}`. However, we like to use a complementary package called `{factoextra}` which re-creates any plot from `{FactoMineR}` (and more) as a `ggplot()`. for `PCA()`, the main function used to re-create the plots are `fviz_pca_ind()` for the products' map, `fviz_pca_var()` for the variables' representation, and `fviz_pca_biplot()` for the biplot combining both.
+Since we have two qualitative variables, let's take advantage of them by colouring for each of them the products based on their content. This can easily be done through the `habillage` parameter from `fviz_pca_ind()`, which can either take a numerical value (position) of the name of the qualitative variable.
+
+
+```{r}
+library(factoextra)
+
+fviz_pca_ind(senso_pca, habillage="Protein", repel=TRUE)
+fviz_pca_ind(senso_pca, habillage=2, repel=TRUE)
+fviz_pca_var(senso_pca)
+fviz_pca_biplot(senso_pca)
+
+```
+

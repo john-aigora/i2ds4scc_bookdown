@@ -24,7 +24,7 @@
 <meta name="author" content="John Ennis, Julien Delarue, and Thierry Worch" />
 
 
-<meta name="date" content="2021-02-21" />
+<meta name="date" content="2021-04-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -57,6 +57,7 @@
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -406,7 +407,13 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <p>To analyze data, we need <em>data</em>. If this data is already available in R, then the analysis can be performed directly. However, in much cases, the data is stored outside the R environment, and needs to be imported.</p>
 <p>In practice, the data might be stored in as many format as one can imagine, whether it ends up being a fairly common solution (.txt file, .csv file, or .xls/.xlsx file), or software specific (e.g. Stata, SPSS, etc.).
 Since it is very common to store the data in Excel spreadsheets (.xlsx) due to its simplicity, the emphasis is on this solution. Fortunately, most generalities presented for Excel files also apply to other formats through <code>base::read.table()</code> for .txt files, <code>base::read.csv()</code> and <code>base::read.csv2()</code> for .csv files, or through the <code>{read}</code> package (which is part of the <code>{tidyverse}</code>).</p>
-<p>For other (less common) formats, the reader can find packages that would allow importing their files into R. Particular interest can be given to the package <code>{rio}</code> (<em>rio</em> stands for <em>R</em> <em>I</em>nput and <em>O</em>utput) which provides an easy solution that 1. can handle a large variety of files, 2. can actually guess the type of file it is, and 3. provides tools to import, export, and convert almost any type of data format, including .csv, .xls and .xlsx, or data from other statistical software such as SAS (.sas7bdat and .xpt), SPSS (.sav and .por), or Stata (.dta). As an alternative, the package <code>{foreign}</code> provides functions that allow importing data stored from other statistical software (incl. Minitab, S, SAS, Stata, SPSS, etc.)</p>
+<p>For other (less common) formats, the reader can find packages that would allow importing their files into R. Particular interest can be given to the package <code>{rio}</code> (<em>rio</em> stands for <em>R</em> <em>I</em>nput and <em>O</em>utput) which provides an easy solution that</p>
+<ol style="list-style-type: decimal">
+<li>can handle a large variety of files,</li>
+<li>can actually guess the type of file it is,</li>
+<li>provides tools to import, export, and convert almost any type of data format, including .csv, .xls and .xlsx, or data from other statistical software such as SAS (.sas7bdat and .xpt), SPSS (.sav and .por), or Stata (.dta).</li>
+</ol>
+<p>As an alternative, the package <code>{foreign}</code> provides functions that allow importing data stored from other statistical software (incl. Minitab, S, SAS, Stata, SPSS, etc.).</p>
 <p>Although Excel is most likely one of the most popular way of storing data, there are no <code>{base}</code> functions that allow importing such files easily. Fortunately, many packages have been developed in that purpose, including <code>{XLConnect}</code>, <code>{xlsx}</code>, <code>{gdata}</code>, and <code>{readxl}</code>. Due to its convenience and speed of execution, we will be using <code>{readxl}</code> here.</p>
 <div id="importing-structured-excel-file" class="section level3" number="8.3.1">
 <h3><span class="header-section-number">8.3.1</span> Importing Structured Excel File</h3>
@@ -415,12 +422,12 @@ Since it is very common to store the data in Excel spreadsheets (.xlsx) due to i
 <ul>
 <li>The first row within the <em>Data</em> sheet of <em>Sensory Profile.xlsx</em> contains the headers,<br />
 </li>
-<li>From the second row onwards, only data is being stored.</li>
+<li>From the second row onward, only data is being stored.</li>
 </ul>
 <p>Since this data will be used for some analyses, it is assigned data to an R object called <code>sensory</code>.</p>
 <p>To ensure that the importation went well, we print <code>sensory</code> to see how it looks like. Since <code>{readxl}</code> has been developed by Hadley Wickham and colleagues, its functions follow the <code>{tidyverse}</code> principles and the dataset thus imported is a <code>tibble</code>. Let’s take advantage of the printing properties of a <code>tibble</code> to evaluate <code>sensory</code>:</p>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="data-collection.html#cb62-1" aria-hidden="true" tabindex="-1"></a>sensory</span></code></pre></div>
-<p><code>sensory</code> is a tibble with 99 rows and 35 columns that includes the <code>Judge</code> information (first column, defined as character), the <code>Product</code> information (second and third columns, defined as character), and the sensory attributes (fourth column onward, defined as numerical or <code>dbl</code>).</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="data-collection.html#cb63-1" aria-hidden="true" tabindex="-1"></a>sensory</span></code></pre></div>
+<p><code>sensory</code> is a tibble with 99 rows and 35 columns that includes the <code>Judge</code> information (first column, defined as character), the <code>Product</code> information (second column, defined as character), and the sensory attributes (third column onward, defined as numerical or <code>dbl</code>).</p>
 </div>
 <div id="importing-unstructured-excel-file" class="section level3" number="8.3.2">
 <h3><span class="header-section-number">8.3.2</span> Importing Unstructured Excel File</h3>
@@ -439,12 +446,12 @@ Since it is very common to store the data in Excel spreadsheets (.xlsx) due to i
 <p>Let’s start with importing the variables’ names from <em>TFEQ.xlsx</em> (sheet <em>Variables</em>)</p>
 <p>In a similar way, let’s import the information related to the levels of each variable, stored in the <em>Levels</em> sheet.
 A deeper look at the <em>Levels</em> sheet shows that only the coded names of the variables are available. In order to include the final names, <code>var_names</code> is joined (using <code>inner_join</code>).</p>
-<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="data-collection.html#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb63-2"><a href="data-collection.html#cb63-2" aria-hidden="true" tabindex="-1"></a>var_labels <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(file_path, <span class="at">sheet=</span><span class="st">&quot;Levels&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb63-3"><a href="data-collection.html#cb63-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(dplyr<span class="sc">::</span><span class="fu">select</span>(var_names, Code, Name), <span class="at">by=</span><span class="fu">c</span>(<span class="at">Question=</span><span class="st">&quot;Code&quot;</span>))</span>
-<span id="cb63-4"><a href="data-collection.html#cb63-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb63-5"><a href="data-collection.html#cb63-5" aria-hidden="true" tabindex="-1"></a>var_labels</span></code></pre></div>
-<p><strong>Note</strong>: In some cases, this information is directly available in the dataset as sub-header: A solution is then to import the first rows of the dataset that contain this information using the parameter <code>n_max</code> from `readxl::read_xlsx``. For each variable (when information is available), store that information as a list of tables that contains the code and their corresponding label.</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="data-collection.html#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb64-2"><a href="data-collection.html#cb64-2" aria-hidden="true" tabindex="-1"></a>var_labels <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(file_path, <span class="at">sheet=</span><span class="st">&quot;Levels&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb64-3"><a href="data-collection.html#cb64-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(dplyr<span class="sc">::</span><span class="fu">select</span>(var_names, Code, Name), <span class="at">by=</span><span class="fu">c</span>(<span class="at">Question=</span><span class="st">&quot;Code&quot;</span>))</span>
+<span id="cb64-4"><a href="data-collection.html#cb64-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-5"><a href="data-collection.html#cb64-5" aria-hidden="true" tabindex="-1"></a>var_labels</span></code></pre></div>
+<p><strong>Note</strong>: In some cases, the information regarding the levels of a factor is available within the dataset as sub-header: A solution is then to import the first rows of the dataset that contain this information using the parameter <code>n_max</code> from `readxl::read_xlsx``. For each variable (when information is available), store that information as a list of tables that contains the code and their corresponding label.</p>
 <!-- **THIS SECTION BELOW MIGHT NEED TO GET PASSED ON TO THE EXERCISE**
 
 Since most likely this system of coding follow a fixed pattern, we strongly recommend the use of `{tidytext}` and its function `unnest_tokens()`.
@@ -452,32 +459,34 @@ For example, let's imagine that the our information is structured as *code1=labe
 
 **(PREVIOUS PART) TO BE GIVEN AS AN EXAMPLE/EXERCISE** -->
 <p>Finally, the dataset (<em>Data</em>) is imported by substituting the coded names with their corresponding names.
-This process can be done by skipping reading the first row of the dataset that contains the coded header (<code>skip=1</code>), and by passing <code>Var_names</code> as header or column names (after ensuring that the names’ sequence perfectly match across the two tables!).</p>
+This process can be done by skipping reading the first row of the dataset that contains the coded header (<code>skip=1</code>), and by passing <code>Var_names</code> as header or column names (after ensuring that the names’ sequence perfectly match across the two tables!).
+Alternatively, you can import the data by specifying the range in which the data is being stored (here `range=“A2:BJ108”``).</p>
 <p>The data has now the proper header, however each variable is still coded numerically. The steps to convert the numerical values with their corresponding labels is shown in Section <a href="data-prep.html#data-prep">9</a>.</p>
 </div>
 <div id="import-mult-sheet" class="section level3" number="8.3.3">
 <h3><span class="header-section-number">8.3.3</span> Importing Data Stored in Multiple Sheets</h3>
 <p>It can happen that the data that needs to be analyzed is stored in different files, or in different sheets within the same file. Such situation could happen if the same test involving the same samples is performed multiple times over time, the same test has been performed simultaneously in two different locations, or simply for convenience, your colleague wanted to simplify your task and already split the data based on a variable of interest.</p>
 <p>Since the goal here is to highlight the possibilities in R to handle such situations, we propose to use a small fake example where 12 panelists evaluated 2 samples on 3 attributes in 3 sessions, each session being stored in a different sheet in <em>excel_scrap.xlsx</em>.</p>
-<p>A first approach to tackle this problem could be to import each file separately, and to combine them together using the <code>bind_rows()</code> function from the <code>{dplyr}</code> package. However, this solution is not optimal since 1. it is very tedious when there are many different sheets, and 2. it is not automated since the code will no longer run if (say) the number of session changes.</p>
+<p>A first approach to tackle this problem could be to import each file separately, and to combine them together using the <code>bind_rows()</code> function from the <code>{dplyr}</code> package. However, this solution is not optimal since 1. it is very tedious when a larger number of sheets is involved, and 2. it is not automated since the code will no longer run if (say) the number of session changes.</p>
 <p>To counterbalance, we first introduce the function <code>excel_sheets()</code> from <code>{readxl}</code> as it provides all the sheet that are available in the file of interest. This allows us reading all the sheets from that file, regardless the number of sessions. Second, the function <code>map()</code> from the <code>{purrr}</code> package comes handy as it applies a function (here <code>read_xlsx()</code>) to each element of a list or vector (here, the one obtained from <code>excel_sheets()</code>).</p>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="data-collection.html#cb64-1" aria-hidden="true" tabindex="-1"></a>path <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;excel_scrap.xlsx&quot;</span>) </span>
-<span id="cb64-2"><a href="data-collection.html#cb64-2" aria-hidden="true" tabindex="-1"></a>path <span class="sc">%&gt;%</span> </span>
-<span id="cb64-3"><a href="data-collection.html#cb64-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">excel_sheets</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb64-4"><a href="data-collection.html#cb64-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_names</span>(.) <span class="sc">%&gt;%</span> </span>
-<span id="cb64-5"><a href="data-collection.html#cb64-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span><span class="fu">read_xlsx</span>(path, <span class="at">sheet =</span> .))</span></code></pre></div>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="data-collection.html#cb65-1" aria-hidden="true" tabindex="-1"></a>path <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;excel_scrap.xlsx&quot;</span>) </span>
+<span id="cb65-2"><a href="data-collection.html#cb65-2" aria-hidden="true" tabindex="-1"></a>path <span class="sc">%&gt;%</span> </span>
+<span id="cb65-3"><a href="data-collection.html#cb65-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">excel_sheets</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb65-4"><a href="data-collection.html#cb65-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_names</span>(.) <span class="sc">%&gt;%</span> </span>
+<span id="cb65-5"><a href="data-collection.html#cb65-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span><span class="fu">read_xlsx</span>(path, <span class="at">sheet =</span> .))</span></code></pre></div>
 <p>As can be seen, this procedure creates a list of tables, with as many elements are there are sheets (here session) in the excel file. To convert this list of data tables into one unique data frame, we first extend the previous code and <code>enframe()</code> it by informing that the separation was based on <code>Session</code>. Once done, the data (stored in <code>data</code>) is still nested in a list, and should be <em>unfolded</em>. Such operation is done with the <code>unnest()</code> function from <code>{tidyr}</code>:</p>
-<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="data-collection.html#cb65-1" aria-hidden="true" tabindex="-1"></a>path <span class="sc">%&gt;%</span> </span>
-<span id="cb65-2"><a href="data-collection.html#cb65-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">excel_sheets</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb65-3"><a href="data-collection.html#cb65-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_names</span>(.) <span class="sc">%&gt;%</span> </span>
-<span id="cb65-4"><a href="data-collection.html#cb65-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span><span class="fu">read_excel</span>(path, <span class="at">sheet =</span> .)) <span class="sc">%&gt;%</span> </span>
-<span id="cb65-5"><a href="data-collection.html#cb65-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">enframe</span>(<span class="at">name =</span> <span class="st">&quot;Session&quot;</span>, <span class="at">value =</span> <span class="st">&quot;data&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb65-6"><a href="data-collection.html#cb65-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(<span class="at">cols =</span> <span class="fu">c</span>(data))</span></code></pre></div>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="data-collection.html#cb66-1" aria-hidden="true" tabindex="-1"></a>path <span class="sc">%&gt;%</span> </span>
+<span id="cb66-2"><a href="data-collection.html#cb66-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">excel_sheets</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb66-3"><a href="data-collection.html#cb66-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_names</span>(.) <span class="sc">%&gt;%</span> </span>
+<span id="cb66-4"><a href="data-collection.html#cb66-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span><span class="fu">read_excel</span>(path, <span class="at">sheet =</span> .)) <span class="sc">%&gt;%</span> </span>
+<span id="cb66-5"><a href="data-collection.html#cb66-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">enframe</span>(<span class="at">name =</span> <span class="st">&quot;Session&quot;</span>, <span class="at">value =</span> <span class="st">&quot;data&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb66-6"><a href="data-collection.html#cb66-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(<span class="at">cols =</span> <span class="fu">c</span>(data))</span></code></pre></div>
 <p>This procedure finally returns a tibble with 72 rows and 6 columns, ready to be analyzed!</p>
 <p>Remarks:</p>
 <ol style="list-style-type: decimal">
 <li>Instead of <code>enframe()</code>, we could have used <code>reduce()</code> from <code>{purrr}</code>, or <code>map()</code> combined with <code>bind_rows()</code>, but both these solutions would then lose the information regarding the <code>Session</code> since it is not part of the data set itself.</li>
 <li>The functions <code>enframe()</code> and <code>unnest()</code> have their alter-ego in <code>deframe()</code> and <code>nest()</code> which aim in transforming a data frame into a list of tables, and in nesting data by creating a list-column of data frames.</li>
+<li>In case the different datasets are stored in different excel files (rather than different sheets within a file), we could apply a very similar procedure by using <code>list.files()</code> from the <code>{base}</code> package, together with <code>pattern = "xlsx"</code> to limit the search to Excel files.</li>
 </ol>
 
 </div>

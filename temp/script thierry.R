@@ -15,15 +15,13 @@ sensory <- read_xlsx(file_path, sheet="Data") %>%
 
 #* ANOVA ------------------------------------------------------------------
 
-senso_aov1 <- sensory %>% 
-  pivot_longer(Shiny:Melting, names_to="Attribute", values_to="Score") %>% 
-  nest_by(Attribute) %>% 
-  mutate(mod = list(lm(Score ~ Product + Judge, data=data))) %>% 
-  summarise(broom::tidy(anova(mod))) %>% 
-  ungroup()
+shiny_aov <- lm(Shiny ~ Product + Judge, data=sensory)
+anova(shiny_aov)
 
-senso_aov2 <- sensory %>% 
-  pivot_longer(Shiny:Melting, names_to="Attribute", values_to="Score") %>% 
+senso_aov_data <- sensory %>% 
+  pivot_longer(Shiny:Melting, names_to="Attribute", values_to="Score")
+
+senso_aov1 <- senso_aov_data %>% 
   split(.$Attribute) %>% 
   map(function(data){
     
@@ -33,6 +31,12 @@ senso_aov2 <- sensory %>%
   }) %>% 
   enframe(name="Attribute", value="res") %>% 
   unnest(res)
+
+senso_aov2 <- senso_aov_data %>% 
+  nest_by(Attribute) %>% 
+  mutate(mod = list(lm(Score ~ Product + Judge, data=data))) %>% 
+  summarise(broom::tidy(anova(mod))) %>% 
+  ungroup()
 
 senso_aov1 %>% 
   filter(term == "Product") %>% 
