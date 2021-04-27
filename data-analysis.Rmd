@@ -99,7 +99,6 @@ senso_aov1 %>%
 
 As can be seen, the products do not show any significant differences at 5% for 4 attributes: `Cereal flavor` (p=0.294), `Roasted odor` (p=0.193), `Astrigent` (p=0.116), and `Sticky` (p=0.101).
 
-
 To visualize graphically the results of the ANOVA, a barchart representing the F-value can be generated. We recommend to order the attributes based on their decreasing F-values, and by colour-coding them based on their significance:
 
 
@@ -155,8 +154,8 @@ senso_pca <- senso_mean %>%
 ```
 
 
-The `PCA()` function can generate the plots either in `{base}` R language, or in `{ggplot2}`. However, we like to use a complementary package called `{factoextra}` which re-creates any plot from `{FactoMineR}` (and more) as a `ggplot()`. for `PCA()`, the main function used to re-create the plots are `fviz_pca_ind()` for the products' map, `fviz_pca_var()` for the variables' representation, and `fviz_pca_biplot()` for the biplot combining both.
-Since we have two qualitative variables, let's take advantage of them by colouring for each of them the products based on their content. This can easily be done through the `habillage` parameter from `fviz_pca_ind()`, which can either take a numerical value (position) of the name of the qualitative variable.
+The `PCA()` function can generate the plots either in `{base}` R language, or in `{ggplot2}`. However, we like to use a complementary package called `{factoextra}` which re-creates any plot from `{FactoMineR}` (and more) as a `ggplot()` object. for `PCA()`, the main function used to re-create the plots are `fviz_pca_ind()` for the products' map, `fviz_pca_var()` for the variables' representation, and `fviz_pca_biplot()` for the biplot combining both.
+Since we have two qualitative variables, let's take advantage of them by coloring for each of them the products based on their content. This can easily be done through the `habillage` parameter from `fviz_pca_ind()`, which can either take a numerical value (position) of the name of the qualitative variable.
 
 
 ```{r}
@@ -169,3 +168,5 @@ fviz_pca_biplot(senso_pca)
 
 ```
 
+
+On the first dimension, `P10` is opposed to `P09` and `P03` as it is more intense for attributes such as `Sweet`, and `Dairy flavor` for example, and less intense for attributes such as `Dry in mouth` and `External color intensity`. On the second dimension, `P08`, `P06`, and `POpt` are opposed to `P02` and `P07` as they score higher for `Qty of inclusions`, and `Initial hardness`, and score lower for `RawDough flavor` and `Shiny`. 
