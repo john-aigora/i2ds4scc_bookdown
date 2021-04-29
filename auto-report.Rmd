@@ -54,39 +54,20 @@ for (v in 1:ncol(demographic)){
 
 Although Excel is not our preferred tool for automated reporting, it is still one of the major ways to access and share data. Most data collection software offers the possibility to export data and/or results in an Excel format, and most data analysis tools accepts Excel format as inputs.  With the large use of Excel, it is no surprise that many of our colleagues or clients like to share data and results using such spreadsheets. It is even less a surprise that R provides multiple solutions to import/export results from/to Excel. 
 
-For the importation of datasets, we have already presented two packages (**{xlsx}** and **{readxl}**) which provide some interesting options: they will not be detailed any further here.
+For the importation of datasets, we have already presented the package `{readxl}` amongst others. For exporting results, two complementary packages (yet again, amongst others!) in terms of ease of use and flexibility in the outcome are proposed: `{writexl}` and `{openxlsx}`.
 
-For exporting results, two complementary packages (amongst others) in terms of ease of use and flexibility in the outcome are considered: **{xlsx}** and **{openxlsx}**.
+As its name suggests, `{writexl}` is the extension of `{readxl}` dedicated to exporting tables to Excel through the `write_xlsx()` function. Its use is very simple as it only takes as inputs the table (or list of tables) to export to the file specified in the `path` parameter. 
 
-Besides its option of importing directly Excel files (.xls and .xlsx), the package **{xlsx}** also offers the option to export tables in Excel through the function `write.xlsx()`.  `write.xlsx()` works in the same way as `base::write.csv()` (as its name indicates, this function exports tables from R to a .csv file), but since it generates an Excel file (.xls or .xlsx), additional tabs can be added using the `append` option. The procedure for `write.xlsx()` is the following: 
 
-- First export the table `x=mydata1` of interest in a new Excel into the tab entitles "mytab1" of the file "myfile.xlsx" using the options `file=“myfile.xlsx”` and `sheetName= “mytab1”`, and set the option `append=FALSE`.
-- Then add to `file=“myfile.xlsx”` any additional table `x=mydata2` in another tab (e.g. `sheet=”mytab2”`) using a similar command, but by setting `append=TRUE`.
-By doing so, R understands that "myfile.xlsx" should be extended with a second tab called "mytab2" that contains "mytable2". The tables exported may or may not include row names and column namess, and the sheet can automatically be password protected using the `password` option.
-
-```{r xlsx}
-library(xlsx)
-
-# We propose here to export the 5 first tables in 5 different tabs.
-for (v in 1:5){
-  
-  if (v==1){
-    append=FALSE
-  } else {
-    append=TRUE
-  }
-  
-  xlsx::write.xlsx(as.data.frame(demog_freq[[v]]), 
-                   file="thierry_code/Output/Tables using xlsx.xlsx", 
-                   sheetName=names(demog_freq)[v], 
-                   row.names=FALSE, append=append)
-}
-
+```{r}
+#ADD SOME CODE HERE FOR AN EXAMPLE
 ```
 
-The exportation of tables using the **{xlsx}** package is easy, yet very simplistic as it does not allow formatting the tables, nor does it allow exporting multiple tables in the same tab. For more advanced exporting options, the use of **{openxlsx}** package is preferred as it allows more flexibility in structuring and formatting the Excel output.
 
-With **{openxlsx}**, the procedure starts with creating a workbook `wb` using the `createWorkbook()` function, to which we add worksheets through the `addWorksheet()` function. 
+
+The exportation of tables using the `{writexl}` package is easy, yet too simplistic (?) as it does not allow formatting the tables (except for some minor possibilities for the header), nor does it allow exporting multiple tables within the same sheet. For more advanced exporting options, the use of **{openxlsx}** package is preferred as it allows more flexibility in structuring and formatting the Excel output.
+
+With `{openxlsx}`, the procedure starts with creating a workbook `wb` using the `createWorkbook()` function, to which we add worksheets through the `addWorksheet()` function. 
 On a given worksheet, any table can be exported using `writeData()` or `writeDataTable()`, which controls where to write the table through the `startRow` and `startCol` options.
 Through these different functions, many additional formatting procedure can be applied:  
 
@@ -98,31 +79,32 @@ Through these different functions, many additional formatting procedure can be a
   * format the worksheet by specifying its size (`paperSize`) and orientation (`orientation`).
   
 - `writeData()` and `writeDataTable()` allow:
-  * controlling where to print the data using `startRow` and `startCol` (or alternatively `xy`: `xy=c(“B”,12)` prints the table in cell B12), hence allowing exporting multiple tables within the same tab;
+  * controlling where to print the data using `startRow` and `startCol` (or alternatively `xy`: `xy=c(“B”,12)` prints the table starting in cell B12), hence allowing exporting multiple tables within the same sheet;
   * including the row names and column names through `rowNames` and `colNames`;
   * formatting the header using `headerStyle` (incl. colour of the text and/or background, font, font size, etc.) and whether a `filter` should be applied;
   * shaping the borders using predefined solutions through `borders`, or customizing them with `borderStyle` and `borderColour`;
-  * adding a filter to the table using `withFilger`;
+  * adding a filter to the table using `withFilter`;
   * converts missing data to "#N/A" or any other string using `keepNA` and `na.string`.
   
 - Additional formatting can be controlled using:
-  * `options()` to predefine number formatting, border colours and style that will be applied automatically to each tables;
+  * `options()` to pre-define number formatting, border colours and style that will be applied automatically to each tables;
   * `modifyBaseFont()` to defined the font and font size;
   * `freezePane()` to freeze the first row and/or column of the table using `firstRow=TRUE` and `firstCol=TRUE`;
   * `createStyle()` to pre-define a style, or `addStyle()` to apply a later stage some styling to some cells;
   * controls the width of the columns using `setColWidths`;
   * `conditionalFormatting()` allows coloring cells when they meet pre-defined rules, as for instance to highlight significant p-values. 
   
-When using **{openxlsx}**, we recommend to use the same procedure as for Word and PowerPoint: 
+When using `{openxlsx}`, we recommend to use the same procedure as for Word and PowerPoint: 
 
 - Start with setting as default the parameters that should be applied to each table;
 - Create styles for text or table headers that you save in different elements, and that you apply where needed. 
 
-In the following example, the sensory profiles are exported in the first tab, and a set of frequency tables are exported in the second tab.
-To introduce conditional formatting with **{openxlsx}**, the sensory profiles are color coded as following: For each cell, the value is compared to the overall mean computed for that column and is colored in red (resp. blue) if it's higher (resp. lower) than the mean.
+In the following example, the sensory profiles are exported in the first sheet, and a set of frequency tables are exported in the second sheet.
+To introduce conditional formatting with `{openxlsx}`, the sensory profiles are color coded as following: For each cell, the value is compared to the overall mean computed for that column and is colored in red (resp. blue) if it's higher (resp. lower) than the mean.
 In practice, the color style is pre-defined in two parameters called `pos_style` (red) and `neg_style` (blue) using `createStyle()`. The decision whether `pos_style` or `neg_style` should be used is defined by the `rule` parameter from the `conditionalFormatting()`[^1] function.
 
 [^1]: In `conditionalFormatting()`, you can specify to which `rows` and `cols` the formatting applies. In this example, `cols` takes `v+1` because the first column contains the row names.
+
 
 ```{r openxlsx}
 library(openxlsx)
@@ -198,7 +180,10 @@ setColWidths(wb, 2, cols=1:10, widths=12)
 
 ```
 
-The file is created using `saveWorkbook()` by specifying the name of the workbook `wb` and its path through `file`. In case such workbook already exists, it can be overwritten using `overwrite`. Additionally, the user can visualize the file so far created using `openXL()`. 
+
+The file is created using `saveWorkbook()` by specifying the name of the workbook `wb` and its path through `file`. In case such workbook already exists, it can be overwritten using `overwrite`. 
+
+TIPS: At any time, you can visualize your file using `openXL()`: This function opens within Excel the temporary file that is currently being built, hence allowing you to double-check that your code matches your expectations.
 
 For more details on using **{openxlsx}** see <https://rdrr.io/cran/openxlsx/>.
 
