@@ -33,11 +33,24 @@ Rcolorbrewer
 
 ```{r analysis, echo=FALSE}
 library(readxl)
-library(janitor)
+library(here)
+library(glue)
 
-demographic <- read_xlsx("thierry_code/Data/resultats TFEQ - anonymous.xlsx", sheet="Resultats", col_names=var_names$new_name, skip=1) %>% 
-  clean_names() %>% 
-  dplyr::select(-c(postcode, judge, birthdate, height, weight, bmi))
+file_path <- here("Data","TFEQ.xlsx")
+
+var_names <- read_xlsx(file_path, sheet="Variables")
+var_levels <- read_xlsx(file_path, sheet="Levels") %>% 
+  inner_join(var_names, by=c("Question"="Code")) %>% 
+  dplyr::select(Levels, Code, Name)
+
+demographic <- read_xlsx(file_path, sheet="Data", col_names=var_names$Name, skip=1) %>% 
+  dplyr::select(Judge, `Living area`, Housing, `Marital status`, `Income range`, `Occupation`) %>% 
+  pivot_longer(-Judge, names_to="Name", values_to="Response") %>% 
+  left_join(var_levels, by=c("Name", "Response"="Code")) %>% 
+  dplyr::select(-Response) %>% 
+  pivot_wider(names_from=Name, values_from=Levels) %>% 
+  dplyr::select(-Judge)
+
 
   # Demog_freq reproduces the tables that are stored in another tab of the .xlsx file
 demog_freq <- vector("list", ncol(demographic))
@@ -116,6 +129,11 @@ options("openxlsx.borderStyle"="thin")
 # Automatically set Number formats to 3 values after the decimal
 options("openxlsx.numFmt"="0.000")
 
+# Creation of the workbook wb with two tabs called Mean and Frequency
+wb <- openxlsx::createWorkbook()
+addWorksheet(wb, sheetName="Mean", gridLines=FALSE)
+addWorksheet(wb, sheetName="Frequency", gridLines=FALSE)
+
 # Change the font to Calibri size 10
 modifyBaseFont(wb, fontSize=10, fontName="Calibri")
 
@@ -135,11 +153,6 @@ overall_mean <- apply(senso_mean, 2, mean)
 
 pos_style <- createStyle(fontColour="firebrick3", bgFill="mistyrose1")
 neg_style <- createStyle(fontColour="navy", bgFill="lightsteelblue")
-
-# Creation of the workbook wb with two tabs called Mean and Frequency
-wb <- openxlsx::createWorkbook()
-addWorksheet(wb, sheetName="Mean", gridLines=FALSE)
-addWorksheet(wb, sheetName="Frequency", gridLines=FALSE)
 
 # Exporting senso_mean to the first tab (first row and first column are frozen)
 # A pre-defined Excel design called TableStyleLight9 is used for this table
