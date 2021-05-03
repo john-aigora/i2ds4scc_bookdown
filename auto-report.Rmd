@@ -54,8 +54,7 @@ product_info <- read_excel(path  = file_path,
 product_info %>% 
   filter(Protein %in% "High") %>% 
   write_xlsx(path = file.path("output", "High Protein Products.xlsx"),
-             col_names = TRUE
-             )
+             col_names = TRUE)
 
 ```
 
@@ -98,9 +97,7 @@ When using `{openxlsx}`, we recommend to use the same procedure as for Word and 
 In the following example, the sensory profiles are exported into a newly created sheet. 
 
 To introduce conditional formatting with `{openxlsx}`, the sensory profiles are color coded as following: for each cell, the value is compared to the overall mean computed for that column and is colored in red (resp. blue) if it's higher (resp. lower) than the mean.
-In practice, the color style is pre-defined in two parameters called `pos_style` (red) and `neg_style` (blue) using `createStyle()`. The decision whether `pos_style` or `neg_style` should be used is defined by the `rule` parameter from the `conditionalFormatting()`[^1] function.
-
-[^1]: In `conditionalFormatting()`, you can specify to which `rows` and `cols` the formatting applies. In this example, `cols` takes `2` because the first column contains the row names.
+In practice, the color style is pre-defined in two parameters called `pos_style` (red) and `neg_style` (blue) using `createStyle()`. The decision whether `pos_style` or `neg_style` should be used is defined by the `rule` parameter from the `conditionalFormatting()`^[In `conditionalFormatting()`, you can specify to which `rows` and `cols` the formatting applies. In this example, `cols` takes `2` because the first column contains the row names.] function.
 
 
 ```{r openxlsx}
@@ -126,7 +123,7 @@ headSty <- createStyle(fgFill = "#DCE6F1",
 # Data preparation
 senso_mean <- sensory %>% 
   group_by(Product) %>% 
-  summarise(across(where(is.numeric),mean)) %>% 
+  summarise(across(where(is.numeric), mean)) %>% 
   tibble::column_to_rownames(var = "Product")
 
 overall_mean <- apply(senso_mean, 2, mean)

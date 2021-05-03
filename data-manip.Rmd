@@ -566,7 +566,7 @@ The next step is then to merge this table to `Biscuits`. In this case, since bot
  
 ```{r}
 biscuits <- read_xlsx(file_path, sheet="Biscuits") %>% 
-  mutate(Consumer = paste0("J",Consumer)) %>% 
+  mutate(Consumer = str_c("J",Consumer)) %>% 
   full_join(consumption, by=c("Consumer"="Judge", "Samples"="Product"))
 
 biscuits
