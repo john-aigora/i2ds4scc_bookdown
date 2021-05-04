@@ -203,10 +203,13 @@ demographic <- read_xlsx(file_path, sheet="Data", skip=1, col_names=unlist(demo_
 ```
 
 
+### Demographic Data: Frequency and Proportion
+
+
 For this demographic data file, we are interested to see the partition of consumers for each of the descriptive variables. More precisely, we would like to know the frequency and proportion (in percentage) attached to each level of `Living area`, `Housing`, `Income range`, and `Occupation`. 
 
 To obtain such table, let's start by only selecting these particular columns together with `Judge`. 
-Since the data is coded, let's decode it using the information stored in `demo_lev`: we could automatically recode each variable using `mutate()` and `factor()`. However, we prefer here to use `pivot_longer()` to create a long thin tibble, and then to merge this table with `demo_lev` by `Question` and `Response` using `inner_join()` instead. Once done, we can aggregate the results by `Question` and `Levels` (since we want to use the level information, not their code) and compute the frequency (`n()`) and the proportion (`N/sum(N)`)^[We use the package `{formattable}` to print the results in percentage using one decimal.].
+Since the data is coded, let's decode it using the information stored in `demo_lev`: we could automatically recode each variable using `mutate()` and `factor()`. However, we prefer here to use `pivot_longer()` to create a long thin tibble, and then to merge this table with `demo_lev` by `Question` and `Response` using `inner_join()` instead. Once done, we can aggregate the results by `Question` and `Levels` (since we want to use the level information, not their code) and compute the frequency (`n()`) and the proportion (`N/sum(N)`)^[We use the package `{formattable}` to print the results in percentage using one decimal. As an alternative, we could have used `percent()` from the `{scales}` package.].
 
 
 ```{r}
@@ -223,7 +226,7 @@ demog_reduced <- demographic %>%
 ```
 
 
-To better visualize these different proportions, histogram can be generated. This can be done by splitting `demog_reduced` by `Question`, and to create in each case an histogram using either `N` or `Pct` (we are using `Pct`)^[The histograms are ordered decreasingly (`reorder`) and are represented horizontally (`coord_flip()`).]. Of course, we automate this across all questions using `map()`.
+To better visualize these different proportions, histograms are often considered. Such histograms can be obtained by splitting `demog_reduced` by `Question` and by creating in each case an histogram using either `N` or `Pct` (we are using `Pct`)^[Here, the histograms are ordered decreasingly (`reorder`) and are represented horizontally (`coord_flip()`).]. Of course, we automate this across all questions using `map()`.
 
 
 ```{r}
@@ -246,4 +249,34 @@ demog_reduced %>%
 ```
 
 
-One bar-chart per question is being generated automatically.
+### Behavioral Data: TFEQ Traits
+
+
+In the same data set, consumers also answered some behavioral questions that reflects on their relation to food. These questions can be categorized into three groups: Disinhibitor (variables starting with `D`), Restriction (variables starting with `R`), and Hunger (variables starting with `H`).
+
+Let's start by selecting all these variables. We could use `select()` combined with `starts_with("D")`, `starts_with("R")`, and `starts_with("H")`, but this solution is not satisfying since it can also seelct other variables that would start with any of these letters (e.g. Housing). Since the variables are all well structured (the all start with the letters D, R, or H, followed by a number), the use of a regular expression is more appropriate.
+
+In practice, generating regular expression can be quite complex as it is an abstract concept which follow very specific rules. Fortunately, the package `{RVerbalExpression}` is a great assistant as it generates the regular expression for you thanks to understandable functions. First, we initiate the regular expression by calling the function `rx()` to which we add that we first want any variables that start with any of the letter R, D, or H, followed by a number (or more, as values go from 1 to 21). This can be done using the following code:
+
+
+```{r}
+library(RVerbalExpressions)
+
+rdh <- rx() %>% 
+  rx_either_of(c("R","D","H")) %>% 
+  rx_digit() %>% 
+  rx_one_or_more()
+
+rdh
+
+```
+
+
+`rdh` contains the regular expression that we need. We can then `dplyr::select()` any variable that fits our regular expression by using the function `matches()`.
+
+
+```{r}
+demographic %>% 
+  dplyr::select(matches(rdh))
+```
+
