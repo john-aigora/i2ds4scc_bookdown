@@ -132,17 +132,10 @@ rdh <- rx() %>%
   rx_digit() %>% 
   rx_one_or_more()
 
-d <- rx() %>% 
-  rx_find("D") %>% 
-  rx_digit() %>% 
-  rx_one_or_more()
-
 myfreq <- function(data, info){
-  
   var = unique(unlist(data$TFEQ))
   info <- info %>% 
     filter(Name == var)
-  
   res <- data %>% 
     mutate(Response = factor(Response, levels=info$Code, labels=info$Levels)) %>% 
     arrange(Response) %>% 
@@ -150,9 +143,7 @@ myfreq <- function(data, info){
     summarize(N = n()) %>% 
     mutate(Pct = percent(N/sum(N), digits=1L)) %>% 
     ungroup()
-  
   return(res)
-  
 }
 
 TFEQ_freq <- demographic %>% 
@@ -164,6 +155,11 @@ TFEQ_freq <- demographic %>%
   unnest(res) %>% 
   mutate(TFEQ = factor(TFEQ, levels=unique(str_sort(.$TFEQ, numeric=TRUE)))) %>% 
   arrange(TFEQ)
+
+d <- rx() %>% 
+  rx_find("D") %>% 
+  rx_digit() %>% 
+  rx_one_or_more()
 
 TFEQ_freq %>% 
   filter(str_detect(TFEQ, d)) %>% 

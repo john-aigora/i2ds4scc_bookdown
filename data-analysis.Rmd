@@ -280,3 +280,63 @@ demographic %>%
   dplyr::select(matches(rdh))
 ```
 
+
+Since we would like to create a frequency table for each of these variables, we create a function called `myfreq()` which will automatically compute the frequency for each level, and the corresponding percentage.
+
+
+```{r}
+myfreq <- function(data, info){
+  
+  var = unique(unlist(data$TFEQ))
+  info <- info %>% 
+    filter(Name == var)
+  
+  res <- data %>% 
+    mutate(Response = factor(Response, levels=info$Code, labels=info$Levels)) %>% 
+    arrange(Response) %>% 
+    group_by(Response) %>% 
+    summarize(N = n()) %>% 
+    mutate(Pct = percent(N/sum(N), digits=1L)) %>% 
+    ungroup()
+  
+  return(res)
+}
+
+```
+
+
+We then apply this function to each variable separately using `map()` after pivoting all these variables of interest (`pivot_longer()`) and splitting the data by `TFEQ` question:
+
+
+```{r}
+TFEQ_freq <- demographic %>% 
+  dplyr::select(Judge, matches(rdh)) %>% 
+  pivot_longer(-Judge, names_to="TFEQ", values_to="Response") %>% 
+  split(.$TFEQ) %>%
+  map(myfreq, info=demo_lev) %>% 
+  enframe(name = "TFEQ", value="res") %>% 
+  unnest(res) %>% 
+  mutate(TFEQ = factor(TFEQ, levels=unique(str_sort(.$TFEQ, numeric=TRUE)))) %>% 
+  arrange(TFEQ)
+```
+
+
+Similarly, we can create histograms representing the frequency for each variable. But here we limit ourselves to variables related to Disinhibitor. To do so, we start by generating the right regular expression (only selecting variables starting with "D") that we used to filter the results, before creating the corresponding graph:
+
+
+```{r}
+d <- rx() %>% 
+  rx_find("D") %>% 
+  rx_digit() %>% 
+  rx_one_or_more()
+
+TFEQ_freq %>% 
+  filter(str_detect(TFEQ, d)) %>% 
+  ggplot(aes(x=Response, y=Pct, label=Pct))+
+  geom_bar(stat="identity", fill="grey50")+
+  geom_text(aes(y = Pct/2), colour="white")+
+  theme_bw()+
+  facet_wrap(~TFEQ, scales="free")
+```
+
+
