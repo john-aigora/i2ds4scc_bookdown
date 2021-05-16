@@ -58,8 +58,6 @@ product_info %>%
 
 ```
 
-
-
 The export of tables using the `{writexl}` package is easy, yet simplistic as it does not allow formatting the tables (except for some minor possibilities for the header), nor does it allow exporting multiple tables within the same sheet. For more advanced exporting options, the use of **{openxlsx}** package is preferred as it allows more flexibility in structuring and formatting the Excel output.
 
 With `{openxlsx}`, the procedure starts with creating a workbook object `wb` using the `createWorkbook()` function, to which we add worksheets through the `addWorksheet()` function. 
@@ -182,129 +180,97 @@ For more details on using **{openxlsx}** see <https://rdrr.io/cran/openxlsx/>.
 
 ## PowerPoint
 
-Start with template
-Explain slide master
-How to adjust choices
-Internal naming (relevant later)
-Example
-Title slides
-Tables
-Charts
-Bullet points
-Images
-Layout discussion
-
-
 ```{r}
 library(tidyverse)
 library(officer)
 library(flextable)
 ```
 
-### PowerPoint Formatting
+With `{officer}`, the procedure starts with creating a powerpoint object `pptx_obj` using the `read_pptx()` function, to which we add slides through the `add_slide()` function. 
+On a given worksheet, any type of content (text, graph, table) can be exported using `ph_with()` (ph ~ placeholder) which controls where to write the content through the `location` and `ph_location` options.
 
-PowerPoint Slide Master
+Through these different functions, many additional formatting procedure can be applied.
 
-#### Importing the Template 
+- `add_slide()` with arguments:
+  * `layout` type of slide;
+  * `master` theme of the deck;
+  
 
-```{r 1.1 importing the template}
-my_file <- file.path("input", "templates", "Tutorial Template.pptx") %>% 
-                        read_pptx()
 
-class(my_file) # checking if correct class
+### Creating a PowerPoint Deck
 
-my_file %>%
-  layout_summary()
-```
+**Key functions:**
+`read_pptx(path)` `add_slide(x, layout, master)` `layout_summary(x)` 
 
-#### Creating a PowerPoint Deck
-
-```{r 1.2 creating a PPT deck}
-pptx_obj <- read_pptx () # new empty file
+```{r 1.1 creating a PPT deck}
+pptx_obj <- read_pptx() # new empty file
 pptx_obj <- pptx_obj %>% 
   add_slide(layout  = 'Title and Content', master = "Office Theme")
 
-pptx_obj %>% print(target = "output/first_example.pptx")
+class(pptx_obj)
+
+pptx_obj %>%
+  layout_summary()
+
+pptx_obj %>% 
+  print(target = file.path("output","example_1.pptx"))
 ```
 
-We cannot load the themes of Office *ex nihilo* returns error
-```{r themes}
-pptx_obj <- read_pptx() # new empty file
-pptx_obj <- pptx_obj %>% 
-  add_slide(layout = "Title and Content", master = "Integral")
-```
+### PowerPoint Themes
 
-However, we can save an empty pptx with the desired theme and use it as a template
-```{r themes1}
-pptx_obj <- read_pptx(file.path("input", "templates", "integral.pptx"))
-layout_summary(pptx_obj)
-```
+A blank Deck is by default set up with the *Office Theme*. To use a custom theme, we must create a Deck using the Powerpoint software and use it as input.
 
-We can even load a template with more than one theme
+Loading a template with a custom theme
 ```{r themes2}
-pptx_obj <- read_pptx(file.path("input", "templates", "multmasters.pptx"))
-layout_summary(pptx_obj)
-```
+pptx_obj <- read_pptx(file.path("data", "templates", "intergral.pptx"))
 
-#### Selection Pane
-
-#### Key functions: 
-`read_pptx(path)` `layout_summary(x)` `layout_properties(x)` 
-
-`add_slide(x, layout, master)` `on_slide(x, index)` `slide_summary(x, index)`
-
-
-#### Example Code
-```{r 1.5 example code}
-pptx_obj <- read_pptx() # new empty file
+pptx_obj %>% 
+  layout_summary()
 
 pptx_obj <- pptx_obj %>% # add slide
-  add_slide(layout = "Title and Content", master = "Office Theme")
+  add_slide(layout = "Title and Content", master = "Integral")
 
-layout_summary(pptx_obj) # contains only basic layouts
-layout_properties(pptx_obj) # additional detail
-
-pptx_obj <- pptx_obj %>% 
-  on_slide(index = 1) # set active slide
-slide_summary(pptx_obj) # slide is empty
 ```
 
-### Placeholders
 
-#### Placeholders and Shapes
+### Placeholders and Shapes
+
+- `ph_location_type()` allows use predefined placeholders for content:
+  * title, body
+  * ctrTitle, subTitle, dt, ftr, sldNum
 
 ```{r 2.1 shapes1}
 # Example 1
 my_data <- c("My functions are:", "ph_with", "ph_location_type")
-my_type <- "body"
 
-pptx_obj <- read_pptx() # new empty file
-
-pptx_obj <- pptx_obj %>% 
+# first slide
+pptx_obj <- read_pptx() %>%
   add_slide(layout = "Title and Content", master = "Office Theme")
 
 pptx_obj <- pptx_obj %>%
-  ph_with(value = my_data, location = ph_location_type(type = my_type))
+  ph_with(value = my_data, location = ph_location_type(type = 'body'))
 
-pptx_obj %>%
-  print(target = "output/test2.1.pptx") 
-```
+pptx_obj <- pptx_obj %>% 
+  on_slide(index = 1) # set active slide
 
-```{r 2.2 shapes2}
-# Example 2: 
+slide_summary(pptx_obj) # technical content summary
+
 my_data <- head(mtcars)[,1:4]
-my_type <- "body"
 
-pptx_obj <- read_pptx() # new empty file
+# second slide
 pptx_obj <- pptx_obj %>% 
     add_slide(layout = "Title and Content", master = "Office Theme")
 
 pptx_obj <- pptx_obj %>% 
-  ph_with(value = my_data, location = ph_location_type(type = my_type)) 
+  ph_with(value = my_data, location = ph_location_type(type = 'body')) 
 
 pptx_obj %>%
-  print(target = "output/test2.2.pptx") 
+  print(target = file.path("output","example_2.pptx"))
+
 ```
+
+- `ph_location()` allows to specify exact positions for content
+  * for left/top/width/height units are inches
 
 ```{r 2.3 shapes3}
 # Example 3
@@ -312,121 +278,53 @@ pptx_obj %>%
 # The same can be done for an image, logo, custom objects, etc.
 
 my_data <- "My text"
-my_type <- "body"
 
-pptx_obj <- read_pptx() # new empty file
-pptx_obj <- pptx_obj %>%
+pptx_obj <- read_pptx() %>%
   add_slide(layout = "Title and Content", master = "Office Theme")
-
-# ph_location is a subfunction which takes as argument 
-# left/top/width/height, units are inches
 
 pptx_obj <- pptx_obj %>%
   ph_with(value = my_data, location = ph_location(left = 2, top = 2, width = 3, height = 1))
 
 pptx_obj %>%
-  print(target = "output/test2.3.pptx") 
+  print(target = file.path("output","example_3.pptx"))
 ```
 
-#### Key functions: ph_with()
+### Working with Text
 
-
-### Text
-
-#### Working with Text
 Each new text item added to a PowerPoint via officer is a paragraph object
-`fpar()` (“formatted paragraph”) creates this object
 
-```{r 3.1 text1}
-my_data <- fpar("My text")
-my_type <- "body"
-
-pptx_obj <- read_pptx() 
-pptx_obj <- pptx_obj %>% 
-  add_slide(layout = "Title and Content", master = "Office Theme")
-
-# Add paragraph
-pptx_obj <- pptx_obj %>% 
-  ph_with(value = my_data, location = ph_location_type(type = my_type))
-
-# Try to add a second paragraph
-my_data2 <- fpar("My other text")
-my_type <- "body"
-
-pptx_obj <- pptx_obj %>% 
-  ph_with(value = my_data2, location = ph_location_type(type = my_type) )
-
-pptx_obj %>%
-  print(target = "output/test3.1.pptx") 
-# As we see, this code doesn’t produce bullet points as we might hope
-```
+`fpar()` ("formatted paragraph") creates this object
 
 `block_list()` allows us to wrap multiple paragraphs together
 
-```{r 3.2 text2 blocklist}
-my_data <- fpar("My text")
-blank_line <- fpar("")
-my_data2 <- fpar("My other text")
+`ftext()` ("formatted text") to edit the text before pasting into paragraphs. `ftext()` requires a second argument called prop which contains the formatting properties.
 
-my_list <- block_list(my_data, blank_line, my_data2)
+```{r 3.1 text1}
 
-my_type <- "body"
-
-pptx_obj <- read_pptx()
-pptx_obj <- pptx_obj %>%
-  add_slide(layout = "Title and Content", master = "Office Theme") %>% 
-  ph_with(value = my_list, location = ph_location_type(type = my_type) )
-
-pptx_obj %>%
-  print(target = "output/test3.2.pptx") 
-```
-
-Use `ftext()` ("formatted text") to edit the text before pasting into paragraphs. `ftext()` requires a second argument called prop which contains the formatting properties.
-```{r 3.3 text3}
-my_prop <- fp_text(color = "red", font.size = 16)
-my_text <- ftext("Hello", prop = my_prop)
+my_prop <- fp_text(color = "red", font.size = 14)
+my_text <- ftext("First Line in Red", prop = my_prop)
 
 my_par <- fpar(my_text) # formatted
-blank_line <- fpar("")
+blank_line <- fpar("") #optional
 
-my_par2 <- fpar("My other text") # unformatted
+my_par2 <- fpar("Second Line") # unformatted
 my_list <- block_list(my_par, blank_line, my_par2)
 
-pptx_obj <- read_pptx()
-
-pptx_obj <- pptx_obj %>%
+pptx_obj <- read_pptx() %>%
   add_slide(layout = "Title and Content", master = "Office Theme") %>% 
-  ph_with(value = my_list, location = ph_location_type(type = my_type))
+  ph_with(value = my_list, location = ph_location_type(type = "body") )
 
 pptx_obj %>%
-  print(target = "output/test3.3.pptx") 
+  print(target = file.path("output","example_4.pptx"))
 ```
 
-#### Key functions:
-`fpar()` `ftext()` `fp_text()` `block_list()`
+For more details on using **{officer}** see <https://davidgohel.github.io/officer>.
 
-#### Example Code
-```{r 3.4 example code}
-my_list <- block_list(
-  fpar(ftext("Hello", prop = fp_text(color = "red", font.size = 16))) ,
-  fpar(ftext("World", prop = fp_text(color = "blue", font.size = 14)))
-  )
 
-# The hierarchy is: `block_list > fpar > ftext > fp_text`
+## Tables
 
-pptx_obj <- read_pptx() %>%
-  add_slide(layout = "Title and Content", master = "Office Theme") %>%
-  ph_with(value = block_list(
-    fpar(ftext("Hello", prop = fp_text(color = "red", font.size = 16))),
-    fpar(ftext("World", prop = fp_text(color = "blue", font.size = 14)))
-    ),
-    ph_location_type(type = "body")
-  ) %>%
-  print(target = "output/test3.4.pptx") 
-```
+`ph_with` accepts a data.frame as value and renders it in a default format
 
-### Tables
-#### Basic Code
 ```{r 4.1 basic code}
 ft_data <- senso_mean %>%
   dplyr::select(Salty, Sweet, Sour, Bitter) %>% 
@@ -441,16 +339,16 @@ ft_data <- senso_mean %>%
 pptx_obj <- read_pptx() %>%
   add_slide(layout = "Title and Content", master = "Office Theme") %>%
   ph_with(value = ft_data, location = ph_location_type(type = "body")) %>%
-  print(target = "output/test4.1.pptx") 
+  print(target = file.path("output","table_1.pptx"))
 ```
 
-#### Introduction to flextable
+### Introduction to flextable
 
 With `{flextable}`, the procedure starts with creating a flextable object `ft_table` using the `flextable()` function.
 Flextable objects are compatible with `{officer}` and therefore are our primary tool for table formatting.
 Through different functions, many custom formatting procedure can be applied:  
 
-#### key functions:
+**key functions:**
  `align()` `bold()` `font()` `color()` `bg()` `height()` & `width()` 
  `border_outer()` & `border_inner()` & `border_inner_h()` `border_inner_v()` `autofit()`
 
@@ -468,7 +366,7 @@ print(ft_table)
 
 ```
 
-#### Formatting examples
+### Formatting examples
 
 ```{r 4.4 demonstration}
 ft_table <- ft_table %>%
@@ -521,129 +419,130 @@ ft_table <- ft_table %>%
   width(j = 1, width = 1.2) %>% # column 1 wider
   height(i = 12, height = 1) # last row's height
 
-ft_table
+print(ft_table)
 ```
 
-#### Demonstration Output
 
-#### Add flextable object to a powerpoint slide
+### Add flextable object to a powerpoint slide
 
 ```{r 4.7 original example}
 # Add table to slide
 pptx_obj <- read_pptx() %>%
   add_slide(layout = "Title and Content", master = "Office Theme") %>%
   ph_with(value = ft_table, ph_location(left = 2, top = 2, width = 4)) %>% 
-  print(target = "output/test4.7.pptx") 
-# positions are fixed. We can input exact positions to center the table
-
+  print(target = file.path("output","table_2.pptx"))
 ```
 
+For more details on using **{flextable}** see <https://davidgohel.github.io/flextable/>.
 
-### Charts
+## Charts
 
-#### Adding charts as images
+### Adding charts as images
 
 ```{r 5.1 rvg package}
-# We have preloaded a function to plot the chart.
-# the function is using ggplot2 as plotting library
-chart_to_plot <- sample_data_list[['Sample 1']] %>%
-  make_jar_chart() # code to create a ggplot2 item, we will skip the contents
-print(chart_to_plot) # see in Plots Window
+# Using ggplot2 as plotting library
+chart_to_plot <- senso_mean %>%
+  dplyr::select(Salty, Sweet, Sour, Bitter) %>% 
+  tibble::rownames_to_column() %>% 
+  rename(Product = rowname) %>%
+  pivot_longer(cols = Salty:Bitter, names_to = 'Attribute', values_to = 'Value') %>% 
+  ggplot(aes(x = Product, y = Value, fill = Attribute)) + 
+  geom_col(position = 'dodge')
+
+print(chart_to_plot) #in Plots window of Rstudio
 ```
 
-#### rvg Example
+### rvg package
+
+rvg is providing two graphics devices that produces Vector Graphics outputs in `DrawingML` format for Microsoft PowerPoint with dml_pptx and for Microsoft Excel with dml_xlsx.
 
 ```{r 5.2 rvg example}
-# the output is a ggplot2 object
+# body location
+library(rvg)
 
-# To add this object as a rvg object on a slide, we will use the ph_with_vg
-# ph_with_vg replaces the ph_with for a rvg object
-# ph_with_vg_at allows to input a precise position for a chart, using the top/left we know already
-# all units are in inches
-# argument code requires print(chart), argument type is a specific place on slide ("body" or other)
-
-## IMPORTANT: ph_with_vg is is deprecated.
-#old syntaxis ph_with_vg(code = print(chart_to_plot), type = "body") 
-
+# all items on the chart inside the pptx can be editable
 pptx_obj <- read_pptx() %>%
   add_slide(layout = "Title and Content", master = "Office Theme") %>%
-  ph_with(value = dml(ggobj = chart_to_plot), location  =  ph_location_type(type = 'body')) %>%
-  print(target = "output/5.2.rvg1.pptx") 
+  ph_with(value = dml(ggobj = chart_to_plot, editable = TRUE),
+          location= ph_location_type(type = 'body')) %>% 
+  print(target = file.path("output","rvg_1.pptx"))
 
-## IMPORTANT: ph_with_vg_at is is deprecated.
-# old syntaxis ph_with_vg_at(code = print(chart_to_plot), left = 1, top = 1, width = 8, height = 6) 
-
+#custom location, all units are in inches
 pptx_obj <- read_pptx() %>%
   add_slide(layout = "Title and Content", master = "Office Theme") %>%
-  ph_with(value = dml(ggobj = chart_to_plot), location =  ph_location(left = 1, top = 1, width = 8, height = 6))  %>%
-  print(target = "output/5.2.rvg2.pptx") 
+  ph_with(value = dml(ggobj = chart_to_plot, editable = FALSE),
+          location =  ph_location(left = 1, top = 1, width = 8, height = 6))  %>%
+  print(target = file.path("output","rvg_2.pptx"))
 
-# all items on the chart inside the pptx are now editable, just click on any and see 
-# the Shape Format tab in PowerPoint
+
 ```
 
-### mschart Package
+### mschart package
 
 ```{r 5.3 mschart example}
+library(mschart)
 # sample dataframe
-mydata <- sample_data_list[['Sample 1']] %>%
-  group_by(Variable,Response) %>% count()
+mydata <- senso_mean %>%
+  dplyr::select(Salty, Sweet, Sour, Bitter) %>% 
+  tibble::rownames_to_column() %>% 
+  rename(Product = rowname) %>%
+  pivot_longer(cols = Salty:Bitter, names_to = 'Attribute', values_to = 'Value')
 
-# syntaxis is similar to ggplot2"s aes() with x,y,group
-my_barchart <- ms_barchart(data = mydata, x = "Variable", y = "n", group = "Response")
+# syntaxis is similar to ggplot2's aes() with x,y,group
+my_barchart <- ms_barchart(data = mydata,
+                           x = "Product",
+                           y = "Value",
+                           group = "Attribute")
 
-# to add the object to a powerpoint slide we can use the officer"s native ph_with
+#the chart is a Powerpoint native object and can be viewed using the preview option in print
+print(my_barchart, preview = TRUE)
+#the command will work on machines with a Powerpoint Viewer
+
+# to add the object to a powerpoint slide we can use the officer's native ph_with
 pptx_obj <- read_pptx() %>%
   add_slide(layout = "Title and Content", master = "Office Theme") %>%
   ph_with(value = my_barchart, location = ph_location_type(type = "body")) %>%
-  print(target = "output/5.3.msoffice.pptx") 
-
-# if we would open a rvg slide and an ms office slide and click on the slide
-# for the rvg slide the only menu that appear is shape format
-# While for the msoffice chart we have now the chart design option with all msoffice functionalities
-# by using chart_settings() functions one can customise in R the charts
+  print(target = file.path("output","rvg_2.pptx"))
 ```
 
 ## Word
 
-### Word documents
-Formats share similarities
+Word documents are created using `read_docx()`. 
 
-`body_add_*()`
+`body_add_par()` to add a text paragraph. Paragraphs are automatically separated by line breaks.
 
 ```{r 6.1 word doc1}
 my_doc <- read_docx() %>% 
   body_add_par(value = "My Text", style = "Normal") %>%
   body_add_par(value = "Other Text", style = "Normal") %>% 
   body_add_par(value = "Conclusion", style = "Normal") %>% 
-  print(target = 'output/6.1.mydoc.docx')
+  print(target = file.path("output","doc_1.docx"))
 ```
 
-`body_add_break()`
+Unlike a pptx with separate slides, a word document is a continuous object. To create a new page and continue to write on it `body_add_break()` is used.
 
 ```{r 6.2 word doc2}
 my_doc <- read_docx() %>% 
   body_add_par(value = "My Text", style = "Normal") %>%
   body_add_break() %>% 
   body_add_par(value = "Conclusion", style = "Normal") %>% 
-  print(target = 'output/6.2.mydoc.docx')
+  print(target = file.path("output","doc_2.docx"))
 ```
 
+`body_add_fpar()` to add a formatted text paragraph
+`body_add_table()` to add a table
+
 ```{r 6.3 word doc3}
-my_format <- fp_text(font.family = 'Calibri', font.size = 14, bold = TRUE, color = 'red')
+my_format <- fp_text(font.family = 'Calibri', font.size = 14, bold = TRUE, color = 'blue')
 my_text <- ftext('My dataset is:', my_format)
 my_par <- fpar(my_text)
 
 doc <- read_docx() %>% 
-  body_add_par(value = "Table of content", style = "heading 1") %>% 
+  body_add_par(value = "Document Title", style = "heading 1") %>% 
   body_add_par(value = "", style = "Normal") %>% 
   body_add_fpar(my_par, style = "Normal") %>% #formatted paragraph function
   body_add_par(value = "", style = "Normal") %>% 
   body_add_table(value = head(mtcars)[, 1:4], style = "table_template" ) %>% 
-  print(target = 'output/6.3.mydoc.docx')
+  print(target = file.path("output","doc_3.docx"))
 
-read_docx() %>% styles_info() 
 ```
-
-
-
