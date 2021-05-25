@@ -340,3 +340,113 @@ TFEQ_freq %>%
 ```
 
 
+Ultimately, the TFEQ questionnaire consists in a set of structured questions whose respective answers combine to provide a TFEQ score. This TFEQ score translates into certain behavior towards food. Similar structured questionnaire could include IQ test, Food Neophobia, etc.
+
+However, it appears that the TFEQ score is not computed by simply adding the scores of all TFEQ questions together. Instead, it follows certain rules that are stored in the *Variables* sheet in *TFEQ.xlsx*. For each TFEQ question, the rule to follow is provided by `Direction` and `Value`, and works as following: if the condition provided by `Direction` and `Value` is met, then the respondent gets a 1, else a 0. Ultimately, the TFEQ is the sum of all these evaluations.
+
+Let's start by extracting this information (`Direction` and `Value`) from the sheet Variables for all the variables involved in the computation of the TFEQ score. We store this in `var_drh`.
+
+
+```{r}
+var_rdh <- read_xlsx(file_path, sheet="Variables") %>% 
+  filter(str_detect(Name, rdh)) %>% 
+  dplyr::select(Name, Direction, Value)
+```
+
+
+This information is added to `demographic`. Since we need to evaluate each assessors' answer to the TFEQ questions, we create a new variable `TFEQValue` which takes a 1 if the corresponding condition is met, and a 0 otherwise. Such approach is done through `mutate()` combined with a succession of intertwined `ifelse()` functions.^[The function `ifelse()` takes three parameters: 1. the condition to test, 2. the value or code to run if the condition is met, and 3. the value or code to run if the condition is not met.]
+
+Ultimately, we compute the TFEQ Score by summing across all `TFEQValue` per respondent (here, we compute the sum per category first before computing the grand total per respondent).
+
+
+```{r}
+TFEQ <- demographic %>% 
+  dplyr::select(Judge, matches(rdh)) %>% 
+  pivot_longer(-Judge, names_to="DHR", values_to="Score") %>% 
+  inner_join(var_rdh, by=c("DHR"="Name")) %>% 
+  mutate(TFEQValue = ifelse(Direction == "Equal" & Score == Value, 1, 
+                        ifelse (Direction == "Superior" & Score > Value, 1,
+                                ifelse(Direction == "Inferior" & Score < Value, 1, 0)))) %>% 
+  mutate(Factor = ifelse(str_starts(.$DHR, "D"), "Disinhibitor",
+                         ifelse(str_starts(.$DHR, "H"), "Hunger", "Restriction"))) %>% 
+  mutate(Factor = factor(Factor, levels=c("Restriction","Disinhibitor","Hunger"))) %>%
+  group_by(Judge, Factor) %>% 
+  summarize(TFEQ = sum(TFEQValue)) %>% 
+  mutate(Judge = factor(Judge, levels=unique(str_sort(.$Judge, numeric=TRUE)))) %>% 
+  arrange(Judge) %>% 
+  pivot_wider(names_from=Factor, values_from=TFEQ) %>% 
+  mutate(Total = sum(across(where(is.numeric))))
+```
+
+
+Such results can then be visualized graphically, for instance by representing the distribution of the TFEQ score for the 3 categories of questions (or TFEQ-factor):
+
+
+```{r}
+TFEQ %>% 
+  dplyr::select(-Total) %>% 
+  pivot_longer(-Judge, names_to="Factor", values_to="Scores") %>% 
+  ggplot(aes(x=Scores, colour=Factor))+
+  geom_density(lwd=1.5)+
+  xlab("TFEQ Score")+
+  ylab("")+
+  ggtitle("Distribution of the Individual TFEQ-factor Scores")+
+  theme_bw()
+
+```
+
+
+## Consumer Data
+
+
+The analysis of consumer data involves the same type of analysis as the ones for sensory data (e.g. ANOVA, PCA, etc.), but the way the data is being collected (absence of duplicates) and its underlying nature (affective vs. descriptive) require some adjustments.
+
+So let's start by importing the consumer data that is stored in *Consumer Test.xlsx*. Here we import two sheets, one with the consumption time and number of biscuits (stored in `Nbiscuit`), and one with different consumer evaluations of the samples (stored in `consumer`)
+
+
+```{r}
+file_path <- here("Data","Consumer Test.xlsx")
+
+Nbiscuit <- read_xlsx(file_path, sheet="Time Consumption") %>% 
+  mutate(Product = str_c("P", Product)) %>% 
+  rename(N = `Nb biscuits`)
+
+consumer <- read_xlsx(file_path, sheet="Biscuits") %>% 
+  rename(Judge=Consumer, Product=Samples) %>% 
+  mutate(Judge = str_c("J", Judge), Product = str_c("P", Product)) %>% 
+  inner_join(Nbiscuit, by=c("Judge", "Product"))
+
+```
+
+
+Similarly to the sensory data, let's start with computing the mean liking score per product after the first bite (`1stbite_liking`) and at the end of the evaluation (`after_liking`). 
+
+
+```{r}
+consumer %>% 
+  dplyr::select(Judge, Product, `1stbite_liking`, `after_liking`) %>% 
+  group_by(Product) %>% 
+  summarise(across(where(is.numeric), mean))
+
+```
+
+
+A first glance at the table show that there are clear differences between the samples (within a liking variable), but little difference between liking variables(within a sample).
+
+Ultimately, since we want to see if there are differences between samples, an ANOVA (testing for the product effect) followed up by a paired comparison test (here Tukey's HSD) is performed. To do so, we recommend the `{agricolae}` package as it is simple to use and all their build in tests are working in the same way.
+
+
+```{r}
+library(agricolae)
+
+liking_start <- lm(`1stbite_liking` ~ Product + Judge, data=consumer)
+liking_start_hsd <- HSD.test(liking_start, "Product")$groups %>% 
+  as_tibble(rownames = "Product")
+
+liking_end <- lm(`after_liking` ~ Product + Judge, data=consumer)
+liking_end_hsd <- HSD.test(liking_end, "Product")$groups %>% 
+  as_tibble(rownames = "Product")
+```
+
+
+Both at the start and at the end of the evaluation, significant differences (at 5%) in liking between samples are observed according to Tukey's HSD test. 

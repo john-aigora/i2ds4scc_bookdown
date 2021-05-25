@@ -180,14 +180,14 @@ TFEQ <- demographic %>%
   dplyr::select(Judge, matches(rdh)) %>% 
   pivot_longer(-Judge, names_to="DHR", values_to="Score") %>% 
   inner_join(var_rdh, by=c("DHR"="Name")) %>% 
-  mutate(Value = ifelse(Direction == "Equal" & Score == Value, 1, 
+  mutate(TFEQValue = ifelse(Direction == "Equal" & Score == Value, 1, 
                         ifelse (Direction == "Superior" & Score > Value, 1,
                                 ifelse(Direction == "Inferior" & Score < Value, 1, 0)))) %>% 
   mutate(Factor = ifelse(str_starts(.$DHR, "D"), "Disinhibitor",
                          ifelse(str_starts(.$DHR, "H"), "Hunger", "Restriction"))) %>% 
   mutate(Factor = factor(Factor, levels=c("Restriction","Disinhibitor","Hunger"))) %>%
   group_by(Judge, Factor) %>% 
-  summarize(TFEQ = sum(Value)) %>% 
+  summarize(TFEQ = sum(TFEQValue)) %>% 
   mutate(Judge = factor(Judge, levels=unique(str_sort(.$Judge, numeric=TRUE)))) %>% 
   arrange(Judge) %>% 
   pivot_wider(names_from=Factor, values_from=TFEQ) %>% 
@@ -219,6 +219,11 @@ consumer <- read_xlsx(file_path, sheet="Biscuits") %>%
 
 
 #* ANOVA and Post'hoc Test ------------------------------------------------
+
+consumer %>% 
+  dplyr::select(Judge, Product, `1stbite_liking`, `after_liking`) %>% 
+  group_by(Product) %>% 
+  summarise(across(where(is.numeric), mean))
 
 library(agricolae)
 
