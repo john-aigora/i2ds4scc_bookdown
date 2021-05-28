@@ -240,8 +240,9 @@ liking_end_hsd <- HSD.test(liking_end, "Product")$groups %>%
 
 list(Start = liking_start_hsd %>% rename(Liking=`1stbite_liking`), 
      End = liking_end_hsd %>% rename(Liking=`after_liking`)) %>% 
-  enframe(name = "Moment", value = "res") %>% 
+  enframe(name = "Moment", value = "res") %>%
   unnest(res) %>% 
+  mutate(Moment = factor(Moment, levels=c("Start","End"))) %>% 
   ggplot(aes(x=reorder(Product, -Liking), y=Liking, fill=Moment))+
   geom_bar(stat="identity", position="dodge")+
   xlab("")+

@@ -46,6 +46,7 @@ We could duplicate this code for each single attributes, but 1. this would be qu
 
 For both these solutions, the dataset should be in the long and short form, which can be obtained using `pivot_longer()`:
 
+
 ```{r}
 senso_aov_data <- sensory %>% 
   pivot_longer(Shiny:Melting, names_to="Attribute", values_to="Score")
@@ -450,3 +451,24 @@ liking_end_hsd <- HSD.test(liking_end, "Product")$groups %>%
 
 
 Both at the start and at the end of the evaluation, significant differences (at 5%) in liking between samples are observed according to Tukey's HSD test. 
+
+To further compare the liking assessment of the samples after the first bite and at the end of the tasting, the results obtained from `liking_start_hsd` and `liking_end_hsd` are combined. We then represent the results in a barchart:
+
+
+```{r}
+list(Start = liking_start_hsd %>% rename(Liking=`1stbite_liking`), 
+     End = liking_end_hsd %>% rename(Liking=`after_liking`)) %>% 
+  enframe(name = "Moment", value = "res") %>% 
+  unnest(res) %>% 
+  mutate(Moment = factor(Moment, levels=c("Start","End"))) %>% 
+  ggplot(aes(x=reorder(Product, -Liking), y=Liking, fill=Moment))+
+  geom_bar(stat="identity", position="dodge")+
+  xlab("")+
+  ggtitle("Comparison of the liking scores at the start and at the end of the evaluation")+
+  theme_bw()
+```
+
+
+As can be seen, the pattern of liking scores across samples is indeed very stable across the evaluation, the evaluation at the end being slightly more extreme: Samples that were liked (e.g. P10) are even more liked at the end, whereas samples that were disliked (e.g. P4, P8) are even more disliked.
+
+
