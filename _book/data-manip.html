@@ -24,7 +24,7 @@
 <meta name="author" content="John Ennis, Julien Delarue, and Thierry Worch" />
 
 
-<meta name="date" content="2021-04-30" />
+<meta name="date" content="2021-05-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -209,7 +209,14 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="part"><span><b>Bon Appétit</b></span></li>
-<li class="chapter" data-level="7" data-path="example-projects.html"><a href="example-projects.html"><i class="fa fa-check"></i><b>7</b> Example Projects</a></li>
+<li class="chapter" data-level="7" data-path="example-projects.html"><a href="example-projects.html"><i class="fa fa-check"></i><b>7</b> Example Project: the biscuit study</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="example-projects.html"><a href="example-projects.html#products"><i class="fa fa-check"></i><b>7.1</b> Products</a></li>
+<li class="chapter" data-level="7.2" data-path="example-projects.html"><a href="example-projects.html#participants"><i class="fa fa-check"></i><b>7.2</b> Participants</a></li>
+<li class="chapter" data-level="7.3" data-path="example-projects.html"><a href="example-projects.html#design-of-the-consumer-test"><i class="fa fa-check"></i><b>7.3</b> Design of the consumer test</a></li>
+<li class="chapter" data-level="7.4" data-path="example-projects.html"><a href="example-projects.html#sensory-descriptive-analysis-data"><i class="fa fa-check"></i><b>7.4</b> Sensory descriptive analysis data</a></li>
+<li class="chapter" data-level="7.5" data-path="example-projects.html"><a href="example-projects.html#summary-of-the-datasets"><i class="fa fa-check"></i><b>7.5</b> Summary of the datasets</a></li>
+</ul></li>
 <li class="chapter" data-level="8" data-path="data-collection.html"><a href="data-collection.html"><i class="fa fa-check"></i><b>8</b> Data Collection</a>
 <ul>
 <li class="chapter" data-level="8.1" data-path="data-collection.html"><a href="data-collection.html#design-1"><i class="fa fa-check"></i><b>8.1</b> Design</a></li>
@@ -241,6 +248,11 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="10" data-path="data-analysis.html"><a href="data-analysis.html"><i class="fa fa-check"></i><b>10</b> Data Analysis</a>
 <ul>
 <li class="chapter" data-level="10.1" data-path="data-analysis.html"><a href="data-analysis.html#sensory-data"><i class="fa fa-check"></i><b>10.1</b> Sensory Data</a></li>
+<li class="chapter" data-level="10.2" data-path="data-analysis.html"><a href="data-analysis.html#demographic-and-tfeq-data"><i class="fa fa-check"></i><b>10.2</b> Demographic and TFEQ Data</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="data-analysis.html"><a href="data-analysis.html#demographic-data-frequency-and-proportion"><i class="fa fa-check"></i><b>10.2.1</b> Demographic Data: Frequency and Proportion</a></li>
+<li class="chapter" data-level="10.2.2" data-path="data-analysis.html"><a href="data-analysis.html#behavioral-data-tfeq-traits"><i class="fa fa-check"></i><b>10.2.2</b> Behavioral Data: TFEQ Traits</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="value-delivery.html"><a href="value-delivery.html"><i class="fa fa-check"></i><b>11</b> Value Delivery</a>
 <ul>
@@ -648,7 +660,8 @@ the <code>{dplyr}</code> package. In that case, the tables do not need to be in 
 <li><code>full_join()</code> keeps all the cases from X and Y regardless whether they are present in the other table or not (in case they are not present, NAs will be introduced) [corresponds to <code>merge()</code> with <code>all=TRUE</code>];</li>
 <li><code>inner_join()</code> only keeps the common cases, i.e. cases that are present in both X and Y [corresponds to <code>merge()</code>with <code>all=FALSE</code>];</li>
 <li><code>left_join()</code> keeps all the cases from X [corresponds to <code>merge()</code>with <code>all.x=TRUE</code> and <code>all.y=FALSE</code>];</li>
-<li><code>right_join()</code> keeps all the cases from Y [corresponds to <code>merge()</code>with <code>all.x=FALSE</code> and <code>all.y=TRUE</code>].</li>
+<li><code>right_join()</code> keeps all the cases from Y [corresponds to <code>merge()</code>with <code>all.x=FALSE</code> and <code>all.y=TRUE</code>];</li>
+<li><code>anti_join()</code> only keeps the elements from X that do are not present in Y (this is particularly useful if you have a tibble Y of elements that you would like to remove from X).</li>
 </ul>
 <!-- Add examples with X=ABC, Y=ABD and full = ABCD, inner=AB, left=ABC, right=ABD  -->
 <p>The merging procedure requires the users to provide a <em>key</em>, i.e. a (set of) variable(s) used to combine the tables. For each unique element defined by the key, a line is being created. When needed, rows of a table are being duplicated. Within the different <code>*_join()</code> functions, the key is informed by the <code>by</code> parameter, which may contain one or more variables with the same or different names.</p>
@@ -680,7 +693,7 @@ the <code>{dplyr}</code> package. In that case, the tables do not need to be in 
 <li>The names that contain the product (<code>Samples</code> and <code>Product</code>) and consumers (<code>Consumer</code> and <code>Judge</code>) information are different in both dataset. We could rename these columns in one dataset to match the other, but instead we will keep the two names and inform it within <code>full_join()</code>. This is done through the <code>by</code> parameter as following: <code>"name in dataset 1" = "name in dataset 2"</code></li>
 </ul>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="data-manip.html#cb33-1" aria-hidden="true" tabindex="-1"></a>biscuits <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(file_path, <span class="at">sheet=</span><span class="st">&quot;Biscuits&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb33-2"><a href="data-manip.html#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Consumer =</span> <span class="fu">paste0</span>(<span class="st">&quot;J&quot;</span>,Consumer)) <span class="sc">%&gt;%</span> </span>
+<span id="cb33-2"><a href="data-manip.html#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Consumer =</span> <span class="fu">str_c</span>(<span class="st">&quot;J&quot;</span>,Consumer)) <span class="sc">%&gt;%</span> </span>
 <span id="cb33-3"><a href="data-manip.html#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">full_join</span>(consumption, <span class="at">by=</span><span class="fu">c</span>(<span class="st">&quot;Consumer&quot;</span><span class="ot">=</span><span class="st">&quot;Judge&quot;</span>, <span class="st">&quot;Samples&quot;</span><span class="ot">=</span><span class="st">&quot;Product&quot;</span>))</span>
 <span id="cb33-4"><a href="data-manip.html#cb33-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb33-5"><a href="data-manip.html#cb33-5" aria-hidden="true" tabindex="-1"></a>biscuits</span></code></pre></div>

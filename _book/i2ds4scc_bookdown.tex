@@ -118,7 +118,7 @@
 
 \title{Data Science for Sensory and Consumer Scientists}
 \author{John Ennis, Julien Delarue, and Thierry Worch}
-\date{2021-04-30}
+\date{2021-05-06}
 
 \begin{document}
 \maketitle
@@ -286,6 +286,8 @@ A schematic of a data scientific workflow is shown in Figure \ref{fig:ds-workflo
 
 \hypertarget{design}{%
 \subsubsection{Design}\label{design}}
+
+Experimental design is an essential part of any scientific investigation. Whether the data
 
 \hypertarget{execute}{%
 \subsubsection{Execute}\label{execute}}
@@ -912,7 +914,9 @@ Depending on the \emph{merging degree} to consider between tables X and Y, there
 \item
   \texttt{left\_join()} keeps all the cases from X {[}corresponds to \texttt{merge()}with \texttt{all.x=TRUE} and \texttt{all.y=FALSE}{]};
 \item
-  \texttt{right\_join()} keeps all the cases from Y {[}corresponds to \texttt{merge()}with \texttt{all.x=FALSE} and \texttt{all.y=TRUE}{]}.
+  \texttt{right\_join()} keeps all the cases from Y {[}corresponds to \texttt{merge()}with \texttt{all.x=FALSE} and \texttt{all.y=TRUE}{]};
+\item
+  \texttt{anti\_join()} only keeps the elements from X that do are not present in Y (this is particularly useful if you have a tibble Y of elements that you would like to remove from X).
 \end{itemize}
 
 The merging procedure requires the users to provide a \emph{key}, i.e.~a (set of) variable(s) used to combine the tables. For each unique element defined by the key, a line is being created. When needed, rows of a table are being duplicated. Within the different \texttt{*\_join()} functions, the key is informed by the \texttt{by} parameter, which may contain one or more variables with the same or different names.
@@ -971,7 +975,7 @@ The next step is then to merge this table to \texttt{Biscuits}. In this case, si
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{biscuits }\OtherTok{\textless{}{-}} \FunctionTok{read\_xlsx}\NormalTok{(file\_path, }\AttributeTok{sheet=}\StringTok{"Biscuits"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Consumer =} \FunctionTok{paste0}\NormalTok{(}\StringTok{"J"}\NormalTok{,Consumer)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Consumer =} \FunctionTok{str\_c}\NormalTok{(}\StringTok{"J"}\NormalTok{,Consumer)) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{full\_join}\NormalTok{(consumption, }\AttributeTok{by=}\FunctionTok{c}\NormalTok{(}\StringTok{"Consumer"}\OtherTok{=}\StringTok{"Judge"}\NormalTok{, }\StringTok{"Samples"}\OtherTok{=}\StringTok{"Product"}\NormalTok{))}
 
 \NormalTok{biscuits}
@@ -1149,8 +1153,7 @@ As its name suggests, \texttt{\{writexl\}} is the extension of \texttt{\{readxl\
 \NormalTok{product\_info }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{filter}\NormalTok{(Protein }\SpecialCharTok{\%in\%} \StringTok{"High"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{write\_xlsx}\NormalTok{(}\AttributeTok{path =} \FunctionTok{file.path}\NormalTok{(}\StringTok{"output"}\NormalTok{, }\StringTok{"High Protein Products.xlsx"}\NormalTok{),}
-             \AttributeTok{col\_names =} \ConstantTok{TRUE}
-\NormalTok{             )}
+             \AttributeTok{col\_names =} \ConstantTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1255,7 +1258,7 @@ In practice, the color style is pre-defined in two parameters called \texttt{pos
 \CommentTok{\# Data preparation}
 \NormalTok{senso\_mean }\OtherTok{\textless{}{-}}\NormalTok{ sensory }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{group\_by}\NormalTok{(Product) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{summarise}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{where}\NormalTok{(is.numeric),mean)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{where}\NormalTok{(is.numeric), mean)) }\SpecialCharTok{\%\textgreater{}\%} 
 \NormalTok{  tibble}\SpecialCharTok{::}\FunctionTok{column\_to\_rownames}\NormalTok{(}\AttributeTok{var =} \StringTok{"Product"}\NormalTok{)}
 
 \NormalTok{overall\_mean }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(senso\_mean, }\DecValTok{2}\NormalTok{, mean)}
@@ -1868,7 +1871,38 @@ Formats share similarities
 \addcontentsline{toc}{part}{Bon Appétit}
 
 \hypertarget{example-projects}{%
-\chapter{Example Projects}\label{example-projects}}
+\chapter{Example Project: the biscuit study}\label{example-projects}}
+
+The dataset that we use as a main example throughout this book comes from a sensory study on biscuits. These biscuits were developed for breakfast consumption and specifically designed to improve satiety.
+The study was conducted in France with one hundred and seven consumers who tested a total of 10 biscuit recipes (including 9 experimental products varying in their fiber and protein content). Fibers and proteins are known to increase satiety.\\
+The study aimed to measure the liking for these biscuits, its link with eaten quantities and the evolution of hunger sensations over ad libitum consumption. All the volunteers therefore participated to ten morning sessions in order to test every product (one biscuit type per session). After they completed all the sessions, they also filled a questionnaire about food-related personality traits such as cognitive restraint and sensitivity to hunger.\\
+Parallel to this, a panel of nine trained judges performed a descriptive analysis of the biscuits. They evaluated the same 10 products as well as an additional product whose recipe was optimized for liking and satiating properties.\\
+Data from the biscuit study are gathered in three Excel files that can be accessed here {[}ADD LINK HERE{]}:
+
+\begin{itemize}
+\tightlist
+\item
+  biscuits\_consumer\_test.xls\\
+\item
+  biscuits\_sensory\_profile.xls\\
+\item
+  biscuits\_traits.xls
+\end{itemize}
+
+\hypertarget{products}{%
+\section{Products}\label{products}}
+
+\hypertarget{participants}{%
+\section{Participants}\label{participants}}
+
+\hypertarget{design-of-the-consumer-test}{%
+\section{Design of the consumer test}\label{design-of-the-consumer-test}}
+
+\hypertarget{sensory-descriptive-analysis-data}{%
+\section{Sensory descriptive analysis data}\label{sensory-descriptive-analysis-data}}
+
+\hypertarget{summary-of-the-datasets}{%
+\section{Summary of the datasets}\label{summary-of-the-datasets}}
 
 \hypertarget{data-collection}{%
 \chapter{Data Collection}\label{data-collection}}
@@ -2417,8 +2451,8 @@ To do so, we need the \texttt{\{here\}} and \texttt{\{readxl\}} packages. Since 
 \FunctionTok{library}\NormalTok{(here)}
 \FunctionTok{library}\NormalTok{(readxl)}
 
-\NormalTok{file\_path }\OtherTok{\textless{}{-}} \FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{,}\StringTok{"Sensory Profile.xlsx"}\NormalTok{) }
-\NormalTok{p\_info }\OtherTok{\textless{}{-}} \FunctionTok{read\_xlsx}\NormalTok{(file\_path, }\AttributeTok{sheet=}\StringTok{"Product Info"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{file\_path }\OtherTok{\textless{}{-}} \FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"Sensory Profile.xlsx"}\NormalTok{) }
+\NormalTok{p\_info }\OtherTok{\textless{}{-}} \FunctionTok{read\_xlsx}\NormalTok{(file\_path, }\AttributeTok{sheet =} \StringTok{"Product Info"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
 \NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Type)}
 
 \NormalTok{sensory }\OtherTok{\textless{}{-}} \FunctionTok{read\_xlsx}\NormalTok{(file\_path, }\AttributeTok{sheet=}\StringTok{"Data"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
@@ -2559,6 +2593,119 @@ Since we have two qualitative variables, let's take advantage of them by colorin
 \end{Shaded}
 
 On the first dimension, \texttt{P10} is opposed to \texttt{P09} and \texttt{P03} as it is more intense for attributes such as \texttt{Sweet}, and \texttt{Dairy\ flavor} for example, and less intense for attributes such as \texttt{Dry\ in\ mouth} and \texttt{External\ color\ intensity}. On the second dimension, \texttt{P08}, \texttt{P06}, and \texttt{POpt} are opposed to \texttt{P02} and \texttt{P07} as they score higher for \texttt{Qty\ of\ inclusions}, and \texttt{Initial\ hardness}, and score lower for \texttt{RawDough\ flavor} and \texttt{Shiny}.
+
+\hypertarget{demographic-and-tfeq-data}{%
+\section{Demographic and TFEQ Data}\label{demographic-and-tfeq-data}}
+
+In the \emph{TFEQ.xlsx} file, descriptive (e.g.~demographic) and behavioral (e.g.~TFEQ) information regarding the consumers is being stored.
+
+A quick look at this file shows that it contains three tabs denoted as \emph{Data}, \emph{Variables}, and \emph{Levels}:
+
+\begin{itemize}
+\tightlist
+\item
+  \emph{Data} contains the data, coded;
+\item
+  \emph{Variables} provides information (e.g.~name, information) related to the different variables present in Data;
+\item
+  \emph{Levels} provides information about the different levels each variable can take.
+\end{itemize}
+
+Let's start with importing this data set. The importation is done in multiple step as following:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{file\_path }\OtherTok{\textless{}{-}} \FunctionTok{here}\NormalTok{(}\StringTok{"Data"}\NormalTok{, }\StringTok{"TFEQ.xlsx"}\NormalTok{)}
+\FunctionTok{excel\_sheets}\NormalTok{(file\_path)}
+
+\NormalTok{demo\_var }\OtherTok{\textless{}{-}} \FunctionTok{read\_xlsx}\NormalTok{(file\_path, }\AttributeTok{sheet=}\StringTok{"Variables"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Code, Name)}
+
+\NormalTok{demo\_lev }\OtherTok{\textless{}{-}} \FunctionTok{read\_xlsx}\NormalTok{(file\_path, }\AttributeTok{sheet=}\StringTok{"Levels"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Question, Code, Levels) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{inner\_join}\NormalTok{(demo\_var, }\AttributeTok{by=}\FunctionTok{c}\NormalTok{(}\StringTok{"Question"}\OtherTok{=}\StringTok{"Code"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Question)}
+
+\NormalTok{demographic }\OtherTok{\textless{}{-}} \FunctionTok{read\_xlsx}\NormalTok{(file\_path, }\AttributeTok{sheet=}\StringTok{"Data"}\NormalTok{, }\AttributeTok{skip=}\DecValTok{1}\NormalTok{, }\AttributeTok{col\_names=}\FunctionTok{unlist}\NormalTok{(demo\_var}\SpecialCharTok{$}\NormalTok{Name))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{demographic-data-frequency-and-proportion}{%
+\subsection{Demographic Data: Frequency and Proportion}\label{demographic-data-frequency-and-proportion}}
+
+For this demographic data file, we are interested to see the partition of consumers for each of the descriptive variables. More precisely, we would like to know the frequency and proportion (in percentage) attached to each level of \texttt{Living\ area}, \texttt{Housing}, \texttt{Income\ range}, and \texttt{Occupation}.
+
+To obtain such table, let's start by only selecting these particular columns together with \texttt{Judge}.
+Since the data is coded, let's decode it using the information stored in \texttt{demo\_lev}: we could automatically recode each variable using \texttt{mutate()} and \texttt{factor()}. However, we prefer here to use \texttt{pivot\_longer()} to create a long thin tibble, and then to merge this table with \texttt{demo\_lev} by \texttt{Question} and \texttt{Response} using \texttt{inner\_join()} instead. Once done, we can aggregate the results by \texttt{Question} and \texttt{Levels} (since we want to use the level information, not their code) and compute the frequency (\texttt{n()}) and the proportion (\texttt{N/sum(N)})\footnote{We use the package \texttt{\{formattable\}} to print the results in percentage using one decimal. As an alternative, we could have used \texttt{percent()} from the \texttt{\{scales\}} package.}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(formattable)}
+
+\NormalTok{demog\_reduced }\OtherTok{\textless{}{-}}\NormalTok{ demographic }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Judge, }\StringTok{\textasciigrave{}}\AttributeTok{Living area}\StringTok{\textasciigrave{}}\NormalTok{, Housing, }\StringTok{\textasciigrave{}}\AttributeTok{Income range}\StringTok{\textasciigrave{}}\NormalTok{, }\StringTok{\textasciigrave{}}\AttributeTok{Occupation}\StringTok{\textasciigrave{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_longer}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Judge, }\AttributeTok{names\_to=}\StringTok{"Question"}\NormalTok{, }\AttributeTok{values\_to=}\StringTok{"Response"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{inner\_join}\NormalTok{(demo\_lev, }\AttributeTok{by=}\FunctionTok{c}\NormalTok{(}\StringTok{"Question"}\OtherTok{=}\StringTok{"Name"}\NormalTok{, }\StringTok{"Response"}\OtherTok{=}\StringTok{"Code"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(Question, Levels) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{N =} \FunctionTok{n}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Pct =} \FunctionTok{percent}\NormalTok{(N}\SpecialCharTok{/}\FunctionTok{sum}\NormalTok{(N), }\AttributeTok{digits=}\NormalTok{1L)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ungroup}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+To better visualize these different proportions, histograms are often considered. Such histograms can be obtained by splitting \texttt{demog\_reduced} by \texttt{Question} and by creating in each case an histogram using either \texttt{N} or \texttt{Pct} (we are using \texttt{Pct})\footnote{Here, the histograms are ordered decreasingly (\texttt{reorder}) and are represented horizontally (\texttt{coord\_flip()}).}. Of course, we automate this across all questions using \texttt{map()}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{demog\_reduced }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{split}\NormalTok{(.}\SpecialCharTok{$}\NormalTok{Question) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{map}\NormalTok{(}\ControlFlowTok{function}\NormalTok{(data)\{}
+    
+\NormalTok{    var }\OtherTok{=} \FunctionTok{as.character}\NormalTok{(}\FunctionTok{unlist}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{Question))}
+    
+    \FunctionTok{ggplot}\NormalTok{(data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\FunctionTok{reorder}\NormalTok{(Levels, Pct), }\AttributeTok{y=}\NormalTok{Pct, }\AttributeTok{label=}\NormalTok{Pct))}\SpecialCharTok{+}
+      \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat=}\StringTok{"identity"}\NormalTok{, }\AttributeTok{fill=}\StringTok{"grey50"}\NormalTok{)}\SpecialCharTok{+}
+      \FunctionTok{geom\_text}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y =}\NormalTok{ Pct}\SpecialCharTok{/}\DecValTok{2}\NormalTok{), }\AttributeTok{colour=}\StringTok{"white"}\NormalTok{)}\SpecialCharTok{+}
+      \FunctionTok{xlab}\NormalTok{(}\StringTok{""}\NormalTok{)}\SpecialCharTok{+}
+      \FunctionTok{ylab}\NormalTok{(}\StringTok{""}\NormalTok{)}\SpecialCharTok{+}
+      \FunctionTok{ggtitle}\NormalTok{(var)}\SpecialCharTok{+}
+      \FunctionTok{theme\_bw}\NormalTok{()}\SpecialCharTok{+}
+      \FunctionTok{coord\_flip}\NormalTok{()}
+    
+\NormalTok{  \})}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{behavioral-data-tfeq-traits}{%
+\subsection{Behavioral Data: TFEQ Traits}\label{behavioral-data-tfeq-traits}}
+
+In the same data set, consumers also answered some behavioral questions that reflects on their relation to food. These questions can be categorized into three groups: Disinhibitor (variables starting with \texttt{D}), Restriction (variables starting with \texttt{R}), and Hunger (variables starting with \texttt{H}).
+
+Let's start by selecting all these variables. We could use \texttt{select()} combined with \texttt{starts\_with("D")}, \texttt{starts\_with("R")}, and \texttt{starts\_with("H")}, but this solution is not satisfying since it can also seelct other variables that would start with any of these letters (e.g.~Housing). Since the variables are all well structured (the all start with the letters D, R, or H, followed by a number), the use of a regular expression is more appropriate.
+
+In practice, generating regular expression can be quite complex as it is an abstract concept which follow very specific rules. Fortunately, the package \texttt{\{RVerbalExpression\}} is a great assistant as it generates the regular expression for you thanks to understandable functions. First, we initiate the regular expression by calling the function \texttt{rx()} to which we add that we first want any variables that start with any of the letter R, D, or H, followed by a number (or more, as values go from 1 to 21). This can be done using the following code:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(RVerbalExpressions)}
+
+\NormalTok{rdh }\OtherTok{\textless{}{-}} \FunctionTok{rx}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{rx\_either\_of}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"R"}\NormalTok{,}\StringTok{"D"}\NormalTok{,}\StringTok{"H"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{rx\_digit}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{rx\_one\_or\_more}\NormalTok{()}
+
+\NormalTok{rdh}
+\end{Highlighting}
+\end{Shaded}
+
+\texttt{rdh} contains the regular expression that we need. We can then \texttt{dplyr::select()} any variable that fits our regular expression by using the function \texttt{matches()}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{demographic }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\FunctionTok{matches}\NormalTok{(rdh))}
+\end{Highlighting}
+\end{Shaded}
 
 \hypertarget{value-delivery}{%
 \chapter{Value Delivery}\label{value-delivery}}

@@ -24,7 +24,7 @@
 <meta name="author" content="John Ennis, Julien Delarue, and Thierry Worch" />
 
 
-<meta name="date" content="2021-04-30" />
+<meta name="date" content="2021-05-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -209,7 +209,14 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="part"><span><b>Bon Appétit</b></span></li>
-<li class="chapter" data-level="7" data-path="example-projects.html"><a href="example-projects.html"><i class="fa fa-check"></i><b>7</b> Example Projects</a></li>
+<li class="chapter" data-level="7" data-path="example-projects.html"><a href="example-projects.html"><i class="fa fa-check"></i><b>7</b> Example Project: the biscuit study</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="example-projects.html"><a href="example-projects.html#products"><i class="fa fa-check"></i><b>7.1</b> Products</a></li>
+<li class="chapter" data-level="7.2" data-path="example-projects.html"><a href="example-projects.html#participants"><i class="fa fa-check"></i><b>7.2</b> Participants</a></li>
+<li class="chapter" data-level="7.3" data-path="example-projects.html"><a href="example-projects.html#design-of-the-consumer-test"><i class="fa fa-check"></i><b>7.3</b> Design of the consumer test</a></li>
+<li class="chapter" data-level="7.4" data-path="example-projects.html"><a href="example-projects.html#sensory-descriptive-analysis-data"><i class="fa fa-check"></i><b>7.4</b> Sensory descriptive analysis data</a></li>
+<li class="chapter" data-level="7.5" data-path="example-projects.html"><a href="example-projects.html#summary-of-the-datasets"><i class="fa fa-check"></i><b>7.5</b> Summary of the datasets</a></li>
+</ul></li>
 <li class="chapter" data-level="8" data-path="data-collection.html"><a href="data-collection.html"><i class="fa fa-check"></i><b>8</b> Data Collection</a>
 <ul>
 <li class="chapter" data-level="8.1" data-path="data-collection.html"><a href="data-collection.html#design-1"><i class="fa fa-check"></i><b>8.1</b> Design</a></li>
@@ -241,6 +248,11 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="10" data-path="data-analysis.html"><a href="data-analysis.html"><i class="fa fa-check"></i><b>10</b> Data Analysis</a>
 <ul>
 <li class="chapter" data-level="10.1" data-path="data-analysis.html"><a href="data-analysis.html#sensory-data"><i class="fa fa-check"></i><b>10.1</b> Sensory Data</a></li>
+<li class="chapter" data-level="10.2" data-path="data-analysis.html"><a href="data-analysis.html#demographic-and-tfeq-data"><i class="fa fa-check"></i><b>10.2</b> Demographic and TFEQ Data</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="data-analysis.html"><a href="data-analysis.html#demographic-data-frequency-and-proportion"><i class="fa fa-check"></i><b>10.2.1</b> Demographic Data: Frequency and Proportion</a></li>
+<li class="chapter" data-level="10.2.2" data-path="data-analysis.html"><a href="data-analysis.html#behavioral-data-tfeq-traits"><i class="fa fa-check"></i><b>10.2.2</b> Behavioral Data: TFEQ Traits</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="value-delivery.html"><a href="value-delivery.html"><i class="fa fa-check"></i><b>11</b> Value Delivery</a>
 <ul>
@@ -437,8 +449,7 @@ Rcolorbrewer</p>
 <span id="cb34-13"><a href="auto-report.html#cb34-13" aria-hidden="true" tabindex="-1"></a>product_info <span class="sc">%&gt;%</span> </span>
 <span id="cb34-14"><a href="auto-report.html#cb34-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Protein <span class="sc">%in%</span> <span class="st">&quot;High&quot;</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb34-15"><a href="auto-report.html#cb34-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write_xlsx</span>(<span class="at">path =</span> <span class="fu">file.path</span>(<span class="st">&quot;output&quot;</span>, <span class="st">&quot;High Protein Products.xlsx&quot;</span>),</span>
-<span id="cb34-16"><a href="auto-report.html#cb34-16" aria-hidden="true" tabindex="-1"></a>             <span class="at">col_names =</span> <span class="cn">TRUE</span></span>
-<span id="cb34-17"><a href="auto-report.html#cb34-17" aria-hidden="true" tabindex="-1"></a>             )</span></code></pre></div>
+<span id="cb34-16"><a href="auto-report.html#cb34-16" aria-hidden="true" tabindex="-1"></a>             <span class="at">col_names =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p>The export of tables using the <code>{writexl}</code> package is easy, yet simplistic as it does not allow formatting the tables (except for some minor possibilities for the header), nor does it allow exporting multiple tables within the same sheet. For more advanced exporting options, the use of <strong>{openxlsx}</strong> package is preferred as it allows more flexibility in structuring and formatting the Excel output.</p>
 <p>With <code>{openxlsx}</code>, the procedure starts with creating a workbook object <code>wb</code> using the <code>createWorkbook()</code> function, to which we add worksheets through the <code>addWorksheet()</code> function.
 On a given worksheet, any table can be exported using <code>writeData()</code> or <code>writeDataTable()</code>, which controls where to write the table through the <code>startRow</code> and <code>startCol</code> options.
@@ -501,7 +512,7 @@ In practice, the color style is pre-defined in two parameters called <code>pos_s
 <span id="cb35-20"><a href="auto-report.html#cb35-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Data preparation</span></span>
 <span id="cb35-21"><a href="auto-report.html#cb35-21" aria-hidden="true" tabindex="-1"></a>senso_mean <span class="ot">&lt;-</span> sensory <span class="sc">%&gt;%</span> </span>
 <span id="cb35-22"><a href="auto-report.html#cb35-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Product) <span class="sc">%&gt;%</span> </span>
-<span id="cb35-23"><a href="auto-report.html#cb35-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric),mean)) <span class="sc">%&gt;%</span> </span>
+<span id="cb35-23"><a href="auto-report.html#cb35-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), mean)) <span class="sc">%&gt;%</span> </span>
 <span id="cb35-24"><a href="auto-report.html#cb35-24" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">column_to_rownames</span>(<span class="at">var =</span> <span class="st">&quot;Product&quot;</span>)</span>
 <span id="cb35-25"><a href="auto-report.html#cb35-25" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb35-26"><a href="auto-report.html#cb35-26" aria-hidden="true" tabindex="-1"></a>overall_mean <span class="ot">&lt;-</span> <span class="fu">apply</span>(senso_mean, <span class="dv">2</span>, mean)</span>

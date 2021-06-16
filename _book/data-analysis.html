@@ -24,7 +24,7 @@
 <meta name="author" content="John Ennis, Julien Delarue, and Thierry Worch" />
 
 
-<meta name="date" content="2021-04-30" />
+<meta name="date" content="2021-05-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -209,7 +209,14 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="part"><span><b>Bon Appétit</b></span></li>
-<li class="chapter" data-level="7" data-path="example-projects.html"><a href="example-projects.html"><i class="fa fa-check"></i><b>7</b> Example Projects</a></li>
+<li class="chapter" data-level="7" data-path="example-projects.html"><a href="example-projects.html"><i class="fa fa-check"></i><b>7</b> Example Project: the biscuit study</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="example-projects.html"><a href="example-projects.html#products"><i class="fa fa-check"></i><b>7.1</b> Products</a></li>
+<li class="chapter" data-level="7.2" data-path="example-projects.html"><a href="example-projects.html#participants"><i class="fa fa-check"></i><b>7.2</b> Participants</a></li>
+<li class="chapter" data-level="7.3" data-path="example-projects.html"><a href="example-projects.html#design-of-the-consumer-test"><i class="fa fa-check"></i><b>7.3</b> Design of the consumer test</a></li>
+<li class="chapter" data-level="7.4" data-path="example-projects.html"><a href="example-projects.html#sensory-descriptive-analysis-data"><i class="fa fa-check"></i><b>7.4</b> Sensory descriptive analysis data</a></li>
+<li class="chapter" data-level="7.5" data-path="example-projects.html"><a href="example-projects.html#summary-of-the-datasets"><i class="fa fa-check"></i><b>7.5</b> Summary of the datasets</a></li>
+</ul></li>
 <li class="chapter" data-level="8" data-path="data-collection.html"><a href="data-collection.html"><i class="fa fa-check"></i><b>8</b> Data Collection</a>
 <ul>
 <li class="chapter" data-level="8.1" data-path="data-collection.html"><a href="data-collection.html#design-1"><i class="fa fa-check"></i><b>8.1</b> Design</a></li>
@@ -241,6 +248,11 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="10" data-path="data-analysis.html"><a href="data-analysis.html"><i class="fa fa-check"></i><b>10</b> Data Analysis</a>
 <ul>
 <li class="chapter" data-level="10.1" data-path="data-analysis.html"><a href="data-analysis.html#sensory-data"><i class="fa fa-check"></i><b>10.1</b> Sensory Data</a></li>
+<li class="chapter" data-level="10.2" data-path="data-analysis.html"><a href="data-analysis.html#demographic-and-tfeq-data"><i class="fa fa-check"></i><b>10.2</b> Demographic and TFEQ Data</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="data-analysis.html"><a href="data-analysis.html#demographic-data-frequency-and-proportion"><i class="fa fa-check"></i><b>10.2.1</b> Demographic Data: Frequency and Proportion</a></li>
+<li class="chapter" data-level="10.2.2" data-path="data-analysis.html"><a href="data-analysis.html#behavioral-data-tfeq-traits"><i class="fa fa-check"></i><b>10.2.2</b> Behavioral Data: TFEQ Traits</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="value-delivery.html"><a href="value-delivery.html"><i class="fa fa-check"></i><b>11</b> Value Delivery</a>
 <ul>
@@ -402,8 +414,8 @@ To do so, we need the <code>{here}</code> and <code>{readxl}</code> packages. Si
 <span id="cb79-2"><a href="data-analysis.html#cb79-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
 <span id="cb79-3"><a href="data-analysis.html#cb79-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
 <span id="cb79-4"><a href="data-analysis.html#cb79-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb79-5"><a href="data-analysis.html#cb79-5" aria-hidden="true" tabindex="-1"></a>file_path <span class="ot">&lt;-</span> <span class="fu">here</span>(<span class="st">&quot;data&quot;</span>,<span class="st">&quot;Sensory Profile.xlsx&quot;</span>) </span>
-<span id="cb79-6"><a href="data-analysis.html#cb79-6" aria-hidden="true" tabindex="-1"></a>p_info <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(file_path, <span class="at">sheet=</span><span class="st">&quot;Product Info&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb79-5"><a href="data-analysis.html#cb79-5" aria-hidden="true" tabindex="-1"></a>file_path <span class="ot">&lt;-</span> <span class="fu">here</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;Sensory Profile.xlsx&quot;</span>) </span>
+<span id="cb79-6"><a href="data-analysis.html#cb79-6" aria-hidden="true" tabindex="-1"></a>p_info <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(file_path, <span class="at">sheet =</span> <span class="st">&quot;Product Info&quot;</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb79-7"><a href="data-analysis.html#cb79-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>Type)</span>
 <span id="cb79-8"><a href="data-analysis.html#cb79-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb79-9"><a href="data-analysis.html#cb79-9" aria-hidden="true" tabindex="-1"></a>sensory <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(file_path, <span class="at">sheet=</span><span class="st">&quot;Data&quot;</span>) <span class="sc">%&gt;%</span> </span>
@@ -482,13 +494,88 @@ Since we have two qualitative variables, let’s take advantage of them by color
 <span id="cb88-5"><a href="data-analysis.html#cb88-5" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_pca_var</span>(senso_pca)</span>
 <span id="cb88-6"><a href="data-analysis.html#cb88-6" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_pca_biplot</span>(senso_pca)</span></code></pre></div>
 <p>On the first dimension, <code>P10</code> is opposed to <code>P09</code> and <code>P03</code> as it is more intense for attributes such as <code>Sweet</code>, and <code>Dairy flavor</code> for example, and less intense for attributes such as <code>Dry in mouth</code> and <code>External color intensity</code>. On the second dimension, <code>P08</code>, <code>P06</code>, and <code>POpt</code> are opposed to <code>P02</code> and <code>P07</code> as they score higher for <code>Qty of inclusions</code>, and <code>Initial hardness</code>, and score lower for <code>RawDough flavor</code> and <code>Shiny</code>.</p>
+</div>
+<div id="demographic-and-tfeq-data" class="section level2" number="10.2">
+<h2><span class="header-section-number">10.2</span> Demographic and TFEQ Data</h2>
+<p>In the <em>TFEQ.xlsx</em> file, descriptive (e.g. demographic) and behavioral (e.g. TFEQ) information regarding the consumers is being stored.</p>
+<p>A quick look at this file shows that it contains three tabs denoted as <em>Data</em>, <em>Variables</em>, and <em>Levels</em>:</p>
+<ul>
+<li><em>Data</em> contains the data, coded;</li>
+<li><em>Variables</em> provides information (e.g. name, information) related to the different variables present in Data;</li>
+<li><em>Levels</em> provides information about the different levels each variable can take.</li>
+</ul>
+<p>Let’s start with importing this data set. The importation is done in multiple step as following:</p>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="data-analysis.html#cb89-1" aria-hidden="true" tabindex="-1"></a>file_path <span class="ot">&lt;-</span> <span class="fu">here</span>(<span class="st">&quot;Data&quot;</span>, <span class="st">&quot;TFEQ.xlsx&quot;</span>)</span>
+<span id="cb89-2"><a href="data-analysis.html#cb89-2" aria-hidden="true" tabindex="-1"></a><span class="fu">excel_sheets</span>(file_path)</span>
+<span id="cb89-3"><a href="data-analysis.html#cb89-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-4"><a href="data-analysis.html#cb89-4" aria-hidden="true" tabindex="-1"></a>demo_var <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(file_path, <span class="at">sheet=</span><span class="st">&quot;Variables&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb89-5"><a href="data-analysis.html#cb89-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Code, Name)</span>
+<span id="cb89-6"><a href="data-analysis.html#cb89-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-7"><a href="data-analysis.html#cb89-7" aria-hidden="true" tabindex="-1"></a>demo_lev <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(file_path, <span class="at">sheet=</span><span class="st">&quot;Levels&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb89-8"><a href="data-analysis.html#cb89-8" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Question, Code, Levels) <span class="sc">%&gt;%</span> </span>
+<span id="cb89-9"><a href="data-analysis.html#cb89-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(demo_var, <span class="at">by=</span><span class="fu">c</span>(<span class="st">&quot;Question&quot;</span><span class="ot">=</span><span class="st">&quot;Code&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb89-10"><a href="data-analysis.html#cb89-10" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>Question)</span>
+<span id="cb89-11"><a href="data-analysis.html#cb89-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-12"><a href="data-analysis.html#cb89-12" aria-hidden="true" tabindex="-1"></a>demographic <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(file_path, <span class="at">sheet=</span><span class="st">&quot;Data&quot;</span>, <span class="at">skip=</span><span class="dv">1</span>, <span class="at">col_names=</span><span class="fu">unlist</span>(demo_var<span class="sc">$</span>Name))</span></code></pre></div>
+<div id="demographic-data-frequency-and-proportion" class="section level3" number="10.2.1">
+<h3><span class="header-section-number">10.2.1</span> Demographic Data: Frequency and Proportion</h3>
+<p>For this demographic data file, we are interested to see the partition of consumers for each of the descriptive variables. More precisely, we would like to know the frequency and proportion (in percentage) attached to each level of <code>Living area</code>, <code>Housing</code>, <code>Income range</code>, and <code>Occupation</code>.</p>
+<p>To obtain such table, let’s start by only selecting these particular columns together with <code>Judge</code>.
+Since the data is coded, let’s decode it using the information stored in <code>demo_lev</code>: we could automatically recode each variable using <code>mutate()</code> and <code>factor()</code>. However, we prefer here to use <code>pivot_longer()</code> to create a long thin tibble, and then to merge this table with <code>demo_lev</code> by <code>Question</code> and <code>Response</code> using <code>inner_join()</code> instead. Once done, we can aggregate the results by <code>Question</code> and <code>Levels</code> (since we want to use the level information, not their code) and compute the frequency (<code>n()</code>) and the proportion (<code>N/sum(N)</code>)<a href="#fn10" class="footnote-ref" id="fnref10"><sup>10</sup></a>.</p>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="data-analysis.html#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(formattable)</span>
+<span id="cb90-2"><a href="data-analysis.html#cb90-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-3"><a href="data-analysis.html#cb90-3" aria-hidden="true" tabindex="-1"></a>demog_reduced <span class="ot">&lt;-</span> demographic <span class="sc">%&gt;%</span> </span>
+<span id="cb90-4"><a href="data-analysis.html#cb90-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Judge, <span class="st">`</span><span class="at">Living area</span><span class="st">`</span>, Housing, <span class="st">`</span><span class="at">Income range</span><span class="st">`</span>, <span class="st">`</span><span class="at">Occupation</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb90-5"><a href="data-analysis.html#cb90-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>Judge, <span class="at">names_to=</span><span class="st">&quot;Question&quot;</span>, <span class="at">values_to=</span><span class="st">&quot;Response&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb90-6"><a href="data-analysis.html#cb90-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(demo_lev, <span class="at">by=</span><span class="fu">c</span>(<span class="st">&quot;Question&quot;</span><span class="ot">=</span><span class="st">&quot;Name&quot;</span>, <span class="st">&quot;Response&quot;</span><span class="ot">=</span><span class="st">&quot;Code&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb90-7"><a href="data-analysis.html#cb90-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Question, Levels) <span class="sc">%&gt;%</span> </span>
+<span id="cb90-8"><a href="data-analysis.html#cb90-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">N =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb90-9"><a href="data-analysis.html#cb90-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Pct =</span> <span class="fu">percent</span>(N<span class="sc">/</span><span class="fu">sum</span>(N), <span class="at">digits=</span>1L)) <span class="sc">%&gt;%</span> </span>
+<span id="cb90-10"><a href="data-analysis.html#cb90-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code></pre></div>
+<p>To better visualize these different proportions, histograms are often considered. Such histograms can be obtained by splitting <code>demog_reduced</code> by <code>Question</code> and by creating in each case an histogram using either <code>N</code> or <code>Pct</code> (we are using <code>Pct</code>)<a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a>. Of course, we automate this across all questions using <code>map()</code>.</p>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="data-analysis.html#cb91-1" aria-hidden="true" tabindex="-1"></a>demog_reduced <span class="sc">%&gt;%</span> </span>
+<span id="cb91-2"><a href="data-analysis.html#cb91-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">split</span>(.<span class="sc">$</span>Question) <span class="sc">%&gt;%</span> </span>
+<span id="cb91-3"><a href="data-analysis.html#cb91-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="cf">function</span>(data){</span>
+<span id="cb91-4"><a href="data-analysis.html#cb91-4" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb91-5"><a href="data-analysis.html#cb91-5" aria-hidden="true" tabindex="-1"></a>    var <span class="ot">=</span> <span class="fu">as.character</span>(<span class="fu">unlist</span>(data<span class="sc">$</span>Question))</span>
+<span id="cb91-6"><a href="data-analysis.html#cb91-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb91-7"><a href="data-analysis.html#cb91-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">reorder</span>(Levels, Pct), <span class="at">y=</span>Pct, <span class="at">label=</span>Pct))<span class="sc">+</span></span>
+<span id="cb91-8"><a href="data-analysis.html#cb91-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="at">fill=</span><span class="st">&quot;grey50&quot;</span>)<span class="sc">+</span></span>
+<span id="cb91-9"><a href="data-analysis.html#cb91-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">y =</span> Pct<span class="sc">/</span><span class="dv">2</span>), <span class="at">colour=</span><span class="st">&quot;white&quot;</span>)<span class="sc">+</span></span>
+<span id="cb91-10"><a href="data-analysis.html#cb91-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">xlab</span>(<span class="st">&quot;&quot;</span>)<span class="sc">+</span></span>
+<span id="cb91-11"><a href="data-analysis.html#cb91-11" aria-hidden="true" tabindex="-1"></a>      <span class="fu">ylab</span>(<span class="st">&quot;&quot;</span>)<span class="sc">+</span></span>
+<span id="cb91-12"><a href="data-analysis.html#cb91-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">ggtitle</span>(var)<span class="sc">+</span></span>
+<span id="cb91-13"><a href="data-analysis.html#cb91-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
+<span id="cb91-14"><a href="data-analysis.html#cb91-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">coord_flip</span>()</span>
+<span id="cb91-15"><a href="data-analysis.html#cb91-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb91-16"><a href="data-analysis.html#cb91-16" aria-hidden="true" tabindex="-1"></a>  })</span></code></pre></div>
+</div>
+<div id="behavioral-data-tfeq-traits" class="section level3" number="10.2.2">
+<h3><span class="header-section-number">10.2.2</span> Behavioral Data: TFEQ Traits</h3>
+<p>In the same data set, consumers also answered some behavioral questions that reflects on their relation to food. These questions can be categorized into three groups: Disinhibitor (variables starting with <code>D</code>), Restriction (variables starting with <code>R</code>), and Hunger (variables starting with <code>H</code>).</p>
+<p>Let’s start by selecting all these variables. We could use <code>select()</code> combined with <code>starts_with("D")</code>, <code>starts_with("R")</code>, and <code>starts_with("H")</code>, but this solution is not satisfying since it can also seelct other variables that would start with any of these letters (e.g. Housing). Since the variables are all well structured (the all start with the letters D, R, or H, followed by a number), the use of a regular expression is more appropriate.</p>
+<p>In practice, generating regular expression can be quite complex as it is an abstract concept which follow very specific rules. Fortunately, the package <code>{RVerbalExpression}</code> is a great assistant as it generates the regular expression for you thanks to understandable functions. First, we initiate the regular expression by calling the function <code>rx()</code> to which we add that we first want any variables that start with any of the letter R, D, or H, followed by a number (or more, as values go from 1 to 21). This can be done using the following code:</p>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="data-analysis.html#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RVerbalExpressions)</span>
+<span id="cb92-2"><a href="data-analysis.html#cb92-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-3"><a href="data-analysis.html#cb92-3" aria-hidden="true" tabindex="-1"></a>rdh <span class="ot">&lt;-</span> <span class="fu">rx</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb92-4"><a href="data-analysis.html#cb92-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rx_either_of</span>(<span class="fu">c</span>(<span class="st">&quot;R&quot;</span>,<span class="st">&quot;D&quot;</span>,<span class="st">&quot;H&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb92-5"><a href="data-analysis.html#cb92-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rx_digit</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb92-6"><a href="data-analysis.html#cb92-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rx_one_or_more</span>()</span>
+<span id="cb92-7"><a href="data-analysis.html#cb92-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-8"><a href="data-analysis.html#cb92-8" aria-hidden="true" tabindex="-1"></a>rdh</span></code></pre></div>
+<p><code>rdh</code> contains the regular expression that we need. We can then <code>dplyr::select()</code> any variable that fits our regular expression by using the function <code>matches()</code>.</p>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="data-analysis.html#cb93-1" aria-hidden="true" tabindex="-1"></a>demographic <span class="sc">%&gt;%</span> </span>
+<span id="cb93-2"><a href="data-analysis.html#cb93-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">matches</span>(rdh))</span></code></pre></div>
 
+</div>
 </div>
 </div>
 <div class="footnotes">
 <hr />
 <ol start="9">
 <li id="fn9"><p>The <code>{broom}</code> package is a very useful package that convert statistical objects into tidy tables.<a href="data-analysis.html#fnref9" class="footnote-back">↩︎</a></p></li>
+<li id="fn10"><p>We use the package <code>{formattable}</code> to print the results in percentage using one decimal. As an alternative, we could have used <code>percent()</code> from the <code>{scales}</code> package.<a href="data-analysis.html#fnref10" class="footnote-back">↩︎</a></p></li>
+<li id="fn11"><p>Here, the histograms are ordered decreasingly (<code>reorder</code>) and are represented horizontally (<code>coord_flip()</code>).<a href="data-analysis.html#fnref11" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
