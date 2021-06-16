@@ -250,7 +250,8 @@ list(Start = liking_start_hsd %>% rename(Liking=`1stbite_liking`),
   theme_bw()
 
 consumer %>% 
-  dplyr::select(Judge, Product, Start=`1stbite_liking`, End=`after_liking`, Liking=`end_liking 9pt`, N) %>% 
+  dplyr::select(Judge, Product, Start=`1stbite_liking`, End=`after_liking`) %>% 
+  filter(Judge %in% str_c("J",1:12)) %>% 
   mutate(Judge = factor(Judge, levels=unique(str_sort(.$Judge, numeric=TRUE)))) %>% 
   ggplot(aes(x=Start, y=End))+
   geom_point(pch=20, cex=2)+
@@ -260,7 +261,7 @@ consumer %>%
   facet_wrap(~Judge)
 
 consumer %>% 
-  dplyr::select(Judge, Product, Start=`1stbite_liking`, End=`after_liking`, Liking=`end_liking 9pt`, N) %>% 
+  dplyr::select(Judge, Product,  End=`after_liking`, Liking=`end_liking 9pt`) %>% 
   mutate(Judge = factor(Judge, levels=unique(str_sort(.$Judge, numeric=TRUE)))) %>% 
   mutate(Liking = 10-Liking) %>% 
   ggplot(aes(x=End, y=Liking))+
@@ -274,7 +275,7 @@ consumer %>%
 #* Liking and Number of Biscuits Eaten ------------------------------------
 
 consumer %>% 
-  dplyr::select(Judge, Product, Start=`1stbite_liking`, End=`after_liking`, Liking=`end_liking 9pt`, N) %>% 
+  dplyr::select(Judge, Product, Liking=`end_liking 9pt`, N) %>% 
   mutate(Judge = factor(Judge, levels=unique(str_sort(.$Judge, numeric=TRUE)))) %>% 
   mutate(Liking = 10-Liking) %>% 
   ggplot(aes(x=Liking, y=N))+
@@ -286,13 +287,12 @@ consumer %>%
 
   ## Limiting to Significant Regression only
 run_reg <- function(df){
-  output <- lm(N ~ Start, data=df)
+  output <- lm(N ~ Liking, data=df)
   return(output)
 }
 
-consumer %>% 
-  dplyr::select(Judge, Product, Start=`1stbite_liking`, End=`after_liking`, Liking=`end_liking 9pt`, N) %>% 
-  mutate(Judge = factor(Judge, levels=unique(str_sort(.$Judge, numeric=TRUE)))) %>% 
+N_liking <- consumer %>% 
+  dplyr::select(Judge, Product, Liking=`end_liking 9pt`, N) %>% 
   mutate(Liking = 10-Liking) %>% 
   group_by(Judge) %>%
   nest() %>%
@@ -303,8 +303,9 @@ consumer %>%
   filter(p.value <= 0.05) %>% 
   arrange(p.value) %>% 
   mutate(Judge = fct_reorder(Judge, p.value)) %>% 
-  unnest(data) %>% 
-  ggplot(aes(x=Liking, y=N))+
+  unnest(data)
+
+ggplot(N_liking, aes(x=Liking, y=N))+
   geom_point(pch=20, cex=2)+
   geom_smooth(method="lm", formula="y~x", se=FALSE)+
   theme_bw()+
@@ -320,6 +321,7 @@ consumer_wide <- consumer %>%
   mutate(Number = ifelse(nchar(Number) == 1, str_c("0", Number), Number)) %>% 
   unite(Product, P, Number, sep="") %>% 
   dplyr::select(Judge, Product, Liking=`end_liking 9pt`) %>% 
+  mutate(Liking = 10-Liking) %>% 
   pivot_wider(names_from=Judge, values_from=Liking)
 
 data_mdpref <- senso_mean %>% 
@@ -328,7 +330,7 @@ data_mdpref <- senso_mean %>%
 res_mdpref <- data_mdpref %>% 
   as.data.frame() %>% 
   column_to_rownames(var="Product") %>% 
-  PCA(., quali.sup=1:2, quanti.sup=3:35, graph=FALSE)
+  PCA(., quali.sup=1:2, quanti.sup=3:34, graph=FALSE)
 
 fviz_pca_ind(res_mdpref, habillage=1)
 fviz_pca_var(res_mdpref, label="quanti.sup", select.var=list(cos2=0.5), repel=TRUE)

@@ -469,6 +469,117 @@ list(Start = liking_start_hsd %>% rename(Liking=`1stbite_liking`),
 ```
 
 
-As can be seen, the pattern of liking scores across samples is indeed very stable across the evaluation, the evaluation at the end being slightly more extreme: Samples that were liked (e.g. P10) are even more liked at the end, whereas samples that were disliked (e.g. P4, P8) are even more disliked.
+As can be seen, the pattern of liking scores across samples is indeed very stable across the evaluation, particularly in terms of rank.
+At the individual level, such linear relationship is also observed (here for the first 12 consumers):
 
+
+```{r}
+consumer %>% 
+  dplyr::select(Judge, Product, Start=`1stbite_liking`, End=`after_liking`) %>% 
+  filter(Judge %in% str_c("J",1:12)) %>% 
+  mutate(Judge = factor(Judge, levels=unique(str_sort(.$Judge, numeric=TRUE)))) %>% 
+  ggplot(aes(x=Start, y=End))+
+  geom_point(pch=20, cex=2)+
+  geom_smooth(method="lm", formula="y~x", se=FALSE)+
+  theme_bw()+
+  ggtitle("Overall Liking", "(Assessment after first bite vs. end of the tasting)")+
+  facet_wrap(~Judge)
+```
+
+
+<!-- Also include comparison between Liking score (9pt) and the continuous scale? Or should we put that as an exercise and make them reflect on the results? We could ask to create the plot including all consumers and then ask specifically for some of them... -->
+
+
+Another interesting relationship to study involves the liking scores^[We would like to remind the reader that the liking scores measured on the categorical scale was reverted since 1 defined "I like it a lot" and 9 "I dislike it a lot". To simplify the readability, this scale is reverted so that 1 corresponds to a low liking score, and 9 to a high liking score (in practice, we will take as value 10-score given).] and the number of cookies eaten by each consumer. We could follow the same procedure as before, but prefer to add here a filter to only show consumers with a significant regression line at 5%.
+
+Let's start by creating a function called `run_reg()` that runs the regression analysis of the number of biscuits (`N`) in function of the liking score (`Liking`):
+
+
+```{r}
+run_reg <- function(df){
+  output <- lm(N ~ Liking, data=df)
+  return(output)
+}
+
+```
+
+
+After transforming the data, we apply this function to our data, but we are going to store two sorts of results (as list) in our tibbles: 
+ - `lm_obj` which corresponds to the results of the linear model
+ - `glance` which contains some general results of the model incl. R2, the p-value, etc.
+ 
+
+```{r}
+N_liking <- consumer %>% 
+  dplyr::select(Judge, Product, Liking=`end_liking 9pt`, N) %>% 
+  mutate(Liking = 10-Liking) %>% 
+  group_by(Judge) %>%
+  nest() %>%
+  ungroup() %>%
+  mutate(lm_obj = map(data, run_reg)) %>% 
+  mutate(glance = map(lm_obj, broom::glance)) %>% 
+  unnest(glance) %>% 
+  filter(p.value <= 0.05) %>% 
+  arrange(p.value) %>% 
+  mutate(Judge = fct_reorder(Judge, p.value)) %>% 
+  unnest(data)
+```
+
+
+Ultimately, we can represent the relationship in a line chart:
+
+
+```{r}
+ggplot(N_liking, aes(x=Liking, y=N))+
+  geom_point(pch=20, cex=2)+
+  geom_smooth(method="lm", formula="y~x", se=FALSE)+
+  theme_bw()+
+  ggtitle("Number of Biscuits vs. Liking","(Consumers with a significant (5%) regression model are shown (ordered from the most to the least signif.)")+
+  facet_wrap(~Judge, scales="free_y")
+
+```
+
+
+## Combining Sensory and Consumer Data
+
+
+Now we've analyzed the sensory and the consumer data separately, it is time to combine both data sets and analyzed them conjointly. A first analysis that can then be performed is the internal preference mapping, i.e. a PCA on the consumer liking scores in which we project as supplementary variables the sensory attributes.
+
+Such analysis is split in 3 steps:
+1. The consumer data is re-organized in a wide format with the samples in rows and the consumers in columns;
+2. The sensory mean table is joined to the consumer data (to do so, we need to make sure that the product names perfectly match in the two files);
+3. A PCA is performed on the consumer data, the sensory descriptors being projected as supplementary onto that space.
+
+
+```{r}
+consumer_wide <- consumer %>% 
+  separate(Product, into = c("P", "Number"), sep = 1) %>% 
+  mutate(Number = ifelse(nchar(Number) == 1, str_c("0", Number), Number)) %>% 
+  unite(Product, P, Number, sep="") %>% 
+  dplyr::select(Judge, Product, Liking=`end_liking 9pt`) %>% 
+  mutate(Liking = 10-Liking) %>% 
+  pivot_wider(names_from=Judge, values_from=Liking)
+
+data_mdpref <- senso_mean %>% 
+  inner_join(consumer_wide, by="Product")
+
+res_mdpref <- data_mdpref %>% 
+  as.data.frame() %>% 
+  column_to_rownames(var="Product") %>% 
+  PCA(., quali.sup=1:2, quanti.sup=3:34, graph=FALSE)
+
+fviz_pca_ind(res_mdpref, habillage=1)
+fviz_pca_var(res_mdpref, label="quanti.sup", select.var=list(cos2=0.5), repel=TRUE)
+
+```
+
+
+As can be seen, the consumers are fairly in agreement as all the consumers (black arrows) are pointed in a similar direction.
+In overall, they seem to like biscuits that are sweet, with cereal flavor, and fatty/dairy flavor and odor, and dislike biscuits defined as astringent, dry in mouth, uneven and with dark external color.
+
+Although the data show a fairly good agreement between consumers, let's cluster them in more homogeneous groups based on liking.
+Various solutions for clustering exist, depending on the type of distance (similarity or dissimilarity), the linkage (single, average, Ward, etc.), and of course the algorithm itself (e.g. AHC, k-means, etc.).
+Here, we opt for the Agglomerative Hierarchical Clustering (AHC) approach with Euclidean distance (dissimilarity) and Ward criterion.
+
+Such analysis can be done using `stats::hclust()` or `cluster::agnes()`. 
 
