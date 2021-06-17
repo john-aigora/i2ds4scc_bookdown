@@ -345,7 +345,7 @@ consumer_dist <- consumer_wide %>%
   t(.) %>% 
   dist(., method="euclidean")
 
-library(cluster)
+# library(cluster)
 
 res_hclust <- hclust(consumer_dist, method="ward.D2")
 res_clust <- cutree(res_hclust, k=2) %>% 

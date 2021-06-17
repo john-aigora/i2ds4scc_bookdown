@@ -542,6 +542,7 @@ ggplot(N_liking, aes(x=Liking, y=N))+
 
 ## Combining Sensory and Consumer Data
 
+### Internal Preference Mapping
 
 Now we've analyzed the sensory and the consumer data separately, it is time to combine both data sets and analyzed them conjointly. A first analysis that can then be performed is the internal preference mapping, i.e. a PCA on the consumer liking scores in which we project as supplementary variables the sensory attributes.
 
@@ -577,9 +578,95 @@ fviz_pca_var(res_mdpref, label="quanti.sup", select.var=list(cos2=0.5), repel=TR
 As can be seen, the consumers are fairly in agreement as all the consumers (black arrows) are pointed in a similar direction.
 In overall, they seem to like biscuits that are sweet, with cereal flavor, and fatty/dairy flavor and odor, and dislike biscuits defined as astringent, dry in mouth, uneven and with dark external color.
 
+
+### Consumers Clustering
+
 Although the data show a fairly good agreement between consumers, let's cluster them in more homogeneous groups based on liking.
 Various solutions for clustering exist, depending on the type of distance (similarity or dissimilarity), the linkage (single, average, Ward, etc.), and of course the algorithm itself (e.g. AHC, k-means, etc.).
 Here, we opt for the Agglomerative Hierarchical Clustering (AHC) approach with Euclidean distance (dissimilarity) and Ward criterion.
 
 Such analysis can be done using `stats::hclust()` or `cluster::agnes()`. 
 
+Note that before computing the distance between consumers, it is advised to at least center their liking scores (subtracting their mean liking scores to each of their individual scores) as it allows grouping consumers based on similar preferences, rather than on their scale usage (otherwise, consumers who scored high on all samples are be grouped together, and separated from consumers who scored low on all samples, which isn't so much informative). 
+
+Let's start with computing the euclidean distance between each pair of consumers by using the `dist()` function.
+
+
+```{r}
+consumer_dist <- consumer_wide %>% 
+  as.data.frame() %>% 
+  column_to_rownames(var="Product") %>% 
+  scale(., center=TRUE, scale=FALSE) %>% 
+  t(.) %>% 
+  dist(., method="euclidean")
+```
+
+
+We then run the AHC using the `hclust()` function and the `method = "ward.D2"` parameter, which is the equivalent to the `method = "ward"` for `agnes()`. To visualize the dendrogram, we use the `factoextra::fviz_dend()` function:
+
+
+```{r}
+res_hclust <- hclust(consumer_dist, method="ward.D2")
+
+fviz_dend(res_hclust, k=2)
+fviz_dend(res_hclust, k=2, type="phylogenic")
+
+```
+
+
+Since we are satisfied with the 2 clusters solution, we cut the tree at this level using, hence generating a group of 74 and a group of 33 consumers.
+
+
+```{r}
+res_clust <- cutree(res_hclust, k=2) %>% 
+  as_tibble(rownames="Judge") %>% 
+  rename(Cluster = value) %>% 
+  mutate(Cluster = as.character(Cluster))
+
+res_clust %>% 
+  group_by(Cluster) %>% 
+  count() %>% 
+  ungroup()
+
+```
+
+
+Lastly, we compare visually the preference patterns between clusters by representing in a line chart the average liking score for each product provided by each cluster.
+
+
+```{r}
+mean_cluster <- consumer %>% 
+  separate(Product, into = c("P", "Number"), sep = 1) %>% 
+  mutate(Number = ifelse(nchar(Number) == 1, str_c("0", Number), Number)) %>% 
+  unite(Product, P, Number, sep="") %>% 
+  dplyr::select(Judge, Product, Liking=`end_liking 9pt`) %>%
+  full_join(res_clust, by="Judge") %>% 
+  group_by(Product, Cluster) %>% 
+  summarize(Liking = mean(Liking), N=n()) %>% 
+  mutate(Cluster = str_c(Cluster," (",N,")")) %>% 
+  ungroup()
+
+ggplot(mean_cluster, aes(x=Product, y=Liking, colour=Cluster, group=Cluster))+
+  geom_point(pch=20)+
+  geom_line(aes(group=Cluster), lwd=2)+
+  xlab("")+
+  scale_y_continuous(name="Average Liking Score", limits=c(1,9), breaks=seq(1,9,1))+
+  ggtitle("Cluster differences in the appreciation of the Products (using hclust)")+
+  theme_bw()
+
+```
+
+
+It appears that cluster 1 (74 consumers) particularly dislike P10, P01, and eventually P05, and has a fairly flat liking pattern otherwise. On the other hand, the cluster 2 (33 consumers) expressed strongly their preference towards P04 and P08.
+
+
+*Remark*: In the `{FactoMineR}` package, the `HCPC()` function also performs AHC but takes as starting point the results of a multivariate analysis (HCPC stands for Hierarchical Clustering on Principal Components). Although results should be identical in most cases, it can happen that results slightly diverge from `agnes()` and `hclust()` as it also depends on the number of dimensions kept in the multivariate analysis and on the treatment of in-between clusters consumers. But more interestingly, `HCPC()` offers the possibility to *consolidate* the clusters by performing k-mean on the solution obtained from the AHC (`consol=TRUE`).
+
+
+### Drivers of Liking
+
+#### Correlation
+
+#### Linear and Quadratic Regression
+
+### External Preference Mapping
