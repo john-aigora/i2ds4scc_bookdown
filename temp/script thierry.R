@@ -458,28 +458,38 @@ lin <- res_reg %>%
   summarise(broom::tidy(lin_mod)) %>% 
   ungroup() %>% 
   filter(term == "Score", p.value <= 0.05) %>% 
-  dplyr::select(Attribute) %>% 
-  unlist() %>% 
+  pull(Attribute) %>% 
   as.character()
 
 quad <- res_reg %>% 
   summarise(broom::tidy(quad_mod)) %>% 
   ungroup() %>% 
   filter(term == "Score2", p.value <= 0.06) %>%
-  dplyr::select(Attribute) %>% 
-  unlist() %>% 
+  pull(Attribute) %>% 
   as.character()
 
 library(ggrepel)
-data_reg %>% 
-  filter(Attribute %in% unique(c(lin,quad))) %>% 
-  ggplot(aes(x=Score, y=`1 (74)`, label=Product))+
+
+df <- data_reg %>% 
+  filter(Attribute %in% unique(c(lin,quad)))
+
+p <- ggplot(df, aes(x=Score, y=`1 (74)`, label=Product))+
   geom_point(pch=20, cex=2)+
-  geom_smooth(method="lm", formula="y~x", se=FALSE)+
-  geom_smooth(method="lm", formula="y~x+I(x^2)", se=FALSE, colour="red", lty=2)+
+  # geom_smooth(method="lm", se=FALSE, formula=.data[["Model"]])+
+  # geom_smooth(method="lm", formula="y~x", se=FALSE)+
+  # geom_smooth(method="lm", formula="y~x+I(x^2)", se=FALSE, colour="red", lty=2)+
   geom_text_repel()+
   theme_bw()+
   facet_wrap(~Attribute, scales="free_x")
+
+lm.mod <- function(df, quad){
+  ifelse(df$Attribute %in% quad, "y~x+I(x^2)", "y~x")
+}
+
+p_smooth <- by(df, df$Attribute, 
+               function(x) geom_smooth(data=x, method=lm, formula=lm.mod(x, quad=quad)))
+
+p + p_smooth
 
 #* External Preference Mapping --------------------------------------------
 

@@ -709,8 +709,80 @@ Finally, it can be noted that the correlation between clusters is high with a va
 #### Linear and Quadratic Regression
 
 
-Although the correlation provides a first good idea of which attributes are somewhat linked to liking, it has two major drawbacks: 1. it only measures linear relationships, and 2. it does not allow for inference. 
-To overcome this, we use linear and quadratic regression.
+Although the correlation provides a first good idea of which attributes are linked to liking, it has two major drawbacks: 1. it only measures linear relationships, and 2. it does not allow for inference. 
+To overcome this particular limitations, linear and quadratic regressions can be used.
+
+Let's start by combining the sensory data to the average liking score per product. To simplify the analysis, all the sensory attributes will be structured in the long format alike previous ANOVAs that we have been performed. Also, since the quadratic term can be evaluated by adding into the model an effect in which the sensory scores have been squared up, we create a second variable called `Score2` that corresponds to `Score^2`.
+
+
+```{r}
+data_reg <- mean_cluster %>% 
+  dplyr::select(-N) %>% 
+  pivot_wider(names_from=Cluster, values_from=Liking) %>% 
+  inner_join(senso_mean %>% dplyr::select(-c(Protein, Fiber)), by="Product") %>% 
+  pivot_longer(Shiny:Melting, names_to="Attribute", values_to="Score") %>% 
+  mutate(Attribute = factor(Attribute, levels=colnames(senso_mean)[4:ncol(senso_mean)])) %>% 
+  mutate(Score2 = Score^2)
+
+```
+
+
+We then run both the linear and quadratic regression simultaneously by attribute for cluster 1 (`1 (74)`):
+
+
+```{r}
+res_reg <- data_reg %>% 
+  nest_by(Attribute) %>% 
+  mutate(lin_mod = list(lm(`1 (74)` ~ Score, data=data)), quad_mod = list(lm(`1 (74)` ~ Score + Score2, data=data)))
+
+```
+
+
+We can then visualize which attributes are linked to liking by unfolding the results (using `broom::tidy()`). However, in this example, we propose to extract the attributes that are associated to a significant model at 5%, to then represent them graphically against the liking score.
+
+
+```{r}
+library(ggrepel)
+
+df <- data_reg %>% 
+  filter(Attribute %in% unique(c(lin,quad)))
+
+p <- ggplot(df, aes(x=Score, y=`1 (74)`, label=Product))+
+  geom_point(pch=20, cex=2)+
+  geom_text_repel()+
+  theme_bw()+
+  facet_wrap(~Attribute, scales="free_x")
+
+```
+
+
+Let's now add a regression line to the model. To do so, `geom_smooth()` is being used, in which `method = lm` as we are adding a regression line based on a linear model, and `formula = 'y ~ x'` for a linear relationship, and `formula = 'y ~ x + I(x^2)'` for a quadratic relationship.
+
+Based on the attribute, let's decide which of the regression line to add.
+
+
+```{r}
+lm.mod <- function(df, quad){
+  ifelse(df$Attribute %in% quad, "y~x+I(x^2)", "y~x")
+}
+
+```
+
+
+We apply this function to our data by applying to each attribute:
+
+
+```{r}
+p_smooth <- by(df, df$Attribute, 
+               function(x) geom_smooth(data=x, method=lm, formula=lm.mod(x, quad=quad)))
+
+p + p_smooth
+
+```
+
+
+All attributes except for `Astringent` are linearly linked to liking. 
+For `Astringent`, the curvature is U-shaped: this does not show an effect of saturation as it would have been represented as an inverted U-shape. Instead, we can notice that although the quadratic effect shows a better fit than the linear effect, having a linear effect would have been a good predictor as well.
 
 
 ### External Preference Mapping
