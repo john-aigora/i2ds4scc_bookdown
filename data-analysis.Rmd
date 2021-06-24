@@ -640,6 +640,7 @@ mean_cluster <- consumer %>%
   mutate(Number = ifelse(nchar(Number) == 1, str_c("0", Number), Number)) %>% 
   unite(Product, P, Number, sep="") %>% 
   dplyr::select(Judge, Product, Liking=`end_liking 9pt`) %>%
+  mutate(Liking = 10-Liking) %>% 
   full_join(res_clust, by="Judge") %>% 
   group_by(Product, Cluster) %>% 
   summarize(Liking = mean(Liking), N=n()) %>% 
@@ -657,7 +658,8 @@ ggplot(mean_cluster, aes(x=Product, y=Liking, colour=Cluster, group=Cluster))+
 ```
 
 
-It appears that cluster 1 (74 consumers) particularly dislike P10, P01, and eventually P05, and has a fairly flat liking pattern otherwise. On the other hand, the cluster 2 (33 consumers) expressed strongly their preference towards P04 and P08.
+It appears that cluster 1 (74 consumers) particularly likes P10, P01, and eventually P05, and has a fairly flat liking pattern otherwise. On the other hand, the cluster 2 (33 consumers) expressed strong rejection towards P04 and P08, and like P10 and P01 the most.
+The fact that both clusters agree on the best samples (P10 and P01) goes with our original assumption from the Internal Preference Mapping that the panel of conusmers is fairly homogeneous.
 
 
 *Remark*: In the `{FactoMineR}` package, the `HCPC()` function also performs AHC but takes as starting point the results of a multivariate analysis (HCPC stands for Hierarchical Clustering on Principal Components). Although results should be identical in most cases, it can happen that results slightly diverge from `agnes()` and `hclust()` as it also depends on the number of dimensions kept in the multivariate analysis and on the treatment of in-between clusters consumers. But more interestingly, `HCPC()` offers the possibility to *consolidate* the clusters by performing k-mean on the solution obtained from the AHC (`consol=TRUE`).
@@ -665,8 +667,50 @@ It appears that cluster 1 (74 consumers) particularly dislike P10, P01, and even
 
 ### Drivers of Liking
 
+It is then relevant to understand which sensory properties of the products drivers consumer's liking and disliking. Such evaluation can be done at the panel level, at any group level (e.g. clusters, users vs. non-users, gender, etc.), or even at the consumer level. 
+
 #### Correlation
 
+Let's start by evaluating the simplest relationship between the sensory attributes and overall liking by looking at the correlation. Here, we are combining the average liking score at the panel level that we link to the sensory profile of the products. The correlations are the computed using the `cor()` function:
+
+
+```{r}
+data_cor <- mean_cluster %>% 
+  dplyr::select(-N) %>% 
+  pivot_wider(names_from=Cluster, values_from=Liking) %>% 
+  inner_join(senso_mean %>% dplyr::select(-c(Protein, Fiber)), by="Product") %>% 
+  as.data.frame() %>% 
+  column_to_rownames(var="Product")
+
+res_cor <- cor(data_cor)
+
+```
+
+
+Various packages can be used to visualize these correlations. We opt here for the function `ggcorrplot()` from the package `{ggcorrplot}` as it provides many possibilities and generate the graphic as a ggplot object.
+
+Note that this package also comes with the function `cor_pmat()` which return the matrix of p-value associated to the correlations. This matrix of p-value can be used to hide correlations that are not significant at the level defined by the parameter `sig.level`
+
+
+```{r}
+library(ggcorrplot)
+
+res_cor_pmat <- cor_pmat(data_cor)
+
+ggcorrplot(res_cor, type="full", p.mat=res_cor_pmat, sig.level=0.05, insig="blank", lab=TRUE, lab_size=2)
+
+```
+
+
+By looking at the correlations, the liking scores for cluster 1 (defined as `1 (74)`) are positively correlated with `Overall odor intensity`, `Fatty odor`, `Cereal flavor`, `Fatty flavor`, `Dairy flavor`, `Overall flavor persistence`, `Salty`, `Sweet`, `Warming`, `Fatty in mouth`, and `Melting`. They are also negatively correlated to `External color intensity`, `Astringent`, and `Dry in mouth`. 
+Finally, it can be noted that the correlation between clusters is high with a value of 0.72.
+
+
 #### Linear and Quadratic Regression
+
+
+Although the correlation provides a first good idea of which attributes are somewhat linked to liking, it has two major drawbacks: 1. it only measures linear relationships, and 2. it does not allow for inference. 
+To overcome this, we use linear and quadratic regression.
+
 
 ### External Preference Mapping

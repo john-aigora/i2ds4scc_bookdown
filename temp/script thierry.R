@@ -372,6 +372,7 @@ mean_cluster <- consumer %>%
   mutate(Number = ifelse(nchar(Number) == 1, str_c("0", Number), Number)) %>% 
   unite(Product, P, Number, sep="") %>% 
   dplyr::select(Judge, Product, Liking=`end_liking 9pt`) %>%
+  mutate(Liking = 10-Liking) %>% 
   full_join(res_clust, by="Judge") %>% 
   group_by(Product, Cluster) %>% 
   summarize(Liking = mean(Liking), N=n()) %>% 
@@ -407,6 +408,7 @@ mean_cluster2 <- consumer %>%
   mutate(Number = ifelse(nchar(Number) == 1, str_c("0", Number), Number)) %>% 
   unite(Product, P, Number, sep="") %>% 
   dplyr::select(Judge, Product, Liking=`end_liking 9pt`) %>%
+  mutate(Liking = 10-Liking) %>% 
   full_join(res_hcpc, by="Judge") %>% 
   group_by(Product, Cluster) %>% 
   summarize(Liking = mean(Liking), N=n()) %>% 
@@ -481,5 +483,5 @@ data_reg %>%
 
 #* External Preference Mapping --------------------------------------------
 
-
+# Add code for PrefMap + Graph
 
