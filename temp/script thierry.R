@@ -67,9 +67,10 @@ library(FactoMineR)
 library(factoextra)
 
 senso_pca <- senso_mean %>% 
+  arrange(Product) %>% 
   as.data.frame() %>% 
   column_to_rownames(var="Product") %>% 
-  PCA(., quali.sup=1:2, graph=FALSE)
+  PCA(., ind.sup=nrow(.), quali.sup=1:2, graph=FALSE)
 
 fviz_pca_ind(senso_pca, habillage="Protein")
 fviz_pca_ind(senso_pca, habillage=2)
@@ -493,4 +494,44 @@ p + p_smooth
 
 #* External Preference Mapping --------------------------------------------
 
-# Add code and plot for PrefMap
+senso <- senso_pca$ind$coord[,1:2] %>% 
+  as_tibble(rownames="Product") %>% 
+  as.data.frame() %>% 
+  column_to_rownames(var="Product")
+
+consu <- consumer_wide %>% 
+  as.data.frame() %>% 
+  column_to_rownames(var="Product")
+
+library(SensoMineR)
+PrefMap <- carto(Mat=senso, MatH=consu, regmod=1, graph.tree=FALSE, graph.corr=FALSE, graph.carto=TRUE)
+abline(v=0, lty=2)
+abline(h=0, lty=2)
+
+senso <- senso %>% 
+  as_tibble(rownames="Product")
+
+senso_sup <- senso_pca$ind.sup$coord %>% 
+  as_tibble(rownames="Product")
+
+dimnames(PrefMap$nb.depasse) <- list(round(PrefMap$f1,2), round(PrefMap$f2,2))
+PrefMap_plot <- PrefMap$nb.depasse %>% 
+  as_tibble(rownames="Dim1") %>% 
+  pivot_longer(-Dim1, names_to="Dim2", values_to="Acceptance (%)") %>% 
+  mutate(across(where(is.character), as.numeric))
+
+ggplot()+
+  geom_tile(data=PrefMap_plot, aes(x=Dim1, y=Dim2, fill=`Acceptance (%)`, color=`Acceptance (%)`))+
+  geom_contour(data=PrefMap_plot, aes(x=Dim1, y=Dim2, z=`Acceptance (%)`), breaks=seq(0,100,10), colour="black")+
+  geom_hline(yintercept=0, lty=2)+
+  geom_vline(xintercept=0, lty=2)+
+  geom_point(data=senso, aes(x=Dim.1, y=Dim.2), pch=20, col="black", cex=3)+
+  geom_text_repel(data=senso, aes(x=Dim.1, y=Dim.2, label=Product), col="black")+
+  geom_point(data=senso_sup, aes(x=Dim.1, y=Dim.2), pch=20, col="green", cex=3)+
+  geom_text_repel(data=senso_sup, aes(x=Dim.1, y=Dim.2, label=Product), col="green")+
+  scale_fill_gradient2(low="blue", mid="white", high="red", midpoint=50)+
+  scale_color_gradient2(low="blue", mid="white", high="red", midpoint=50)+
+  xlab(str_c("Dimension 1(",round(senso_pca$eig[1,2],1),"%)"))+
+  ylab(str_c("Dimension 2(",round(senso_pca$eig[2,2],1),"%)"))+
+  ggtitle("External Preference Mapping applied on the biscuits data","(The PrefMap is based on the quadratic model)")+
+  theme_bw()

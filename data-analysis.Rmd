@@ -141,16 +141,17 @@ senso_mean <- sensory %>%
 
 
 Such table can be submitted to PCA. To do so, the `PCA()` function from the `{FactoMineR}` is used. 
-Few important remarks: The `PCA()` function usually contains only numerical data, the product names being often set as row names in a data frame. This is something that can easily be taken care of through the `column_to_rownames()` function from the `{tibble}` package. Additionally, one might notice that we still have two qualitative variables: `Protein` and `Fiber`. These 2 variables can either be removed prior to running the analysis, or better, projected as supplementary variables through the `quali.sup` parameter from `PCA()`. 
+Few important remarks: The `PCA()` function usually contains only numerical data, the product names being often set as row names in a data frame. This is something that can easily be taken care of through the `column_to_rownames()` function from the `{tibble}` package. Additionally, one might notice that we still have two qualitative variables: `Protein` and `Fiber`. These 2 variables can either be removed prior to running the analysis, or better, projected as supplementary variables through the `quali.sup` parameter from `PCA()`. Last but not least, since `POpt` is an optimized sample, we are not including it in the analysis: Instead, we project it as supplementary just to illustrate where it would be located on the space if it were.
 
 
 ```{r}
 library(FactoMineR)
 
 senso_pca <- senso_mean %>% 
+  arrange(Product) %>% 
   as.data.frame() %>% 
   column_to_rownames(var="Product") %>% 
-  PCA(., quali.sup=1:2, graph=TRUE)
+  PCA(., ind.sup=nrow(.), quali.sup=1:2, graph=FALSE)
 
 ```
 
@@ -786,3 +787,84 @@ For `Astringent`, the curvature is U-shaped: this does not show an effect of sat
 
 
 ### External Preference Mapping
+
+
+Ultimately, one of the goals of combining sensory and consumer data is to find within the sensory space the area that are liked/accepted by consumers. Since this approach is based on modeling and prediction, it may also suggest area of the space with high acceptance potential which are not filled in by products yet. This would open doors to new product development. 
+
+To perform such analysis, the External Preference Mapping (PrefMap) could be used amongst other techniques. For more information on the principles of PrefMap, please refer to (ANALYZING SENSORY DATA WITH R or OTHER REFERENCES...).
+
+To run the PrefMap analysis, the `carto()` function from the `{SensoMineR}` package is being used. This function mainly takes as parameter the sensory space to consider (stored in `senso_pca$ind$coord`, here we will consider dimension 1 and dimension 2), the table of hedonic score (`consumer_wider`), and the model to consider (here we consider the quadratic model, so we use `regmod=1`). Since `carto()` uses rownames for the analysis, the data needs to be slightly adapted.
+
+
+```{r}
+senso <- senso_pca$ind$coord[,1:2] %>% 
+  as_tibble(rownames="Product") %>% 
+  arrange(Product) %>% 
+  as.data.frame() %>% 
+  column_to_rownames(var="Product")
+
+consu <- consumer_wide %>% 
+  as.data.frame() %>% 
+  column_to_rownames(var="Product")
+
+library(SensoMineR)
+PrefMap <- carto(Mat=senso, MatH=consu, regmod=1, graph.tree=FALSE, graph.corr=FALSE, graph.carto=TRUE)
+
+```
+
+
+From this map, we can see that the optimal area (dark red) would be located on the positive side of dimension 1, between P01, P05, and P10 (as expected by the liking score).
+
+
+Let's now re-build this plot using `{ggplot2}`.
+The sensory space is store in `senso`, whereas the surface response plot is stored in:
+- `PrefMap$f1`: contains the coordinates on dimension 1 in which predictions have be made;
+- `PrefMap$f2`: contains the coordinates on dimension 1 in which predictions have be made;
+- `PrefMap$depasse`: contains the percentage of consumers that accept a product at each point of the space. This matrix is defined in such a way that `PrefMap$f1` links to the rows of the matrix, and `PrefMap$f2` links to the columns.
+
+Last but not least, `POpt` (which coordinates are stored in `senso_pca$ind.sup$coord`) can be projected on that space in order to see if such sample was well optimized in terms of consumers' liking/preference.
+
+
+Let's start with preparing the data:
+
+
+```{r}
+senso <- senso %>% 
+  as_tibble(rownames="Product")
+
+senso_sup <- senso_pca$ind.sup$coord %>% 
+  as_tibble(rownames="Product")
+
+dimnames(PrefMap$nb.depasse) <- list(round(PrefMap$f1,2), round(PrefMap$f2,2))
+PrefMap_plot <- PrefMap$nb.depasse %>% 
+  as_tibble(rownames="Dim1") %>% 
+  pivot_longer(-Dim1, names_to="Dim2", values_to="Acceptance (%)") %>% 
+  mutate(across(where(is.character), as.numeric))
+
+```
+
+
+To build the plot, we need many layers that will use different source of data (`senso`, `senso_sup`, and `PrefMap_plot` that is). Hence, the initiation of the plot thorugh the `ggplot()` function will not specify any data. Instead, the data to use at each step are included within the `geom_*()` functions of interest. In particular, `geom_tile()` and `geom_contour()` are used to build the surface plot.
+
+
+```{r}
+ggplot()+
+  geom_tile(data=PrefMap_plot, aes(x=Dim1, y=Dim2, fill=`Acceptance (%)`, color=`Acceptance (%)`))+
+  geom_contour(data=PrefMap_plot, aes(x=Dim1, y=Dim2, z=`Acceptance (%)`), breaks=seq(0,100,10))+
+  geom_hline(yintercept=0, lty=2)+
+  geom_vline(xintercept=0, lty=2)+
+  geom_point(data=senso, aes(x=Dim.1, y=Dim.2), pch=20, cex=3)+
+  geom_text_repel(data=senso, aes(x=Dim.1, y=Dim.2, label=Product))+
+  geom_point(data=senso_sup, aes(x=Dim.1, y=Dim.2), pch=20, col="green", cex=3)+
+  geom_text_repel(data=senso_sup, aes(x=Dim.1, y=Dim.2, label=Product), col="green")+
+  scale_fill_gradient2(low="blue", mid="white", high="red", midpoint=50)+
+  scale_color_gradient2(low="blue", mid="white", high="red", midpoint=50)+
+  xlab(str_c("Dimension 1(",round(senso_pca$eig[1,2],1),"%)"))+
+  ylab(str_c("Dimension 2(",round(senso_pca$eig[2,2],1),"%)"))+
+  ggtitle("External Preference Mapping applied on the biscuits data","(The PrefMap is based on the quadratic model)")+
+  theme_bw()
+
+```
+
+
+As can be seen, `POpt` is not so close from the optimal area suggested by the PrefMap, hence suggesting that other prototypes that are closer to P10 should be generated.
