@@ -49,7 +49,7 @@ A schematic of a data scientific workflow is shown in Figure \@ref(fig:ds-workfl
 
 ```{r ds-workflow, fig.cap='Data scientific workflow.', fig.align='center', echo=FALSE, eval=TRUE}
 
-knitr::include_graphics("images/data_science_workflow.png")
+knitr::include_graphics("images/data_science_workflow.jpg")
 
 ```
 
@@ -67,21 +67,27 @@ Since Fisher's time, ideas around experimental design have relaxed somewhat, wit
 
 > "Unless exploratory data analysis uncovers indications, usually quantitative ones, there is likely to be nothing for confirmatory data analysis to consider.
 > 
-> Experiments and certain planned inquires provide some exceptions and partial exceptions to this rule.  They do this because one line of data analysis was planned asa  part of the experiment or inquiry. *Even here, however, restricting one's self to the planned analysis -- failing to accompany it with exploration -- loses sight of the most interesting results too frequently to be comfortable.* (Emphasis original)"
+> Experiments and certain planned inquires provide some exceptions and partial exceptions to this rule.  They do this because one line of data analysis was planned as a part of the experiment or inquiry. *Even here, however, restricting one's self to the planned analysis -- failing to accompany it with exploration -- loses sight of the most interesting results too frequently to be comfortable.* (Emphasis original)"
 
+In this book, we take no strong opinions on this topic, as they belong more properly to the study of statistics than to data science.  However, we agree that results from an experiment explicitly designed to test a specific hypothesis should be viewed as more trustworthy than results incidentally obtained.  Moreover, as we will describe in Chapters \@ref(machine-learning) and \@ref(linear-programming), well-selected sample sets support more generalizable predictions from machine learning models.
 
 #### Execute
 
+Execution of the actual experiment is a crucial step in the data science workflow, although not one in which  data scientists themselves are necessarily involved.  Even so, it is imperative that data scientists communicate directly and frequently with the experimenters so that nuances of the data are properly understood for modeling and interpretation.  
+
 #### Import
+
+Once the data are collected, they need to find their way into a computer's working memory to be analyzed.  This importation process should be fully scripted in code, as we detail in Chapter \@ref(data-collection), and raw data files should never be directly edited.  This discipline ensures that all steps taken to import the data will be understood later and that the reasoning behind all choices will be documented.  Moreover, writing code to import raw data allows for new data to be analyzed quickly in the future as long as the data formatting is consistent.  For sensory scientists, who regularly run similar tests, a streamlined workflow for data import and analysis both saves much time and protects against errors.
 
 ### Data Preparation
 
+Preparing data for analysis typically involves two steps: data inspection and data cleaning.
+
 #### Inspect
 
-Goal: 
-Gain familiarity with the data
-Key Steps:
-Learn collection details
+In this step, the main goal is to gain familiarity with the data.  
+
+Learn data collection details
 Check data imported correctly
 Determine data types
 Ascertain consistency and validity

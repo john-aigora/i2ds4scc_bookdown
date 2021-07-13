@@ -24,7 +24,7 @@
 <meta name="author" content="John Ennis, Julien Delarue, and Thierry Worch" />
 
 
-<meta name="date" content="2021-06-16" />
+<meta name="date" content="2021-07-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -53,6 +53,68 @@
 
 
 
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -199,6 +261,13 @@
 <li class="chapter" data-level="10.2.2" data-path="data-analysis.html"><a href="data-analysis.html#behavioral-data-tfeq-traits"><i class="fa fa-check"></i><b>10.2.2</b> Behavioral Data: TFEQ Traits</a></li>
 </ul></li>
 <li class="chapter" data-level="10.3" data-path="data-analysis.html"><a href="data-analysis.html#consumer-data"><i class="fa fa-check"></i><b>10.3</b> Consumer Data</a></li>
+<li class="chapter" data-level="10.4" data-path="data-analysis.html"><a href="data-analysis.html#combining-sensory-and-consumer-data"><i class="fa fa-check"></i><b>10.4</b> Combining Sensory and Consumer Data</a>
+<ul>
+<li class="chapter" data-level="10.4.1" data-path="data-analysis.html"><a href="data-analysis.html#internal-preference-mapping"><i class="fa fa-check"></i><b>10.4.1</b> Internal Preference Mapping</a></li>
+<li class="chapter" data-level="10.4.2" data-path="data-analysis.html"><a href="data-analysis.html#consumers-clustering"><i class="fa fa-check"></i><b>10.4.2</b> Consumers Clustering</a></li>
+<li class="chapter" data-level="10.4.3" data-path="data-analysis.html"><a href="data-analysis.html#drivers-of-liking"><i class="fa fa-check"></i><b>10.4.3</b> Drivers of Liking</a></li>
+<li class="chapter" data-level="10.4.4" data-path="data-analysis.html"><a href="data-analysis.html#external-preference-mapping"><i class="fa fa-check"></i><b>10.4.4</b> External Preference Mapping</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="value-delivery.html"><a href="value-delivery.html"><i class="fa fa-check"></i><b>11</b> Value Delivery</a>
 <ul>
@@ -389,7 +458,7 @@
 <h2><span class="header-section-number">2.3</span> Data Scientific Workflow</h2>
 <p>A schematic of a data scientific workflow is shown in Figure <a href="data-science.html#fig:ds-workflow">2.1</a>. Each section is described in greater detail below.</p>
 <div class="figure" style="text-align: center"><span id="fig:ds-workflow"></span>
-<img src="images/data_science_workflow.png" alt="Data scientific workflow." width="626" />
+<img src="images/data_science_workflow.jpg" alt="Data scientific workflow." width="4272" />
 <p class="caption">
 Figure 2.1: Data scientific workflow.
 </p>
@@ -398,16 +467,25 @@ Figure 2.1: Data scientific workflow.
 <h3><span class="header-section-number">2.3.1</span> Data Collection</h3>
 <div id="design" class="section level4" number="2.3.1.1">
 <h4><span class="header-section-number">2.3.1.1</span> Design</h4>
-<p>From the standpoint of classical statistics, experiments are conducted to test specific hypotheses and proper experimental design ensures that the data collected will allow hypotheses of interest to be tested. Sir Ronald Fisher, the father of modern statistics, felt so strongly on this topic that he said</p>
+<p>From the standpoint of classical statistics, experiments are conducted to test specific hypotheses and proper experimental design ensures that the data collected will allow hypotheses of interest to be tested (c.f. <span class="citation"><a href="bibliography.html#ref-Fisher1935" role="doc-biblioref">Fisher</a> (<a href="bibliography.html#ref-Fisher1935" role="doc-biblioref">1935</a>)</span>). Sir Ronald Fisher, the father of modern statistics, felt so strongly on this topic that he said:</p>
 <blockquote>
 <p>“To call in the statistician after the experiment is done may be no more than asking him to perform a postmortem examination: he may be able to say what the experiment died of.”</p>
 </blockquote>
+<p>This topic of designed experiments, which are necessary to fully explore causal or mechanistic explanations, is covered extensively in <span class="citation"><a href="bibliography.html#ref-Lawson2014" role="doc-biblioref">Lawson</a> (<a href="bibliography.html#ref-Lawson2014" role="doc-biblioref">2014</a>)</span>.</p>
+<p>Since Fisher’s time, ideas around experimental design have relaxed somewhat, with Tukey arguing in <span class="citation"><a href="bibliography.html#ref-Tukey1977" role="doc-biblioref">Tukey</a> (<a href="bibliography.html#ref-Tukey1977" role="doc-biblioref">1977</a>)</span> that exploratory and confirmatory data analysis can and should proceed in tandem.</p>
+<blockquote>
+<p>"Unless exploratory data analysis uncovers indications, usually quantitative ones, there is likely to be nothing for confirmatory data analysis to consider.</p>
+<p>Experiments and certain planned inquires provide some exceptions and partial exceptions to this rule. They do this because one line of data analysis was planned as a part of the experiment or inquiry. <em>Even here, however, restricting one’s self to the planned analysis – failing to accompany it with exploration – loses sight of the most interesting results too frequently to be comfortable.</em> (Emphasis original)"</p>
+</blockquote>
+<p>In this book, we take no strong opinions on this topic, as they belong more properly to the study of statistics than to data science. However, we agree that results from an experiment explicitly designed to test a specific hypothesis should be viewed as more trustworthy than results incidentally obtained. Moreover, as we will describe in Chapters <a href="machine-learning.html#machine-learning">12</a> and <a href="linear-programming.html#linear-programming">14</a>, well-selected sample sets support more generalizable predictions from machine learning models.</p>
 </div>
 <div id="execute" class="section level4" number="2.3.1.2">
 <h4><span class="header-section-number">2.3.1.2</span> Execute</h4>
+<p>Execution of the actual experiment is a crucial step in the data science workflow, although not one in which data scientists themselves are necessarily involved. Even so, it is imperative that data scientists communicate directly and frequently with the experimenters so that nuances of the data are properly understood for modeling and interpretation.</p>
 </div>
 <div id="import" class="section level4" number="2.3.1.3">
 <h4><span class="header-section-number">2.3.1.3</span> Import</h4>
+<p>Once the data are collected, they need to find their way into a computer’s working memory to be analyzed. This importation process should be fully scripted in code, as we detail in Chapter <a href="data-collection.html#data-collection">8</a>, and raw data files should never be directly edited. This discipline ensures that all steps taken to import the data will be understood later and that the reasoning behind all choices will be documented. Moreover, writing code to import raw data allows for new data to be analyzed quickly in the future as long as the data formatting is consistent. For sensory scientists, who regularly run similar tests, a streamlined workflow for data import and analysis is a tremendous time-saver.</p>
 </div>
 </div>
 <div id="data-preparation" class="section level3" number="2.3.2">

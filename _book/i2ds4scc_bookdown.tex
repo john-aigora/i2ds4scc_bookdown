@@ -118,7 +118,7 @@
 
 \title{Data Science for Sensory and Consumer Scientists}
 \author{John Ennis, Julien Delarue, and Thierry Worch}
-\date{2021-05-06}
+\date{2021-07-13}
 
 \begin{document}
 \maketitle
@@ -274,7 +274,7 @@ A schematic of a data scientific workflow is shown in Figure \ref{fig:ds-workflo
 
 \begin{figure}
 
-{\centering \includegraphics[width=17.38in]{images/data_science_workflow} 
+{\centering \includegraphics[width=118.67in]{images/data_science_workflow} 
 
 }
 
@@ -287,13 +287,33 @@ A schematic of a data scientific workflow is shown in Figure \ref{fig:ds-workflo
 \hypertarget{design}{%
 \subsubsection{Design}\label{design}}
 
-Experimental design is an essential part of any scientific investigation. Whether the data
+From the standpoint of classical statistics, experiments are conducted to test specific hypotheses and proper experimental design ensures that the data collected will allow hypotheses of interest to be tested (c.f. \citet{Fisher1935}). Sir Ronald Fisher, the father of modern statistics, felt so strongly on this topic that he said:
+
+\begin{quote}
+``To call in the statistician after the experiment is done may be no more than asking him to perform a postmortem examination: he may be able to say what the experiment died of.''
+\end{quote}
+
+This topic of designed experiments, which are necessary to fully explore causal or mechanistic explanations, is covered extensively in \citet{Lawson2014}.
+
+Since Fisher's time, ideas around experimental design have relaxed somewhat, with Tukey arguing in \citet{Tukey1977} that exploratory and confirmatory data analysis can and should proceed in tandem.
+
+\begin{quote}
+"Unless exploratory data analysis uncovers indications, usually quantitative ones, there is likely to be nothing for confirmatory data analysis to consider.
+
+Experiments and certain planned inquires provide some exceptions and partial exceptions to this rule. They do this because one line of data analysis was planned as a part of the experiment or inquiry. \emph{Even here, however, restricting one's self to the planned analysis -- failing to accompany it with exploration -- loses sight of the most interesting results too frequently to be comfortable.} (Emphasis original)"
+\end{quote}
+
+In this book, we take no strong opinions on this topic, as they belong more properly to the study of statistics than to data science. However, we agree that results from an experiment explicitly designed to test a specific hypothesis should be viewed as more trustworthy than results incidentally obtained. Moreover, as we will describe in Chapters \ref{machine-learning} and \ref{linear-programming}, well-selected sample sets support more generalizable predictions from machine learning models.
 
 \hypertarget{execute}{%
 \subsubsection{Execute}\label{execute}}
 
+Execution of the actual experiment is a crucial step in the data science workflow, although not one in which data scientists themselves are necessarily involved. Even so, it is imperative that data scientists communicate directly and frequently with the experimenters so that nuances of the data are properly understood for modeling and interpretation.
+
 \hypertarget{import}{%
 \subsubsection{Import}\label{import}}
+
+Once the data are collected, they need to find their way into a computer's working memory to be analyzed. This importation process should be fully scripted in code, as we detail in Chapter \ref{data-collection}, and raw data files should never be directly edited. This discipline ensures that all steps taken to import the data will be understood later and that the reasoning behind all choices will be documented. Moreover, writing code to import raw data allows for new data to be analyzed quickly in the future as long as the data formatting is consistent. For sensory scientists, who regularly run similar tests, a streamlined workflow for data import and analysis is a tremendous time-saver.
 
 \hypertarget{data-preparation}{%
 \subsection{Data Preparation}\label{data-preparation}}
@@ -1317,18 +1337,6 @@ For more details on using \textbf{\{openxlsx\}} see \url{https://rdrr.io/cran/op
 \hypertarget{powerpoint}{%
 \section{PowerPoint}\label{powerpoint}}
 
-Start with template
-Explain slide master
-How to adjust choices
-Internal naming (relevant later)
-Example
-Title slides
-Tables
-Charts
-Bullet points
-Images
-Layout discussion
-
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(tidyverse)}
@@ -1337,138 +1345,125 @@ Layout discussion
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{powerpoint-formatting}{%
-\subsection{PowerPoint Formatting}\label{powerpoint-formatting}}
+With \texttt{\{officer\}}, the procedure starts with creating a powerpoint object \texttt{pptx\_obj} using the \texttt{read\_pptx()} function, to which we add slides through the \texttt{add\_slide()} function.
+On a given worksheet, any type of content (text, graph, table) can be exported using \texttt{ph\_with()} (ph \textasciitilde{} placeholder) which controls where to write the content through the \texttt{location} and \texttt{ph\_location} options.
 
-PowerPoint Slide Master
+Through these different functions, many additional formatting procedure can be applied.
 
-\hypertarget{importing-the-template}{%
-\subsubsection{Importing the Template}\label{importing-the-template}}
+\begin{itemize}
+\tightlist
+\item
+  \texttt{add\_slide()} with arguments:
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{my\_file }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(}\StringTok{"input"}\NormalTok{, }\StringTok{"templates"}\NormalTok{, }\StringTok{"Tutorial Template.pptx"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
-                        \FunctionTok{read\_pptx}\NormalTok{()}
-
-\FunctionTok{class}\NormalTok{(my\_file) }\CommentTok{\# checking if correct class}
-
-\NormalTok{my\_file }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{layout\_summary}\NormalTok{()}
-\end{Highlighting}
-\end{Shaded}
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{layout} type of slide;
+  \item
+    \texttt{master} theme of the deck;
+  \end{itemize}
+\end{itemize}
 
 \hypertarget{creating-a-powerpoint-deck}{%
-\subsubsection{Creating a PowerPoint Deck}\label{creating-a-powerpoint-deck}}
+\subsection{Creating a PowerPoint Deck}\label{creating-a-powerpoint-deck}}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}} \FunctionTok{read\_pptx}\NormalTok{ () }\CommentTok{\# new empty file}
-\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}}\NormalTok{ pptx\_obj }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{add\_slide}\NormalTok{(}\AttributeTok{layout  =} \StringTok{\textquotesingle{}Title and Content\textquotesingle{}}\NormalTok{, }\AttributeTok{master =} \StringTok{"Office Theme"}\NormalTok{)}
-
-\NormalTok{pptx\_obj }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{print}\NormalTok{(}\AttributeTok{target =} \StringTok{"output/first\_example.pptx"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-We cannot load the themes of Office \emph{ex nihilo} returns error
+\textbf{Key functions:}
+\texttt{read\_pptx(path)} \texttt{add\_slide(x,\ layout,\ master)} \texttt{layout\_summary(x)}
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{pptx\_obj }\OtherTok{\textless{}{-}} \FunctionTok{read\_pptx}\NormalTok{() }\CommentTok{\# new empty file}
 \NormalTok{pptx\_obj }\OtherTok{\textless{}{-}}\NormalTok{ pptx\_obj }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{add\_slide}\NormalTok{(}\AttributeTok{layout  =} \StringTok{\textquotesingle{}Title and Content\textquotesingle{}}\NormalTok{, }\AttributeTok{master =} \StringTok{"Office Theme"}\NormalTok{)}
+
+\FunctionTok{class}\NormalTok{(pptx\_obj)}
+
+\NormalTok{pptx\_obj }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{layout\_summary}\NormalTok{()}
+
+\NormalTok{pptx\_obj }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{print}\NormalTok{(}\AttributeTok{target =} \FunctionTok{file.path}\NormalTok{(}\StringTok{"output"}\NormalTok{,}\StringTok{"example\_1.pptx"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{powerpoint-themes}{%
+\subsection{PowerPoint Themes}\label{powerpoint-themes}}
+
+A blank Deck is by default set up with the \emph{Office Theme}. To use a custom theme, we must create a Deck using the Powerpoint software and use it as input.
+
+Loading a template with a custom theme
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}} \FunctionTok{read\_pptx}\NormalTok{(}\FunctionTok{file.path}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"templates"}\NormalTok{, }\StringTok{"intergral.pptx"}\NormalTok{))}
+
+\NormalTok{pptx\_obj }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{layout\_summary}\NormalTok{()}
+
+\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}}\NormalTok{ pptx\_obj }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# add slide}
   \FunctionTok{add\_slide}\NormalTok{(}\AttributeTok{layout =} \StringTok{"Title and Content"}\NormalTok{, }\AttributeTok{master =} \StringTok{"Integral"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-However, we can save an empty pptx with the desired theme and use it as a template
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}} \FunctionTok{read\_pptx}\NormalTok{(}\FunctionTok{file.path}\NormalTok{(}\StringTok{"input"}\NormalTok{, }\StringTok{"templates"}\NormalTok{, }\StringTok{"integral.pptx"}\NormalTok{))}
-\FunctionTok{layout\_summary}\NormalTok{(pptx\_obj)}
-\end{Highlighting}
-\end{Shaded}
-
-We can even load a template with more than one theme
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}} \FunctionTok{read\_pptx}\NormalTok{(}\FunctionTok{file.path}\NormalTok{(}\StringTok{"input"}\NormalTok{, }\StringTok{"templates"}\NormalTok{, }\StringTok{"multmasters.pptx"}\NormalTok{))}
-\FunctionTok{layout\_summary}\NormalTok{(pptx\_obj)}
-\end{Highlighting}
-\end{Shaded}
-
-\hypertarget{selection-pane}{%
-\subsubsection{Selection Pane}\label{selection-pane}}
-
-\hypertarget{key-functions}{%
-\subsubsection{Key functions:}\label{key-functions}}
-
-\texttt{read\_pptx(path)} \texttt{layout\_summary(x)} \texttt{layout\_properties(x)}
-
-\texttt{add\_slide(x,\ layout,\ master)} \texttt{on\_slide(x,\ index)} \texttt{slide\_summary(x,\ index)}
-
-\hypertarget{example-code}{%
-\subsubsection{Example Code}\label{example-code}}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}} \FunctionTok{read\_pptx}\NormalTok{() }\CommentTok{\# new empty file}
-
-\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}}\NormalTok{ pptx\_obj }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# add slide}
-  \FunctionTok{add\_slide}\NormalTok{(}\AttributeTok{layout =} \StringTok{"Title and Content"}\NormalTok{, }\AttributeTok{master =} \StringTok{"Office Theme"}\NormalTok{)}
-
-\FunctionTok{layout\_summary}\NormalTok{(pptx\_obj) }\CommentTok{\# contains only basic layouts}
-\FunctionTok{layout\_properties}\NormalTok{(pptx\_obj) }\CommentTok{\# additional detail}
-
-\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}}\NormalTok{ pptx\_obj }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{on\_slide}\NormalTok{(}\AttributeTok{index =} \DecValTok{1}\NormalTok{) }\CommentTok{\# set active slide}
-\FunctionTok{slide\_summary}\NormalTok{(pptx\_obj) }\CommentTok{\# slide is empty}
-\end{Highlighting}
-\end{Shaded}
-
-\hypertarget{placeholders}{%
-\subsection{Placeholders}\label{placeholders}}
-
 \hypertarget{placeholders-and-shapes}{%
-\subsubsection{Placeholders and Shapes}\label{placeholders-and-shapes}}
+\subsection{Placeholders and Shapes}\label{placeholders-and-shapes}}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{ph\_location\_type()} allows use predefined placeholders for content:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    title, body
+  \item
+    ctrTitle, subTitle, dt, ftr, sldNum
+  \end{itemize}
+\end{itemize}
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\# Example 1}
 \NormalTok{my\_data }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"My functions are:"}\NormalTok{, }\StringTok{"ph\_with"}\NormalTok{, }\StringTok{"ph\_location\_type"}\NormalTok{)}
-\NormalTok{my\_type }\OtherTok{\textless{}{-}} \StringTok{"body"}
 
-\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}} \FunctionTok{read\_pptx}\NormalTok{() }\CommentTok{\# new empty file}
-
-\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}}\NormalTok{ pptx\_obj }\SpecialCharTok{\%\textgreater{}\%} 
+\CommentTok{\# first slide}
+\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}} \FunctionTok{read\_pptx}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{add\_slide}\NormalTok{(}\AttributeTok{layout =} \StringTok{"Title and Content"}\NormalTok{, }\AttributeTok{master =} \StringTok{"Office Theme"}\NormalTok{)}
 
 \NormalTok{pptx\_obj }\OtherTok{\textless{}{-}}\NormalTok{ pptx\_obj }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ph\_with}\NormalTok{(}\AttributeTok{value =}\NormalTok{ my\_data, }\AttributeTok{location =} \FunctionTok{ph\_location\_type}\NormalTok{(}\AttributeTok{type =}\NormalTok{ my\_type))}
+  \FunctionTok{ph\_with}\NormalTok{(}\AttributeTok{value =}\NormalTok{ my\_data, }\AttributeTok{location =} \FunctionTok{ph\_location\_type}\NormalTok{(}\AttributeTok{type =} \StringTok{\textquotesingle{}body\textquotesingle{}}\NormalTok{))}
 
-\NormalTok{pptx\_obj }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{print}\NormalTok{(}\AttributeTok{target =} \StringTok{"output/test2.1.pptx"}\NormalTok{) }
-\end{Highlighting}
-\end{Shaded}
+\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}}\NormalTok{ pptx\_obj }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{on\_slide}\NormalTok{(}\AttributeTok{index =} \DecValTok{1}\NormalTok{) }\CommentTok{\# set active slide}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# Example 2: }
+\FunctionTok{slide\_summary}\NormalTok{(pptx\_obj) }\CommentTok{\# technical content summary}
+
 \NormalTok{my\_data }\OtherTok{\textless{}{-}} \FunctionTok{head}\NormalTok{(mtcars)[,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{]}
-\NormalTok{my\_type }\OtherTok{\textless{}{-}} \StringTok{"body"}
 
-\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}} \FunctionTok{read\_pptx}\NormalTok{() }\CommentTok{\# new empty file}
+\CommentTok{\# second slide}
 \NormalTok{pptx\_obj }\OtherTok{\textless{}{-}}\NormalTok{ pptx\_obj }\SpecialCharTok{\%\textgreater{}\%} 
     \FunctionTok{add\_slide}\NormalTok{(}\AttributeTok{layout =} \StringTok{"Title and Content"}\NormalTok{, }\AttributeTok{master =} \StringTok{"Office Theme"}\NormalTok{)}
 
 \NormalTok{pptx\_obj }\OtherTok{\textless{}{-}}\NormalTok{ pptx\_obj }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{ph\_with}\NormalTok{(}\AttributeTok{value =}\NormalTok{ my\_data, }\AttributeTok{location =} \FunctionTok{ph\_location\_type}\NormalTok{(}\AttributeTok{type =}\NormalTok{ my\_type)) }
+  \FunctionTok{ph\_with}\NormalTok{(}\AttributeTok{value =}\NormalTok{ my\_data, }\AttributeTok{location =} \FunctionTok{ph\_location\_type}\NormalTok{(}\AttributeTok{type =} \StringTok{\textquotesingle{}body\textquotesingle{}}\NormalTok{)) }
 
 \NormalTok{pptx\_obj }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{print}\NormalTok{(}\AttributeTok{target =} \StringTok{"output/test2.2.pptx"}\NormalTok{) }
+  \FunctionTok{print}\NormalTok{(}\AttributeTok{target =} \FunctionTok{file.path}\NormalTok{(}\StringTok{"output"}\NormalTok{,}\StringTok{"example\_2.pptx"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{ph\_location()} allows to specify exact positions for content
+
+  \begin{itemize}
+  \tightlist
+  \item
+    for left/top/width/height units are inches
+  \end{itemize}
+\end{itemize}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1477,141 +1472,55 @@ We can even load a template with more than one theme
 \CommentTok{\# The same can be done for an image, logo, custom objects, etc.}
 
 \NormalTok{my\_data }\OtherTok{\textless{}{-}} \StringTok{"My text"}
-\NormalTok{my\_type }\OtherTok{\textless{}{-}} \StringTok{"body"}
 
-\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}} \FunctionTok{read\_pptx}\NormalTok{() }\CommentTok{\# new empty file}
-\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}}\NormalTok{ pptx\_obj }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}} \FunctionTok{read\_pptx}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{add\_slide}\NormalTok{(}\AttributeTok{layout =} \StringTok{"Title and Content"}\NormalTok{, }\AttributeTok{master =} \StringTok{"Office Theme"}\NormalTok{)}
-
-\CommentTok{\# ph\_location is a subfunction which takes as argument }
-\CommentTok{\# left/top/width/height, units are inches}
 
 \NormalTok{pptx\_obj }\OtherTok{\textless{}{-}}\NormalTok{ pptx\_obj }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{ph\_with}\NormalTok{(}\AttributeTok{value =}\NormalTok{ my\_data, }\AttributeTok{location =} \FunctionTok{ph\_location}\NormalTok{(}\AttributeTok{left =} \DecValTok{2}\NormalTok{, }\AttributeTok{top =} \DecValTok{2}\NormalTok{, }\AttributeTok{width =} \DecValTok{3}\NormalTok{, }\AttributeTok{height =} \DecValTok{1}\NormalTok{))}
 
 \NormalTok{pptx\_obj }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{print}\NormalTok{(}\AttributeTok{target =} \StringTok{"output/test2.3.pptx"}\NormalTok{) }
+  \FunctionTok{print}\NormalTok{(}\AttributeTok{target =} \FunctionTok{file.path}\NormalTok{(}\StringTok{"output"}\NormalTok{,}\StringTok{"example\_3.pptx"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
-
-\hypertarget{key-functions-ph_with}{%
-\subsubsection{Key functions: ph\_with()}\label{key-functions-ph_with}}
-
-\hypertarget{text-1}{%
-\subsection{Text}\label{text-1}}
 
 \hypertarget{working-with-text}{%
-\subsubsection{Working with Text}\label{working-with-text}}
+\subsection{Working with Text}\label{working-with-text}}
 
 Each new text item added to a PowerPoint via officer is a paragraph object
+
 \texttt{fpar()} (``formatted paragraph'') creates this object
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{my\_data }\OtherTok{\textless{}{-}} \FunctionTok{fpar}\NormalTok{(}\StringTok{"My text"}\NormalTok{)}
-\NormalTok{my\_type }\OtherTok{\textless{}{-}} \StringTok{"body"}
-
-\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}} \FunctionTok{read\_pptx}\NormalTok{() }
-\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}}\NormalTok{ pptx\_obj }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{add\_slide}\NormalTok{(}\AttributeTok{layout =} \StringTok{"Title and Content"}\NormalTok{, }\AttributeTok{master =} \StringTok{"Office Theme"}\NormalTok{)}
-
-\CommentTok{\# Add paragraph}
-\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}}\NormalTok{ pptx\_obj }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{ph\_with}\NormalTok{(}\AttributeTok{value =}\NormalTok{ my\_data, }\AttributeTok{location =} \FunctionTok{ph\_location\_type}\NormalTok{(}\AttributeTok{type =}\NormalTok{ my\_type))}
-
-\CommentTok{\# Try to add a second paragraph}
-\NormalTok{my\_data2 }\OtherTok{\textless{}{-}} \FunctionTok{fpar}\NormalTok{(}\StringTok{"My other text"}\NormalTok{)}
-\NormalTok{my\_type }\OtherTok{\textless{}{-}} \StringTok{"body"}
-
-\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}}\NormalTok{ pptx\_obj }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{ph\_with}\NormalTok{(}\AttributeTok{value =}\NormalTok{ my\_data2, }\AttributeTok{location =} \FunctionTok{ph\_location\_type}\NormalTok{(}\AttributeTok{type =}\NormalTok{ my\_type) )}
-
-\NormalTok{pptx\_obj }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{print}\NormalTok{(}\AttributeTok{target =} \StringTok{"output/test3.1.pptx"}\NormalTok{) }
-\CommentTok{\# As we see, this code doesn’t produce bullet points as we might hope}
-\end{Highlighting}
-\end{Shaded}
 
 \texttt{block\_list()} allows us to wrap multiple paragraphs together
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{my\_data }\OtherTok{\textless{}{-}} \FunctionTok{fpar}\NormalTok{(}\StringTok{"My text"}\NormalTok{)}
-\NormalTok{blank\_line }\OtherTok{\textless{}{-}} \FunctionTok{fpar}\NormalTok{(}\StringTok{""}\NormalTok{)}
-\NormalTok{my\_data2 }\OtherTok{\textless{}{-}} \FunctionTok{fpar}\NormalTok{(}\StringTok{"My other text"}\NormalTok{)}
-
-\NormalTok{my\_list }\OtherTok{\textless{}{-}} \FunctionTok{block\_list}\NormalTok{(my\_data, blank\_line, my\_data2)}
-
-\NormalTok{my\_type }\OtherTok{\textless{}{-}} \StringTok{"body"}
-
-\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}} \FunctionTok{read\_pptx}\NormalTok{()}
-\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}}\NormalTok{ pptx\_obj }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{add\_slide}\NormalTok{(}\AttributeTok{layout =} \StringTok{"Title and Content"}\NormalTok{, }\AttributeTok{master =} \StringTok{"Office Theme"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{ph\_with}\NormalTok{(}\AttributeTok{value =}\NormalTok{ my\_list, }\AttributeTok{location =} \FunctionTok{ph\_location\_type}\NormalTok{(}\AttributeTok{type =}\NormalTok{ my\_type) )}
-
-\NormalTok{pptx\_obj }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{print}\NormalTok{(}\AttributeTok{target =} \StringTok{"output/test3.2.pptx"}\NormalTok{) }
-\end{Highlighting}
-\end{Shaded}
-
-Use \texttt{ftext()} (``formatted text'') to edit the text before pasting into paragraphs. \texttt{ftext()} requires a second argument called prop which contains the formatting properties.
+\texttt{ftext()} (``formatted text'') to edit the text before pasting into paragraphs. \texttt{ftext()} requires a second argument called prop which contains the formatting properties.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{my\_prop }\OtherTok{\textless{}{-}} \FunctionTok{fp\_text}\NormalTok{(}\AttributeTok{color =} \StringTok{"red"}\NormalTok{, }\AttributeTok{font.size =} \DecValTok{16}\NormalTok{)}
-\NormalTok{my\_text }\OtherTok{\textless{}{-}} \FunctionTok{ftext}\NormalTok{(}\StringTok{"Hello"}\NormalTok{, }\AttributeTok{prop =}\NormalTok{ my\_prop)}
+\NormalTok{my\_prop }\OtherTok{\textless{}{-}} \FunctionTok{fp\_text}\NormalTok{(}\AttributeTok{color =} \StringTok{"red"}\NormalTok{, }\AttributeTok{font.size =} \DecValTok{14}\NormalTok{)}
+\NormalTok{my\_text }\OtherTok{\textless{}{-}} \FunctionTok{ftext}\NormalTok{(}\StringTok{"First Line in Red"}\NormalTok{, }\AttributeTok{prop =}\NormalTok{ my\_prop)}
 
 \NormalTok{my\_par }\OtherTok{\textless{}{-}} \FunctionTok{fpar}\NormalTok{(my\_text) }\CommentTok{\# formatted}
-\NormalTok{blank\_line }\OtherTok{\textless{}{-}} \FunctionTok{fpar}\NormalTok{(}\StringTok{""}\NormalTok{)}
+\NormalTok{blank\_line }\OtherTok{\textless{}{-}} \FunctionTok{fpar}\NormalTok{(}\StringTok{""}\NormalTok{) }\CommentTok{\#optional}
 
-\NormalTok{my\_par2 }\OtherTok{\textless{}{-}} \FunctionTok{fpar}\NormalTok{(}\StringTok{"My other text"}\NormalTok{) }\CommentTok{\# unformatted}
+\NormalTok{my\_par2 }\OtherTok{\textless{}{-}} \FunctionTok{fpar}\NormalTok{(}\StringTok{"Second Line"}\NormalTok{) }\CommentTok{\# unformatted}
 \NormalTok{my\_list }\OtherTok{\textless{}{-}} \FunctionTok{block\_list}\NormalTok{(my\_par, blank\_line, my\_par2)}
 
-\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}} \FunctionTok{read\_pptx}\NormalTok{()}
-
-\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}}\NormalTok{ pptx\_obj }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}} \FunctionTok{read\_pptx}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{add\_slide}\NormalTok{(}\AttributeTok{layout =} \StringTok{"Title and Content"}\NormalTok{, }\AttributeTok{master =} \StringTok{"Office Theme"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{ph\_with}\NormalTok{(}\AttributeTok{value =}\NormalTok{ my\_list, }\AttributeTok{location =} \FunctionTok{ph\_location\_type}\NormalTok{(}\AttributeTok{type =}\NormalTok{ my\_type))}
+  \FunctionTok{ph\_with}\NormalTok{(}\AttributeTok{value =}\NormalTok{ my\_list, }\AttributeTok{location =} \FunctionTok{ph\_location\_type}\NormalTok{(}\AttributeTok{type =} \StringTok{"body"}\NormalTok{) )}
 
 \NormalTok{pptx\_obj }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{print}\NormalTok{(}\AttributeTok{target =} \StringTok{"output/test3.3.pptx"}\NormalTok{) }
+  \FunctionTok{print}\NormalTok{(}\AttributeTok{target =} \FunctionTok{file.path}\NormalTok{(}\StringTok{"output"}\NormalTok{,}\StringTok{"example\_4.pptx"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{key-functions-1}{%
-\subsubsection{Key functions:}\label{key-functions-1}}
-
-\texttt{fpar()} \texttt{ftext()} \texttt{fp\_text()} \texttt{block\_list()}
-
-\hypertarget{example-code-1}{%
-\subsubsection{Example Code}\label{example-code-1}}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{my\_list }\OtherTok{\textless{}{-}} \FunctionTok{block\_list}\NormalTok{(}
-  \FunctionTok{fpar}\NormalTok{(}\FunctionTok{ftext}\NormalTok{(}\StringTok{"Hello"}\NormalTok{, }\AttributeTok{prop =} \FunctionTok{fp\_text}\NormalTok{(}\AttributeTok{color =} \StringTok{"red"}\NormalTok{, }\AttributeTok{font.size =} \DecValTok{16}\NormalTok{))) ,}
-  \FunctionTok{fpar}\NormalTok{(}\FunctionTok{ftext}\NormalTok{(}\StringTok{"World"}\NormalTok{, }\AttributeTok{prop =} \FunctionTok{fp\_text}\NormalTok{(}\AttributeTok{color =} \StringTok{"blue"}\NormalTok{, }\AttributeTok{font.size =} \DecValTok{14}\NormalTok{)))}
-\NormalTok{  )}
-
-\CommentTok{\# The hierarchy is: \textasciigrave{}block\_list \textgreater{} fpar \textgreater{} ftext \textgreater{} fp\_text\textasciigrave{}}
-
-\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}} \FunctionTok{read\_pptx}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{add\_slide}\NormalTok{(}\AttributeTok{layout =} \StringTok{"Title and Content"}\NormalTok{, }\AttributeTok{master =} \StringTok{"Office Theme"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ph\_with}\NormalTok{(}\AttributeTok{value =} \FunctionTok{block\_list}\NormalTok{(}
-    \FunctionTok{fpar}\NormalTok{(}\FunctionTok{ftext}\NormalTok{(}\StringTok{"Hello"}\NormalTok{, }\AttributeTok{prop =} \FunctionTok{fp\_text}\NormalTok{(}\AttributeTok{color =} \StringTok{"red"}\NormalTok{, }\AttributeTok{font.size =} \DecValTok{16}\NormalTok{))),}
-    \FunctionTok{fpar}\NormalTok{(}\FunctionTok{ftext}\NormalTok{(}\StringTok{"World"}\NormalTok{, }\AttributeTok{prop =} \FunctionTok{fp\_text}\NormalTok{(}\AttributeTok{color =} \StringTok{"blue"}\NormalTok{, }\AttributeTok{font.size =} \DecValTok{14}\NormalTok{)))}
-\NormalTok{    ),}
-    \FunctionTok{ph\_location\_type}\NormalTok{(}\AttributeTok{type =} \StringTok{"body"}\NormalTok{)}
-\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{print}\NormalTok{(}\AttributeTok{target =} \StringTok{"output/test3.4.pptx"}\NormalTok{) }
-\end{Highlighting}
-\end{Shaded}
+For more details on using \textbf{\{officer\}} see \url{https://davidgohel.github.io/officer}.
 
 \hypertarget{tables}{%
-\subsection{Tables}\label{tables}}
+\section{Tables}\label{tables}}
 
-\hypertarget{basic-code}{%
-\subsubsection{Basic Code}\label{basic-code}}
+\texttt{ph\_with} accepts a data.frame as value and renders it in a default format
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1628,20 +1537,18 @@ Use \texttt{ftext()} (``formatted text'') to edit the text before pasting into p
 \NormalTok{pptx\_obj }\OtherTok{\textless{}{-}} \FunctionTok{read\_pptx}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{add\_slide}\NormalTok{(}\AttributeTok{layout =} \StringTok{"Title and Content"}\NormalTok{, }\AttributeTok{master =} \StringTok{"Office Theme"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{ph\_with}\NormalTok{(}\AttributeTok{value =}\NormalTok{ ft\_data, }\AttributeTok{location =} \FunctionTok{ph\_location\_type}\NormalTok{(}\AttributeTok{type =} \StringTok{"body"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{print}\NormalTok{(}\AttributeTok{target =} \StringTok{"output/test4.1.pptx"}\NormalTok{) }
+  \FunctionTok{print}\NormalTok{(}\AttributeTok{target =} \FunctionTok{file.path}\NormalTok{(}\StringTok{"output"}\NormalTok{,}\StringTok{"table\_1.pptx"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
 \hypertarget{introduction-to-flextable}{%
-\subsubsection{Introduction to flextable}\label{introduction-to-flextable}}
+\subsection{Introduction to flextable}\label{introduction-to-flextable}}
 
 With \texttt{\{flextable\}}, the procedure starts with creating a flextable object \texttt{ft\_table} using the \texttt{flextable()} function.
 Flextable objects are compatible with \texttt{\{officer\}} and therefore are our primary tool for table formatting.
 Through different functions, many custom formatting procedure can be applied:
 
-\hypertarget{key-functions-2}{%
-\subsubsection{key functions:}\label{key-functions-2}}
-
+\textbf{key functions:}
 \texttt{align()} \texttt{bold()} \texttt{font()} \texttt{color()} \texttt{bg()} \texttt{height()} \& \texttt{width()}
 \texttt{border\_outer()} \& \texttt{border\_inner()} \& \texttt{border\_inner\_h()} \texttt{border\_inner\_v()} \texttt{autofit()}
 
@@ -1661,7 +1568,7 @@ Additional function to learn: \texttt{merge()}, \texttt{compose()} \& \texttt{as
 \end{Shaded}
 
 \hypertarget{formatting-examples}{%
-\subsubsection{Formatting examples}\label{formatting-examples}}
+\subsection{Formatting examples}\label{formatting-examples}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1720,15 +1627,12 @@ Set borders and adjust cells heights and widths
   \FunctionTok{width}\NormalTok{(}\AttributeTok{j =} \DecValTok{1}\NormalTok{, }\AttributeTok{width =} \FloatTok{1.2}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# column 1 wider}
   \FunctionTok{height}\NormalTok{(}\AttributeTok{i =} \DecValTok{12}\NormalTok{, }\AttributeTok{height =} \DecValTok{1}\NormalTok{) }\CommentTok{\# last row\textquotesingle{}s height}
 
-\NormalTok{ft\_table}
+\FunctionTok{print}\NormalTok{(ft\_table)}
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{demonstration-output}{%
-\subsubsection{Demonstration Output}\label{demonstration-output}}
-
 \hypertarget{add-flextable-object-to-a-powerpoint-slide}{%
-\subsubsection{Add flextable object to a powerpoint slide}\label{add-flextable-object-to-a-powerpoint-slide}}
+\subsection{Add flextable object to a powerpoint slide}\label{add-flextable-object-to-a-powerpoint-slide}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1736,95 +1640,96 @@ Set borders and adjust cells heights and widths
 \NormalTok{pptx\_obj }\OtherTok{\textless{}{-}} \FunctionTok{read\_pptx}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{add\_slide}\NormalTok{(}\AttributeTok{layout =} \StringTok{"Title and Content"}\NormalTok{, }\AttributeTok{master =} \StringTok{"Office Theme"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{ph\_with}\NormalTok{(}\AttributeTok{value =}\NormalTok{ ft\_table, }\FunctionTok{ph\_location}\NormalTok{(}\AttributeTok{left =} \DecValTok{2}\NormalTok{, }\AttributeTok{top =} \DecValTok{2}\NormalTok{, }\AttributeTok{width =} \DecValTok{4}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{print}\NormalTok{(}\AttributeTok{target =} \StringTok{"output/test4.7.pptx"}\NormalTok{) }
-\CommentTok{\# positions are fixed. We can input exact positions to center the table}
+  \FunctionTok{print}\NormalTok{(}\AttributeTok{target =} \FunctionTok{file.path}\NormalTok{(}\StringTok{"output"}\NormalTok{,}\StringTok{"table\_2.pptx"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
+
+For more details on using \textbf{\{flextable\}} see \url{https://davidgohel.github.io/flextable/}.
 
 \hypertarget{charts}{%
-\subsection{Charts}\label{charts}}
+\section{Charts}\label{charts}}
 
 \hypertarget{adding-charts-as-images}{%
-\subsubsection{Adding charts as images}\label{adding-charts-as-images}}
+\subsection{Adding charts as images}\label{adding-charts-as-images}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# We have preloaded a function to plot the chart.}
-\CommentTok{\# the function is using ggplot2 as plotting library}
-\NormalTok{chart\_to\_plot }\OtherTok{\textless{}{-}}\NormalTok{ sample\_data\_list[[}\StringTok{\textquotesingle{}Sample 1\textquotesingle{}}\NormalTok{]] }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{make\_jar\_chart}\NormalTok{() }\CommentTok{\# code to create a ggplot2 item, we will skip the contents}
-\FunctionTok{print}\NormalTok{(chart\_to\_plot) }\CommentTok{\# see in Plots Window}
+\CommentTok{\# Using ggplot2 as plotting library}
+\NormalTok{chart\_to\_plot }\OtherTok{\textless{}{-}}\NormalTok{ senso\_mean }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Salty, Sweet, Sour, Bitter) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  tibble}\SpecialCharTok{::}\FunctionTok{rownames\_to\_column}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{Product =}\NormalTok{ rowname) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{pivot\_longer}\NormalTok{(}\AttributeTok{cols =}\NormalTok{ Salty}\SpecialCharTok{:}\NormalTok{Bitter, }\AttributeTok{names\_to =} \StringTok{\textquotesingle{}Attribute\textquotesingle{}}\NormalTok{, }\AttributeTok{values\_to =} \StringTok{\textquotesingle{}Value\textquotesingle{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Product, }\AttributeTok{y =}\NormalTok{ Value, }\AttributeTok{fill =}\NormalTok{ Attribute)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_col}\NormalTok{(}\AttributeTok{position =} \StringTok{\textquotesingle{}dodge\textquotesingle{}}\NormalTok{)}
+
+\FunctionTok{print}\NormalTok{(chart\_to\_plot) }\CommentTok{\#in Plots window of Rstudio}
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{rvg-example}{%
-\subsubsection{rvg Example}\label{rvg-example}}
+\hypertarget{rvg-package}{%
+\subsection{rvg package}\label{rvg-package}}
+
+rvg is providing two graphics devices that produces Vector Graphics outputs in \texttt{DrawingML} format for Microsoft PowerPoint with dml\_pptx and for Microsoft Excel with dml\_xlsx.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# the output is a ggplot2 object}
+\CommentTok{\# body location}
+\FunctionTok{library}\NormalTok{(rvg)}
 
-\CommentTok{\# To add this object as a rvg object on a slide, we will use the ph\_with\_vg}
-\CommentTok{\# ph\_with\_vg replaces the ph\_with for a rvg object}
-\CommentTok{\# ph\_with\_vg\_at allows to input a precise position for a chart, using the top/left we know already}
-\CommentTok{\# all units are in inches}
-\CommentTok{\# argument code requires print(chart), argument type is a specific place on slide ("body" or other)}
-
-\DocumentationTok{\#\# IMPORTANT: ph\_with\_vg is is deprecated.}
-\CommentTok{\#old syntaxis ph\_with\_vg(code = print(chart\_to\_plot), type = "body") }
-
+\CommentTok{\# all items on the chart inside the pptx can be editable}
 \NormalTok{pptx\_obj }\OtherTok{\textless{}{-}} \FunctionTok{read\_pptx}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{add\_slide}\NormalTok{(}\AttributeTok{layout =} \StringTok{"Title and Content"}\NormalTok{, }\AttributeTok{master =} \StringTok{"Office Theme"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ph\_with}\NormalTok{(}\AttributeTok{value =} \FunctionTok{dml}\NormalTok{(}\AttributeTok{ggobj =}\NormalTok{ chart\_to\_plot), }\AttributeTok{location  =}  \FunctionTok{ph\_location\_type}\NormalTok{(}\AttributeTok{type =} \StringTok{\textquotesingle{}body\textquotesingle{}}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{print}\NormalTok{(}\AttributeTok{target =} \StringTok{"output/5.2.rvg1.pptx"}\NormalTok{) }
+  \FunctionTok{ph\_with}\NormalTok{(}\AttributeTok{value =} \FunctionTok{dml}\NormalTok{(}\AttributeTok{ggobj =}\NormalTok{ chart\_to\_plot, }\AttributeTok{editable =} \ConstantTok{TRUE}\NormalTok{),}
+          \AttributeTok{location=} \FunctionTok{ph\_location\_type}\NormalTok{(}\AttributeTok{type =} \StringTok{\textquotesingle{}body\textquotesingle{}}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{print}\NormalTok{(}\AttributeTok{target =} \FunctionTok{file.path}\NormalTok{(}\StringTok{"output"}\NormalTok{,}\StringTok{"rvg\_1.pptx"}\NormalTok{))}
 
-\DocumentationTok{\#\# IMPORTANT: ph\_with\_vg\_at is is deprecated.}
-\CommentTok{\# old syntaxis ph\_with\_vg\_at(code = print(chart\_to\_plot), left = 1, top = 1, width = 8, height = 6) }
-
+\CommentTok{\#custom location, all units are in inches}
 \NormalTok{pptx\_obj }\OtherTok{\textless{}{-}} \FunctionTok{read\_pptx}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{add\_slide}\NormalTok{(}\AttributeTok{layout =} \StringTok{"Title and Content"}\NormalTok{, }\AttributeTok{master =} \StringTok{"Office Theme"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ph\_with}\NormalTok{(}\AttributeTok{value =} \FunctionTok{dml}\NormalTok{(}\AttributeTok{ggobj =}\NormalTok{ chart\_to\_plot), }\AttributeTok{location =}  \FunctionTok{ph\_location}\NormalTok{(}\AttributeTok{left =} \DecValTok{1}\NormalTok{, }\AttributeTok{top =} \DecValTok{1}\NormalTok{, }\AttributeTok{width =} \DecValTok{8}\NormalTok{, }\AttributeTok{height =} \DecValTok{6}\NormalTok{))  }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{print}\NormalTok{(}\AttributeTok{target =} \StringTok{"output/5.2.rvg2.pptx"}\NormalTok{) }
-
-\CommentTok{\# all items on the chart inside the pptx are now editable, just click on any and see }
-\CommentTok{\# the Shape Format tab in PowerPoint}
+  \FunctionTok{ph\_with}\NormalTok{(}\AttributeTok{value =} \FunctionTok{dml}\NormalTok{(}\AttributeTok{ggobj =}\NormalTok{ chart\_to\_plot, }\AttributeTok{editable =} \ConstantTok{FALSE}\NormalTok{),}
+          \AttributeTok{location =}  \FunctionTok{ph\_location}\NormalTok{(}\AttributeTok{left =} \DecValTok{1}\NormalTok{, }\AttributeTok{top =} \DecValTok{1}\NormalTok{, }\AttributeTok{width =} \DecValTok{8}\NormalTok{, }\AttributeTok{height =} \DecValTok{6}\NormalTok{))  }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{print}\NormalTok{(}\AttributeTok{target =} \FunctionTok{file.path}\NormalTok{(}\StringTok{"output"}\NormalTok{,}\StringTok{"rvg\_2.pptx"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
 \hypertarget{mschart-package}{%
-\subsection{mschart Package}\label{mschart-package}}
+\subsection{mschart package}\label{mschart-package}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(mschart)}
 \CommentTok{\# sample dataframe}
-\NormalTok{mydata }\OtherTok{\textless{}{-}}\NormalTok{ sample\_data\_list[[}\StringTok{\textquotesingle{}Sample 1\textquotesingle{}}\NormalTok{]] }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{group\_by}\NormalTok{(Variable,Response) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{count}\NormalTok{()}
+\NormalTok{mydata }\OtherTok{\textless{}{-}}\NormalTok{ senso\_mean }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Salty, Sweet, Sour, Bitter) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  tibble}\SpecialCharTok{::}\FunctionTok{rownames\_to\_column}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{Product =}\NormalTok{ rowname) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{pivot\_longer}\NormalTok{(}\AttributeTok{cols =}\NormalTok{ Salty}\SpecialCharTok{:}\NormalTok{Bitter, }\AttributeTok{names\_to =} \StringTok{\textquotesingle{}Attribute\textquotesingle{}}\NormalTok{, }\AttributeTok{values\_to =} \StringTok{\textquotesingle{}Value\textquotesingle{}}\NormalTok{)}
 
-\CommentTok{\# syntaxis is similar to ggplot2"s aes() with x,y,group}
-\NormalTok{my\_barchart }\OtherTok{\textless{}{-}} \FunctionTok{ms\_barchart}\NormalTok{(}\AttributeTok{data =}\NormalTok{ mydata, }\AttributeTok{x =} \StringTok{"Variable"}\NormalTok{, }\AttributeTok{y =} \StringTok{"n"}\NormalTok{, }\AttributeTok{group =} \StringTok{"Response"}\NormalTok{)}
+\CommentTok{\# syntaxis is similar to ggplot2\textquotesingle{}s aes() with x,y,group}
+\NormalTok{my\_barchart }\OtherTok{\textless{}{-}} \FunctionTok{ms\_barchart}\NormalTok{(}\AttributeTok{data =}\NormalTok{ mydata,}
+                           \AttributeTok{x =} \StringTok{"Product"}\NormalTok{,}
+                           \AttributeTok{y =} \StringTok{"Value"}\NormalTok{,}
+                           \AttributeTok{group =} \StringTok{"Attribute"}\NormalTok{)}
 
-\CommentTok{\# to add the object to a powerpoint slide we can use the officer"s native ph\_with}
+\CommentTok{\#the chart is a Powerpoint native object and can be viewed using the preview option in print}
+\FunctionTok{print}\NormalTok{(my\_barchart, }\AttributeTok{preview =} \ConstantTok{TRUE}\NormalTok{)}
+\CommentTok{\#the command will work on machines with a Powerpoint Viewer}
+
+\CommentTok{\# to add the object to a powerpoint slide we can use the officer\textquotesingle{}s native ph\_with}
 \NormalTok{pptx\_obj }\OtherTok{\textless{}{-}} \FunctionTok{read\_pptx}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{add\_slide}\NormalTok{(}\AttributeTok{layout =} \StringTok{"Title and Content"}\NormalTok{, }\AttributeTok{master =} \StringTok{"Office Theme"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{ph\_with}\NormalTok{(}\AttributeTok{value =}\NormalTok{ my\_barchart, }\AttributeTok{location =} \FunctionTok{ph\_location\_type}\NormalTok{(}\AttributeTok{type =} \StringTok{"body"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{print}\NormalTok{(}\AttributeTok{target =} \StringTok{"output/5.3.msoffice.pptx"}\NormalTok{) }
-
-\CommentTok{\# if we would open a rvg slide and an ms office slide and click on the slide}
-\CommentTok{\# for the rvg slide the only menu that appear is shape format}
-\CommentTok{\# While for the msoffice chart we have now the chart design option with all msoffice functionalities}
-\CommentTok{\# by using chart\_settings() functions one can customise in R the charts}
+  \FunctionTok{print}\NormalTok{(}\AttributeTok{target =} \FunctionTok{file.path}\NormalTok{(}\StringTok{"output"}\NormalTok{,}\StringTok{"rvg\_2.pptx"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
 \hypertarget{word}{%
 \section{Word}\label{word}}
 
-\hypertarget{word-documents}{%
-\subsection{Word documents}\label{word-documents}}
+Word documents are created using \texttt{read\_docx()}.
 
-Formats share similarities
-
-\texttt{body\_add\_*()}
+\texttt{body\_add\_par()} to add a text paragraph. Paragraphs are automatically separated by line breaks.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1832,11 +1737,11 @@ Formats share similarities
   \FunctionTok{body\_add\_par}\NormalTok{(}\AttributeTok{value =} \StringTok{"My Text"}\NormalTok{, }\AttributeTok{style =} \StringTok{"Normal"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{body\_add\_par}\NormalTok{(}\AttributeTok{value =} \StringTok{"Other Text"}\NormalTok{, }\AttributeTok{style =} \StringTok{"Normal"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{body\_add\_par}\NormalTok{(}\AttributeTok{value =} \StringTok{"Conclusion"}\NormalTok{, }\AttributeTok{style =} \StringTok{"Normal"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{print}\NormalTok{(}\AttributeTok{target =} \StringTok{\textquotesingle{}output/6.1.mydoc.docx\textquotesingle{}}\NormalTok{)}
+  \FunctionTok{print}\NormalTok{(}\AttributeTok{target =} \FunctionTok{file.path}\NormalTok{(}\StringTok{"output"}\NormalTok{,}\StringTok{"doc\_1.docx"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
-\texttt{body\_add\_break()}
+Unlike a pptx with separate slides, a word document is a continuous object. To create a new page and continue to write on it \texttt{body\_add\_break()} is used.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1844,25 +1749,26 @@ Formats share similarities
   \FunctionTok{body\_add\_par}\NormalTok{(}\AttributeTok{value =} \StringTok{"My Text"}\NormalTok{, }\AttributeTok{style =} \StringTok{"Normal"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{body\_add\_break}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{body\_add\_par}\NormalTok{(}\AttributeTok{value =} \StringTok{"Conclusion"}\NormalTok{, }\AttributeTok{style =} \StringTok{"Normal"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{print}\NormalTok{(}\AttributeTok{target =} \StringTok{\textquotesingle{}output/6.2.mydoc.docx\textquotesingle{}}\NormalTok{)}
+  \FunctionTok{print}\NormalTok{(}\AttributeTok{target =} \FunctionTok{file.path}\NormalTok{(}\StringTok{"output"}\NormalTok{,}\StringTok{"doc\_2.docx"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
+\texttt{body\_add\_fpar()} to add a formatted text paragraph
+\texttt{body\_add\_table()} to add a table
+
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{my\_format }\OtherTok{\textless{}{-}} \FunctionTok{fp\_text}\NormalTok{(}\AttributeTok{font.family =} \StringTok{\textquotesingle{}Calibri\textquotesingle{}}\NormalTok{, }\AttributeTok{font.size =} \DecValTok{14}\NormalTok{, }\AttributeTok{bold =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{color =} \StringTok{\textquotesingle{}red\textquotesingle{}}\NormalTok{)}
+\NormalTok{my\_format }\OtherTok{\textless{}{-}} \FunctionTok{fp\_text}\NormalTok{(}\AttributeTok{font.family =} \StringTok{\textquotesingle{}Calibri\textquotesingle{}}\NormalTok{, }\AttributeTok{font.size =} \DecValTok{14}\NormalTok{, }\AttributeTok{bold =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{color =} \StringTok{\textquotesingle{}blue\textquotesingle{}}\NormalTok{)}
 \NormalTok{my\_text }\OtherTok{\textless{}{-}} \FunctionTok{ftext}\NormalTok{(}\StringTok{\textquotesingle{}My dataset is:\textquotesingle{}}\NormalTok{, my\_format)}
 \NormalTok{my\_par }\OtherTok{\textless{}{-}} \FunctionTok{fpar}\NormalTok{(my\_text)}
 
 \NormalTok{doc }\OtherTok{\textless{}{-}} \FunctionTok{read\_docx}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{body\_add\_par}\NormalTok{(}\AttributeTok{value =} \StringTok{"Table of content"}\NormalTok{, }\AttributeTok{style =} \StringTok{"heading 1"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{body\_add\_par}\NormalTok{(}\AttributeTok{value =} \StringTok{"Document Title"}\NormalTok{, }\AttributeTok{style =} \StringTok{"heading 1"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{body\_add\_par}\NormalTok{(}\AttributeTok{value =} \StringTok{""}\NormalTok{, }\AttributeTok{style =} \StringTok{"Normal"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{body\_add\_fpar}\NormalTok{(my\_par, }\AttributeTok{style =} \StringTok{"Normal"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\#formatted paragraph function}
   \FunctionTok{body\_add\_par}\NormalTok{(}\AttributeTok{value =} \StringTok{""}\NormalTok{, }\AttributeTok{style =} \StringTok{"Normal"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{body\_add\_table}\NormalTok{(}\AttributeTok{value =} \FunctionTok{head}\NormalTok{(mtcars)[, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{], }\AttributeTok{style =} \StringTok{"table\_template"}\NormalTok{ ) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{print}\NormalTok{(}\AttributeTok{target =} \StringTok{\textquotesingle{}output/6.3.mydoc.docx\textquotesingle{}}\NormalTok{)}
-
-\FunctionTok{read\_docx}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{styles\_info}\NormalTok{() }
+  \FunctionTok{print}\NormalTok{(}\AttributeTok{target =} \FunctionTok{file.path}\NormalTok{(}\StringTok{"output"}\NormalTok{,}\StringTok{"doc\_3.docx"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2565,16 +2471,17 @@ In practice, PCA is performed on the mean table crossing the products in rows, a
 \end{Shaded}
 
 Such table can be submitted to PCA. To do so, the \texttt{PCA()} function from the \texttt{\{FactoMineR\}} is used.
-Few important remarks: The \texttt{PCA()} function usually contains only numerical data, the product names being often set as row names in a data frame. This is something that can easily be taken care of through the \texttt{column\_to\_rownames()} function from the \texttt{\{tibble\}} package. Additionally, one might notice that we still have two qualitative variables: \texttt{Protein} and \texttt{Fiber}. These 2 variables can either be removed prior to running the analysis, or better, projected as supplementary variables through the \texttt{quali.sup} parameter from \texttt{PCA()}.
+Few important remarks: The \texttt{PCA()} function usually contains only numerical data, the product names being often set as row names in a data frame. This is something that can easily be taken care of through the \texttt{column\_to\_rownames()} function from the \texttt{\{tibble\}} package. Additionally, one might notice that we still have two qualitative variables: \texttt{Protein} and \texttt{Fiber}. These 2 variables can either be removed prior to running the analysis, or better, projected as supplementary variables through the \texttt{quali.sup} parameter from \texttt{PCA()}. Last but not least, since \texttt{POpt} is an optimized sample, we are not including it in the analysis: Instead, we project it as supplementary just to illustrate where it would be located on the space if it were.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(FactoMineR)}
 
 \NormalTok{senso\_pca }\OtherTok{\textless{}{-}}\NormalTok{ senso\_mean }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{arrange}\NormalTok{(Product) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{as.data.frame}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{column\_to\_rownames}\NormalTok{(}\AttributeTok{var=}\StringTok{"Product"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{PCA}\NormalTok{(., }\AttributeTok{quali.sup=}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{, }\AttributeTok{graph=}\ConstantTok{TRUE}\NormalTok{)}
+  \FunctionTok{PCA}\NormalTok{(., }\AttributeTok{ind.sup=}\FunctionTok{nrow}\NormalTok{(.), }\AttributeTok{quali.sup=}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{, }\AttributeTok{graph=}\ConstantTok{FALSE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2707,6 +2614,567 @@ In practice, generating regular expression can be quite complex as it is an abst
 \end{Highlighting}
 \end{Shaded}
 
+Since we would like to create a frequency table for each of these variables, we create a function called \texttt{myfreq()} which will automatically compute the frequency for each level, and the corresponding percentage.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{myfreq }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(data, info)\{}
+  
+\NormalTok{  var }\OtherTok{=} \FunctionTok{unique}\NormalTok{(}\FunctionTok{unlist}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{TFEQ))}
+\NormalTok{  info }\OtherTok{\textless{}{-}}\NormalTok{ info }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{filter}\NormalTok{(Name }\SpecialCharTok{==}\NormalTok{ var)}
+  
+\NormalTok{  res }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Response =} \FunctionTok{factor}\NormalTok{(Response, }\AttributeTok{levels=}\NormalTok{info}\SpecialCharTok{$}\NormalTok{Code, }\AttributeTok{labels=}\NormalTok{info}\SpecialCharTok{$}\NormalTok{Levels)) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{arrange}\NormalTok{(Response) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{group\_by}\NormalTok{(Response) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{summarize}\NormalTok{(}\AttributeTok{N =} \FunctionTok{n}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Pct =} \FunctionTok{percent}\NormalTok{(N}\SpecialCharTok{/}\FunctionTok{sum}\NormalTok{(N), }\AttributeTok{digits=}\NormalTok{1L)) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{ungroup}\NormalTok{()}
+  
+  \FunctionTok{return}\NormalTok{(res)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+We then apply this function to each variable separately using \texttt{map()} after pivoting all these variables of interest (\texttt{pivot\_longer()}) and splitting the data by \texttt{TFEQ} question:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{TFEQ\_freq }\OtherTok{\textless{}{-}}\NormalTok{ demographic }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Judge, }\FunctionTok{matches}\NormalTok{(rdh)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_longer}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Judge, }\AttributeTok{names\_to=}\StringTok{"TFEQ"}\NormalTok{, }\AttributeTok{values\_to=}\StringTok{"Response"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{split}\NormalTok{(.}\SpecialCharTok{$}\NormalTok{TFEQ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{map}\NormalTok{(myfreq, }\AttributeTok{info=}\NormalTok{demo\_lev) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{enframe}\NormalTok{(}\AttributeTok{name =} \StringTok{"TFEQ"}\NormalTok{, }\AttributeTok{value=}\StringTok{"res"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{unnest}\NormalTok{(res) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{TFEQ =} \FunctionTok{factor}\NormalTok{(TFEQ, }\AttributeTok{levels=}\FunctionTok{unique}\NormalTok{(}\FunctionTok{str\_sort}\NormalTok{(.}\SpecialCharTok{$}\NormalTok{TFEQ, }\AttributeTok{numeric=}\ConstantTok{TRUE}\NormalTok{)))) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{arrange}\NormalTok{(TFEQ)}
+\end{Highlighting}
+\end{Shaded}
+
+Similarly, we can create histograms representing the frequency for each variable. But here we limit ourselves to variables related to Disinhibitor. To do so, we start by generating the right regular expression (only selecting variables starting with ``D'') that we used to filter the results, before creating the corresponding graph:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d }\OtherTok{\textless{}{-}} \FunctionTok{rx}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{rx\_find}\NormalTok{(}\StringTok{"D"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{rx\_digit}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{rx\_one\_or\_more}\NormalTok{()}
+
+\NormalTok{TFEQ\_freq }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(}\FunctionTok{str\_detect}\NormalTok{(TFEQ, d)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Response, }\AttributeTok{y=}\NormalTok{Pct, }\AttributeTok{label=}\NormalTok{Pct))}\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat=}\StringTok{"identity"}\NormalTok{, }\AttributeTok{fill=}\StringTok{"grey50"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{geom\_text}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y =}\NormalTok{ Pct}\SpecialCharTok{/}\DecValTok{2}\NormalTok{), }\AttributeTok{colour=}\StringTok{"white"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{TFEQ, }\AttributeTok{scales=}\StringTok{"free"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Ultimately, the TFEQ questionnaire consists in a set of structured questions whose respective answers combine to provide a TFEQ score. This TFEQ score translates into certain behavior towards food. Similar structured questionnaire could include IQ test, Food Neophobia, etc.
+
+However, it appears that the TFEQ score is not computed by simply adding the scores of all TFEQ questions together. Instead, it follows certain rules that are stored in the \emph{Variables} sheet in \emph{TFEQ.xlsx}. For each TFEQ question, the rule to follow is provided by \texttt{Direction} and \texttt{Value}, and works as following: if the condition provided by \texttt{Direction} and \texttt{Value} is met, then the respondent gets a 1, else a 0. Ultimately, the TFEQ is the sum of all these evaluations.
+
+Let's start by extracting this information (\texttt{Direction} and \texttt{Value}) from the sheet Variables for all the variables involved in the computation of the TFEQ score. We store this in \texttt{var\_drh}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{var\_rdh }\OtherTok{\textless{}{-}} \FunctionTok{read\_xlsx}\NormalTok{(file\_path, }\AttributeTok{sheet=}\StringTok{"Variables"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(}\FunctionTok{str\_detect}\NormalTok{(Name, rdh)) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Name, Direction, Value)}
+\end{Highlighting}
+\end{Shaded}
+
+This information is added to \texttt{demographic}. Since we need to evaluate each assessors' answer to the TFEQ questions, we create a new variable \texttt{TFEQValue} which takes a 1 if the corresponding condition is met, and a 0 otherwise. Such approach is done through \texttt{mutate()} combined with a succession of intertwined \texttt{ifelse()} functions.\footnote{The function \texttt{ifelse()} takes three parameters: 1. the condition to test, 2. the value or code to run if the condition is met, and 3. the value or code to run if the condition is not met.}
+
+Ultimately, we compute the TFEQ Score by summing across all \texttt{TFEQValue} per respondent (here, we compute the sum per category first before computing the grand total per respondent).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{TFEQ }\OtherTok{\textless{}{-}}\NormalTok{ demographic }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Judge, }\FunctionTok{matches}\NormalTok{(rdh)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_longer}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Judge, }\AttributeTok{names\_to=}\StringTok{"DHR"}\NormalTok{, }\AttributeTok{values\_to=}\StringTok{"Score"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{inner\_join}\NormalTok{(var\_rdh, }\AttributeTok{by=}\FunctionTok{c}\NormalTok{(}\StringTok{"DHR"}\OtherTok{=}\StringTok{"Name"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{TFEQValue =} \FunctionTok{ifelse}\NormalTok{(Direction }\SpecialCharTok{==} \StringTok{"Equal"} \SpecialCharTok{\&}\NormalTok{ Score }\SpecialCharTok{==}\NormalTok{ Value, }\DecValTok{1}\NormalTok{, }
+                        \FunctionTok{ifelse}\NormalTok{ (Direction }\SpecialCharTok{==} \StringTok{"Superior"} \SpecialCharTok{\&}\NormalTok{ Score }\SpecialCharTok{\textgreater{}}\NormalTok{ Value, }\DecValTok{1}\NormalTok{,}
+                                \FunctionTok{ifelse}\NormalTok{(Direction }\SpecialCharTok{==} \StringTok{"Inferior"} \SpecialCharTok{\&}\NormalTok{ Score }\SpecialCharTok{\textless{}}\NormalTok{ Value, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{)))) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Factor =} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{str\_starts}\NormalTok{(.}\SpecialCharTok{$}\NormalTok{DHR, }\StringTok{"D"}\NormalTok{), }\StringTok{"Disinhibitor"}\NormalTok{,}
+                         \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{str\_starts}\NormalTok{(.}\SpecialCharTok{$}\NormalTok{DHR, }\StringTok{"H"}\NormalTok{), }\StringTok{"Hunger"}\NormalTok{, }\StringTok{"Restriction"}\NormalTok{))) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Factor =} \FunctionTok{factor}\NormalTok{(Factor, }\AttributeTok{levels=}\FunctionTok{c}\NormalTok{(}\StringTok{"Restriction"}\NormalTok{,}\StringTok{"Disinhibitor"}\NormalTok{,}\StringTok{"Hunger"}\NormalTok{))) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(Judge, Factor) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{TFEQ =} \FunctionTok{sum}\NormalTok{(TFEQValue)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Judge =} \FunctionTok{factor}\NormalTok{(Judge, }\AttributeTok{levels=}\FunctionTok{unique}\NormalTok{(}\FunctionTok{str\_sort}\NormalTok{(.}\SpecialCharTok{$}\NormalTok{Judge, }\AttributeTok{numeric=}\ConstantTok{TRUE}\NormalTok{)))) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{arrange}\NormalTok{(Judge) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_wider}\NormalTok{(}\AttributeTok{names\_from=}\NormalTok{Factor, }\AttributeTok{values\_from=}\NormalTok{TFEQ) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Total =} \FunctionTok{sum}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{where}\NormalTok{(is.numeric))))}
+\end{Highlighting}
+\end{Shaded}
+
+Such results can then be visualized graphically, for instance by representing the distribution of the TFEQ score for the 3 categories of questions (or TFEQ-factor):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{TFEQ }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Total) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_longer}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Judge, }\AttributeTok{names\_to=}\StringTok{"Factor"}\NormalTok{, }\AttributeTok{values\_to=}\StringTok{"Scores"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Scores, }\AttributeTok{colour=}\NormalTok{Factor))}\SpecialCharTok{+}
+  \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{lwd=}\FloatTok{1.5}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{xlab}\NormalTok{(}\StringTok{"TFEQ Score"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{""}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Distribution of the Individual TFEQ{-}factor Scores"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{consumer-data}{%
+\section{Consumer Data}\label{consumer-data}}
+
+The analysis of consumer data involves the same type of analysis as the ones for sensory data (e.g.~ANOVA, PCA, etc.), but the way the data is being collected (absence of duplicates) and its underlying nature (affective vs.~descriptive) require some adjustments.
+
+So let's start by importing the consumer data that is stored in \emph{Consumer Test.xlsx}. Here we import two sheets, one with the consumption time and number of biscuits (stored in \texttt{Nbiscuit}), and one with different consumer evaluations of the samples (stored in \texttt{consumer})
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{file\_path }\OtherTok{\textless{}{-}} \FunctionTok{here}\NormalTok{(}\StringTok{"Data"}\NormalTok{,}\StringTok{"Consumer Test.xlsx"}\NormalTok{)}
+
+\NormalTok{Nbiscuit }\OtherTok{\textless{}{-}} \FunctionTok{read\_xlsx}\NormalTok{(file\_path, }\AttributeTok{sheet=}\StringTok{"Time Consumption"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Product =} \FunctionTok{str\_c}\NormalTok{(}\StringTok{"P"}\NormalTok{, Product)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{N =} \StringTok{\textasciigrave{}}\AttributeTok{Nb biscuits}\StringTok{\textasciigrave{}}\NormalTok{)}
+
+\NormalTok{consumer }\OtherTok{\textless{}{-}} \FunctionTok{read\_xlsx}\NormalTok{(file\_path, }\AttributeTok{sheet=}\StringTok{"Biscuits"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{Judge=}\NormalTok{Consumer, }\AttributeTok{Product=}\NormalTok{Samples) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Judge =} \FunctionTok{str\_c}\NormalTok{(}\StringTok{"J"}\NormalTok{, Judge), }\AttributeTok{Product =} \FunctionTok{str\_c}\NormalTok{(}\StringTok{"P"}\NormalTok{, Product)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{inner\_join}\NormalTok{(Nbiscuit, }\AttributeTok{by=}\FunctionTok{c}\NormalTok{(}\StringTok{"Judge"}\NormalTok{, }\StringTok{"Product"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+Similarly to the sensory data, let's start with computing the mean liking score per product after the first bite (\texttt{1stbite\_liking}) and at the end of the evaluation (\texttt{after\_liking}).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{consumer }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Judge, Product, }\StringTok{\textasciigrave{}}\AttributeTok{1stbite\_liking}\StringTok{\textasciigrave{}}\NormalTok{, }\StringTok{\textasciigrave{}}\AttributeTok{after\_liking}\StringTok{\textasciigrave{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(Product) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{where}\NormalTok{(is.numeric), mean))}
+\end{Highlighting}
+\end{Shaded}
+
+A first glance at the table show that there are clear differences between the samples (within a liking variable), but little difference between liking variables(within a sample).
+
+Ultimately, since we want to see if there are differences between samples, an ANOVA (testing for the product effect) followed up by a paired comparison test (here Tukey's HSD) is performed. To do so, we recommend the \texttt{\{agricolae\}} package as it is simple to use and all their build in tests are working in the same way.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(agricolae)}
+
+\NormalTok{liking\_start }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{1stbite\_liking}\StringTok{\textasciigrave{}} \SpecialCharTok{\textasciitilde{}}\NormalTok{ Product }\SpecialCharTok{+}\NormalTok{ Judge, }\AttributeTok{data=}\NormalTok{consumer)}
+\NormalTok{liking\_start\_hsd }\OtherTok{\textless{}{-}} \FunctionTok{HSD.test}\NormalTok{(liking\_start, }\StringTok{"Product"}\NormalTok{)}\SpecialCharTok{$}\NormalTok{groups }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{as\_tibble}\NormalTok{(}\AttributeTok{rownames =} \StringTok{"Product"}\NormalTok{)}
+
+\NormalTok{liking\_end }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{after\_liking}\StringTok{\textasciigrave{}} \SpecialCharTok{\textasciitilde{}}\NormalTok{ Product }\SpecialCharTok{+}\NormalTok{ Judge, }\AttributeTok{data=}\NormalTok{consumer)}
+\NormalTok{liking\_end\_hsd }\OtherTok{\textless{}{-}} \FunctionTok{HSD.test}\NormalTok{(liking\_end, }\StringTok{"Product"}\NormalTok{)}\SpecialCharTok{$}\NormalTok{groups }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{as\_tibble}\NormalTok{(}\AttributeTok{rownames =} \StringTok{"Product"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Both at the start and at the end of the evaluation, significant differences (at 5\%) in liking between samples are observed according to Tukey's HSD test.
+
+To further compare the liking assessment of the samples after the first bite and at the end of the tasting, the results obtained from \texttt{liking\_start\_hsd} and \texttt{liking\_end\_hsd} are combined. We then represent the results in a barchart:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{list}\NormalTok{(}\AttributeTok{Start =}\NormalTok{ liking\_start\_hsd }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{rename}\NormalTok{(}\AttributeTok{Liking=}\StringTok{\textasciigrave{}}\AttributeTok{1stbite\_liking}\StringTok{\textasciigrave{}}\NormalTok{), }
+     \AttributeTok{End =}\NormalTok{ liking\_end\_hsd }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{rename}\NormalTok{(}\AttributeTok{Liking=}\StringTok{\textasciigrave{}}\AttributeTok{after\_liking}\StringTok{\textasciigrave{}}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{enframe}\NormalTok{(}\AttributeTok{name =} \StringTok{"Moment"}\NormalTok{, }\AttributeTok{value =} \StringTok{"res"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{unnest}\NormalTok{(res) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Moment =} \FunctionTok{factor}\NormalTok{(Moment, }\AttributeTok{levels=}\FunctionTok{c}\NormalTok{(}\StringTok{"Start"}\NormalTok{,}\StringTok{"End"}\NormalTok{))) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\FunctionTok{reorder}\NormalTok{(Product, }\SpecialCharTok{{-}}\NormalTok{Liking), }\AttributeTok{y=}\NormalTok{Liking, }\AttributeTok{fill=}\NormalTok{Moment))}\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat=}\StringTok{"identity"}\NormalTok{, }\AttributeTok{position=}\StringTok{"dodge"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{xlab}\NormalTok{(}\StringTok{""}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Comparison of the liking scores at the start and at the end of the evaluation"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+As can be seen, the pattern of liking scores across samples is indeed very stable across the evaluation, particularly in terms of rank.
+At the individual level, such linear relationship is also observed (here for the first 12 consumers):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{consumer }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Judge, Product, }\AttributeTok{Start=}\StringTok{\textasciigrave{}}\AttributeTok{1stbite\_liking}\StringTok{\textasciigrave{}}\NormalTok{, }\AttributeTok{End=}\StringTok{\textasciigrave{}}\AttributeTok{after\_liking}\StringTok{\textasciigrave{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(Judge }\SpecialCharTok{\%in\%} \FunctionTok{str\_c}\NormalTok{(}\StringTok{"J"}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{12}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Judge =} \FunctionTok{factor}\NormalTok{(Judge, }\AttributeTok{levels=}\FunctionTok{unique}\NormalTok{(}\FunctionTok{str\_sort}\NormalTok{(.}\SpecialCharTok{$}\NormalTok{Judge, }\AttributeTok{numeric=}\ConstantTok{TRUE}\NormalTok{)))) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Start, }\AttributeTok{y=}\NormalTok{End))}\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{pch=}\DecValTok{20}\NormalTok{, }\AttributeTok{cex=}\DecValTok{2}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method=}\StringTok{"lm"}\NormalTok{, }\AttributeTok{formula=}\StringTok{"y\textasciitilde{}x"}\NormalTok{, }\AttributeTok{se=}\ConstantTok{FALSE}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Overall Liking"}\NormalTok{, }\StringTok{"(Assessment after first bite vs. end of the tasting)"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{Judge)}
+\end{Highlighting}
+\end{Shaded}
+
+Another interesting relationship to study involves the liking scores\footnote{We would like to remind the reader that the liking scores measured on the categorical scale was reverted since 1 defined ``I like it a lot'' and 9 ``I dislike it a lot''. To simplify the readability, this scale is reverted so that 1 corresponds to a low liking score, and 9 to a high liking score (in practice, we will take as value 10-score given).} and the number of cookies eaten by each consumer. We could follow the same procedure as before, but prefer to add here a filter to only show consumers with a significant regression line at 5\%.
+
+Let's start by creating a function called \texttt{run\_reg()} that runs the regression analysis of the number of biscuits (\texttt{N}) in function of the liking score (\texttt{Liking}):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{run\_reg }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(df)\{}
+\NormalTok{  output }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(N }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Liking, }\AttributeTok{data=}\NormalTok{df)}
+  \FunctionTok{return}\NormalTok{(output)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+After transforming the data, we apply this function to our data, but we are going to store two sorts of results (as list) in our tibbles:
+- \texttt{lm\_obj} which corresponds to the results of the linear model
+- \texttt{glance} which contains some general results of the model incl.~R2, the p-value, etc.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{N\_liking }\OtherTok{\textless{}{-}}\NormalTok{ consumer }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Judge, Product, }\AttributeTok{Liking=}\StringTok{\textasciigrave{}}\AttributeTok{end\_liking 9pt}\StringTok{\textasciigrave{}}\NormalTok{, N) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Liking =} \DecValTok{10}\SpecialCharTok{{-}}\NormalTok{Liking) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(Judge) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{nest}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ungroup}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{lm\_obj =} \FunctionTok{map}\NormalTok{(data, run\_reg)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{glance =} \FunctionTok{map}\NormalTok{(lm\_obj, broom}\SpecialCharTok{::}\NormalTok{glance)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{unnest}\NormalTok{(glance) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(p.value }\SpecialCharTok{\textless{}=} \FloatTok{0.05}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{arrange}\NormalTok{(p.value) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Judge =} \FunctionTok{fct\_reorder}\NormalTok{(Judge, p.value)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{unnest}\NormalTok{(data)}
+\end{Highlighting}
+\end{Shaded}
+
+Ultimately, we can represent the relationship in a line chart:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(N\_liking, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Liking, }\AttributeTok{y=}\NormalTok{N))}\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{pch=}\DecValTok{20}\NormalTok{, }\AttributeTok{cex=}\DecValTok{2}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method=}\StringTok{"lm"}\NormalTok{, }\AttributeTok{formula=}\StringTok{"y\textasciitilde{}x"}\NormalTok{, }\AttributeTok{se=}\ConstantTok{FALSE}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Number of Biscuits vs. Liking"}\NormalTok{,}\StringTok{"(Consumers with a significant (5\%) regression model are shown (ordered from the most to the least signif.)"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{Judge, }\AttributeTok{scales=}\StringTok{"free\_y"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{combining-sensory-and-consumer-data}{%
+\section{Combining Sensory and Consumer Data}\label{combining-sensory-and-consumer-data}}
+
+\hypertarget{internal-preference-mapping}{%
+\subsection{Internal Preference Mapping}\label{internal-preference-mapping}}
+
+Now we've analyzed the sensory and the consumer data separately, it is time to combine both data sets and analyzed them conjointly. A first analysis that can then be performed is the internal preference mapping, i.e.~a PCA on the consumer liking scores in which we project as supplementary variables the sensory attributes.
+
+Such analysis is split in 3 steps:
+1. The consumer data is re-organized in a wide format with the samples in rows and the consumers in columns;
+2. The sensory mean table is joined to the consumer data (to do so, we need to make sure that the product names perfectly match in the two files);
+3. A PCA is performed on the consumer data, the sensory descriptors being projected as supplementary onto that space.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{consumer\_wide }\OtherTok{\textless{}{-}}\NormalTok{ consumer }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{separate}\NormalTok{(Product, }\AttributeTok{into =} \FunctionTok{c}\NormalTok{(}\StringTok{"P"}\NormalTok{, }\StringTok{"Number"}\NormalTok{), }\AttributeTok{sep =} \DecValTok{1}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Number =} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{nchar}\NormalTok{(Number) }\SpecialCharTok{==} \DecValTok{1}\NormalTok{, }\FunctionTok{str\_c}\NormalTok{(}\StringTok{"0"}\NormalTok{, Number), Number)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{unite}\NormalTok{(Product, P, Number, }\AttributeTok{sep=}\StringTok{""}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Judge, Product, }\AttributeTok{Liking=}\StringTok{\textasciigrave{}}\AttributeTok{end\_liking 9pt}\StringTok{\textasciigrave{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Liking =} \DecValTok{10}\SpecialCharTok{{-}}\NormalTok{Liking) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_wider}\NormalTok{(}\AttributeTok{names\_from=}\NormalTok{Judge, }\AttributeTok{values\_from=}\NormalTok{Liking)}
+
+\NormalTok{data\_mdpref }\OtherTok{\textless{}{-}}\NormalTok{ senso\_mean }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{inner\_join}\NormalTok{(consumer\_wide, }\AttributeTok{by=}\StringTok{"Product"}\NormalTok{)}
+
+\NormalTok{res\_mdpref }\OtherTok{\textless{}{-}}\NormalTok{ data\_mdpref }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{as.data.frame}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{column\_to\_rownames}\NormalTok{(}\AttributeTok{var=}\StringTok{"Product"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{PCA}\NormalTok{(., }\AttributeTok{quali.sup=}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{, }\AttributeTok{quanti.sup=}\DecValTok{3}\SpecialCharTok{:}\DecValTok{34}\NormalTok{, }\AttributeTok{graph=}\ConstantTok{FALSE}\NormalTok{)}
+
+\FunctionTok{fviz\_pca\_ind}\NormalTok{(res\_mdpref, }\AttributeTok{habillage=}\DecValTok{1}\NormalTok{)}
+\FunctionTok{fviz\_pca\_var}\NormalTok{(res\_mdpref, }\AttributeTok{label=}\StringTok{"quanti.sup"}\NormalTok{, }\AttributeTok{select.var=}\FunctionTok{list}\NormalTok{(}\AttributeTok{cos2=}\FloatTok{0.5}\NormalTok{), }\AttributeTok{repel=}\ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+As can be seen, the consumers are fairly in agreement as all the consumers (black arrows) are pointed in a similar direction.
+In overall, they seem to like biscuits that are sweet, with cereal flavor, and fatty/dairy flavor and odor, and dislike biscuits defined as astringent, dry in mouth, uneven and with dark external color.
+
+\hypertarget{consumers-clustering}{%
+\subsection{Consumers Clustering}\label{consumers-clustering}}
+
+Although the data show a fairly good agreement between consumers, let's cluster them in more homogeneous groups based on liking.
+Various solutions for clustering exist, depending on the type of distance (similarity or dissimilarity), the linkage (single, average, Ward, etc.), and of course the algorithm itself (e.g.~AHC, k-means, etc.).
+Here, we opt for the Agglomerative Hierarchical Clustering (AHC) approach with Euclidean distance (dissimilarity) and Ward criterion.
+
+Such analysis can be done using \texttt{stats::hclust()} or \texttt{cluster::agnes()}.
+
+Note that before computing the distance between consumers, it is advised to at least center their liking scores (subtracting their mean liking scores to each of their individual scores) as it allows grouping consumers based on similar preferences, rather than on their scale usage (otherwise, consumers who scored high on all samples are be grouped together, and separated from consumers who scored low on all samples, which isn't so much informative).
+
+Let's start with computing the euclidean distance between each pair of consumers by using the \texttt{dist()} function.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{consumer\_dist }\OtherTok{\textless{}{-}}\NormalTok{ consumer\_wide }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{as.data.frame}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{column\_to\_rownames}\NormalTok{(}\AttributeTok{var=}\StringTok{"Product"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{scale}\NormalTok{(., }\AttributeTok{center=}\ConstantTok{TRUE}\NormalTok{, }\AttributeTok{scale=}\ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{t}\NormalTok{(.) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{dist}\NormalTok{(., }\AttributeTok{method=}\StringTok{"euclidean"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+We then run the AHC using the \texttt{hclust()} function and the \texttt{method\ =\ "ward.D2"} parameter, which is the equivalent to the \texttt{method\ =\ "ward"} for \texttt{agnes()}. To visualize the dendrogram, we use the \texttt{factoextra::fviz\_dend()} function:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{res\_hclust }\OtherTok{\textless{}{-}} \FunctionTok{hclust}\NormalTok{(consumer\_dist, }\AttributeTok{method=}\StringTok{"ward.D2"}\NormalTok{)}
+
+\FunctionTok{fviz\_dend}\NormalTok{(res\_hclust, }\AttributeTok{k=}\DecValTok{2}\NormalTok{)}
+\FunctionTok{fviz\_dend}\NormalTok{(res\_hclust, }\AttributeTok{k=}\DecValTok{2}\NormalTok{, }\AttributeTok{type=}\StringTok{"phylogenic"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Since we are satisfied with the 2 clusters solution, we cut the tree at this level using, hence generating a group of 74 and a group of 33 consumers.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{res\_clust }\OtherTok{\textless{}{-}} \FunctionTok{cutree}\NormalTok{(res\_hclust, }\AttributeTok{k=}\DecValTok{2}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{as\_tibble}\NormalTok{(}\AttributeTok{rownames=}\StringTok{"Judge"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{Cluster =}\NormalTok{ value) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Cluster =} \FunctionTok{as.character}\NormalTok{(Cluster))}
+
+\NormalTok{res\_clust }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(Cluster) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{count}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ungroup}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+Lastly, we compare visually the preference patterns between clusters by representing in a line chart the average liking score for each product provided by each cluster.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mean\_cluster }\OtherTok{\textless{}{-}}\NormalTok{ consumer }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{separate}\NormalTok{(Product, }\AttributeTok{into =} \FunctionTok{c}\NormalTok{(}\StringTok{"P"}\NormalTok{, }\StringTok{"Number"}\NormalTok{), }\AttributeTok{sep =} \DecValTok{1}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Number =} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{nchar}\NormalTok{(Number) }\SpecialCharTok{==} \DecValTok{1}\NormalTok{, }\FunctionTok{str\_c}\NormalTok{(}\StringTok{"0"}\NormalTok{, Number), Number)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{unite}\NormalTok{(Product, P, Number, }\AttributeTok{sep=}\StringTok{""}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Judge, Product, }\AttributeTok{Liking=}\StringTok{\textasciigrave{}}\AttributeTok{end\_liking 9pt}\StringTok{\textasciigrave{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Liking =} \DecValTok{10}\SpecialCharTok{{-}}\NormalTok{Liking) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{full\_join}\NormalTok{(res\_clust, }\AttributeTok{by=}\StringTok{"Judge"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(Product, Cluster) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{Liking =} \FunctionTok{mean}\NormalTok{(Liking), }\AttributeTok{N=}\FunctionTok{n}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Cluster =} \FunctionTok{str\_c}\NormalTok{(Cluster,}\StringTok{" ("}\NormalTok{,N,}\StringTok{")"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ungroup}\NormalTok{()}
+
+\FunctionTok{ggplot}\NormalTok{(mean\_cluster, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Product, }\AttributeTok{y=}\NormalTok{Liking, }\AttributeTok{colour=}\NormalTok{Cluster, }\AttributeTok{group=}\NormalTok{Cluster))}\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{pch=}\DecValTok{20}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{group=}\NormalTok{Cluster), }\AttributeTok{lwd=}\DecValTok{2}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{xlab}\NormalTok{(}\StringTok{""}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{name=}\StringTok{"Average Liking Score"}\NormalTok{, }\AttributeTok{limits=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{9}\NormalTok{), }\AttributeTok{breaks=}\FunctionTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{9}\NormalTok{,}\DecValTok{1}\NormalTok{))}\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Cluster differences in the appreciation of the Products (using hclust)"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+It appears that cluster 1 (74 consumers) particularly likes P10, P01, and eventually P05, and has a fairly flat liking pattern otherwise. On the other hand, the cluster 2 (33 consumers) expressed strong rejection towards P04 and P08, and like P10 and P01 the most.
+The fact that both clusters agree on the best samples (P10 and P01) goes with our original assumption from the Internal Preference Mapping that the panel of conusmers is fairly homogeneous.
+
+\emph{Remark}: In the \texttt{\{FactoMineR\}} package, the \texttt{HCPC()} function also performs AHC but takes as starting point the results of a multivariate analysis (HCPC stands for Hierarchical Clustering on Principal Components). Although results should be identical in most cases, it can happen that results slightly diverge from \texttt{agnes()} and \texttt{hclust()} as it also depends on the number of dimensions kept in the multivariate analysis and on the treatment of in-between clusters consumers. But more interestingly, \texttt{HCPC()} offers the possibility to \emph{consolidate} the clusters by performing k-mean on the solution obtained from the AHC (\texttt{consol=TRUE}).
+
+\hypertarget{drivers-of-liking}{%
+\subsection{Drivers of Liking}\label{drivers-of-liking}}
+
+It is then relevant to understand which sensory properties of the products drivers consumer's liking and disliking. Such evaluation can be done at the panel level, at any group level (e.g.~clusters, users vs.~non-users, gender, etc.), or even at the consumer level.
+
+\hypertarget{correlation}{%
+\subsubsection{Correlation}\label{correlation}}
+
+Let's start by evaluating the simplest relationship between the sensory attributes and overall liking by looking at the correlation. Here, we are combining the average liking score at the panel level that we link to the sensory profile of the products. The correlations are the computed using the \texttt{cor()} function:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data\_cor }\OtherTok{\textless{}{-}}\NormalTok{ mean\_cluster }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{N) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_wider}\NormalTok{(}\AttributeTok{names\_from=}\NormalTok{Cluster, }\AttributeTok{values\_from=}\NormalTok{Liking) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{inner\_join}\NormalTok{(senso\_mean }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(Protein, Fiber)), }\AttributeTok{by=}\StringTok{"Product"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{as.data.frame}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{column\_to\_rownames}\NormalTok{(}\AttributeTok{var=}\StringTok{"Product"}\NormalTok{)}
+
+\NormalTok{res\_cor }\OtherTok{\textless{}{-}} \FunctionTok{cor}\NormalTok{(data\_cor)}
+\end{Highlighting}
+\end{Shaded}
+
+Various packages can be used to visualize these correlations. We opt here for the function \texttt{ggcorrplot()} from the package \texttt{\{ggcorrplot\}} as it provides many possibilities and generate the graphic as a ggplot object.
+
+Note that this package also comes with the function \texttt{cor\_pmat()} which return the matrix of p-value associated to the correlations. This matrix of p-value can be used to hide correlations that are not significant at the level defined by the parameter \texttt{sig.level}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggcorrplot)}
+
+\NormalTok{res\_cor\_pmat }\OtherTok{\textless{}{-}} \FunctionTok{cor\_pmat}\NormalTok{(data\_cor)}
+
+\FunctionTok{ggcorrplot}\NormalTok{(res\_cor, }\AttributeTok{type=}\StringTok{"full"}\NormalTok{, }\AttributeTok{p.mat=}\NormalTok{res\_cor\_pmat, }\AttributeTok{sig.level=}\FloatTok{0.05}\NormalTok{, }\AttributeTok{insig=}\StringTok{"blank"}\NormalTok{, }\AttributeTok{lab=}\ConstantTok{TRUE}\NormalTok{, }\AttributeTok{lab\_size=}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+By looking at the correlations, the liking scores for cluster 1 (defined as \texttt{1\ (74)}) are positively correlated with \texttt{Overall\ odor\ intensity}, \texttt{Fatty\ odor}, \texttt{Cereal\ flavor}, \texttt{Fatty\ flavor}, \texttt{Dairy\ flavor}, \texttt{Overall\ flavor\ persistence}, \texttt{Salty}, \texttt{Sweet}, \texttt{Warming}, \texttt{Fatty\ in\ mouth}, and \texttt{Melting}. They are also negatively correlated to \texttt{External\ color\ intensity}, \texttt{Astringent}, and \texttt{Dry\ in\ mouth}.
+Finally, it can be noted that the correlation between clusters is high with a value of 0.72.
+
+\hypertarget{linear-and-quadratic-regression}{%
+\subsubsection{Linear and Quadratic Regression}\label{linear-and-quadratic-regression}}
+
+Although the correlation provides a first good idea of which attributes are linked to liking, it has two major drawbacks: 1. it only measures linear relationships, and 2. it does not allow for inference.
+To overcome this particular limitations, linear and quadratic regressions can be used.
+
+Let's start by combining the sensory data to the average liking score per product. To simplify the analysis, all the sensory attributes will be structured in the long format alike previous ANOVAs that we have been performed. Also, since the quadratic term can be evaluated by adding into the model an effect in which the sensory scores have been squared up, we create a second variable called \texttt{Score2} that corresponds to \texttt{Score\^{}2}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data\_reg }\OtherTok{\textless{}{-}}\NormalTok{ mean\_cluster }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{N) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_wider}\NormalTok{(}\AttributeTok{names\_from=}\NormalTok{Cluster, }\AttributeTok{values\_from=}\NormalTok{Liking) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{inner\_join}\NormalTok{(senso\_mean }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(Protein, Fiber)), }\AttributeTok{by=}\StringTok{"Product"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_longer}\NormalTok{(Shiny}\SpecialCharTok{:}\NormalTok{Melting, }\AttributeTok{names\_to=}\StringTok{"Attribute"}\NormalTok{, }\AttributeTok{values\_to=}\StringTok{"Score"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Attribute =} \FunctionTok{factor}\NormalTok{(Attribute, }\AttributeTok{levels=}\FunctionTok{colnames}\NormalTok{(senso\_mean)[}\DecValTok{4}\SpecialCharTok{:}\FunctionTok{ncol}\NormalTok{(senso\_mean)])) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Score2 =}\NormalTok{ Score}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+We then run both the linear and quadratic regression simultaneously by attribute for cluster 1 (\texttt{1\ (74)}):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{res\_reg }\OtherTok{\textless{}{-}}\NormalTok{ data\_reg }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{nest\_by}\NormalTok{(Attribute) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{lin\_mod =} \FunctionTok{list}\NormalTok{(}\FunctionTok{lm}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{1 (74)}\StringTok{\textasciigrave{}} \SpecialCharTok{\textasciitilde{}}\NormalTok{ Score, }\AttributeTok{data=}\NormalTok{data)), }\AttributeTok{quad\_mod =} \FunctionTok{list}\NormalTok{(}\FunctionTok{lm}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{1 (74)}\StringTok{\textasciigrave{}} \SpecialCharTok{\textasciitilde{}}\NormalTok{ Score }\SpecialCharTok{+}\NormalTok{ Score2, }\AttributeTok{data=}\NormalTok{data)))}
+\end{Highlighting}
+\end{Shaded}
+
+We can then visualize which attributes are linked to liking by unfolding the results (using \texttt{broom::tidy()}). However, in this example, we propose to extract the attributes that are associated to a significant model at 5\%, to then represent them graphically against the liking score.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggrepel)}
+
+\NormalTok{df }\OtherTok{\textless{}{-}}\NormalTok{ data\_reg }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(Attribute }\SpecialCharTok{\%in\%} \FunctionTok{unique}\NormalTok{(}\FunctionTok{c}\NormalTok{(lin,quad)))}
+
+\NormalTok{p }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(df, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Score, }\AttributeTok{y=}\StringTok{\textasciigrave{}}\AttributeTok{1 (74)}\StringTok{\textasciigrave{}}\NormalTok{, }\AttributeTok{label=}\NormalTok{Product))}\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{pch=}\DecValTok{20}\NormalTok{, }\AttributeTok{cex=}\DecValTok{2}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{geom\_text\_repel}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{Attribute, }\AttributeTok{scales=}\StringTok{"free\_x"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Let's now add a regression line to the model. To do so, \texttt{geom\_smooth()} is being used, in which \texttt{method\ =\ lm} as we are adding a regression line based on a linear model, and \texttt{formula\ =\ \textquotesingle{}y\ \textasciitilde{}\ x\textquotesingle{}} for a linear relationship, and \texttt{formula\ =\ \textquotesingle{}y\ \textasciitilde{}\ x\ +\ I(x\^{}2)\textquotesingle{}} for a quadratic relationship.
+
+Based on the attribute, let's decide which of the regression line to add.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lm.mod }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(df, quad)\{}
+  \FunctionTok{ifelse}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{Attribute }\SpecialCharTok{\%in\%}\NormalTok{ quad, }\StringTok{"y\textasciitilde{}x+I(x\^{}2)"}\NormalTok{, }\StringTok{"y\textasciitilde{}x"}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+We apply this function to our data by applying to each attribute:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p\_smooth }\OtherTok{\textless{}{-}} \FunctionTok{by}\NormalTok{(df, df}\SpecialCharTok{$}\NormalTok{Attribute, }
+               \ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{data=}\NormalTok{x, }\AttributeTok{method=}\NormalTok{lm, }\AttributeTok{formula=}\FunctionTok{lm.mod}\NormalTok{(x, }\AttributeTok{quad=}\NormalTok{quad)))}
+
+\NormalTok{p }\SpecialCharTok{+}\NormalTok{ p\_smooth}
+\end{Highlighting}
+\end{Shaded}
+
+All attributes except for \texttt{Astringent} are linearly linked to liking.
+For \texttt{Astringent}, the curvature is U-shaped: this does not show an effect of saturation as it would have been represented as an inverted U-shape. Instead, we can notice that although the quadratic effect shows a better fit than the linear effect, having a linear effect would have been a good predictor as well.
+
+\hypertarget{external-preference-mapping}{%
+\subsection{External Preference Mapping}\label{external-preference-mapping}}
+
+Ultimately, one of the goals of combining sensory and consumer data is to find within the sensory space the area that are liked/accepted by consumers. Since this approach is based on modeling and prediction, it may also suggest area of the space with high acceptance potential which are not filled in by products yet. This would open doors to new product development.
+
+To perform such analysis, the External Preference Mapping (PrefMap) could be used amongst other techniques. For more information on the principles of PrefMap, please refer to (ANALYZING SENSORY DATA WITH R or OTHER REFERENCES\ldots).
+
+To run the PrefMap analysis, the \texttt{carto()} function from the \texttt{\{SensoMineR\}} package is being used. This function mainly takes as parameter the sensory space to consider (stored in \texttt{senso\_pca\$ind\$coord}, here we will consider dimension 1 and dimension 2), the table of hedonic score (\texttt{consumer\_wider}), and the model to consider (here we consider the quadratic model, so we use \texttt{regmod=1}). Since \texttt{carto()} uses rownames for the analysis, the data needs to be slightly adapted.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{senso }\OtherTok{\textless{}{-}}\NormalTok{ senso\_pca}\SpecialCharTok{$}\NormalTok{ind}\SpecialCharTok{$}\NormalTok{coord[,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{] }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{as\_tibble}\NormalTok{(}\AttributeTok{rownames=}\StringTok{"Product"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{arrange}\NormalTok{(Product) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{as.data.frame}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{column\_to\_rownames}\NormalTok{(}\AttributeTok{var=}\StringTok{"Product"}\NormalTok{)}
+
+\NormalTok{consu }\OtherTok{\textless{}{-}}\NormalTok{ consumer\_wide }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{as.data.frame}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{column\_to\_rownames}\NormalTok{(}\AttributeTok{var=}\StringTok{"Product"}\NormalTok{)}
+
+\FunctionTok{library}\NormalTok{(SensoMineR)}
+\NormalTok{PrefMap }\OtherTok{\textless{}{-}} \FunctionTok{carto}\NormalTok{(}\AttributeTok{Mat=}\NormalTok{senso, }\AttributeTok{MatH=}\NormalTok{consu, }\AttributeTok{regmod=}\DecValTok{1}\NormalTok{, }\AttributeTok{graph.tree=}\ConstantTok{FALSE}\NormalTok{, }\AttributeTok{graph.corr=}\ConstantTok{FALSE}\NormalTok{, }\AttributeTok{graph.carto=}\ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+From this map, we can see that the optimal area (dark red) would be located on the positive side of dimension 1, between P01, P05, and P10 (as expected by the liking score).
+
+Let's now re-build this plot using \texttt{\{ggplot2\}}.
+The sensory space is store in \texttt{senso}, whereas the surface response plot is stored in:
+- \texttt{PrefMap\$f1}: contains the coordinates on dimension 1 in which predictions have be made;
+- \texttt{PrefMap\$f2}: contains the coordinates on dimension 1 in which predictions have be made;
+- \texttt{PrefMap\$depasse}: contains the percentage of consumers that accept a product at each point of the space. This matrix is defined in such a way that \texttt{PrefMap\$f1} links to the rows of the matrix, and \texttt{PrefMap\$f2} links to the columns.
+
+Last but not least, \texttt{POpt} (which coordinates are stored in \texttt{senso\_pca\$ind.sup\$coord}) can be projected on that space in order to see if such sample was well optimized in terms of consumers' liking/preference.
+
+Let's start with preparing the data:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{senso }\OtherTok{\textless{}{-}}\NormalTok{ senso }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{as\_tibble}\NormalTok{(}\AttributeTok{rownames=}\StringTok{"Product"}\NormalTok{)}
+
+\NormalTok{senso\_sup }\OtherTok{\textless{}{-}}\NormalTok{ senso\_pca}\SpecialCharTok{$}\NormalTok{ind.sup}\SpecialCharTok{$}\NormalTok{coord }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{as\_tibble}\NormalTok{(}\AttributeTok{rownames=}\StringTok{"Product"}\NormalTok{)}
+
+\FunctionTok{dimnames}\NormalTok{(PrefMap}\SpecialCharTok{$}\NormalTok{nb.depasse) }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}\FunctionTok{round}\NormalTok{(PrefMap}\SpecialCharTok{$}\NormalTok{f1,}\DecValTok{2}\NormalTok{), }\FunctionTok{round}\NormalTok{(PrefMap}\SpecialCharTok{$}\NormalTok{f2,}\DecValTok{2}\NormalTok{))}
+\NormalTok{PrefMap\_plot }\OtherTok{\textless{}{-}}\NormalTok{ PrefMap}\SpecialCharTok{$}\NormalTok{nb.depasse }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{as\_tibble}\NormalTok{(}\AttributeTok{rownames=}\StringTok{"Dim1"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_longer}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Dim1, }\AttributeTok{names\_to=}\StringTok{"Dim2"}\NormalTok{, }\AttributeTok{values\_to=}\StringTok{"Acceptance (\%)"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{where}\NormalTok{(is.character), as.numeric))}
+\end{Highlighting}
+\end{Shaded}
+
+To build the plot, we need many layers that will use different source of data (\texttt{senso}, \texttt{senso\_sup}, and \texttt{PrefMap\_plot} that is). Hence, the initiation of the plot thorugh the \texttt{ggplot()} function will not specify any data. Instead, the data to use at each step are included within the \texttt{geom\_*()} functions of interest. In particular, \texttt{geom\_tile()} and \texttt{geom\_contour()} are used to build the surface plot.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{geom\_tile}\NormalTok{(}\AttributeTok{data=}\NormalTok{PrefMap\_plot, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Dim1, }\AttributeTok{y=}\NormalTok{Dim2, }\AttributeTok{fill=}\StringTok{\textasciigrave{}}\AttributeTok{Acceptance (\%)}\StringTok{\textasciigrave{}}\NormalTok{, }\AttributeTok{color=}\StringTok{\textasciigrave{}}\AttributeTok{Acceptance (\%)}\StringTok{\textasciigrave{}}\NormalTok{))}\SpecialCharTok{+}
+  \FunctionTok{geom\_contour}\NormalTok{(}\AttributeTok{data=}\NormalTok{PrefMap\_plot, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Dim1, }\AttributeTok{y=}\NormalTok{Dim2, }\AttributeTok{z=}\StringTok{\textasciigrave{}}\AttributeTok{Acceptance (\%)}\StringTok{\textasciigrave{}}\NormalTok{), }\AttributeTok{breaks=}\FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{100}\NormalTok{,}\DecValTok{10}\NormalTok{))}\SpecialCharTok{+}
+  \FunctionTok{geom\_hline}\NormalTok{(}\AttributeTok{yintercept=}\DecValTok{0}\NormalTok{, }\AttributeTok{lty=}\DecValTok{2}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{geom\_vline}\NormalTok{(}\AttributeTok{xintercept=}\DecValTok{0}\NormalTok{, }\AttributeTok{lty=}\DecValTok{2}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{data=}\NormalTok{senso, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Dim}\FloatTok{.1}\NormalTok{, }\AttributeTok{y=}\NormalTok{Dim}\FloatTok{.2}\NormalTok{), }\AttributeTok{pch=}\DecValTok{20}\NormalTok{, }\AttributeTok{cex=}\DecValTok{3}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{geom\_text\_repel}\NormalTok{(}\AttributeTok{data=}\NormalTok{senso, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Dim}\FloatTok{.1}\NormalTok{, }\AttributeTok{y=}\NormalTok{Dim}\FloatTok{.2}\NormalTok{, }\AttributeTok{label=}\NormalTok{Product))}\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{data=}\NormalTok{senso\_sup, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Dim}\FloatTok{.1}\NormalTok{, }\AttributeTok{y=}\NormalTok{Dim}\FloatTok{.2}\NormalTok{), }\AttributeTok{pch=}\DecValTok{20}\NormalTok{, }\AttributeTok{col=}\StringTok{"green"}\NormalTok{, }\AttributeTok{cex=}\DecValTok{3}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{geom\_text\_repel}\NormalTok{(}\AttributeTok{data=}\NormalTok{senso\_sup, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Dim}\FloatTok{.1}\NormalTok{, }\AttributeTok{y=}\NormalTok{Dim}\FloatTok{.2}\NormalTok{, }\AttributeTok{label=}\NormalTok{Product), }\AttributeTok{col=}\StringTok{"green"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{scale\_fill\_gradient2}\NormalTok{(}\AttributeTok{low=}\StringTok{"blue"}\NormalTok{, }\AttributeTok{mid=}\StringTok{"white"}\NormalTok{, }\AttributeTok{high=}\StringTok{"red"}\NormalTok{, }\AttributeTok{midpoint=}\DecValTok{50}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{scale\_color\_gradient2}\NormalTok{(}\AttributeTok{low=}\StringTok{"blue"}\NormalTok{, }\AttributeTok{mid=}\StringTok{"white"}\NormalTok{, }\AttributeTok{high=}\StringTok{"red"}\NormalTok{, }\AttributeTok{midpoint=}\DecValTok{50}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{xlab}\NormalTok{(}\FunctionTok{str\_c}\NormalTok{(}\StringTok{"Dimension 1("}\NormalTok{,}\FunctionTok{round}\NormalTok{(senso\_pca}\SpecialCharTok{$}\NormalTok{eig[}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{],}\DecValTok{1}\NormalTok{),}\StringTok{"\%)"}\NormalTok{))}\SpecialCharTok{+}
+  \FunctionTok{ylab}\NormalTok{(}\FunctionTok{str\_c}\NormalTok{(}\StringTok{"Dimension 2("}\NormalTok{,}\FunctionTok{round}\NormalTok{(senso\_pca}\SpecialCharTok{$}\NormalTok{eig[}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{],}\DecValTok{1}\NormalTok{),}\StringTok{"\%)"}\NormalTok{))}\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"External Preference Mapping applied on the biscuits data"}\NormalTok{,}\StringTok{"(The PrefMap is based on the quadratic model)"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+As can be seen, \texttt{POpt} is not so close from the optimal area suggested by the PrefMap, hence suggesting that other prototypes that are closer to P10 should be generated.
+
 \hypertarget{value-delivery}{%
 \chapter{Value Delivery}\label{value-delivery}}
 
@@ -2729,8 +3197,8 @@ In practice, generating regular expression can be quite complex as it is an abst
 \part*{Haute Cuisine}\label{part-haute-cuisine}}
 \addcontentsline{toc}{part}{Haute Cuisine}
 
-\hypertarget{machine_learning}{%
-\chapter{Machine Learning}\label{machine_learning}}
+\hypertarget{machine-learning}{%
+\chapter{Machine Learning}\label{machine-learning}}
 
 \hypertarget{overview}{%
 \section{Overview}\label{overview}}
@@ -3412,8 +3880,8 @@ Introduction to free-JAR?
 
 Presentation of graph-theory applied to text mining
 
-\hypertarget{machine-learning}{%
-\subsubsection{Machine learning}\label{machine-learning}}
+\hypertarget{machine-learning-1}{%
+\subsubsection{Machine learning}\label{machine-learning-1}}
 
 Introduction to machine learning associated to text mining
 
