@@ -27,7 +27,7 @@ Another example of data manipulation consists in summarizing data, by for instan
 <!-- Insert Figure illustrating the data structure -->
 
 
-For these reasons, it is hence essential to learn to manipulate data and transition from one structure to another. After presenting many different ways to transform your data, application through simple examples will be presented^[Most of the examples presented in this chapter have no scientific meaning. This has been done on purpose to emphasize the "how to?", not the "why?"].
+For these reasons, it is essential to learn to manipulate data and transition from one structure to another. After presenting many different ways to transform your data, application through simple examples will be presented^[Most of the examples presented in this chapter emphasize on the "how to?", not the "why?" and thus do not necessary intend to convey scientific meaning].
 
 
 ## Tidying Data
@@ -39,7 +39,7 @@ Hadley Wickham defined 'tidy data' as "data sets that are arranged such that eac
 ### Simple Manipulations
 
 
-The notion of 'simple manipulations' proposed here is completely arbitrary and consists in data transformation that could easily be performed in other software such as Excel (although we strongly recommend performing any sorts of transformation in R)
+The notion of 'simple manipulations' proposed here is completely arbitrary and consists in data transformation that could easily be performed in other software such as Excel (using copy-paste, the sort & filter function, inserting a pivot table, etc.). However, we strongly recommend performing any sorts of transformation in R as this will reduce the risk of errors, be usually faster, and become much easier and fluent as you will familiarize with them.
 
 
 #### Handling Columns
@@ -51,7 +51,7 @@ The notion of 'simple manipulations' proposed here is completely arbitrary and c
 The first simple transformation that one could consider consists in renaming one or multiple variables.
 This procedure can easily be done using the `rename()` function from the `{dplyr}` package.
 
-In our sensory file, let's recode 'Judge' into 'Panellist', and 'Product' into 'Sample' (here, we apply transformations without saving the results, so without altering the original dataset):
+In our sensory file^[The *sensory* data is imported from the *Sensory Profile.xlsx* file, see Chapter XXX for how to import datasets], let's recode 'Judge' into 'Panellist', and 'Product' into 'Sample' (here, we apply transformations without saving the results, so without altering the original dataset):
 
 
 ```{r}
@@ -59,7 +59,7 @@ sensory %>%
   rename(Panellist = Judge, Sample = Product)
 ```
 
-If this procedure of renaming variables should be applied on many variables following a structured form (e.g. transforming names into snake_case, camelCase, etc.), the use of the `{janitor}` package comes handy thanks to its `clean_names()` function and the `case` parameter:
+If this procedure of renaming variables should be applied on many variables following a structured form (e.g. transforming names into snake_case, CamelCase, etc.), the use of the `{janitor}` package comes handy thanks to its `clean_names()` function and the `case` parameter:
 
 
 ```{r}
@@ -75,21 +75,21 @@ Note that the `{janitor}` package offers many options, and although the transfor
 ##### Re-Organizing Columns
 
 
-Another simple transformation consists in re-organizing the dataset, either by re-ordering (incl. removing) the columns, or by selecting some rows based on a certain criteria. 
+Another simple transformation consists in re-organizing the dataset, either by re-ordering (including removing) the columns, or by selecting some rows based on a certain criteria. 
 
-For re-ordering columns, `relocate()` is being used. This function allows re-positioning a (set of) variable(s) before or after another variable. By re-using the `sensory` dataset, let's position all the variables starting with 'Qtt' between `Product` and `Shiny`. This can be specified into two different ways:
+For re-ordering columns, `relocate()` is being used. This function allows re-positioning a (set of) variable(s) before or after another variable. By re-using the `sensory` dataset, let's position all the variables starting with 'Qty' between `Product` and `Shiny`. This can be specified into two different ways:
 
 
 ```{r}
 sensory %>% 
-  relocate(starts_with("Qtt"), .after=Product)
+  relocate(starts_with("Qty"), .after=Product)
 
 sensory %>% 
-  relocate(starts_with("Qtt"), .before=Shiny)
+  relocate(starts_with("Qty"), .before=Shiny)
 ```
 
 
-Last but not least (regarding columns transformation) the `select()` function (from the `{dplyr}` package^[Many other packages include a function called `select()`, hence creating conflicts: To avoid any risks of errors, we recommend calling the `select()` function using the notation `dplyr::select()` as it formally calls the `select()` function from `{dplyr}`. This avoids any risks of error! Of course, the same procedure applies to any other functions that may suffer from the same issue.]) allows selecting a set of variables, by simply informing the variables that should be kept in the dataset. Let's limit ourselves in selecting `Judge`, `Product`, and `Shiny`:
+Another very important function regarding columns transformation is the `select()` function (from the `{dplyr}` package^[Note that many other packages include a function called `select()`, which could create conflicts. To avoid any risks of errors, we recommend calling the `select()` function using the notation `dplyr::select()` as it formally calls the `select()` function from `{dplyr}`. This avoids any risks of error! Of course, the same procedure applies to any other functions that may suffer from the same issue.]) allows selecting a set of variables, by simply informing the variables that should be kept in the dataset. Let's limit ourselves in selecting `Judge`, `Product`, and `Shiny`:
 
 
 
@@ -100,14 +100,14 @@ sensory %>%
 
 
 When a long series of variables should be kept in the same order, the use of the `:` is used.
-Let's only keep the variables related to Flavour, hence going from `Cereal flavor` to `Warming`:
+Let's only keep the variables related to Flavor, hence going from `Cereal flavor` to `Warming`:
 
 
 ```{r}
 sensory %>% 
   dplyr::select(Judge, Product, `Cereal flavor`:Warming)
 ```
-
+<!-- why does 'Cereal flavor' has the '' and not Warming? Is it because of the blank between Cereal and flavor? If so, it might be worth adding a note about that. -->
 
 However, when only one (or few) variable needs to be removed, it is easier to specify which variable to remove rather than informing all the variables to keep. Such solution is then done using the `-` sign. The previous example can then be obtained using the following code:
 
@@ -118,12 +118,12 @@ sensory %>%
 ```
 
 
-The selection process of variables can be further informed through functions such as `starts_with()`, `ends_with()`, and `contains()`, which all select variables that either starts, ends, or contains a certain character or sequence of character. To illustrate this, let's only keep the variables that starts with 'Qtt':
+The selection process of variables can be further informed through functions such as `starts_with()`, `ends_with()`, and `contains()`, which all select variables that either starts, ends, or contains a certain character or sequence of character. To illustrate this, let's only keep the variables that starts with 'Qty':
 
 
 ```{r}
 sensory %>% 
-  dplyr::select(starts_with("Qtt"))
+  dplyr::select(starts_with("Qty"))
 ```
 
 
@@ -141,7 +141,7 @@ sensory %>%
 
 ```{r}
 sensory %>% 
-  dplyr::select(Panellist = Judge, Sample = Product, Shiny:Sticky, -starts_with("Qtt"))
+  dplyr::select(Panellist = Judge, Sample = Product, Shiny:Sticky, -starts_with("Qty"))
 ```
 
 
