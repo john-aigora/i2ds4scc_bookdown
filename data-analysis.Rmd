@@ -100,7 +100,7 @@ senso_aov1 %>%
 
 As can be seen, the products do not show any significant differences at 5% for 4 attributes: `Cereal flavor` (p=0.294), `Roasted odor` (p=0.193), `Astrigent` (p=0.116), and `Sticky` (p=0.101).
 
-To visualize graphically the results of the ANOVA, a barchart representing the F-value can be generated. We recommend to order the attributes based on their decreasing F-values, and by colour-coding them based on their significance:
+Since we ran ANOVAs on multiple attributes, it is useful to visualize the results graphically as a barchart representing the F-value. We recommend to order the attributes based on their decreasing product-wise F-values, and by colour-coding them based on their significance:
 
 
 ```{r}
@@ -112,7 +112,7 @@ senso_aov1 %>%
   ggplot(aes(x=reorder(Attribute, statistic), y=statistic, fill=Signif))+
   geom_bar(stat="identity")+
   scale_fill_manual(values=c("Signif."="forestgreen", "Not Signif."="orangered2"))+
-  ggtitle("Sensory Attributes","(The attributes are sorted according to the F-values)")+
+  ggtitle("Sensory Attributes","(The attributes are sorted according to product-wise F-values)")+
   theme_bw()+
   xlab("")+
   ylab("F-values")+
@@ -126,7 +126,7 @@ It appears that the evaluated biscuits differ the most (top 5) for `Initial hard
 Note that as an alternative, we could use the `decat()` function from the `{SensoMineR}` package. This function performs ANOVA on a set of attributes (presented in subsequent columns), followed by some t-test that highlights which samples are significantly more (or less) intense than average for each attribute.
 
 
-Once the significant differences have been checked, a follow-up analysis consists in visualizing these differences. Such visualization is often done through Principal Component Analysis (PCA).
+Once the significant differences have been checked, a follow-up analysis consists in visualizing these differences in a multivariate way. Such visualization is often done through Principal Component Analysis (PCA).
 
 In practice, PCA is performed on the mean table crossing the products in rows, and the sensory attributes in columns. In \@ref(data-manip), many different approaches to generate such table have been proposed:
 
@@ -139,8 +139,9 @@ senso_mean <- sensory %>%
 
 ```
 
-
+<!-- Here, it might be good to briefly mention that several packages or functions can be used to run a PCA (pcrcomp, princomp, PCA). This is important because most students who are not specialized in sensory science would usually go with pcrcomp. They might thus be confused. -->
 Such table can be submitted to PCA. To do so, the `PCA()` function from the `{FactoMineR}` is used. 
+<!-- The sentence below sounds odd: shouldn't you rather say: "the function usually applies to (or uses) numerical data only..."? -->
 Few important remarks: The `PCA()` function usually contains only numerical data, the product names being often set as row names in a data frame. This is something that can easily be taken care of through the `column_to_rownames()` function from the `{tibble}` package. Additionally, one might notice that we still have two qualitative variables: `Protein` and `Fiber`. These 2 variables can either be removed prior to running the analysis, or better, projected as supplementary variables through the `quali.sup` parameter from `PCA()`. Last but not least, since `POpt` is an optimized sample, we are not including it in the analysis: Instead, we project it as supplementary just to illustrate where it would be located on the space if it were.
 
 
@@ -156,8 +157,9 @@ senso_pca <- senso_mean %>%
 ```
 
 
-The `PCA()` function can generate the plots either in `{base}` R language, or in `{ggplot2}`. However, we like to use a complementary package called `{factoextra}` which re-creates any plot from `{FactoMineR}` (and more) as a `ggplot()` object. for `PCA()`, the main function used to re-create the plots are `fviz_pca_ind()` for the products' map, `fviz_pca_var()` for the variables' representation, and `fviz_pca_biplot()` for the biplot combining both.
-Since we have two qualitative variables, let's take advantage of them by coloring for each of them the products based on their content. This can easily be done through the `habillage` parameter from `fviz_pca_ind()`, which can either take a numerical value (position) of the name of the qualitative variable.
+The `PCA()` function can generate the plots either in `{base}` R language, or in `{ggplot2}`. However, we like to use a complementary package called `{factoextra}` which re-creates any plot from `{FactoMineR}` (and more) as a `ggplot()` object. This comes in very handy as you can benefit from the customizable options and flexibility offered by `ggplot()`.
+The score map (the product map) from `PCA()` can be hence replotted with `fviz_pca_ind()`, the representation of variables loadings (attribute correlations) can be managed with `fviz_pca_var()`, and `fviz_pca_biplot()` can be used to trace the biplot combining both.
+To illustrate how convenient this is, let's take advantage of the two qualitative variables in our example, by coloring the products based on their protein and fiber content. This can easily be done through the `habillage` parameter from `fviz_pca_ind()`, which can either take a numerical value (position) of the name of the qualitative variable.
 
 
 ```{r}
@@ -169,9 +171,9 @@ fviz_pca_var(senso_pca)
 fviz_pca_biplot(senso_pca)
 
 ``` 
+<!-- Of course, we will want to see the outcome of the PCA and factoextra plots here. -->
 
-
-On the first dimension, `P10` is opposed to `P09` and `P03` as it is more intense for attributes such as `Sweet`, and `Dairy flavor` for example, and less intense for attributes such as `Dry in mouth` and `External color intensity`. On the second dimension, `P08`, `P06`, and `POpt` are opposed to `P02` and `P07` as they score higher for `Qty of inclusions`, and `Initial hardness`, and score lower for `RawDough flavor` and `Shiny`. 
+On the first dimension, `P10` is opposed to `P09` and `P03` as it is more intense for attributes such as `Sweet`, and `Dairy flavor` for example, and less intense for attributes such as `Dry in mouth` and `External color intensity`. On the second dimension, `P08`, `P06`, and `POpt` are opposed to `P02` and `P07` as they score higher for `Qty of inclusions`, and `Initial hardness`, and score lower for `RawDough flavor` and `Shiny`.
 
 
 ## Demographic and TFEQ Data
