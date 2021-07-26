@@ -118,7 +118,7 @@
 
 \title{Data Science for Sensory and Consumer Scientists}
 \author{John Ennis, Julien Delarue, and Thierry Worch}
-\date{2021-07-13}
+\date{2021-07-26}
 
 \begin{document}
 \maketitle
@@ -313,36 +313,22 @@ Execution of the actual experiment is a crucial step in the data science workflo
 \hypertarget{import}{%
 \subsubsection{Import}\label{import}}
 
-Once the data are collected, they need to find their way into a computer's working memory to be analyzed. This importation process should be fully scripted in code, as we detail in Chapter \ref{data-collection}, and raw data files should never be directly edited. This discipline ensures that all steps taken to import the data will be understood later and that the reasoning behind all choices will be documented. Moreover, writing code to import raw data allows for new data to be analyzed quickly in the future as long as the data formatting is consistent. For sensory scientists, who regularly run similar tests, a streamlined workflow for data import and analysis is a tremendous time-saver.
+Once the data are collected, they need to find their way into a computer's working memory to be analyzed. This importation process should be fully scripted in code, as we detail in Chapter \ref{data-collection}, and raw data files should never be directly edited. This discipline ensures that all steps taken to import the data will be understood later and that the reasoning behind all choices will be documented. Moreover, writing code to import raw data allows for new data to be analyzed quickly in the future as long as the data formatting is consistent. For sensory scientists, who regularly run similar tests, a streamlined workflow for data import and analysis both saves much time and protects against errors.
 
 \hypertarget{data-preparation}{%
 \subsection{Data Preparation}\label{data-preparation}}
 
-\hypertarget{inspect}{%
-\subsubsection{Inspect}\label{inspect}}
+Preparing data for analysis typically involves two steps: data inspection and data cleaning.
 
-Goal:
-Gain familiarity with the data
-Key Steps:
-Learn collection details
-Check data imported correctly
-Determine data types
-Ascertain consistency and validity
-Tabulate and compute other basic summary statistics
-Create basic plots of key variables of interest
+\hypertarget{inspect_2}{%
+\subsubsection{Inspect}\label{inspect_2}}
 
-\hypertarget{clean}{%
-\subsubsection{Clean}\label{clean}}
+In this step, the main goal is to gain familiarity with the data. Under ideal circumstances, this step includes reviewing the study documentation, including the study background, sampling, design, analysis plan, screener (if any), and questionnaire. As part of this step, the data should be inspected to ensure they have been imported properly and relevant data quality checks, such as checks for consistency and validity, should be performed. Preliminary summary tables and charts should also be preformed at this step to help the data scientist gain familiarity with the data. These steps are discussed in further detail in Section \ref{inspect} of Chapter \ref{data-prep}.
 
-Goal:
-Prepare data for analysis
-Key Steps:
-Remove/correct errors
-Make data formatting consistent
-Organize text data
-Create tidy data (one observation per row)
-Organize data into related tables
-Document all choices
+\hypertarget{clean_2}{%
+\subsubsection{Clean}\label{clean_2}}
+
+Data cleaning is the process of preparing data for analysis. In this step we must identify and correct any errors, and ensure the data are formatted consistently and appropriately for analysis. As part of this step, we will typically tidy our data, a concept that we cover in more detail in Chapter \ref{tidy-thoughts} and Section \ref{tidy-data}. It is extremely important than any changes to the data are made in code with the reasons for the changes clearly documented. This way of working ensures that, a year from now, we don't revisit our analysis to find multiple versions of the input data and not know which version was the one used for the final analysis\footnote{Anyone working in the field for more than five years has almost certainly experienced this problem, perhaps even with their own data and reports}. We discuss data cleaning in further detail in Section \ref{clean} of Chapter \ref{data-prep}.
 
 \hypertarget{data-analysis2}{%
 \subsection{Data Analysis}\label{data-analysis2}}
@@ -447,8 +433,8 @@ Another example of data manipulation consists in summarizing data, by for instan
 
 For these reasons, it is hence essential to learn to manipulate data and transition from one structure to another. After presenting many different ways to transform your data, application through simple examples will be presented\footnote{Most of the examples presented in this chapter have no scientific meaning. This has been done on purpose to emphasize the ``how to?'', not the ``why?''}.
 
-\hypertarget{tidying-data}{%
-\section{Tidying Data}\label{tidying-data}}
+\hypertarget{tidy-data}{%
+\section{Tidying Data}\label{tidy-data}}
 
 Hadley Wickham defined `tidy data' as ``data sets that are arranged such that each variable is a column and each observation (or case) is a row.'' Depending on the statistical unit to consider, and the analyses to perform, data hence need to be manipulated.
 
@@ -1779,7 +1765,7 @@ Unlike a pptx with separate slides, a word document is a continuous object. To c
 \hypertarget{example-projects}{%
 \chapter{Example Project: the biscuit study}\label{example-projects}}
 
-The dataset that we use as a main example throughout this book comes from a sensory study on biscuits. These biscuits were developed for breakfast consumption and specifically designed to improve satiety.
+The dataset that we use as a main example throughout this book comes from a sensory study on biscuits. The study was part of project BISENS funded by the French National Research Agency (ANR, programme ALIA 2008). These biscuits were developed for breakfast consumption and specifically designed to improve satiety.
 The study was conducted in France with one hundred and seven consumers who tested a total of 10 biscuit recipes (including 9 experimental products varying in their fiber and protein content). Fibers and proteins are known to increase satiety.\\
 The study aimed to measure the liking for these biscuits, its link with eaten quantities and the evolution of hunger sensations over ad libitum consumption. All the volunteers therefore participated to ten morning sessions in order to test every product (one biscuit type per session). After they completed all the sessions, they also filled a questionnaire about food-related personality traits such as cognitive restraint and sensitivity to hunger.\\
 Parallel to this, a panel of nine trained judges performed a descriptive analysis of the biscuits. They evaluated the same 10 products as well as an additional product whose recipe was optimized for liking and satiating properties.\\
@@ -1798,17 +1784,40 @@ Data from the biscuit study are gathered in three Excel files that can be access
 \hypertarget{products}{%
 \section{Products}\label{products}}
 
-\hypertarget{participants}{%
-\section{Participants}\label{participants}}
+In total, 11 products were considered in this study. They are all breakfast biscuits with varying contents of proteins and fibers (Table @ref(tab:biscuit\_set)). Products P01 to P09 are prototypes whereas product P10 is a standard commercial biscuit without enrichment. The eleventh product Popt is an additional optimized biscuit that has been evaluated only by the trained panel for descriptive analysis.
 
-\hypertarget{design-of-the-consumer-test}{%
-\section{Design of the consumer test}\label{design-of-the-consumer-test}}
+\hypertarget{consumer-test}{%
+\section{Consumer test}\label{consumer-test}}
+
+\hypertarget{participants}{%
+\subsection{Participants}\label{participants}}
+
+107 women of normal weight (Body Mass Index (BMI): 18-26) participated to the test. All were regular consumers of breakfast biscuits.
+
+\hypertarget{test-design}{%
+\subsection{Test design}\label{test-design}}
+
+Consumers evaluated one biscuit type per session. Product evaluation order was randomized across the panel.\\
+The design of the sessions is summarized in Figure {[}REF REF{]}. After they first rated their appetite sensations using visual analog scales (VAS), the participants tasted and rated one biscuit for liking. They were then served with a box of the same biscuits for \emph{ad libitum} consumption, followed by a new questionnaire regarding their liking, pleasure and appetite sensations.
+The liking was measured with two different scales:\\
+1. with a horizontally oriented unstructured linear scale (VAS) anchored with `I don't like this biscuit at all' (left end) and `I like this biscuit a lot' (right end) at two times (at the first bite and when stopping their consumption).\\
+2. with a vertically oriented semantic nine-point hedonic scale when stopping their consumption.\\
+VAS scales are frequently used in nutrition studies (REF REF), whereas the nine-point hedonic scale is more popular in sensory and consumer science (REF REF).
+
+Once done, participants were asked about the reason(s) why they stopped eating (6 potential reasons rated with \emph{Likert} scales ranging from \emph{strongly disagree} to to \emph{strongly agree}). They were also asked how much they would like to eat other types of foods (11 food items rated using a VAS).
+
+The time spent in the booth and the number of biscuits eaten by each participant was recorded by the experimenters, as well as the type of drink they selected and the approximate volume they drank during each session. These data are stored in the second tab of the \textbf{Consumer Test.xlsx file} named \emph{Time Consumption}.
 
 \hypertarget{sensory-descriptive-analysis-data}{%
 \section{Sensory descriptive analysis data}\label{sensory-descriptive-analysis-data}}
 
+A panel of 9 trained judges evaluated the 11 products for 32 sensory attributes (8 attributes for aspect, 3 for odor, 12 for flavor, 9 for texture).\\
+For each product, the judges individually reported the perceived intensity of each attribute on an unstructured linear scale. Intensities were automatically converted by the acquisition system into a score ranging from 0 to 60.
+
 \hypertarget{summary-of-the-datasets}{%
 \section{Summary of the datasets}\label{summary-of-the-datasets}}
+
+List of the variables in each data sets (or just the size of each data set?).
 
 \hypertarget{data-collection}{%
 \chapter{Data Collection}\label{data-collection}}
@@ -1975,8 +1984,8 @@ Remarks:
 
 The data we will be using in this chapter is the one that you imported in Section \ref{data-collection}.
 
-\hypertarget{inspect-1}{%
-\section{Inspect}\label{inspect-1}}
+\hypertarget{inspect}{%
+\section{Inspect}\label{inspect}}
 
 \hypertarget{data-inspection}{%
 \subsection{Data Inspection}\label{data-inspection}}
@@ -2011,8 +2020,18 @@ Frequencies and cross-frequencies (simple statistics and simple graphs)
 Are there NAs?
 If yes, are they structured of random?
 
-\hypertarget{clean-1}{%
-\section{Clean}\label{clean-1}}
+\hypertarget{checks-for-consistency-and-reliability}{%
+\subsection{Checks for Consistency and Reliability}\label{checks-for-consistency-and-reliability}}
+
+Any relevant checks should be performed.
+
+\hypertarget{preliminary-tables-and-charts}{%
+\subsection{Preliminary Tables and Charts}\label{preliminary-tables-and-charts}}
+
+Any preliminary summary tables and charts should be created that might help the scientist gain familiarity with the data.
+
+\hypertarget{clean}{%
+\section{Clean}\label{clean}}
 
 \hypertarget{renaming-variables-1}{%
 \subsection{Renaming Variables}\label{renaming-variables-1}}

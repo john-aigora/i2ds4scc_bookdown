@@ -1,9 +1,9 @@
-```{r include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
+```{r include = FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = TRUE)
 ```
 # Example Project: the biscuit study {#example-projects}
 
-The dataset that we use as a main example throughout this book comes from a sensory study on biscuits. These biscuits were developed for breakfast consumption and specifically designed to improve satiety.
+The dataset that we use as a main example throughout this book comes from a sensory study on biscuits. The study was part of project BISENS funded by the French National Research Agency (ANR, programme ALIA 2008). These biscuits were developed for breakfast consumption and specifically designed to improve satiety.
 The study was conducted in France with one hundred and seven consumers who tested a total of 10 biscuit recipes (including 9 experimental products varying in their fiber and protein content). Fibers and proteins are known to increase satiety.  
 The study aimed to measure the liking for these biscuits, its link with eaten quantities and the evolution of hunger sensations over ad libitum consumption. All the volunteers therefore participated to ten morning sessions in order to test every product (one biscuit type per session). After they completed all the sessions, they also filled a questionnaire about food-related personality traits such as cognitive restraint and sensitivity to hunger.  
 Parallel to this, a panel of nine trained judges performed a descriptive analysis of the biscuits. They evaluated the same 10 products as well as an additional product whose recipe was optimized for liking and satiating properties.  
@@ -15,10 +15,54 @@ Data from the biscuit study are gathered in three Excel files that can be access
 
 ## Products
 
-## Participants
+In total, 11 products were considered in this study. They are all breakfast biscuits with varying contents of proteins and fibers (Table \@ref(tab:biscuit_set)). Products P01 to P09 are prototypes whereas product P10 is a standard commercial biscuit without enrichment. The eleventh product Popt is an additional optimized biscuit that has been evaluated only by the trained panel for descriptive analysis.
 
-## Design of the consumer test
+```{r biscuit_set, echo = FALSE}
+# Bset <- readxl::read_excel("data/Sensory Profile.xlsx", sheet = "Product Info")
+
+biscuit_names <- c("P01", "P02", "P03", "P04", "P05", "P06", "P07", "P08", "P09", "P10", "POpt")
+protein <- c("Low", "Low", "High", "High", "High", "High", "Low",  "High", "High", "Low", "High")
+fiber <- c("Low", "High", "High", "High", "Low", "Low", "High", "Low", "High", "Low", "Low")
+type_prod <- c("Trial", "Trial", "Trial", "Trial", "Trial", "Trial", "Trial", "Trial", "Trial", "Commercial product", "Optimized trial")
+
+Bset <- data.frame(biscuit_names, protein, fiber, type_prod)
+colnames(Bset) <- c("Product", "Protein", "Fiber", "Type")
+ft <- flextable::qflextable(Bset)
+ft <- flextable::set_caption(ft, "Product set for the biscuit study", style = "Table Caption")
+ft
+knitr::knit_print(ft)
+#knitr::kable(
+#  Bset, booktabs = TRUE,
+#  caption = 'Product set for the biscuit study'
+#)
+
+```
+<!-- For some reasons the table above doesn't show when knitted in the book, although it does appear when knitted as a separate .rmd file -->
+
+
+## Consumer test
+### Participants
+
+107 women of normal weight (Body Mass Index (BMI): 18-26) participated to the test. All were regular consumers of breakfast biscuits.
+
+### Test design
+Consumers evaluated one biscuit type per session. Product evaluation order was randomized across the panel.  
+The design of the sessions is summarized in Figure [REF REF]. After they first rated their appetite sensations using visual analog scales (VAS), the participants tasted and rated one biscuit for liking. They were then served with a box of the same biscuits for _ad libitum_ consumption, followed by a new questionnaire regarding their liking, pleasure and appetite sensations.
+The liking was measured with two different scales:  
+    1. with a horizontally oriented unstructured linear scale (VAS) anchored with ‘I don’t like this biscuit at all’ (left end) and ‘I like this biscuit a lot’ (right end) at two times (at the first bite and when stopping their consumption).  
+    2. with a vertically oriented semantic nine-point hedonic scale when stopping their consumption.  
+VAS scales are frequently used in nutrition studies (REF REF), whereas the nine-point hedonic scale is more popular in sensory and consumer science (REF REF).  
+
+Once done, participants were asked about the reason(s) why they stopped eating (6 potential reasons rated with *Likert* scales ranging from *strongly disagree* to to *strongly agree*). They were also asked how much they would like to eat other types of foods (11 food items rated using a VAS).
+
+
+The time spent in the booth and the number of biscuits eaten by each participant was recorded by the experimenters, as well as the type of drink they selected and the approximate volume they drank during each session. These data are stored in the second tab of the **Consumer Test.xlsx file**  named *Time Consumption*.
+
+
 
 ## Sensory descriptive analysis data
+A panel of 9 trained judges evaluated the 11 products for 32 sensory attributes (8 attributes for aspect, 3 for odor, 12 for flavor, 9 for texture).  
+For each product, the judges individually reported the perceived intensity of each attribute on an unstructured linear scale. Intensities were automatically converted by the acquisition system into a score ranging from 0 to 60.
 
 ## Summary of the datasets
+List of the variables in each data sets (or just the size of each data set?).
