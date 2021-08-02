@@ -118,7 +118,7 @@
 
 \title{Data Science for Sensory and Consumer Scientists}
 \author{John Ennis, Julien Delarue, and Thierry Worch}
-\date{2021-07-26}
+\date{2021-08-02}
 
 \begin{document}
 \maketitle
@@ -333,6 +333,22 @@ Data cleaning is the process of preparing data for analysis. In this step we mus
 \hypertarget{data-analysis2}{%
 \subsection{Data Analysis}\label{data-analysis2}}
 
+Data analysis is one of the areas of data science that most clearly overlaps with traditional statistics. In fact, any traditional or computational statistical technique can be applied within the context of data science.
+
+In practice, the dominant cultural difference between the two fields can be summarized as:
+
+\begin{itemize}
+\tightlist
+\item
+  Statistics often focuses on advancing explicit theoretical understanding of an area through parameter estimation within first-principle models.
+\item
+  Data science often focuses on predictive ability using computational models that are validated empirically using held-out subsets of the data.
+\end{itemize}
+
+Another cultural difference between the two fields is that data science, evolving more directly out of computer science, has been more historically interested in documenting the code used for analysis with the ultimate goal of reproducible research. See \citet{Peng2011} for more information on this topic, for example. This difference is gradually disappearing, however, as statistics more fully embraces a data scientific way of scripting analyses.
+
+Data analysis is covered in greater detail in Chapter \ref{data-analysis}.
+
 \hypertarget{transform}{%
 \subsubsection{Transform}\label{transform}}
 
@@ -431,7 +447,7 @@ However, to assess whether consumers have the same preference patterns at the in
 
 Another example of data manipulation consists in summarizing data, by for instance computing the mean by product for each sensory attribute (hence creating the so-called sensory profiles), or to generate frequency tables (e.g.~proportions of male/female, distribution of the liking scores by sample, contingency table for CATA data, etc.)
 
-For these reasons, it is hence essential to learn to manipulate data and transition from one structure to another. After presenting many different ways to transform your data, application through simple examples will be presented\footnote{Most of the examples presented in this chapter have no scientific meaning. This has been done on purpose to emphasize the ``how to?'', not the ``why?''}.
+For these reasons, it is essential to learn to manipulate data and transition from one structure to another. After presenting many different ways to transform your data, application through simple examples will be presented\footnote{Most of the examples presented in this chapter emphasize on the ``how to?'', not the ``why?'' and thus do not necessary intend to convey scientific meaning}.
 
 \hypertarget{tidy-data}{%
 \section{Tidying Data}\label{tidy-data}}
@@ -441,7 +457,7 @@ Hadley Wickham defined `tidy data' as ``data sets that are arranged such that ea
 \hypertarget{simple-manipulations}{%
 \subsection{Simple Manipulations}\label{simple-manipulations}}
 
-The notion of `simple manipulations' proposed here is completely arbitrary and consists in data transformation that could easily be performed in other software such as Excel (although we strongly recommend performing any sorts of transformation in R)
+The notion of `simple manipulations' proposed here is completely arbitrary and consists in data transformation that could easily be performed in other software such as Excel (using copy-paste, the sort \& filter function, inserting a pivot table, etc.). However, we strongly recommend performing any sorts of transformation in R as this will reduce the risk of errors, be usually faster, and become much easier and fluent as you will familiarize with them.
 
 \hypertarget{handling-columns}{%
 \subsubsection{Handling Columns}\label{handling-columns}}
@@ -452,7 +468,7 @@ The notion of `simple manipulations' proposed here is completely arbitrary and c
 The first simple transformation that one could consider consists in renaming one or multiple variables.
 This procedure can easily be done using the \texttt{rename()} function from the \texttt{\{dplyr\}} package.
 
-In our sensory file, let's recode `Judge' into `Panellist', and `Product' into `Sample' (here, we apply transformations without saving the results, so without altering the original dataset):
+In our sensory file\footnote{The \emph{sensory} data is imported from the \emph{Sensory Profile.xlsx} file, see Chapter XXX for how to import datasets}, let's recode `Judge' into `Panellist', and `Product' into `Sample' (here, we apply transformations without saving the results, so without altering the original dataset):
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -461,7 +477,7 @@ In our sensory file, let's recode `Judge' into `Panellist', and `Product' into `
 \end{Highlighting}
 \end{Shaded}
 
-If this procedure of renaming variables should be applied on many variables following a structured form (e.g.~transforming names into snake\_case, camelCase, etc.), the use of the \texttt{\{janitor\}} package comes handy thanks to its \texttt{clean\_names()} function and the \texttt{case} parameter:
+If this procedure of renaming variables should be applied on many variables following a structured form (e.g.~transforming names into snake\_case, CamelCase, etc.), the use of the \texttt{\{janitor\}} package comes handy thanks to its \texttt{clean\_names()} function and the \texttt{case} parameter:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -476,21 +492,21 @@ Note that the \texttt{\{janitor\}} package offers many options, and although the
 \hypertarget{re-organizing-columns}{%
 \paragraph{Re-Organizing Columns}\label{re-organizing-columns}}
 
-Another simple transformation consists in re-organizing the dataset, either by re-ordering (incl.~removing) the columns, or by selecting some rows based on a certain criteria.
+Another simple transformation consists in re-organizing the dataset, either by re-ordering (including removing) the columns, or by selecting some rows based on a certain criteria.
 
-For re-ordering columns, \texttt{relocate()} is being used. This function allows re-positioning a (set of) variable(s) before or after another variable. By re-using the \texttt{sensory} dataset, let's position all the variables starting with `Qtt' between \texttt{Product} and \texttt{Shiny}. This can be specified into two different ways:
+For re-ordering columns, \texttt{relocate()} is being used. This function allows re-positioning a (set of) variable(s) before or after another variable. By re-using the \texttt{sensory} dataset, let's position all the variables starting with `Qty' between \texttt{Product} and \texttt{Shiny}. This can be specified into two different ways:
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{sensory }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{relocate}\NormalTok{(}\FunctionTok{starts\_with}\NormalTok{(}\StringTok{"Qtt"}\NormalTok{), }\AttributeTok{.after=}\NormalTok{Product)}
+  \FunctionTok{relocate}\NormalTok{(}\FunctionTok{starts\_with}\NormalTok{(}\StringTok{"Qty"}\NormalTok{), }\AttributeTok{.after=}\NormalTok{Product)}
 
 \NormalTok{sensory }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{relocate}\NormalTok{(}\FunctionTok{starts\_with}\NormalTok{(}\StringTok{"Qtt"}\NormalTok{), }\AttributeTok{.before=}\NormalTok{Shiny)}
+  \FunctionTok{relocate}\NormalTok{(}\FunctionTok{starts\_with}\NormalTok{(}\StringTok{"Qty"}\NormalTok{), }\AttributeTok{.before=}\NormalTok{Shiny)}
 \end{Highlighting}
 \end{Shaded}
 
-Last but not least (regarding columns transformation) the \texttt{select()} function (from the \texttt{\{dplyr\}} package\footnote{Many other packages include a function called \texttt{select()}, hence creating conflicts: To avoid any risks of errors, we recommend calling the \texttt{select()} function using the notation \texttt{dplyr::select()} as it formally calls the \texttt{select()} function from \texttt{\{dplyr\}}. This avoids any risks of error! Of course, the same procedure applies to any other functions that may suffer from the same issue.}) allows selecting a set of variables, by simply informing the variables that should be kept in the dataset. Let's limit ourselves in selecting \texttt{Judge}, \texttt{Product}, and \texttt{Shiny}:
+Another very important function regarding columns transformation is the \texttt{select()} function (from the \texttt{\{dplyr\}} package\footnote{Note that many other packages include a function called \texttt{select()}, which could create conflicts. To avoid any risks of errors, we recommend calling the \texttt{select()} function using the notation \texttt{dplyr::select()} as it formally calls the \texttt{select()} function from \texttt{\{dplyr\}}. This avoids any risks of error! Of course, the same procedure applies to any other functions that may suffer from the same issue.}) allows selecting a set of variables, by simply informing the variables that should be kept in the dataset. Let's limit ourselves in selecting \texttt{Judge}, \texttt{Product}, and \texttt{Shiny}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -500,7 +516,7 @@ Last but not least (regarding columns transformation) the \texttt{select()} func
 \end{Shaded}
 
 When a long series of variables should be kept in the same order, the use of the \texttt{:} is used.
-Let's only keep the variables related to Flavour, hence going from \texttt{Cereal\ flavor} to \texttt{Warming}:
+Let's only keep the variables related to Flavor, hence going from \texttt{Cereal\ flavor} to \texttt{Warming}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -518,12 +534,12 @@ However, when only one (or few) variable needs to be removed, it is easier to sp
 \end{Highlighting}
 \end{Shaded}
 
-The selection process of variables can be further informed through functions such as \texttt{starts\_with()}, \texttt{ends\_with()}, and \texttt{contains()}, which all select variables that either starts, ends, or contains a certain character or sequence of character. To illustrate this, let's only keep the variables that starts with `Qtt':
+The selection process of variables can be further informed through functions such as \texttt{starts\_with()}, \texttt{ends\_with()}, and \texttt{contains()}, which all select variables that either starts, ends, or contains a certain character or sequence of character. To illustrate this, let's only keep the variables that starts with `Qty':
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{sensory }\SpecialCharTok{\%\textgreater{}\%} 
-\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\FunctionTok{starts\_with}\NormalTok{(}\StringTok{"Qtt"}\NormalTok{))}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\FunctionTok{starts\_with}\NormalTok{(}\StringTok{"Qty"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -536,12 +552,12 @@ Rather than selecting variables based on their names, we can also select them ba
 \end{Highlighting}
 \end{Shaded}
 
-\textbf{Remark}: \texttt{dplyr::select()} is a very powerful function that facilitates complex variables' selection through very intuitive functions. Ultimately, it can also be used to \texttt{relocate()} and even \texttt{rename()} variables, as shown in the example below:
+\textbf{Remark}: \texttt{dplyr::select()} is a very powerful function that facilitates selection of complex variables through very intuitive functions. Ultimately, it can also be used to \texttt{relocate()} and even \texttt{rename()} variables, as shown in the example below:
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{sensory }\SpecialCharTok{\%\textgreater{}\%} 
-\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\AttributeTok{Panellist =}\NormalTok{ Judge, }\AttributeTok{Sample =}\NormalTok{ Product, Shiny}\SpecialCharTok{:}\NormalTok{Sticky, }\SpecialCharTok{{-}}\FunctionTok{starts\_with}\NormalTok{(}\StringTok{"Qtt"}\NormalTok{))}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\AttributeTok{Panellist =}\NormalTok{ Judge, }\AttributeTok{Sample =}\NormalTok{ Product, Shiny}\SpecialCharTok{:}\NormalTok{Sticky, }\SpecialCharTok{{-}}\FunctionTok{starts\_with}\NormalTok{(}\StringTok{"Qty"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2386,17 +2402,17 @@ To do so, we need the \texttt{\{here\}} and \texttt{\{readxl\}} packages. Since 
 \end{Highlighting}
 \end{Shaded}
 
-The first analysis often done consists in evaluate whether there are differences between samples for the different attributes. This is done through Analysis of Variance (ANOVA) and can be done using the \texttt{lm()} or \texttt{aov()} functions.
-If we would want to run the ANOVA for \texttt{Shiny}, the code would look like this (here we consider the 2-way ANOVA evaluating the Product and Assessor effects):
+The first analysis often done consists in evaluating whether there are differences between samples for the different attributes. This is done through Analysis of Variance (ANOVA) and can be done using the \texttt{lm()} or \texttt{aov()} functions.
+If we would want to run the ANOVA for \texttt{Sweet}, the code would look like this (here we consider the 2-way ANOVA evaluating the Product and Assessor effects):
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{shiny\_aov }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(Shiny }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Product }\SpecialCharTok{+}\NormalTok{ Judge, }\AttributeTok{data=}\NormalTok{sensory)}
-\FunctionTok{anova}\NormalTok{(shiny\_aov)}
+\NormalTok{sweet\_aov }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(Sweet }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Product }\SpecialCharTok{+}\NormalTok{ Judge, }\AttributeTok{data=}\NormalTok{sensory)}
+\FunctionTok{anova}\NormalTok{(sweet\_aov)}
 \end{Highlighting}
 \end{Shaded}
 
-We could duplicate this code for each single attributes, but 1. this would be quite tedious if the number of attributes increase, 2. it is sensitive to the way the variables are being called, meaning that 3. it would usually not be applicable to other dataset. Instead, we propose two solutions, one using \texttt{split()} combined with \texttt{map()} and one involving \texttt{nest\_by()} to run this analysis automatically.
+We could duplicate this code for each single attribute, but: 1. this would be quite tedious for large number of attributes increase, 2. this code is sensitive to the way the variables are being called, meaning that 3. it would usually not be applicable to other datasets. Instead, we propose two solutions, one using \texttt{split()} combined with \texttt{map()} and one involving \texttt{nest\_by()} to run this analysis automatically.
 
 For both these solutions, the dataset should be in the long and short form, which can be obtained using \texttt{pivot\_longer()}:
 
@@ -2407,7 +2423,7 @@ For both these solutions, the dataset should be in the long and short form, whic
 \end{Highlighting}
 \end{Shaded}
 
-From this structure, the first approach consists in splitting the data by attribute. Once done, we run for each sub-data the ANOVA (the model is then defined as \texttt{Score\ \textasciitilde{}\ Product\ +\ Judge}), and we extract the results of interest using the \texttt{\{broom\}} package\footnote{The \texttt{\{broom\}} package is a very useful package that convert statistical objects into tidy tables.}
+From this structure, the first approach consists in splitting the data by attribute. Once done, we run the ANOVA for each data subset (the model is then defined as \texttt{Score\ \textasciitilde{}\ Product\ +\ Judge}), and we extract the results of interest using the \texttt{\{broom\}} package\footnote{The \texttt{\{broom\}} package is a very useful package that convert statistical objects into tidy tables.}
 Ultimately, the results can be combined again using \texttt{enframe()} and \texttt{unnest()}.
 
 \begin{Shaded}
@@ -2425,8 +2441,8 @@ Ultimately, the results can be combined again using \texttt{enframe()} and \text
 \end{Highlighting}
 \end{Shaded}
 
-The second approach nests the analysis by attribute (meaning the analysis is done for each attribute separately, a bit like \texttt{group\_by()}): in this case, we create a new variable called \texttt{mod} which takes the results of the ANOVA.
-Once the analysis is done, we summarize the info stored in \texttt{mod} by converting into a tibble using \texttt{\{broom\}}:
+The second approach nests the analysis by attribute (meaning the analysis is done for each attribute separately, a bit like \texttt{group\_by()}): in this case, we store the results of the ANOVA in a new variable called \texttt{mod}.
+Once the analysis is done, we summarize the info stored in \texttt{mod} by converting it into a tibble using \texttt{\{broom\}}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2452,7 +2468,7 @@ The two approaches return the exact same results. Let's dig into the results by 
 
 As can be seen, the products do not show any significant differences at 5\% for 4 attributes: \texttt{Cereal\ flavor} (p=0.294), \texttt{Roasted\ odor} (p=0.193), \texttt{Astrigent} (p=0.116), and \texttt{Sticky} (p=0.101).
 
-To visualize graphically the results of the ANOVA, a barchart representing the F-value can be generated. We recommend to order the attributes based on their decreasing F-values, and by colour-coding them based on their significance:
+Since we ran ANOVAs on multiple attributes, it is useful to visualize the results graphically as a barchart representing the F-value. We recommend to order the attributes based on their decreasing product-wise F-values, and by colour-coding them based on their significance:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2464,7 +2480,7 @@ To visualize graphically the results of the ANOVA, a barchart representing the F
   \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\FunctionTok{reorder}\NormalTok{(Attribute, statistic), }\AttributeTok{y=}\NormalTok{statistic, }\AttributeTok{fill=}\NormalTok{Signif))}\SpecialCharTok{+}
   \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat=}\StringTok{"identity"}\NormalTok{)}\SpecialCharTok{+}
   \FunctionTok{scale\_fill\_manual}\NormalTok{(}\AttributeTok{values=}\FunctionTok{c}\NormalTok{(}\StringTok{"Signif."}\OtherTok{=}\StringTok{"forestgreen"}\NormalTok{, }\StringTok{"Not Signif."}\OtherTok{=}\StringTok{"orangered2"}\NormalTok{))}\SpecialCharTok{+}
-  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Sensory Attriubtes"}\NormalTok{,}\StringTok{"(The attributes are sorted according to the F{-}values)"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Sensory Attributes"}\NormalTok{,}\StringTok{"(The attributes are sorted according to product{-}wise F{-}values)"}\NormalTok{)}\SpecialCharTok{+}
   \FunctionTok{theme\_bw}\NormalTok{()}\SpecialCharTok{+}
   \FunctionTok{xlab}\NormalTok{(}\StringTok{""}\NormalTok{)}\SpecialCharTok{+}
   \FunctionTok{ylab}\NormalTok{(}\StringTok{"F{-}values"}\NormalTok{)}\SpecialCharTok{+}
@@ -2472,11 +2488,11 @@ To visualize graphically the results of the ANOVA, a barchart representing the F
 \end{Highlighting}
 \end{Shaded}
 
-It appears that the different biscuits differ the most (top 5) for \texttt{Initial\ hardness}, \texttt{Shiny}, \texttt{Dairy\ flavor}, \texttt{External\ color\ intensity}, and \texttt{Thickness}.
+It appears that the evaluated biscuits differ the most (top 5) for \texttt{Initial\ hardness}, \texttt{Shiny}, \texttt{Dairy\ flavor}, \texttt{External\ color\ intensity}, and \texttt{Thickness}.
 
 Note that as an alternative, we could use the \texttt{decat()} function from the \texttt{\{SensoMineR\}} package. This function performs ANOVA on a set of attributes (presented in subsequent columns), followed by some t-test that highlights which samples are significantly more (or less) intense than average for each attribute.
 
-Once the significant differences have been checked, a follow-up analysis consists in visualizing these differences. Such visualization is often done through Principal Component Analysis (PCA).
+Once the significant differences have been checked, a follow-up analysis consists in visualizing these differences in a multivariate way. Such visualization is often done through Principal Component Analysis (PCA).
 
 In practice, PCA is performed on the mean table crossing the products in rows, and the sensory attributes in columns. In \ref{data-manip}, many different approaches to generate such table have been proposed:
 
@@ -2504,8 +2520,9 @@ Few important remarks: The \texttt{PCA()} function usually contains only numeric
 \end{Highlighting}
 \end{Shaded}
 
-The \texttt{PCA()} function can generate the plots either in \texttt{\{base\}} R language, or in \texttt{\{ggplot2\}}. However, we like to use a complementary package called \texttt{\{factoextra\}} which re-creates any plot from \texttt{\{FactoMineR\}} (and more) as a \texttt{ggplot()} object. for \texttt{PCA()}, the main function used to re-create the plots are \texttt{fviz\_pca\_ind()} for the products' map, \texttt{fviz\_pca\_var()} for the variables' representation, and \texttt{fviz\_pca\_biplot()} for the biplot combining both.
-Since we have two qualitative variables, let's take advantage of them by coloring for each of them the products based on their content. This can easily be done through the \texttt{habillage} parameter from \texttt{fviz\_pca\_ind()}, which can either take a numerical value (position) of the name of the qualitative variable.
+The \texttt{PCA()} function can generate the plots either in \texttt{\{base\}} R language, or in \texttt{\{ggplot2\}}. However, we like to use a complementary package called \texttt{\{factoextra\}} which re-creates any plot from \texttt{\{FactoMineR\}} (and more) as a \texttt{ggplot()} object. This comes in very handy as you can benefit from the customizable options and flexibility offered by \texttt{ggplot()}.
+The score map (the product map) from \texttt{PCA()} can be hence replotted with \texttt{fviz\_pca\_ind()}, the representation of variables loadings (attribute correlations) can be managed with \texttt{fviz\_pca\_var()}, and \texttt{fviz\_pca\_biplot()} can be used to trace the biplot combining both.
+To illustrate how convenient this is, let's take advantage of the two qualitative variables in our example, by coloring the products based on their protein and fiber content. This can easily be done through the \texttt{habillage} parameter from \texttt{fviz\_pca\_ind()}, which can either take a numerical value (position) of the name of the qualitative variable.
 
 \begin{Shaded}
 \begin{Highlighting}[]
