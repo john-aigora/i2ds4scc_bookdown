@@ -118,7 +118,7 @@
 
 \title{Data Science for Sensory and Consumer Scientists}
 \author{John Ennis, Julien Delarue, and Thierry Worch}
-\date{2021-08-02}
+\date{2021-08-03}
 
 \begin{document}
 \maketitle
@@ -328,7 +328,7 @@ In this step, the main goal is to gain familiarity with the data. Under ideal ci
 \hypertarget{clean_2}{%
 \subsubsection{Clean}\label{clean_2}}
 
-Data cleaning is the process of preparing data for analysis. In this step we must identify and correct any errors, and ensure the data are formatted consistently and appropriately for analysis. As part of this step, we will typically tidy our data, a concept that we cover in more detail in Chapter \ref{tidy-thoughts} and Section \ref{tidy-data}. It is extremely important than any changes to the data are made in code with the reasons for the changes clearly documented. This way of working ensures that, a year from now, we don't revisit our analysis to find multiple versions of the input data and not know which version was the one used for the final analysis\footnote{Anyone working in the field for more than five years has almost certainly experienced this problem, perhaps even with their own data and reports}. We discuss data cleaning in further detail in Section \ref{clean} of Chapter \ref{data-prep}.
+Data cleaning is the process of preparing data for analysis. In this step we must identify and correct any errors, and ensure the data are formatted consistently and appropriately for analysis. As part of this step, we will typically tidy our data, a concept that we cover in more detail in Section \ref{tidy-data}. It is extremely important than any changes to the data are made in code with the reasons for the changes clearly documented. This way of working ensures that, a year from now, we don't revisit our analysis to find multiple versions of the input data and not know which version was the one used for the final analysis\footnote{Anyone working in the field for more than five years has almost certainly experienced this problem, perhaps even with their own data and reports}. We discuss data cleaning in further detail in Section \ref{clean} of Chapter \ref{data-prep}.
 
 \hypertarget{data-analysis2}{%
 \subsection{Data Analysis}\label{data-analysis2}}
@@ -429,11 +429,6 @@ Discuss benefits
 Learning data science is much like learning a language or learning to play an instrument - you have to practice. Our advice based on mentoring many students and clients is to get started sooner rather than later, and to accept that the code you'll write in the future will always be better than the code you'll write today. Also, many of the small details that separate an proficient data scientist from a novice can only really be learned through practice as there are too many small details to learn them all in advice. So, starting today, do your best to write at least some code for all your projects. If a time deadline prevents you from completing the analysis in R, that's fine, but at least gain the experience of making an RStudio project and loading the data in R. Then, as time allows, try to duplicate your analyses in R, being quick to search for solutions when you run into errors. Often simply copying and pasting your error into a search engine will be enough to find the solution to your problem. Moreover, searching for solutions is its own skill that also requires practice. Finally, if you are really stuck, reach out to a colleague (or even the authors of this book) for help
 
 We recommend following the instructions in Appendix \ref{start-R} to get started.
-
-\hypertarget{tidy-thoughts}{%
-\chapter{Tidy Thinking}\label{tidy-thoughts}}
-
-This is a test of the footnotes\footnote{A great footnote}.
 
 \hypertarget{data-manip}{%
 \chapter{Data Manipulation}\label{data-manip}}
@@ -2540,7 +2535,7 @@ On the first dimension, \texttt{P10} is opposed to \texttt{P09} and \texttt{P03}
 \hypertarget{demographic-and-tfeq-data}{%
 \section{Demographic and TFEQ Data}\label{demographic-and-tfeq-data}}
 
-In the \emph{TFEQ.xlsx} file, descriptive (e.g.~demographic) and behavioral (e.g.~TFEQ) information regarding the consumers is being stored.
+The \emph{TFEQ.xlsx} file contains descriptive (i.e.~\emph{demographic}) information regarding the consumers and their food-related personality traits (i.e.~\emph{TFEQ}) .
 
 A quick look at this file shows that it contains three tabs denoted as \emph{Data}, \emph{Variables}, and \emph{Levels}:
 
@@ -2554,7 +2549,7 @@ A quick look at this file shows that it contains three tabs denoted as \emph{Dat
   \emph{Levels} provides information about the different levels each variable can take.
 \end{itemize}
 
-Let's start with importing this data set. The importation is done in multiple step as following:
+Let's start with importing this data set. The importation is done in multiple steps as following:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2578,8 +2573,8 @@ Let's start with importing this data set. The importation is done in multiple st
 
 For this demographic data file, we are interested to see the partition of consumers for each of the descriptive variables. More precisely, we would like to know the frequency and proportion (in percentage) attached to each level of \texttt{Living\ area}, \texttt{Housing}, \texttt{Income\ range}, and \texttt{Occupation}.
 
-To obtain such table, let's start by only selecting these particular columns together with \texttt{Judge}.
-Since the data is coded, let's decode it using the information stored in \texttt{demo\_lev}: we could automatically recode each variable using \texttt{mutate()} and \texttt{factor()}. However, we prefer here to use \texttt{pivot\_longer()} to create a long thin tibble, and then to merge this table with \texttt{demo\_lev} by \texttt{Question} and \texttt{Response} using \texttt{inner\_join()} instead. Once done, we can aggregate the results by \texttt{Question} and \texttt{Levels} (since we want to use the level information, not their code) and compute the frequency (\texttt{n()}) and the proportion (\texttt{N/sum(N)})\footnote{We use the package \texttt{\{formattable\}} to print the results in percentage using one decimal. As an alternative, we could have used \texttt{percent()} from the \texttt{\{scales\}} package.}.
+To obtain such a table, let's start by only selecting the particular columns corresponding to these variables together with \texttt{Judge}.
+Data from surveys and questionnaires are often coded. For example, in this dataset, answer \#6 to question Q10 means ``Student'', while answer \#7 to the same question means ``Qualified worker''. Thus, to make this data readable by human beings, we need to decode them using the information stored in \texttt{demo\_lev}. For that, we could automatically recode each variable using \texttt{mutate()} and \texttt{factor()}. However, we prefer here to use \texttt{pivot\_longer()} to create a long thin tibble, and then to merge this table with \texttt{demo\_lev} by \texttt{Question} and \texttt{Response} using \texttt{inner\_join()} instead. Once done, we can aggregate the results by \texttt{Question} and \texttt{Levels} (since we want to use the level information, not their code) and compute the frequency (\texttt{n()}) and the proportion (\texttt{N/sum(N)})\footnote{We use the package \texttt{\{formattable\}} to print the results in percentage using one decimal. As an alternative, we could have used \texttt{percent()} from the \texttt{\{scales\}} package.}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2596,7 +2591,7 @@ Since the data is coded, let's decode it using the information stored in \texttt
 \end{Highlighting}
 \end{Shaded}
 
-To better visualize these different proportions, histograms are often considered. Such histograms can be obtained by splitting \texttt{demog\_reduced} by \texttt{Question} and by creating in each case an histogram using either \texttt{N} or \texttt{Pct} (we are using \texttt{Pct})\footnote{Here, the histograms are ordered decreasingly (\texttt{reorder}) and are represented horizontally (\texttt{coord\_flip()}).}. Of course, we automate this across all questions using \texttt{map()}.
+Histograms are a nice way to visualize these different proportions. Such histograms can be obtained by splitting \texttt{demog\_reduced} by \texttt{Question} and by creating in each case an histogram using either \texttt{N} or \texttt{Pct} (we are using \texttt{Pct})\footnote{Here, the histograms are ordered decreasingly (\texttt{reorder}) and are represented horizontally (\texttt{coord\_flip()}).}. Of course, we automate this across all questions using \texttt{map()}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
