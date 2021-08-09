@@ -9,9 +9,118 @@ knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 
 ## Chart Making
 
-### Philosophy of ggplot2
 
-Explain the principles of multi-layer graphs through an example.
+"A picture is worth 1000 words". This saying definitely applies to Statistics as well, since visual representation of data often appears clearer than the values themselves stored in a table. It is hence no surprise that R is also a powerful tool for graphics. 
+
+In practice, there are various ways to build graphics in R. In fact, R itself comes with a powerful way of building graphs through the `plot()` function. An extensive description can be found in (*R Graphics 2nd edition Paul Murrell CRC Press*). Due to its philosophy, its simplicity, and the point of view adopted in this book, we will limit ourselves to graphics built using the package `{ggplot2}`. 
+
+
+### Philosophy of `{ggplot2}`
+
+
+`{ggplot2}` belongs to the `{tidyverse}`, and was developed by H. Wickham and colleagues at RStudio. It is hence no surprise that a lot of the procedures that we're learning throughout this book also applies to `{ggplot2}`. More generally, building graphics with `{ggplot2}` fits very well within the pipes (`%>%`) system from `{magrittr}`. As we will see, `{ggplot2}` also works with a system that is similar to pipes, except that the symbol used is `+` instead of `%>%`.
+
+`{ggplot2}` is a multi-layer graphical tools, meaning that the graphics are build by adding layers one at a time to finally build your graphics. This means that `ggplot` objects can be printed at any time, and yet still be improved by adding other layers if needed. To read more about `{gglot2}` and its philosophy, please refer to <http://vita.had.co.nz/papers/layered-grammar.pdf>[link](http://vita.had.co.nz/papers/layered-grammar.pdf).
+
+Note that since building graphics is limited to one imagination, it is not possible to tackle each and every possibilities offered by `{ggplot2}` (and its extensions). For that reason, we limit ourselves to describing the principles of how `{ggplot2}`works. This should be more than sufficient to get you started, and should cover 90% of the graphics that are relevant in sensory and consumer science. But if that should not be the case, we invite you to look into the online documentation or to references such as [REFS].
+
+
+### Getting started with `{ggplot2}`
+
+To use `{ggplot2}`, we need to load this package: this can either be done directly using:
+
+
+```{r}
+library(ggplot2)
+```
+
+
+However, if you load the `{tidyverse}` package, this step can be ignored as `{ggplot2}` is included within the list of packages it contains:
+
+
+```{r}
+library(tidyverse)
+```
+
+
+To illustrate the use of `{ggplot2}`, we will use the sensory dataset stored in *Sensory Profile.xlsx*.
+
+
+```{r}
+library(here)
+library(readxl)
+
+file_path <- here("data","Sensory Profile.xlsx") 
+p_info <- read_xlsx(file_path, sheet="Product Info") %>% 
+  dplyr::select(-Type)
+
+sensory <- read_xlsx(file_path, sheet="Data") %>% 
+  inner_join(p_info, by="Product") %>% 
+  relocate(Protein:Fiber, .after=Product)
+```
+
+
+To initiate a graph, we start by calling the function `ggplot()`.
+Since the data we want to use is stored in `sensory`, we apply `ggplot()` to `sensory`:
+
+
+```{r}
+p <- ggplot(sensory)
+```
+
+
+If you run this line of code, you'll notice that p contains an empty graphic. This is because we haven't added any layer that is relevant for us yet.
+So let's imagine we want to look at the overall relationship between `Sticky` and `Melting`. To do so, we want to create a scatter plot with `Sticky` in the x-axis, and `Melting` in the y-axis. To do so, we require to call a `geom_` function that relates to scatter plots, in this case `geom_point()`, by also informing through the aesthetics (defined through `aes()`) what needs to be considered on the x-axis and on the y-axis.
+
+This provides something similar to:
+
+
+```{r}
+p + geom_point(aes(x=Sticky, y=Melting))
+```
+
+
+A scatter plot is hence generated. In this example, one can notice that many points are being printed: this can easily be explained by the fact that the raw sensory data are being used, meaning that there are as many points as there are assessors evaluating products.
+
+
+Let's imagine we want to color the points per products to see if we can see patterns. This can be done by informing within the aesthetics that `colour = Product`:
+
+
+```{r}
+p + geom_point(aes(x=Sticky, y=Melting, colour=Product))
+```
+
+
+It is important to note that parameters can depend on a variable (e.g. `colour` in the previous example) or should be applied to all the elements of the graph. In the first case, the parameters is included within the aesthetics, whereas in the second case, it should be defined outside the aesthetics. 
+Let's illustrate this by providing a simple example in which we change the type of dots (from circle to square) using `pch`, and by increasing their size using `cex` to all the points of the graph:
+
+
+```{r}
+p + geom_point(aes(x=Sticky, y=Melting, colour=Product), pch=15, cex=5)
+```
+
+
+Since `{ggplot2}` is a multi-layer graph, let's add another layer that contains the name of the panellists that is associated to each point. To do so, we could consider `geom_text()`. In that case, we need to inform in `aes()` what corresponds to the x-axis, what correspond to the y-axis, and `label`. To avoid having the label overlapping with the point, we propose to shift slightly the text vertically (using `nudge_y`):
+
+
+```{r}
+p <- ggplot(sensory)+
+  geom_point(aes(x=Sticky, y=Melting, colour=Product))+
+  geom_text(aes(x=Sticky, y=Melting, label=Judge), nudge_y=1)
+```
+
+
+
+
+
+initiate graph with ggplot()
+add geom_
+(discussion around geom_ that have some statistical computation integrated...)
+include aes()
+what is not an aesthetic - fixed options
+aes() included in ggplot are passed to every geom, unless stated differently!
+play around with themes
+miscalleneous
 
 `aes()`, `geom_()`, `theme()`
 
