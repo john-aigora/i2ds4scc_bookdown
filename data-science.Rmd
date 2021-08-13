@@ -89,7 +89,7 @@ In this step, the main goal is to gain familiarity with the data. Under ideal ci
 
 #### Clean {#clean_2}
 
-Data cleaning is the process of preparing data for analysis.  In this step we must identify and correct any errors, and ensure the data are formatted consistently and appropriately for analysis.  As part of this step, we will typically tidy our data, a concept that we cover in more detail in Section \@ref(tidy-data).  It is extremely important than any changes to the data are made in code with the reasons for the changes clearly documented.  This way of working ensures that, a year from now, we don't revisit our analysis to find multiple versions of the input data and not know which version was the one used for the final analysis^[Anyone working in the field for more than five years has almost certainly experienced this problem, perhaps even with their own data and reports].  We discuss data cleaning in further detail in Section \@ref(clean).
+Data cleaning is the process of preparing data for analysis.  In this step we must identify and correct any errors, and ensure the data are formatted consistently and appropriately for analysis.  As part of this step, we will typically tidy our data, a concept that we cover in more detail in Section \@ref(tidy-data).  It is extremely important than any changes to the data are made in code with the reasons for the changes clearly documented.  This way of working ensures that, a year from now, we don't revisit our analysis to find multiple versions of the input data and not know which version was the one used for the final analysis^[Anyone working in the field for more than five years has almost certainly experienced this problem, perhaps even with their own data and reports].  We discuss data cleaning in further detail in Section \@ref(clean).  
  
 ### Data Analysis {#data-analysis2}
 
@@ -106,25 +106,11 @@ Data analysis is covered in greater detail in Chapter \@ref(data-analysis).  The
 
 #### Transform
 
-Data transformation is slightly different from data preparation.  In data preparation, we prepare the raw data for processing.
-
-Imputing missing data?
-
-Create secondary variables or new features
-Decorrelate data
-Identify latent factors
-Engineer new features
-
+Data transformation is slightly different from data preparation.  In data preparation, we prepare the raw data for processing in a non-creative way, such as reshaping existing data or storing character strings representing dates as date formatted variables.  With data transformation, we create new data for analysis by applying functions to the raw data.  These functions can be simple transformations such as inversions or logarithms, or can be summary operations such as computing means and variances, or could be complex operations such as principle components analysis or missing value imputation.  In a machine learning context (see Chapter \@ref(machine-learning)), this step is often referred to as "feature engineering."  In any case, these functions provide the analyst an opportunity to improve the value of the analysis through skillful choices.  Data transformation is covered in more detail in Chapter \@ref(data-analysis).
 
 #### Explore
 
-Goal: 
-Allow data to suggest hypotheses
-Key Steps:
-Graphical visualizations
-Exploratory analyses
-Note:
-Caution must be taken to avoid high false discovery rate when using automated tools
+Just as data transformation differs slightly from data preparation, data exploration differs slightly from data inspection.  When we inspect the data, our goal is to familiarize ourselves with the data and potentially spot errors as we do so.  With data exploration, our goal is to begin to understand the results of the experiment and to allow the data to suggest hypotheses for follow-up analyses or future research.  The key steps of data exploration are graphical visualizations (covered in Chapter \@ref(data-viz)) and exploratory analyses (covered in Chapter \@ref(data-analysis)).  As we will discuss later in this book, employing automated tools for analysis requires caution; the ease with which we can conduct a wide range of analyses increases the risk that chance results will be regarded as meaningful.  In Chapter \@ref(machine-learning) we will discuss techniques, such as cross-validation, that can help mitigate this risk.
 
 
 #### Model

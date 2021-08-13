@@ -32,7 +32,7 @@ sensory <- read_xlsx(file_path, sheet="Data") %>%
 ```
 
 <!-- Would be better to use an attribute other than Shiny. First because it is a less common attribute. Second, there might be some confusion with the shiny package. I'd suggest to use Sweet which is pretty standard -->
-The first analysis often done consists in evaluating whether there are differences between samples for the different attributes. This is done through Analysis of Variance (ANOVA) and can be done using the `lm()` or `aov()` functions.
+Typically, sensory scientists would first seek to determine whether there are differences between samples for the different attributes. This is done through Analysis of Variance (ANOVA) and can be done using the `lm()` or `aov()` functions.
 If we would want to run the ANOVA for `Sweet`, the code would look like this (here we consider the 2-way ANOVA evaluating the Product and Assessor effects):
 
 
@@ -98,7 +98,7 @@ senso_aov1 %>%
 ```
 
 
-As can be seen, the products do not show any significant differences at 5% for 4 attributes: `Cereal flavor` (p=0.294), `Roasted odor` (p=0.193), `Astrigent` (p=0.116), and `Sticky` (p=0.101).
+As can be seen, the products do not show any significant differences at 5% for 4 attributes: `Cereal flavor` (p=0.294), `Roasted odor` (p=0.193), `Astringent` (p=0.116), and `Sticky` (p=0.101).
 
 Since we ran ANOVAs on multiple attributes, it is useful to visualize the results graphically as a barchart representing the F-value. We recommend to order the attributes based on their decreasing product-wise F-values, and by colour-coding them based on their significance:
 
@@ -179,9 +179,7 @@ On the first dimension, `P10` is opposed to `P09` and `P03` as it is more intens
 ## Demographic and TFEQ Data
 
 
-The *TFEQ.xlsx* file contains descriptive (i.e. *demographic*) information regarding the consumers and their food-related personality traits (i.e. *TFEQ*) .
-
-A quick look at this file shows that it contains three tabs denoted as *Data*, *Variables*, and *Levels*:
+The *TFEQ.xlsx* file contains descriptive (i.e. *demographic*) information regarding the consumers and their food-related personality traits (i.e. *TFEQ*) .This file has three tabs denoted as *Data*, *Variables*, and *Levels*:
 
 - *Data* contains the data, coded;
 - *Variables* provides information (e.g. name, information) related to the different variables present in Data;
@@ -212,9 +210,9 @@ demographic <- read_xlsx(file_path, sheet="Data", skip=1, col_names=unlist(demo_
 
 For this demographic data file, we are interested to see the partition of consumers for each of the descriptive variables. More precisely, we would like to know the frequency and proportion (in percentage) attached to each level of `Living area`, `Housing`, `Income range`, and `Occupation`. 
 
-To obtain such a table, let's start by only selecting the particular columns corresponding to these variables together with `Judge`. 
-Data from surveys and questionnaires are often coded. For example, in this dataset, answer #6 to question Q10 means "Student", while answer #7 to the same question means "Qualified worker". Thus, to make this data readable by human beings, we need to decode them using the information stored in `demo_lev`. For that, we could automatically recode each variable using `mutate()` and `factor()`. However, we prefer here to use `pivot_longer()` to create a long thin tibble, and then to merge this table with `demo_lev` by `Question` and `Response` using `inner_join()` instead. Once done, we can aggregate the results by `Question` and `Levels` (since we want to use the level information, not their code) and compute the frequency (`n()`) and the proportion (`N/sum(N)`)^[We use the package `{formattable}` to print the results in percentage using one decimal. As an alternative, we could have used `percent()` from the `{scales}` package.].
-
+To obtain such a table, let's start by selecting only the columns corresponding to these variables together with `Judge`. 
+Data from surveys and questionnaires are often coded. For example, in this dataset, answer #6 to question Q10 means "Student", while answer #7 to the same question means "Qualified worker". Thus, to make these data readable by human beings, we need to decode them using the information stored in `demo_lev`. For that, we could automatically recode each variable using `mutate()` and `factor()`. However, we prefer here to use `pivot_longer()` to create a long thin tibble, and then to merge this table with `demo_lev` by `Question` and `Response` using `inner_join()` instead. Once done, we can aggregate the results by `Question` and `Levels` (since we want to use the level information, not their code) and compute the frequency (`n()`) and the proportion (`N/sum(N)`)^[We use the package `{formattable}` to print the results in percentage using one decimal. As an alternative, we could have used `percent()` from the `{scales}` package.].
+<!-- JD: I think it's best to avoid saying "we prefer to use..." without explaining why we prefer that (here, pivot_longer()+inner_join()), because it's disturbing for the reader who has to think why  -->
 
 ```{r}
 library(formattable)
@@ -230,7 +228,7 @@ demog_reduced <- demographic %>%
 ```
 
 
-Histograms are a nice way to visualize these different proportions. Such histograms can be obtained by splitting `demog_reduced` by `Question` and by creating in each case an histogram using either `N` or `Pct` (we are using `Pct`)^[Here, the histograms are ordered decreasingly (`reorder`) and are represented horizontally (`coord_flip()`).]. Of course, we automate this across all questions using `map()`.
+Histograms are a nice way to visualize proportions and compare them over several variables. Such histograms can be obtained by splitting `demog_reduced` by `Question` and by creating in each case an histogram using either `N` or `Pct` (we are using `Pct`)^[Here, the histograms are ordered decreasingly (`reorder`) and are represented horizontally (`coord_flip()`).]. Of course, we automate this across all questions using `map()`.
 
 
 ```{r}
@@ -253,14 +251,17 @@ demog_reduced %>%
 ```
 
 
-### Behavioral Data: TFEQ Traits
+### Personality traits and eating behavior: TFEQ data
 
+<!-- TFEQ data are about behavior, but strictly speaking, they are not behavioral data. If we want to focus on truly behavioral data at some point, we can look at how many cookies they eat in each session , or how much they drink. -->
 
-In the same data set, consumers also answered some behavioral questions that reflects on their relation to food. These questions can be categorized into three groups: Disinhibitor (variables starting with `D`), Restriction (variables starting with `R`), and Hunger (variables starting with `H`).
+In the same data set, consumers also answered some behavioral questions that reflect on their relation to food. These questions can be categorized into three groups relating to three underlying factors, respectively: Disinhibition (variables starting with `D`), Restriction (variables starting with `R`), and sensitivity to Hunger (variables starting with `H`).
 
-Let's start by selecting all these variables. We could use `select()` combined with `starts_with("D")`, `starts_with("R")`, and `starts_with("H")`, but this solution is not satisfying since it can also seelct other variables that would start with any of these letters (e.g. Housing). Since the variables are all well structured (the all start with the letters D, R, or H, followed by a number), the use of a regular expression is more appropriate.
+In order to analyze these three factors separately, we first need to select the corresponding variables. When variable names are well structured with a recurring pattern (here, they all start with the letters D, R, or H, followed by a number) the use of a *regular expression* is very powerful.  
 
-In practice, generating regular expression can be quite complex as it is an abstract concept which follow very specific rules. Fortunately, the package `{RVerbalExpression}` is a great assistant as it generates the regular expression for you thanks to understandable functions. First, we initiate the regular expression by calling the function `rx()` to which we add that we first want any variables that start with any of the letter R, D, or H, followed by a number (or more, as values go from 1 to 21). This can be done using the following code:
+Note that, instead we could think of using `select()` combined with `starts_with("D")`, `starts_with("R")`, and `starts_with("H")`, but this solution is not satisfactory because it can also select other variables that would start with any of these letters (e.g. Housing).
+
+In practice, generating a regular expression can be quite complex as it is an abstract concept which follows very specific rules. Fortunately, the package `{RVerbalExpression}` is a great assistant as it generates the regular expression for you thanks to understandable functions. First, we initiate the regular expression by calling the function `rx()` to which we add that we first want any variables that start with any of the letter R, D, or H, followed by a number (or more, as values go from 1 to 21). This can be done using the following code:
 
 
 ```{r}
@@ -325,7 +326,7 @@ TFEQ_freq <- demographic %>%
 ```
 
 
-Similarly, we can create histograms representing the frequency for each variable. But here we limit ourselves to variables related to Disinhibitor. To do so, we start by generating the right regular expression (only selecting variables starting with "D") that we used to filter the results, before creating the corresponding graph:
+Similarly, we can create histograms representing the frequency for each variable. But here we limit ourselves to variables related to Disinhibition. To do so, we start by generating the right regular expression (only selecting variables starting with "D") that we used to filter the results, before creating the corresponding graph:
 
 
 ```{r}
@@ -371,9 +372,9 @@ TFEQ <- demographic %>%
   mutate(TFEQValue = ifelse(Direction == "Equal" & Score == Value, 1, 
                         ifelse (Direction == "Superior" & Score > Value, 1,
                                 ifelse(Direction == "Inferior" & Score < Value, 1, 0)))) %>% 
-  mutate(Factor = ifelse(str_starts(.$DHR, "D"), "Disinhibitor",
+  mutate(Factor = ifelse(str_starts(.$DHR, "D"), "Disinhibition",
                          ifelse(str_starts(.$DHR, "H"), "Hunger", "Restriction"))) %>% 
-  mutate(Factor = factor(Factor, levels=c("Restriction","Disinhibitor","Hunger"))) %>%
+  mutate(Factor = factor(Factor, levels=c("Restriction","Disinhibition","Hunger"))) %>%
   group_by(Judge, Factor) %>% 
   summarize(TFEQ = sum(TFEQValue)) %>% 
   mutate(Judge = factor(Judge, levels=unique(str_sort(.$Judge, numeric=TRUE)))) %>% 
