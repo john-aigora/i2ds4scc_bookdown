@@ -118,7 +118,7 @@
 
 \title{Data Science for Sensory and Consumer Scientists}
 \author{John Ennis, Julien Delarue, and Thierry Worch}
-\date{2021-08-05}
+\date{2021-08-16}
 
 \begin{document}
 \maketitle
@@ -357,24 +357,12 @@ Data transformation is slightly different from data preparation. In data prepara
 \hypertarget{explore}{%
 \subsubsection{Explore}\label{explore}}
 
-Goal:
-Allow data to suggest hypotheses
-Key Steps:
-Graphical visualizations
-Exploratory analyses
-Note:
-Caution must be taken to avoid high false discovery rate when using automated tools
+Just as data transformation differs slightly from data preparation, data exploration differs slightly from data inspection. When we inspect the data, our goal is to familiarize ourselves with the data and potentially spot errors as we do so. With data exploration, our goal is to begin to understand the results of the experiment and to allow the data to suggest hypotheses for follow-up analyses or future research. The key steps of data exploration are graphical visualizations (covered in Chapter \ref{data-viz}) and exploratory analyses (covered in Chapter \ref{data-analysis}). As we will discuss later in this book, employing automated tools for analysis requires caution; the ease with which we can conduct a wide range of analyses increases the risk that chance results will be regarded as meaningful. In Chapter \ref{machine-learning} we will discuss techniques, such as cross-validation, that can help mitigate this risk.
 
 \hypertarget{model}{%
 \subsubsection{Model}\label{model}}
 
-Goal:
-Conduct formal statistical modeling
-Key Steps:
-Conduct traditional statistical modeling
-Build predictive models
-Note:
-This step may feed back into transform and explore
+At last we reach the modeling step of our workflow, which is the step in which we conduct formal statistical modeling. This step may also include predicitve modeling, which we cover in Chapter \ref{machine-learning}, as mentioned above. One difference between data science and classical statistics is that this step may feed back into the transform and explore steps, as data scientists are typically more willing to allow the data to suggest new hypotheses for testing (recall Tukey's quotation above). This step is described in further detail in Chapter \ref{data-analysis}.
 
 \hypertarget{value-delivery2}{%
 \subsection{Value Delivery}\label{value-delivery2}}
@@ -2391,7 +2379,7 @@ To do so, we need the \texttt{\{here\}} and \texttt{\{readxl\}} packages. Since 
 \end{Highlighting}
 \end{Shaded}
 
-The first analysis often done consists in evaluating whether there are differences between samples for the different attributes. This is done through Analysis of Variance (ANOVA) and can be done using the \texttt{lm()} or \texttt{aov()} functions.
+Typically, sensory scientists would first seek to determine whether there are differences between samples for the different attributes. This is done through Analysis of Variance (ANOVA) and can be done using the \texttt{lm()} or \texttt{aov()} functions.
 If we would want to run the ANOVA for \texttt{Sweet}, the code would look like this (here we consider the 2-way ANOVA evaluating the Product and Assessor effects):
 
 \begin{Shaded}
@@ -2455,7 +2443,7 @@ The two approaches return the exact same results. Let's dig into the results by 
 \end{Highlighting}
 \end{Shaded}
 
-As can be seen, the products do not show any significant differences at 5\% for 4 attributes: \texttt{Cereal\ flavor} (p=0.294), \texttt{Roasted\ odor} (p=0.193), \texttt{Astrigent} (p=0.116), and \texttt{Sticky} (p=0.101).
+As can be seen, the products do not show any significant differences at 5\% for 4 attributes: \texttt{Cereal\ flavor} (p=0.294), \texttt{Roasted\ odor} (p=0.193), \texttt{Astringent} (p=0.116), and \texttt{Sticky} (p=0.101).
 
 Since we ran ANOVAs on multiple attributes, it is useful to visualize the results graphically as a barchart representing the F-value. We recommend to order the attributes based on their decreasing product-wise F-values, and by colour-coding them based on their significance:
 
@@ -2529,9 +2517,7 @@ On the first dimension, \texttt{P10} is opposed to \texttt{P09} and \texttt{P03}
 \hypertarget{demographic-and-tfeq-data}{%
 \section{Demographic and TFEQ Data}\label{demographic-and-tfeq-data}}
 
-The \emph{TFEQ.xlsx} file contains descriptive (i.e.~\emph{demographic}) information regarding the consumers and their food-related personality traits (i.e.~\emph{TFEQ}) .
-
-A quick look at this file shows that it contains three tabs denoted as \emph{Data}, \emph{Variables}, and \emph{Levels}:
+The \emph{TFEQ.xlsx} file contains descriptive (i.e.~\emph{demographic}) information regarding the consumers and their food-related personality traits (i.e.~\emph{TFEQ}) .This file has three tabs denoted as \emph{Data}, \emph{Variables}, and \emph{Levels}:
 
 \begin{itemize}
 \tightlist
@@ -2567,8 +2553,8 @@ Let's start with importing this data set. The importation is done in multiple st
 
 For this demographic data file, we are interested to see the partition of consumers for each of the descriptive variables. More precisely, we would like to know the frequency and proportion (in percentage) attached to each level of \texttt{Living\ area}, \texttt{Housing}, \texttt{Income\ range}, and \texttt{Occupation}.
 
-To obtain such a table, let's start by only selecting the particular columns corresponding to these variables together with \texttt{Judge}.
-Data from surveys and questionnaires are often coded. For example, in this dataset, answer \#6 to question Q10 means ``Student'', while answer \#7 to the same question means ``Qualified worker''. Thus, to make this data readable by human beings, we need to decode them using the information stored in \texttt{demo\_lev}. For that, we could automatically recode each variable using \texttt{mutate()} and \texttt{factor()}. However, we prefer here to use \texttt{pivot\_longer()} to create a long thin tibble, and then to merge this table with \texttt{demo\_lev} by \texttt{Question} and \texttt{Response} using \texttt{inner\_join()} instead. Once done, we can aggregate the results by \texttt{Question} and \texttt{Levels} (since we want to use the level information, not their code) and compute the frequency (\texttt{n()}) and the proportion (\texttt{N/sum(N)})\footnote{We use the package \texttt{\{formattable\}} to print the results in percentage using one decimal. As an alternative, we could have used \texttt{percent()} from the \texttt{\{scales\}} package.}.
+To obtain such a table, let's start by selecting only the columns corresponding to these variables together with \texttt{Judge}.
+Data from surveys and questionnaires are often coded. For example, in this dataset, answer \#6 to question Q10 means ``Student'', while answer \#7 to the same question means ``Qualified worker''. Thus, to make these data readable by human beings, we need to decode them using the information stored in \texttt{demo\_lev}. For that, we could automatically recode each variable using \texttt{mutate()} and \texttt{factor()}. However, we prefer here to use \texttt{pivot\_longer()} to create a long thin tibble, and then to merge this table with \texttt{demo\_lev} by \texttt{Question} and \texttt{Response} using \texttt{inner\_join()} instead. Once done, we can aggregate the results by \texttt{Question} and \texttt{Levels} (since we want to use the level information, not their code) and compute the frequency (\texttt{n()}) and the proportion (\texttt{N/sum(N)})\footnote{We use the package \texttt{\{formattable\}} to print the results in percentage using one decimal. As an alternative, we could have used \texttt{percent()} from the \texttt{\{scales\}} package.}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2585,7 +2571,7 @@ Data from surveys and questionnaires are often coded. For example, in this datas
 \end{Highlighting}
 \end{Shaded}
 
-Histograms are a nice way to visualize these different proportions. Such histograms can be obtained by splitting \texttt{demog\_reduced} by \texttt{Question} and by creating in each case an histogram using either \texttt{N} or \texttt{Pct} (we are using \texttt{Pct})\footnote{Here, the histograms are ordered decreasingly (\texttt{reorder}) and are represented horizontally (\texttt{coord\_flip()}).}. Of course, we automate this across all questions using \texttt{map()}.
+Histograms are a nice way to visualize proportions and compare them over several variables. Such histograms can be obtained by splitting \texttt{demog\_reduced} by \texttt{Question} and by creating in each case an histogram using either \texttt{N} or \texttt{Pct} (we are using \texttt{Pct})\footnote{Here, the histograms are ordered decreasingly (\texttt{reorder}) and are represented horizontally (\texttt{coord\_flip()}).}. Of course, we automate this across all questions using \texttt{map()}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2608,14 +2594,16 @@ Histograms are a nice way to visualize these different proportions. Such histogr
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{behavioral-data-tfeq-traits}{%
-\subsection{Behavioral Data: TFEQ Traits}\label{behavioral-data-tfeq-traits}}
+\hypertarget{personality-traits-and-eating-behavior-tfeq-data}{%
+\subsection{Personality traits and eating behavior: TFEQ data}\label{personality-traits-and-eating-behavior-tfeq-data}}
 
-In the same data set, consumers also answered some behavioral questions that reflects on their relation to food. These questions can be categorized into three groups: Disinhibitor (variables starting with \texttt{D}), Restriction (variables starting with \texttt{R}), and Hunger (variables starting with \texttt{H}).
+In the same data set, consumers also answered some behavioral questions that reflect on their relation to food. These questions can be categorized into three groups relating to three underlying factors, respectively: Disinhibition (variables starting with \texttt{D}), Restriction (variables starting with \texttt{R}), and sensitivity to Hunger (variables starting with \texttt{H}).
 
-Let's start by selecting all these variables. We could use \texttt{select()} combined with \texttt{starts\_with("D")}, \texttt{starts\_with("R")}, and \texttt{starts\_with("H")}, but this solution is not satisfying since it can also seelct other variables that would start with any of these letters (e.g.~Housing). Since the variables are all well structured (the all start with the letters D, R, or H, followed by a number), the use of a regular expression is more appropriate.
+In order to analyze these three factors separately, we first need to select the corresponding variables. When variable names are well structured with a recurring pattern (here, they all start with the letters D, R, or H, followed by a number) the use of a \emph{regular expression} is very powerful.
 
-In practice, generating regular expression can be quite complex as it is an abstract concept which follow very specific rules. Fortunately, the package \texttt{\{RVerbalExpression\}} is a great assistant as it generates the regular expression for you thanks to understandable functions. First, we initiate the regular expression by calling the function \texttt{rx()} to which we add that we first want any variables that start with any of the letter R, D, or H, followed by a number (or more, as values go from 1 to 21). This can be done using the following code:
+Note that, instead we could think of using \texttt{select()} combined with \texttt{starts\_with("D")}, \texttt{starts\_with("R")}, and \texttt{starts\_with("H")}, but this solution is not satisfactory because it can also select other variables that would start with any of these letters (e.g.~Housing).
+
+In practice, generating a regular expression can be quite complex as it is an abstract concept which follows very specific rules. Fortunately, the package \texttt{\{RVerbalExpression\}} is a great assistant as it generates the regular expression for you thanks to understandable functions. First, we initiate the regular expression by calling the function \texttt{rx()} to which we add that we first want any variables that start with any of the letter R, D, or H, followed by a number (or more, as values go from 1 to 21). This can be done using the following code:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2678,7 +2666,7 @@ We then apply this function to each variable separately using \texttt{map()} aft
 \end{Highlighting}
 \end{Shaded}
 
-Similarly, we can create histograms representing the frequency for each variable. But here we limit ourselves to variables related to Disinhibitor. To do so, we start by generating the right regular expression (only selecting variables starting with ``D'') that we used to filter the results, before creating the corresponding graph:
+Similarly, we can create histograms representing the frequency for each variable. But here we limit ourselves to variables related to Disinhibition. To do so, we start by generating the right regular expression (only selecting variables starting with ``D'') that we used to filter the results, before creating the corresponding graph:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2724,9 +2712,9 @@ Ultimately, we compute the TFEQ Score by summing across all \texttt{TFEQValue} p
   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{TFEQValue =} \FunctionTok{ifelse}\NormalTok{(Direction }\SpecialCharTok{==} \StringTok{"Equal"} \SpecialCharTok{\&}\NormalTok{ Score }\SpecialCharTok{==}\NormalTok{ Value, }\DecValTok{1}\NormalTok{, }
                         \FunctionTok{ifelse}\NormalTok{ (Direction }\SpecialCharTok{==} \StringTok{"Superior"} \SpecialCharTok{\&}\NormalTok{ Score }\SpecialCharTok{\textgreater{}}\NormalTok{ Value, }\DecValTok{1}\NormalTok{,}
                                 \FunctionTok{ifelse}\NormalTok{(Direction }\SpecialCharTok{==} \StringTok{"Inferior"} \SpecialCharTok{\&}\NormalTok{ Score }\SpecialCharTok{\textless{}}\NormalTok{ Value, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{)))) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Factor =} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{str\_starts}\NormalTok{(.}\SpecialCharTok{$}\NormalTok{DHR, }\StringTok{"D"}\NormalTok{), }\StringTok{"Disinhibitor"}\NormalTok{,}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Factor =} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{str\_starts}\NormalTok{(.}\SpecialCharTok{$}\NormalTok{DHR, }\StringTok{"D"}\NormalTok{), }\StringTok{"Disinhibition"}\NormalTok{,}
                          \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{str\_starts}\NormalTok{(.}\SpecialCharTok{$}\NormalTok{DHR, }\StringTok{"H"}\NormalTok{), }\StringTok{"Hunger"}\NormalTok{, }\StringTok{"Restriction"}\NormalTok{))) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Factor =} \FunctionTok{factor}\NormalTok{(Factor, }\AttributeTok{levels=}\FunctionTok{c}\NormalTok{(}\StringTok{"Restriction"}\NormalTok{,}\StringTok{"Disinhibitor"}\NormalTok{,}\StringTok{"Hunger"}\NormalTok{))) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Factor =} \FunctionTok{factor}\NormalTok{(Factor, }\AttributeTok{levels=}\FunctionTok{c}\NormalTok{(}\StringTok{"Restriction"}\NormalTok{,}\StringTok{"Disinhibition"}\NormalTok{,}\StringTok{"Hunger"}\NormalTok{))) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{group\_by}\NormalTok{(Judge, Factor) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{summarize}\NormalTok{(}\AttributeTok{TFEQ =} \FunctionTok{sum}\NormalTok{(TFEQValue)) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Judge =} \FunctionTok{factor}\NormalTok{(Judge, }\AttributeTok{levels=}\FunctionTok{unique}\NormalTok{(}\FunctionTok{str\_sort}\NormalTok{(.}\SpecialCharTok{$}\NormalTok{Judge, }\AttributeTok{numeric=}\ConstantTok{TRUE}\NormalTok{)))) }\SpecialCharTok{\%\textgreater{}\%} 
