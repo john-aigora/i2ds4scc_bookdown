@@ -24,7 +24,7 @@
 <meta name="author" content="John Ennis, Julien Delarue, and Thierry Worch" />
 
 
-<meta name="date" content="2021-08-16" />
+<meta name="date" content="2021-08-20" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -165,8 +165,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.3.3" data-path="data-science.html"><a href="data-science.html#data-analysis2"><i class="fa fa-check"></i><b>2.3.3</b> Data Analysis</a></li>
 <li class="chapter" data-level="2.3.4" data-path="data-science.html"><a href="data-science.html#value-delivery2"><i class="fa fa-check"></i><b>2.3.4</b> Value Delivery</a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="data-science.html"><a href="data-science.html#reproducible-research-1"><i class="fa fa-check"></i><b>2.4</b> Reproducible Research</a></li>
-<li class="chapter" data-level="2.5" data-path="data-science.html"><a href="data-science.html#how-to-learn-data-science"><i class="fa fa-check"></i><b>2.5</b> How to Learn Data Science</a></li>
+<li class="chapter" data-level="2.4" data-path="data-science.html"><a href="data-science.html#how-to-learn-data-science"><i class="fa fa-check"></i><b>2.4</b> How to Learn Data Science</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="data-manip.html"><a href="data-manip.html"><i class="fa fa-check"></i><b>3</b> Data Manipulation</a>
 <ul>
@@ -275,13 +274,13 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="10" data-path="value-delivery.html"><a href="value-delivery.html"><i class="fa fa-check"></i><b>10</b> Value Delivery</a>
 <ul>
-<li class="chapter" data-level="10.1" data-path="value-delivery.html"><a href="value-delivery.html#communicate-1"><i class="fa fa-check"></i><b>10.1</b> Communicate</a>
+<li class="chapter" data-level="10.1" data-path="value-delivery.html"><a href="value-delivery.html#communicate2"><i class="fa fa-check"></i><b>10.1</b> Communicate</a>
 <ul>
 <li class="chapter" data-level="10.1.1" data-path="value-delivery.html"><a href="value-delivery.html#know-your-audience"><i class="fa fa-check"></i><b>10.1.1</b> Know Your Audience</a></li>
 <li class="chapter" data-level="10.1.2" data-path="value-delivery.html"><a href="value-delivery.html#pick-the-correct-format"><i class="fa fa-check"></i><b>10.1.2</b> Pick the Correct Format</a></li>
 <li class="chapter" data-level="10.1.3" data-path="value-delivery.html"><a href="value-delivery.html#storytelling"><i class="fa fa-check"></i><b>10.1.3</b> Storytelling</a></li>
 </ul></li>
-<li class="chapter" data-level="10.2" data-path="value-delivery.html"><a href="value-delivery.html#reformulate-1"><i class="fa fa-check"></i><b>10.2</b> Reformulate</a></li>
+<li class="chapter" data-level="10.2" data-path="value-delivery.html"><a href="value-delivery.html#reformulate2"><i class="fa fa-check"></i><b>10.2</b> Reformulate</a></li>
 </ul></li>
 <li class="part"><span><b>Haute Cuisine</b></span></li>
 <li class="chapter" data-level="11" data-path="machine-learning.html"><a href="machine-learning.html"><i class="fa fa-check"></i><b>11</b> Machine Learning</a>
@@ -449,7 +448,7 @@ If we would want to run the ANOVA for <code>Sweet</code>, the code would look li
 <p>For both these solutions, the dataset should be in the long and short form, which can be obtained using <code>pivot_longer()</code>:</p>
 <div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="data-analysis.html#cb73-1" aria-hidden="true" tabindex="-1"></a>senso_aov_data <span class="ot">&lt;-</span> sensory <span class="sc">%&gt;%</span> </span>
 <span id="cb73-2"><a href="data-analysis.html#cb73-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(Shiny<span class="sc">:</span>Melting, <span class="at">names_to=</span><span class="st">&quot;Attribute&quot;</span>, <span class="at">values_to=</span><span class="st">&quot;Score&quot;</span>)</span></code></pre></div>
-<p>From this structure, the first approach consists in splitting the data by attribute. Once done, we run the ANOVA for each data subset (the model is then defined as <code>Score ~ Product + Judge</code>), and we extract the results of interest using the <code>{broom}</code> package<a href="#fn10" class="footnote-ref" id="fnref10"><sup>10</sup></a>
+<p>From this structure, the first approach consists in splitting the data by attribute. Once done, we run the ANOVA for each data subset (the model is then defined as <code>Score ~ Product + Judge</code>), and we extract the results of interest using the <code>{broom}</code> package<a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a>
 Ultimately, the results can be combined again using <code>enframe()</code> and <code>unnest()</code>.</p>
 <div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="data-analysis.html#cb74-1" aria-hidden="true" tabindex="-1"></a>senso_aov1 <span class="ot">&lt;-</span> senso_aov_data <span class="sc">%&gt;%</span> </span>
 <span id="cb74-2"><a href="data-analysis.html#cb74-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">split</span>(.<span class="sc">$</span>Attribute) <span class="sc">%&gt;%</span> </span>
@@ -546,7 +545,7 @@ To illustrate how convenient this is, let’s take advantage of the two qualitat
 <h3><span class="header-section-number">9.2.1</span> Demographic Data: Frequency and Proportion</h3>
 <p>For this demographic data file, we are interested to see the partition of consumers for each of the descriptive variables. More precisely, we would like to know the frequency and proportion (in percentage) attached to each level of <code>Living area</code>, <code>Housing</code>, <code>Income range</code>, and <code>Occupation</code>.</p>
 <p>To obtain such a table, let’s start by selecting only the columns corresponding to these variables together with <code>Judge</code>.
-Data from surveys and questionnaires are often coded. For example, in this dataset, answer #6 to question Q10 means “Student,” while answer #7 to the same question means “Qualified worker.” Thus, to make these data readable by human beings, we need to decode them using the information stored in <code>demo_lev</code>. For that, we could automatically recode each variable using <code>mutate()</code> and <code>factor()</code>. However, we prefer here to use <code>pivot_longer()</code> to create a long thin tibble, and then to merge this table with <code>demo_lev</code> by <code>Question</code> and <code>Response</code> using <code>inner_join()</code> instead. Once done, we can aggregate the results by <code>Question</code> and <code>Levels</code> (since we want to use the level information, not their code) and compute the frequency (<code>n()</code>) and the proportion (<code>N/sum(N)</code>)<a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a>.
+Data from surveys and questionnaires are often coded. For example, in this dataset, answer #6 to question Q10 means “Student,” while answer #7 to the same question means “Qualified worker.” Thus, to make these data readable by human beings, we need to decode them using the information stored in <code>demo_lev</code>. For that, we could automatically recode each variable using <code>mutate()</code> and <code>factor()</code>. However, we prefer here to use <code>pivot_longer()</code> to create a long thin tibble, and then to merge this table with <code>demo_lev</code> by <code>Question</code> and <code>Response</code> using <code>inner_join()</code> instead. Once done, we can aggregate the results by <code>Question</code> and <code>Levels</code> (since we want to use the level information, not their code) and compute the frequency (<code>n()</code>) and the proportion (<code>N/sum(N)</code>)<a href="#fn12" class="footnote-ref" id="fnref12"><sup>12</sup></a>.
 <!-- JD: I think it's best to avoid saying "we prefer to use..." without explaining why we prefer that (here, pivot_longer()+inner_join()), because it's disturbing for the reader who has to think why  --></p>
 <div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="data-analysis.html#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(formattable)</span>
 <span id="cb82-2"><a href="data-analysis.html#cb82-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -558,7 +557,7 @@ Data from surveys and questionnaires are often coded. For example, in this datas
 <span id="cb82-8"><a href="data-analysis.html#cb82-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">N =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
 <span id="cb82-9"><a href="data-analysis.html#cb82-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Pct =</span> <span class="fu">percent</span>(N<span class="sc">/</span><span class="fu">sum</span>(N), <span class="at">digits=</span>1L)) <span class="sc">%&gt;%</span> </span>
 <span id="cb82-10"><a href="data-analysis.html#cb82-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code></pre></div>
-<p>Histograms are a nice way to visualize proportions and compare them over several variables. Such histograms can be obtained by splitting <code>demog_reduced</code> by <code>Question</code> and by creating in each case an histogram using either <code>N</code> or <code>Pct</code> (we are using <code>Pct</code>)<a href="#fn12" class="footnote-ref" id="fnref12"><sup>12</sup></a>. Of course, we automate this across all questions using <code>map()</code>.</p>
+<p>Histograms are a nice way to visualize proportions and compare them over several variables. Such histograms can be obtained by splitting <code>demog_reduced</code> by <code>Question</code> and by creating in each case an histogram using either <code>N</code> or <code>Pct</code> (we are using <code>Pct</code>)<a href="#fn13" class="footnote-ref" id="fnref13"><sup>13</sup></a>. Of course, we automate this across all questions using <code>map()</code>.</p>
 <div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="data-analysis.html#cb83-1" aria-hidden="true" tabindex="-1"></a>demog_reduced <span class="sc">%&gt;%</span> </span>
 <span id="cb83-2"><a href="data-analysis.html#cb83-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">split</span>(.<span class="sc">$</span>Question) <span class="sc">%&gt;%</span> </span>
 <span id="cb83-3"><a href="data-analysis.html#cb83-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="cf">function</span>(data){</span>
@@ -640,7 +639,7 @@ Data from surveys and questionnaires are often coded. For example, in this datas
 <div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="data-analysis.html#cb89-1" aria-hidden="true" tabindex="-1"></a>var_rdh <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(file_path, <span class="at">sheet=</span><span class="st">&quot;Variables&quot;</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb89-2"><a href="data-analysis.html#cb89-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(Name, rdh)) <span class="sc">%&gt;%</span> </span>
 <span id="cb89-3"><a href="data-analysis.html#cb89-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Name, Direction, Value)</span></code></pre></div>
-<p>This information is added to <code>demographic</code>. Since we need to evaluate each assessors’ answer to the TFEQ questions, we create a new variable <code>TFEQValue</code> which takes a 1 if the corresponding condition is met, and a 0 otherwise. Such approach is done through <code>mutate()</code> combined with a succession of intertwined <code>ifelse()</code> functions.<a href="#fn13" class="footnote-ref" id="fnref13"><sup>13</sup></a></p>
+<p>This information is added to <code>demographic</code>. Since we need to evaluate each assessors’ answer to the TFEQ questions, we create a new variable <code>TFEQValue</code> which takes a 1 if the corresponding condition is met, and a 0 otherwise. Such approach is done through <code>mutate()</code> combined with a succession of intertwined <code>ifelse()</code> functions.<a href="#fn14" class="footnote-ref" id="fnref14"><sup>14</sup></a></p>
 <p>Ultimately, we compute the TFEQ Score by summing across all <code>TFEQValue</code> per respondent (here, we compute the sum per category first before computing the grand total per respondent).</p>
 <div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="data-analysis.html#cb90-1" aria-hidden="true" tabindex="-1"></a>TFEQ <span class="ot">&lt;-</span> demographic <span class="sc">%&gt;%</span> </span>
 <span id="cb90-2"><a href="data-analysis.html#cb90-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Judge, <span class="fu">matches</span>(rdh)) <span class="sc">%&gt;%</span> </span>
@@ -725,7 +724,7 @@ At the individual level, such linear relationship is also observed (here for the
 <span id="cb96-9"><a href="data-analysis.html#cb96-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Overall Liking&quot;</span>, <span class="st">&quot;(Assessment after first bite vs. end of the tasting)&quot;</span>)<span class="sc">+</span></span>
 <span id="cb96-10"><a href="data-analysis.html#cb96-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Judge)</span></code></pre></div>
 <!-- Also include comparison between Liking score (9pt) and the continuous scale? Or should we put that as an exercise and make them reflect on the results? We could ask to create the plot including all consumers and then ask specifically for some of them... -->
-<p>Another interesting relationship to study involves the liking scores<a href="#fn14" class="footnote-ref" id="fnref14"><sup>14</sup></a> and the number of cookies eaten by each consumer. We could follow the same procedure as before, but prefer to add here a filter to only show consumers with a significant regression line at 5%.</p>
+<p>Another interesting relationship to study involves the liking scores<a href="#fn15" class="footnote-ref" id="fnref15"><sup>15</sup></a> and the number of cookies eaten by each consumer. We could follow the same procedure as before, but prefer to add here a filter to only show consumers with a significant regression line at 5%.</p>
 <p>Let’s start by creating a function called <code>run_reg()</code> that runs the regression analysis of the number of biscuits (<code>N</code>) in function of the liking score (<code>Liking</code>):</p>
 <div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="data-analysis.html#cb97-1" aria-hidden="true" tabindex="-1"></a>run_reg <span class="ot">&lt;-</span> <span class="cf">function</span>(df){</span>
 <span id="cb97-2"><a href="data-analysis.html#cb97-2" aria-hidden="true" tabindex="-1"></a>  output <span class="ot">&lt;-</span> <span class="fu">lm</span>(N <span class="sc">~</span> Liking, <span class="at">data=</span>df)</span>
@@ -962,12 +961,12 @@ The sensory space is store in <code>senso</code>, whereas the surface response p
 </div>
 <div class="footnotes">
 <hr />
-<ol start="10">
-<li id="fn10"><p>The <code>{broom}</code> package is a very useful package that convert statistical objects into tidy tables.<a href="data-analysis.html#fnref10" class="footnote-back">↩︎</a></p></li>
-<li id="fn11"><p>We use the package <code>{formattable}</code> to print the results in percentage using one decimal. As an alternative, we could have used <code>percent()</code> from the <code>{scales}</code> package.<a href="data-analysis.html#fnref11" class="footnote-back">↩︎</a></p></li>
-<li id="fn12"><p>Here, the histograms are ordered decreasingly (<code>reorder</code>) and are represented horizontally (<code>coord_flip()</code>).<a href="data-analysis.html#fnref12" class="footnote-back">↩︎</a></p></li>
-<li id="fn13"><p>The function <code>ifelse()</code> takes three parameters: 1. the condition to test, 2. the value or code to run if the condition is met, and 3. the value or code to run if the condition is not met.<a href="data-analysis.html#fnref13" class="footnote-back">↩︎</a></p></li>
-<li id="fn14"><p>We would like to remind the reader that the liking scores measured on the categorical scale was reverted since 1 defined “I like it a lot” and 9 “I dislike it a lot.” To simplify the readability, this scale is reverted so that 1 corresponds to a low liking score, and 9 to a high liking score (in practice, we will take as value 10-score given).<a href="data-analysis.html#fnref14" class="footnote-back">↩︎</a></p></li>
+<ol start="11">
+<li id="fn11"><p>The <code>{broom}</code> package is a very useful package that convert statistical objects into tidy tables.<a href="data-analysis.html#fnref11" class="footnote-back">↩︎</a></p></li>
+<li id="fn12"><p>We use the package <code>{formattable}</code> to print the results in percentage using one decimal. As an alternative, we could have used <code>percent()</code> from the <code>{scales}</code> package.<a href="data-analysis.html#fnref12" class="footnote-back">↩︎</a></p></li>
+<li id="fn13"><p>Here, the histograms are ordered decreasingly (<code>reorder</code>) and are represented horizontally (<code>coord_flip()</code>).<a href="data-analysis.html#fnref13" class="footnote-back">↩︎</a></p></li>
+<li id="fn14"><p>The function <code>ifelse()</code> takes three parameters: 1. the condition to test, 2. the value or code to run if the condition is met, and 3. the value or code to run if the condition is not met.<a href="data-analysis.html#fnref14" class="footnote-back">↩︎</a></p></li>
+<li id="fn15"><p>We would like to remind the reader that the liking scores measured on the categorical scale was reverted since 1 defined “I like it a lot” and 9 “I dislike it a lot.” To simplify the readability, this scale is reverted so that 1 corresponds to a low liking score, and 9 to a high liking score (in practice, we will take as value 10-score given).<a href="data-analysis.html#fnref15" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
