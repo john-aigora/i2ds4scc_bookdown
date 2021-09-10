@@ -176,8 +176,8 @@ fviz_pca_biplot(senso_pca)
 On the first dimension, `P10` is opposed to `P09` and `P03` as it is more intense for attributes such as `Sweet`, and `Dairy flavor` for example, and less intense for attributes such as `Dry in mouth` and `External color intensity`. On the second dimension, `P08`, `P06`, and `POpt` are opposed to `P02` and `P07` as they score higher for `Qty of inclusions`, and `Initial hardness`, and score lower for `RawDough flavor` and `Shiny`.
 
 
-## Demographic and TFEQ Data
-
+## Demographic and Questionnaire Data
+<!-- Previous title was 'Demographic and TFEQ Data'. I changed it to make it sound more general -->
 
 The *TFEQ.xlsx* file contains descriptive (i.e. *demographic*) information regarding the consumers and their food-related personality traits (i.e. *TFEQ*) .This file has three tabs denoted as *Data*, *Variables*, and *Levels*:
 
@@ -228,7 +228,7 @@ demog_reduced <- demographic %>%
 ```
 
 
-Histograms are a nice way to visualize proportions and compare them over several variables. Such histograms can be obtained by splitting `demog_reduced` by `Question` and by creating in each case an histogram using either `N` or `Pct` (we are using `Pct`)^[Here, the histograms are ordered decreasingly (`reorder`) and are represented horizontally (`coord_flip()`).]. Of course, we automate this across all questions using `map()`.
+Histograms are a nice way to visualize proportions and to compare them over several variables. Such histograms can be obtained by splitting `demog_reduced` by `Question` and by creating in each case an histogram using either `N` or `Pct` (we are using `Pct`)^[Here, the histograms are ordered decreasingly (`reorder`) and are represented horizontally (`coord_flip()`).]. Of course, we automate this across all questions using `map()`.
 
 
 ```{r}
@@ -286,7 +286,7 @@ demographic %>%
 ```
 
 
-Since we would like to create a frequency table for each of these variables, we create a function called `myfreq()` which will automatically compute the frequency for each level, and the corresponding percentage.
+In order to build a separate frequency table for each of these variables, we create a function called `myfreq()` which will automatically compute the frequency for each level, and the corresponding percentage.
 
 
 ```{r}
@@ -326,7 +326,7 @@ TFEQ_freq <- demographic %>%
 ```
 
 
-Similarly, we can create histograms representing the frequency for each variable. But here we limit ourselves to variables related to Disinhibition. To do so, we start by generating the right regular expression (only selecting variables starting with "D") that we used to filter the results, before creating the corresponding graph:
+Accordingly, we can create histograms that represent the frequency distribution for each variable. But let's suppose that we only want to display variables related to Disinhibition. To do so, we first need to generate the corresponding regular expression (only selecting variables starting with "D") to filter the results before creating the plots:
 
 
 ```{r}
@@ -338,18 +338,18 @@ d <- rx() %>%
 TFEQ_freq %>% 
   filter(str_detect(TFEQ, d)) %>% 
   ggplot(aes(x=Response, y=Pct, label=Pct))+
-  geom_bar(stat="identity", fill="grey50")+
+  geom_bar(stat="identity" , fill="grey50")+
   geom_text(aes(y = Pct/2), colour="white")+
   theme_bw()+
   facet_wrap(~TFEQ, scales="free")
 ```
 
 
-Ultimately, the TFEQ questionnaire consists in a set of structured questions whose respective answers combine to provide a TFEQ score. This TFEQ score translates into certain behavior towards food. Similar structured questionnaire could include IQ test, Food Neophobia, etc.
+Structured questionnaires such as the TFEQ are very frequent in sensory and consumer science. They are used to measure individual patterns as diverse as personality traits, attitudes, food choice motives, engagement, social desirability bias, etc. Ultimately, the TFEQ questionnaire consists in a set of structured questions whose respective answers combine to provide a TFEQ score (actually, three scores, one for Disinhibition, one for Restriction and one for sensitivity to Hunger). This TFEQ scores translate into certain food behavior tendencies.  
 
-However, it appears that the TFEQ score is not computed by simply adding the scores of all TFEQ questions together. Instead, it follows certain rules that are stored in the *Variables* sheet in *TFEQ.xlsx*. For each TFEQ question, the rule to follow is provided by `Direction` and `Value`, and works as following: if the condition provided by `Direction` and `Value` is met, then the respondent gets a 1, else a 0. Ultimately, the TFEQ is the sum of all these evaluations.
+However, it appears that the TFEQ scores are not computed by simply adding the scores of all TFEQ questions together. Instead, they follow certain rules that are stored in the *Variables* sheet in *TFEQ.xlsx*. For each TFEQ question, the rule to follow is provided by `Direction` and `Value`, and works as following: if the condition provided by `Direction` and `Value` is met, then the respondent gets a 1, else a 0. Ultimately, the TFEQ is the sum of all these evaluations.  
 
-Let's start by extracting this information (`Direction` and `Value`) from the sheet Variables for all the variables involved in the computation of the TFEQ score. We store this in `var_drh`.
+Let's start by extracting this information (`Direction` and `Value`) from the sheet *Variables* for all the variables involved in the computation of the TFEQ scores. We store this in `var_drh`.
 
 
 ```{r}

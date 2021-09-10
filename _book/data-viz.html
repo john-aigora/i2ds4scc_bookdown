@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 4 Data Visualization | Data Science for Sensory and Consumer Scientists</title>
   <meta name="description" content="Open development of data science book for sensory and consumer scientists." />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 4 Data Visualization | Data Science for Sensory and Consumer Scientists" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="John Ennis, Julien Delarue, and Thierry Worch" />
 
 
-<meta name="date" content="2021-08-20" />
+<meta name="date" content="2021-08-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +33,7 @@
   
 <link rel="prev" href="data-manip.html"/>
 <link rel="next" href="auto-report.html"/>
-<script src="libs/header-attrs-2.6/header-attrs.js"></script>
+<script src="libs/header-attrs-2.9/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -51,12 +51,15 @@
 
 
 
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -116,6 +119,29 @@ code span.vs { color: #4e9a06; } /* VerbatimString */
 code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 
@@ -169,7 +195,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="3" data-path="data-manip.html"><a href="data-manip.html"><i class="fa fa-check"></i><b>3</b> Data Manipulation</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="data-manip.html"><a href="data-manip.html#tidy-data"><i class="fa fa-check"></i><b>3.1</b> Tidying Data</a>
+<li class="chapter" data-level="4.1" data-path="data-manip.html"><a href="data-manip.html#tidying-data"><i class="fa fa-check"></i><b>4.1</b> Tidying Data</a>
 <ul>
 <li class="chapter" data-level="3.1.1" data-path="data-manip.html"><a href="data-manip.html#simple-manipulations"><i class="fa fa-check"></i><b>3.1.1</b> Simple Manipulations</a></li>
 <li class="chapter" data-level="3.1.2" data-path="data-manip.html"><a href="data-manip.html#reshaping-the-data"><i class="fa fa-check"></i><b>3.1.2</b> Reshaping the Data</a></li>
@@ -183,9 +209,10 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.2" data-path="data-viz.html"><a href="data-viz.html#table-making"><i class="fa fa-check"></i><b>4.2</b> Table Making</a></li>
 <li class="chapter" data-level="4.3" data-path="data-viz.html"><a href="data-viz.html#chart-making"><i class="fa fa-check"></i><b>4.3</b> Chart Making</a>
 <ul>
-<li class="chapter" data-level="4.3.1" data-path="data-viz.html"><a href="data-viz.html#philosophy-of-ggplot2"><i class="fa fa-check"></i><b>4.3.1</b> Philosophy of ggplot2</a></li>
-<li class="chapter" data-level="4.3.2" data-path="data-viz.html"><a href="data-viz.html#common-charts"><i class="fa fa-check"></i><b>4.3.2</b> Common Charts</a></li>
-<li class="chapter" data-level="4.3.3" data-path="data-viz.html"><a href="data-viz.html#additional-topics"><i class="fa fa-check"></i><b>4.3.3</b> Additional Topics</a></li>
+<li class="chapter" data-level="5.3.1" data-path="data-viz.html"><a href="data-viz.html#philosophy-of-ggplot2"><i class="fa fa-check"></i><b>5.3.1</b> Philosophy of <code>{ggplot2}</code></a></li>
+<li class="chapter" data-level="5.3.2" data-path="data-viz.html"><a href="data-viz.html#getting-started-with-ggplot2"><i class="fa fa-check"></i><b>5.3.2</b> Getting started with <code>{ggplot2}</code></a></li>
+<li class="chapter" data-level="5.3.3" data-path="data-viz.html"><a href="data-viz.html#common-charts"><i class="fa fa-check"></i><b>5.3.3</b> Common Charts</a></li>
+<li class="chapter" data-level="5.3.4" data-path="data-viz.html"><a href="data-viz.html#additional-topics"><i class="fa fa-check"></i><b>5.3.4</b> Additional Topics</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="auto-report.html"><a href="auto-report.html"><i class="fa fa-check"></i><b>5</b> Automated Reporting</a>
@@ -216,16 +243,13 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <li class="part"><span><b>Bon Appétit</b></span></li>
 <li class="chapter" data-level="6" data-path="example-projects.html"><a href="example-projects.html"><i class="fa fa-check"></i><b>6</b> Example Project: the biscuit study</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="example-projects.html"><a href="example-projects.html#products"><i class="fa fa-check"></i><b>6.1</b> Products</a></li>
-<li class="chapter" data-level="6.2" data-path="example-projects.html"><a href="example-projects.html#consumer-test"><i class="fa fa-check"></i><b>6.2</b> Consumer test</a>
-<ul>
-<li class="chapter" data-level="6.2.1" data-path="example-projects.html"><a href="example-projects.html#participants"><i class="fa fa-check"></i><b>6.2.1</b> Participants</a></li>
-<li class="chapter" data-level="6.2.2" data-path="example-projects.html"><a href="example-projects.html#test-design"><i class="fa fa-check"></i><b>6.2.2</b> Test design</a></li>
+<li class="chapter" data-level="7.1" data-path="example-projects.html"><a href="example-projects.html#products"><i class="fa fa-check"></i><b>7.1</b> Products</a></li>
+<li class="chapter" data-level="7.2" data-path="example-projects.html"><a href="example-projects.html#participants"><i class="fa fa-check"></i><b>7.2</b> Participants</a></li>
+<li class="chapter" data-level="7.3" data-path="example-projects.html"><a href="example-projects.html#design-of-the-consumer-test"><i class="fa fa-check"></i><b>7.3</b> Design of the consumer test</a></li>
+<li class="chapter" data-level="7.4" data-path="example-projects.html"><a href="example-projects.html#sensory-descriptive-analysis-data"><i class="fa fa-check"></i><b>7.4</b> Sensory descriptive analysis data</a></li>
+<li class="chapter" data-level="7.5" data-path="example-projects.html"><a href="example-projects.html#summary-of-the-datasets"><i class="fa fa-check"></i><b>7.5</b> Summary of the datasets</a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="example-projects.html"><a href="example-projects.html#sensory-descriptive-analysis-data"><i class="fa fa-check"></i><b>6.3</b> Sensory descriptive analysis data</a></li>
-<li class="chapter" data-level="6.4" data-path="example-projects.html"><a href="example-projects.html#summary-of-the-datasets"><i class="fa fa-check"></i><b>6.4</b> Summary of the datasets</a></li>
-</ul></li>
-<li class="chapter" data-level="7" data-path="data-collection.html"><a href="data-collection.html"><i class="fa fa-check"></i><b>7</b> Data Collection</a>
+<li class="chapter" data-level="8" data-path="data-collection.html"><a href="data-collection.html"><i class="fa fa-check"></i><b>8</b> Data Collection</a>
 <ul>
 <li class="chapter" data-level="7.1" data-path="data-collection.html"><a href="data-collection.html#design-1"><i class="fa fa-check"></i><b>7.1</b> Design</a></li>
 <li class="chapter" data-level="7.2" data-path="data-collection.html"><a href="data-collection.html#execute-1"><i class="fa fa-check"></i><b>7.2</b> Execute</a></li>
@@ -238,15 +262,13 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="8" data-path="data-prep.html"><a href="data-prep.html"><i class="fa fa-check"></i><b>8</b> Data Preparation</a>
 <ul>
-<li class="chapter" data-level="8.1" data-path="data-prep.html"><a href="data-prep.html#inspect"><i class="fa fa-check"></i><b>8.1</b> Inspect</a>
+<li class="chapter" data-level="9.1" data-path="data-prep.html"><a href="data-prep.html#inspect-1"><i class="fa fa-check"></i><b>9.1</b> Inspect</a>
 <ul>
-<li class="chapter" data-level="8.1.1" data-path="data-prep.html"><a href="data-prep.html#data-inspection"><i class="fa fa-check"></i><b>8.1.1</b> Data Inspection</a></li>
-<li class="chapter" data-level="8.1.2" data-path="data-prep.html"><a href="data-prep.html#design-inspection"><i class="fa fa-check"></i><b>8.1.2</b> Design Inspection</a></li>
-<li class="chapter" data-level="8.1.3" data-path="data-prep.html"><a href="data-prep.html#missing-data-inspection"><i class="fa fa-check"></i><b>8.1.3</b> Missing Data Inspection</a></li>
-<li class="chapter" data-level="8.1.4" data-path="data-prep.html"><a href="data-prep.html#checks-for-consistency-and-reliability"><i class="fa fa-check"></i><b>8.1.4</b> Checks for Consistency and Reliability</a></li>
-<li class="chapter" data-level="8.1.5" data-path="data-prep.html"><a href="data-prep.html#preliminary-tables-and-charts"><i class="fa fa-check"></i><b>8.1.5</b> Preliminary Tables and Charts</a></li>
+<li class="chapter" data-level="9.1.1" data-path="data-prep.html"><a href="data-prep.html#data-inspection"><i class="fa fa-check"></i><b>9.1.1</b> Data Inspection</a></li>
+<li class="chapter" data-level="9.1.2" data-path="data-prep.html"><a href="data-prep.html#design-inspection"><i class="fa fa-check"></i><b>9.1.2</b> Design Inspection</a></li>
+<li class="chapter" data-level="9.1.3" data-path="data-prep.html"><a href="data-prep.html#missing-data-inspection"><i class="fa fa-check"></i><b>9.1.3</b> Missing Data Inspection</a></li>
 </ul></li>
-<li class="chapter" data-level="8.2" data-path="data-prep.html"><a href="data-prep.html#clean"><i class="fa fa-check"></i><b>8.2</b> Clean</a>
+<li class="chapter" data-level="9.2" data-path="data-prep.html"><a href="data-prep.html#clean-1"><i class="fa fa-check"></i><b>9.2</b> Clean</a>
 <ul>
 <li class="chapter" data-level="8.2.1" data-path="data-prep.html"><a href="data-prep.html#renaming-variables-1"><i class="fa fa-check"></i><b>8.2.1</b> Renaming Variables</a></li>
 <li class="chapter" data-level="8.2.2" data-path="data-prep.html"><a href="data-prep.html#handling-data-type"><i class="fa fa-check"></i><b>8.2.2</b> Handling Data Type</a></li>
@@ -427,14 +449,61 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <div id="table-making" class="section level2" number="4.2">
 <h2><span class="header-section-number">4.2</span> Table Making</h2>
 </div>
-<div id="chart-making" class="section level2" number="4.3">
-<h2><span class="header-section-number">4.3</span> Chart Making</h2>
-<div id="philosophy-of-ggplot2" class="section level3" number="4.3.1">
-<h3><span class="header-section-number">4.3.1</span> Philosophy of ggplot2</h3>
-<p>Explain the principles of multi-layer graphs through an example.</p>
+<div id="chart-making" class="section level2" number="5.3">
+<h2><span class="header-section-number">5.3</span> Chart Making</h2>
+<p>“A picture is worth 1000 words.” This saying definitely applies to Statistics as well, since visual representation of data often appears clearer than the values themselves stored in a table. It is hence no surprise that R is also a powerful tool for graphics.</p>
+<p>In practice, there are various ways to build graphics in R. In fact, R itself comes with a powerful way of building graphs through the <code>plot()</code> function. An extensive description can be found in (<em>R Graphics 2nd edition Paul Murrell CRC Press</em>). Due to its philosophy, its simplicity, and the point of view adopted in this book, we will limit ourselves to graphics built using the package <code>{ggplot2}</code>.</p>
+<div id="philosophy-of-ggplot2" class="section level3" number="5.3.1">
+<h3><span class="header-section-number">5.3.1</span> Philosophy of <code>{ggplot2}</code></h3>
+<p><code>{ggplot2}</code> belongs to the <code>{tidyverse}</code>, and was developed by H. Wickham and colleagues at RStudio. It is hence no surprise that a lot of the procedures that we’re learning throughout this book also applies to <code>{ggplot2}</code>. More generally, building graphics with <code>{ggplot2}</code> fits very well within the pipes (<code>%&gt;%</code>) system from <code>{magrittr}</code>. As we will see, <code>{ggplot2}</code> also works with a system that is similar to pipes, except that the symbol used is <code>+</code> instead of <code>%&gt;%</code>.</p>
+<p><code>{ggplot2}</code> is a multi-layer graphical tools, meaning that the graphics are build by adding layers one at a time to finally build your graphics. This means that <code>ggplot</code> objects can be printed at any time, and yet still be improved by adding other layers if needed. To read more about <code>{gglot2}</code> and its philosophy, please refer to <a href="http://vita.had.co.nz/papers/layered-grammar.pdf" class="uri">http://vita.had.co.nz/papers/layered-grammar.pdf</a><a href="http://vita.had.co.nz/papers/layered-grammar.pdf">link</a>.</p>
+<p>Note that since building graphics is limited to one imagination, it is not possible to tackle each and every possibilities offered by <code>{ggplot2}</code> (and its extensions). For that reason, we limit ourselves to describing the principles of how <code>{ggplot2}</code>works. This should be more than sufficient to get you started, and should cover 90% of the graphics that are relevant in sensory and consumer science. But if that should not be the case, we invite you to look into the online documentation or to references such as [REFS].</p>
+</div>
+<div id="getting-started-with-ggplot2" class="section level3" number="5.3.2">
+<h3><span class="header-section-number">5.3.2</span> Getting started with <code>{ggplot2}</code></h3>
+<p>To use <code>{ggplot2}</code>, we need to load this package: this can either be done directly using:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="data-viz.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code></pre></div>
+<p>However, if you load the <code>{tidyverse}</code> package, this step can be ignored as <code>{ggplot2}</code> is included within the list of packages it contains:</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="data-viz.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<p>To illustrate the use of <code>{ggplot2}</code>, we will use the sensory dataset stored in <em>Sensory Profile.xlsx</em>.</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="data-viz.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<span id="cb36-2"><a href="data-viz.html#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb36-3"><a href="data-viz.html#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-4"><a href="data-viz.html#cb36-4" aria-hidden="true" tabindex="-1"></a>file_path <span class="ot">&lt;-</span> <span class="fu">here</span>(<span class="st">&quot;data&quot;</span>,<span class="st">&quot;Sensory Profile.xlsx&quot;</span>) </span>
+<span id="cb36-5"><a href="data-viz.html#cb36-5" aria-hidden="true" tabindex="-1"></a>p_info <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(file_path, <span class="at">sheet=</span><span class="st">&quot;Product Info&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-6"><a href="data-viz.html#cb36-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>Type)</span>
+<span id="cb36-7"><a href="data-viz.html#cb36-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-8"><a href="data-viz.html#cb36-8" aria-hidden="true" tabindex="-1"></a>sensory <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(file_path, <span class="at">sheet=</span><span class="st">&quot;Data&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-9"><a href="data-viz.html#cb36-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(p_info, <span class="at">by=</span><span class="st">&quot;Product&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-10"><a href="data-viz.html#cb36-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(Protein<span class="sc">:</span>Fiber, <span class="at">.after=</span>Product)</span></code></pre></div>
+<p>To initiate a graph, we start by calling the function <code>ggplot()</code>.
+Since the data we want to use is stored in <code>sensory</code>, we apply <code>ggplot()</code> to <code>sensory</code>:</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="data-viz.html#cb37-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(sensory)</span></code></pre></div>
+<p>If you run this line of code, you’ll notice that p contains an empty graphic. This is because we haven’t added any layer that is relevant for us yet.
+So let’s imagine we want to look at the overall relationship between <code>Sticky</code> and <code>Melting</code>. To do so, we want to create a scatter plot with <code>Sticky</code> in the x-axis, and <code>Melting</code> in the y-axis. To do so, we require to call a <code>geom_</code> function that relates to scatter plots, in this case <code>geom_point()</code>, by also informing through the aesthetics (defined through <code>aes()</code>) what needs to be considered on the x-axis and on the y-axis.</p>
+<p>This provides something similar to:</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="data-viz.html#cb38-1" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>Sticky, <span class="at">y=</span>Melting))</span></code></pre></div>
+<p>A scatter plot is hence generated. In this example, one can notice that many points are being printed: this can easily be explained by the fact that the raw sensory data are being used, meaning that there are as many points as there are assessors evaluating products.</p>
+<p>Let’s imagine we want to color the points per products to see if we can see patterns. This can be done by informing within the aesthetics that <code>colour = Product</code>:</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="data-viz.html#cb39-1" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>Sticky, <span class="at">y=</span>Melting, <span class="at">colour=</span>Product))</span></code></pre></div>
+<p>It is important to note that parameters can depend on a variable (e.g. <code>colour</code> in the previous example) or should be applied to all the elements of the graph. In the first case, the parameters is included within the aesthetics, whereas in the second case, it should be defined outside the aesthetics.
+Let’s illustrate this by providing a simple example in which we change the type of dots (from circle to square) using <code>pch</code>, and by increasing their size using <code>cex</code> to all the points of the graph:</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="data-viz.html#cb40-1" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>Sticky, <span class="at">y=</span>Melting, <span class="at">colour=</span>Product), <span class="at">pch=</span><span class="dv">15</span>, <span class="at">cex=</span><span class="dv">5</span>)</span></code></pre></div>
+<p>Since <code>{ggplot2}</code> is a multi-layer graph, let’s add another layer that contains the name of the panellists that is associated to each point. To do so, we could consider <code>geom_text()</code>. In that case, we need to inform in <code>aes()</code> what corresponds to the x-axis, what correspond to the y-axis, and <code>label</code>. To avoid having the label overlapping with the point, we propose to shift slightly the text vertically (using <code>nudge_y</code>):</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="data-viz.html#cb41-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(sensory)<span class="sc">+</span></span>
+<span id="cb41-2"><a href="data-viz.html#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>Sticky, <span class="at">y=</span>Melting, <span class="at">colour=</span>Product))<span class="sc">+</span></span>
+<span id="cb41-3"><a href="data-viz.html#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x=</span>Sticky, <span class="at">y=</span>Melting, <span class="at">label=</span>Judge), <span class="at">nudge_y=</span><span class="dv">1</span>)</span></code></pre></div>
+<p>initiate graph with ggplot()
+add geom_
+(discussion around geom_ that have some statistical computation integrated…)
+include aes()
+what is not an aesthetic - fixed options
+aes() included in ggplot are passed to every geom, unless stated differently!
+play around with themes
+miscalleneous</p>
 <p><code>aes()</code>, <code>geom_()</code>, <code>theme()</code></p>
-<div id="aesthetics" class="section level4" number="4.3.1.1">
-<h4><span class="header-section-number">4.3.1.1</span> aesthetics</h4>
+<div id="aesthetics" class="section level4" number="5.3.2.1">
+<h4><span class="header-section-number">5.3.2.1</span> aesthetics</h4>
 <p>Provide the most relevant options for <code>aes()</code></p>
 <ul>
 <li>x, y, z</li>
@@ -444,66 +513,66 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <li>alpha, size</li>
 </ul>
 </div>
-<div id="geom_" class="section level4" number="4.3.1.2">
-<h4><span class="header-section-number">4.3.1.2</span> geom_</h4>
+<div id="geom_" class="section level4" number="5.3.2.2">
+<h4><span class="header-section-number">5.3.2.2</span> geom_</h4>
 <p>Explain the fact that some <code>geom_()</code> comes with some stats automatically (e.g. <code>geom_bar</code> bins the data)</p>
 </div>
 </div>
-<div id="common-charts" class="section level3" number="4.3.2">
-<h3><span class="header-section-number">4.3.2</span> Common Charts</h3>
-<div id="scatter-points" class="section level4" number="4.3.2.1">
-<h4><span class="header-section-number">4.3.2.1</span> Scatter points</h4>
+<div id="common-charts" class="section level3" number="5.3.3">
+<h3><span class="header-section-number">5.3.3</span> Common Charts</h3>
+<div id="scatter-points" class="section level4" number="5.3.3.1">
+<h4><span class="header-section-number">5.3.3.1</span> Scatter points</h4>
 <p><code>geom_point()</code></p>
 </div>
-<div id="line-charts" class="section level4" number="4.3.2.2">
-<h4><span class="header-section-number">4.3.2.2</span> Line charts</h4>
+<div id="line-charts" class="section level4" number="5.3.3.2">
+<h4><span class="header-section-number">5.3.3.2</span> Line charts</h4>
 <p><code>geom_line()</code>, <code>geom_smooth()</code>
 <code>geom_abline()</code>
 <code>geom_hline()</code> and <code>geom_vline()</code>
 <code>geom_segment()</code> and <code>geom_arrow()</code></p>
 </div>
-<div id="bar-charts" class="section level4" number="4.3.2.3">
-<h4><span class="header-section-number">4.3.2.3</span> Bar charts</h4>
+<div id="bar-charts" class="section level4" number="5.3.3.3">
+<h4><span class="header-section-number">5.3.3.3</span> Bar charts</h4>
 <p><code>geom_bar</code>, <code>geom_polygon</code>, <code>geom_histogram()</code>, <code>geom_freqpoly()</code>
 <code>position="identity"</code>, <code>position="dodge"</code> or <code>position="fill"</code></p>
 </div>
-<div id="distribution" class="section level4" number="4.3.2.4">
-<h4><span class="header-section-number">4.3.2.4</span> Distribution</h4>
+<div id="distribution" class="section level4" number="5.3.3.4">
+<h4><span class="header-section-number">5.3.3.4</span> Distribution</h4>
 <p><code>geom_boxplot()</code> and <code>geom_violin()</code></p>
 </div>
-<div id="text" class="section level4" number="4.3.2.5">
-<h4><span class="header-section-number">4.3.2.5</span> Text</h4>
+<div id="text" class="section level4" number="5.3.3.5">
+<h4><span class="header-section-number">5.3.3.5</span> Text</h4>
 <p><code>geom_text</code> and <code>geom_label</code>
 presentation of <strong>{ggrepel}</strong></p>
 </div>
-<div id="rectangles" class="section level4" number="4.3.2.6">
-<h4><span class="header-section-number">4.3.2.6</span> Rectangles</h4>
+<div id="rectangles" class="section level4" number="5.3.3.6">
+<h4><span class="header-section-number">5.3.3.6</span> Rectangles</h4>
 <p><code>geom_tile()</code>, <code>geom_rect</code>, and <code>geom_raster()</code></p>
 </div>
-<div id="themes-and-legend" class="section level4" number="4.3.2.7">
-<h4><span class="header-section-number">4.3.2.7</span> Themes and legend</h4>
+<div id="themes-and-legend" class="section level4" number="5.3.3.7">
+<h4><span class="header-section-number">5.3.3.7</span> Themes and legend</h4>
 <p><code>theme()</code>, and pre-defined themes like <code>theme_bw()</code>, <code>theme_minimal()</code>, etc.
 <code>ggtitle()</code>
 <code>xlab()</code>, <code>ylab()</code>, or <code>labs()</code></p>
 </div>
 </div>
-<div id="additional-topics" class="section level3" number="4.3.3">
-<h3><span class="header-section-number">4.3.3</span> Additional Topics</h3>
-<div id="playing-around-with-axes" class="section level4" number="4.3.3.1">
-<h4><span class="header-section-number">4.3.3.1</span> Playing around with axes</h4>
+<div id="additional-topics" class="section level3" number="5.3.4">
+<h3><span class="header-section-number">5.3.4</span> Additional Topics</h3>
+<div id="playing-around-with-axes" class="section level4" number="5.3.4.1">
+<h4><span class="header-section-number">5.3.4.1</span> Playing around with axes</h4>
 <p><code>coord_fixed()</code>, <code>coord_cartesian()</code>, <code>coord_trans()</code>
 <code>scale_x_</code>, <code>scale_y_</code></p>
 </div>
-<div id="transposing-the-plot" class="section level4" number="4.3.3.2">
-<h4><span class="header-section-number">4.3.3.2</span> Transposing the plot</h4>
+<div id="transposing-the-plot" class="section level4" number="5.3.4.2">
+<h4><span class="header-section-number">5.3.4.2</span> Transposing the plot</h4>
 <p><code>coord_flip()</code> and <code>coord_polar()</code></p>
 </div>
-<div id="splitting-plots" class="section level4" number="4.3.3.3">
-<h4><span class="header-section-number">4.3.3.3</span> Splitting plots</h4>
+<div id="splitting-plots" class="section level4" number="5.3.4.3">
+<h4><span class="header-section-number">5.3.4.3</span> Splitting plots</h4>
 <p><code>facet_wrap()</code>, <code>facet_grid()</code></p>
 </div>
-<div id="combining-plots" class="section level4" number="4.3.3.4">
-<h4><span class="header-section-number">4.3.3.4</span> Combining plots</h4>
+<div id="combining-plots" class="section level4" number="5.3.4.4">
+<h4><span class="header-section-number">5.3.4.4</span> Combining plots</h4>
 <p><strong>{patchwork}</strong></p>
 
 </div>
@@ -539,6 +608,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
