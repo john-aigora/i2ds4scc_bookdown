@@ -24,7 +24,7 @@
 <meta name="author" content="John Ennis, Julien Delarue, and Thierry Worch" />
 
 
-<meta name="date" content="2021-08-20" />
+<meta name="date" content="2021-09-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -183,9 +183,10 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.2" data-path="data-viz.html"><a href="data-viz.html#table-making"><i class="fa fa-check"></i><b>4.2</b> Table Making</a></li>
 <li class="chapter" data-level="4.3" data-path="data-viz.html"><a href="data-viz.html#chart-making"><i class="fa fa-check"></i><b>4.3</b> Chart Making</a>
 <ul>
-<li class="chapter" data-level="4.3.1" data-path="data-viz.html"><a href="data-viz.html#philosophy-of-ggplot2"><i class="fa fa-check"></i><b>4.3.1</b> Philosophy of ggplot2</a></li>
-<li class="chapter" data-level="4.3.2" data-path="data-viz.html"><a href="data-viz.html#common-charts"><i class="fa fa-check"></i><b>4.3.2</b> Common Charts</a></li>
-<li class="chapter" data-level="4.3.3" data-path="data-viz.html"><a href="data-viz.html#additional-topics"><i class="fa fa-check"></i><b>4.3.3</b> Additional Topics</a></li>
+<li class="chapter" data-level="4.3.1" data-path="data-viz.html"><a href="data-viz.html#philosophy-of-ggplot2"><i class="fa fa-check"></i><b>4.3.1</b> Philosophy of <code>{ggplot2}</code></a></li>
+<li class="chapter" data-level="4.3.2" data-path="data-viz.html"><a href="data-viz.html#getting-started-with-ggplot2"><i class="fa fa-check"></i><b>4.3.2</b> Getting started with <code>{ggplot2}</code></a></li>
+<li class="chapter" data-level="4.3.3" data-path="data-viz.html"><a href="data-viz.html#common-charts"><i class="fa fa-check"></i><b>4.3.3</b> Common Charts</a></li>
+<li class="chapter" data-level="4.3.4" data-path="data-viz.html"><a href="data-viz.html#additional-topics"><i class="fa fa-check"></i><b>4.3.4</b> Additional Topics</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="auto-report.html"><a href="auto-report.html"><i class="fa fa-check"></i><b>5</b> Automated Reporting</a>
@@ -229,7 +230,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="7.1" data-path="data-collection.html"><a href="data-collection.html#design-1"><i class="fa fa-check"></i><b>7.1</b> Design</a></li>
 <li class="chapter" data-level="7.2" data-path="data-collection.html"><a href="data-collection.html#execute-1"><i class="fa fa-check"></i><b>7.2</b> Execute</a></li>
-<li class="chapter" data-level="7.3" data-path="data-collection.html"><a href="data-collection.html#import-1"><i class="fa fa-check"></i><b>7.3</b> Import</a>
+<li class="chapter" data-level="7.3" data-path="data-collection.html"><a href="data-collection.html#data-import"><i class="fa fa-check"></i><b>7.3</b> Import</a>
 <ul>
 <li class="chapter" data-level="7.3.1" data-path="data-collection.html"><a href="data-collection.html#importing-structured-excel-file"><i class="fa fa-check"></i><b>7.3.1</b> Importing Structured Excel File</a></li>
 <li class="chapter" data-level="7.3.2" data-path="data-collection.html"><a href="data-collection.html#importing-unstructured-excel-file"><i class="fa fa-check"></i><b>7.3.2</b> Importing Unstructured Excel File</a></li>
@@ -258,7 +259,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9" data-path="data-analysis.html"><a href="data-analysis.html"><i class="fa fa-check"></i><b>9</b> Data Analysis</a>
 <ul>
 <li class="chapter" data-level="9.1" data-path="data-analysis.html"><a href="data-analysis.html#sensory-data"><i class="fa fa-check"></i><b>9.1</b> Sensory Data</a></li>
-<li class="chapter" data-level="9.2" data-path="data-analysis.html"><a href="data-analysis.html#demographic-and-tfeq-data"><i class="fa fa-check"></i><b>9.2</b> Demographic and TFEQ Data</a>
+<li class="chapter" data-level="9.2" data-path="data-analysis.html"><a href="data-analysis.html#demographic-and-questionnaire-data"><i class="fa fa-check"></i><b>9.2</b> Demographic and Questionnaire Data</a>
 <ul>
 <li class="chapter" data-level="9.2.1" data-path="data-analysis.html"><a href="data-analysis.html#demographic-data-frequency-and-proportion"><i class="fa fa-check"></i><b>9.2.1</b> Demographic Data: Frequency and Proportion</a></li>
 <li class="chapter" data-level="9.2.2" data-path="data-analysis.html"><a href="data-analysis.html#personality-traits-and-eating-behavior-tfeq-data"><i class="fa fa-check"></i><b>9.2.2</b> Personality traits and eating behavior: TFEQ data</a></li>
@@ -423,25 +424,24 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">Chapter 3</span> Data Manipulation</h1>
 <p>In sensory science, different data collection tools (e.g. different devices, software, methodologies, etc.) may provide the same data in different ways. Also, different statistical analyses may require having the data structured in different formats.</p>
 <p>A simple example to illustrate this latter point is the analysis of liking data.
-Let C consumers provide their hedonic assessments on P samples. To evaluate if samples have been liked differently, an ANOVA is performed on a long thin table with (PxC) rows x 3 columns (consumer, sample, and the liking scores).</p>
+Let C consumers provide their hedonic assessments on P samples. To evaluate if samples have received different liking means at the population level, an ANOVA is performed on a long thin table with (PxC) rows x 3 columns (consumer, sample, and the liking scores).</p>
 <!-- Insert Figure illustrating the data structure -->
 <p>However, to assess whether consumers have the same preference patterns at the individual level, internal preference mapping or cluster analysis would be performed, both these analyses requiring as input a short and large table with P rows and C columns.</p>
 <!-- Insert Figure illustrating the data structure -->
 <p>Another example of data manipulation consists in summarizing data, by for instance computing the mean by product for each sensory attribute (hence creating the so-called sensory profiles), or to generate frequency tables (e.g. proportions of male/female, distribution of the liking scores by sample, contingency table for CATA data, etc.)</p>
 <!-- Insert Figure illustrating the data structure -->
-<p>For these reasons, it is essential to learn to manipulate data and transition from one structure to another. After presenting many different ways to transform your data, application through simple examples will be presented<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a>.</p>
+<p>For these reasons, it is essential to learn to manipulate data and transition from one structure to another. After presenting many different ways to transform your data, we present several simple examples to show these ideas in practice<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a>.</p>
 <div id="tidy-data" class="section level2" number="3.1">
 <h2><span class="header-section-number">3.1</span> Tidying Data</h2>
-<p>Hadley Wickham defined ‘tidy data’ as “data sets that are arranged such that each variable is a column and each observation (or case) is a row.” Depending on the statistical unit to consider, and the analyses to perform, data hence need to be manipulated.</p>
+<p>Hadley Wickham (<span class="citation"><a href="bibliography.html#ref-Wickham2014" role="doc-biblioref">Wickham</a> (<a href="bibliography.html#ref-Wickham2014" role="doc-biblioref">2014</a>)</span>) defined ‘tidy data’ as “data sets that are arranged such that each variable is a column and each observation (or case) is a row.” Depending on the statistical unit to consider and the analyses to perform, data may need to be manipulated to be presented in a tidy form.</p>
 <div id="simple-manipulations" class="section level3" number="3.1.1">
 <h3><span class="header-section-number">3.1.1</span> Simple Manipulations</h3>
-<p>The notion of ‘simple manipulations’ proposed here is completely arbitrary and consists in data transformation that could easily be performed in other software such as Excel (using copy-paste, the sort &amp; filter function, inserting a pivot table, etc.). However, we strongly recommend performing any sorts of transformation in R as this will reduce the risk of errors, be usually faster, and become much easier and fluent as you will familiarize with them.</p>
+<p>The notion of ‘simple manipulations’ proposed here consists in data transformations that could easily be performed in other software such as Excel (using copy-paste, sorting and filtering, creating a pivot table, etc.). However, we strongly recommend performing any sorts of transformation in R as this will reduce the risk of errors, typically be faster, and will be reusable if you need to perform the same operations on similar data in the future (including updated versions of the current dataset). Moreover, these operations will become easier and more natural for you to use as you familiarize yourself with them.</p>
 <div id="handling-columns" class="section level4" number="3.1.1.1">
 <h4><span class="header-section-number">3.1.1.1</span> Handling Columns</h4>
 <div id="renaming-variables" class="section level5" number="3.1.1.1.1">
 <h5><span class="header-section-number">3.1.1.1.1</span> Renaming Variables</h5>
-<p>The first simple transformation that one could consider consists in renaming one or multiple variables.
-This procedure can easily be done using the <code>rename()</code> function from the <code>{dplyr}</code> package.</p>
+<p>The first simple transformation we consider consists of renaming one or multiple variables. This procedure can easily be done using the <code>rename()</code> function from the <code>{dplyr}</code> package.</p>
 <p>In our sensory file<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a>, let’s recode ‘Judge’ into ‘Panellist,’ and ‘Product’ into ‘Sample’ (here, we apply transformations without saving the results, so without altering the original dataset):</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="data-manip.html#cb1-1" aria-hidden="true" tabindex="-1"></a>sensory <span class="sc">%&gt;%</span> </span>
 <span id="cb1-2"><a href="data-manip.html#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Panellist =</span> Judge, <span class="at">Sample =</span> Product)</span></code></pre></div>
@@ -724,8 +724,8 @@ the <code>{dplyr}</code> package. In that case, the tables do not need to be in 
 <div class="footnotes">
 <hr />
 <ol start="5">
-<li id="fn5"><p>Most of the examples presented in this chapter emphasize on the “how to?” not the “why?” and thus do not necessary intend to convey scientific meaning<a href="data-manip.html#fnref5" class="footnote-back">↩︎</a></p></li>
-<li id="fn6"><p>The <em>sensory</em> data is imported from the <em>Sensory Profile.xlsx</em> file, see Chapter XXX for how to import datasets<a href="data-manip.html#fnref6" class="footnote-back">↩︎</a></p></li>
+<li id="fn5"><p>Most of the examples presented in this chapter emphasize on the “how to?,” not the “why?,” and are not necessarily chosen to convey scientific meaning<a href="data-manip.html#fnref5" class="footnote-back">↩︎</a></p></li>
+<li id="fn6"><p>The <em>sensory</em> data are imported from the <em>Sensory Profile.xlsx</em> file, see Section <a href="data-collection.html#data-import">7.3</a> for more on how to import datasets<a href="data-manip.html#fnref6" class="footnote-back">↩︎</a></p></li>
 <li id="fn7"><p>Note that many other packages include a function called <code>select()</code>, which could create conflicts. To avoid any risks of errors, we recommend calling the <code>select()</code> function using the notation <code>dplyr::select()</code> as it formally calls the <code>select()</code> function from <code>{dplyr}</code>. This avoids any risks of error! Of course, the same procedure applies to any other functions that may suffer from the same issue.<a href="data-manip.html#fnref7" class="footnote-back">↩︎</a></p></li>
 <li id="fn8"><p>For numerical order, this is simply re-arranging the values from the lowest to the highest. For strings, the entries are then sorted alphabetically unless the variable is of type factor in which case the order of the levels for that factors are being used.<a href="data-manip.html#fnref8" class="footnote-back">↩︎</a></p></li>
 <li id="fn9"><p>It is important to realize that each ‘data manipulation challenge’ can be solved in many different ways, so don’t be afraid to think out of the box when solving them…<a href="data-manip.html#fnref9" class="footnote-back">↩︎</a></p></li>

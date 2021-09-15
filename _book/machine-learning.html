@@ -24,7 +24,7 @@
 <meta name="author" content="John Ennis, Julien Delarue, and Thierry Worch" />
 
 
-<meta name="date" content="2021-08-20" />
+<meta name="date" content="2021-09-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -183,9 +183,10 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.2" data-path="data-viz.html"><a href="data-viz.html#table-making"><i class="fa fa-check"></i><b>4.2</b> Table Making</a></li>
 <li class="chapter" data-level="4.3" data-path="data-viz.html"><a href="data-viz.html#chart-making"><i class="fa fa-check"></i><b>4.3</b> Chart Making</a>
 <ul>
-<li class="chapter" data-level="4.3.1" data-path="data-viz.html"><a href="data-viz.html#philosophy-of-ggplot2"><i class="fa fa-check"></i><b>4.3.1</b> Philosophy of ggplot2</a></li>
-<li class="chapter" data-level="4.3.2" data-path="data-viz.html"><a href="data-viz.html#common-charts"><i class="fa fa-check"></i><b>4.3.2</b> Common Charts</a></li>
-<li class="chapter" data-level="4.3.3" data-path="data-viz.html"><a href="data-viz.html#additional-topics"><i class="fa fa-check"></i><b>4.3.3</b> Additional Topics</a></li>
+<li class="chapter" data-level="4.3.1" data-path="data-viz.html"><a href="data-viz.html#philosophy-of-ggplot2"><i class="fa fa-check"></i><b>4.3.1</b> Philosophy of <code>{ggplot2}</code></a></li>
+<li class="chapter" data-level="4.3.2" data-path="data-viz.html"><a href="data-viz.html#getting-started-with-ggplot2"><i class="fa fa-check"></i><b>4.3.2</b> Getting started with <code>{ggplot2}</code></a></li>
+<li class="chapter" data-level="4.3.3" data-path="data-viz.html"><a href="data-viz.html#common-charts"><i class="fa fa-check"></i><b>4.3.3</b> Common Charts</a></li>
+<li class="chapter" data-level="4.3.4" data-path="data-viz.html"><a href="data-viz.html#additional-topics"><i class="fa fa-check"></i><b>4.3.4</b> Additional Topics</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="auto-report.html"><a href="auto-report.html"><i class="fa fa-check"></i><b>5</b> Automated Reporting</a>
@@ -229,7 +230,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="7.1" data-path="data-collection.html"><a href="data-collection.html#design-1"><i class="fa fa-check"></i><b>7.1</b> Design</a></li>
 <li class="chapter" data-level="7.2" data-path="data-collection.html"><a href="data-collection.html#execute-1"><i class="fa fa-check"></i><b>7.2</b> Execute</a></li>
-<li class="chapter" data-level="7.3" data-path="data-collection.html"><a href="data-collection.html#import-1"><i class="fa fa-check"></i><b>7.3</b> Import</a>
+<li class="chapter" data-level="7.3" data-path="data-collection.html"><a href="data-collection.html#data-import"><i class="fa fa-check"></i><b>7.3</b> Import</a>
 <ul>
 <li class="chapter" data-level="7.3.1" data-path="data-collection.html"><a href="data-collection.html#importing-structured-excel-file"><i class="fa fa-check"></i><b>7.3.1</b> Importing Structured Excel File</a></li>
 <li class="chapter" data-level="7.3.2" data-path="data-collection.html"><a href="data-collection.html#importing-unstructured-excel-file"><i class="fa fa-check"></i><b>7.3.2</b> Importing Unstructured Excel File</a></li>
@@ -258,7 +259,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9" data-path="data-analysis.html"><a href="data-analysis.html"><i class="fa fa-check"></i><b>9</b> Data Analysis</a>
 <ul>
 <li class="chapter" data-level="9.1" data-path="data-analysis.html"><a href="data-analysis.html#sensory-data"><i class="fa fa-check"></i><b>9.1</b> Sensory Data</a></li>
-<li class="chapter" data-level="9.2" data-path="data-analysis.html"><a href="data-analysis.html#demographic-and-tfeq-data"><i class="fa fa-check"></i><b>9.2</b> Demographic and TFEQ Data</a>
+<li class="chapter" data-level="9.2" data-path="data-analysis.html"><a href="data-analysis.html#demographic-and-questionnaire-data"><i class="fa fa-check"></i><b>9.2</b> Demographic and Questionnaire Data</a>
 <ul>
 <li class="chapter" data-level="9.2.1" data-path="data-analysis.html"><a href="data-analysis.html#demographic-data-frequency-and-proportion"><i class="fa fa-check"></i><b>9.2.1</b> Demographic Data: Frequency and Proportion</a></li>
 <li class="chapter" data-level="9.2.2" data-path="data-analysis.html"><a href="data-analysis.html#personality-traits-and-eating-behavior-tfeq-data"><i class="fa fa-check"></i><b>9.2.2</b> Personality traits and eating behavior: TFEQ data</a></li>
@@ -509,450 +510,450 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">11.4</span> Code Examples</h2>
 <div id="data-prep-1" class="section level3" number="11.4.1">
 <h3><span class="header-section-number">11.4.1</span> Data Prep</h3>
-<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="machine-learning.html#cb115-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_rds</span>(<span class="st">&#39;data/masked_data.rds&#39;</span>)</span>
-<span id="cb115-2"><a href="machine-learning.html#cb115-2" aria-hidden="true" tabindex="-1"></a>nrows <span class="ot">&lt;-</span> <span class="fu">max</span>(<span class="fu">summary</span>(data<span class="sc">$</span>Class)) <span class="sc">*</span> <span class="dv">2</span></span>
-<span id="cb115-3"><a href="machine-learning.html#cb115-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb115-4"><a href="machine-learning.html#cb115-4" aria-hidden="true" tabindex="-1"></a>data_over <span class="ot">&lt;-</span> ROSE<span class="sc">::</span><span class="fu">ROSE</span>(Class <span class="sc">~</span> .,</span>
-<span id="cb115-5"><a href="machine-learning.html#cb115-5" aria-hidden="true" tabindex="-1"></a>                        <span class="at">data =</span> data <span class="sc">%&gt;%</span> </span>
-<span id="cb115-6"><a href="machine-learning.html#cb115-6" aria-hidden="true" tabindex="-1"></a>                          <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">starts_with</span>(<span class="st">&#39;D&#39;</span>), factor, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))),</span>
-<span id="cb115-7"><a href="machine-learning.html#cb115-7" aria-hidden="true" tabindex="-1"></a>                        <span class="at">N =</span> nrows, <span class="at">seed =</span> <span class="dv">1</span>)<span class="sc">$</span>data</span>
-<span id="cb115-8"><a href="machine-learning.html#cb115-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb115-9"><a href="machine-learning.html#cb115-9" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">write_rds</span>(data_over, <span class="st">&#39;data/data_classification.rds&#39;</span>)</span>
-<span id="cb115-10"><a href="machine-learning.html#cb115-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb115-11"><a href="machine-learning.html#cb115-11" aria-hidden="true" tabindex="-1"></a>readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">&#39;data/data_regression.xlsx&#39;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb115-12"><a href="machine-learning.html#cb115-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="st">`</span><span class="at">...1</span><span class="st">`</span>, <span class="sc">-</span>judge, <span class="sc">-</span>product, <span class="sc">-</span>(steak<span class="sc">:</span>V64), <span class="sc">-</span><span class="st">`</span><span class="at">qtt.drink.(%)</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb115-13"><a href="machine-learning.html#cb115-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">socio_professional =</span> <span class="st">`</span><span class="at">socio-professional</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb115-14"><a href="machine-learning.html#cb115-14" aria-hidden="true" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">write_rds</span>(<span class="st">&#39;data/data_regression.rds&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="machine-learning.html#cb123-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_rds</span>(<span class="st">&#39;data/masked_data.rds&#39;</span>)</span>
+<span id="cb123-2"><a href="machine-learning.html#cb123-2" aria-hidden="true" tabindex="-1"></a>nrows <span class="ot">&lt;-</span> <span class="fu">max</span>(<span class="fu">summary</span>(data<span class="sc">$</span>Class)) <span class="sc">*</span> <span class="dv">2</span></span>
+<span id="cb123-3"><a href="machine-learning.html#cb123-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb123-4"><a href="machine-learning.html#cb123-4" aria-hidden="true" tabindex="-1"></a>data_over <span class="ot">&lt;-</span> ROSE<span class="sc">::</span><span class="fu">ROSE</span>(Class <span class="sc">~</span> .,</span>
+<span id="cb123-5"><a href="machine-learning.html#cb123-5" aria-hidden="true" tabindex="-1"></a>                        <span class="at">data =</span> data <span class="sc">%&gt;%</span> </span>
+<span id="cb123-6"><a href="machine-learning.html#cb123-6" aria-hidden="true" tabindex="-1"></a>                          <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">starts_with</span>(<span class="st">&#39;D&#39;</span>), factor, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))),</span>
+<span id="cb123-7"><a href="machine-learning.html#cb123-7" aria-hidden="true" tabindex="-1"></a>                        <span class="at">N =</span> nrows, <span class="at">seed =</span> <span class="dv">1</span>)<span class="sc">$</span>data</span>
+<span id="cb123-8"><a href="machine-learning.html#cb123-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb123-9"><a href="machine-learning.html#cb123-9" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">write_rds</span>(data_over, <span class="st">&#39;data/data_classification.rds&#39;</span>)</span>
+<span id="cb123-10"><a href="machine-learning.html#cb123-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb123-11"><a href="machine-learning.html#cb123-11" aria-hidden="true" tabindex="-1"></a>readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">&#39;data/data_regression.xlsx&#39;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb123-12"><a href="machine-learning.html#cb123-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="st">`</span><span class="at">...1</span><span class="st">`</span>, <span class="sc">-</span>judge, <span class="sc">-</span>product, <span class="sc">-</span>(steak<span class="sc">:</span>V64), <span class="sc">-</span><span class="st">`</span><span class="at">qtt.drink.(%)</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb123-13"><a href="machine-learning.html#cb123-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">socio_professional =</span> <span class="st">`</span><span class="at">socio-professional</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb123-14"><a href="machine-learning.html#cb123-14" aria-hidden="true" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">write_rds</span>(<span class="st">&#39;data/data_regression.rds&#39;</span>)</span></code></pre></div>
 </div>
 <div id="classification-code" class="section level3" number="11.4.2">
 <h3><span class="header-section-number">11.4.2</span> Classification Code</h3>
-<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="machine-learning.html#cb116-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb116-2"><a href="machine-learning.html#cb116-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
-<span id="cb116-3"><a href="machine-learning.html#cb116-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-4"><a href="machine-learning.html#cb116-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-5"><a href="machine-learning.html#cb116-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data ---------------------------------------------------------------</span></span>
-<span id="cb116-6"><a href="machine-learning.html#cb116-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-7"><a href="machine-learning.html#cb116-7" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">&#39;data/data_classification.rds&#39;</span>)</span>
-<span id="cb116-8"><a href="machine-learning.html#cb116-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-9"><a href="machine-learning.html#cb116-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Inspect the data --------------------------------------------------------</span></span>
-<span id="cb116-10"><a href="machine-learning.html#cb116-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-11"><a href="machine-learning.html#cb116-11" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(data)</span>
-<span id="cb116-12"><a href="machine-learning.html#cb116-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-13"><a href="machine-learning.html#cb116-13" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>ID)</span>
-<span id="cb116-14"><a href="machine-learning.html#cb116-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-15"><a href="machine-learning.html#cb116-15" aria-hidden="true" tabindex="-1"></a>skimr<span class="sc">::</span><span class="fu">skim</span>(data)</span>
-<span id="cb116-16"><a href="machine-learning.html#cb116-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-17"><a href="machine-learning.html#cb116-17" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
-<span id="cb116-18"><a href="machine-learning.html#cb116-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">starts_with</span>(<span class="st">&#39;D&#39;</span>), factor, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb116-19"><a href="machine-learning.html#cb116-19" aria-hidden="true" tabindex="-1"></a>  GGally<span class="sc">::</span><span class="fu">ggpairs</span>(<span class="fu">aes</span>(<span class="at">fill =</span> Class))</span>
-<span id="cb116-20"><a href="machine-learning.html#cb116-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-21"><a href="machine-learning.html#cb116-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-22"><a href="machine-learning.html#cb116-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-23"><a href="machine-learning.html#cb116-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Split data for models ---------------------------------------------------</span></span>
-<span id="cb116-24"><a href="machine-learning.html#cb116-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-25"><a href="machine-learning.html#cb116-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Set test set aside</span></span>
-<span id="cb116-26"><a href="machine-learning.html#cb116-26" aria-hidden="true" tabindex="-1"></a>train_test_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(data)</span>
-<span id="cb116-27"><a href="machine-learning.html#cb116-27" aria-hidden="true" tabindex="-1"></a>train_test_split</span>
-<span id="cb116-28"><a href="machine-learning.html#cb116-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-29"><a href="machine-learning.html#cb116-29" aria-hidden="true" tabindex="-1"></a>train_set <span class="ot">&lt;-</span> <span class="fu">training</span>(train_test_split)</span>
-<span id="cb116-30"><a href="machine-learning.html#cb116-30" aria-hidden="true" tabindex="-1"></a>test_set <span class="ot">&lt;-</span> <span class="fu">testing</span>(train_test_split)</span>
-<span id="cb116-31"><a href="machine-learning.html#cb116-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-32"><a href="machine-learning.html#cb116-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Split set fot cross-validation</span></span>
-<span id="cb116-33"><a href="machine-learning.html#cb116-33" aria-hidden="true" tabindex="-1"></a>resampling <span class="ot">&lt;-</span> <span class="fu">vfold_cv</span>(train_set, <span class="dv">10</span>)</span>
-<span id="cb116-34"><a href="machine-learning.html#cb116-34" aria-hidden="true" tabindex="-1"></a>resampling</span>
-<span id="cb116-35"><a href="machine-learning.html#cb116-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-36"><a href="machine-learning.html#cb116-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-37"><a href="machine-learning.html#cb116-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit MARS model ----------------------------------------------------------</span></span>
-<span id="cb116-38"><a href="machine-learning.html#cb116-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-39"><a href="machine-learning.html#cb116-39" aria-hidden="true" tabindex="-1"></a>usemodels<span class="sc">::</span><span class="fu">use_earth</span>(</span>
-<span id="cb116-40"><a href="machine-learning.html#cb116-40" aria-hidden="true" tabindex="-1"></a>  Class <span class="sc">~</span> .,</span>
-<span id="cb116-41"><a href="machine-learning.html#cb116-41" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> train_set</span>
-<span id="cb116-42"><a href="machine-learning.html#cb116-42" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb116-43"><a href="machine-learning.html#cb116-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-44"><a href="machine-learning.html#cb116-44" aria-hidden="true" tabindex="-1"></a>earth_recipe <span class="ot">&lt;-</span> </span>
-<span id="cb116-45"><a href="machine-learning.html#cb116-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">recipe</span>(<span class="at">formula =</span> Class <span class="sc">~</span> ., <span class="at">data =</span> train_set) <span class="sc">%&gt;%</span> </span>
-<span id="cb116-46"><a href="machine-learning.html#cb116-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_novel</span>(<span class="fu">all_nominal</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb116-47"><a href="machine-learning.html#cb116-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb116-48"><a href="machine-learning.html#cb116-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_zv</span>(<span class="fu">all_predictors</span>()) </span>
-<span id="cb116-49"><a href="machine-learning.html#cb116-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-50"><a href="machine-learning.html#cb116-50" aria-hidden="true" tabindex="-1"></a>earth_spec <span class="ot">&lt;-</span> </span>
-<span id="cb116-51"><a href="machine-learning.html#cb116-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mars</span>(</span>
-<span id="cb116-52"><a href="machine-learning.html#cb116-52" aria-hidden="true" tabindex="-1"></a>    <span class="at">num_terms =</span> <span class="fu">tune</span>(),</span>
-<span id="cb116-53"><a href="machine-learning.html#cb116-53" aria-hidden="true" tabindex="-1"></a>    <span class="at">prod_degree =</span> <span class="fu">tune</span>(),</span>
-<span id="cb116-54"><a href="machine-learning.html#cb116-54" aria-hidden="true" tabindex="-1"></a>    <span class="at">prune_method =</span> <span class="st">&quot;none&quot;</span></span>
-<span id="cb116-55"><a href="machine-learning.html#cb116-55" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span> </span>
-<span id="cb116-56"><a href="machine-learning.html#cb116-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">&quot;classification&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb116-57"><a href="machine-learning.html#cb116-57" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">&quot;earth&quot;</span>) </span>
-<span id="cb116-58"><a href="machine-learning.html#cb116-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-59"><a href="machine-learning.html#cb116-59" aria-hidden="true" tabindex="-1"></a>earth_workflow <span class="ot">&lt;-</span> </span>
-<span id="cb116-60"><a href="machine-learning.html#cb116-60" aria-hidden="true" tabindex="-1"></a>  <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb116-61"><a href="machine-learning.html#cb116-61" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(earth_recipe) <span class="sc">%&gt;%</span> </span>
-<span id="cb116-62"><a href="machine-learning.html#cb116-62" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(earth_spec) </span>
-<span id="cb116-63"><a href="machine-learning.html#cb116-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-64"><a href="machine-learning.html#cb116-64" aria-hidden="true" tabindex="-1"></a>earth_grid <span class="ot">&lt;-</span> tidyr<span class="sc">::</span><span class="fu">crossing</span>(<span class="at">num_terms =</span> <span class="dv">2</span> <span class="sc">*</span> (<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>), <span class="at">prod_degree =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>) </span>
-<span id="cb116-65"><a href="machine-learning.html#cb116-65" aria-hidden="true" tabindex="-1"></a>earth_grid</span>
-<span id="cb116-66"><a href="machine-learning.html#cb116-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-67"><a href="machine-learning.html#cb116-67" aria-hidden="true" tabindex="-1"></a>earth_tune <span class="ot">&lt;-</span> </span>
-<span id="cb116-68"><a href="machine-learning.html#cb116-68" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tune_grid</span>(</span>
-<span id="cb116-69"><a href="machine-learning.html#cb116-69" aria-hidden="true" tabindex="-1"></a>    earth_workflow, </span>
-<span id="cb116-70"><a href="machine-learning.html#cb116-70" aria-hidden="true" tabindex="-1"></a>    <span class="at">resamples =</span> resampling, </span>
-<span id="cb116-71"><a href="machine-learning.html#cb116-71" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Save predictions for further steps</span></span>
-<span id="cb116-72"><a href="machine-learning.html#cb116-72" aria-hidden="true" tabindex="-1"></a>    <span class="at">control =</span> <span class="fu">control_grid</span>(<span class="at">save_pred =</span> <span class="cn">TRUE</span>, <span class="at">verbose =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb116-73"><a href="machine-learning.html#cb116-73" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Test parameters on a grid defined above</span></span>
-<span id="cb116-74"><a href="machine-learning.html#cb116-74" aria-hidden="true" tabindex="-1"></a>    <span class="at">grid =</span> earth_grid</span>
-<span id="cb116-75"><a href="machine-learning.html#cb116-75" aria-hidden="true" tabindex="-1"></a>  ) </span>
-<span id="cb116-76"><a href="machine-learning.html#cb116-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-77"><a href="machine-learning.html#cb116-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-78"><a href="machine-learning.html#cb116-78" aria-hidden="true" tabindex="-1"></a><span class="co"># Check model performance -------------------------------------------------</span></span>
-<span id="cb116-79"><a href="machine-learning.html#cb116-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-80"><a href="machine-learning.html#cb116-80" aria-hidden="true" tabindex="-1"></a>earth_tune <span class="sc">%&gt;%</span> <span class="fu">show_best</span>(<span class="at">n =</span> <span class="dv">10</span>)</span>
-<span id="cb116-81"><a href="machine-learning.html#cb116-81" aria-hidden="true" tabindex="-1"></a>earth_tune <span class="sc">%&gt;%</span> <span class="fu">autoplot</span>()</span>
-<span id="cb116-82"><a href="machine-learning.html#cb116-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-83"><a href="machine-learning.html#cb116-83" aria-hidden="true" tabindex="-1"></a>earth_predictions <span class="ot">&lt;-</span> earth_tune <span class="sc">%&gt;%</span></span>
-<span id="cb116-84"><a href="machine-learning.html#cb116-84" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect_predictions</span>(<span class="at">parameters =</span> <span class="fu">select_best</span>(., <span class="st">&#39;roc_auc&#39;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb116-85"><a href="machine-learning.html#cb116-85" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">model =</span> <span class="st">&quot;MARS&quot;</span>)</span>
-<span id="cb116-86"><a href="machine-learning.html#cb116-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-87"><a href="machine-learning.html#cb116-87" aria-hidden="true" tabindex="-1"></a>earth_predictions <span class="sc">%&gt;%</span></span>
-<span id="cb116-88"><a href="machine-learning.html#cb116-88" aria-hidden="true" tabindex="-1"></a>  <span class="fu">roc_curve</span>(Class, .pred_A) <span class="sc">%&gt;%</span></span>
-<span id="cb116-89"><a href="machine-learning.html#cb116-89" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>()</span>
-<span id="cb116-90"><a href="machine-learning.html#cb116-90" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-91"><a href="machine-learning.html#cb116-91" aria-hidden="true" tabindex="-1"></a>earth_predictions <span class="sc">%&gt;%</span></span>
-<span id="cb116-92"><a href="machine-learning.html#cb116-92" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lift_curve</span>(Class, .pred_A) <span class="sc">%&gt;%</span></span>
-<span id="cb116-93"><a href="machine-learning.html#cb116-93" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>()</span>
-<span id="cb116-94"><a href="machine-learning.html#cb116-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-95"><a href="machine-learning.html#cb116-95" aria-hidden="true" tabindex="-1"></a>earth_predictions <span class="sc">%&gt;%</span></span>
-<span id="cb116-96"><a href="machine-learning.html#cb116-96" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pr_curve</span>(Class, .pred_A) <span class="sc">%&gt;%</span></span>
-<span id="cb116-97"><a href="machine-learning.html#cb116-97" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>()</span>
-<span id="cb116-98"><a href="machine-learning.html#cb116-98" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-99"><a href="machine-learning.html#cb116-99" aria-hidden="true" tabindex="-1"></a>earth_predictions <span class="sc">%&gt;%</span></span>
-<span id="cb116-100"><a href="machine-learning.html#cb116-100" aria-hidden="true" tabindex="-1"></a>  <span class="fu">conf_mat</span>(Class, .pred_class) <span class="sc">%&gt;%</span></span>
-<span id="cb116-101"><a href="machine-learning.html#cb116-101" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>()</span>
-<span id="cb116-102"><a href="machine-learning.html#cb116-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-103"><a href="machine-learning.html#cb116-103" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-104"><a href="machine-learning.html#cb116-104" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit decision tree -------------------------------------------------------</span></span>
-<span id="cb116-105"><a href="machine-learning.html#cb116-105" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-106"><a href="machine-learning.html#cb116-106" aria-hidden="true" tabindex="-1"></a>tree_recipe <span class="ot">&lt;-</span> </span>
-<span id="cb116-107"><a href="machine-learning.html#cb116-107" aria-hidden="true" tabindex="-1"></a>  <span class="fu">recipe</span>(<span class="at">formula =</span> Class <span class="sc">~</span> ., <span class="at">data =</span> train_set) <span class="sc">%&gt;%</span> </span>
-<span id="cb116-108"><a href="machine-learning.html#cb116-108" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_novel</span>(<span class="fu">all_nominal</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb116-109"><a href="machine-learning.html#cb116-109" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_zv</span>(<span class="fu">all_predictors</span>()) </span>
-<span id="cb116-110"><a href="machine-learning.html#cb116-110" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-111"><a href="machine-learning.html#cb116-111" aria-hidden="true" tabindex="-1"></a>tree_spec <span class="ot">&lt;-</span> </span>
-<span id="cb116-112"><a href="machine-learning.html#cb116-112" aria-hidden="true" tabindex="-1"></a>  <span class="fu">decision_tree</span>(</span>
-<span id="cb116-113"><a href="machine-learning.html#cb116-113" aria-hidden="true" tabindex="-1"></a>    <span class="at">cost_complexity =</span> <span class="fu">tune</span>(),</span>
-<span id="cb116-114"><a href="machine-learning.html#cb116-114" aria-hidden="true" tabindex="-1"></a>    <span class="at">tree_depth =</span> <span class="fu">tune</span>(),</span>
-<span id="cb116-115"><a href="machine-learning.html#cb116-115" aria-hidden="true" tabindex="-1"></a>    <span class="at">min_n =</span> <span class="fu">tune</span>()</span>
-<span id="cb116-116"><a href="machine-learning.html#cb116-116" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span> </span>
-<span id="cb116-117"><a href="machine-learning.html#cb116-117" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">&quot;classification&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb116-118"><a href="machine-learning.html#cb116-118" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">&quot;rpart&quot;</span>) </span>
-<span id="cb116-119"><a href="machine-learning.html#cb116-119" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-120"><a href="machine-learning.html#cb116-120" aria-hidden="true" tabindex="-1"></a>tree_workflow <span class="ot">&lt;-</span> </span>
-<span id="cb116-121"><a href="machine-learning.html#cb116-121" aria-hidden="true" tabindex="-1"></a>  <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb116-122"><a href="machine-learning.html#cb116-122" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(tree_recipe) <span class="sc">%&gt;%</span> </span>
-<span id="cb116-123"><a href="machine-learning.html#cb116-123" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(tree_spec) </span>
-<span id="cb116-124"><a href="machine-learning.html#cb116-124" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-125"><a href="machine-learning.html#cb116-125" aria-hidden="true" tabindex="-1"></a>tree_tune <span class="ot">&lt;-</span> </span>
-<span id="cb116-126"><a href="machine-learning.html#cb116-126" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tune_grid</span>(</span>
-<span id="cb116-127"><a href="machine-learning.html#cb116-127" aria-hidden="true" tabindex="-1"></a>    tree_workflow, </span>
-<span id="cb116-128"><a href="machine-learning.html#cb116-128" aria-hidden="true" tabindex="-1"></a>    <span class="at">resamples =</span> resampling, </span>
-<span id="cb116-129"><a href="machine-learning.html#cb116-129" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Save predictions for further steps</span></span>
-<span id="cb116-130"><a href="machine-learning.html#cb116-130" aria-hidden="true" tabindex="-1"></a>    <span class="at">control =</span> <span class="fu">control_grid</span>(<span class="at">save_pred =</span> <span class="cn">TRUE</span>, <span class="at">verbose =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb116-131"><a href="machine-learning.html#cb116-131" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Test 20 random combinations of parameters</span></span>
-<span id="cb116-132"><a href="machine-learning.html#cb116-132" aria-hidden="true" tabindex="-1"></a>    <span class="at">grid =</span> <span class="dv">20</span></span>
-<span id="cb116-133"><a href="machine-learning.html#cb116-133" aria-hidden="true" tabindex="-1"></a>  ) </span>
-<span id="cb116-134"><a href="machine-learning.html#cb116-134" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-135"><a href="machine-learning.html#cb116-135" aria-hidden="true" tabindex="-1"></a><span class="co"># Check model performance -------------------------------------------------</span></span>
-<span id="cb116-136"><a href="machine-learning.html#cb116-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-137"><a href="machine-learning.html#cb116-137" aria-hidden="true" tabindex="-1"></a>tree_tune <span class="sc">%&gt;%</span> <span class="fu">show_best</span>(<span class="at">n =</span> <span class="dv">10</span>)</span>
-<span id="cb116-138"><a href="machine-learning.html#cb116-138" aria-hidden="true" tabindex="-1"></a>tree_tune <span class="sc">%&gt;%</span> <span class="fu">autoplot</span>()</span>
-<span id="cb116-139"><a href="machine-learning.html#cb116-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-140"><a href="machine-learning.html#cb116-140" aria-hidden="true" tabindex="-1"></a>tree_predictions <span class="ot">&lt;-</span> tree_tune <span class="sc">%&gt;%</span></span>
-<span id="cb116-141"><a href="machine-learning.html#cb116-141" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect_predictions</span>(<span class="at">parameters =</span> <span class="fu">select_best</span>(., <span class="st">&#39;roc_auc&#39;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb116-142"><a href="machine-learning.html#cb116-142" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">model =</span> <span class="st">&quot;Decision Tree&quot;</span>)</span>
-<span id="cb116-143"><a href="machine-learning.html#cb116-143" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-144"><a href="machine-learning.html#cb116-144" aria-hidden="true" tabindex="-1"></a>tree_predictions <span class="sc">%&gt;%</span></span>
-<span id="cb116-145"><a href="machine-learning.html#cb116-145" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(earth_predictions) <span class="sc">%&gt;%</span></span>
-<span id="cb116-146"><a href="machine-learning.html#cb116-146" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(model) <span class="sc">%&gt;%</span></span>
-<span id="cb116-147"><a href="machine-learning.html#cb116-147" aria-hidden="true" tabindex="-1"></a>  <span class="fu">roc_curve</span>(Class, .pred_A) <span class="sc">%&gt;%</span></span>
-<span id="cb116-148"><a href="machine-learning.html#cb116-148" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>()</span>
-<span id="cb116-149"><a href="machine-learning.html#cb116-149" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-150"><a href="machine-learning.html#cb116-150" aria-hidden="true" tabindex="-1"></a>tree_predictions <span class="sc">%&gt;%</span></span>
-<span id="cb116-151"><a href="machine-learning.html#cb116-151" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(earth_predictions) <span class="sc">%&gt;%</span></span>
-<span id="cb116-152"><a href="machine-learning.html#cb116-152" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(model) <span class="sc">%&gt;%</span></span>
-<span id="cb116-153"><a href="machine-learning.html#cb116-153" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lift_curve</span>(Class, .pred_A) <span class="sc">%&gt;%</span></span>
-<span id="cb116-154"><a href="machine-learning.html#cb116-154" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>()</span>
-<span id="cb116-155"><a href="machine-learning.html#cb116-155" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-156"><a href="machine-learning.html#cb116-156" aria-hidden="true" tabindex="-1"></a>tree_predictions <span class="sc">%&gt;%</span></span>
-<span id="cb116-157"><a href="machine-learning.html#cb116-157" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(earth_predictions) <span class="sc">%&gt;%</span></span>
-<span id="cb116-158"><a href="machine-learning.html#cb116-158" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(model) <span class="sc">%&gt;%</span>  <span class="fu">pr_curve</span>(Class, .pred_A) <span class="sc">%&gt;%</span></span>
-<span id="cb116-159"><a href="machine-learning.html#cb116-159" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>()</span>
-<span id="cb116-160"><a href="machine-learning.html#cb116-160" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-161"><a href="machine-learning.html#cb116-161" aria-hidden="true" tabindex="-1"></a>tree_predictions <span class="sc">%&gt;%</span></span>
-<span id="cb116-162"><a href="machine-learning.html#cb116-162" aria-hidden="true" tabindex="-1"></a>  <span class="fu">conf_mat</span>(Class, .pred_class) <span class="sc">%&gt;%</span></span>
-<span id="cb116-163"><a href="machine-learning.html#cb116-163" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>()</span>
-<span id="cb116-164"><a href="machine-learning.html#cb116-164" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-165"><a href="machine-learning.html#cb116-165" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-166"><a href="machine-learning.html#cb116-166" aria-hidden="true" tabindex="-1"></a><span class="co"># Let&#39;s go with MARS model ------------------------------------------------</span></span>
-<span id="cb116-167"><a href="machine-learning.html#cb116-167" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-168"><a href="machine-learning.html#cb116-168" aria-hidden="true" tabindex="-1"></a>final_fit <span class="ot">&lt;-</span> earth_workflow <span class="sc">%&gt;%</span></span>
-<span id="cb116-169"><a href="machine-learning.html#cb116-169" aria-hidden="true" tabindex="-1"></a>  <span class="fu">finalize_workflow</span>(<span class="fu">select_best</span>(earth_tune, <span class="st">&#39;roc_auc&#39;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb116-170"><a href="machine-learning.html#cb116-170" aria-hidden="true" tabindex="-1"></a>  <span class="fu">last_fit</span>(train_test_split)</span>
-<span id="cb116-171"><a href="machine-learning.html#cb116-171" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-172"><a href="machine-learning.html#cb116-172" aria-hidden="true" tabindex="-1"></a>final_fit <span class="sc">%&gt;%</span> <span class="fu">collect_metrics</span>()</span>
-<span id="cb116-173"><a href="machine-learning.html#cb116-173" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-174"><a href="machine-learning.html#cb116-174" aria-hidden="true" tabindex="-1"></a>final_fit <span class="sc">%&gt;%</span></span>
-<span id="cb116-175"><a href="machine-learning.html#cb116-175" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect_predictions</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb116-176"><a href="machine-learning.html#cb116-176" aria-hidden="true" tabindex="-1"></a>  <span class="fu">roc_curve</span>(Class, .pred_A) <span class="sc">%&gt;%</span></span>
-<span id="cb116-177"><a href="machine-learning.html#cb116-177" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>()</span>
-<span id="cb116-178"><a href="machine-learning.html#cb116-178" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-179"><a href="machine-learning.html#cb116-179" aria-hidden="true" tabindex="-1"></a>final_model <span class="ot">&lt;-</span> final_fit <span class="sc">%&gt;%</span></span>
-<span id="cb116-180"><a href="machine-learning.html#cb116-180" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pluck</span>(<span class="st">&quot;.workflow&quot;</span>, <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb116-181"><a href="machine-learning.html#cb116-181" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(data)</span>
-<span id="cb116-182"><a href="machine-learning.html#cb116-182" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-183"><a href="machine-learning.html#cb116-183" aria-hidden="true" tabindex="-1"></a>final_model <span class="sc">%&gt;%</span></span>
-<span id="cb116-184"><a href="machine-learning.html#cb116-184" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull_workflow_fit</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb116-185"><a href="machine-learning.html#cb116-185" aria-hidden="true" tabindex="-1"></a>  vip<span class="sc">::</span><span class="fu">vip</span>()</span>
-<span id="cb116-186"><a href="machine-learning.html#cb116-186" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-187"><a href="machine-learning.html#cb116-187" aria-hidden="true" tabindex="-1"></a>final_model <span class="sc">%&gt;%</span></span>
-<span id="cb116-188"><a href="machine-learning.html#cb116-188" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull_workflow_fit</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb116-189"><a href="machine-learning.html#cb116-189" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pluck</span>(<span class="st">&quot;fit&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb116-190"><a href="machine-learning.html#cb116-190" aria-hidden="true" tabindex="-1"></a>  summary</span>
-<span id="cb116-191"><a href="machine-learning.html#cb116-191" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-192"><a href="machine-learning.html#cb116-192" aria-hidden="true" tabindex="-1"></a><span class="fu">write_rds</span>(final_model, <span class="st">&#39;classification_model.rds&#39;</span>)</span>
-<span id="cb116-193"><a href="machine-learning.html#cb116-193" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-194"><a href="machine-learning.html#cb116-194" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-195"><a href="machine-learning.html#cb116-195" aria-hidden="true" tabindex="-1"></a><span class="co"># Predict something -------------------------------------------------------</span></span>
-<span id="cb116-196"><a href="machine-learning.html#cb116-196" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-197"><a href="machine-learning.html#cb116-197" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">&#39;classification_model.rds&#39;</span>)</span>
-<span id="cb116-198"><a href="machine-learning.html#cb116-198" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-199"><a href="machine-learning.html#cb116-199" aria-hidden="true" tabindex="-1"></a>new_observation <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb116-200"><a href="machine-learning.html#cb116-200" aria-hidden="true" tabindex="-1"></a>  <span class="at">N1 =</span> <span class="fl">1.8</span>,</span>
-<span id="cb116-201"><a href="machine-learning.html#cb116-201" aria-hidden="true" tabindex="-1"></a>  <span class="at">D1 =</span> <span class="fu">factor</span>(<span class="dv">0</span>),</span>
-<span id="cb116-202"><a href="machine-learning.html#cb116-202" aria-hidden="true" tabindex="-1"></a>  <span class="at">D2 =</span> <span class="fu">factor</span>(<span class="dv">0</span>),</span>
-<span id="cb116-203"><a href="machine-learning.html#cb116-203" aria-hidden="true" tabindex="-1"></a>  <span class="at">D3 =</span> <span class="fu">factor</span>(<span class="dv">1</span>),</span>
-<span id="cb116-204"><a href="machine-learning.html#cb116-204" aria-hidden="true" tabindex="-1"></a>  <span class="at">D4 =</span> <span class="fu">factor</span>(<span class="dv">0</span>),</span>
-<span id="cb116-205"><a href="machine-learning.html#cb116-205" aria-hidden="true" tabindex="-1"></a>  <span class="at">D5 =</span> <span class="fu">factor</span>(<span class="dv">1</span>),</span>
-<span id="cb116-206"><a href="machine-learning.html#cb116-206" aria-hidden="true" tabindex="-1"></a>  <span class="at">D6 =</span> <span class="fu">factor</span>(<span class="dv">0</span>),</span>
-<span id="cb116-207"><a href="machine-learning.html#cb116-207" aria-hidden="true" tabindex="-1"></a>  <span class="at">D7 =</span> <span class="fu">factor</span>(<span class="dv">1</span>),</span>
-<span id="cb116-208"><a href="machine-learning.html#cb116-208" aria-hidden="true" tabindex="-1"></a>  <span class="at">D8 =</span> <span class="fu">factor</span>(<span class="dv">1</span>),</span>
-<span id="cb116-209"><a href="machine-learning.html#cb116-209" aria-hidden="true" tabindex="-1"></a>  <span class="at">D9 =</span> <span class="fu">factor</span>(<span class="dv">1</span>),</span>
-<span id="cb116-210"><a href="machine-learning.html#cb116-210" aria-hidden="true" tabindex="-1"></a>  <span class="at">D10 =</span> <span class="fu">factor</span>(<span class="dv">1</span>),</span>
-<span id="cb116-211"><a href="machine-learning.html#cb116-211" aria-hidden="true" tabindex="-1"></a>  <span class="at">D11 =</span> <span class="fu">factor</span>(<span class="dv">0</span>)</span>
-<span id="cb116-212"><a href="machine-learning.html#cb116-212" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb116-213"><a href="machine-learning.html#cb116-213" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-214"><a href="machine-learning.html#cb116-214" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(model, new_observation, <span class="at">type =</span> <span class="st">&quot;class&quot;</span>)</span>
-<span id="cb116-215"><a href="machine-learning.html#cb116-215" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(model, new_observation, <span class="at">type =</span> <span class="st">&quot;prob&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="machine-learning.html#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb124-2"><a href="machine-learning.html#cb124-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb124-3"><a href="machine-learning.html#cb124-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-4"><a href="machine-learning.html#cb124-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-5"><a href="machine-learning.html#cb124-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data ---------------------------------------------------------------</span></span>
+<span id="cb124-6"><a href="machine-learning.html#cb124-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-7"><a href="machine-learning.html#cb124-7" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">&#39;data/data_classification.rds&#39;</span>)</span>
+<span id="cb124-8"><a href="machine-learning.html#cb124-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-9"><a href="machine-learning.html#cb124-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Inspect the data --------------------------------------------------------</span></span>
+<span id="cb124-10"><a href="machine-learning.html#cb124-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-11"><a href="machine-learning.html#cb124-11" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(data)</span>
+<span id="cb124-12"><a href="machine-learning.html#cb124-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-13"><a href="machine-learning.html#cb124-13" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>ID)</span>
+<span id="cb124-14"><a href="machine-learning.html#cb124-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-15"><a href="machine-learning.html#cb124-15" aria-hidden="true" tabindex="-1"></a>skimr<span class="sc">::</span><span class="fu">skim</span>(data)</span>
+<span id="cb124-16"><a href="machine-learning.html#cb124-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-17"><a href="machine-learning.html#cb124-17" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
+<span id="cb124-18"><a href="machine-learning.html#cb124-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">starts_with</span>(<span class="st">&#39;D&#39;</span>), factor, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb124-19"><a href="machine-learning.html#cb124-19" aria-hidden="true" tabindex="-1"></a>  GGally<span class="sc">::</span><span class="fu">ggpairs</span>(<span class="fu">aes</span>(<span class="at">fill =</span> Class))</span>
+<span id="cb124-20"><a href="machine-learning.html#cb124-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-21"><a href="machine-learning.html#cb124-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-22"><a href="machine-learning.html#cb124-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-23"><a href="machine-learning.html#cb124-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Split data for models ---------------------------------------------------</span></span>
+<span id="cb124-24"><a href="machine-learning.html#cb124-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-25"><a href="machine-learning.html#cb124-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Set test set aside</span></span>
+<span id="cb124-26"><a href="machine-learning.html#cb124-26" aria-hidden="true" tabindex="-1"></a>train_test_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(data)</span>
+<span id="cb124-27"><a href="machine-learning.html#cb124-27" aria-hidden="true" tabindex="-1"></a>train_test_split</span>
+<span id="cb124-28"><a href="machine-learning.html#cb124-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-29"><a href="machine-learning.html#cb124-29" aria-hidden="true" tabindex="-1"></a>train_set <span class="ot">&lt;-</span> <span class="fu">training</span>(train_test_split)</span>
+<span id="cb124-30"><a href="machine-learning.html#cb124-30" aria-hidden="true" tabindex="-1"></a>test_set <span class="ot">&lt;-</span> <span class="fu">testing</span>(train_test_split)</span>
+<span id="cb124-31"><a href="machine-learning.html#cb124-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-32"><a href="machine-learning.html#cb124-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Split set fot cross-validation</span></span>
+<span id="cb124-33"><a href="machine-learning.html#cb124-33" aria-hidden="true" tabindex="-1"></a>resampling <span class="ot">&lt;-</span> <span class="fu">vfold_cv</span>(train_set, <span class="dv">10</span>)</span>
+<span id="cb124-34"><a href="machine-learning.html#cb124-34" aria-hidden="true" tabindex="-1"></a>resampling</span>
+<span id="cb124-35"><a href="machine-learning.html#cb124-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-36"><a href="machine-learning.html#cb124-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-37"><a href="machine-learning.html#cb124-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit MARS model ----------------------------------------------------------</span></span>
+<span id="cb124-38"><a href="machine-learning.html#cb124-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-39"><a href="machine-learning.html#cb124-39" aria-hidden="true" tabindex="-1"></a>usemodels<span class="sc">::</span><span class="fu">use_earth</span>(</span>
+<span id="cb124-40"><a href="machine-learning.html#cb124-40" aria-hidden="true" tabindex="-1"></a>  Class <span class="sc">~</span> .,</span>
+<span id="cb124-41"><a href="machine-learning.html#cb124-41" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> train_set</span>
+<span id="cb124-42"><a href="machine-learning.html#cb124-42" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb124-43"><a href="machine-learning.html#cb124-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-44"><a href="machine-learning.html#cb124-44" aria-hidden="true" tabindex="-1"></a>earth_recipe <span class="ot">&lt;-</span> </span>
+<span id="cb124-45"><a href="machine-learning.html#cb124-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">recipe</span>(<span class="at">formula =</span> Class <span class="sc">~</span> ., <span class="at">data =</span> train_set) <span class="sc">%&gt;%</span> </span>
+<span id="cb124-46"><a href="machine-learning.html#cb124-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_novel</span>(<span class="fu">all_nominal</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb124-47"><a href="machine-learning.html#cb124-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb124-48"><a href="machine-learning.html#cb124-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_zv</span>(<span class="fu">all_predictors</span>()) </span>
+<span id="cb124-49"><a href="machine-learning.html#cb124-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-50"><a href="machine-learning.html#cb124-50" aria-hidden="true" tabindex="-1"></a>earth_spec <span class="ot">&lt;-</span> </span>
+<span id="cb124-51"><a href="machine-learning.html#cb124-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mars</span>(</span>
+<span id="cb124-52"><a href="machine-learning.html#cb124-52" aria-hidden="true" tabindex="-1"></a>    <span class="at">num_terms =</span> <span class="fu">tune</span>(),</span>
+<span id="cb124-53"><a href="machine-learning.html#cb124-53" aria-hidden="true" tabindex="-1"></a>    <span class="at">prod_degree =</span> <span class="fu">tune</span>(),</span>
+<span id="cb124-54"><a href="machine-learning.html#cb124-54" aria-hidden="true" tabindex="-1"></a>    <span class="at">prune_method =</span> <span class="st">&quot;none&quot;</span></span>
+<span id="cb124-55"><a href="machine-learning.html#cb124-55" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span> </span>
+<span id="cb124-56"><a href="machine-learning.html#cb124-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">&quot;classification&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb124-57"><a href="machine-learning.html#cb124-57" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">&quot;earth&quot;</span>) </span>
+<span id="cb124-58"><a href="machine-learning.html#cb124-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-59"><a href="machine-learning.html#cb124-59" aria-hidden="true" tabindex="-1"></a>earth_workflow <span class="ot">&lt;-</span> </span>
+<span id="cb124-60"><a href="machine-learning.html#cb124-60" aria-hidden="true" tabindex="-1"></a>  <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb124-61"><a href="machine-learning.html#cb124-61" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(earth_recipe) <span class="sc">%&gt;%</span> </span>
+<span id="cb124-62"><a href="machine-learning.html#cb124-62" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(earth_spec) </span>
+<span id="cb124-63"><a href="machine-learning.html#cb124-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-64"><a href="machine-learning.html#cb124-64" aria-hidden="true" tabindex="-1"></a>earth_grid <span class="ot">&lt;-</span> tidyr<span class="sc">::</span><span class="fu">crossing</span>(<span class="at">num_terms =</span> <span class="dv">2</span> <span class="sc">*</span> (<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>), <span class="at">prod_degree =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>) </span>
+<span id="cb124-65"><a href="machine-learning.html#cb124-65" aria-hidden="true" tabindex="-1"></a>earth_grid</span>
+<span id="cb124-66"><a href="machine-learning.html#cb124-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-67"><a href="machine-learning.html#cb124-67" aria-hidden="true" tabindex="-1"></a>earth_tune <span class="ot">&lt;-</span> </span>
+<span id="cb124-68"><a href="machine-learning.html#cb124-68" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tune_grid</span>(</span>
+<span id="cb124-69"><a href="machine-learning.html#cb124-69" aria-hidden="true" tabindex="-1"></a>    earth_workflow, </span>
+<span id="cb124-70"><a href="machine-learning.html#cb124-70" aria-hidden="true" tabindex="-1"></a>    <span class="at">resamples =</span> resampling, </span>
+<span id="cb124-71"><a href="machine-learning.html#cb124-71" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Save predictions for further steps</span></span>
+<span id="cb124-72"><a href="machine-learning.html#cb124-72" aria-hidden="true" tabindex="-1"></a>    <span class="at">control =</span> <span class="fu">control_grid</span>(<span class="at">save_pred =</span> <span class="cn">TRUE</span>, <span class="at">verbose =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb124-73"><a href="machine-learning.html#cb124-73" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Test parameters on a grid defined above</span></span>
+<span id="cb124-74"><a href="machine-learning.html#cb124-74" aria-hidden="true" tabindex="-1"></a>    <span class="at">grid =</span> earth_grid</span>
+<span id="cb124-75"><a href="machine-learning.html#cb124-75" aria-hidden="true" tabindex="-1"></a>  ) </span>
+<span id="cb124-76"><a href="machine-learning.html#cb124-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-77"><a href="machine-learning.html#cb124-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-78"><a href="machine-learning.html#cb124-78" aria-hidden="true" tabindex="-1"></a><span class="co"># Check model performance -------------------------------------------------</span></span>
+<span id="cb124-79"><a href="machine-learning.html#cb124-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-80"><a href="machine-learning.html#cb124-80" aria-hidden="true" tabindex="-1"></a>earth_tune <span class="sc">%&gt;%</span> <span class="fu">show_best</span>(<span class="at">n =</span> <span class="dv">10</span>)</span>
+<span id="cb124-81"><a href="machine-learning.html#cb124-81" aria-hidden="true" tabindex="-1"></a>earth_tune <span class="sc">%&gt;%</span> <span class="fu">autoplot</span>()</span>
+<span id="cb124-82"><a href="machine-learning.html#cb124-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-83"><a href="machine-learning.html#cb124-83" aria-hidden="true" tabindex="-1"></a>earth_predictions <span class="ot">&lt;-</span> earth_tune <span class="sc">%&gt;%</span></span>
+<span id="cb124-84"><a href="machine-learning.html#cb124-84" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect_predictions</span>(<span class="at">parameters =</span> <span class="fu">select_best</span>(., <span class="st">&#39;roc_auc&#39;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb124-85"><a href="machine-learning.html#cb124-85" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">model =</span> <span class="st">&quot;MARS&quot;</span>)</span>
+<span id="cb124-86"><a href="machine-learning.html#cb124-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-87"><a href="machine-learning.html#cb124-87" aria-hidden="true" tabindex="-1"></a>earth_predictions <span class="sc">%&gt;%</span></span>
+<span id="cb124-88"><a href="machine-learning.html#cb124-88" aria-hidden="true" tabindex="-1"></a>  <span class="fu">roc_curve</span>(Class, .pred_A) <span class="sc">%&gt;%</span></span>
+<span id="cb124-89"><a href="machine-learning.html#cb124-89" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>()</span>
+<span id="cb124-90"><a href="machine-learning.html#cb124-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-91"><a href="machine-learning.html#cb124-91" aria-hidden="true" tabindex="-1"></a>earth_predictions <span class="sc">%&gt;%</span></span>
+<span id="cb124-92"><a href="machine-learning.html#cb124-92" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lift_curve</span>(Class, .pred_A) <span class="sc">%&gt;%</span></span>
+<span id="cb124-93"><a href="machine-learning.html#cb124-93" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>()</span>
+<span id="cb124-94"><a href="machine-learning.html#cb124-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-95"><a href="machine-learning.html#cb124-95" aria-hidden="true" tabindex="-1"></a>earth_predictions <span class="sc">%&gt;%</span></span>
+<span id="cb124-96"><a href="machine-learning.html#cb124-96" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pr_curve</span>(Class, .pred_A) <span class="sc">%&gt;%</span></span>
+<span id="cb124-97"><a href="machine-learning.html#cb124-97" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>()</span>
+<span id="cb124-98"><a href="machine-learning.html#cb124-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-99"><a href="machine-learning.html#cb124-99" aria-hidden="true" tabindex="-1"></a>earth_predictions <span class="sc">%&gt;%</span></span>
+<span id="cb124-100"><a href="machine-learning.html#cb124-100" aria-hidden="true" tabindex="-1"></a>  <span class="fu">conf_mat</span>(Class, .pred_class) <span class="sc">%&gt;%</span></span>
+<span id="cb124-101"><a href="machine-learning.html#cb124-101" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>()</span>
+<span id="cb124-102"><a href="machine-learning.html#cb124-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-103"><a href="machine-learning.html#cb124-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-104"><a href="machine-learning.html#cb124-104" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit decision tree -------------------------------------------------------</span></span>
+<span id="cb124-105"><a href="machine-learning.html#cb124-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-106"><a href="machine-learning.html#cb124-106" aria-hidden="true" tabindex="-1"></a>tree_recipe <span class="ot">&lt;-</span> </span>
+<span id="cb124-107"><a href="machine-learning.html#cb124-107" aria-hidden="true" tabindex="-1"></a>  <span class="fu">recipe</span>(<span class="at">formula =</span> Class <span class="sc">~</span> ., <span class="at">data =</span> train_set) <span class="sc">%&gt;%</span> </span>
+<span id="cb124-108"><a href="machine-learning.html#cb124-108" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_novel</span>(<span class="fu">all_nominal</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb124-109"><a href="machine-learning.html#cb124-109" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_zv</span>(<span class="fu">all_predictors</span>()) </span>
+<span id="cb124-110"><a href="machine-learning.html#cb124-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-111"><a href="machine-learning.html#cb124-111" aria-hidden="true" tabindex="-1"></a>tree_spec <span class="ot">&lt;-</span> </span>
+<span id="cb124-112"><a href="machine-learning.html#cb124-112" aria-hidden="true" tabindex="-1"></a>  <span class="fu">decision_tree</span>(</span>
+<span id="cb124-113"><a href="machine-learning.html#cb124-113" aria-hidden="true" tabindex="-1"></a>    <span class="at">cost_complexity =</span> <span class="fu">tune</span>(),</span>
+<span id="cb124-114"><a href="machine-learning.html#cb124-114" aria-hidden="true" tabindex="-1"></a>    <span class="at">tree_depth =</span> <span class="fu">tune</span>(),</span>
+<span id="cb124-115"><a href="machine-learning.html#cb124-115" aria-hidden="true" tabindex="-1"></a>    <span class="at">min_n =</span> <span class="fu">tune</span>()</span>
+<span id="cb124-116"><a href="machine-learning.html#cb124-116" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span> </span>
+<span id="cb124-117"><a href="machine-learning.html#cb124-117" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">&quot;classification&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb124-118"><a href="machine-learning.html#cb124-118" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">&quot;rpart&quot;</span>) </span>
+<span id="cb124-119"><a href="machine-learning.html#cb124-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-120"><a href="machine-learning.html#cb124-120" aria-hidden="true" tabindex="-1"></a>tree_workflow <span class="ot">&lt;-</span> </span>
+<span id="cb124-121"><a href="machine-learning.html#cb124-121" aria-hidden="true" tabindex="-1"></a>  <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb124-122"><a href="machine-learning.html#cb124-122" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(tree_recipe) <span class="sc">%&gt;%</span> </span>
+<span id="cb124-123"><a href="machine-learning.html#cb124-123" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(tree_spec) </span>
+<span id="cb124-124"><a href="machine-learning.html#cb124-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-125"><a href="machine-learning.html#cb124-125" aria-hidden="true" tabindex="-1"></a>tree_tune <span class="ot">&lt;-</span> </span>
+<span id="cb124-126"><a href="machine-learning.html#cb124-126" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tune_grid</span>(</span>
+<span id="cb124-127"><a href="machine-learning.html#cb124-127" aria-hidden="true" tabindex="-1"></a>    tree_workflow, </span>
+<span id="cb124-128"><a href="machine-learning.html#cb124-128" aria-hidden="true" tabindex="-1"></a>    <span class="at">resamples =</span> resampling, </span>
+<span id="cb124-129"><a href="machine-learning.html#cb124-129" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Save predictions for further steps</span></span>
+<span id="cb124-130"><a href="machine-learning.html#cb124-130" aria-hidden="true" tabindex="-1"></a>    <span class="at">control =</span> <span class="fu">control_grid</span>(<span class="at">save_pred =</span> <span class="cn">TRUE</span>, <span class="at">verbose =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb124-131"><a href="machine-learning.html#cb124-131" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Test 20 random combinations of parameters</span></span>
+<span id="cb124-132"><a href="machine-learning.html#cb124-132" aria-hidden="true" tabindex="-1"></a>    <span class="at">grid =</span> <span class="dv">20</span></span>
+<span id="cb124-133"><a href="machine-learning.html#cb124-133" aria-hidden="true" tabindex="-1"></a>  ) </span>
+<span id="cb124-134"><a href="machine-learning.html#cb124-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-135"><a href="machine-learning.html#cb124-135" aria-hidden="true" tabindex="-1"></a><span class="co"># Check model performance -------------------------------------------------</span></span>
+<span id="cb124-136"><a href="machine-learning.html#cb124-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-137"><a href="machine-learning.html#cb124-137" aria-hidden="true" tabindex="-1"></a>tree_tune <span class="sc">%&gt;%</span> <span class="fu">show_best</span>(<span class="at">n =</span> <span class="dv">10</span>)</span>
+<span id="cb124-138"><a href="machine-learning.html#cb124-138" aria-hidden="true" tabindex="-1"></a>tree_tune <span class="sc">%&gt;%</span> <span class="fu">autoplot</span>()</span>
+<span id="cb124-139"><a href="machine-learning.html#cb124-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-140"><a href="machine-learning.html#cb124-140" aria-hidden="true" tabindex="-1"></a>tree_predictions <span class="ot">&lt;-</span> tree_tune <span class="sc">%&gt;%</span></span>
+<span id="cb124-141"><a href="machine-learning.html#cb124-141" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect_predictions</span>(<span class="at">parameters =</span> <span class="fu">select_best</span>(., <span class="st">&#39;roc_auc&#39;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb124-142"><a href="machine-learning.html#cb124-142" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">model =</span> <span class="st">&quot;Decision Tree&quot;</span>)</span>
+<span id="cb124-143"><a href="machine-learning.html#cb124-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-144"><a href="machine-learning.html#cb124-144" aria-hidden="true" tabindex="-1"></a>tree_predictions <span class="sc">%&gt;%</span></span>
+<span id="cb124-145"><a href="machine-learning.html#cb124-145" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(earth_predictions) <span class="sc">%&gt;%</span></span>
+<span id="cb124-146"><a href="machine-learning.html#cb124-146" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(model) <span class="sc">%&gt;%</span></span>
+<span id="cb124-147"><a href="machine-learning.html#cb124-147" aria-hidden="true" tabindex="-1"></a>  <span class="fu">roc_curve</span>(Class, .pred_A) <span class="sc">%&gt;%</span></span>
+<span id="cb124-148"><a href="machine-learning.html#cb124-148" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>()</span>
+<span id="cb124-149"><a href="machine-learning.html#cb124-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-150"><a href="machine-learning.html#cb124-150" aria-hidden="true" tabindex="-1"></a>tree_predictions <span class="sc">%&gt;%</span></span>
+<span id="cb124-151"><a href="machine-learning.html#cb124-151" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(earth_predictions) <span class="sc">%&gt;%</span></span>
+<span id="cb124-152"><a href="machine-learning.html#cb124-152" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(model) <span class="sc">%&gt;%</span></span>
+<span id="cb124-153"><a href="machine-learning.html#cb124-153" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lift_curve</span>(Class, .pred_A) <span class="sc">%&gt;%</span></span>
+<span id="cb124-154"><a href="machine-learning.html#cb124-154" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>()</span>
+<span id="cb124-155"><a href="machine-learning.html#cb124-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-156"><a href="machine-learning.html#cb124-156" aria-hidden="true" tabindex="-1"></a>tree_predictions <span class="sc">%&gt;%</span></span>
+<span id="cb124-157"><a href="machine-learning.html#cb124-157" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(earth_predictions) <span class="sc">%&gt;%</span></span>
+<span id="cb124-158"><a href="machine-learning.html#cb124-158" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(model) <span class="sc">%&gt;%</span>  <span class="fu">pr_curve</span>(Class, .pred_A) <span class="sc">%&gt;%</span></span>
+<span id="cb124-159"><a href="machine-learning.html#cb124-159" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>()</span>
+<span id="cb124-160"><a href="machine-learning.html#cb124-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-161"><a href="machine-learning.html#cb124-161" aria-hidden="true" tabindex="-1"></a>tree_predictions <span class="sc">%&gt;%</span></span>
+<span id="cb124-162"><a href="machine-learning.html#cb124-162" aria-hidden="true" tabindex="-1"></a>  <span class="fu">conf_mat</span>(Class, .pred_class) <span class="sc">%&gt;%</span></span>
+<span id="cb124-163"><a href="machine-learning.html#cb124-163" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>()</span>
+<span id="cb124-164"><a href="machine-learning.html#cb124-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-165"><a href="machine-learning.html#cb124-165" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-166"><a href="machine-learning.html#cb124-166" aria-hidden="true" tabindex="-1"></a><span class="co"># Let&#39;s go with MARS model ------------------------------------------------</span></span>
+<span id="cb124-167"><a href="machine-learning.html#cb124-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-168"><a href="machine-learning.html#cb124-168" aria-hidden="true" tabindex="-1"></a>final_fit <span class="ot">&lt;-</span> earth_workflow <span class="sc">%&gt;%</span></span>
+<span id="cb124-169"><a href="machine-learning.html#cb124-169" aria-hidden="true" tabindex="-1"></a>  <span class="fu">finalize_workflow</span>(<span class="fu">select_best</span>(earth_tune, <span class="st">&#39;roc_auc&#39;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb124-170"><a href="machine-learning.html#cb124-170" aria-hidden="true" tabindex="-1"></a>  <span class="fu">last_fit</span>(train_test_split)</span>
+<span id="cb124-171"><a href="machine-learning.html#cb124-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-172"><a href="machine-learning.html#cb124-172" aria-hidden="true" tabindex="-1"></a>final_fit <span class="sc">%&gt;%</span> <span class="fu">collect_metrics</span>()</span>
+<span id="cb124-173"><a href="machine-learning.html#cb124-173" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-174"><a href="machine-learning.html#cb124-174" aria-hidden="true" tabindex="-1"></a>final_fit <span class="sc">%&gt;%</span></span>
+<span id="cb124-175"><a href="machine-learning.html#cb124-175" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect_predictions</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb124-176"><a href="machine-learning.html#cb124-176" aria-hidden="true" tabindex="-1"></a>  <span class="fu">roc_curve</span>(Class, .pred_A) <span class="sc">%&gt;%</span></span>
+<span id="cb124-177"><a href="machine-learning.html#cb124-177" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>()</span>
+<span id="cb124-178"><a href="machine-learning.html#cb124-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-179"><a href="machine-learning.html#cb124-179" aria-hidden="true" tabindex="-1"></a>final_model <span class="ot">&lt;-</span> final_fit <span class="sc">%&gt;%</span></span>
+<span id="cb124-180"><a href="machine-learning.html#cb124-180" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pluck</span>(<span class="st">&quot;.workflow&quot;</span>, <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb124-181"><a href="machine-learning.html#cb124-181" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(data)</span>
+<span id="cb124-182"><a href="machine-learning.html#cb124-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-183"><a href="machine-learning.html#cb124-183" aria-hidden="true" tabindex="-1"></a>final_model <span class="sc">%&gt;%</span></span>
+<span id="cb124-184"><a href="machine-learning.html#cb124-184" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull_workflow_fit</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb124-185"><a href="machine-learning.html#cb124-185" aria-hidden="true" tabindex="-1"></a>  vip<span class="sc">::</span><span class="fu">vip</span>()</span>
+<span id="cb124-186"><a href="machine-learning.html#cb124-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-187"><a href="machine-learning.html#cb124-187" aria-hidden="true" tabindex="-1"></a>final_model <span class="sc">%&gt;%</span></span>
+<span id="cb124-188"><a href="machine-learning.html#cb124-188" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull_workflow_fit</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb124-189"><a href="machine-learning.html#cb124-189" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pluck</span>(<span class="st">&quot;fit&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb124-190"><a href="machine-learning.html#cb124-190" aria-hidden="true" tabindex="-1"></a>  summary</span>
+<span id="cb124-191"><a href="machine-learning.html#cb124-191" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-192"><a href="machine-learning.html#cb124-192" aria-hidden="true" tabindex="-1"></a><span class="fu">write_rds</span>(final_model, <span class="st">&#39;classification_model.rds&#39;</span>)</span>
+<span id="cb124-193"><a href="machine-learning.html#cb124-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-194"><a href="machine-learning.html#cb124-194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-195"><a href="machine-learning.html#cb124-195" aria-hidden="true" tabindex="-1"></a><span class="co"># Predict something -------------------------------------------------------</span></span>
+<span id="cb124-196"><a href="machine-learning.html#cb124-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-197"><a href="machine-learning.html#cb124-197" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">&#39;classification_model.rds&#39;</span>)</span>
+<span id="cb124-198"><a href="machine-learning.html#cb124-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-199"><a href="machine-learning.html#cb124-199" aria-hidden="true" tabindex="-1"></a>new_observation <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb124-200"><a href="machine-learning.html#cb124-200" aria-hidden="true" tabindex="-1"></a>  <span class="at">N1 =</span> <span class="fl">1.8</span>,</span>
+<span id="cb124-201"><a href="machine-learning.html#cb124-201" aria-hidden="true" tabindex="-1"></a>  <span class="at">D1 =</span> <span class="fu">factor</span>(<span class="dv">0</span>),</span>
+<span id="cb124-202"><a href="machine-learning.html#cb124-202" aria-hidden="true" tabindex="-1"></a>  <span class="at">D2 =</span> <span class="fu">factor</span>(<span class="dv">0</span>),</span>
+<span id="cb124-203"><a href="machine-learning.html#cb124-203" aria-hidden="true" tabindex="-1"></a>  <span class="at">D3 =</span> <span class="fu">factor</span>(<span class="dv">1</span>),</span>
+<span id="cb124-204"><a href="machine-learning.html#cb124-204" aria-hidden="true" tabindex="-1"></a>  <span class="at">D4 =</span> <span class="fu">factor</span>(<span class="dv">0</span>),</span>
+<span id="cb124-205"><a href="machine-learning.html#cb124-205" aria-hidden="true" tabindex="-1"></a>  <span class="at">D5 =</span> <span class="fu">factor</span>(<span class="dv">1</span>),</span>
+<span id="cb124-206"><a href="machine-learning.html#cb124-206" aria-hidden="true" tabindex="-1"></a>  <span class="at">D6 =</span> <span class="fu">factor</span>(<span class="dv">0</span>),</span>
+<span id="cb124-207"><a href="machine-learning.html#cb124-207" aria-hidden="true" tabindex="-1"></a>  <span class="at">D7 =</span> <span class="fu">factor</span>(<span class="dv">1</span>),</span>
+<span id="cb124-208"><a href="machine-learning.html#cb124-208" aria-hidden="true" tabindex="-1"></a>  <span class="at">D8 =</span> <span class="fu">factor</span>(<span class="dv">1</span>),</span>
+<span id="cb124-209"><a href="machine-learning.html#cb124-209" aria-hidden="true" tabindex="-1"></a>  <span class="at">D9 =</span> <span class="fu">factor</span>(<span class="dv">1</span>),</span>
+<span id="cb124-210"><a href="machine-learning.html#cb124-210" aria-hidden="true" tabindex="-1"></a>  <span class="at">D10 =</span> <span class="fu">factor</span>(<span class="dv">1</span>),</span>
+<span id="cb124-211"><a href="machine-learning.html#cb124-211" aria-hidden="true" tabindex="-1"></a>  <span class="at">D11 =</span> <span class="fu">factor</span>(<span class="dv">0</span>)</span>
+<span id="cb124-212"><a href="machine-learning.html#cb124-212" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb124-213"><a href="machine-learning.html#cb124-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-214"><a href="machine-learning.html#cb124-214" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(model, new_observation, <span class="at">type =</span> <span class="st">&quot;class&quot;</span>)</span>
+<span id="cb124-215"><a href="machine-learning.html#cb124-215" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(model, new_observation, <span class="at">type =</span> <span class="st">&quot;prob&quot;</span>)</span></code></pre></div>
 </div>
 <div id="regression-code" class="section level3" number="11.4.3">
 <h3><span class="header-section-number">11.4.3</span> Regression Code</h3>
-<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="machine-learning.html#cb117-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb117-2"><a href="machine-learning.html#cb117-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
-<span id="cb117-3"><a href="machine-learning.html#cb117-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-4"><a href="machine-learning.html#cb117-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-5"><a href="machine-learning.html#cb117-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data ---------------------------------------------------------------</span></span>
-<span id="cb117-6"><a href="machine-learning.html#cb117-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-7"><a href="machine-learning.html#cb117-7" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">&#39;data/data_regression.rds&#39;</span>)</span>
-<span id="cb117-8"><a href="machine-learning.html#cb117-8" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(data)</span>
-<span id="cb117-9"><a href="machine-learning.html#cb117-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-10"><a href="machine-learning.html#cb117-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Inspect the data --------------------------------------------------------</span></span>
-<span id="cb117-11"><a href="machine-learning.html#cb117-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-12"><a href="machine-learning.html#cb117-12" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(data)</span>
-<span id="cb117-13"><a href="machine-learning.html#cb117-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-14"><a href="machine-learning.html#cb117-14" aria-hidden="true" tabindex="-1"></a>skimr<span class="sc">::</span><span class="fu">skim</span>(data)</span>
-<span id="cb117-15"><a href="machine-learning.html#cb117-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-16"><a href="machine-learning.html#cb117-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Split data for models ---------------------------------------------------</span></span>
-<span id="cb117-17"><a href="machine-learning.html#cb117-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-18"><a href="machine-learning.html#cb117-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Set test set aside</span></span>
-<span id="cb117-19"><a href="machine-learning.html#cb117-19" aria-hidden="true" tabindex="-1"></a>train_test_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(data)</span>
-<span id="cb117-20"><a href="machine-learning.html#cb117-20" aria-hidden="true" tabindex="-1"></a>train_test_split</span>
-<span id="cb117-21"><a href="machine-learning.html#cb117-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-22"><a href="machine-learning.html#cb117-22" aria-hidden="true" tabindex="-1"></a>train_set <span class="ot">&lt;-</span> <span class="fu">training</span>(train_test_split)</span>
-<span id="cb117-23"><a href="machine-learning.html#cb117-23" aria-hidden="true" tabindex="-1"></a>test_set <span class="ot">&lt;-</span> <span class="fu">testing</span>(train_test_split)</span>
-<span id="cb117-24"><a href="machine-learning.html#cb117-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-25"><a href="machine-learning.html#cb117-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Split set fot cross-validation</span></span>
-<span id="cb117-26"><a href="machine-learning.html#cb117-26" aria-hidden="true" tabindex="-1"></a>resampling <span class="ot">&lt;-</span> <span class="fu">vfold_cv</span>(train_set, <span class="dv">10</span>)</span>
-<span id="cb117-27"><a href="machine-learning.html#cb117-27" aria-hidden="true" tabindex="-1"></a>resampling</span>
-<span id="cb117-28"><a href="machine-learning.html#cb117-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-29"><a href="machine-learning.html#cb117-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-30"><a href="machine-learning.html#cb117-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit glmnet model ----------------------------------------------------------</span></span>
-<span id="cb117-31"><a href="machine-learning.html#cb117-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-32"><a href="machine-learning.html#cb117-32" aria-hidden="true" tabindex="-1"></a>usemodels<span class="sc">::</span><span class="fu">use_glmnet</span>(</span>
-<span id="cb117-33"><a href="machine-learning.html#cb117-33" aria-hidden="true" tabindex="-1"></a>  Liking <span class="sc">~</span> .,</span>
-<span id="cb117-34"><a href="machine-learning.html#cb117-34" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> train_set</span>
-<span id="cb117-35"><a href="machine-learning.html#cb117-35" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb117-36"><a href="machine-learning.html#cb117-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-37"><a href="machine-learning.html#cb117-37" aria-hidden="true" tabindex="-1"></a>glmnet_recipe <span class="ot">&lt;-</span> </span>
-<span id="cb117-38"><a href="machine-learning.html#cb117-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">recipe</span>(<span class="at">formula =</span> Liking <span class="sc">~</span> ., <span class="at">data =</span> train_set) <span class="sc">%&gt;%</span> </span>
-<span id="cb117-39"><a href="machine-learning.html#cb117-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_novel</span>(<span class="fu">all_nominal</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb117-40"><a href="machine-learning.html#cb117-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb117-41"><a href="machine-learning.html#cb117-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_zv</span>(<span class="fu">all_predictors</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb117-42"><a href="machine-learning.html#cb117-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_normalize</span>(<span class="fu">all_predictors</span>(), <span class="sc">-</span><span class="fu">all_nominal</span>())</span>
-<span id="cb117-43"><a href="machine-learning.html#cb117-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-44"><a href="machine-learning.html#cb117-44" aria-hidden="true" tabindex="-1"></a>glmnet_spec <span class="ot">&lt;-</span> </span>
-<span id="cb117-45"><a href="machine-learning.html#cb117-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">linear_reg</span>(<span class="at">penalty =</span> <span class="fu">tune</span>(), <span class="at">mixture =</span> <span class="fu">tune</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb117-46"><a href="machine-learning.html#cb117-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">&quot;regression&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb117-47"><a href="machine-learning.html#cb117-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">&quot;glmnet&quot;</span>) </span>
-<span id="cb117-48"><a href="machine-learning.html#cb117-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-49"><a href="machine-learning.html#cb117-49" aria-hidden="true" tabindex="-1"></a>glmnet_workflow <span class="ot">&lt;-</span> </span>
-<span id="cb117-50"><a href="machine-learning.html#cb117-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb117-51"><a href="machine-learning.html#cb117-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(glmnet_recipe) <span class="sc">%&gt;%</span> </span>
-<span id="cb117-52"><a href="machine-learning.html#cb117-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(glmnet_spec) </span>
-<span id="cb117-53"><a href="machine-learning.html#cb117-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-54"><a href="machine-learning.html#cb117-54" aria-hidden="true" tabindex="-1"></a>glmnet_grid <span class="ot">&lt;-</span> tidyr<span class="sc">::</span><span class="fu">crossing</span>(<span class="at">penalty =</span> <span class="dv">10</span><span class="sc">^</span><span class="fu">seq</span>(<span class="sc">-</span><span class="dv">6</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="at">length.out =</span> <span class="dv">20</span>), </span>
-<span id="cb117-55"><a href="machine-learning.html#cb117-55" aria-hidden="true" tabindex="-1"></a>                               <span class="at">mixture =</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.2</span>, <span class="fl">0.4</span>, <span class="fl">0.6</span>, <span class="fl">0.8</span>, <span class="dv">1</span>)) </span>
-<span id="cb117-56"><a href="machine-learning.html#cb117-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-57"><a href="machine-learning.html#cb117-57" aria-hidden="true" tabindex="-1"></a>glmnet_tune <span class="ot">&lt;-</span> </span>
-<span id="cb117-58"><a href="machine-learning.html#cb117-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tune_grid</span>(</span>
-<span id="cb117-59"><a href="machine-learning.html#cb117-59" aria-hidden="true" tabindex="-1"></a>    glmnet_workflow, </span>
-<span id="cb117-60"><a href="machine-learning.html#cb117-60" aria-hidden="true" tabindex="-1"></a>    <span class="at">resamples =</span> resampling, </span>
-<span id="cb117-61"><a href="machine-learning.html#cb117-61" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Save predictions for further steps</span></span>
-<span id="cb117-62"><a href="machine-learning.html#cb117-62" aria-hidden="true" tabindex="-1"></a>    <span class="at">control =</span> <span class="fu">control_grid</span>(<span class="at">save_pred =</span> <span class="cn">TRUE</span>, <span class="at">verbose =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb117-63"><a href="machine-learning.html#cb117-63" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Test parameters on a grid defined above</span></span>
-<span id="cb117-64"><a href="machine-learning.html#cb117-64" aria-hidden="true" tabindex="-1"></a>    <span class="at">grid =</span> glmnet_grid</span>
-<span id="cb117-65"><a href="machine-learning.html#cb117-65" aria-hidden="true" tabindex="-1"></a>    ) </span>
-<span id="cb117-66"><a href="machine-learning.html#cb117-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-67"><a href="machine-learning.html#cb117-67" aria-hidden="true" tabindex="-1"></a><span class="co"># Check model performance -------------------------------------------------</span></span>
-<span id="cb117-68"><a href="machine-learning.html#cb117-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-69"><a href="machine-learning.html#cb117-69" aria-hidden="true" tabindex="-1"></a>glmnet_tune <span class="sc">%&gt;%</span> <span class="fu">show_best</span>(<span class="at">n =</span> <span class="dv">10</span>)</span>
-<span id="cb117-70"><a href="machine-learning.html#cb117-70" aria-hidden="true" tabindex="-1"></a>glmnet_tune <span class="sc">%&gt;%</span> <span class="fu">autoplot</span>()</span>
-<span id="cb117-71"><a href="machine-learning.html#cb117-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-72"><a href="machine-learning.html#cb117-72" aria-hidden="true" tabindex="-1"></a>glmnet_predictions <span class="ot">&lt;-</span> glmnet_tune <span class="sc">%&gt;%</span></span>
-<span id="cb117-73"><a href="machine-learning.html#cb117-73" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect_predictions</span>(<span class="at">parameters =</span> <span class="fu">select_best</span>(., <span class="st">&#39;rmse&#39;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb117-74"><a href="machine-learning.html#cb117-74" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">model =</span> <span class="st">&quot;GLMNet&quot;</span>,</span>
-<span id="cb117-75"><a href="machine-learning.html#cb117-75" aria-hidden="true" tabindex="-1"></a>         <span class="at">.resid =</span> Liking <span class="sc">-</span> .pred)</span>
-<span id="cb117-76"><a href="machine-learning.html#cb117-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-77"><a href="machine-learning.html#cb117-77" aria-hidden="true" tabindex="-1"></a>glmnet_predictions <span class="sc">%&gt;%</span></span>
-<span id="cb117-78"><a href="machine-learning.html#cb117-78" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">sample =</span> .resid)) <span class="sc">+</span></span>
-<span id="cb117-79"><a href="machine-learning.html#cb117-79" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_qq</span>() <span class="sc">+</span></span>
-<span id="cb117-80"><a href="machine-learning.html#cb117-80" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_qq_line</span>()</span>
-<span id="cb117-81"><a href="machine-learning.html#cb117-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-82"><a href="machine-learning.html#cb117-82" aria-hidden="true" tabindex="-1"></a>glmnet_predictions <span class="sc">%&gt;%</span></span>
-<span id="cb117-83"><a href="machine-learning.html#cb117-83" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(.pred, Liking)) <span class="sc">+</span></span>
-<span id="cb117-84"><a href="machine-learning.html#cb117-84" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb117-85"><a href="machine-learning.html#cb117-85" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">slope =</span> <span class="dv">1</span>, <span class="at">intercept =</span> <span class="dv">0</span>)</span>
-<span id="cb117-86"><a href="machine-learning.html#cb117-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-87"><a href="machine-learning.html#cb117-87" aria-hidden="true" tabindex="-1"></a>glmnet_predictions <span class="sc">%&gt;%</span></span>
-<span id="cb117-88"><a href="machine-learning.html#cb117-88" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(.pred, .resid)) <span class="sc">+</span></span>
-<span id="cb117-89"><a href="machine-learning.html#cb117-89" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb117-90"><a href="machine-learning.html#cb117-90" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>)</span>
-<span id="cb117-91"><a href="machine-learning.html#cb117-91" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-92"><a href="machine-learning.html#cb117-92" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(glmnet_predictions, <span class="fu">aes</span>(<span class="at">x =</span> .resid)) <span class="sc">+</span> </span>
-<span id="cb117-93"><a href="machine-learning.html#cb117-93" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span>..density..), <span class="at">fill =</span> <span class="st">&#39;white&#39;</span>, <span class="at">color =</span> <span class="st">&#39;black&#39;</span>) <span class="sc">+</span></span>
-<span id="cb117-94"><a href="machine-learning.html#cb117-94" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> dnorm,</span>
-<span id="cb117-95"><a href="machine-learning.html#cb117-95" aria-hidden="true" tabindex="-1"></a>                <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> <span class="fu">mean</span>(glmnet_predictions<span class="sc">$</span>.resid), </span>
-<span id="cb117-96"><a href="machine-learning.html#cb117-96" aria-hidden="true" tabindex="-1"></a>                            <span class="at">sd =</span> <span class="fu">sd</span>(glmnet_predictions<span class="sc">$</span>.resid)),</span>
-<span id="cb117-97"><a href="machine-learning.html#cb117-97" aria-hidden="true" tabindex="-1"></a>                <span class="at">size =</span> <span class="dv">1</span>)</span>
-<span id="cb117-98"><a href="machine-learning.html#cb117-98" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-99"><a href="machine-learning.html#cb117-99" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit random forest -------------------------------------------------------</span></span>
-<span id="cb117-100"><a href="machine-learning.html#cb117-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-101"><a href="machine-learning.html#cb117-101" aria-hidden="true" tabindex="-1"></a>rf_recipe <span class="ot">&lt;-</span> </span>
-<span id="cb117-102"><a href="machine-learning.html#cb117-102" aria-hidden="true" tabindex="-1"></a>  <span class="fu">recipe</span>(<span class="at">formula =</span> Liking <span class="sc">~</span> ., <span class="at">data =</span> train_set) <span class="sc">%&gt;%</span> </span>
-<span id="cb117-103"><a href="machine-learning.html#cb117-103" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_novel</span>(<span class="fu">all_nominal</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb117-104"><a href="machine-learning.html#cb117-104" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_zv</span>(<span class="fu">all_predictors</span>()) </span>
-<span id="cb117-105"><a href="machine-learning.html#cb117-105" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-106"><a href="machine-learning.html#cb117-106" aria-hidden="true" tabindex="-1"></a>rf_spec <span class="ot">&lt;-</span> </span>
-<span id="cb117-107"><a href="machine-learning.html#cb117-107" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rand_forest</span>(</span>
-<span id="cb117-108"><a href="machine-learning.html#cb117-108" aria-hidden="true" tabindex="-1"></a>    <span class="at">mtry =</span> <span class="fu">tune</span>(), </span>
-<span id="cb117-109"><a href="machine-learning.html#cb117-109" aria-hidden="true" tabindex="-1"></a>    <span class="at">min_n =</span> <span class="fu">tune</span>(),</span>
-<span id="cb117-110"><a href="machine-learning.html#cb117-110" aria-hidden="true" tabindex="-1"></a>    <span class="at">trees =</span> <span class="dv">50</span></span>
-<span id="cb117-111"><a href="machine-learning.html#cb117-111" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span> </span>
-<span id="cb117-112"><a href="machine-learning.html#cb117-112" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">&quot;regression&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb117-113"><a href="machine-learning.html#cb117-113" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">&quot;ranger&quot;</span>, <span class="at">importance =</span> <span class="st">&quot;impurity&quot;</span>) </span>
-<span id="cb117-114"><a href="machine-learning.html#cb117-114" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-115"><a href="machine-learning.html#cb117-115" aria-hidden="true" tabindex="-1"></a>rf_workflow <span class="ot">&lt;-</span> </span>
-<span id="cb117-116"><a href="machine-learning.html#cb117-116" aria-hidden="true" tabindex="-1"></a>  <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb117-117"><a href="machine-learning.html#cb117-117" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(rf_recipe) <span class="sc">%&gt;%</span> </span>
-<span id="cb117-118"><a href="machine-learning.html#cb117-118" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(rf_spec) </span>
-<span id="cb117-119"><a href="machine-learning.html#cb117-119" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-120"><a href="machine-learning.html#cb117-120" aria-hidden="true" tabindex="-1"></a>rf_tune <span class="ot">&lt;-</span> </span>
-<span id="cb117-121"><a href="machine-learning.html#cb117-121" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tune_grid</span>(</span>
-<span id="cb117-122"><a href="machine-learning.html#cb117-122" aria-hidden="true" tabindex="-1"></a>    rf_workflow, </span>
-<span id="cb117-123"><a href="machine-learning.html#cb117-123" aria-hidden="true" tabindex="-1"></a>    <span class="at">resamples =</span> resampling, </span>
-<span id="cb117-124"><a href="machine-learning.html#cb117-124" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Save predictions for further steps</span></span>
-<span id="cb117-125"><a href="machine-learning.html#cb117-125" aria-hidden="true" tabindex="-1"></a>    <span class="at">control =</span> <span class="fu">control_grid</span>(<span class="at">save_pred =</span> <span class="cn">TRUE</span>, <span class="at">verbose =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb117-126"><a href="machine-learning.html#cb117-126" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Test 20 random combinations of parameters</span></span>
-<span id="cb117-127"><a href="machine-learning.html#cb117-127" aria-hidden="true" tabindex="-1"></a>    <span class="at">grid =</span> <span class="dv">20</span></span>
-<span id="cb117-128"><a href="machine-learning.html#cb117-128" aria-hidden="true" tabindex="-1"></a>  ) </span>
-<span id="cb117-129"><a href="machine-learning.html#cb117-129" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-130"><a href="machine-learning.html#cb117-130" aria-hidden="true" tabindex="-1"></a><span class="co"># Check model performance -------------------------------------------------</span></span>
-<span id="cb117-131"><a href="machine-learning.html#cb117-131" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-132"><a href="machine-learning.html#cb117-132" aria-hidden="true" tabindex="-1"></a>rf_tune <span class="sc">%&gt;%</span> <span class="fu">show_best</span>(<span class="at">n =</span> <span class="dv">10</span>)</span>
-<span id="cb117-133"><a href="machine-learning.html#cb117-133" aria-hidden="true" tabindex="-1"></a>rf_tune <span class="sc">%&gt;%</span> <span class="fu">autoplot</span>()</span>
-<span id="cb117-134"><a href="machine-learning.html#cb117-134" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-135"><a href="machine-learning.html#cb117-135" aria-hidden="true" tabindex="-1"></a>rf_predictions <span class="ot">&lt;-</span> rf_tune <span class="sc">%&gt;%</span></span>
-<span id="cb117-136"><a href="machine-learning.html#cb117-136" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect_predictions</span>(<span class="at">parameters =</span> <span class="fu">select_best</span>(., <span class="st">&#39;rmse&#39;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb117-137"><a href="machine-learning.html#cb117-137" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">model =</span> <span class="st">&quot;Random Forest&quot;</span>,</span>
-<span id="cb117-138"><a href="machine-learning.html#cb117-138" aria-hidden="true" tabindex="-1"></a>         <span class="at">.resid =</span> Liking <span class="sc">-</span> .pred)</span>
-<span id="cb117-139"><a href="machine-learning.html#cb117-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-140"><a href="machine-learning.html#cb117-140" aria-hidden="true" tabindex="-1"></a>rf_predictions <span class="sc">%&gt;%</span></span>
-<span id="cb117-141"><a href="machine-learning.html#cb117-141" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(glmnet_predictions) <span class="sc">%&gt;%</span></span>
-<span id="cb117-142"><a href="machine-learning.html#cb117-142" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">sample =</span> .resid)) <span class="sc">+</span></span>
-<span id="cb117-143"><a href="machine-learning.html#cb117-143" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_qq</span>() <span class="sc">+</span></span>
-<span id="cb117-144"><a href="machine-learning.html#cb117-144" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_qq_line</span>() <span class="sc">+</span></span>
-<span id="cb117-145"><a href="machine-learning.html#cb117-145" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>model)</span>
-<span id="cb117-146"><a href="machine-learning.html#cb117-146" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-147"><a href="machine-learning.html#cb117-147" aria-hidden="true" tabindex="-1"></a>rf_predictions <span class="sc">%&gt;%</span></span>
-<span id="cb117-148"><a href="machine-learning.html#cb117-148" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(glmnet_predictions) <span class="sc">%&gt;%</span></span>
-<span id="cb117-149"><a href="machine-learning.html#cb117-149" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(.pred, Liking)) <span class="sc">+</span></span>
-<span id="cb117-150"><a href="machine-learning.html#cb117-150" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb117-151"><a href="machine-learning.html#cb117-151" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">slope =</span> <span class="dv">1</span>, <span class="at">intercept =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb117-152"><a href="machine-learning.html#cb117-152" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>model)</span>
-<span id="cb117-153"><a href="machine-learning.html#cb117-153" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-154"><a href="machine-learning.html#cb117-154" aria-hidden="true" tabindex="-1"></a>rf_predictions <span class="sc">%&gt;%</span></span>
-<span id="cb117-155"><a href="machine-learning.html#cb117-155" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(glmnet_predictions) <span class="sc">%&gt;%</span></span>
-<span id="cb117-156"><a href="machine-learning.html#cb117-156" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(.pred, .resid)) <span class="sc">+</span></span>
-<span id="cb117-157"><a href="machine-learning.html#cb117-157" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb117-158"><a href="machine-learning.html#cb117-158" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb117-159"><a href="machine-learning.html#cb117-159" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>model)</span>
-<span id="cb117-160"><a href="machine-learning.html#cb117-160" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-161"><a href="machine-learning.html#cb117-161" aria-hidden="true" tabindex="-1"></a>rf_predictions <span class="sc">%&gt;%</span></span>
-<span id="cb117-162"><a href="machine-learning.html#cb117-162" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> .resid)) <span class="sc">+</span> </span>
-<span id="cb117-163"><a href="machine-learning.html#cb117-163" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span>..density..), <span class="at">fill =</span> <span class="st">&#39;white&#39;</span>, <span class="at">color =</span> <span class="st">&#39;black&#39;</span>) <span class="sc">+</span></span>
-<span id="cb117-164"><a href="machine-learning.html#cb117-164" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> dnorm,</span>
-<span id="cb117-165"><a href="machine-learning.html#cb117-165" aria-hidden="true" tabindex="-1"></a>                <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> <span class="fu">mean</span>(rf_predictions<span class="sc">$</span>.resid), </span>
-<span id="cb117-166"><a href="machine-learning.html#cb117-166" aria-hidden="true" tabindex="-1"></a>                            <span class="at">sd =</span> <span class="fu">sd</span>(rf_predictions<span class="sc">$</span>.resid)),</span>
-<span id="cb117-167"><a href="machine-learning.html#cb117-167" aria-hidden="true" tabindex="-1"></a>                <span class="at">size =</span> <span class="dv">1</span>)</span>
-<span id="cb117-168"><a href="machine-learning.html#cb117-168" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-169"><a href="machine-learning.html#cb117-169" aria-hidden="true" tabindex="-1"></a><span class="co"># Let&#39;s go with rf model ------------------------------------------------</span></span>
-<span id="cb117-170"><a href="machine-learning.html#cb117-170" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-171"><a href="machine-learning.html#cb117-171" aria-hidden="true" tabindex="-1"></a>final_fit <span class="ot">&lt;-</span> glmnet_workflow <span class="sc">%&gt;%</span></span>
-<span id="cb117-172"><a href="machine-learning.html#cb117-172" aria-hidden="true" tabindex="-1"></a>  <span class="fu">finalize_workflow</span>(<span class="fu">select_best</span>(glmnet_tune, <span class="st">&#39;rmse&#39;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb117-173"><a href="machine-learning.html#cb117-173" aria-hidden="true" tabindex="-1"></a>  <span class="fu">last_fit</span>(train_test_split)</span>
-<span id="cb117-174"><a href="machine-learning.html#cb117-174" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-175"><a href="machine-learning.html#cb117-175" aria-hidden="true" tabindex="-1"></a>final_fit <span class="ot">&lt;-</span> rf_workflow <span class="sc">%&gt;%</span></span>
-<span id="cb117-176"><a href="machine-learning.html#cb117-176" aria-hidden="true" tabindex="-1"></a>  <span class="fu">finalize_workflow</span>(<span class="fu">select_best</span>(rf_tune, <span class="st">&#39;rmse&#39;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb117-177"><a href="machine-learning.html#cb117-177" aria-hidden="true" tabindex="-1"></a>  <span class="fu">last_fit</span>(train_test_split)</span>
-<span id="cb117-178"><a href="machine-learning.html#cb117-178" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-179"><a href="machine-learning.html#cb117-179" aria-hidden="true" tabindex="-1"></a>final_fit <span class="sc">%&gt;%</span> <span class="fu">collect_metrics</span>()</span>
-<span id="cb117-180"><a href="machine-learning.html#cb117-180" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-181"><a href="machine-learning.html#cb117-181" aria-hidden="true" tabindex="-1"></a>final_fit <span class="sc">%&gt;%</span></span>
-<span id="cb117-182"><a href="machine-learning.html#cb117-182" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect_predictions</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb117-183"><a href="machine-learning.html#cb117-183" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">.resid =</span> Liking <span class="sc">-</span> .pred) <span class="sc">%&gt;%</span></span>
-<span id="cb117-184"><a href="machine-learning.html#cb117-184" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">sample =</span> .resid)) <span class="sc">+</span></span>
-<span id="cb117-185"><a href="machine-learning.html#cb117-185" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_qq</span>() <span class="sc">+</span></span>
-<span id="cb117-186"><a href="machine-learning.html#cb117-186" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_qq_line</span>()</span>
-<span id="cb117-187"><a href="machine-learning.html#cb117-187" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-188"><a href="machine-learning.html#cb117-188" aria-hidden="true" tabindex="-1"></a>final_model <span class="ot">&lt;-</span>  final_fit <span class="sc">%&gt;%</span></span>
-<span id="cb117-189"><a href="machine-learning.html#cb117-189" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pluck</span>(<span class="st">&quot;.workflow&quot;</span>, <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb117-190"><a href="machine-learning.html#cb117-190" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(data)</span>
-<span id="cb117-191"><a href="machine-learning.html#cb117-191" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-192"><a href="machine-learning.html#cb117-192" aria-hidden="true" tabindex="-1"></a>final_model <span class="sc">%&gt;%</span></span>
-<span id="cb117-193"><a href="machine-learning.html#cb117-193" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull_workflow_fit</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb117-194"><a href="machine-learning.html#cb117-194" aria-hidden="true" tabindex="-1"></a>  vip<span class="sc">::</span><span class="fu">vip</span>()</span>
-<span id="cb117-195"><a href="machine-learning.html#cb117-195" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-196"><a href="machine-learning.html#cb117-196" aria-hidden="true" tabindex="-1"></a><span class="co"># final_model %&gt;%</span></span>
-<span id="cb117-197"><a href="machine-learning.html#cb117-197" aria-hidden="true" tabindex="-1"></a><span class="co">#   broom::tidy() %&gt;%</span></span>
-<span id="cb117-198"><a href="machine-learning.html#cb117-198" aria-hidden="true" tabindex="-1"></a><span class="co">#   filter(estimate != 0)</span></span>
-<span id="cb117-199"><a href="machine-learning.html#cb117-199" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-200"><a href="machine-learning.html#cb117-200" aria-hidden="true" tabindex="-1"></a><span class="fu">write_rds</span>(final_model, <span class="st">&#39;regression_model.rds&#39;</span>)</span>
-<span id="cb117-201"><a href="machine-learning.html#cb117-201" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-202"><a href="machine-learning.html#cb117-202" aria-hidden="true" tabindex="-1"></a><span class="co"># Predict something -------------------------------------------------------</span></span>
-<span id="cb117-203"><a href="machine-learning.html#cb117-203" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-204"><a href="machine-learning.html#cb117-204" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">&#39;regression_model.rds&#39;</span>)</span>
-<span id="cb117-205"><a href="machine-learning.html#cb117-205" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-206"><a href="machine-learning.html#cb117-206" aria-hidden="true" tabindex="-1"></a>new_observations <span class="ot">&lt;-</span> data[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,]</span>
-<span id="cb117-207"><a href="machine-learning.html#cb117-207" aria-hidden="true" tabindex="-1"></a>new_observations</span>
-<span id="cb117-208"><a href="machine-learning.html#cb117-208" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-209"><a href="machine-learning.html#cb117-209" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(model, new_observations)</span></code></pre></div>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="machine-learning.html#cb125-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb125-2"><a href="machine-learning.html#cb125-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb125-3"><a href="machine-learning.html#cb125-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-4"><a href="machine-learning.html#cb125-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-5"><a href="machine-learning.html#cb125-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data ---------------------------------------------------------------</span></span>
+<span id="cb125-6"><a href="machine-learning.html#cb125-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-7"><a href="machine-learning.html#cb125-7" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">&#39;data/data_regression.rds&#39;</span>)</span>
+<span id="cb125-8"><a href="machine-learning.html#cb125-8" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(data)</span>
+<span id="cb125-9"><a href="machine-learning.html#cb125-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-10"><a href="machine-learning.html#cb125-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Inspect the data --------------------------------------------------------</span></span>
+<span id="cb125-11"><a href="machine-learning.html#cb125-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-12"><a href="machine-learning.html#cb125-12" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(data)</span>
+<span id="cb125-13"><a href="machine-learning.html#cb125-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-14"><a href="machine-learning.html#cb125-14" aria-hidden="true" tabindex="-1"></a>skimr<span class="sc">::</span><span class="fu">skim</span>(data)</span>
+<span id="cb125-15"><a href="machine-learning.html#cb125-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-16"><a href="machine-learning.html#cb125-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Split data for models ---------------------------------------------------</span></span>
+<span id="cb125-17"><a href="machine-learning.html#cb125-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-18"><a href="machine-learning.html#cb125-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Set test set aside</span></span>
+<span id="cb125-19"><a href="machine-learning.html#cb125-19" aria-hidden="true" tabindex="-1"></a>train_test_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(data)</span>
+<span id="cb125-20"><a href="machine-learning.html#cb125-20" aria-hidden="true" tabindex="-1"></a>train_test_split</span>
+<span id="cb125-21"><a href="machine-learning.html#cb125-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-22"><a href="machine-learning.html#cb125-22" aria-hidden="true" tabindex="-1"></a>train_set <span class="ot">&lt;-</span> <span class="fu">training</span>(train_test_split)</span>
+<span id="cb125-23"><a href="machine-learning.html#cb125-23" aria-hidden="true" tabindex="-1"></a>test_set <span class="ot">&lt;-</span> <span class="fu">testing</span>(train_test_split)</span>
+<span id="cb125-24"><a href="machine-learning.html#cb125-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-25"><a href="machine-learning.html#cb125-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Split set fot cross-validation</span></span>
+<span id="cb125-26"><a href="machine-learning.html#cb125-26" aria-hidden="true" tabindex="-1"></a>resampling <span class="ot">&lt;-</span> <span class="fu">vfold_cv</span>(train_set, <span class="dv">10</span>)</span>
+<span id="cb125-27"><a href="machine-learning.html#cb125-27" aria-hidden="true" tabindex="-1"></a>resampling</span>
+<span id="cb125-28"><a href="machine-learning.html#cb125-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-29"><a href="machine-learning.html#cb125-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-30"><a href="machine-learning.html#cb125-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit glmnet model ----------------------------------------------------------</span></span>
+<span id="cb125-31"><a href="machine-learning.html#cb125-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-32"><a href="machine-learning.html#cb125-32" aria-hidden="true" tabindex="-1"></a>usemodels<span class="sc">::</span><span class="fu">use_glmnet</span>(</span>
+<span id="cb125-33"><a href="machine-learning.html#cb125-33" aria-hidden="true" tabindex="-1"></a>  Liking <span class="sc">~</span> .,</span>
+<span id="cb125-34"><a href="machine-learning.html#cb125-34" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> train_set</span>
+<span id="cb125-35"><a href="machine-learning.html#cb125-35" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb125-36"><a href="machine-learning.html#cb125-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-37"><a href="machine-learning.html#cb125-37" aria-hidden="true" tabindex="-1"></a>glmnet_recipe <span class="ot">&lt;-</span> </span>
+<span id="cb125-38"><a href="machine-learning.html#cb125-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">recipe</span>(<span class="at">formula =</span> Liking <span class="sc">~</span> ., <span class="at">data =</span> train_set) <span class="sc">%&gt;%</span> </span>
+<span id="cb125-39"><a href="machine-learning.html#cb125-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_novel</span>(<span class="fu">all_nominal</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb125-40"><a href="machine-learning.html#cb125-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb125-41"><a href="machine-learning.html#cb125-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_zv</span>(<span class="fu">all_predictors</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb125-42"><a href="machine-learning.html#cb125-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_normalize</span>(<span class="fu">all_predictors</span>(), <span class="sc">-</span><span class="fu">all_nominal</span>())</span>
+<span id="cb125-43"><a href="machine-learning.html#cb125-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-44"><a href="machine-learning.html#cb125-44" aria-hidden="true" tabindex="-1"></a>glmnet_spec <span class="ot">&lt;-</span> </span>
+<span id="cb125-45"><a href="machine-learning.html#cb125-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">linear_reg</span>(<span class="at">penalty =</span> <span class="fu">tune</span>(), <span class="at">mixture =</span> <span class="fu">tune</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb125-46"><a href="machine-learning.html#cb125-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">&quot;regression&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb125-47"><a href="machine-learning.html#cb125-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">&quot;glmnet&quot;</span>) </span>
+<span id="cb125-48"><a href="machine-learning.html#cb125-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-49"><a href="machine-learning.html#cb125-49" aria-hidden="true" tabindex="-1"></a>glmnet_workflow <span class="ot">&lt;-</span> </span>
+<span id="cb125-50"><a href="machine-learning.html#cb125-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb125-51"><a href="machine-learning.html#cb125-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(glmnet_recipe) <span class="sc">%&gt;%</span> </span>
+<span id="cb125-52"><a href="machine-learning.html#cb125-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(glmnet_spec) </span>
+<span id="cb125-53"><a href="machine-learning.html#cb125-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-54"><a href="machine-learning.html#cb125-54" aria-hidden="true" tabindex="-1"></a>glmnet_grid <span class="ot">&lt;-</span> tidyr<span class="sc">::</span><span class="fu">crossing</span>(<span class="at">penalty =</span> <span class="dv">10</span><span class="sc">^</span><span class="fu">seq</span>(<span class="sc">-</span><span class="dv">6</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="at">length.out =</span> <span class="dv">20</span>), </span>
+<span id="cb125-55"><a href="machine-learning.html#cb125-55" aria-hidden="true" tabindex="-1"></a>                               <span class="at">mixture =</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.2</span>, <span class="fl">0.4</span>, <span class="fl">0.6</span>, <span class="fl">0.8</span>, <span class="dv">1</span>)) </span>
+<span id="cb125-56"><a href="machine-learning.html#cb125-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-57"><a href="machine-learning.html#cb125-57" aria-hidden="true" tabindex="-1"></a>glmnet_tune <span class="ot">&lt;-</span> </span>
+<span id="cb125-58"><a href="machine-learning.html#cb125-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tune_grid</span>(</span>
+<span id="cb125-59"><a href="machine-learning.html#cb125-59" aria-hidden="true" tabindex="-1"></a>    glmnet_workflow, </span>
+<span id="cb125-60"><a href="machine-learning.html#cb125-60" aria-hidden="true" tabindex="-1"></a>    <span class="at">resamples =</span> resampling, </span>
+<span id="cb125-61"><a href="machine-learning.html#cb125-61" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Save predictions for further steps</span></span>
+<span id="cb125-62"><a href="machine-learning.html#cb125-62" aria-hidden="true" tabindex="-1"></a>    <span class="at">control =</span> <span class="fu">control_grid</span>(<span class="at">save_pred =</span> <span class="cn">TRUE</span>, <span class="at">verbose =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb125-63"><a href="machine-learning.html#cb125-63" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Test parameters on a grid defined above</span></span>
+<span id="cb125-64"><a href="machine-learning.html#cb125-64" aria-hidden="true" tabindex="-1"></a>    <span class="at">grid =</span> glmnet_grid</span>
+<span id="cb125-65"><a href="machine-learning.html#cb125-65" aria-hidden="true" tabindex="-1"></a>    ) </span>
+<span id="cb125-66"><a href="machine-learning.html#cb125-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-67"><a href="machine-learning.html#cb125-67" aria-hidden="true" tabindex="-1"></a><span class="co"># Check model performance -------------------------------------------------</span></span>
+<span id="cb125-68"><a href="machine-learning.html#cb125-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-69"><a href="machine-learning.html#cb125-69" aria-hidden="true" tabindex="-1"></a>glmnet_tune <span class="sc">%&gt;%</span> <span class="fu">show_best</span>(<span class="at">n =</span> <span class="dv">10</span>)</span>
+<span id="cb125-70"><a href="machine-learning.html#cb125-70" aria-hidden="true" tabindex="-1"></a>glmnet_tune <span class="sc">%&gt;%</span> <span class="fu">autoplot</span>()</span>
+<span id="cb125-71"><a href="machine-learning.html#cb125-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-72"><a href="machine-learning.html#cb125-72" aria-hidden="true" tabindex="-1"></a>glmnet_predictions <span class="ot">&lt;-</span> glmnet_tune <span class="sc">%&gt;%</span></span>
+<span id="cb125-73"><a href="machine-learning.html#cb125-73" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect_predictions</span>(<span class="at">parameters =</span> <span class="fu">select_best</span>(., <span class="st">&#39;rmse&#39;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb125-74"><a href="machine-learning.html#cb125-74" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">model =</span> <span class="st">&quot;GLMNet&quot;</span>,</span>
+<span id="cb125-75"><a href="machine-learning.html#cb125-75" aria-hidden="true" tabindex="-1"></a>         <span class="at">.resid =</span> Liking <span class="sc">-</span> .pred)</span>
+<span id="cb125-76"><a href="machine-learning.html#cb125-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-77"><a href="machine-learning.html#cb125-77" aria-hidden="true" tabindex="-1"></a>glmnet_predictions <span class="sc">%&gt;%</span></span>
+<span id="cb125-78"><a href="machine-learning.html#cb125-78" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">sample =</span> .resid)) <span class="sc">+</span></span>
+<span id="cb125-79"><a href="machine-learning.html#cb125-79" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_qq</span>() <span class="sc">+</span></span>
+<span id="cb125-80"><a href="machine-learning.html#cb125-80" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_qq_line</span>()</span>
+<span id="cb125-81"><a href="machine-learning.html#cb125-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-82"><a href="machine-learning.html#cb125-82" aria-hidden="true" tabindex="-1"></a>glmnet_predictions <span class="sc">%&gt;%</span></span>
+<span id="cb125-83"><a href="machine-learning.html#cb125-83" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(.pred, Liking)) <span class="sc">+</span></span>
+<span id="cb125-84"><a href="machine-learning.html#cb125-84" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb125-85"><a href="machine-learning.html#cb125-85" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">slope =</span> <span class="dv">1</span>, <span class="at">intercept =</span> <span class="dv">0</span>)</span>
+<span id="cb125-86"><a href="machine-learning.html#cb125-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-87"><a href="machine-learning.html#cb125-87" aria-hidden="true" tabindex="-1"></a>glmnet_predictions <span class="sc">%&gt;%</span></span>
+<span id="cb125-88"><a href="machine-learning.html#cb125-88" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(.pred, .resid)) <span class="sc">+</span></span>
+<span id="cb125-89"><a href="machine-learning.html#cb125-89" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb125-90"><a href="machine-learning.html#cb125-90" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>)</span>
+<span id="cb125-91"><a href="machine-learning.html#cb125-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-92"><a href="machine-learning.html#cb125-92" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(glmnet_predictions, <span class="fu">aes</span>(<span class="at">x =</span> .resid)) <span class="sc">+</span> </span>
+<span id="cb125-93"><a href="machine-learning.html#cb125-93" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span>..density..), <span class="at">fill =</span> <span class="st">&#39;white&#39;</span>, <span class="at">color =</span> <span class="st">&#39;black&#39;</span>) <span class="sc">+</span></span>
+<span id="cb125-94"><a href="machine-learning.html#cb125-94" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> dnorm,</span>
+<span id="cb125-95"><a href="machine-learning.html#cb125-95" aria-hidden="true" tabindex="-1"></a>                <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> <span class="fu">mean</span>(glmnet_predictions<span class="sc">$</span>.resid), </span>
+<span id="cb125-96"><a href="machine-learning.html#cb125-96" aria-hidden="true" tabindex="-1"></a>                            <span class="at">sd =</span> <span class="fu">sd</span>(glmnet_predictions<span class="sc">$</span>.resid)),</span>
+<span id="cb125-97"><a href="machine-learning.html#cb125-97" aria-hidden="true" tabindex="-1"></a>                <span class="at">size =</span> <span class="dv">1</span>)</span>
+<span id="cb125-98"><a href="machine-learning.html#cb125-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-99"><a href="machine-learning.html#cb125-99" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit random forest -------------------------------------------------------</span></span>
+<span id="cb125-100"><a href="machine-learning.html#cb125-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-101"><a href="machine-learning.html#cb125-101" aria-hidden="true" tabindex="-1"></a>rf_recipe <span class="ot">&lt;-</span> </span>
+<span id="cb125-102"><a href="machine-learning.html#cb125-102" aria-hidden="true" tabindex="-1"></a>  <span class="fu">recipe</span>(<span class="at">formula =</span> Liking <span class="sc">~</span> ., <span class="at">data =</span> train_set) <span class="sc">%&gt;%</span> </span>
+<span id="cb125-103"><a href="machine-learning.html#cb125-103" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_novel</span>(<span class="fu">all_nominal</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb125-104"><a href="machine-learning.html#cb125-104" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_zv</span>(<span class="fu">all_predictors</span>()) </span>
+<span id="cb125-105"><a href="machine-learning.html#cb125-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-106"><a href="machine-learning.html#cb125-106" aria-hidden="true" tabindex="-1"></a>rf_spec <span class="ot">&lt;-</span> </span>
+<span id="cb125-107"><a href="machine-learning.html#cb125-107" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rand_forest</span>(</span>
+<span id="cb125-108"><a href="machine-learning.html#cb125-108" aria-hidden="true" tabindex="-1"></a>    <span class="at">mtry =</span> <span class="fu">tune</span>(), </span>
+<span id="cb125-109"><a href="machine-learning.html#cb125-109" aria-hidden="true" tabindex="-1"></a>    <span class="at">min_n =</span> <span class="fu">tune</span>(),</span>
+<span id="cb125-110"><a href="machine-learning.html#cb125-110" aria-hidden="true" tabindex="-1"></a>    <span class="at">trees =</span> <span class="dv">50</span></span>
+<span id="cb125-111"><a href="machine-learning.html#cb125-111" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span> </span>
+<span id="cb125-112"><a href="machine-learning.html#cb125-112" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">&quot;regression&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb125-113"><a href="machine-learning.html#cb125-113" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">&quot;ranger&quot;</span>, <span class="at">importance =</span> <span class="st">&quot;impurity&quot;</span>) </span>
+<span id="cb125-114"><a href="machine-learning.html#cb125-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-115"><a href="machine-learning.html#cb125-115" aria-hidden="true" tabindex="-1"></a>rf_workflow <span class="ot">&lt;-</span> </span>
+<span id="cb125-116"><a href="machine-learning.html#cb125-116" aria-hidden="true" tabindex="-1"></a>  <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb125-117"><a href="machine-learning.html#cb125-117" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(rf_recipe) <span class="sc">%&gt;%</span> </span>
+<span id="cb125-118"><a href="machine-learning.html#cb125-118" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(rf_spec) </span>
+<span id="cb125-119"><a href="machine-learning.html#cb125-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-120"><a href="machine-learning.html#cb125-120" aria-hidden="true" tabindex="-1"></a>rf_tune <span class="ot">&lt;-</span> </span>
+<span id="cb125-121"><a href="machine-learning.html#cb125-121" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tune_grid</span>(</span>
+<span id="cb125-122"><a href="machine-learning.html#cb125-122" aria-hidden="true" tabindex="-1"></a>    rf_workflow, </span>
+<span id="cb125-123"><a href="machine-learning.html#cb125-123" aria-hidden="true" tabindex="-1"></a>    <span class="at">resamples =</span> resampling, </span>
+<span id="cb125-124"><a href="machine-learning.html#cb125-124" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Save predictions for further steps</span></span>
+<span id="cb125-125"><a href="machine-learning.html#cb125-125" aria-hidden="true" tabindex="-1"></a>    <span class="at">control =</span> <span class="fu">control_grid</span>(<span class="at">save_pred =</span> <span class="cn">TRUE</span>, <span class="at">verbose =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb125-126"><a href="machine-learning.html#cb125-126" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Test 20 random combinations of parameters</span></span>
+<span id="cb125-127"><a href="machine-learning.html#cb125-127" aria-hidden="true" tabindex="-1"></a>    <span class="at">grid =</span> <span class="dv">20</span></span>
+<span id="cb125-128"><a href="machine-learning.html#cb125-128" aria-hidden="true" tabindex="-1"></a>  ) </span>
+<span id="cb125-129"><a href="machine-learning.html#cb125-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-130"><a href="machine-learning.html#cb125-130" aria-hidden="true" tabindex="-1"></a><span class="co"># Check model performance -------------------------------------------------</span></span>
+<span id="cb125-131"><a href="machine-learning.html#cb125-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-132"><a href="machine-learning.html#cb125-132" aria-hidden="true" tabindex="-1"></a>rf_tune <span class="sc">%&gt;%</span> <span class="fu">show_best</span>(<span class="at">n =</span> <span class="dv">10</span>)</span>
+<span id="cb125-133"><a href="machine-learning.html#cb125-133" aria-hidden="true" tabindex="-1"></a>rf_tune <span class="sc">%&gt;%</span> <span class="fu">autoplot</span>()</span>
+<span id="cb125-134"><a href="machine-learning.html#cb125-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-135"><a href="machine-learning.html#cb125-135" aria-hidden="true" tabindex="-1"></a>rf_predictions <span class="ot">&lt;-</span> rf_tune <span class="sc">%&gt;%</span></span>
+<span id="cb125-136"><a href="machine-learning.html#cb125-136" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect_predictions</span>(<span class="at">parameters =</span> <span class="fu">select_best</span>(., <span class="st">&#39;rmse&#39;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb125-137"><a href="machine-learning.html#cb125-137" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">model =</span> <span class="st">&quot;Random Forest&quot;</span>,</span>
+<span id="cb125-138"><a href="machine-learning.html#cb125-138" aria-hidden="true" tabindex="-1"></a>         <span class="at">.resid =</span> Liking <span class="sc">-</span> .pred)</span>
+<span id="cb125-139"><a href="machine-learning.html#cb125-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-140"><a href="machine-learning.html#cb125-140" aria-hidden="true" tabindex="-1"></a>rf_predictions <span class="sc">%&gt;%</span></span>
+<span id="cb125-141"><a href="machine-learning.html#cb125-141" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(glmnet_predictions) <span class="sc">%&gt;%</span></span>
+<span id="cb125-142"><a href="machine-learning.html#cb125-142" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">sample =</span> .resid)) <span class="sc">+</span></span>
+<span id="cb125-143"><a href="machine-learning.html#cb125-143" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_qq</span>() <span class="sc">+</span></span>
+<span id="cb125-144"><a href="machine-learning.html#cb125-144" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_qq_line</span>() <span class="sc">+</span></span>
+<span id="cb125-145"><a href="machine-learning.html#cb125-145" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>model)</span>
+<span id="cb125-146"><a href="machine-learning.html#cb125-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-147"><a href="machine-learning.html#cb125-147" aria-hidden="true" tabindex="-1"></a>rf_predictions <span class="sc">%&gt;%</span></span>
+<span id="cb125-148"><a href="machine-learning.html#cb125-148" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(glmnet_predictions) <span class="sc">%&gt;%</span></span>
+<span id="cb125-149"><a href="machine-learning.html#cb125-149" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(.pred, Liking)) <span class="sc">+</span></span>
+<span id="cb125-150"><a href="machine-learning.html#cb125-150" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb125-151"><a href="machine-learning.html#cb125-151" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">slope =</span> <span class="dv">1</span>, <span class="at">intercept =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb125-152"><a href="machine-learning.html#cb125-152" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>model)</span>
+<span id="cb125-153"><a href="machine-learning.html#cb125-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-154"><a href="machine-learning.html#cb125-154" aria-hidden="true" tabindex="-1"></a>rf_predictions <span class="sc">%&gt;%</span></span>
+<span id="cb125-155"><a href="machine-learning.html#cb125-155" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(glmnet_predictions) <span class="sc">%&gt;%</span></span>
+<span id="cb125-156"><a href="machine-learning.html#cb125-156" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(.pred, .resid)) <span class="sc">+</span></span>
+<span id="cb125-157"><a href="machine-learning.html#cb125-157" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb125-158"><a href="machine-learning.html#cb125-158" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb125-159"><a href="machine-learning.html#cb125-159" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>model)</span>
+<span id="cb125-160"><a href="machine-learning.html#cb125-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-161"><a href="machine-learning.html#cb125-161" aria-hidden="true" tabindex="-1"></a>rf_predictions <span class="sc">%&gt;%</span></span>
+<span id="cb125-162"><a href="machine-learning.html#cb125-162" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> .resid)) <span class="sc">+</span> </span>
+<span id="cb125-163"><a href="machine-learning.html#cb125-163" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span>..density..), <span class="at">fill =</span> <span class="st">&#39;white&#39;</span>, <span class="at">color =</span> <span class="st">&#39;black&#39;</span>) <span class="sc">+</span></span>
+<span id="cb125-164"><a href="machine-learning.html#cb125-164" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> dnorm,</span>
+<span id="cb125-165"><a href="machine-learning.html#cb125-165" aria-hidden="true" tabindex="-1"></a>                <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> <span class="fu">mean</span>(rf_predictions<span class="sc">$</span>.resid), </span>
+<span id="cb125-166"><a href="machine-learning.html#cb125-166" aria-hidden="true" tabindex="-1"></a>                            <span class="at">sd =</span> <span class="fu">sd</span>(rf_predictions<span class="sc">$</span>.resid)),</span>
+<span id="cb125-167"><a href="machine-learning.html#cb125-167" aria-hidden="true" tabindex="-1"></a>                <span class="at">size =</span> <span class="dv">1</span>)</span>
+<span id="cb125-168"><a href="machine-learning.html#cb125-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-169"><a href="machine-learning.html#cb125-169" aria-hidden="true" tabindex="-1"></a><span class="co"># Let&#39;s go with rf model ------------------------------------------------</span></span>
+<span id="cb125-170"><a href="machine-learning.html#cb125-170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-171"><a href="machine-learning.html#cb125-171" aria-hidden="true" tabindex="-1"></a>final_fit <span class="ot">&lt;-</span> glmnet_workflow <span class="sc">%&gt;%</span></span>
+<span id="cb125-172"><a href="machine-learning.html#cb125-172" aria-hidden="true" tabindex="-1"></a>  <span class="fu">finalize_workflow</span>(<span class="fu">select_best</span>(glmnet_tune, <span class="st">&#39;rmse&#39;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb125-173"><a href="machine-learning.html#cb125-173" aria-hidden="true" tabindex="-1"></a>  <span class="fu">last_fit</span>(train_test_split)</span>
+<span id="cb125-174"><a href="machine-learning.html#cb125-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-175"><a href="machine-learning.html#cb125-175" aria-hidden="true" tabindex="-1"></a>final_fit <span class="ot">&lt;-</span> rf_workflow <span class="sc">%&gt;%</span></span>
+<span id="cb125-176"><a href="machine-learning.html#cb125-176" aria-hidden="true" tabindex="-1"></a>  <span class="fu">finalize_workflow</span>(<span class="fu">select_best</span>(rf_tune, <span class="st">&#39;rmse&#39;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb125-177"><a href="machine-learning.html#cb125-177" aria-hidden="true" tabindex="-1"></a>  <span class="fu">last_fit</span>(train_test_split)</span>
+<span id="cb125-178"><a href="machine-learning.html#cb125-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-179"><a href="machine-learning.html#cb125-179" aria-hidden="true" tabindex="-1"></a>final_fit <span class="sc">%&gt;%</span> <span class="fu">collect_metrics</span>()</span>
+<span id="cb125-180"><a href="machine-learning.html#cb125-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-181"><a href="machine-learning.html#cb125-181" aria-hidden="true" tabindex="-1"></a>final_fit <span class="sc">%&gt;%</span></span>
+<span id="cb125-182"><a href="machine-learning.html#cb125-182" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect_predictions</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb125-183"><a href="machine-learning.html#cb125-183" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">.resid =</span> Liking <span class="sc">-</span> .pred) <span class="sc">%&gt;%</span></span>
+<span id="cb125-184"><a href="machine-learning.html#cb125-184" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">sample =</span> .resid)) <span class="sc">+</span></span>
+<span id="cb125-185"><a href="machine-learning.html#cb125-185" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_qq</span>() <span class="sc">+</span></span>
+<span id="cb125-186"><a href="machine-learning.html#cb125-186" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_qq_line</span>()</span>
+<span id="cb125-187"><a href="machine-learning.html#cb125-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-188"><a href="machine-learning.html#cb125-188" aria-hidden="true" tabindex="-1"></a>final_model <span class="ot">&lt;-</span>  final_fit <span class="sc">%&gt;%</span></span>
+<span id="cb125-189"><a href="machine-learning.html#cb125-189" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pluck</span>(<span class="st">&quot;.workflow&quot;</span>, <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb125-190"><a href="machine-learning.html#cb125-190" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(data)</span>
+<span id="cb125-191"><a href="machine-learning.html#cb125-191" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-192"><a href="machine-learning.html#cb125-192" aria-hidden="true" tabindex="-1"></a>final_model <span class="sc">%&gt;%</span></span>
+<span id="cb125-193"><a href="machine-learning.html#cb125-193" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull_workflow_fit</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb125-194"><a href="machine-learning.html#cb125-194" aria-hidden="true" tabindex="-1"></a>  vip<span class="sc">::</span><span class="fu">vip</span>()</span>
+<span id="cb125-195"><a href="machine-learning.html#cb125-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-196"><a href="machine-learning.html#cb125-196" aria-hidden="true" tabindex="-1"></a><span class="co"># final_model %&gt;%</span></span>
+<span id="cb125-197"><a href="machine-learning.html#cb125-197" aria-hidden="true" tabindex="-1"></a><span class="co">#   broom::tidy() %&gt;%</span></span>
+<span id="cb125-198"><a href="machine-learning.html#cb125-198" aria-hidden="true" tabindex="-1"></a><span class="co">#   filter(estimate != 0)</span></span>
+<span id="cb125-199"><a href="machine-learning.html#cb125-199" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-200"><a href="machine-learning.html#cb125-200" aria-hidden="true" tabindex="-1"></a><span class="fu">write_rds</span>(final_model, <span class="st">&#39;regression_model.rds&#39;</span>)</span>
+<span id="cb125-201"><a href="machine-learning.html#cb125-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-202"><a href="machine-learning.html#cb125-202" aria-hidden="true" tabindex="-1"></a><span class="co"># Predict something -------------------------------------------------------</span></span>
+<span id="cb125-203"><a href="machine-learning.html#cb125-203" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-204"><a href="machine-learning.html#cb125-204" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">&#39;regression_model.rds&#39;</span>)</span>
+<span id="cb125-205"><a href="machine-learning.html#cb125-205" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-206"><a href="machine-learning.html#cb125-206" aria-hidden="true" tabindex="-1"></a>new_observations <span class="ot">&lt;-</span> data[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,]</span>
+<span id="cb125-207"><a href="machine-learning.html#cb125-207" aria-hidden="true" tabindex="-1"></a>new_observations</span>
+<span id="cb125-208"><a href="machine-learning.html#cb125-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-209"><a href="machine-learning.html#cb125-209" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(model, new_observations)</span></code></pre></div>
 
 </div>
 </div>

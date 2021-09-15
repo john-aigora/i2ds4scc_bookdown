@@ -33,13 +33,13 @@ For these reasons, it is essential to learn to manipulate data and transition fr
 ## Tidying Data {#tidy-data}
 
 
-Hadley Wickham (@Wickham2016) defined 'tidy data' as "data sets that are arranged such that each variable is a column and each observation (or case) is a row." Depending on the statistical unit to consider and the analyses to perform, data may need to be manipulated to be presented in a tidy form. 
+Hadley Wickham (@Wickham2014) defined 'tidy data' as "data sets that are arranged such that each variable is a column and each observation (or case) is a row." Depending on the statistical unit to consider and the analyses to perform, data may need to be manipulated to be presented in a tidy form. 
 
 
 ### Simple Manipulations
 
 
-The notion of 'simple manipulations' proposed here is completely arbitrary and consists in data transformation that could easily be performed in other software such as Excel (using copy-paste, the sort & filter function, inserting a pivot table, etc.). However, we strongly recommend performing any sorts of transformation in R as this will reduce the risk of errors, be usually faster, and become much easier and fluent as you will familiarize with them.
+The notion of 'simple manipulations' proposed here consists in data transformations that could easily be performed in other software such as Excel (using copy-paste, sorting and filtering, creating a pivot table, etc.). However, we strongly recommend performing any sorts of transformation in R as this will reduce the risk of errors, typically be faster, and will be reusable if you need to perform the same operations on similar data in the future (including updated versions of the current dataset). Moreover, these operations will become easier and more natural for you to use as you familiarize yourself with them.
 
 
 #### Handling Columns
@@ -48,10 +48,9 @@ The notion of 'simple manipulations' proposed here is completely arbitrary and c
 ##### Renaming Variables
 
 
-The first simple transformation that one could consider consists in renaming one or multiple variables.
-This procedure can easily be done using the `rename()` function from the `{dplyr}` package.
+The first simple transformation we consider consists of renaming one or multiple variables. This procedure can easily be done using the `rename()` function from the `{dplyr}` package.
 
-In our sensory file^[The *sensory* data is imported from the *Sensory Profile.xlsx* file, see Chapter XXX for how to import datasets], let's recode 'Judge' into 'Panellist', and 'Product' into 'Sample' (here, we apply transformations without saving the results, so without altering the original dataset):
+In our sensory file^[The *sensory* data are imported from the *Sensory Profile.xlsx* file, see Section \@ref(data-import) for more on how to import datasets], let's recode 'Judge' into 'Panellist', and 'Product' into 'Sample' (here, we apply transformations without saving the results, so without altering the original dataset):
 
 
 ```{r}

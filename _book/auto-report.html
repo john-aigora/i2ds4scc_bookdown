@@ -24,7 +24,7 @@
 <meta name="author" content="John Ennis, Julien Delarue, and Thierry Worch" />
 
 
-<meta name="date" content="2021-08-20" />
+<meta name="date" content="2021-09-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -183,9 +183,10 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.2" data-path="data-viz.html"><a href="data-viz.html#table-making"><i class="fa fa-check"></i><b>4.2</b> Table Making</a></li>
 <li class="chapter" data-level="4.3" data-path="data-viz.html"><a href="data-viz.html#chart-making"><i class="fa fa-check"></i><b>4.3</b> Chart Making</a>
 <ul>
-<li class="chapter" data-level="4.3.1" data-path="data-viz.html"><a href="data-viz.html#philosophy-of-ggplot2"><i class="fa fa-check"></i><b>4.3.1</b> Philosophy of ggplot2</a></li>
-<li class="chapter" data-level="4.3.2" data-path="data-viz.html"><a href="data-viz.html#common-charts"><i class="fa fa-check"></i><b>4.3.2</b> Common Charts</a></li>
-<li class="chapter" data-level="4.3.3" data-path="data-viz.html"><a href="data-viz.html#additional-topics"><i class="fa fa-check"></i><b>4.3.3</b> Additional Topics</a></li>
+<li class="chapter" data-level="4.3.1" data-path="data-viz.html"><a href="data-viz.html#philosophy-of-ggplot2"><i class="fa fa-check"></i><b>4.3.1</b> Philosophy of <code>{ggplot2}</code></a></li>
+<li class="chapter" data-level="4.3.2" data-path="data-viz.html"><a href="data-viz.html#getting-started-with-ggplot2"><i class="fa fa-check"></i><b>4.3.2</b> Getting started with <code>{ggplot2}</code></a></li>
+<li class="chapter" data-level="4.3.3" data-path="data-viz.html"><a href="data-viz.html#common-charts"><i class="fa fa-check"></i><b>4.3.3</b> Common Charts</a></li>
+<li class="chapter" data-level="4.3.4" data-path="data-viz.html"><a href="data-viz.html#additional-topics"><i class="fa fa-check"></i><b>4.3.4</b> Additional Topics</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="auto-report.html"><a href="auto-report.html"><i class="fa fa-check"></i><b>5</b> Automated Reporting</a>
@@ -229,7 +230,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="7.1" data-path="data-collection.html"><a href="data-collection.html#design-1"><i class="fa fa-check"></i><b>7.1</b> Design</a></li>
 <li class="chapter" data-level="7.2" data-path="data-collection.html"><a href="data-collection.html#execute-1"><i class="fa fa-check"></i><b>7.2</b> Execute</a></li>
-<li class="chapter" data-level="7.3" data-path="data-collection.html"><a href="data-collection.html#import-1"><i class="fa fa-check"></i><b>7.3</b> Import</a>
+<li class="chapter" data-level="7.3" data-path="data-collection.html"><a href="data-collection.html#data-import"><i class="fa fa-check"></i><b>7.3</b> Import</a>
 <ul>
 <li class="chapter" data-level="7.3.1" data-path="data-collection.html"><a href="data-collection.html#importing-structured-excel-file"><i class="fa fa-check"></i><b>7.3.1</b> Importing Structured Excel File</a></li>
 <li class="chapter" data-level="7.3.2" data-path="data-collection.html"><a href="data-collection.html#importing-unstructured-excel-file"><i class="fa fa-check"></i><b>7.3.2</b> Importing Unstructured Excel File</a></li>
@@ -258,7 +259,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9" data-path="data-analysis.html"><a href="data-analysis.html"><i class="fa fa-check"></i><b>9</b> Data Analysis</a>
 <ul>
 <li class="chapter" data-level="9.1" data-path="data-analysis.html"><a href="data-analysis.html#sensory-data"><i class="fa fa-check"></i><b>9.1</b> Sensory Data</a></li>
-<li class="chapter" data-level="9.2" data-path="data-analysis.html"><a href="data-analysis.html#demographic-and-tfeq-data"><i class="fa fa-check"></i><b>9.2</b> Demographic and TFEQ Data</a>
+<li class="chapter" data-level="9.2" data-path="data-analysis.html"><a href="data-analysis.html#demographic-and-questionnaire-data"><i class="fa fa-check"></i><b>9.2</b> Demographic and Questionnaire Data</a>
 <ul>
 <li class="chapter" data-level="9.2.1" data-path="data-analysis.html"><a href="data-analysis.html#demographic-data-frequency-and-proportion"><i class="fa fa-check"></i><b>9.2.1</b> Demographic Data: Frequency and Proportion</a></li>
 <li class="chapter" data-level="9.2.2" data-path="data-analysis.html"><a href="data-analysis.html#personality-traits-and-eating-behavior-tfeq-data"><i class="fa fa-check"></i><b>9.2.2</b> Personality traits and eating behavior: TFEQ data</a></li>
@@ -452,22 +453,22 @@ Rcolorbrewer</p>
 <p>Although Excel is not our preferred tool for automated reporting, it is still one of the major ways to access and share data. Most data collection software offer the possibility to export data and results in an Excel format, and most data analysis tools accept Excel format as inputs. With the large use of Excel, it is no surprise that many of our colleagues or clients like to share data and results using such spreadsheets. It is even less a surprise that R provides multiple solutions to import/export results from/to Excel.</p>
 <p>For the import of datasets, we have already presented the package <code>{readxl}</code> among others. For exporting results, two complementary packages (yet again, among others!) in terms of ease of use and flexibility in the outcome are proposed: <code>{writexl}</code> and <code>{openxlsx}</code>.</p>
 <p>As its name suggests, <code>{writexl}</code> is the extension of <code>{readxl}</code> dedicated to exporting tables to Excel through the <code>write_xlsx()</code> function. Its use is very simple as it only takes as inputs the table (or list of tables) to export to the file specified in the <code>path</code> parameter.</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="auto-report.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
-<span id="cb34-2"><a href="auto-report.html#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(writexl)</span>
-<span id="cb34-3"><a href="auto-report.html#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb34-4"><a href="auto-report.html#cb34-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-5"><a href="auto-report.html#cb34-5" aria-hidden="true" tabindex="-1"></a>file_path <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;Sensory Profile.xlsx&quot;</span>)</span>
-<span id="cb34-6"><a href="auto-report.html#cb34-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-7"><a href="auto-report.html#cb34-7" aria-hidden="true" tabindex="-1"></a>product_info <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="at">path  =</span> file_path,</span>
-<span id="cb34-8"><a href="auto-report.html#cb34-8" aria-hidden="true" tabindex="-1"></a>                           <span class="at">sheet =</span> <span class="st">&quot;Product Info&quot;</span>,</span>
-<span id="cb34-9"><a href="auto-report.html#cb34-9" aria-hidden="true" tabindex="-1"></a>                           <span class="at">range =</span> <span class="st">&quot;A1:D12&quot;</span>,</span>
-<span id="cb34-10"><a href="auto-report.html#cb34-10" aria-hidden="true" tabindex="-1"></a>                           <span class="at">col_names =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb34-11"><a href="auto-report.html#cb34-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-12"><a href="auto-report.html#cb34-12" aria-hidden="true" tabindex="-1"></a><span class="co">#Basic data manipulation: writing a subset into a new xlsx</span></span>
-<span id="cb34-13"><a href="auto-report.html#cb34-13" aria-hidden="true" tabindex="-1"></a>product_info <span class="sc">%&gt;%</span> </span>
-<span id="cb34-14"><a href="auto-report.html#cb34-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Protein <span class="sc">%in%</span> <span class="st">&quot;High&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb34-15"><a href="auto-report.html#cb34-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write_xlsx</span>(<span class="at">path =</span> <span class="fu">file.path</span>(<span class="st">&quot;output&quot;</span>, <span class="st">&quot;High Protein Products.xlsx&quot;</span>),</span>
-<span id="cb34-16"><a href="auto-report.html#cb34-16" aria-hidden="true" tabindex="-1"></a>             <span class="at">col_names =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="auto-report.html#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb42-2"><a href="auto-report.html#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(writexl)</span>
+<span id="cb42-3"><a href="auto-report.html#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb42-4"><a href="auto-report.html#cb42-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-5"><a href="auto-report.html#cb42-5" aria-hidden="true" tabindex="-1"></a>file_path <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;Sensory Profile.xlsx&quot;</span>)</span>
+<span id="cb42-6"><a href="auto-report.html#cb42-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-7"><a href="auto-report.html#cb42-7" aria-hidden="true" tabindex="-1"></a>product_info <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="at">path  =</span> file_path,</span>
+<span id="cb42-8"><a href="auto-report.html#cb42-8" aria-hidden="true" tabindex="-1"></a>                           <span class="at">sheet =</span> <span class="st">&quot;Product Info&quot;</span>,</span>
+<span id="cb42-9"><a href="auto-report.html#cb42-9" aria-hidden="true" tabindex="-1"></a>                           <span class="at">range =</span> <span class="st">&quot;A1:D12&quot;</span>,</span>
+<span id="cb42-10"><a href="auto-report.html#cb42-10" aria-hidden="true" tabindex="-1"></a>                           <span class="at">col_names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb42-11"><a href="auto-report.html#cb42-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-12"><a href="auto-report.html#cb42-12" aria-hidden="true" tabindex="-1"></a><span class="co">#Basic data manipulation: writing a subset into a new xlsx</span></span>
+<span id="cb42-13"><a href="auto-report.html#cb42-13" aria-hidden="true" tabindex="-1"></a>product_info <span class="sc">%&gt;%</span> </span>
+<span id="cb42-14"><a href="auto-report.html#cb42-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Protein <span class="sc">%in%</span> <span class="st">&quot;High&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb42-15"><a href="auto-report.html#cb42-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write_xlsx</span>(<span class="at">path =</span> <span class="fu">file.path</span>(<span class="st">&quot;output&quot;</span>, <span class="st">&quot;High Protein Products.xlsx&quot;</span>),</span>
+<span id="cb42-16"><a href="auto-report.html#cb42-16" aria-hidden="true" tabindex="-1"></a>             <span class="at">col_names =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p>The export of tables using the <code>{writexl}</code> package is easy, yet simplistic as it does not allow formatting the tables (except for some minor possibilities for the header), nor does it allow exporting multiple tables within the same sheet. For more advanced exporting options, the use of <strong>{openxlsx}</strong> package is preferred as it allows more flexibility in structuring and formatting the Excel output.</p>
 <p>With <code>{openxlsx}</code>, the procedure starts with creating a workbook object <code>wb</code> using the <code>createWorkbook()</code> function, to which we add worksheets through the <code>addWorksheet()</code> function.
 On a given worksheet, any table can be exported using <code>writeData()</code> or <code>writeDataTable()</code>, which controls where to write the table through the <code>startRow</code> and <code>startCol</code> options.
@@ -508,84 +509,84 @@ Through these different functions, many additional formatting procedure can be a
 <p>In the following example, the sensory profiles are exported into a newly created sheet.</p>
 <p>To introduce conditional formatting with <code>{openxlsx}</code>, the sensory profiles are color coded as following: for each cell, the value is compared to the overall mean computed for that column and is colored in red (resp. blue) if it’s higher (resp. lower) than the mean.
 In practice, the color style is pre-defined in two parameters called <code>pos_style</code> (red) and <code>neg_style</code> (blue) using <code>createStyle()</code>. The decision whether <code>pos_style</code> or <code>neg_style</code> should be used is defined by the <code>rule</code> parameter from the <code>conditionalFormatting()</code><a href="#fn10" class="footnote-ref" id="fnref10"><sup>10</sup></a> function.</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="auto-report.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(openxlsx)</span>
-<span id="cb35-2"><a href="auto-report.html#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-3"><a href="auto-report.html#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Pre-define options to control the borders </span></span>
-<span id="cb35-4"><a href="auto-report.html#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="st">&quot;openxlsx.borderColour&quot;</span> <span class="ot">=</span> <span class="st">&quot;#4F80BD&quot;</span>)</span>
-<span id="cb35-5"><a href="auto-report.html#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="st">&quot;openxlsx.borderStyle&quot;</span> <span class="ot">=</span> <span class="st">&quot;thin&quot;</span>)</span>
-<span id="cb35-6"><a href="auto-report.html#cb35-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-7"><a href="auto-report.html#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Automatically set Number formats to 3 values after the decimal</span></span>
-<span id="cb35-8"><a href="auto-report.html#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="st">&quot;openxlsx.numFmt&quot;</span> <span class="ot">=</span> <span class="st">&quot;0.000&quot;</span>)</span>
-<span id="cb35-9"><a href="auto-report.html#cb35-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-10"><a href="auto-report.html#cb35-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a header style in which </span></span>
-<span id="cb35-11"><a href="auto-report.html#cb35-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># a blue background is used,</span></span>
-<span id="cb35-12"><a href="auto-report.html#cb35-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># borders on top and on the bottom, </span></span>
-<span id="cb35-13"><a href="auto-report.html#cb35-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># the text is centered and is bold</span></span>
-<span id="cb35-14"><a href="auto-report.html#cb35-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-15"><a href="auto-report.html#cb35-15" aria-hidden="true" tabindex="-1"></a>headSty <span class="ot">&lt;-</span> <span class="fu">createStyle</span>(<span class="at">fgFill =</span> <span class="st">&quot;#DCE6F1&quot;</span>,</span>
-<span id="cb35-16"><a href="auto-report.html#cb35-16" aria-hidden="true" tabindex="-1"></a>                       <span class="at">border =</span> <span class="st">&quot;TopBottom&quot;</span>,</span>
-<span id="cb35-17"><a href="auto-report.html#cb35-17" aria-hidden="true" tabindex="-1"></a>                       <span class="at">halign =</span> <span class="st">&quot;center&quot;</span>,</span>
-<span id="cb35-18"><a href="auto-report.html#cb35-18" aria-hidden="true" tabindex="-1"></a>                       <span class="at">textDecoration =</span> <span class="st">&quot;bold&quot;</span>)</span>
-<span id="cb35-19"><a href="auto-report.html#cb35-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-20"><a href="auto-report.html#cb35-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Data preparation</span></span>
-<span id="cb35-21"><a href="auto-report.html#cb35-21" aria-hidden="true" tabindex="-1"></a>senso_mean <span class="ot">&lt;-</span> sensory <span class="sc">%&gt;%</span> </span>
-<span id="cb35-22"><a href="auto-report.html#cb35-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Product) <span class="sc">%&gt;%</span> </span>
-<span id="cb35-23"><a href="auto-report.html#cb35-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), mean)) <span class="sc">%&gt;%</span> </span>
-<span id="cb35-24"><a href="auto-report.html#cb35-24" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">column_to_rownames</span>(<span class="at">var =</span> <span class="st">&quot;Product&quot;</span>)</span>
-<span id="cb35-25"><a href="auto-report.html#cb35-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-26"><a href="auto-report.html#cb35-26" aria-hidden="true" tabindex="-1"></a>overall_mean <span class="ot">&lt;-</span> <span class="fu">apply</span>(senso_mean, <span class="dv">2</span>, mean)</span>
-<span id="cb35-27"><a href="auto-report.html#cb35-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-28"><a href="auto-report.html#cb35-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Create workbook object</span></span>
-<span id="cb35-29"><a href="auto-report.html#cb35-29" aria-hidden="true" tabindex="-1"></a>wb <span class="ot">&lt;-</span> openxlsx<span class="sc">::</span><span class="fu">createWorkbook</span>()</span>
-<span id="cb35-30"><a href="auto-report.html#cb35-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-31"><a href="auto-report.html#cb35-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Change the font to Calibri size 10</span></span>
-<span id="cb35-32"><a href="auto-report.html#cb35-32" aria-hidden="true" tabindex="-1"></a><span class="fu">modifyBaseFont</span>(wb,<span class="at">fontName =</span> <span class="st">&quot;Calibri&quot;</span>, <span class="at">fontSize =</span> <span class="dv">10</span>)</span>
-<span id="cb35-33"><a href="auto-report.html#cb35-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-34"><a href="auto-report.html#cb35-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a new worksheet</span></span>
-<span id="cb35-35"><a href="auto-report.html#cb35-35" aria-hidden="true" tabindex="-1"></a><span class="fu">addWorksheet</span>(wb, <span class="at">sheetName =</span> <span class="st">&quot;Mean&quot;</span>, <span class="at">gridLines =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb35-36"><a href="auto-report.html#cb35-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-37"><a href="auto-report.html#cb35-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Write table: note that </span></span>
-<span id="cb35-38"><a href="auto-report.html#cb35-38" aria-hidden="true" tabindex="-1"></a><span class="fu">writeDataTable</span>(wb,</span>
-<span id="cb35-39"><a href="auto-report.html#cb35-39" aria-hidden="true" tabindex="-1"></a>               <span class="at">sheet =</span> <span class="st">&quot;Mean&quot;</span>,</span>
-<span id="cb35-40"><a href="auto-report.html#cb35-40" aria-hidden="true" tabindex="-1"></a>               <span class="at">x =</span> senso_mean, </span>
-<span id="cb35-41"><a href="auto-report.html#cb35-41" aria-hidden="true" tabindex="-1"></a>               <span class="at">startCol =</span> <span class="dv">1</span>,</span>
-<span id="cb35-42"><a href="auto-report.html#cb35-42" aria-hidden="true" tabindex="-1"></a>               <span class="at">startRow =</span> <span class="dv">1</span>,</span>
-<span id="cb35-43"><a href="auto-report.html#cb35-43" aria-hidden="true" tabindex="-1"></a>               <span class="at">colNames =</span> <span class="cn">TRUE</span>, <span class="at">rowNames =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb35-44"><a href="auto-report.html#cb35-44" aria-hidden="true" tabindex="-1"></a>               <span class="at">tableStyle =</span> <span class="st">&quot;TableStyleLight9&quot;</span>)</span>
-<span id="cb35-45"><a href="auto-report.html#cb35-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-46"><a href="auto-report.html#cb35-46" aria-hidden="true" tabindex="-1"></a><span class="co"># Freezing the table</span></span>
-<span id="cb35-47"><a href="auto-report.html#cb35-47" aria-hidden="true" tabindex="-1"></a><span class="fu">freezePane</span>(wb, <span class="at">sheet =</span> <span class="st">&quot;Mean&quot;</span>, <span class="at">firstRow =</span> <span class="cn">TRUE</span>, <span class="at">firstCol =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb35-48"><a href="auto-report.html#cb35-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-49"><a href="auto-report.html#cb35-49" aria-hidden="true" tabindex="-1"></a><span class="co"># Styles for conditional formatting</span></span>
-<span id="cb35-50"><a href="auto-report.html#cb35-50" aria-hidden="true" tabindex="-1"></a>pos_style <span class="ot">&lt;-</span> <span class="fu">createStyle</span>(<span class="at">fontColour =</span> <span class="st">&quot;firebrick3&quot;</span>, <span class="at">bgFill =</span> <span class="st">&quot;mistyrose1&quot;</span>)</span>
-<span id="cb35-51"><a href="auto-report.html#cb35-51" aria-hidden="true" tabindex="-1"></a>neg_style <span class="ot">&lt;-</span> <span class="fu">createStyle</span>(<span class="at">fontColour =</span> <span class="st">&quot;navy&quot;</span>, <span class="at">bgFill =</span> <span class="st">&quot;lightsteelblue&quot;</span>)</span>
-<span id="cb35-52"><a href="auto-report.html#cb35-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-53"><a href="auto-report.html#cb35-53" aria-hidden="true" tabindex="-1"></a><span class="co"># Adding formatting to the second column</span></span>
-<span id="cb35-54"><a href="auto-report.html#cb35-54" aria-hidden="true" tabindex="-1"></a><span class="fu">conditionalFormatting</span>(wb,</span>
-<span id="cb35-55"><a href="auto-report.html#cb35-55" aria-hidden="true" tabindex="-1"></a>                      <span class="at">sheet =</span> <span class="st">&quot;Mean&quot;</span>, </span>
-<span id="cb35-56"><a href="auto-report.html#cb35-56" aria-hidden="true" tabindex="-1"></a>                      <span class="at">cols  =</span> <span class="dv">2</span>,</span>
-<span id="cb35-57"><a href="auto-report.html#cb35-57" aria-hidden="true" tabindex="-1"></a>                      <span class="at">rows  =</span> <span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(senso_mean), </span>
-<span id="cb35-58"><a href="auto-report.html#cb35-58" aria-hidden="true" tabindex="-1"></a>                      <span class="at">rule  =</span> <span class="fu">paste0</span>(<span class="st">&quot;&gt;&quot;</span>,overall_mean[<span class="dv">2</span>]),</span>
-<span id="cb35-59"><a href="auto-report.html#cb35-59" aria-hidden="true" tabindex="-1"></a>                      <span class="at">style =</span> pos_style)</span>
-<span id="cb35-60"><a href="auto-report.html#cb35-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-61"><a href="auto-report.html#cb35-61" aria-hidden="true" tabindex="-1"></a><span class="fu">conditionalFormatting</span>(wb,</span>
-<span id="cb35-62"><a href="auto-report.html#cb35-62" aria-hidden="true" tabindex="-1"></a>                      <span class="at">sheet =</span> <span class="st">&quot;Mean&quot;</span>,</span>
-<span id="cb35-63"><a href="auto-report.html#cb35-63" aria-hidden="true" tabindex="-1"></a>                      <span class="at">cols  =</span> <span class="dv">2</span>,</span>
-<span id="cb35-64"><a href="auto-report.html#cb35-64" aria-hidden="true" tabindex="-1"></a>                      <span class="at">rows  =</span> <span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(senso_mean), </span>
-<span id="cb35-65"><a href="auto-report.html#cb35-65" aria-hidden="true" tabindex="-1"></a>                      <span class="at">rule  =</span> <span class="fu">paste0</span>(<span class="st">&quot;&lt;&quot;</span>,overall_mean[<span class="dv">2</span>]),</span>
-<span id="cb35-66"><a href="auto-report.html#cb35-66" aria-hidden="true" tabindex="-1"></a>                      <span class="at">style =</span> neg_style)</span>
-<span id="cb35-67"><a href="auto-report.html#cb35-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-68"><a href="auto-report.html#cb35-68" aria-hidden="true" tabindex="-1"></a><span class="fu">setColWidths</span>(wb, <span class="at">sheet =</span> <span class="st">&quot;Mean&quot;</span>,</span>
-<span id="cb35-69"><a href="auto-report.html#cb35-69" aria-hidden="true" tabindex="-1"></a>             <span class="at">cols =</span> <span class="dv">1</span><span class="sc">:</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">ncol</span>(senso_mean)), <span class="at">widths =</span> <span class="dv">12</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="auto-report.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(openxlsx)</span>
+<span id="cb43-2"><a href="auto-report.html#cb43-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-3"><a href="auto-report.html#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Pre-define options to control the borders </span></span>
+<span id="cb43-4"><a href="auto-report.html#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="st">&quot;openxlsx.borderColour&quot;</span> <span class="ot">=</span> <span class="st">&quot;#4F80BD&quot;</span>)</span>
+<span id="cb43-5"><a href="auto-report.html#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="st">&quot;openxlsx.borderStyle&quot;</span> <span class="ot">=</span> <span class="st">&quot;thin&quot;</span>)</span>
+<span id="cb43-6"><a href="auto-report.html#cb43-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-7"><a href="auto-report.html#cb43-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Automatically set Number formats to 3 values after the decimal</span></span>
+<span id="cb43-8"><a href="auto-report.html#cb43-8" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="st">&quot;openxlsx.numFmt&quot;</span> <span class="ot">=</span> <span class="st">&quot;0.000&quot;</span>)</span>
+<span id="cb43-9"><a href="auto-report.html#cb43-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-10"><a href="auto-report.html#cb43-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a header style in which </span></span>
+<span id="cb43-11"><a href="auto-report.html#cb43-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># a blue background is used,</span></span>
+<span id="cb43-12"><a href="auto-report.html#cb43-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># borders on top and on the bottom, </span></span>
+<span id="cb43-13"><a href="auto-report.html#cb43-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># the text is centered and is bold</span></span>
+<span id="cb43-14"><a href="auto-report.html#cb43-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-15"><a href="auto-report.html#cb43-15" aria-hidden="true" tabindex="-1"></a>headSty <span class="ot">&lt;-</span> <span class="fu">createStyle</span>(<span class="at">fgFill =</span> <span class="st">&quot;#DCE6F1&quot;</span>,</span>
+<span id="cb43-16"><a href="auto-report.html#cb43-16" aria-hidden="true" tabindex="-1"></a>                       <span class="at">border =</span> <span class="st">&quot;TopBottom&quot;</span>,</span>
+<span id="cb43-17"><a href="auto-report.html#cb43-17" aria-hidden="true" tabindex="-1"></a>                       <span class="at">halign =</span> <span class="st">&quot;center&quot;</span>,</span>
+<span id="cb43-18"><a href="auto-report.html#cb43-18" aria-hidden="true" tabindex="-1"></a>                       <span class="at">textDecoration =</span> <span class="st">&quot;bold&quot;</span>)</span>
+<span id="cb43-19"><a href="auto-report.html#cb43-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-20"><a href="auto-report.html#cb43-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Data preparation</span></span>
+<span id="cb43-21"><a href="auto-report.html#cb43-21" aria-hidden="true" tabindex="-1"></a>senso_mean <span class="ot">&lt;-</span> sensory <span class="sc">%&gt;%</span> </span>
+<span id="cb43-22"><a href="auto-report.html#cb43-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Product) <span class="sc">%&gt;%</span> </span>
+<span id="cb43-23"><a href="auto-report.html#cb43-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), mean)) <span class="sc">%&gt;%</span> </span>
+<span id="cb43-24"><a href="auto-report.html#cb43-24" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">column_to_rownames</span>(<span class="at">var =</span> <span class="st">&quot;Product&quot;</span>)</span>
+<span id="cb43-25"><a href="auto-report.html#cb43-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-26"><a href="auto-report.html#cb43-26" aria-hidden="true" tabindex="-1"></a>overall_mean <span class="ot">&lt;-</span> <span class="fu">apply</span>(senso_mean, <span class="dv">2</span>, mean)</span>
+<span id="cb43-27"><a href="auto-report.html#cb43-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-28"><a href="auto-report.html#cb43-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Create workbook object</span></span>
+<span id="cb43-29"><a href="auto-report.html#cb43-29" aria-hidden="true" tabindex="-1"></a>wb <span class="ot">&lt;-</span> openxlsx<span class="sc">::</span><span class="fu">createWorkbook</span>()</span>
+<span id="cb43-30"><a href="auto-report.html#cb43-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-31"><a href="auto-report.html#cb43-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Change the font to Calibri size 10</span></span>
+<span id="cb43-32"><a href="auto-report.html#cb43-32" aria-hidden="true" tabindex="-1"></a><span class="fu">modifyBaseFont</span>(wb,<span class="at">fontName =</span> <span class="st">&quot;Calibri&quot;</span>, <span class="at">fontSize =</span> <span class="dv">10</span>)</span>
+<span id="cb43-33"><a href="auto-report.html#cb43-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-34"><a href="auto-report.html#cb43-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a new worksheet</span></span>
+<span id="cb43-35"><a href="auto-report.html#cb43-35" aria-hidden="true" tabindex="-1"></a><span class="fu">addWorksheet</span>(wb, <span class="at">sheetName =</span> <span class="st">&quot;Mean&quot;</span>, <span class="at">gridLines =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb43-36"><a href="auto-report.html#cb43-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-37"><a href="auto-report.html#cb43-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Write table: note that </span></span>
+<span id="cb43-38"><a href="auto-report.html#cb43-38" aria-hidden="true" tabindex="-1"></a><span class="fu">writeDataTable</span>(wb,</span>
+<span id="cb43-39"><a href="auto-report.html#cb43-39" aria-hidden="true" tabindex="-1"></a>               <span class="at">sheet =</span> <span class="st">&quot;Mean&quot;</span>,</span>
+<span id="cb43-40"><a href="auto-report.html#cb43-40" aria-hidden="true" tabindex="-1"></a>               <span class="at">x =</span> senso_mean, </span>
+<span id="cb43-41"><a href="auto-report.html#cb43-41" aria-hidden="true" tabindex="-1"></a>               <span class="at">startCol =</span> <span class="dv">1</span>,</span>
+<span id="cb43-42"><a href="auto-report.html#cb43-42" aria-hidden="true" tabindex="-1"></a>               <span class="at">startRow =</span> <span class="dv">1</span>,</span>
+<span id="cb43-43"><a href="auto-report.html#cb43-43" aria-hidden="true" tabindex="-1"></a>               <span class="at">colNames =</span> <span class="cn">TRUE</span>, <span class="at">rowNames =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb43-44"><a href="auto-report.html#cb43-44" aria-hidden="true" tabindex="-1"></a>               <span class="at">tableStyle =</span> <span class="st">&quot;TableStyleLight9&quot;</span>)</span>
+<span id="cb43-45"><a href="auto-report.html#cb43-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-46"><a href="auto-report.html#cb43-46" aria-hidden="true" tabindex="-1"></a><span class="co"># Freezing the table</span></span>
+<span id="cb43-47"><a href="auto-report.html#cb43-47" aria-hidden="true" tabindex="-1"></a><span class="fu">freezePane</span>(wb, <span class="at">sheet =</span> <span class="st">&quot;Mean&quot;</span>, <span class="at">firstRow =</span> <span class="cn">TRUE</span>, <span class="at">firstCol =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb43-48"><a href="auto-report.html#cb43-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-49"><a href="auto-report.html#cb43-49" aria-hidden="true" tabindex="-1"></a><span class="co"># Styles for conditional formatting</span></span>
+<span id="cb43-50"><a href="auto-report.html#cb43-50" aria-hidden="true" tabindex="-1"></a>pos_style <span class="ot">&lt;-</span> <span class="fu">createStyle</span>(<span class="at">fontColour =</span> <span class="st">&quot;firebrick3&quot;</span>, <span class="at">bgFill =</span> <span class="st">&quot;mistyrose1&quot;</span>)</span>
+<span id="cb43-51"><a href="auto-report.html#cb43-51" aria-hidden="true" tabindex="-1"></a>neg_style <span class="ot">&lt;-</span> <span class="fu">createStyle</span>(<span class="at">fontColour =</span> <span class="st">&quot;navy&quot;</span>, <span class="at">bgFill =</span> <span class="st">&quot;lightsteelblue&quot;</span>)</span>
+<span id="cb43-52"><a href="auto-report.html#cb43-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-53"><a href="auto-report.html#cb43-53" aria-hidden="true" tabindex="-1"></a><span class="co"># Adding formatting to the second column</span></span>
+<span id="cb43-54"><a href="auto-report.html#cb43-54" aria-hidden="true" tabindex="-1"></a><span class="fu">conditionalFormatting</span>(wb,</span>
+<span id="cb43-55"><a href="auto-report.html#cb43-55" aria-hidden="true" tabindex="-1"></a>                      <span class="at">sheet =</span> <span class="st">&quot;Mean&quot;</span>, </span>
+<span id="cb43-56"><a href="auto-report.html#cb43-56" aria-hidden="true" tabindex="-1"></a>                      <span class="at">cols  =</span> <span class="dv">2</span>,</span>
+<span id="cb43-57"><a href="auto-report.html#cb43-57" aria-hidden="true" tabindex="-1"></a>                      <span class="at">rows  =</span> <span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(senso_mean), </span>
+<span id="cb43-58"><a href="auto-report.html#cb43-58" aria-hidden="true" tabindex="-1"></a>                      <span class="at">rule  =</span> <span class="fu">paste0</span>(<span class="st">&quot;&gt;&quot;</span>,overall_mean[<span class="dv">2</span>]),</span>
+<span id="cb43-59"><a href="auto-report.html#cb43-59" aria-hidden="true" tabindex="-1"></a>                      <span class="at">style =</span> pos_style)</span>
+<span id="cb43-60"><a href="auto-report.html#cb43-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-61"><a href="auto-report.html#cb43-61" aria-hidden="true" tabindex="-1"></a><span class="fu">conditionalFormatting</span>(wb,</span>
+<span id="cb43-62"><a href="auto-report.html#cb43-62" aria-hidden="true" tabindex="-1"></a>                      <span class="at">sheet =</span> <span class="st">&quot;Mean&quot;</span>,</span>
+<span id="cb43-63"><a href="auto-report.html#cb43-63" aria-hidden="true" tabindex="-1"></a>                      <span class="at">cols  =</span> <span class="dv">2</span>,</span>
+<span id="cb43-64"><a href="auto-report.html#cb43-64" aria-hidden="true" tabindex="-1"></a>                      <span class="at">rows  =</span> <span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(senso_mean), </span>
+<span id="cb43-65"><a href="auto-report.html#cb43-65" aria-hidden="true" tabindex="-1"></a>                      <span class="at">rule  =</span> <span class="fu">paste0</span>(<span class="st">&quot;&lt;&quot;</span>,overall_mean[<span class="dv">2</span>]),</span>
+<span id="cb43-66"><a href="auto-report.html#cb43-66" aria-hidden="true" tabindex="-1"></a>                      <span class="at">style =</span> neg_style)</span>
+<span id="cb43-67"><a href="auto-report.html#cb43-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-68"><a href="auto-report.html#cb43-68" aria-hidden="true" tabindex="-1"></a><span class="fu">setColWidths</span>(wb, <span class="at">sheet =</span> <span class="st">&quot;Mean&quot;</span>,</span>
+<span id="cb43-69"><a href="auto-report.html#cb43-69" aria-hidden="true" tabindex="-1"></a>             <span class="at">cols =</span> <span class="dv">1</span><span class="sc">:</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">ncol</span>(senso_mean)), <span class="at">widths =</span> <span class="dv">12</span>)</span></code></pre></div>
 <p>The file is created using <code>saveWorkbook()</code> by specifying the name of the workbook <code>wb</code> and its path through <code>file</code>. In case such workbook already exists, it can be overwritten using <code>overwrite</code>.</p>
 <p>TIPS: At any time, you can visualize your file using <code>openXL()</code>: This function opens within Excel the temporary file that is currently being built, hence allowing you to double-check that your code matches your expectations.</p>
 <p>For more details on using <strong>{openxlsx}</strong> see <a href="https://rdrr.io/cran/openxlsx/" class="uri">https://rdrr.io/cran/openxlsx/</a>.</p>
 </div>
 <div id="powerpoint" class="section level2" number="5.3">
 <h2><span class="header-section-number">5.3</span> PowerPoint</h2>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="auto-report.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb36-2"><a href="auto-report.html#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(officer)</span>
-<span id="cb36-3"><a href="auto-report.html#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(flextable)</span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="auto-report.html#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb44-2"><a href="auto-report.html#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(officer)</span>
+<span id="cb44-3"><a href="auto-report.html#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(flextable)</span></code></pre></div>
 <p>With <code>{officer}</code>, the procedure starts with creating a powerpoint object <code>pptx_obj</code> using the <code>read_pptx()</code> function, to which we add slides through the <code>add_slide()</code> function.
 On a given worksheet, any type of content (text, graph, table) can be exported using <code>ph_with()</code> (ph ~ placeholder) which controls where to write the content through the <code>location</code> and <code>ph_location</code> options.</p>
 <p>Through these different functions, many additional formatting procedure can be applied.</p>
@@ -600,29 +601,29 @@ On a given worksheet, any type of content (text, graph, table) can be exported u
 <h3><span class="header-section-number">5.3.1</span> Creating a PowerPoint Deck</h3>
 <p><strong>Key functions:</strong>
 <code>read_pptx(path)</code> <code>add_slide(x, layout, master)</code> <code>layout_summary(x)</code></p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="auto-report.html#cb37-1" aria-hidden="true" tabindex="-1"></a>pptx_obj <span class="ot">&lt;-</span> <span class="fu">read_pptx</span>() <span class="co"># new empty file</span></span>
-<span id="cb37-2"><a href="auto-report.html#cb37-2" aria-hidden="true" tabindex="-1"></a>pptx_obj <span class="ot">&lt;-</span> pptx_obj <span class="sc">%&gt;%</span> </span>
-<span id="cb37-3"><a href="auto-report.html#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_slide</span>(<span class="at">layout  =</span> <span class="st">&#39;Title and Content&#39;</span>, <span class="at">master =</span> <span class="st">&quot;Office Theme&quot;</span>)</span>
-<span id="cb37-4"><a href="auto-report.html#cb37-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-5"><a href="auto-report.html#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(pptx_obj)</span>
-<span id="cb37-6"><a href="auto-report.html#cb37-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-7"><a href="auto-report.html#cb37-7" aria-hidden="true" tabindex="-1"></a>pptx_obj <span class="sc">%&gt;%</span></span>
-<span id="cb37-8"><a href="auto-report.html#cb37-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layout_summary</span>()</span>
-<span id="cb37-9"><a href="auto-report.html#cb37-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-10"><a href="auto-report.html#cb37-10" aria-hidden="true" tabindex="-1"></a>pptx_obj <span class="sc">%&gt;%</span> </span>
-<span id="cb37-11"><a href="auto-report.html#cb37-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">target =</span> <span class="fu">file.path</span>(<span class="st">&quot;output&quot;</span>,<span class="st">&quot;example_1.pptx&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="auto-report.html#cb45-1" aria-hidden="true" tabindex="-1"></a>pptx_obj <span class="ot">&lt;-</span> <span class="fu">read_pptx</span>() <span class="co"># new empty file</span></span>
+<span id="cb45-2"><a href="auto-report.html#cb45-2" aria-hidden="true" tabindex="-1"></a>pptx_obj <span class="ot">&lt;-</span> pptx_obj <span class="sc">%&gt;%</span> </span>
+<span id="cb45-3"><a href="auto-report.html#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_slide</span>(<span class="at">layout  =</span> <span class="st">&#39;Title and Content&#39;</span>, <span class="at">master =</span> <span class="st">&quot;Office Theme&quot;</span>)</span>
+<span id="cb45-4"><a href="auto-report.html#cb45-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-5"><a href="auto-report.html#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(pptx_obj)</span>
+<span id="cb45-6"><a href="auto-report.html#cb45-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-7"><a href="auto-report.html#cb45-7" aria-hidden="true" tabindex="-1"></a>pptx_obj <span class="sc">%&gt;%</span></span>
+<span id="cb45-8"><a href="auto-report.html#cb45-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layout_summary</span>()</span>
+<span id="cb45-9"><a href="auto-report.html#cb45-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-10"><a href="auto-report.html#cb45-10" aria-hidden="true" tabindex="-1"></a>pptx_obj <span class="sc">%&gt;%</span> </span>
+<span id="cb45-11"><a href="auto-report.html#cb45-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">target =</span> <span class="fu">file.path</span>(<span class="st">&quot;output&quot;</span>,<span class="st">&quot;example_1.pptx&quot;</span>))</span></code></pre></div>
 </div>
 <div id="powerpoint-themes" class="section level3" number="5.3.2">
 <h3><span class="header-section-number">5.3.2</span> PowerPoint Themes</h3>
 <p>A blank Deck is by default set up with the <em>Office Theme</em>. To use a custom theme, we must create a Deck using the Powerpoint software and use it as input.</p>
 <p>Loading a template with a custom theme</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="auto-report.html#cb38-1" aria-hidden="true" tabindex="-1"></a>pptx_obj <span class="ot">&lt;-</span> <span class="fu">read_pptx</span>(<span class="fu">file.path</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;templates&quot;</span>, <span class="st">&quot;intergral.pptx&quot;</span>))</span>
-<span id="cb38-2"><a href="auto-report.html#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-3"><a href="auto-report.html#cb38-3" aria-hidden="true" tabindex="-1"></a>pptx_obj <span class="sc">%&gt;%</span> </span>
-<span id="cb38-4"><a href="auto-report.html#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layout_summary</span>()</span>
-<span id="cb38-5"><a href="auto-report.html#cb38-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-6"><a href="auto-report.html#cb38-6" aria-hidden="true" tabindex="-1"></a>pptx_obj <span class="ot">&lt;-</span> pptx_obj <span class="sc">%&gt;%</span> <span class="co"># add slide</span></span>
-<span id="cb38-7"><a href="auto-report.html#cb38-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_slide</span>(<span class="at">layout =</span> <span class="st">&quot;Title and Content&quot;</span>, <span class="at">master =</span> <span class="st">&quot;Integral&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="auto-report.html#cb46-1" aria-hidden="true" tabindex="-1"></a>pptx_obj <span class="ot">&lt;-</span> <span class="fu">read_pptx</span>(<span class="fu">file.path</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;templates&quot;</span>, <span class="st">&quot;intergral.pptx&quot;</span>))</span>
+<span id="cb46-2"><a href="auto-report.html#cb46-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-3"><a href="auto-report.html#cb46-3" aria-hidden="true" tabindex="-1"></a>pptx_obj <span class="sc">%&gt;%</span> </span>
+<span id="cb46-4"><a href="auto-report.html#cb46-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layout_summary</span>()</span>
+<span id="cb46-5"><a href="auto-report.html#cb46-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-6"><a href="auto-report.html#cb46-6" aria-hidden="true" tabindex="-1"></a>pptx_obj <span class="ot">&lt;-</span> pptx_obj <span class="sc">%&gt;%</span> <span class="co"># add slide</span></span>
+<span id="cb46-7"><a href="auto-report.html#cb46-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_slide</span>(<span class="at">layout =</span> <span class="st">&quot;Title and Content&quot;</span>, <span class="at">master =</span> <span class="st">&quot;Integral&quot;</span>)</span></code></pre></div>
 </div>
 <div id="placeholders-and-shapes" class="section level3" number="5.3.3">
 <h3><span class="header-section-number">5.3.3</span> Placeholders and Shapes</h3>
@@ -633,52 +634,52 @@ On a given worksheet, any type of content (text, graph, table) can be exported u
 <li>ctrTitle, subTitle, dt, ftr, sldNum</li>
 </ul></li>
 </ul>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="auto-report.html#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example 1</span></span>
-<span id="cb39-2"><a href="auto-report.html#cb39-2" aria-hidden="true" tabindex="-1"></a>my_data <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;My functions are:&quot;</span>, <span class="st">&quot;ph_with&quot;</span>, <span class="st">&quot;ph_location_type&quot;</span>)</span>
-<span id="cb39-3"><a href="auto-report.html#cb39-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-4"><a href="auto-report.html#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="co"># first slide</span></span>
-<span id="cb39-5"><a href="auto-report.html#cb39-5" aria-hidden="true" tabindex="-1"></a>pptx_obj <span class="ot">&lt;-</span> <span class="fu">read_pptx</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb39-6"><a href="auto-report.html#cb39-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_slide</span>(<span class="at">layout =</span> <span class="st">&quot;Title and Content&quot;</span>, <span class="at">master =</span> <span class="st">&quot;Office Theme&quot;</span>)</span>
-<span id="cb39-7"><a href="auto-report.html#cb39-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-8"><a href="auto-report.html#cb39-8" aria-hidden="true" tabindex="-1"></a>pptx_obj <span class="ot">&lt;-</span> pptx_obj <span class="sc">%&gt;%</span></span>
-<span id="cb39-9"><a href="auto-report.html#cb39-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ph_with</span>(<span class="at">value =</span> my_data, <span class="at">location =</span> <span class="fu">ph_location_type</span>(<span class="at">type =</span> <span class="st">&#39;body&#39;</span>))</span>
-<span id="cb39-10"><a href="auto-report.html#cb39-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-11"><a href="auto-report.html#cb39-11" aria-hidden="true" tabindex="-1"></a>pptx_obj <span class="ot">&lt;-</span> pptx_obj <span class="sc">%&gt;%</span> </span>
-<span id="cb39-12"><a href="auto-report.html#cb39-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">on_slide</span>(<span class="at">index =</span> <span class="dv">1</span>) <span class="co"># set active slide</span></span>
-<span id="cb39-13"><a href="auto-report.html#cb39-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-14"><a href="auto-report.html#cb39-14" aria-hidden="true" tabindex="-1"></a><span class="fu">slide_summary</span>(pptx_obj) <span class="co"># technical content summary</span></span>
-<span id="cb39-15"><a href="auto-report.html#cb39-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-16"><a href="auto-report.html#cb39-16" aria-hidden="true" tabindex="-1"></a>my_data <span class="ot">&lt;-</span> <span class="fu">head</span>(mtcars)[,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]</span>
-<span id="cb39-17"><a href="auto-report.html#cb39-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-18"><a href="auto-report.html#cb39-18" aria-hidden="true" tabindex="-1"></a><span class="co"># second slide</span></span>
-<span id="cb39-19"><a href="auto-report.html#cb39-19" aria-hidden="true" tabindex="-1"></a>pptx_obj <span class="ot">&lt;-</span> pptx_obj <span class="sc">%&gt;%</span> </span>
-<span id="cb39-20"><a href="auto-report.html#cb39-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">add_slide</span>(<span class="at">layout =</span> <span class="st">&quot;Title and Content&quot;</span>, <span class="at">master =</span> <span class="st">&quot;Office Theme&quot;</span>)</span>
-<span id="cb39-21"><a href="auto-report.html#cb39-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-22"><a href="auto-report.html#cb39-22" aria-hidden="true" tabindex="-1"></a>pptx_obj <span class="ot">&lt;-</span> pptx_obj <span class="sc">%&gt;%</span> </span>
-<span id="cb39-23"><a href="auto-report.html#cb39-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ph_with</span>(<span class="at">value =</span> my_data, <span class="at">location =</span> <span class="fu">ph_location_type</span>(<span class="at">type =</span> <span class="st">&#39;body&#39;</span>)) </span>
-<span id="cb39-24"><a href="auto-report.html#cb39-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-25"><a href="auto-report.html#cb39-25" aria-hidden="true" tabindex="-1"></a>pptx_obj <span class="sc">%&gt;%</span></span>
-<span id="cb39-26"><a href="auto-report.html#cb39-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">target =</span> <span class="fu">file.path</span>(<span class="st">&quot;output&quot;</span>,<span class="st">&quot;example_2.pptx&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="auto-report.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example 1</span></span>
+<span id="cb47-2"><a href="auto-report.html#cb47-2" aria-hidden="true" tabindex="-1"></a>my_data <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;My functions are:&quot;</span>, <span class="st">&quot;ph_with&quot;</span>, <span class="st">&quot;ph_location_type&quot;</span>)</span>
+<span id="cb47-3"><a href="auto-report.html#cb47-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-4"><a href="auto-report.html#cb47-4" aria-hidden="true" tabindex="-1"></a><span class="co"># first slide</span></span>
+<span id="cb47-5"><a href="auto-report.html#cb47-5" aria-hidden="true" tabindex="-1"></a>pptx_obj <span class="ot">&lt;-</span> <span class="fu">read_pptx</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb47-6"><a href="auto-report.html#cb47-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_slide</span>(<span class="at">layout =</span> <span class="st">&quot;Title and Content&quot;</span>, <span class="at">master =</span> <span class="st">&quot;Office Theme&quot;</span>)</span>
+<span id="cb47-7"><a href="auto-report.html#cb47-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-8"><a href="auto-report.html#cb47-8" aria-hidden="true" tabindex="-1"></a>pptx_obj <span class="ot">&lt;-</span> pptx_obj <span class="sc">%&gt;%</span></span>
+<span id="cb47-9"><a href="auto-report.html#cb47-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ph_with</span>(<span class="at">value =</span> my_data, <span class="at">location =</span> <span class="fu">ph_location_type</span>(<span class="at">type =</span> <span class="st">&#39;body&#39;</span>))</span>
+<span id="cb47-10"><a href="auto-report.html#cb47-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-11"><a href="auto-report.html#cb47-11" aria-hidden="true" tabindex="-1"></a>pptx_obj <span class="ot">&lt;-</span> pptx_obj <span class="sc">%&gt;%</span> </span>
+<span id="cb47-12"><a href="auto-report.html#cb47-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">on_slide</span>(<span class="at">index =</span> <span class="dv">1</span>) <span class="co"># set active slide</span></span>
+<span id="cb47-13"><a href="auto-report.html#cb47-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-14"><a href="auto-report.html#cb47-14" aria-hidden="true" tabindex="-1"></a><span class="fu">slide_summary</span>(pptx_obj) <span class="co"># technical content summary</span></span>
+<span id="cb47-15"><a href="auto-report.html#cb47-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-16"><a href="auto-report.html#cb47-16" aria-hidden="true" tabindex="-1"></a>my_data <span class="ot">&lt;-</span> <span class="fu">head</span>(mtcars)[,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]</span>
+<span id="cb47-17"><a href="auto-report.html#cb47-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-18"><a href="auto-report.html#cb47-18" aria-hidden="true" tabindex="-1"></a><span class="co"># second slide</span></span>
+<span id="cb47-19"><a href="auto-report.html#cb47-19" aria-hidden="true" tabindex="-1"></a>pptx_obj <span class="ot">&lt;-</span> pptx_obj <span class="sc">%&gt;%</span> </span>
+<span id="cb47-20"><a href="auto-report.html#cb47-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">add_slide</span>(<span class="at">layout =</span> <span class="st">&quot;Title and Content&quot;</span>, <span class="at">master =</span> <span class="st">&quot;Office Theme&quot;</span>)</span>
+<span id="cb47-21"><a href="auto-report.html#cb47-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-22"><a href="auto-report.html#cb47-22" aria-hidden="true" tabindex="-1"></a>pptx_obj <span class="ot">&lt;-</span> pptx_obj <span class="sc">%&gt;%</span> </span>
+<span id="cb47-23"><a href="auto-report.html#cb47-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ph_with</span>(<span class="at">value =</span> my_data, <span class="at">location =</span> <span class="fu">ph_location_type</span>(<span class="at">type =</span> <span class="st">&#39;body&#39;</span>)) </span>
+<span id="cb47-24"><a href="auto-report.html#cb47-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-25"><a href="auto-report.html#cb47-25" aria-hidden="true" tabindex="-1"></a>pptx_obj <span class="sc">%&gt;%</span></span>
+<span id="cb47-26"><a href="auto-report.html#cb47-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">target =</span> <span class="fu">file.path</span>(<span class="st">&quot;output&quot;</span>,<span class="st">&quot;example_2.pptx&quot;</span>))</span></code></pre></div>
 <ul>
 <li><code>ph_location()</code> allows to specify exact positions for content
 <ul>
 <li>for left/top/width/height units are inches</li>
 </ul></li>
 </ul>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="auto-report.html#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example 3</span></span>
-<span id="cb40-2"><a href="auto-report.html#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="co"># We add a text box item in a custom position</span></span>
-<span id="cb40-3"><a href="auto-report.html#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="co"># The same can be done for an image, logo, custom objects, etc.</span></span>
-<span id="cb40-4"><a href="auto-report.html#cb40-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-5"><a href="auto-report.html#cb40-5" aria-hidden="true" tabindex="-1"></a>my_data <span class="ot">&lt;-</span> <span class="st">&quot;My text&quot;</span></span>
-<span id="cb40-6"><a href="auto-report.html#cb40-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-7"><a href="auto-report.html#cb40-7" aria-hidden="true" tabindex="-1"></a>pptx_obj <span class="ot">&lt;-</span> <span class="fu">read_pptx</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb40-8"><a href="auto-report.html#cb40-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_slide</span>(<span class="at">layout =</span> <span class="st">&quot;Title and Content&quot;</span>, <span class="at">master =</span> <span class="st">&quot;Office Theme&quot;</span>)</span>
-<span id="cb40-9"><a href="auto-report.html#cb40-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-10"><a href="auto-report.html#cb40-10" aria-hidden="true" tabindex="-1"></a>pptx_obj <span class="ot">&lt;-</span> pptx_obj <span class="sc">%&gt;%</span></span>
-<span id="cb40-11"><a href="auto-report.html#cb40-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ph_with</span>(<span class="at">value =</span> my_data, <span class="at">location =</span> <span class="fu">ph_location</span>(<span class="at">left =</span> <span class="dv">2</span>, <span class="at">top =</span> <span class="dv">2</span>, <span class="at">width =</span> <span class="dv">3</span>, <span class="at">height =</span> <span class="dv">1</span>))</span>
-<span id="cb40-12"><a href="auto-report.html#cb40-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-13"><a href="auto-report.html#cb40-13" aria-hidden="true" tabindex="-1"></a>pptx_obj <span class="sc">%&gt;%</span></span>
-<span id="cb40-14"><a href="auto-report.html#cb40-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">target =</span> <span class="fu">file.path</span>(<span class="st">&quot;output&quot;</span>,<span class="st">&quot;example_3.pptx&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="auto-report.html#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example 3</span></span>
+<span id="cb48-2"><a href="auto-report.html#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="co"># We add a text box item in a custom position</span></span>
+<span id="cb48-3"><a href="auto-report.html#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="co"># The same can be done for an image, logo, custom objects, etc.</span></span>
+<span id="cb48-4"><a href="auto-report.html#cb48-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-5"><a href="auto-report.html#cb48-5" aria-hidden="true" tabindex="-1"></a>my_data <span class="ot">&lt;-</span> <span class="st">&quot;My text&quot;</span></span>
+<span id="cb48-6"><a href="auto-report.html#cb48-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-7"><a href="auto-report.html#cb48-7" aria-hidden="true" tabindex="-1"></a>pptx_obj <span class="ot">&lt;-</span> <span class="fu">read_pptx</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb48-8"><a href="auto-report.html#cb48-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_slide</span>(<span class="at">layout =</span> <span class="st">&quot;Title and Content&quot;</span>, <span class="at">master =</span> <span class="st">&quot;Office Theme&quot;</span>)</span>
+<span id="cb48-9"><a href="auto-report.html#cb48-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-10"><a href="auto-report.html#cb48-10" aria-hidden="true" tabindex="-1"></a>pptx_obj <span class="ot">&lt;-</span> pptx_obj <span class="sc">%&gt;%</span></span>
+<span id="cb48-11"><a href="auto-report.html#cb48-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ph_with</span>(<span class="at">value =</span> my_data, <span class="at">location =</span> <span class="fu">ph_location</span>(<span class="at">left =</span> <span class="dv">2</span>, <span class="at">top =</span> <span class="dv">2</span>, <span class="at">width =</span> <span class="dv">3</span>, <span class="at">height =</span> <span class="dv">1</span>))</span>
+<span id="cb48-12"><a href="auto-report.html#cb48-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-13"><a href="auto-report.html#cb48-13" aria-hidden="true" tabindex="-1"></a>pptx_obj <span class="sc">%&gt;%</span></span>
+<span id="cb48-14"><a href="auto-report.html#cb48-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">target =</span> <span class="fu">file.path</span>(<span class="st">&quot;output&quot;</span>,<span class="st">&quot;example_3.pptx&quot;</span>))</span></code></pre></div>
 </div>
 <div id="working-with-text" class="section level3" number="5.3.4">
 <h3><span class="header-section-number">5.3.4</span> Working with Text</h3>
@@ -686,41 +687,41 @@ On a given worksheet, any type of content (text, graph, table) can be exported u
 <p><code>fpar()</code> (“formatted paragraph”) creates this object</p>
 <p><code>block_list()</code> allows us to wrap multiple paragraphs together</p>
 <p><code>ftext()</code> (“formatted text”) to edit the text before pasting into paragraphs. <code>ftext()</code> requires a second argument called prop which contains the formatting properties.</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="auto-report.html#cb41-1" aria-hidden="true" tabindex="-1"></a>my_prop <span class="ot">&lt;-</span> <span class="fu">fp_text</span>(<span class="at">color =</span> <span class="st">&quot;red&quot;</span>, <span class="at">font.size =</span> <span class="dv">14</span>)</span>
-<span id="cb41-2"><a href="auto-report.html#cb41-2" aria-hidden="true" tabindex="-1"></a>my_text <span class="ot">&lt;-</span> <span class="fu">ftext</span>(<span class="st">&quot;First Line in Red&quot;</span>, <span class="at">prop =</span> my_prop)</span>
-<span id="cb41-3"><a href="auto-report.html#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-4"><a href="auto-report.html#cb41-4" aria-hidden="true" tabindex="-1"></a>my_par <span class="ot">&lt;-</span> <span class="fu">fpar</span>(my_text) <span class="co"># formatted</span></span>
-<span id="cb41-5"><a href="auto-report.html#cb41-5" aria-hidden="true" tabindex="-1"></a>blank_line <span class="ot">&lt;-</span> <span class="fu">fpar</span>(<span class="st">&quot;&quot;</span>) <span class="co">#optional</span></span>
-<span id="cb41-6"><a href="auto-report.html#cb41-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-7"><a href="auto-report.html#cb41-7" aria-hidden="true" tabindex="-1"></a>my_par2 <span class="ot">&lt;-</span> <span class="fu">fpar</span>(<span class="st">&quot;Second Line&quot;</span>) <span class="co"># unformatted</span></span>
-<span id="cb41-8"><a href="auto-report.html#cb41-8" aria-hidden="true" tabindex="-1"></a>my_list <span class="ot">&lt;-</span> <span class="fu">block_list</span>(my_par, blank_line, my_par2)</span>
-<span id="cb41-9"><a href="auto-report.html#cb41-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-10"><a href="auto-report.html#cb41-10" aria-hidden="true" tabindex="-1"></a>pptx_obj <span class="ot">&lt;-</span> <span class="fu">read_pptx</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb41-11"><a href="auto-report.html#cb41-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_slide</span>(<span class="at">layout =</span> <span class="st">&quot;Title and Content&quot;</span>, <span class="at">master =</span> <span class="st">&quot;Office Theme&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb41-12"><a href="auto-report.html#cb41-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ph_with</span>(<span class="at">value =</span> my_list, <span class="at">location =</span> <span class="fu">ph_location_type</span>(<span class="at">type =</span> <span class="st">&quot;body&quot;</span>) )</span>
-<span id="cb41-13"><a href="auto-report.html#cb41-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-14"><a href="auto-report.html#cb41-14" aria-hidden="true" tabindex="-1"></a>pptx_obj <span class="sc">%&gt;%</span></span>
-<span id="cb41-15"><a href="auto-report.html#cb41-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">target =</span> <span class="fu">file.path</span>(<span class="st">&quot;output&quot;</span>,<span class="st">&quot;example_4.pptx&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="auto-report.html#cb49-1" aria-hidden="true" tabindex="-1"></a>my_prop <span class="ot">&lt;-</span> <span class="fu">fp_text</span>(<span class="at">color =</span> <span class="st">&quot;red&quot;</span>, <span class="at">font.size =</span> <span class="dv">14</span>)</span>
+<span id="cb49-2"><a href="auto-report.html#cb49-2" aria-hidden="true" tabindex="-1"></a>my_text <span class="ot">&lt;-</span> <span class="fu">ftext</span>(<span class="st">&quot;First Line in Red&quot;</span>, <span class="at">prop =</span> my_prop)</span>
+<span id="cb49-3"><a href="auto-report.html#cb49-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-4"><a href="auto-report.html#cb49-4" aria-hidden="true" tabindex="-1"></a>my_par <span class="ot">&lt;-</span> <span class="fu">fpar</span>(my_text) <span class="co"># formatted</span></span>
+<span id="cb49-5"><a href="auto-report.html#cb49-5" aria-hidden="true" tabindex="-1"></a>blank_line <span class="ot">&lt;-</span> <span class="fu">fpar</span>(<span class="st">&quot;&quot;</span>) <span class="co">#optional</span></span>
+<span id="cb49-6"><a href="auto-report.html#cb49-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-7"><a href="auto-report.html#cb49-7" aria-hidden="true" tabindex="-1"></a>my_par2 <span class="ot">&lt;-</span> <span class="fu">fpar</span>(<span class="st">&quot;Second Line&quot;</span>) <span class="co"># unformatted</span></span>
+<span id="cb49-8"><a href="auto-report.html#cb49-8" aria-hidden="true" tabindex="-1"></a>my_list <span class="ot">&lt;-</span> <span class="fu">block_list</span>(my_par, blank_line, my_par2)</span>
+<span id="cb49-9"><a href="auto-report.html#cb49-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-10"><a href="auto-report.html#cb49-10" aria-hidden="true" tabindex="-1"></a>pptx_obj <span class="ot">&lt;-</span> <span class="fu">read_pptx</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb49-11"><a href="auto-report.html#cb49-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_slide</span>(<span class="at">layout =</span> <span class="st">&quot;Title and Content&quot;</span>, <span class="at">master =</span> <span class="st">&quot;Office Theme&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb49-12"><a href="auto-report.html#cb49-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ph_with</span>(<span class="at">value =</span> my_list, <span class="at">location =</span> <span class="fu">ph_location_type</span>(<span class="at">type =</span> <span class="st">&quot;body&quot;</span>) )</span>
+<span id="cb49-13"><a href="auto-report.html#cb49-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-14"><a href="auto-report.html#cb49-14" aria-hidden="true" tabindex="-1"></a>pptx_obj <span class="sc">%&gt;%</span></span>
+<span id="cb49-15"><a href="auto-report.html#cb49-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">target =</span> <span class="fu">file.path</span>(<span class="st">&quot;output&quot;</span>,<span class="st">&quot;example_4.pptx&quot;</span>))</span></code></pre></div>
 <p>For more details on using <strong>{officer}</strong> see <a href="https://davidgohel.github.io/officer" class="uri">https://davidgohel.github.io/officer</a>.</p>
 </div>
 </div>
 <div id="tables" class="section level2" number="5.4">
 <h2><span class="header-section-number">5.4</span> Tables</h2>
 <p><code>ph_with</code> accepts a data.frame as value and renders it in a default format</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="auto-report.html#cb42-1" aria-hidden="true" tabindex="-1"></a>ft_data <span class="ot">&lt;-</span> senso_mean <span class="sc">%&gt;%</span></span>
-<span id="cb42-2"><a href="auto-report.html#cb42-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Salty, Sweet, Sour, Bitter) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-3"><a href="auto-report.html#cb42-3" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">rownames_to_column</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb42-4"><a href="auto-report.html#cb42-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Product =</span> rowname) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-5"><a href="auto-report.html#cb42-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(Salty<span class="sc">:</span>Bitter, as.numeric)) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-6"><a href="auto-report.html#cb42-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">summarise</span>(.,</span>
-<span id="cb42-7"><a href="auto-report.html#cb42-7" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">across</span>(<span class="fu">where</span>(is.numeric), mean),</span>
-<span id="cb42-8"><a href="auto-report.html#cb42-8" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">across</span>(<span class="fu">where</span>(is.character), <span class="sc">~</span><span class="st">&quot;Average&quot;</span>))) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-9"><a href="auto-report.html#cb42-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), round, <span class="dv">2</span>)) </span>
-<span id="cb42-10"><a href="auto-report.html#cb42-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-11"><a href="auto-report.html#cb42-11" aria-hidden="true" tabindex="-1"></a>pptx_obj <span class="ot">&lt;-</span> <span class="fu">read_pptx</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb42-12"><a href="auto-report.html#cb42-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_slide</span>(<span class="at">layout =</span> <span class="st">&quot;Title and Content&quot;</span>, <span class="at">master =</span> <span class="st">&quot;Office Theme&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb42-13"><a href="auto-report.html#cb42-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ph_with</span>(<span class="at">value =</span> ft_data, <span class="at">location =</span> <span class="fu">ph_location_type</span>(<span class="at">type =</span> <span class="st">&quot;body&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb42-14"><a href="auto-report.html#cb42-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">target =</span> <span class="fu">file.path</span>(<span class="st">&quot;output&quot;</span>,<span class="st">&quot;table_1.pptx&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="auto-report.html#cb50-1" aria-hidden="true" tabindex="-1"></a>ft_data <span class="ot">&lt;-</span> senso_mean <span class="sc">%&gt;%</span></span>
+<span id="cb50-2"><a href="auto-report.html#cb50-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Salty, Sweet, Sour, Bitter) <span class="sc">%&gt;%</span> </span>
+<span id="cb50-3"><a href="auto-report.html#cb50-3" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">rownames_to_column</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb50-4"><a href="auto-report.html#cb50-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Product =</span> rowname) <span class="sc">%&gt;%</span> </span>
+<span id="cb50-5"><a href="auto-report.html#cb50-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(Salty<span class="sc">:</span>Bitter, as.numeric)) <span class="sc">%&gt;%</span> </span>
+<span id="cb50-6"><a href="auto-report.html#cb50-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">summarise</span>(.,</span>
+<span id="cb50-7"><a href="auto-report.html#cb50-7" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">across</span>(<span class="fu">where</span>(is.numeric), mean),</span>
+<span id="cb50-8"><a href="auto-report.html#cb50-8" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">across</span>(<span class="fu">where</span>(is.character), <span class="sc">~</span><span class="st">&quot;Average&quot;</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb50-9"><a href="auto-report.html#cb50-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), round, <span class="dv">2</span>)) </span>
+<span id="cb50-10"><a href="auto-report.html#cb50-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-11"><a href="auto-report.html#cb50-11" aria-hidden="true" tabindex="-1"></a>pptx_obj <span class="ot">&lt;-</span> <span class="fu">read_pptx</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb50-12"><a href="auto-report.html#cb50-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_slide</span>(<span class="at">layout =</span> <span class="st">&quot;Title and Content&quot;</span>, <span class="at">master =</span> <span class="st">&quot;Office Theme&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb50-13"><a href="auto-report.html#cb50-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ph_with</span>(<span class="at">value =</span> ft_data, <span class="at">location =</span> <span class="fu">ph_location_type</span>(<span class="at">type =</span> <span class="st">&quot;body&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb50-14"><a href="auto-report.html#cb50-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">target =</span> <span class="fu">file.path</span>(<span class="st">&quot;output&quot;</span>,<span class="st">&quot;table_1.pptx&quot;</span>))</span></code></pre></div>
 <div id="introduction-to-flextable" class="section level3" number="5.4.1">
 <h3><span class="header-section-number">5.4.1</span> Introduction to flextable</h3>
 <p>With <code>{flextable}</code>, the procedure starts with creating a flextable object <code>ft_table</code> using the <code>flextable()</code> function.
@@ -730,69 +731,69 @@ Through different functions, many custom formatting procedure can be applied:</p
 <code>align()</code> <code>bold()</code> <code>font()</code> <code>color()</code> <code>bg()</code> <code>height()</code> &amp; <code>width()</code>
 <code>border_outer()</code> &amp; <code>border_inner()</code> &amp; <code>border_inner_h()</code> <code>border_inner_v()</code> <code>autofit()</code></p>
 <p>Additional function to learn: <code>merge()</code>, <code>compose()</code> &amp; <code>as_chunk()</code>, <code>style()</code></p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="auto-report.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(flextable)</span>
-<span id="cb43-2"><a href="auto-report.html#cb43-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-3"><a href="auto-report.html#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a flextable object</span></span>
-<span id="cb43-4"><a href="auto-report.html#cb43-4" aria-hidden="true" tabindex="-1"></a>ft_table <span class="ot">&lt;-</span> ft_data <span class="sc">%&gt;%</span> </span>
-<span id="cb43-5"><a href="auto-report.html#cb43-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">flextable</span>()</span>
-<span id="cb43-6"><a href="auto-report.html#cb43-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-7"><a href="auto-report.html#cb43-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Flextable objects can be found in the Viewer tab of Rstudio</span></span>
-<span id="cb43-8"><a href="auto-report.html#cb43-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(ft_table)</span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="auto-report.html#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(flextable)</span>
+<span id="cb51-2"><a href="auto-report.html#cb51-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-3"><a href="auto-report.html#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a flextable object</span></span>
+<span id="cb51-4"><a href="auto-report.html#cb51-4" aria-hidden="true" tabindex="-1"></a>ft_table <span class="ot">&lt;-</span> ft_data <span class="sc">%&gt;%</span> </span>
+<span id="cb51-5"><a href="auto-report.html#cb51-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">flextable</span>()</span>
+<span id="cb51-6"><a href="auto-report.html#cb51-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-7"><a href="auto-report.html#cb51-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Flextable objects can be found in the Viewer tab of Rstudio</span></span>
+<span id="cb51-8"><a href="auto-report.html#cb51-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(ft_table)</span></code></pre></div>
 </div>
 <div id="formatting-examples" class="section level3" number="5.4.2">
 <h3><span class="header-section-number">5.4.2</span> Formatting examples</h3>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="auto-report.html#cb44-1" aria-hidden="true" tabindex="-1"></a>ft_table <span class="ot">&lt;-</span> ft_table <span class="sc">%&gt;%</span></span>
-<span id="cb44-2"><a href="auto-report.html#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autofit</span>() <span class="sc">%&gt;%</span> <span class="co"># column width</span></span>
-<span id="cb44-3"><a href="auto-report.html#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># alignment of header: we use part argument</span></span>
-<span id="cb44-4"><a href="auto-report.html#cb44-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">align</span>(<span class="at">align =</span> <span class="st">&quot;center&quot;</span>, <span class="at">part =</span> <span class="st">&quot;header&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb44-5"><a href="auto-report.html#cb44-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># alignment of content: we can use part = &quot;body&quot; or specify exact lines </span></span>
-<span id="cb44-6"><a href="auto-report.html#cb44-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">align</span>(<span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(ft_data), <span class="at">j =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(ft_data), <span class="at">align =</span> <span class="st">&quot;center&quot;</span>) </span>
-<span id="cb44-7"><a href="auto-report.html#cb44-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-8"><a href="auto-report.html#cb44-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(ft_table)</span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="auto-report.html#cb52-1" aria-hidden="true" tabindex="-1"></a>ft_table <span class="ot">&lt;-</span> ft_table <span class="sc">%&gt;%</span></span>
+<span id="cb52-2"><a href="auto-report.html#cb52-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autofit</span>() <span class="sc">%&gt;%</span> <span class="co"># column width</span></span>
+<span id="cb52-3"><a href="auto-report.html#cb52-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># alignment of header: we use part argument</span></span>
+<span id="cb52-4"><a href="auto-report.html#cb52-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">align</span>(<span class="at">align =</span> <span class="st">&quot;center&quot;</span>, <span class="at">part =</span> <span class="st">&quot;header&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb52-5"><a href="auto-report.html#cb52-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># alignment of content: we can use part = &quot;body&quot; or specify exact lines </span></span>
+<span id="cb52-6"><a href="auto-report.html#cb52-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">align</span>(<span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(ft_data), <span class="at">j =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(ft_data), <span class="at">align =</span> <span class="st">&quot;center&quot;</span>) </span>
+<span id="cb52-7"><a href="auto-report.html#cb52-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-8"><a href="auto-report.html#cb52-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(ft_table)</span></code></pre></div>
 <p>Set font names, sizes and colors</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="auto-report.html#cb45-1" aria-hidden="true" tabindex="-1"></a>ft_table <span class="ot">&lt;-</span> ft_table <span class="sc">%&gt;%</span> </span>
-<span id="cb45-2"><a href="auto-report.html#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># main formatting</span></span>
-<span id="cb45-3"><a href="auto-report.html#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fontsize</span>(<span class="at">size =</span> <span class="dv">11</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb45-4"><a href="auto-report.html#cb45-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">font</span>(<span class="at">fontname =</span> <span class="st">&quot;Calibri&quot;</span>) <span class="sc">%&gt;%</span> <span class="co"># since no i or j are input, change is for all data</span></span>
-<span id="cb45-5"><a href="auto-report.html#cb45-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">font</span>(<span class="at">fontname =</span> <span class="st">&quot;Roboto&quot;</span>, <span class="at">part =</span> <span class="st">&quot;header&quot;</span>) <span class="sc">%&gt;%</span> <span class="co">#different font for header</span></span>
-<span id="cb45-6"><a href="auto-report.html#cb45-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">color</span>(<span class="at">color =</span> <span class="st">&quot;white&quot;</span>, <span class="at">part =</span> <span class="st">&quot;header&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb45-7"><a href="auto-report.html#cb45-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bold</span>(<span class="at">part =</span> <span class="st">&quot;header&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb45-8"><a href="auto-report.html#cb45-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># format last row</span></span>
-<span id="cb45-9"><a href="auto-report.html#cb45-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bold</span>(<span class="at">i =</span> <span class="fu">nrow</span>(ft_data), <span class="at">j =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(ft_data)) <span class="sc">%&gt;%</span> <span class="co">#</span></span>
-<span id="cb45-10"><a href="auto-report.html#cb45-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">italic</span>(<span class="at">i =</span> <span class="fu">nrow</span>(ft_data), <span class="at">j =</span> <span class="sc">~</span>Product <span class="sc">+</span> Salty <span class="sc">+</span> Sweet <span class="sc">+</span> Sour <span class="sc">+</span> Bitter) <span class="sc">%&gt;%</span> <span class="co"># using ~ notation</span></span>
-<span id="cb45-11"><a href="auto-report.html#cb45-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">color</span>(<span class="at">i =</span>  <span class="fu">nrow</span>(ft_data), <span class="at">j =</span> <span class="sc">~</span>Sour, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb45-12"><a href="auto-report.html#cb45-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">color</span>(<span class="at">i =</span>  <span class="fu">nrow</span>(ft_data), <span class="at">j =</span> <span class="sc">~</span>Sweet, <span class="at">color =</span> <span class="st">&quot;orange&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb45-13"><a href="auto-report.html#cb45-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># background colors</span></span>
-<span id="cb45-14"><a href="auto-report.html#cb45-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bg</span>(<span class="at">bg =</span> <span class="st">&quot;#324C63&quot;</span>, <span class="at">part =</span> <span class="st">&quot;header&quot;</span>) <span class="sc">%&gt;%</span> <span class="co"># a custom background for the header</span></span>
-<span id="cb45-15"><a href="auto-report.html#cb45-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bg</span>(<span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(ft_data), <span class="at">bg =</span> <span class="st">&quot;#EDEDED&quot;</span>) <span class="co"># a custom background for some cells</span></span>
-<span id="cb45-16"><a href="auto-report.html#cb45-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-17"><a href="auto-report.html#cb45-17" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(ft_table)</span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="auto-report.html#cb53-1" aria-hidden="true" tabindex="-1"></a>ft_table <span class="ot">&lt;-</span> ft_table <span class="sc">%&gt;%</span> </span>
+<span id="cb53-2"><a href="auto-report.html#cb53-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># main formatting</span></span>
+<span id="cb53-3"><a href="auto-report.html#cb53-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fontsize</span>(<span class="at">size =</span> <span class="dv">11</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb53-4"><a href="auto-report.html#cb53-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">font</span>(<span class="at">fontname =</span> <span class="st">&quot;Calibri&quot;</span>) <span class="sc">%&gt;%</span> <span class="co"># since no i or j are input, change is for all data</span></span>
+<span id="cb53-5"><a href="auto-report.html#cb53-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">font</span>(<span class="at">fontname =</span> <span class="st">&quot;Roboto&quot;</span>, <span class="at">part =</span> <span class="st">&quot;header&quot;</span>) <span class="sc">%&gt;%</span> <span class="co">#different font for header</span></span>
+<span id="cb53-6"><a href="auto-report.html#cb53-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">color</span>(<span class="at">color =</span> <span class="st">&quot;white&quot;</span>, <span class="at">part =</span> <span class="st">&quot;header&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb53-7"><a href="auto-report.html#cb53-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bold</span>(<span class="at">part =</span> <span class="st">&quot;header&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb53-8"><a href="auto-report.html#cb53-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># format last row</span></span>
+<span id="cb53-9"><a href="auto-report.html#cb53-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bold</span>(<span class="at">i =</span> <span class="fu">nrow</span>(ft_data), <span class="at">j =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(ft_data)) <span class="sc">%&gt;%</span> <span class="co">#</span></span>
+<span id="cb53-10"><a href="auto-report.html#cb53-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">italic</span>(<span class="at">i =</span> <span class="fu">nrow</span>(ft_data), <span class="at">j =</span> <span class="sc">~</span>Product <span class="sc">+</span> Salty <span class="sc">+</span> Sweet <span class="sc">+</span> Sour <span class="sc">+</span> Bitter) <span class="sc">%&gt;%</span> <span class="co"># using ~ notation</span></span>
+<span id="cb53-11"><a href="auto-report.html#cb53-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">color</span>(<span class="at">i =</span>  <span class="fu">nrow</span>(ft_data), <span class="at">j =</span> <span class="sc">~</span>Sour, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb53-12"><a href="auto-report.html#cb53-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">color</span>(<span class="at">i =</span>  <span class="fu">nrow</span>(ft_data), <span class="at">j =</span> <span class="sc">~</span>Sweet, <span class="at">color =</span> <span class="st">&quot;orange&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb53-13"><a href="auto-report.html#cb53-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># background colors</span></span>
+<span id="cb53-14"><a href="auto-report.html#cb53-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bg</span>(<span class="at">bg =</span> <span class="st">&quot;#324C63&quot;</span>, <span class="at">part =</span> <span class="st">&quot;header&quot;</span>) <span class="sc">%&gt;%</span> <span class="co"># a custom background for the header</span></span>
+<span id="cb53-15"><a href="auto-report.html#cb53-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bg</span>(<span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(ft_data), <span class="at">bg =</span> <span class="st">&quot;#EDEDED&quot;</span>) <span class="co"># a custom background for some cells</span></span>
+<span id="cb53-16"><a href="auto-report.html#cb53-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-17"><a href="auto-report.html#cb53-17" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(ft_table)</span></code></pre></div>
 <p>Set borders and adjust cells heights and widths</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="auto-report.html#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co">#BORDERS</span></span>
-<span id="cb46-2"><a href="auto-report.html#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="co"># For borders we need to use nested functions (similar to fpar&gt;ftext&gt;fp_text)</span></span>
-<span id="cb46-3"><a href="auto-report.html#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="co"># fp_border() is the second level function we will use to specify border&quot;s characteristics</span></span>
-<span id="cb46-4"><a href="auto-report.html#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="co"># as argument it takes color, style, and width</span></span>
-<span id="cb46-5"><a href="auto-report.html#cb46-5" aria-hidden="true" tabindex="-1"></a>my_border <span class="ot">&lt;-</span> officer<span class="sc">::</span><span class="fu">fp_border</span>(<span class="at">color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">style =</span> <span class="st">&quot;solid&quot;</span>, <span class="at">width =</span> <span class="dv">1</span>)</span>
-<span id="cb46-6"><a href="auto-report.html#cb46-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-7"><a href="auto-report.html#cb46-7" aria-hidden="true" tabindex="-1"></a><span class="co"># We use this second level function inside various main border functions</span></span>
-<span id="cb46-8"><a href="auto-report.html#cb46-8" aria-hidden="true" tabindex="-1"></a><span class="co"># border_outer(), border_inner(), border_inner_h(), border_inner_v()</span></span>
-<span id="cb46-9"><a href="auto-report.html#cb46-9" aria-hidden="true" tabindex="-1"></a>ft_table <span class="ot">&lt;-</span> ft_table <span class="sc">%&gt;%</span></span>
-<span id="cb46-10"><a href="auto-report.html#cb46-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">border_outer</span>(<span class="at">part =</span> <span class="st">&quot;all&quot;</span>, <span class="at">border =</span> my_border) <span class="sc">%&gt;%</span> <span class="co"># using predefined border</span></span>
-<span id="cb46-11"><a href="auto-report.html#cb46-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">border_inner</span>(<span class="at">part =</span> <span class="st">&quot;body&quot;</span>, <span class="at">border =</span> officer<span class="sc">::</span><span class="fu">fp_border</span>(<span class="at">style =</span> <span class="st">&quot;dashed&quot;</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb46-12"><a href="auto-report.html#cb46-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-13"><a href="auto-report.html#cb46-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># all measurements are in inches</span></span>
-<span id="cb46-14"><a href="auto-report.html#cb46-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">width</span>(<span class="at">j =</span> <span class="dv">1</span>, <span class="at">width =</span> <span class="fl">1.2</span>) <span class="sc">%&gt;%</span> <span class="co"># column 1 wider</span></span>
-<span id="cb46-15"><a href="auto-report.html#cb46-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">height</span>(<span class="at">i =</span> <span class="dv">12</span>, <span class="at">height =</span> <span class="dv">1</span>) <span class="co"># last row&#39;s height</span></span>
-<span id="cb46-16"><a href="auto-report.html#cb46-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-17"><a href="auto-report.html#cb46-17" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(ft_table)</span></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="auto-report.html#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co">#BORDERS</span></span>
+<span id="cb54-2"><a href="auto-report.html#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="co"># For borders we need to use nested functions (similar to fpar&gt;ftext&gt;fp_text)</span></span>
+<span id="cb54-3"><a href="auto-report.html#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="co"># fp_border() is the second level function we will use to specify border&quot;s characteristics</span></span>
+<span id="cb54-4"><a href="auto-report.html#cb54-4" aria-hidden="true" tabindex="-1"></a><span class="co"># as argument it takes color, style, and width</span></span>
+<span id="cb54-5"><a href="auto-report.html#cb54-5" aria-hidden="true" tabindex="-1"></a>my_border <span class="ot">&lt;-</span> officer<span class="sc">::</span><span class="fu">fp_border</span>(<span class="at">color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">style =</span> <span class="st">&quot;solid&quot;</span>, <span class="at">width =</span> <span class="dv">1</span>)</span>
+<span id="cb54-6"><a href="auto-report.html#cb54-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-7"><a href="auto-report.html#cb54-7" aria-hidden="true" tabindex="-1"></a><span class="co"># We use this second level function inside various main border functions</span></span>
+<span id="cb54-8"><a href="auto-report.html#cb54-8" aria-hidden="true" tabindex="-1"></a><span class="co"># border_outer(), border_inner(), border_inner_h(), border_inner_v()</span></span>
+<span id="cb54-9"><a href="auto-report.html#cb54-9" aria-hidden="true" tabindex="-1"></a>ft_table <span class="ot">&lt;-</span> ft_table <span class="sc">%&gt;%</span></span>
+<span id="cb54-10"><a href="auto-report.html#cb54-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">border_outer</span>(<span class="at">part =</span> <span class="st">&quot;all&quot;</span>, <span class="at">border =</span> my_border) <span class="sc">%&gt;%</span> <span class="co"># using predefined border</span></span>
+<span id="cb54-11"><a href="auto-report.html#cb54-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">border_inner</span>(<span class="at">part =</span> <span class="st">&quot;body&quot;</span>, <span class="at">border =</span> officer<span class="sc">::</span><span class="fu">fp_border</span>(<span class="at">style =</span> <span class="st">&quot;dashed&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb54-12"><a href="auto-report.html#cb54-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-13"><a href="auto-report.html#cb54-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># all measurements are in inches</span></span>
+<span id="cb54-14"><a href="auto-report.html#cb54-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">width</span>(<span class="at">j =</span> <span class="dv">1</span>, <span class="at">width =</span> <span class="fl">1.2</span>) <span class="sc">%&gt;%</span> <span class="co"># column 1 wider</span></span>
+<span id="cb54-15"><a href="auto-report.html#cb54-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">height</span>(<span class="at">i =</span> <span class="dv">12</span>, <span class="at">height =</span> <span class="dv">1</span>) <span class="co"># last row&#39;s height</span></span>
+<span id="cb54-16"><a href="auto-report.html#cb54-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-17"><a href="auto-report.html#cb54-17" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(ft_table)</span></code></pre></div>
 </div>
 <div id="add-flextable-object-to-a-powerpoint-slide" class="section level3" number="5.4.3">
 <h3><span class="header-section-number">5.4.3</span> Add flextable object to a powerpoint slide</h3>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="auto-report.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add table to slide</span></span>
-<span id="cb47-2"><a href="auto-report.html#cb47-2" aria-hidden="true" tabindex="-1"></a>pptx_obj <span class="ot">&lt;-</span> <span class="fu">read_pptx</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb47-3"><a href="auto-report.html#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_slide</span>(<span class="at">layout =</span> <span class="st">&quot;Title and Content&quot;</span>, <span class="at">master =</span> <span class="st">&quot;Office Theme&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb47-4"><a href="auto-report.html#cb47-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ph_with</span>(<span class="at">value =</span> ft_table, <span class="fu">ph_location</span>(<span class="at">left =</span> <span class="dv">2</span>, <span class="at">top =</span> <span class="dv">2</span>, <span class="at">width =</span> <span class="dv">4</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb47-5"><a href="auto-report.html#cb47-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">target =</span> <span class="fu">file.path</span>(<span class="st">&quot;output&quot;</span>,<span class="st">&quot;table_2.pptx&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="auto-report.html#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add table to slide</span></span>
+<span id="cb55-2"><a href="auto-report.html#cb55-2" aria-hidden="true" tabindex="-1"></a>pptx_obj <span class="ot">&lt;-</span> <span class="fu">read_pptx</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb55-3"><a href="auto-report.html#cb55-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_slide</span>(<span class="at">layout =</span> <span class="st">&quot;Title and Content&quot;</span>, <span class="at">master =</span> <span class="st">&quot;Office Theme&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb55-4"><a href="auto-report.html#cb55-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ph_with</span>(<span class="at">value =</span> ft_table, <span class="fu">ph_location</span>(<span class="at">left =</span> <span class="dv">2</span>, <span class="at">top =</span> <span class="dv">2</span>, <span class="at">width =</span> <span class="dv">4</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb55-5"><a href="auto-report.html#cb55-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">target =</span> <span class="fu">file.path</span>(<span class="st">&quot;output&quot;</span>,<span class="st">&quot;table_2.pptx&quot;</span>))</span></code></pre></div>
 <p>For more details on using <strong>{flextable}</strong> see <a href="https://davidgohel.github.io/flextable/" class="uri">https://davidgohel.github.io/flextable/</a>.</p>
 </div>
 </div>
@@ -800,92 +801,92 @@ Through different functions, many custom formatting procedure can be applied:</p
 <h2><span class="header-section-number">5.5</span> Charts</h2>
 <div id="adding-charts-as-images" class="section level3" number="5.5.1">
 <h3><span class="header-section-number">5.5.1</span> Adding charts as images</h3>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="auto-report.html#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Using ggplot2 as plotting library</span></span>
-<span id="cb48-2"><a href="auto-report.html#cb48-2" aria-hidden="true" tabindex="-1"></a>chart_to_plot <span class="ot">&lt;-</span> senso_mean <span class="sc">%&gt;%</span></span>
-<span id="cb48-3"><a href="auto-report.html#cb48-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Salty, Sweet, Sour, Bitter) <span class="sc">%&gt;%</span> </span>
-<span id="cb48-4"><a href="auto-report.html#cb48-4" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">rownames_to_column</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb48-5"><a href="auto-report.html#cb48-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Product =</span> rowname) <span class="sc">%&gt;%</span></span>
-<span id="cb48-6"><a href="auto-report.html#cb48-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> Salty<span class="sc">:</span>Bitter, <span class="at">names_to =</span> <span class="st">&#39;Attribute&#39;</span>, <span class="at">values_to =</span> <span class="st">&#39;Value&#39;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb48-7"><a href="auto-report.html#cb48-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Product, <span class="at">y =</span> Value, <span class="at">fill =</span> Attribute)) <span class="sc">+</span> </span>
-<span id="cb48-8"><a href="auto-report.html#cb48-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">&#39;dodge&#39;</span>)</span>
-<span id="cb48-9"><a href="auto-report.html#cb48-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-10"><a href="auto-report.html#cb48-10" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(chart_to_plot) <span class="co">#in Plots window of Rstudio</span></span></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="auto-report.html#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Using ggplot2 as plotting library</span></span>
+<span id="cb56-2"><a href="auto-report.html#cb56-2" aria-hidden="true" tabindex="-1"></a>chart_to_plot <span class="ot">&lt;-</span> senso_mean <span class="sc">%&gt;%</span></span>
+<span id="cb56-3"><a href="auto-report.html#cb56-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Salty, Sweet, Sour, Bitter) <span class="sc">%&gt;%</span> </span>
+<span id="cb56-4"><a href="auto-report.html#cb56-4" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">rownames_to_column</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb56-5"><a href="auto-report.html#cb56-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Product =</span> rowname) <span class="sc">%&gt;%</span></span>
+<span id="cb56-6"><a href="auto-report.html#cb56-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> Salty<span class="sc">:</span>Bitter, <span class="at">names_to =</span> <span class="st">&#39;Attribute&#39;</span>, <span class="at">values_to =</span> <span class="st">&#39;Value&#39;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb56-7"><a href="auto-report.html#cb56-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Product, <span class="at">y =</span> Value, <span class="at">fill =</span> Attribute)) <span class="sc">+</span> </span>
+<span id="cb56-8"><a href="auto-report.html#cb56-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">&#39;dodge&#39;</span>)</span>
+<span id="cb56-9"><a href="auto-report.html#cb56-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-10"><a href="auto-report.html#cb56-10" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(chart_to_plot) <span class="co">#in Plots window of Rstudio</span></span></code></pre></div>
 </div>
 <div id="rvg-package" class="section level3" number="5.5.2">
 <h3><span class="header-section-number">5.5.2</span> rvg package</h3>
 <p>rvg is providing two graphics devices that produces Vector Graphics outputs in <code>DrawingML</code> format for Microsoft PowerPoint with dml_pptx and for Microsoft Excel with dml_xlsx.</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="auto-report.html#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># body location</span></span>
-<span id="cb49-2"><a href="auto-report.html#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rvg)</span>
-<span id="cb49-3"><a href="auto-report.html#cb49-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-4"><a href="auto-report.html#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="co"># all items on the chart inside the pptx can be editable</span></span>
-<span id="cb49-5"><a href="auto-report.html#cb49-5" aria-hidden="true" tabindex="-1"></a>pptx_obj <span class="ot">&lt;-</span> <span class="fu">read_pptx</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb49-6"><a href="auto-report.html#cb49-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_slide</span>(<span class="at">layout =</span> <span class="st">&quot;Title and Content&quot;</span>, <span class="at">master =</span> <span class="st">&quot;Office Theme&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb49-7"><a href="auto-report.html#cb49-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ph_with</span>(<span class="at">value =</span> <span class="fu">dml</span>(<span class="at">ggobj =</span> chart_to_plot, <span class="at">editable =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb49-8"><a href="auto-report.html#cb49-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">location=</span> <span class="fu">ph_location_type</span>(<span class="at">type =</span> <span class="st">&#39;body&#39;</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb49-9"><a href="auto-report.html#cb49-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">target =</span> <span class="fu">file.path</span>(<span class="st">&quot;output&quot;</span>,<span class="st">&quot;rvg_1.pptx&quot;</span>))</span>
-<span id="cb49-10"><a href="auto-report.html#cb49-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-11"><a href="auto-report.html#cb49-11" aria-hidden="true" tabindex="-1"></a><span class="co">#custom location, all units are in inches</span></span>
-<span id="cb49-12"><a href="auto-report.html#cb49-12" aria-hidden="true" tabindex="-1"></a>pptx_obj <span class="ot">&lt;-</span> <span class="fu">read_pptx</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb49-13"><a href="auto-report.html#cb49-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_slide</span>(<span class="at">layout =</span> <span class="st">&quot;Title and Content&quot;</span>, <span class="at">master =</span> <span class="st">&quot;Office Theme&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb49-14"><a href="auto-report.html#cb49-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ph_with</span>(<span class="at">value =</span> <span class="fu">dml</span>(<span class="at">ggobj =</span> chart_to_plot, <span class="at">editable =</span> <span class="cn">FALSE</span>),</span>
-<span id="cb49-15"><a href="auto-report.html#cb49-15" aria-hidden="true" tabindex="-1"></a>          <span class="at">location =</span>  <span class="fu">ph_location</span>(<span class="at">left =</span> <span class="dv">1</span>, <span class="at">top =</span> <span class="dv">1</span>, <span class="at">width =</span> <span class="dv">8</span>, <span class="at">height =</span> <span class="dv">6</span>))  <span class="sc">%&gt;%</span></span>
-<span id="cb49-16"><a href="auto-report.html#cb49-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">target =</span> <span class="fu">file.path</span>(<span class="st">&quot;output&quot;</span>,<span class="st">&quot;rvg_2.pptx&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="auto-report.html#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># body location</span></span>
+<span id="cb57-2"><a href="auto-report.html#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rvg)</span>
+<span id="cb57-3"><a href="auto-report.html#cb57-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-4"><a href="auto-report.html#cb57-4" aria-hidden="true" tabindex="-1"></a><span class="co"># all items on the chart inside the pptx can be editable</span></span>
+<span id="cb57-5"><a href="auto-report.html#cb57-5" aria-hidden="true" tabindex="-1"></a>pptx_obj <span class="ot">&lt;-</span> <span class="fu">read_pptx</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb57-6"><a href="auto-report.html#cb57-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_slide</span>(<span class="at">layout =</span> <span class="st">&quot;Title and Content&quot;</span>, <span class="at">master =</span> <span class="st">&quot;Office Theme&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb57-7"><a href="auto-report.html#cb57-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ph_with</span>(<span class="at">value =</span> <span class="fu">dml</span>(<span class="at">ggobj =</span> chart_to_plot, <span class="at">editable =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb57-8"><a href="auto-report.html#cb57-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">location=</span> <span class="fu">ph_location_type</span>(<span class="at">type =</span> <span class="st">&#39;body&#39;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb57-9"><a href="auto-report.html#cb57-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">target =</span> <span class="fu">file.path</span>(<span class="st">&quot;output&quot;</span>,<span class="st">&quot;rvg_1.pptx&quot;</span>))</span>
+<span id="cb57-10"><a href="auto-report.html#cb57-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-11"><a href="auto-report.html#cb57-11" aria-hidden="true" tabindex="-1"></a><span class="co">#custom location, all units are in inches</span></span>
+<span id="cb57-12"><a href="auto-report.html#cb57-12" aria-hidden="true" tabindex="-1"></a>pptx_obj <span class="ot">&lt;-</span> <span class="fu">read_pptx</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb57-13"><a href="auto-report.html#cb57-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_slide</span>(<span class="at">layout =</span> <span class="st">&quot;Title and Content&quot;</span>, <span class="at">master =</span> <span class="st">&quot;Office Theme&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb57-14"><a href="auto-report.html#cb57-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ph_with</span>(<span class="at">value =</span> <span class="fu">dml</span>(<span class="at">ggobj =</span> chart_to_plot, <span class="at">editable =</span> <span class="cn">FALSE</span>),</span>
+<span id="cb57-15"><a href="auto-report.html#cb57-15" aria-hidden="true" tabindex="-1"></a>          <span class="at">location =</span>  <span class="fu">ph_location</span>(<span class="at">left =</span> <span class="dv">1</span>, <span class="at">top =</span> <span class="dv">1</span>, <span class="at">width =</span> <span class="dv">8</span>, <span class="at">height =</span> <span class="dv">6</span>))  <span class="sc">%&gt;%</span></span>
+<span id="cb57-16"><a href="auto-report.html#cb57-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">target =</span> <span class="fu">file.path</span>(<span class="st">&quot;output&quot;</span>,<span class="st">&quot;rvg_2.pptx&quot;</span>))</span></code></pre></div>
 </div>
 <div id="mschart-package" class="section level3" number="5.5.3">
 <h3><span class="header-section-number">5.5.3</span> mschart package</h3>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="auto-report.html#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mschart)</span>
-<span id="cb50-2"><a href="auto-report.html#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="co"># sample dataframe</span></span>
-<span id="cb50-3"><a href="auto-report.html#cb50-3" aria-hidden="true" tabindex="-1"></a>mydata <span class="ot">&lt;-</span> senso_mean <span class="sc">%&gt;%</span></span>
-<span id="cb50-4"><a href="auto-report.html#cb50-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Salty, Sweet, Sour, Bitter) <span class="sc">%&gt;%</span> </span>
-<span id="cb50-5"><a href="auto-report.html#cb50-5" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">rownames_to_column</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb50-6"><a href="auto-report.html#cb50-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Product =</span> rowname) <span class="sc">%&gt;%</span></span>
-<span id="cb50-7"><a href="auto-report.html#cb50-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> Salty<span class="sc">:</span>Bitter, <span class="at">names_to =</span> <span class="st">&#39;Attribute&#39;</span>, <span class="at">values_to =</span> <span class="st">&#39;Value&#39;</span>)</span>
-<span id="cb50-8"><a href="auto-report.html#cb50-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-9"><a href="auto-report.html#cb50-9" aria-hidden="true" tabindex="-1"></a><span class="co"># syntaxis is similar to ggplot2&#39;s aes() with x,y,group</span></span>
-<span id="cb50-10"><a href="auto-report.html#cb50-10" aria-hidden="true" tabindex="-1"></a>my_barchart <span class="ot">&lt;-</span> <span class="fu">ms_barchart</span>(<span class="at">data =</span> mydata,</span>
-<span id="cb50-11"><a href="auto-report.html#cb50-11" aria-hidden="true" tabindex="-1"></a>                           <span class="at">x =</span> <span class="st">&quot;Product&quot;</span>,</span>
-<span id="cb50-12"><a href="auto-report.html#cb50-12" aria-hidden="true" tabindex="-1"></a>                           <span class="at">y =</span> <span class="st">&quot;Value&quot;</span>,</span>
-<span id="cb50-13"><a href="auto-report.html#cb50-13" aria-hidden="true" tabindex="-1"></a>                           <span class="at">group =</span> <span class="st">&quot;Attribute&quot;</span>)</span>
-<span id="cb50-14"><a href="auto-report.html#cb50-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-15"><a href="auto-report.html#cb50-15" aria-hidden="true" tabindex="-1"></a><span class="co">#the chart is a Powerpoint native object and can be viewed using the preview option in print</span></span>
-<span id="cb50-16"><a href="auto-report.html#cb50-16" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(my_barchart, <span class="at">preview =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb50-17"><a href="auto-report.html#cb50-17" aria-hidden="true" tabindex="-1"></a><span class="co">#the command will work on machines with a Powerpoint Viewer</span></span>
-<span id="cb50-18"><a href="auto-report.html#cb50-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-19"><a href="auto-report.html#cb50-19" aria-hidden="true" tabindex="-1"></a><span class="co"># to add the object to a powerpoint slide we can use the officer&#39;s native ph_with</span></span>
-<span id="cb50-20"><a href="auto-report.html#cb50-20" aria-hidden="true" tabindex="-1"></a>pptx_obj <span class="ot">&lt;-</span> <span class="fu">read_pptx</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb50-21"><a href="auto-report.html#cb50-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_slide</span>(<span class="at">layout =</span> <span class="st">&quot;Title and Content&quot;</span>, <span class="at">master =</span> <span class="st">&quot;Office Theme&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb50-22"><a href="auto-report.html#cb50-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ph_with</span>(<span class="at">value =</span> my_barchart, <span class="at">location =</span> <span class="fu">ph_location_type</span>(<span class="at">type =</span> <span class="st">&quot;body&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb50-23"><a href="auto-report.html#cb50-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">target =</span> <span class="fu">file.path</span>(<span class="st">&quot;output&quot;</span>,<span class="st">&quot;rvg_2.pptx&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="auto-report.html#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mschart)</span>
+<span id="cb58-2"><a href="auto-report.html#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="co"># sample dataframe</span></span>
+<span id="cb58-3"><a href="auto-report.html#cb58-3" aria-hidden="true" tabindex="-1"></a>mydata <span class="ot">&lt;-</span> senso_mean <span class="sc">%&gt;%</span></span>
+<span id="cb58-4"><a href="auto-report.html#cb58-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Salty, Sweet, Sour, Bitter) <span class="sc">%&gt;%</span> </span>
+<span id="cb58-5"><a href="auto-report.html#cb58-5" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">rownames_to_column</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb58-6"><a href="auto-report.html#cb58-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Product =</span> rowname) <span class="sc">%&gt;%</span></span>
+<span id="cb58-7"><a href="auto-report.html#cb58-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> Salty<span class="sc">:</span>Bitter, <span class="at">names_to =</span> <span class="st">&#39;Attribute&#39;</span>, <span class="at">values_to =</span> <span class="st">&#39;Value&#39;</span>)</span>
+<span id="cb58-8"><a href="auto-report.html#cb58-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-9"><a href="auto-report.html#cb58-9" aria-hidden="true" tabindex="-1"></a><span class="co"># syntaxis is similar to ggplot2&#39;s aes() with x,y,group</span></span>
+<span id="cb58-10"><a href="auto-report.html#cb58-10" aria-hidden="true" tabindex="-1"></a>my_barchart <span class="ot">&lt;-</span> <span class="fu">ms_barchart</span>(<span class="at">data =</span> mydata,</span>
+<span id="cb58-11"><a href="auto-report.html#cb58-11" aria-hidden="true" tabindex="-1"></a>                           <span class="at">x =</span> <span class="st">&quot;Product&quot;</span>,</span>
+<span id="cb58-12"><a href="auto-report.html#cb58-12" aria-hidden="true" tabindex="-1"></a>                           <span class="at">y =</span> <span class="st">&quot;Value&quot;</span>,</span>
+<span id="cb58-13"><a href="auto-report.html#cb58-13" aria-hidden="true" tabindex="-1"></a>                           <span class="at">group =</span> <span class="st">&quot;Attribute&quot;</span>)</span>
+<span id="cb58-14"><a href="auto-report.html#cb58-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-15"><a href="auto-report.html#cb58-15" aria-hidden="true" tabindex="-1"></a><span class="co">#the chart is a Powerpoint native object and can be viewed using the preview option in print</span></span>
+<span id="cb58-16"><a href="auto-report.html#cb58-16" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(my_barchart, <span class="at">preview =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb58-17"><a href="auto-report.html#cb58-17" aria-hidden="true" tabindex="-1"></a><span class="co">#the command will work on machines with a Powerpoint Viewer</span></span>
+<span id="cb58-18"><a href="auto-report.html#cb58-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-19"><a href="auto-report.html#cb58-19" aria-hidden="true" tabindex="-1"></a><span class="co"># to add the object to a powerpoint slide we can use the officer&#39;s native ph_with</span></span>
+<span id="cb58-20"><a href="auto-report.html#cb58-20" aria-hidden="true" tabindex="-1"></a>pptx_obj <span class="ot">&lt;-</span> <span class="fu">read_pptx</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb58-21"><a href="auto-report.html#cb58-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_slide</span>(<span class="at">layout =</span> <span class="st">&quot;Title and Content&quot;</span>, <span class="at">master =</span> <span class="st">&quot;Office Theme&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb58-22"><a href="auto-report.html#cb58-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ph_with</span>(<span class="at">value =</span> my_barchart, <span class="at">location =</span> <span class="fu">ph_location_type</span>(<span class="at">type =</span> <span class="st">&quot;body&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb58-23"><a href="auto-report.html#cb58-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">target =</span> <span class="fu">file.path</span>(<span class="st">&quot;output&quot;</span>,<span class="st">&quot;rvg_2.pptx&quot;</span>))</span></code></pre></div>
 </div>
 </div>
 <div id="word" class="section level2" number="5.6">
 <h2><span class="header-section-number">5.6</span> Word</h2>
 <p>Word documents are created using <code>read_docx()</code>.</p>
 <p><code>body_add_par()</code> to add a text paragraph. Paragraphs are automatically separated by line breaks.</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="auto-report.html#cb51-1" aria-hidden="true" tabindex="-1"></a>my_doc <span class="ot">&lt;-</span> <span class="fu">read_docx</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb51-2"><a href="auto-report.html#cb51-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">body_add_par</span>(<span class="at">value =</span> <span class="st">&quot;My Text&quot;</span>, <span class="at">style =</span> <span class="st">&quot;Normal&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb51-3"><a href="auto-report.html#cb51-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">body_add_par</span>(<span class="at">value =</span> <span class="st">&quot;Other Text&quot;</span>, <span class="at">style =</span> <span class="st">&quot;Normal&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb51-4"><a href="auto-report.html#cb51-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">body_add_par</span>(<span class="at">value =</span> <span class="st">&quot;Conclusion&quot;</span>, <span class="at">style =</span> <span class="st">&quot;Normal&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb51-5"><a href="auto-report.html#cb51-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">target =</span> <span class="fu">file.path</span>(<span class="st">&quot;output&quot;</span>,<span class="st">&quot;doc_1.docx&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="auto-report.html#cb59-1" aria-hidden="true" tabindex="-1"></a>my_doc <span class="ot">&lt;-</span> <span class="fu">read_docx</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb59-2"><a href="auto-report.html#cb59-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">body_add_par</span>(<span class="at">value =</span> <span class="st">&quot;My Text&quot;</span>, <span class="at">style =</span> <span class="st">&quot;Normal&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb59-3"><a href="auto-report.html#cb59-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">body_add_par</span>(<span class="at">value =</span> <span class="st">&quot;Other Text&quot;</span>, <span class="at">style =</span> <span class="st">&quot;Normal&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb59-4"><a href="auto-report.html#cb59-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">body_add_par</span>(<span class="at">value =</span> <span class="st">&quot;Conclusion&quot;</span>, <span class="at">style =</span> <span class="st">&quot;Normal&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb59-5"><a href="auto-report.html#cb59-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">target =</span> <span class="fu">file.path</span>(<span class="st">&quot;output&quot;</span>,<span class="st">&quot;doc_1.docx&quot;</span>))</span></code></pre></div>
 <p>Unlike a pptx with separate slides, a word document is a continuous object. To create a new page and continue to write on it <code>body_add_break()</code> is used.</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="auto-report.html#cb52-1" aria-hidden="true" tabindex="-1"></a>my_doc <span class="ot">&lt;-</span> <span class="fu">read_docx</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb52-2"><a href="auto-report.html#cb52-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">body_add_par</span>(<span class="at">value =</span> <span class="st">&quot;My Text&quot;</span>, <span class="at">style =</span> <span class="st">&quot;Normal&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb52-3"><a href="auto-report.html#cb52-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">body_add_break</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb52-4"><a href="auto-report.html#cb52-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">body_add_par</span>(<span class="at">value =</span> <span class="st">&quot;Conclusion&quot;</span>, <span class="at">style =</span> <span class="st">&quot;Normal&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb52-5"><a href="auto-report.html#cb52-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">target =</span> <span class="fu">file.path</span>(<span class="st">&quot;output&quot;</span>,<span class="st">&quot;doc_2.docx&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="auto-report.html#cb60-1" aria-hidden="true" tabindex="-1"></a>my_doc <span class="ot">&lt;-</span> <span class="fu">read_docx</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb60-2"><a href="auto-report.html#cb60-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">body_add_par</span>(<span class="at">value =</span> <span class="st">&quot;My Text&quot;</span>, <span class="at">style =</span> <span class="st">&quot;Normal&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb60-3"><a href="auto-report.html#cb60-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">body_add_break</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb60-4"><a href="auto-report.html#cb60-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">body_add_par</span>(<span class="at">value =</span> <span class="st">&quot;Conclusion&quot;</span>, <span class="at">style =</span> <span class="st">&quot;Normal&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb60-5"><a href="auto-report.html#cb60-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">target =</span> <span class="fu">file.path</span>(<span class="st">&quot;output&quot;</span>,<span class="st">&quot;doc_2.docx&quot;</span>))</span></code></pre></div>
 <p><code>body_add_fpar()</code> to add a formatted text paragraph
 <code>body_add_table()</code> to add a table</p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="auto-report.html#cb53-1" aria-hidden="true" tabindex="-1"></a>my_format <span class="ot">&lt;-</span> <span class="fu">fp_text</span>(<span class="at">font.family =</span> <span class="st">&#39;Calibri&#39;</span>, <span class="at">font.size =</span> <span class="dv">14</span>, <span class="at">bold =</span> <span class="cn">TRUE</span>, <span class="at">color =</span> <span class="st">&#39;blue&#39;</span>)</span>
-<span id="cb53-2"><a href="auto-report.html#cb53-2" aria-hidden="true" tabindex="-1"></a>my_text <span class="ot">&lt;-</span> <span class="fu">ftext</span>(<span class="st">&#39;My dataset is:&#39;</span>, my_format)</span>
-<span id="cb53-3"><a href="auto-report.html#cb53-3" aria-hidden="true" tabindex="-1"></a>my_par <span class="ot">&lt;-</span> <span class="fu">fpar</span>(my_text)</span>
-<span id="cb53-4"><a href="auto-report.html#cb53-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-5"><a href="auto-report.html#cb53-5" aria-hidden="true" tabindex="-1"></a>doc <span class="ot">&lt;-</span> <span class="fu">read_docx</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb53-6"><a href="auto-report.html#cb53-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">body_add_par</span>(<span class="at">value =</span> <span class="st">&quot;Document Title&quot;</span>, <span class="at">style =</span> <span class="st">&quot;heading 1&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb53-7"><a href="auto-report.html#cb53-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">body_add_par</span>(<span class="at">value =</span> <span class="st">&quot;&quot;</span>, <span class="at">style =</span> <span class="st">&quot;Normal&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb53-8"><a href="auto-report.html#cb53-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">body_add_fpar</span>(my_par, <span class="at">style =</span> <span class="st">&quot;Normal&quot;</span>) <span class="sc">%&gt;%</span> <span class="co">#formatted paragraph function</span></span>
-<span id="cb53-9"><a href="auto-report.html#cb53-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">body_add_par</span>(<span class="at">value =</span> <span class="st">&quot;&quot;</span>, <span class="at">style =</span> <span class="st">&quot;Normal&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb53-10"><a href="auto-report.html#cb53-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">body_add_table</span>(<span class="at">value =</span> <span class="fu">head</span>(mtcars)[, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>], <span class="at">style =</span> <span class="st">&quot;table_template&quot;</span> ) <span class="sc">%&gt;%</span> </span>
-<span id="cb53-11"><a href="auto-report.html#cb53-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">target =</span> <span class="fu">file.path</span>(<span class="st">&quot;output&quot;</span>,<span class="st">&quot;doc_3.docx&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="auto-report.html#cb61-1" aria-hidden="true" tabindex="-1"></a>my_format <span class="ot">&lt;-</span> <span class="fu">fp_text</span>(<span class="at">font.family =</span> <span class="st">&#39;Calibri&#39;</span>, <span class="at">font.size =</span> <span class="dv">14</span>, <span class="at">bold =</span> <span class="cn">TRUE</span>, <span class="at">color =</span> <span class="st">&#39;blue&#39;</span>)</span>
+<span id="cb61-2"><a href="auto-report.html#cb61-2" aria-hidden="true" tabindex="-1"></a>my_text <span class="ot">&lt;-</span> <span class="fu">ftext</span>(<span class="st">&#39;My dataset is:&#39;</span>, my_format)</span>
+<span id="cb61-3"><a href="auto-report.html#cb61-3" aria-hidden="true" tabindex="-1"></a>my_par <span class="ot">&lt;-</span> <span class="fu">fpar</span>(my_text)</span>
+<span id="cb61-4"><a href="auto-report.html#cb61-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-5"><a href="auto-report.html#cb61-5" aria-hidden="true" tabindex="-1"></a>doc <span class="ot">&lt;-</span> <span class="fu">read_docx</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb61-6"><a href="auto-report.html#cb61-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">body_add_par</span>(<span class="at">value =</span> <span class="st">&quot;Document Title&quot;</span>, <span class="at">style =</span> <span class="st">&quot;heading 1&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb61-7"><a href="auto-report.html#cb61-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">body_add_par</span>(<span class="at">value =</span> <span class="st">&quot;&quot;</span>, <span class="at">style =</span> <span class="st">&quot;Normal&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb61-8"><a href="auto-report.html#cb61-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">body_add_fpar</span>(my_par, <span class="at">style =</span> <span class="st">&quot;Normal&quot;</span>) <span class="sc">%&gt;%</span> <span class="co">#formatted paragraph function</span></span>
+<span id="cb61-9"><a href="auto-report.html#cb61-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">body_add_par</span>(<span class="at">value =</span> <span class="st">&quot;&quot;</span>, <span class="at">style =</span> <span class="st">&quot;Normal&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb61-10"><a href="auto-report.html#cb61-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">body_add_table</span>(<span class="at">value =</span> <span class="fu">head</span>(mtcars)[, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>], <span class="at">style =</span> <span class="st">&quot;table_template&quot;</span> ) <span class="sc">%&gt;%</span> </span>
+<span id="cb61-11"><a href="auto-report.html#cb61-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">target =</span> <span class="fu">file.path</span>(<span class="st">&quot;output&quot;</span>,<span class="st">&quot;doc_3.docx&quot;</span>))</span></code></pre></div>
 
 </div>
 </div>

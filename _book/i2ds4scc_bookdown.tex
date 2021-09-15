@@ -118,7 +118,7 @@
 
 \title{Data Science for Sensory and Consumer Scientists}
 \author{John Ennis, Julien Delarue, and Thierry Worch}
-\date{2021-08-20}
+\date{2021-09-15}
 
 \begin{document}
 \maketitle
@@ -400,23 +400,23 @@ With these preliminaries completed, and with you (hopefully) sufficiently motiva
 In sensory science, different data collection tools (e.g.~different devices, software, methodologies, etc.) may provide the same data in different ways. Also, different statistical analyses may require having the data structured in different formats.
 
 A simple example to illustrate this latter point is the analysis of liking data.
-Let C consumers provide their hedonic assessments on P samples. To evaluate if samples have been liked differently, an ANOVA is performed on a long thin table with (PxC) rows x 3 columns (consumer, sample, and the liking scores).
+Let C consumers provide their hedonic assessments on P samples. To evaluate if samples have received different liking means at the population level, an ANOVA is performed on a long thin table with (PxC) rows x 3 columns (consumer, sample, and the liking scores).
 
 However, to assess whether consumers have the same preference patterns at the individual level, internal preference mapping or cluster analysis would be performed, both these analyses requiring as input a short and large table with P rows and C columns.
 
 Another example of data manipulation consists in summarizing data, by for instance computing the mean by product for each sensory attribute (hence creating the so-called sensory profiles), or to generate frequency tables (e.g.~proportions of male/female, distribution of the liking scores by sample, contingency table for CATA data, etc.)
 
-For these reasons, it is essential to learn to manipulate data and transition from one structure to another. After presenting many different ways to transform your data, application through simple examples will be presented\footnote{Most of the examples presented in this chapter emphasize on the ``how to?'', not the ``why?'' and thus do not necessary intend to convey scientific meaning}.
+For these reasons, it is essential to learn to manipulate data and transition from one structure to another. After presenting many different ways to transform your data, we present several simple examples to show these ideas in practice\footnote{Most of the examples presented in this chapter emphasize on the ``how to?,'' not the ``why?,'' and are not necessarily chosen to convey scientific meaning}.
 
 \hypertarget{tidy-data}{%
 \section{Tidying Data}\label{tidy-data}}
 
-Hadley Wickham defined `tidy data' as ``data sets that are arranged such that each variable is a column and each observation (or case) is a row.'' Depending on the statistical unit to consider, and the analyses to perform, data hence need to be manipulated.
+Hadley Wickham (\citet{Wickham2014}) defined `tidy data' as ``data sets that are arranged such that each variable is a column and each observation (or case) is a row.'' Depending on the statistical unit to consider and the analyses to perform, data may need to be manipulated to be presented in a tidy form.
 
 \hypertarget{simple-manipulations}{%
 \subsection{Simple Manipulations}\label{simple-manipulations}}
 
-The notion of `simple manipulations' proposed here is completely arbitrary and consists in data transformation that could easily be performed in other software such as Excel (using copy-paste, the sort \& filter function, inserting a pivot table, etc.). However, we strongly recommend performing any sorts of transformation in R as this will reduce the risk of errors, be usually faster, and become much easier and fluent as you will familiarize with them.
+The notion of `simple manipulations' proposed here consists in data transformations that could easily be performed in other software such as Excel (using copy-paste, sorting and filtering, creating a pivot table, etc.). However, we strongly recommend performing any sorts of transformation in R as this will reduce the risk of errors, typically be faster, and will be reusable if you need to perform the same operations on similar data in the future (including updated versions of the current dataset). Moreover, these operations will become easier and more natural for you to use as you familiarize yourself with them.
 
 \hypertarget{handling-columns}{%
 \subsubsection{Handling Columns}\label{handling-columns}}
@@ -424,10 +424,9 @@ The notion of `simple manipulations' proposed here is completely arbitrary and c
 \hypertarget{renaming-variables}{%
 \paragraph{Renaming Variables}\label{renaming-variables}}
 
-The first simple transformation that one could consider consists in renaming one or multiple variables.
-This procedure can easily be done using the \texttt{rename()} function from the \texttt{\{dplyr\}} package.
+The first simple transformation we consider consists of renaming one or multiple variables. This procedure can easily be done using the \texttt{rename()} function from the \texttt{\{dplyr\}} package.
 
-In our sensory file\footnote{The \emph{sensory} data is imported from the \emph{Sensory Profile.xlsx} file, see Chapter XXX for how to import datasets}, let's recode `Judge' into `Panellist', and `Product' into `Sample' (here, we apply transformations without saving the results, so without altering the original dataset):
+In our sensory file\footnote{The \emph{sensory} data are imported from the \emph{Sensory Profile.xlsx} file, see Section \ref{data-import} for more on how to import datasets}, let's recode `Judge' into `Panellist', and `Product' into `Sample' (here, we apply transformations without saving the results, so without altering the original dataset):
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -977,10 +976,112 @@ The three dataset are now joined in one and could be further processed for some 
 \hypertarget{chart-making}{%
 \section{Chart Making}\label{chart-making}}
 
-\hypertarget{philosophy-of-ggplot2}{%
-\subsection{Philosophy of ggplot2}\label{philosophy-of-ggplot2}}
+``A picture is worth 1000 words''. This saying definitely applies to Statistics as well, since visual representation of data often appears clearer than the values themselves stored in a table. It is hence no surprise that R is also a powerful tool for graphics.
 
-Explain the principles of multi-layer graphs through an example.
+In practice, there are various ways to build graphics in R. In fact, R itself comes with a powerful way of building graphs through the \texttt{plot()} function. An extensive description can be found in (\emph{R Graphics 2nd edition Paul Murrell CRC Press}). Due to its philosophy, its simplicity, and the point of view adopted in this book, we will limit ourselves to graphics built using the package \texttt{\{ggplot2\}}.
+
+\hypertarget{philosophy-of-ggplot2}{%
+\subsection{\texorpdfstring{Philosophy of \texttt{\{ggplot2\}}}{Philosophy of \{ggplot2\}}}\label{philosophy-of-ggplot2}}
+
+\texttt{\{ggplot2\}} belongs to the \texttt{\{tidyverse\}}, and was developed by H. Wickham and colleagues at RStudio. It is hence no surprise that a lot of the procedures that we're learning throughout this book also applies to \texttt{\{ggplot2\}}. More generally, building graphics with \texttt{\{ggplot2\}} fits very well within the pipes (\texttt{\%\textgreater{}\%}) system from \texttt{\{magrittr\}}. As we will see, \texttt{\{ggplot2\}} also works with a system that is similar to pipes, except that the symbol used is \texttt{+} instead of \texttt{\%\textgreater{}\%}.
+
+\texttt{\{ggplot2\}} is a multi-layer graphical tools, meaning that the graphics are build by adding layers one at a time to finally build your graphics. This means that \texttt{ggplot} objects can be printed at any time, and yet still be improved by adding other layers if needed. To read more about \texttt{\{gglot2\}} and its philosophy, please refer to \url{http://vita.had.co.nz/papers/layered-grammar.pdf}\href{http://vita.had.co.nz/papers/layered-grammar.pdf}{link}.
+
+Note that since building graphics is limited to one imagination, it is not possible to tackle each and every possibilities offered by \texttt{\{ggplot2\}} (and its extensions). For that reason, we limit ourselves to describing the principles of how \texttt{\{ggplot2\}}works. This should be more than sufficient to get you started, and should cover 90\% of the graphics that are relevant in sensory and consumer science. But if that should not be the case, we invite you to look into the online documentation or to references such as {[}REFS{]}.
+
+\hypertarget{getting-started-with-ggplot2}{%
+\subsection{\texorpdfstring{Getting started with \texttt{\{ggplot2\}}}{Getting started with \{ggplot2\}}}\label{getting-started-with-ggplot2}}
+
+To use \texttt{\{ggplot2\}}, we need to load this package: this can either be done directly using:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\end{Highlighting}
+\end{Shaded}
+
+However, if you load the \texttt{\{tidyverse\}} package, this step can be ignored as \texttt{\{ggplot2\}} is included within the list of packages it contains:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\end{Highlighting}
+\end{Shaded}
+
+To illustrate the use of \texttt{\{ggplot2\}}, we will use the sensory dataset stored in \emph{Sensory Profile.xlsx}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(here)}
+\FunctionTok{library}\NormalTok{(readxl)}
+
+\NormalTok{file\_path }\OtherTok{\textless{}{-}} \FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{,}\StringTok{"Sensory Profile.xlsx"}\NormalTok{) }
+\NormalTok{p\_info }\OtherTok{\textless{}{-}} \FunctionTok{read\_xlsx}\NormalTok{(file\_path, }\AttributeTok{sheet=}\StringTok{"Product Info"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Type)}
+
+\NormalTok{sensory }\OtherTok{\textless{}{-}} \FunctionTok{read\_xlsx}\NormalTok{(file\_path, }\AttributeTok{sheet=}\StringTok{"Data"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{inner\_join}\NormalTok{(p\_info, }\AttributeTok{by=}\StringTok{"Product"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{relocate}\NormalTok{(Protein}\SpecialCharTok{:}\NormalTok{Fiber, }\AttributeTok{.after=}\NormalTok{Product)}
+\end{Highlighting}
+\end{Shaded}
+
+To initiate a graph, we start by calling the function \texttt{ggplot()}.
+Since the data we want to use is stored in \texttt{sensory}, we apply \texttt{ggplot()} to \texttt{sensory}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(sensory)}
+\end{Highlighting}
+\end{Shaded}
+
+If you run this line of code, you'll notice that p contains an empty graphic. This is because we haven't added any layer that is relevant for us yet.
+So let's imagine we want to look at the overall relationship between \texttt{Sticky} and \texttt{Melting}. To do so, we want to create a scatter plot with \texttt{Sticky} in the x-axis, and \texttt{Melting} in the y-axis. To do so, we require to call a \texttt{geom\_} function that relates to scatter plots, in this case \texttt{geom\_point()}, by also informing through the aesthetics (defined through \texttt{aes()}) what needs to be considered on the x-axis and on the y-axis.
+
+This provides something similar to:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sticky, }\AttributeTok{y=}\NormalTok{Melting))}
+\end{Highlighting}
+\end{Shaded}
+
+A scatter plot is hence generated. In this example, one can notice that many points are being printed: this can easily be explained by the fact that the raw sensory data are being used, meaning that there are as many points as there are assessors evaluating products.
+
+Let's imagine we want to color the points per products to see if we can see patterns. This can be done by informing within the aesthetics that \texttt{colour\ =\ Product}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sticky, }\AttributeTok{y=}\NormalTok{Melting, }\AttributeTok{colour=}\NormalTok{Product))}
+\end{Highlighting}
+\end{Shaded}
+
+It is important to note that parameters can depend on a variable (e.g.~\texttt{colour} in the previous example) or should be applied to all the elements of the graph. In the first case, the parameters is included within the aesthetics, whereas in the second case, it should be defined outside the aesthetics.
+Let's illustrate this by providing a simple example in which we change the type of dots (from circle to square) using \texttt{pch}, and by increasing their size using \texttt{cex} to all the points of the graph:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sticky, }\AttributeTok{y=}\NormalTok{Melting, }\AttributeTok{colour=}\NormalTok{Product), }\AttributeTok{pch=}\DecValTok{15}\NormalTok{, }\AttributeTok{cex=}\DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Since \texttt{\{ggplot2\}} is a multi-layer graph, let's add another layer that contains the name of the panellists that is associated to each point. To do so, we could consider \texttt{geom\_text()}. In that case, we need to inform in \texttt{aes()} what corresponds to the x-axis, what correspond to the y-axis, and \texttt{label}. To avoid having the label overlapping with the point, we propose to shift slightly the text vertically (using \texttt{nudge\_y}):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(sensory)}\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sticky, }\AttributeTok{y=}\NormalTok{Melting, }\AttributeTok{colour=}\NormalTok{Product))}\SpecialCharTok{+}
+  \FunctionTok{geom\_text}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sticky, }\AttributeTok{y=}\NormalTok{Melting, }\AttributeTok{label=}\NormalTok{Judge), }\AttributeTok{nudge\_y=}\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+initiate graph with ggplot()
+add geom\_
+(discussion around geom\_ that have some statistical computation integrated\ldots)
+include aes()
+what is not an aesthetic - fixed options
+aes() included in ggplot are passed to every geom, unless stated differently!
+play around with themes
+miscalleneous
 
 \texttt{aes()}, \texttt{geom\_()}, \texttt{theme()}
 
@@ -1803,8 +1904,8 @@ List of the variables in each data sets (or just the size of each data set?).
 \hypertarget{execute-1}{%
 \section{Execute}\label{execute-1}}
 
-\hypertarget{import-1}{%
-\section{Import}\label{import-1}}
+\hypertarget{data-import}{%
+\section{Import}\label{data-import}}
 
 To analyze data, we need \emph{data}. If this data is already available in R, then the analysis can be performed directly. However, in much cases, the data is stored outside the R environment, and needs to be imported.
 
@@ -2496,8 +2597,8 @@ To illustrate how convenient this is, let's take advantage of the two qualitativ
 
 On the first dimension, \texttt{P10} is opposed to \texttt{P09} and \texttt{P03} as it is more intense for attributes such as \texttt{Sweet}, and \texttt{Dairy\ flavor} for example, and less intense for attributes such as \texttt{Dry\ in\ mouth} and \texttt{External\ color\ intensity}. On the second dimension, \texttt{P08}, \texttt{P06}, and \texttt{POpt} are opposed to \texttt{P02} and \texttt{P07} as they score higher for \texttt{Qty\ of\ inclusions}, and \texttt{Initial\ hardness}, and score lower for \texttt{RawDough\ flavor} and \texttt{Shiny}.
 
-\hypertarget{demographic-and-tfeq-data}{%
-\section{Demographic and TFEQ Data}\label{demographic-and-tfeq-data}}
+\hypertarget{demographic-and-questionnaire-data}{%
+\section{Demographic and Questionnaire Data}\label{demographic-and-questionnaire-data}}
 
 The \emph{TFEQ.xlsx} file contains descriptive (i.e.~\emph{demographic}) information regarding the consumers and their food-related personality traits (i.e.~\emph{TFEQ}) .This file has three tabs denoted as \emph{Data}, \emph{Variables}, and \emph{Levels}:
 
@@ -2553,7 +2654,7 @@ Data from surveys and questionnaires are often coded. For example, in this datas
 \end{Highlighting}
 \end{Shaded}
 
-Histograms are a nice way to visualize proportions and compare them over several variables. Such histograms can be obtained by splitting \texttt{demog\_reduced} by \texttt{Question} and by creating in each case an histogram using either \texttt{N} or \texttt{Pct} (we are using \texttt{Pct})\footnote{Here, the histograms are ordered decreasingly (\texttt{reorder}) and are represented horizontally (\texttt{coord\_flip()}).}. Of course, we automate this across all questions using \texttt{map()}.
+Histograms are a nice way to visualize proportions and to compare them over several variables. Such histograms can be obtained by splitting \texttt{demog\_reduced} by \texttt{Question} and by creating in each case an histogram using either \texttt{N} or \texttt{Pct} (we are using \texttt{Pct})\footnote{Here, the histograms are ordered decreasingly (\texttt{reorder}) and are represented horizontally (\texttt{coord\_flip()}).}. Of course, we automate this across all questions using \texttt{map()}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2609,7 +2710,7 @@ In practice, generating a regular expression can be quite complex as it is an ab
 \end{Highlighting}
 \end{Shaded}
 
-Since we would like to create a frequency table for each of these variables, we create a function called \texttt{myfreq()} which will automatically compute the frequency for each level, and the corresponding percentage.
+In order to build a separate frequency table for each of these variables, we create a function called \texttt{myfreq()} which will automatically compute the frequency for each level, and the corresponding percentage.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2648,7 +2749,7 @@ We then apply this function to each variable separately using \texttt{map()} aft
 \end{Highlighting}
 \end{Shaded}
 
-Similarly, we can create histograms representing the frequency for each variable. But here we limit ourselves to variables related to Disinhibition. To do so, we start by generating the right regular expression (only selecting variables starting with ``D'') that we used to filter the results, before creating the corresponding graph:
+Accordingly, we can create histograms that represent the frequency distribution for each variable. But let's suppose that we only want to display variables related to Disinhibition. To do so, we first need to generate the corresponding regular expression (only selecting variables starting with ``D'') to filter the results before creating the plots:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2660,18 +2761,18 @@ Similarly, we can create histograms representing the frequency for each variable
 \NormalTok{TFEQ\_freq }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{filter}\NormalTok{(}\FunctionTok{str\_detect}\NormalTok{(TFEQ, d)) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Response, }\AttributeTok{y=}\NormalTok{Pct, }\AttributeTok{label=}\NormalTok{Pct))}\SpecialCharTok{+}
-  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat=}\StringTok{"identity"}\NormalTok{, }\AttributeTok{fill=}\StringTok{"grey50"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat=}\StringTok{"identity"}\NormalTok{ , }\AttributeTok{fill=}\StringTok{"grey50"}\NormalTok{)}\SpecialCharTok{+}
   \FunctionTok{geom\_text}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y =}\NormalTok{ Pct}\SpecialCharTok{/}\DecValTok{2}\NormalTok{), }\AttributeTok{colour=}\StringTok{"white"}\NormalTok{)}\SpecialCharTok{+}
   \FunctionTok{theme\_bw}\NormalTok{()}\SpecialCharTok{+}
   \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{TFEQ, }\AttributeTok{scales=}\StringTok{"free"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-Ultimately, the TFEQ questionnaire consists in a set of structured questions whose respective answers combine to provide a TFEQ score. This TFEQ score translates into certain behavior towards food. Similar structured questionnaire could include IQ test, Food Neophobia, etc.
+Structured questionnaires such as the TFEQ are very frequent in sensory and consumer science. They are used to measure individual patterns as diverse as personality traits, attitudes, food choice motives, engagement, social desirability bias, etc. Ultimately, the TFEQ questionnaire consists in a set of structured questions whose respective answers combine to provide a TFEQ score (actually, three scores, one for Disinhibition, one for Restriction and one for sensitivity to Hunger). This TFEQ scores translate into certain food behavior tendencies.
 
-However, it appears that the TFEQ score is not computed by simply adding the scores of all TFEQ questions together. Instead, it follows certain rules that are stored in the \emph{Variables} sheet in \emph{TFEQ.xlsx}. For each TFEQ question, the rule to follow is provided by \texttt{Direction} and \texttt{Value}, and works as following: if the condition provided by \texttt{Direction} and \texttt{Value} is met, then the respondent gets a 1, else a 0. Ultimately, the TFEQ is the sum of all these evaluations.
+However, it appears that the TFEQ scores are not computed by simply adding the scores of all TFEQ questions together. Instead, they follow certain rules that are stored in the \emph{Variables} sheet in \emph{TFEQ.xlsx}. For each TFEQ question, the rule to follow is provided by \texttt{Direction} and \texttt{Value}, and works as following: if the condition provided by \texttt{Direction} and \texttt{Value} is met, then the respondent gets a 1, else a 0. Ultimately, the TFEQ is the sum of all these evaluations.
 
-Let's start by extracting this information (\texttt{Direction} and \texttt{Value}) from the sheet Variables for all the variables involved in the computation of the TFEQ score. We store this in \texttt{var\_drh}.
+Let's start by extracting this information (\texttt{Direction} and \texttt{Value}) from the sheet \emph{Variables} for all the variables involved in the computation of the TFEQ scores. We store this in \texttt{var\_drh}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
