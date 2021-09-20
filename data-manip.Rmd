@@ -48,14 +48,23 @@ The notion of 'simple manipulations' proposed here consists in data transformati
 ##### Renaming Variables
 
 
-The first simple transformation we consider consists of renaming one or multiple variables. This procedure can easily be done using the `rename()` function from the `{dplyr}` package.
+The first simple transformation we consider consists of renaming one or multiple variables. This procedure can easily be done using the `rename()` function from the `{dplyr}` package.  In each of the examples below, we use the `names()` function to show just the names of the resulting dataset.
 
-In our sensory file^[The *sensory* data are imported from the *Sensory Profile.xlsx* file, see Section \@ref(data-import) for more on how to import datasets], let's recode 'Judge' into 'Panellist', and 'Product' into 'Sample' (here, we apply transformations without saving the results, so without altering the original dataset):
+In our sensory file^[The *sensory* data are imported from the *Sensory Profile.xlsx* file, see Section \@ref(data-import) for more on how to import datasets], let's recode 'Judge' into 'Panellist', and 'Product' into 'Sample' (here we apply transformations without saving the results, so the original dataset remains unchanged).
 
+First, here are the original names:
 
 ```{r}
 sensory %>% 
-  rename(Panellist = Judge, Sample = Product)
+  names()
+```
+
+And here are the recoded names:
+
+```{r}
+sensory %>% 
+  rename(Panellist = Judge, Sample = Product) %>% 
+  names()
 ```
 
 If this procedure of renaming variables should be applied on many variables following a structured form (e.g. transforming names into snake_case, CamelCase, etc.), the use of the `{janitor}` package comes handy thanks to its `clean_names()` function and the `case` parameter:
@@ -64,7 +73,8 @@ If this procedure of renaming variables should be applied on many variables foll
 ```{r}
 library(janitor)
 sensory %>% 
-  clean_names(case="snake")
+  clean_names(case="snake") %>% 
+  names()
 ```
 
 
