@@ -404,9 +404,9 @@ TFEQ %>%
 ## Consumer Data
 
 
-The analysis of consumer data involves the same type of analysis as the ones for sensory data (e.g. ANOVA, PCA, etc.), but the way the data is being collected (absence of duplicates) and its underlying nature (affective vs. descriptive) require some adjustments.
+The analysis of consumer data usually involves the same type of analysis as the ones for sensory data (e.g. ANOVA, PCA, etc.), but the way the data is being collected (absence of duplicates) and its underlying nature (affective vs. descriptive) require some adjustments.
 
-So let's start by importing the consumer data that is stored in *Consumer Test.xlsx*. Here we import two sheets, one with the consumption time and number of biscuits (stored in `Nbiscuit`), and one with different consumer evaluations of the samples (stored in `consumer`)
+Let's start by importing the consumer data that is stored in *Consumer Test.xlsx*. Here, we import two sheets, one with the consumption time and number of biscuits (stored in `Nbiscuit`), and one with different consumer evaluations of the samples (stored in `consumer`)
 
 
 ```{r}
@@ -436,9 +436,9 @@ consumer %>%
 ```
 
 
-A first glance at the table show that there are clear differences between the samples (within a liking variable), but little difference between liking variables(within a sample).
+A first glance at the table shows that there are clear differences between the samples (within a liking variable), but little difference between liking variables (within a sample).
 
-Ultimately, since we want to see if there are differences between samples, an ANOVA (testing for the product effect) followed up by a paired comparison test (here Tukey's HSD) is performed. To do so, we recommend the `{agricolae}` package as it is simple to use and all their build in tests are working in the same way.
+Of course, we want to know if differences between samples are significant. We thus need to perform an ANOVA (testing for the product effect) followed up by a paired comparison test (here Tukey's HSD). To do so, we recommend the `{agricolae}` package that is simple to use and has all its built-in tests working in the same way.
 
 
 ```{r}
