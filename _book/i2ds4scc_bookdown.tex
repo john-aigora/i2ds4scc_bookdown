@@ -1009,18 +1009,18 @@ The three dataset are now joined in one and could be further processed for some 
 \hypertarget{chart-making}{%
 \section{Chart Making}\label{chart-making}}
 
-``A picture is worth 1000 words''. This saying definitely applies to Statistics as well, since visual representation of data often appears clearer than the values themselves stored in a table. It is hence no surprise that R is also a powerful tool for graphics.
+``A picture is worth 1000 words''. This saying definitely applies to Statistics as well, since visual representation of data often appears clearer than the values themselves stored in a table. It is hence no surprise that R is a powerful tool for graphics.
 
-In practice, there are various ways to build graphics in R. In fact, R itself comes with a powerful way of building graphs through the \texttt{plot()} function. An extensive description can be found in (\emph{R Graphics 2nd edition Paul Murrell CRC Press}). Due to its philosophy, its simplicity, and the point of view adopted in this book, we will limit ourselves to graphics built using the package \texttt{\{ggplot2\}}.
+In practice, there are various ways to build graphics in R. In fact, R itself comes with a powerful way of building graphs through the \texttt{plot()} function. An extensive description can be found in (\emph{R Graphics 2nd edition Paul Murrell CRC Press}). Due to its philosophy, its simplicity, and the point of view adopted in this book, we will limit ourselves to graphics built using the \texttt{\{ggplot2\}} package.
 
 \hypertarget{philosophy-of-ggplot2}{%
 \subsection{\texorpdfstring{Philosophy of \texttt{\{ggplot2\}}}{Philosophy of \{ggplot2\}}}\label{philosophy-of-ggplot2}}
 
-\texttt{\{ggplot2\}} belongs to the \texttt{\{tidyverse\}}, and was developed by H. Wickham and colleagues at RStudio. It is hence no surprise that a lot of the procedures that we're learning throughout this book also applies to \texttt{\{ggplot2\}}. More generally, building graphics with \texttt{\{ggplot2\}} fits very well within the pipes (\texttt{\%\textgreater{}\%}) system from \texttt{\{magrittr\}}. As we will see, \texttt{\{ggplot2\}} also works with a system that is similar to pipes, except that the symbol used is \texttt{+} instead of \texttt{\%\textgreater{}\%}.
+\texttt{\{ggplot2\}} belongs to the \texttt{\{tidyverse\}}, and was developed by H. Wickham and colleagues at RStudio. It is hence no surprise that a lot of the procedures that we're learning throughout this book also applies to \texttt{\{ggplot2\}}. More generally, building graphics with \texttt{\{ggplot2\}} fits very well within the pipes (\texttt{\%\textgreater{}\%}) system from \texttt{\{magrittr\}}. As we will see, \texttt{\{ggplot2\}} also works with a piping system, except that the symbol used is \texttt{+} instead of \texttt{\%\textgreater{}\%}.
 
 \texttt{\{ggplot2\}} is a multi-layer graphical tools, meaning that the graphics are build by adding layers one at a time to finally build your graphics. This means that \texttt{ggplot} objects can be printed at any time, and yet still be improved by adding other layers if needed. To read more about \texttt{\{gglot2\}} and its philosophy, please refer to \url{http://vita.had.co.nz/papers/layered-grammar.pdf}\href{http://vita.had.co.nz/papers/layered-grammar.pdf}{link}.
 
-Note that since building graphics is limited to one imagination, it is not possible to tackle each and every possibilities offered by \texttt{\{ggplot2\}} (and its extensions). For that reason, we limit ourselves to describing the principles of how \texttt{\{ggplot2\}}works. This should be more than sufficient to get you started, and should cover 90\% of the graphics that are relevant in sensory and consumer science. But if that should not be the case, we invite you to look into the online documentation or to references such as {[}REFS{]}.
+Note that since building graphics is limited to one imagination, it is not possible to tackle each and every possibilities offered by \texttt{\{ggplot2\}} (and its extensions). For that reason, we limit ourselves to describing the principles of how \texttt{\{ggplot2\}}works. Additionnally, we will provide in this section and throughout the book example of graphics that are useful in Sensory and Consumer research. This should be more than sufficient to get you started, and should cover 90\% of the graphics that you would needin your daily work. Still, if that should not be sufficient, we invite you to look into the online documentation or to references such as {[}REFS{]}.
 
 \hypertarget{getting-started-with-ggplot2}{%
 \subsection{\texorpdfstring{Getting started with \texttt{\{ggplot2\}}}{Getting started with \{ggplot2\}}}\label{getting-started-with-ggplot2}}
@@ -1041,13 +1041,14 @@ However, if you load the \texttt{\{tidyverse\}} package, this step can be ignore
 \end{Highlighting}
 \end{Shaded}
 
-To illustrate the use of \texttt{\{ggplot2\}}, we will use the sensory dataset stored in \emph{Sensory Profile.xlsx}.
+To illustrate the use of \texttt{\{ggplot2\}}, we will use both the sensory dataset stored in \emph{Sensory Profile.xlsx} and the number of biscuit eaten by each respondents and stored in \emph{Consumer Test.xlsx}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(here)}
 \FunctionTok{library}\NormalTok{(readxl)}
 
+\CommentTok{\# Sensory Profiles Data}
 \NormalTok{file\_path }\OtherTok{\textless{}{-}} \FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{,}\StringTok{"Sensory Profile.xlsx"}\NormalTok{) }
 \NormalTok{p\_info }\OtherTok{\textless{}{-}} \FunctionTok{read\_xlsx}\NormalTok{(file\_path, }\AttributeTok{sheet=}\StringTok{"Product Info"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
 \NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Type)}
@@ -1055,6 +1056,13 @@ To illustrate the use of \texttt{\{ggplot2\}}, we will use the sensory dataset s
 \NormalTok{sensory }\OtherTok{\textless{}{-}} \FunctionTok{read\_xlsx}\NormalTok{(file\_path, }\AttributeTok{sheet=}\StringTok{"Data"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{inner\_join}\NormalTok{(p\_info, }\AttributeTok{by=}\StringTok{"Product"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{relocate}\NormalTok{(Protein}\SpecialCharTok{:}\NormalTok{Fiber, }\AttributeTok{.after=}\NormalTok{Product)}
+
+\CommentTok{\# Number of Biscuits Eaten Data}
+\NormalTok{file\_path }\OtherTok{\textless{}{-}} \FunctionTok{here}\NormalTok{(}\StringTok{"Data"}\NormalTok{,}\StringTok{"Consumer Test.xlsx"}\NormalTok{)}
+
+\NormalTok{Nbiscuit }\OtherTok{\textless{}{-}} \FunctionTok{read\_xlsx}\NormalTok{(file\_path, }\AttributeTok{sheet=}\StringTok{"Time Consumption"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Product =} \FunctionTok{str\_c}\NormalTok{(}\StringTok{"P"}\NormalTok{, Product)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{N =} \StringTok{\textasciigrave{}}\AttributeTok{Nb biscuits}\StringTok{\textasciigrave{}}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1068,9 +1076,18 @@ Since the data we want to use is stored in \texttt{sensory}, we apply \texttt{gg
 \end{Shaded}
 
 If you run this line of code, you'll notice that p contains an empty graphic. This is because we haven't added any layer that is relevant for us yet.
-So let's imagine we want to look at the overall relationship between \texttt{Sticky} and \texttt{Melting}. To do so, we want to create a scatter plot with \texttt{Sticky} in the x-axis, and \texttt{Melting} in the y-axis. To do so, we require to call a \texttt{geom\_} function that relates to scatter plots, in this case \texttt{geom\_point()}, by also informing through the aesthetics (defined through \texttt{aes()}) what needs to be considered on the x-axis and on the y-axis.
+So let's imagine we want to look at the overall relationship between \texttt{Sticky} and \texttt{Melting}. To do so, we want to create a scatter plot with \texttt{Sticky} in the x-axis, and \texttt{Melting} in the y-axis.
+To do so, two types of information are required:
 
-This provides something similar to:
+\begin{itemize}
+\tightlist
+\item
+  the type of visual layer we want to add (here a scatter point);
+\item
+  the information regarding the data to plot (what should be in represented).
+\end{itemize}
+
+Such information can be provided as such:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1078,9 +1095,14 @@ This provides something similar to:
 \end{Highlighting}
 \end{Shaded}
 
-A scatter plot is hence generated. In this example, one can notice that many points are being printed: this can easily be explained by the fact that the raw sensory data are being used, meaning that there are as many points as there are assessors evaluating products.
+As can be seen, we are adding to the already existing graph \texttt{p} a layer that consists of points (defined by \texttt{geom\_point()}) in which we specified that the x-axis is \texttt{Sticky} and the y-axis is \texttt{Melting} through aesthetics (or \texttt{aes()}).
 
-Let's imagine we want to color the points per products to see if we can see patterns. This can be done by informing within the aesthetics that \texttt{colour\ =\ Product}:
+\hypertarget{aesthetics}{%
+\subsubsection{Aesthetics}\label{aesthetics}}
+
+In the previous example, one can notice that many points are being printed: this can easily be explained by the fact that the raw sensory data are being used, meaning that there are as many points as there are assessors evaluating products.
+
+Let's imagine we want to color the points per products to see if we can see any patterns. Since the color code is specific to the data (more precisely to the products), it should be informed within the aesthetics. In this case, we add to the previous code \texttt{colour=Product} with \texttt{aes()}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1088,8 +1110,10 @@ Let's imagine we want to color the points per products to see if we can see patt
 \end{Highlighting}
 \end{Shaded}
 
-It is important to note that parameters can depend on a variable (e.g.~\texttt{colour} in the previous example) or should be applied to all the elements of the graph. In the first case, the parameters is included within the aesthetics, whereas in the second case, it should be defined outside the aesthetics.
-Let's illustrate this by providing a simple example in which we change the type of dots (from circle to square) using \texttt{pch}, and by increasing their size using \texttt{cex} to all the points of the graph:
+As you can see, any parameters provided within \texttt{aes()} may depend on a variable (e.g.~\texttt{colour} in the previous example).
+If for any reasons, a specific setting should uniformly be applied to all the elements of the graph, then it should be stated outside \texttt{aes()}.
+
+Let's illustrate this by providing a simple example in which we change the type of the dots from circle to square using \texttt{pch}, and by increasing their size using \texttt{cex}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1097,29 +1121,81 @@ Let's illustrate this by providing a simple example in which we change the type 
 \end{Highlighting}
 \end{Shaded}
 
-Since \texttt{\{ggplot2\}} is a multi-layer graph, let's add another layer that contains the name of the panellists that is associated to each point. To do so, we could consider \texttt{geom\_text()}. In that case, we need to inform in \texttt{aes()} what corresponds to the x-axis, what correspond to the y-axis, and \texttt{label}. To avoid having the label overlapping with the point, we propose to shift slightly the text vertically (using \texttt{nudge\_y}):
+Depending on the \texttt{geom\_*()} considered, different parameters should be informed within \texttt{aes()}. Here is a list of the most common \texttt{aes()} you would use:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{x}, \texttt{y}, \texttt{z}, provides the coordinates on the X, Y, Z dimensions respectively;
+\item
+  \texttt{colour}/\texttt{color}, \texttt{fill} controls for the color code\footnote{You can also use \texttt{alpha} to control for the transparency of the elements by defining values between 0 (completely transparent) to 1 (no transparency)} that is being applied to the different elements of a graph;
+\item
+  \texttt{group} makes the distinction between points that belong to different groups: in fact \texttt{colour} and \texttt{fill} are specific cases of groups as they additionally provide a visual cue on the groups through the color code;
+\item
+  \texttt{text}, \texttt{label} prints text on the graph;
+\item
+  \texttt{size} controls the size of the element (this should preferably be used with numerical variable).
+\end{itemize}
+
+Examples highlighting various types of aesthetics will be presented throughout the book.
+
+\hypertarget{geom_-functions}{%
+\subsubsection{\texorpdfstring{\texttt{geom\_*()} functions}{geom\_*() functions}}\label{geom_-functions}}
+
+Since \texttt{\{ggplot2\}} is a multi-layer graph, let's add another layer. Here we propose to add the name of the panelists that is associated to each point.
+
+To do so, we need to consider another \texttt{geom\_*()} function: \texttt{geom\_text()}\footnote{Try using \texttt{geom\_label()} instead of \texttt{geom\_text()} to see the difference between these two} which requires in \texttt{aes()} the position of the labels (\texttt{x} and \texttt{y}) as well as the \texttt{label} itself.
+To avoid having the label overlapping with the point, we propose to shift slightly all the text vertically using \texttt{nudge\_y}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{p }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(sensory)}\SpecialCharTok{+}
+\FunctionTok{ggplot}\NormalTok{(sensory)}\SpecialCharTok{+}
   \FunctionTok{geom\_point}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sticky, }\AttributeTok{y=}\NormalTok{Melting, }\AttributeTok{colour=}\NormalTok{Product))}\SpecialCharTok{+}
   \FunctionTok{geom\_text}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sticky, }\AttributeTok{y=}\NormalTok{Melting, }\AttributeTok{label=}\NormalTok{Judge), }\AttributeTok{nudge\_y=}\DecValTok{1}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-initiate graph with ggplot()
-add geom\_
+On interesting remark is that some information required in \texttt{aes()} is being repeated across the different \texttt{geom\_*()} used. Such writing can be simplified by providing the \texttt{aes()} information that applies to all \texttt{geom\_*()} to the original \texttt{ggplot()} call. The previous code hence can be simplified into:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(sensory, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sticky, }\AttributeTok{y=}\NormalTok{Melting, }\AttributeTok{label=}\NormalTok{Judge))}\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{colour=}\NormalTok{Product))}\SpecialCharTok{+}
+  \FunctionTok{geom\_text}\NormalTok{(}\AttributeTok{nudge\_y=}\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+With this new code, you'll notice that:
+
+\begin{itemize}
+\tightlist
+\item
+  although \texttt{label} is only relevant for \texttt{geom\_text()}, it can still be provided at the beginning, as it will be ignored by \texttt{geom\_point()} which does not require it;
+\item
+  \texttt{colour} should only be provided within \texttt{geom\_point()} else the text would also be colored according to \texttt{Product} (which we do not want here);
+\item
+  \texttt{nudge\_y} is defined outside \texttt{aes()} as it applies to all the text.
+\end{itemize}
+
+To the previous graph, let's add another layer as following:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p}\SpecialCharTok{+}
+  \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method=}\StringTok{"lm"}\NormalTok{, }\AttributeTok{formula=}\StringTok{"y\textasciitilde{}x"}\NormalTok{, }\AttributeTok{se=}\ConstantTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+This code adds a regression line to the graphic (here, we specified that the regression line should be defined using \texttt{lm} and by considering the simple linear regression \texttt{y\textasciitilde{}x}). This result is somewhat surprising since we have not run any regression yet, meaning that \texttt{geom\_smooth()} is actually performing the analysis in the background.
+
+In fact, most \texttt{geom\_*()} function comes with a statistical process to it. This means that in many cases, one can provide raw data, and the \texttt{geom\_*()} function used will
+
 (discussion around geom\_ that have some statistical computation integrated\ldots)
 include aes()
-what is not an aesthetic - fixed options
-aes() included in ggplot are passed to every geom, unless stated differently!
 play around with themes
 miscalleneous
 
 \texttt{aes()}, \texttt{geom\_()}, \texttt{theme()}
-
-\hypertarget{aesthetics}{%
-\subsubsection{aesthetics}\label{aesthetics}}
 
 Provide the most relevant options for \texttt{aes()}
 
@@ -1893,7 +1969,7 @@ Data from the biscuit study are gathered in three Excel files that can be access
 \hypertarget{products}{%
 \section{Products}\label{products}}
 
-In total, 11 products were considered in this study. They are all breakfast biscuits with varying contents of proteins and fibers. Products P01 to P09 are prototypes whereas product P10 is a standard commercial biscuit without enrichment. The eleventh product Popt is an additional optimized biscuit that has been evaluated only by the trained panel for descriptive analysis.
+In total, 11 products were considered in this study. They are all breakfast biscuits with varying contents of proteins and fibers (Table \ref{tab:biscuit-set}). Products P01 to P09 are prototypes whereas product P10 is a standard commercial biscuit without enrichment. The eleventh product Popt is an additional optimized biscuit that has been evaluated only by the trained panel for descriptive analysis.
 
 \providecommand{\docline}[3]{\noalign{\global\setlength{\arrayrulewidth}{#1}}\arrayrulecolor[HTML]{#2}\cline{#3}}
 
@@ -1907,7 +1983,7 @@ In total, 11 products were considered in this study. They are all breakfast bisc
 
 \begin{longtable}{|p{0.74in}|p{0.70in}|p{0.56in}|p{1.58in}}
 
-\caption{Product set for the biscuit study}\label{tab:biscuit-tbl}\\
+\caption{Product set for the biscuit study}\label{tab:biscuit-set}\\
 
 \hhline{>{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=2pt}-}
 

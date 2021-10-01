@@ -430,10 +430,10 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">8.1.1</span> Data Inspection</h3>
 <p>To inspect the data, different steps can be used.
 First, since <code>read_xlsx()</code> returns a tibble, we can take advantage of its printing properties to get a fill of the data at hand,</p>
-<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="data-prep.html#cb67-1" aria-hidden="true" tabindex="-1"></a>TFEQ_data</span></code></pre></div>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="data-prep.html#cb69-1" aria-hidden="true" tabindex="-1"></a>TFEQ_data</span></code></pre></div>
 <p>Other informative solutions consists in printing a summary of the data through the <code>summary()</code> function, or looking at its type and first values using <code>str()</code>. However, due to its richness of the outputs, we prefer to use the <code>skim()</code> function from the <code>{skimr}</code> package.</p>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="data-prep.html#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(skimr)</span>
-<span id="cb68-2"><a href="data-prep.html#cb68-2" aria-hidden="true" tabindex="-1"></a><span class="fu">skim</span>(TFEQ_data)</span></code></pre></div>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="data-prep.html#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(skimr)</span>
+<span id="cb70-2"><a href="data-prep.html#cb70-2" aria-hidden="true" tabindex="-1"></a><span class="fu">skim</span>(TFEQ_data)</span></code></pre></div>
 </div>
 <div id="design-inspection" class="section level3" number="8.1.2">
 <h3><span class="header-section-number">8.1.2</span> Design Inspection</h3>
@@ -484,17 +484,17 @@ By default, when reading data from an external file, R converts any numerical va
 <p>Another common type that seem to be numerical in appearance, but that has additional properties is the binary type.
 Binary data is data that takes two possible values (<code>TRUE</code> or <code>FALSE</code>), and are often the results of a <em>test</em> (e.g. is <code>x&gt;3</code>? Or is <code>MyVar</code> numerical?). A typical example of binary data in sensory and consumer research is data collected through Check-All-That-Apply (CATA) questionnaires.</p>
 <p>Note: Intrinsically, binary data is <em>numerical</em>, TRUE being assimilated to 1, FALSE to 0. If multiple tests are being performed, it is possible to sum the number of tests that pass using the <code>sum()</code> function, as shown in the simple example below:</p>
-<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="data-prep.html#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123456</span>)</span>
-<span id="cb69-2"><a href="data-prep.html#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Generating 10 random values between 1 and 10 using the uniform distribution</span></span>
-<span id="cb69-3"><a href="data-prep.html#cb69-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">10</span>, <span class="dv">1</span>, <span class="dv">10</span>)</span>
-<span id="cb69-4"><a href="data-prep.html#cb69-4" aria-hidden="true" tabindex="-1"></a>x</span>
-<span id="cb69-5"><a href="data-prep.html#cb69-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-6"><a href="data-prep.html#cb69-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Test whether the values generated are strictly larger than 5</span></span>
-<span id="cb69-7"><a href="data-prep.html#cb69-7" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> x<span class="sc">&gt;</span><span class="dv">5</span></span>
-<span id="cb69-8"><a href="data-prep.html#cb69-8" aria-hidden="true" tabindex="-1"></a>test</span>
-<span id="cb69-9"><a href="data-prep.html#cb69-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-10"><a href="data-prep.html#cb69-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Counting the number of values strictly larger than 5</span></span>
-<span id="cb69-11"><a href="data-prep.html#cb69-11" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(test)</span></code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="data-prep.html#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123456</span>)</span>
+<span id="cb71-2"><a href="data-prep.html#cb71-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Generating 10 random values between 1 and 10 using the uniform distribution</span></span>
+<span id="cb71-3"><a href="data-prep.html#cb71-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">10</span>, <span class="dv">1</span>, <span class="dv">10</span>)</span>
+<span id="cb71-4"><a href="data-prep.html#cb71-4" aria-hidden="true" tabindex="-1"></a>x</span>
+<span id="cb71-5"><a href="data-prep.html#cb71-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb71-6"><a href="data-prep.html#cb71-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Test whether the values generated are strictly larger than 5</span></span>
+<span id="cb71-7"><a href="data-prep.html#cb71-7" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> x<span class="sc">&gt;</span><span class="dv">5</span></span>
+<span id="cb71-8"><a href="data-prep.html#cb71-8" aria-hidden="true" tabindex="-1"></a>test</span>
+<span id="cb71-9"><a href="data-prep.html#cb71-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb71-10"><a href="data-prep.html#cb71-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Counting the number of values strictly larger than 5</span></span>
+<span id="cb71-11"><a href="data-prep.html#cb71-11" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(test)</span></code></pre></div>
 </div>
 <div id="nominal-data" class="section level4" number="8.2.2.3">
 <h4><span class="header-section-number">8.2.2.3</span> Nominal Data</h4>
@@ -515,35 +515,35 @@ Binary data is data that takes two possible values (<code>TRUE</code> or <code>F
 <li>For <code>factor</code>, the levels and the number of levels are direcly provided by <code>levels()</code> and <code>nlevels()</code>.</li>
 </ul>
 <p>Let’s compare a variable set as <code>factor</code> and <code>character</code> by using the <code>Judge</code> column from <code>TFEQ_data</code>:</p>
-<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="data-prep.html#cb70-1" aria-hidden="true" tabindex="-1"></a>example <span class="ot">&lt;-</span> TFEQ_data <span class="sc">%&gt;%</span> </span>
-<span id="cb70-2"><a href="data-prep.html#cb70-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Judge) <span class="sc">%&gt;%</span> </span>
-<span id="cb70-3"><a href="data-prep.html#cb70-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Judge_fct =</span> <span class="fu">as.factor</span>(Judge))</span>
-<span id="cb70-4"><a href="data-prep.html#cb70-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(example)</span>
-<span id="cb70-5"><a href="data-prep.html#cb70-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb70-6"><a href="data-prep.html#cb70-6" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(example<span class="sc">$</span>Judge)</span>
-<span id="cb70-7"><a href="data-prep.html#cb70-7" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(example<span class="sc">$</span>Judge))</span>
-<span id="cb70-8"><a href="data-prep.html#cb70-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb70-9"><a href="data-prep.html#cb70-9" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(example<span class="sc">$</span>Judge_fct)</span>
-<span id="cb70-10"><a href="data-prep.html#cb70-10" aria-hidden="true" tabindex="-1"></a><span class="fu">nlevels</span>(example<span class="sc">$</span>Judge_fct)</span></code></pre></div>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="data-prep.html#cb72-1" aria-hidden="true" tabindex="-1"></a>example <span class="ot">&lt;-</span> TFEQ_data <span class="sc">%&gt;%</span> </span>
+<span id="cb72-2"><a href="data-prep.html#cb72-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Judge) <span class="sc">%&gt;%</span> </span>
+<span id="cb72-3"><a href="data-prep.html#cb72-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Judge_fct =</span> <span class="fu">as.factor</span>(Judge))</span>
+<span id="cb72-4"><a href="data-prep.html#cb72-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(example)</span>
+<span id="cb72-5"><a href="data-prep.html#cb72-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-6"><a href="data-prep.html#cb72-6" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(example<span class="sc">$</span>Judge)</span>
+<span id="cb72-7"><a href="data-prep.html#cb72-7" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(example<span class="sc">$</span>Judge))</span>
+<span id="cb72-8"><a href="data-prep.html#cb72-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-9"><a href="data-prep.html#cb72-9" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(example<span class="sc">$</span>Judge_fct)</span>
+<span id="cb72-10"><a href="data-prep.html#cb72-10" aria-hidden="true" tabindex="-1"></a><span class="fu">nlevels</span>(example<span class="sc">$</span>Judge_fct)</span></code></pre></div>
 <p>Although <code>Judge</code> and <code>Judge_fct</code> look the same, they are structurally different, and those differences play an important role that one should consider when running certain analyses, or building tables and graphs.</p>
 <p>When set as <code>character</code>, the number of levels of a variable is directly read from the data, and its levels’ order would either match the way they appear in the data, or are ordered alphabetically. This means that any data collected using a structured scale will lose its natural order.</p>
 <p>When set as <code>factor</code>, the number and order of the factor levels are informed, and does not depend on the data itself: If a level has never been selected, or if certain groups have been filtered, this information is still present in the data.</p>
 <p>To illustrate this, let’s re-arrange the levels from <code>Judge_fct</code> by ordering them numerically in such a way <code>J2</code> follows <code>J1</code> rather than <code>J10</code>.</p>
-<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="data-prep.html#cb71-1" aria-hidden="true" tabindex="-1"></a>judge <span class="ot">&lt;-</span> <span class="fu">str_sort</span>(<span class="fu">levels</span>(example<span class="sc">$</span>Judge_fct),<span class="at">numeric=</span><span class="cn">TRUE</span>)</span>
-<span id="cb71-2"><a href="data-prep.html#cb71-2" aria-hidden="true" tabindex="-1"></a>judge</span>
-<span id="cb71-3"><a href="data-prep.html#cb71-3" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(example<span class="sc">$</span>Judge_fct) <span class="ot">&lt;-</span> judge</span></code></pre></div>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="data-prep.html#cb73-1" aria-hidden="true" tabindex="-1"></a>judge <span class="ot">&lt;-</span> <span class="fu">str_sort</span>(<span class="fu">levels</span>(example<span class="sc">$</span>Judge_fct),<span class="at">numeric=</span><span class="cn">TRUE</span>)</span>
+<span id="cb73-2"><a href="data-prep.html#cb73-2" aria-hidden="true" tabindex="-1"></a>judge</span>
+<span id="cb73-3"><a href="data-prep.html#cb73-3" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(example<span class="sc">$</span>Judge_fct) <span class="ot">&lt;-</span> judge</span></code></pre></div>
 <p>Now the levels are sorted, let’s ‘remove’ some respondents by only keeping the 20 first ones (J1 to J20, as J18 does not exist), and re-run the previous code:</p>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="data-prep.html#cb72-1" aria-hidden="true" tabindex="-1"></a>example <span class="ot">&lt;-</span> TFEQ_data <span class="sc">%&gt;%</span> </span>
-<span id="cb72-2"><a href="data-prep.html#cb72-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Judge) <span class="sc">%&gt;%</span> </span>
-<span id="cb72-3"><a href="data-prep.html#cb72-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Judge_fct =</span> <span class="fu">as.factor</span>(Judge)) <span class="sc">%&gt;%</span> </span>
-<span id="cb72-4"><a href="data-prep.html#cb72-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Judge <span class="sc">%in%</span> <span class="fu">paste0</span>(<span class="st">&quot;J&quot;</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>))</span>
-<span id="cb72-5"><a href="data-prep.html#cb72-5" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(example)</span>
-<span id="cb72-6"><a href="data-prep.html#cb72-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-7"><a href="data-prep.html#cb72-7" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(example<span class="sc">$</span>Judge)</span>
-<span id="cb72-8"><a href="data-prep.html#cb72-8" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(example<span class="sc">$</span>Judge))</span>
-<span id="cb72-9"><a href="data-prep.html#cb72-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-10"><a href="data-prep.html#cb72-10" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(example<span class="sc">$</span>Judge_fct)</span>
-<span id="cb72-11"><a href="data-prep.html#cb72-11" aria-hidden="true" tabindex="-1"></a><span class="fu">nlevels</span>(example<span class="sc">$</span>Judge_fct)</span></code></pre></div>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="data-prep.html#cb74-1" aria-hidden="true" tabindex="-1"></a>example <span class="ot">&lt;-</span> TFEQ_data <span class="sc">%&gt;%</span> </span>
+<span id="cb74-2"><a href="data-prep.html#cb74-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Judge) <span class="sc">%&gt;%</span> </span>
+<span id="cb74-3"><a href="data-prep.html#cb74-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Judge_fct =</span> <span class="fu">as.factor</span>(Judge)) <span class="sc">%&gt;%</span> </span>
+<span id="cb74-4"><a href="data-prep.html#cb74-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Judge <span class="sc">%in%</span> <span class="fu">paste0</span>(<span class="st">&quot;J&quot;</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>))</span>
+<span id="cb74-5"><a href="data-prep.html#cb74-5" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(example)</span>
+<span id="cb74-6"><a href="data-prep.html#cb74-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb74-7"><a href="data-prep.html#cb74-7" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(example<span class="sc">$</span>Judge)</span>
+<span id="cb74-8"><a href="data-prep.html#cb74-8" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(example<span class="sc">$</span>Judge))</span>
+<span id="cb74-9"><a href="data-prep.html#cb74-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb74-10"><a href="data-prep.html#cb74-10" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(example<span class="sc">$</span>Judge_fct)</span>
+<span id="cb74-11"><a href="data-prep.html#cb74-11" aria-hidden="true" tabindex="-1"></a><span class="fu">nlevels</span>(example<span class="sc">$</span>Judge_fct)</span></code></pre></div>
 <p>After filtering some respondents, it can be noticed that the variable set as character only contains 19 elements, whereas the column set as factor still contains the 107 respondents (most of them not having any recordings). This property can be seen as an advantage or a disadvantage depending on the situation:</p>
 <ul>
 <li>For frequencies, it may be relevant to remember all the options, including the ones that may never be selected, and to order the results logically (use of <code>factor</code>).</li>
@@ -553,22 +553,22 @@ Binary data is data that takes two possible values (<code>TRUE</code> or <code>F
 <p>Last but not least, variables defined as factor allow having their levels being renamed (and eventually combined) very easily.
 Let’s consider the <code>Living area</code> variable from <code>TFEQ_data</code> as example. From the original excel file, it can be seen that it has three levels, <code>1</code> corresponding to <em>urban area</em>, <code>2</code> to <em>rurban area</em>, and <code>3</code> to <em>rural area</em>.
 Let’s start by renaming this variable accordingly:</p>
-<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="data-prep.html#cb73-1" aria-hidden="true" tabindex="-1"></a>example <span class="ot">=</span> TFEQ_data <span class="sc">%&gt;%</span> </span>
-<span id="cb73-2"><a href="data-prep.html#cb73-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Area =</span> <span class="fu">factor</span>(<span class="st">`</span><span class="at">Living area</span><span class="st">`</span>, <span class="at">levels=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;Urban&quot;</span>, <span class="st">&quot;Rurban&quot;</span>, <span class="st">&quot;Rural&quot;</span>)))</span>
-<span id="cb73-3"><a href="data-prep.html#cb73-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-4"><a href="data-prep.html#cb73-4" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(example<span class="sc">$</span>Area)</span>
-<span id="cb73-5"><a href="data-prep.html#cb73-5" aria-hidden="true" tabindex="-1"></a><span class="fu">nlevels</span>(example<span class="sc">$</span>Area)</span>
-<span id="cb73-6"><a href="data-prep.html#cb73-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-7"><a href="data-prep.html#cb73-7" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(example<span class="sc">$</span><span class="st">`</span><span class="at">Living area</span><span class="st">`</span>, example<span class="sc">$</span>Area)</span></code></pre></div>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="data-prep.html#cb75-1" aria-hidden="true" tabindex="-1"></a>example <span class="ot">=</span> TFEQ_data <span class="sc">%&gt;%</span> </span>
+<span id="cb75-2"><a href="data-prep.html#cb75-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Area =</span> <span class="fu">factor</span>(<span class="st">`</span><span class="at">Living area</span><span class="st">`</span>, <span class="at">levels=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;Urban&quot;</span>, <span class="st">&quot;Rurban&quot;</span>, <span class="st">&quot;Rural&quot;</span>)))</span>
+<span id="cb75-3"><a href="data-prep.html#cb75-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-4"><a href="data-prep.html#cb75-4" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(example<span class="sc">$</span>Area)</span>
+<span id="cb75-5"><a href="data-prep.html#cb75-5" aria-hidden="true" tabindex="-1"></a><span class="fu">nlevels</span>(example<span class="sc">$</span>Area)</span>
+<span id="cb75-6"><a href="data-prep.html#cb75-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-7"><a href="data-prep.html#cb75-7" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(example<span class="sc">$</span><span class="st">`</span><span class="at">Living area</span><span class="st">`</span>, example<span class="sc">$</span>Area)</span></code></pre></div>
 <p>As can be seen, the variable <code>Area</code> is the factor version (including its labels) of <code>Living area</code>.
 If we would also consider that <code>Rurban</code> should be combined with <code>Rural</code>, and that <code>Rural</code> should appear before <code>Urban</code>, we can simply modify the code as such:</p>
-<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="data-prep.html#cb74-1" aria-hidden="true" tabindex="-1"></a>example <span class="ot">=</span> TFEQ_data <span class="sc">%&gt;%</span> </span>
-<span id="cb74-2"><a href="data-prep.html#cb74-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Area =</span> <span class="fu">factor</span>(<span class="st">`</span><span class="at">Living area</span><span class="st">`</span>, <span class="at">levels=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">1</span>), <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;Rural&quot;</span>, <span class="st">&quot;Rural&quot;</span>, <span class="st">&quot;Urban&quot;</span>)))</span>
-<span id="cb74-3"><a href="data-prep.html#cb74-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb74-4"><a href="data-prep.html#cb74-4" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(example<span class="sc">$</span>Area)</span>
-<span id="cb74-5"><a href="data-prep.html#cb74-5" aria-hidden="true" tabindex="-1"></a><span class="fu">nlevels</span>(example<span class="sc">$</span>Area)</span>
-<span id="cb74-6"><a href="data-prep.html#cb74-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb74-7"><a href="data-prep.html#cb74-7" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(example<span class="sc">$</span><span class="st">`</span><span class="at">Living area</span><span class="st">`</span>, example<span class="sc">$</span>Area)</span></code></pre></div>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="data-prep.html#cb76-1" aria-hidden="true" tabindex="-1"></a>example <span class="ot">=</span> TFEQ_data <span class="sc">%&gt;%</span> </span>
+<span id="cb76-2"><a href="data-prep.html#cb76-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Area =</span> <span class="fu">factor</span>(<span class="st">`</span><span class="at">Living area</span><span class="st">`</span>, <span class="at">levels=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">1</span>), <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;Rural&quot;</span>, <span class="st">&quot;Rural&quot;</span>, <span class="st">&quot;Urban&quot;</span>)))</span>
+<span id="cb76-3"><a href="data-prep.html#cb76-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb76-4"><a href="data-prep.html#cb76-4" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(example<span class="sc">$</span>Area)</span>
+<span id="cb76-5"><a href="data-prep.html#cb76-5" aria-hidden="true" tabindex="-1"></a><span class="fu">nlevels</span>(example<span class="sc">$</span>Area)</span>
+<span id="cb76-6"><a href="data-prep.html#cb76-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb76-7"><a href="data-prep.html#cb76-7" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(example<span class="sc">$</span><span class="st">`</span><span class="at">Living area</span><span class="st">`</span>, example<span class="sc">$</span>Area)</span></code></pre></div>
 <p>This approach of renaming and re-ordering factor levels is very important as it simplifies the readability of tables and figures.
 Some other transformations can be applied to factors thanks to the <code>{forcats}</code> package. Particular attention can be given to the following functions:</p>
 <ul>
@@ -594,23 +594,23 @@ Some other transformations can be applied to factors thanks to the <code>{forcat
 - From character/factor to numerical.</p>
 <p>The conversion from numerical to character or factor is simply done using <code>as.character()</code> and <code>as.factor()</code> respectively. Note however that <code>as.factor()</code> only converts into factors without allowing to chose the order of the levels, nor to rename them. Alternatively, the use of <code>factor()</code> allows specifying the <code>levels</code> (and hence the order of the levels) and their corresponding <code>labels</code>. An example in the use of <code>as.character()</code> and <code>as.factor()</code> was provided in the previous section when we converted the <code>Respondent</code> variables to character and factor. The use of <code>factor()</code> was also used earlier when the variable <code>Living area</code> was converted from numerical to factor (called <code>Area</code>) with labels.</p>
 <p>To illustrate the following points, let’s start with creating a tibble with two variables, one containing strings made of numbers, and one containing strings made of text.</p>
-<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="data-prep.html#cb75-1" aria-hidden="true" tabindex="-1"></a>example <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">Numbers =</span> <span class="fu">c</span>(<span class="st">&quot;2&quot;</span>,<span class="st">&quot;4&quot;</span>,<span class="st">&quot;9&quot;</span>,<span class="st">&quot;6&quot;</span>,<span class="st">&quot;8&quot;</span>,<span class="st">&quot;12&quot;</span>,<span class="st">&quot;10&quot;</span>),</span>
-<span id="cb75-2"><a href="data-prep.html#cb75-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Text =</span> <span class="fu">c</span>(<span class="st">&quot;Data&quot;</span>,<span class="st">&quot;Science&quot;</span>,<span class="st">&quot;4&quot;</span>,<span class="st">&quot;Sensory&quot;</span>,<span class="st">&quot;and&quot;</span>,<span class="st">&quot;Consumer&quot;</span>,<span class="st">&quot;Research&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="data-prep.html#cb77-1" aria-hidden="true" tabindex="-1"></a>example <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">Numbers =</span> <span class="fu">c</span>(<span class="st">&quot;2&quot;</span>,<span class="st">&quot;4&quot;</span>,<span class="st">&quot;9&quot;</span>,<span class="st">&quot;6&quot;</span>,<span class="st">&quot;8&quot;</span>,<span class="st">&quot;12&quot;</span>,<span class="st">&quot;10&quot;</span>),</span>
+<span id="cb77-2"><a href="data-prep.html#cb77-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Text =</span> <span class="fu">c</span>(<span class="st">&quot;Data&quot;</span>,<span class="st">&quot;Science&quot;</span>,<span class="st">&quot;4&quot;</span>,<span class="st">&quot;Sensory&quot;</span>,<span class="st">&quot;and&quot;</span>,<span class="st">&quot;Consumer&quot;</span>,<span class="st">&quot;Research&quot;</span>))</span></code></pre></div>
 <p>The conversion from character to numerical is straight forward and requires the use of the function <code>as.numeric()</code>:</p>
-<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="data-prep.html#cb76-1" aria-hidden="true" tabindex="-1"></a>example <span class="sc">%&gt;%</span> </span>
-<span id="cb76-2"><a href="data-prep.html#cb76-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">NumbersN =</span> <span class="fu">as.numeric</span>(Numbers), <span class="at">TextN =</span> <span class="fu">as.numeric</span>(Text))</span></code></pre></div>
-<p>As can be seen, when strings are made of numbers, the conversion works fine. However, the text are not converted properly and returns NAs.</p>
-<p>Now let’s apply the same principle to a variable of the type factor. To do so, we will take the same example but first convert the variables from character to factor:</p>
-<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="data-prep.html#cb77-1" aria-hidden="true" tabindex="-1"></a>example <span class="ot">&lt;-</span> example <span class="sc">%&gt;%</span> </span>
-<span id="cb77-2"><a href="data-prep.html#cb77-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Numbers =</span> <span class="fu">as.factor</span>(Numbers)) <span class="sc">%&gt;%</span> </span>
-<span id="cb77-3"><a href="data-prep.html#cb77-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Text =</span> <span class="fu">factor</span>(Text, <span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;Data&quot;</span>,<span class="st">&quot;Science&quot;</span>,<span class="st">&quot;4&quot;</span>,<span class="st">&quot;Sensory&quot;</span>,<span class="st">&quot;and&quot;</span>,<span class="st">&quot;Consumer&quot;</span>,<span class="st">&quot;Research&quot;</span>)))</span></code></pre></div>
-<p>Let’s apply as.numeric() to these variables:</p>
 <div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="data-prep.html#cb78-1" aria-hidden="true" tabindex="-1"></a>example <span class="sc">%&gt;%</span> </span>
 <span id="cb78-2"><a href="data-prep.html#cb78-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">NumbersN =</span> <span class="fu">as.numeric</span>(Numbers), <span class="at">TextN =</span> <span class="fu">as.numeric</span>(Text))</span></code></pre></div>
+<p>As can be seen, when strings are made of numbers, the conversion works fine. However, the text are not converted properly and returns NAs.</p>
+<p>Now let’s apply the same principle to a variable of the type factor. To do so, we will take the same example but first convert the variables from character to factor:</p>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="data-prep.html#cb79-1" aria-hidden="true" tabindex="-1"></a>example <span class="ot">&lt;-</span> example <span class="sc">%&gt;%</span> </span>
+<span id="cb79-2"><a href="data-prep.html#cb79-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Numbers =</span> <span class="fu">as.factor</span>(Numbers)) <span class="sc">%&gt;%</span> </span>
+<span id="cb79-3"><a href="data-prep.html#cb79-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Text =</span> <span class="fu">factor</span>(Text, <span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;Data&quot;</span>,<span class="st">&quot;Science&quot;</span>,<span class="st">&quot;4&quot;</span>,<span class="st">&quot;Sensory&quot;</span>,<span class="st">&quot;and&quot;</span>,<span class="st">&quot;Consumer&quot;</span>,<span class="st">&quot;Research&quot;</span>)))</span></code></pre></div>
+<p>Let’s apply as.numeric() to these variables:</p>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="data-prep.html#cb80-1" aria-hidden="true" tabindex="-1"></a>example <span class="sc">%&gt;%</span> </span>
+<span id="cb80-2"><a href="data-prep.html#cb80-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">NumbersN =</span> <span class="fu">as.numeric</span>(Numbers), <span class="at">TextN =</span> <span class="fu">as.numeric</span>(Text))</span></code></pre></div>
 <p>We can notice here that the outcome is not really as expected as the numbers 2-4-9-6-8-12-10 becomes 3-4-7-5-6-2-1, and Data-Science-4-Sensory-and-Consumer-Research becomes 1-2-3-4-5-6-7. The rationale behind this conversion is that the numbers do not reflects the string itself, but the position of that level within the factor level structure.</p>
 <p>To convert properly numerical factor levels to number, the variable should first be converted as character:</p>
-<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="data-prep.html#cb79-1" aria-hidden="true" tabindex="-1"></a>example <span class="sc">%&gt;%</span></span>
-<span id="cb79-2"><a href="data-prep.html#cb79-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Numbers =</span> <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(Numbers)))</span></code></pre></div>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="data-prep.html#cb81-1" aria-hidden="true" tabindex="-1"></a>example <span class="sc">%&gt;%</span></span>
+<span id="cb81-2"><a href="data-prep.html#cb81-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Numbers =</span> <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(Numbers)))</span></code></pre></div>
 <div id="conditional-renaming" class="section level4" number="8.2.3.1">
 <h4><span class="header-section-number">8.2.3.1</span> Conditional Renaming?</h4>
 <p><code>mutate()</code> and <code>ifelse()</code></p>
