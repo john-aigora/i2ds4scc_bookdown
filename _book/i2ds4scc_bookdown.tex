@@ -126,7 +126,7 @@
 
 \title{Data Science for Sensory and Consumer Scientists}
 \author{John Ennis, Julien Delarue, and Thierry Worch}
-\date{2021-10-01}
+\date{2021-10-07}
 
 \begin{document}
 \maketitle
@@ -174,7 +174,7 @@ This book is meant to be interactive, with the reader ideally typing and running
 \section*{Why Data Science for Sensory and Consumer Science?}\label{why-data-science-for-sensory-and-consumer-science}}
 \addcontentsline{toc}{section}{Why Data Science for Sensory and Consumer Science?}
 
-Located at the crossroads of biology, social science, and design, sensory and consumer science (SCS) is definitely the tastiest of all sciences. On the menu is a wide diversity of products and experiences that sensory and consumer scientists approach through the lens of human senses. Thanks to a wide set of refined methods, they have access to rich, complex and mouthwatering data. Delightedly, data science empowers them and leads them to explore new territories.
+Located at the crossroads of biology, social science, and design, sensory and consumer science (SCS) is definitely the tastiest of all sciences. On the menu is a wide diversity of products and experiences that sensory and consumer scientists approach through the lens of human senses. Thanks to a wide set of refined methods, they have access to rich, complex and mouthwatering data. Delightedly, data science empowers them and leads them to explore new flavorful territories.
 
 \hypertarget{core-principles-in-sensory-and-consumer-science}{%
 \subsection*{Core principles in Sensory and Consumer Science}\label{core-principles-in-sensory-and-consumer-science}}
@@ -202,13 +202,20 @@ A detailed description of sensory methods is beyond the scope of this book and m
   Hedonic tests. This category gathers affective tests that aim at measuring consumers' liking for the tested products or their preferences among a product set.
 \end{itemize}
 
-Each of these test categories generates its own type of data and related statistical questions in relation to the objectives of the study. Typically, data from difference tests consist in series of correct/failed binary answers depending on whether judges successfully picked the odd sample(s) among a set of three or more samples. These are used to determine whether the number of correct choices is above the level expected by chance.
+Each test category generates its own type of data and related statistical questions in relation to the objectives of the study. Typically, data from difference tests consist in series of binary answers (correct/failed) depending on whether judges successfully picked the odd sample(s) among a set of three or more samples. These are used to determine whether the number of correct choices is above the level expected by chance.
 
 Conventional descriptive analysis data consist in intensity scores given by each panelist to evaluated samples on a series of sensory attributes, hence resulting in a product x attribute x panelist dataset (Figure 1). Note that depending on the DA method, quantifying means other than intensity ratings can be used (ranks, frequency, etc.). Most frequently, each panelist evaluates all the samples in the product set. However, the use of balanced incomplete design can also be found when the experimenters aim to limit the number of samples evaluated by each subject.
 
 Eventually, hedonic test datasets consist in hedonic scores (ratings for consumers' degree of liking or preference ranks) given by each interviewed consumer to a series of products. As for DA, each consumer usually evaluates all the samples in the product set, but balanced incomplete designs are sometimes used too. In addition, some companies favor pure monadic evaluation of product (i.e.~between-subject design or independent groups design) which obviously result in unrelated sample datasets.
 
 Sensory and consumer researchers also borrow methods from other fields, in particular from sociology and experimental psychology. Definitely a multidisciplinary area, SCS develops in many directions and reaches disciplines that range from genetics and physiology to social marketing, behavioral economics and computational neuroscience. So have diversified the types of data sensory and consumer scientists must deal with.
+
+\hypertarget{measuring-humanproduct-interactions--}{%
+\subsection{Measuring human*product interactions \{-\}}\label{measuring-humanproduct-interactions--}}
+
+As in many scientific fields, the development of sophisticated statistical techniques and access to powerful data analysis tools have played an important role in the evolution of sensory \& consumer science. Statisticians and data analysts in SCS have developed their own field of research, coined Sensometrics {[}REF to (Schlich, 1995){]}. So, what makes sensory \& consumer science special? And how does it influence the way sensory and consumer data are handled?
+
+According to Lawless and Heymann (2010), sensory evaluation attempts to isolate the sensory properties of foods themselves and provides important and useful information to product developers, food scientists, and managers. However, one should bear in mind that \ldots{}
 
 \hypertarget{computational-sensory-science}{%
 \subsection*{Computational Sensory Science}\label{computational-sensory-science}}
@@ -1097,8 +1104,8 @@ Such information can be provided as such:
 
 As can be seen, we are adding to the already existing graph \texttt{p} a layer that consists of points (defined by \texttt{geom\_point()}) in which we specified that the x-axis is \texttt{Sticky} and the y-axis is \texttt{Melting} through aesthetics (or \texttt{aes()}).
 
-\hypertarget{aesthetics}{%
-\subsubsection{Aesthetics}\label{aesthetics}}
+\hypertarget{introduction-to-aesthetics}{%
+\subsubsection{Introduction to Aesthetics}\label{introduction-to-aesthetics}}
 
 In the previous example, one can notice that many points are being printed: this can easily be explained by the fact that the raw sensory data are being used, meaning that there are as many points as there are assessors evaluating products.
 
@@ -1139,8 +1146,8 @@ Depending on the \texttt{geom\_*()} considered, different parameters should be i
 
 Examples highlighting various types of aesthetics will be presented throughout the book.
 
-\hypertarget{geom_-functions}{%
-\subsubsection{\texorpdfstring{\texttt{geom\_*()} functions}{geom\_*() functions}}\label{geom_-functions}}
+\hypertarget{introduction-to-geom_-functions}{%
+\subsubsection{\texorpdfstring{Introduction to \texttt{geom\_*()} functions}{Introduction to geom\_*() functions}}\label{introduction-to-geom_-functions}}
 
 Since \texttt{\{ggplot2\}} is a multi-layer graph, let's add another layer. Here we propose to add the name of the panelists that is associated to each point.
 
@@ -1155,7 +1162,7 @@ To avoid having the label overlapping with the point, we propose to shift slight
 \end{Highlighting}
 \end{Shaded}
 
-On interesting remark is that some information required in \texttt{aes()} is being repeated across the different \texttt{geom\_*()} used. Such writing can be simplified by providing the \texttt{aes()} information that applies to all \texttt{geom\_*()} to the original \texttt{ggplot()} call. The previous code hence can be simplified into:
+One interesting remark is that some information required in \texttt{aes()} is being repeated across the different \texttt{geom\_*()} used. Such writing can be simplified by providing the \texttt{aes()} information that applies to all \texttt{geom\_*()} to the original \texttt{ggplot()} call. The previous code hence can be simplified into:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1181,111 +1188,446 @@ To the previous graph, let's add another layer as following:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{p}\SpecialCharTok{+}
-  \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method=}\StringTok{"lm"}\NormalTok{, }\AttributeTok{formula=}\StringTok{"y\textasciitilde{}x"}\NormalTok{, }\AttributeTok{se=}\ConstantTok{FALSE}\NormalTok{)}
+\NormalTok{line\_p }\OtherTok{\textless{}{-}}\NormalTok{ p }\SpecialCharTok{+} \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method=}\StringTok{"lm"}\NormalTok{, }\AttributeTok{formula=}\StringTok{"y\textasciitilde{}x"}\NormalTok{, }\AttributeTok{se=}\ConstantTok{FALSE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-This code adds a regression line to the graphic (here, we specified that the regression line should be defined using \texttt{lm} and by considering the simple linear regression \texttt{y\textasciitilde{}x}). This result is somewhat surprising since we have not run any regression yet, meaning that \texttt{geom\_smooth()} is actually performing the analysis in the background.
+This code adds a regression line to the graphic (here, we specified that the regression line should be defined using \texttt{lm} and by considering the simple linear regression \texttt{y\textasciitilde{}x}). This result is somewhat surprising since we have not run any regression yet, meaning that \texttt{geom\_smooth()} is actually performing the required analysis in the background.
 
-In fact, most \texttt{geom\_*()} function comes with a statistical process to it. This means that in many cases, one can provide raw data, and the \texttt{geom\_*()} function used will
+In fact, most \texttt{geom\_*()} function comes with a statistical process to it. This means that we can provide raw data, and the \texttt{geom\_*()} function calls its \texttt{stat\_*()} function that runs the corresponding analysis. In the previous example, \texttt{geom\_smooth()} calls \texttt{stat\_smooth()}.
 
-(discussion around geom\_ that have some statistical computation integrated\ldots)
-include aes()
-play around with themes
-miscalleneous
+Let's illustrate this concept again using another example: bar-charts that we apply on the data stored in \texttt{Nbiscuit}.
+Here, we want to see the distribution (through bar-charts) of number of biscuits eaten per biscuit. A quick look at the data shows that some respondents ate portions of the cookies. To simplify the analysis, let's consider the total number of entire cookies eaten: if a respondent has eaten 3.5 biscuits, we will consider that they ate 3 full cookies.
 
-\texttt{aes()}, \texttt{geom\_()}, \texttt{theme()}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Nbiscuit }\OtherTok{\textless{}{-}}\NormalTok{ Nbiscuit }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{N =} \FunctionTok{floor}\NormalTok{(N))}
+\end{Highlighting}
+\end{Shaded}
 
-Provide the most relevant options for \texttt{aes()}
+To create such distribution, a first solution consists in counting for each product how many respondents ate 0 biscuit, 1 biscuit, 2 biscuits, etc. This is automatically done using \texttt{geom\_bar} and \texttt{stat="count"}. Here, we set the parameter \texttt{position="dodge"} to get the results per biscuit side by side rather than stacked up (value by default):
 
-\begin{itemize}
-\tightlist
-\item
-  x, y, z
-\item
-  group
-\item
-  color, fill
-\item
-  text, label
-\item
-  alpha, size
-\end{itemize}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bar\_p }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(Nbiscuit, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{N, }\AttributeTok{fill=}\NormalTok{Product))}\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat=}\StringTok{"count"}\NormalTok{, }\AttributeTok{position=}\StringTok{"dodge"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
-\hypertarget{geom_}{%
-\subsubsection{geom\_}\label{geom_}}
+In the background, this corresponds to grouping the data by \texttt{Product}, summarizing the results by counting \texttt{N}, and then performing \texttt{geom\_bar()} in which no transformation is required (we set \texttt{stat="identity"})\footnote{This code could even be simplified by using \texttt{geom\_col()} since \texttt{geom\_col()} corresponds to \texttt{geom\_bar()} with \texttt{stat="identity"} as default.}:
 
-Explain the fact that some \texttt{geom\_()} comes with some stats automatically (e.g.~\texttt{geom\_bar} bins the data)
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Nbiscuit }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{count}\NormalTok{(Product, N) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{N, }\AttributeTok{y=}\NormalTok{n, }\AttributeTok{fill=}\NormalTok{Product))}\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat=}\StringTok{"identity"}\NormalTok{, }\AttributeTok{position=}\StringTok{"dodge"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+As can be seen, the two graphics are identical.
+
+\hypertarget{making-graphs-pretty}{%
+\subsubsection{Making graphs pretty}\label{making-graphs-pretty}}
+
+In the two previous graphs generated (stored in \texttt{line\_p} and \texttt{bar\_p}), we can notice some features that we may want to change to produce a clearer graph. Currently, the background is grey with vertical and horizontal white lines, the legend is positioned on the right side, the axis is defined based on the data itself (and so are the axis titles), there are not graph title, etc.\\
+These are the points that we are going to improve in this section.
+
+Let's start with a quick win by completely changing the overall appearance of the graph. To do so, we can use predefined \emph{themes} which then automatically set a different background (with or without lines), axis lines, etc. The two themes that we like to use are \texttt{theme\_minimal()} and \texttt{theme\_bw()} (please visit \url{https://ggplot2.tidyverse.org/reference/ggtheme.html}\href{https://ggplot2.tidyverse.org/reference/ggtheme.html}{link} for the complete list of pre-defined themes.)
+
+Let's start with improving \texttt{bar\_p} using \texttt{theme\_minimal()}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bar\_p }\OtherTok{=}\NormalTok{ bar\_p }\SpecialCharTok{+} \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+Rather than using pre-defined themes (or to complement pre-defined themes), we can manually control every parameters of the graph using \texttt{theme()}.
+
+Next, let's modify the axes by changing their names and by applying more logical breaks. We are extending here the limits of the x-axis to -1 and 11 to ensure that all the histograms are visible, else R removes some and returns a warning: \texttt{Removed\ 10\ rows\ containing\ missing\ values}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bar\_p }\OtherTok{=}\NormalTok{ bar\_p }\SpecialCharTok{+}
+  \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{name=}\StringTok{"Number of Biscuits eaten"}\NormalTok{, }
+                     \AttributeTok{breaks=}\FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{10}\NormalTok{,}\DecValTok{1}\NormalTok{), }
+                     \AttributeTok{labels=}\FunctionTok{c}\NormalTok{(}\StringTok{"None"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{9}\NormalTok{, }\StringTok{"All of them"}\NormalTok{), }
+                     \AttributeTok{limits=}\FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\DecValTok{11}\NormalTok{))}\SpecialCharTok{+}
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{"Number of Respondents"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Last but not least, we can provide a title to the graph using \texttt{ggtitle()}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bar\_p }\OtherTok{=}\NormalTok{ bar\_p }\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Distribution of the number of biscuits eaten"}\NormalTok{,}\StringTok{"(Results are split per biscuit type)"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Let's apply a similar transformation to \texttt{line\_p}. Here, we are aiming in having a more \emph{realistic} plot using cartesian coordinates, a nice theme, no legend, and a title to the graph.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{line\_p }\OtherTok{=}\NormalTok{ line\_p }\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{breaks=}\FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{50}\NormalTok{,}\DecValTok{10}\NormalTok{), }\AttributeTok{limits=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{60}\NormalTok{))}\SpecialCharTok{+}
+  \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{breaks=}\FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{50}\NormalTok{,}\DecValTok{10}\NormalTok{), }\AttributeTok{limits=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{60}\NormalTok{))}\SpecialCharTok{+}
+  \FunctionTok{coord\_fixed}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Relationship between Melting and Sticky"}\NormalTok{, }\StringTok{"Biscuits perceived as more sticky tend to be less melting."}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{guides}\NormalTok{(}\AttributeTok{colour=}\StringTok{"none"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
 \hypertarget{common-charts}{%
 \subsection{Common Charts}\label{common-charts}}
 
-\hypertarget{scatter-points}{%
-\subsubsection{Scatter points}\label{scatter-points}}
+You have now an overview of the basics of \texttt{\{ggplot2\}} and its philosophy. You'll find plenty of other examples throughout this book to help you develop your skills in building graphics in R.
 
-\texttt{geom\_point()}
+Since making an exhaustive list of plots that are relevant in sensory and consumer science is out of the scope for this book, it is not going to be further developed here. Yet, here is a summary of the \texttt{geom\_*()} that you could be of interest for you:
 
-\hypertarget{line-charts}{%
-\subsubsection{Line charts}\label{line-charts}}
+\begin{itemize}
+\tightlist
+\item
+  Scatter points:
 
-\texttt{geom\_line()}, \texttt{geom\_smooth()}
-\texttt{geom\_abline()}
-\texttt{geom\_hline()} and \texttt{geom\_vline()}
-\texttt{geom\_segment()} and \texttt{geom\_arrow()}
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{geom\_point()} (see example\ldots)
+  \end{itemize}
+\item
+  Line charts:
 
-\hypertarget{bar-charts}{%
-\subsubsection{Bar charts}\label{bar-charts}}
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{geom\_line()} to create connect points (see example\ldots);
+  \item
+    \texttt{geom\_smooth()} to add a regression line (see \ldots);
+  \item
+    \texttt{geom\_hline()} (resp. \texttt{geom\_vline()}) add a horizontal (resp. vertical) line using \texttt{yintercept} (resp. \texttt{xintercept});
+  \item
+    \texttt{geom\_segment()}draws a segment going from (\texttt{x};\texttt{y}) to (\texttt{xend};\texttt{yend})\footnote{This function can also be used to draw arrows through the parameter \texttt{arrow} and the function of that same name \texttt{arrow()}.}.
+  \end{itemize}
+\item
+  Bar charts:
 
-\texttt{geom\_bar}, \texttt{geom\_polygon}, \texttt{geom\_histogram()}, \texttt{geom\_freqpoly()}
-\texttt{position="identity"}, \texttt{position="dodge"} or \texttt{position="fill"}
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{geom\_col()} and \texttt{geom\_bar()} (see example\ldots);
+  \item
+    \texttt{geom\_histogram()} and \texttt{geom\_freqpoly()} work in a similar way as \texttt{geom\_bar()} except that it divides the x axis into bins before counting the number of observation in each bin and either represent it as bars (\texttt{geom\_histogram}) or lines (\texttt{geom\_freqpoly()}).
+  \end{itemize}
+\item
+  Distribution:
 
-\hypertarget{distribution}{%
-\subsubsection{Distribution}\label{distribution}}
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{geom\_density()} creates the density plot;
+  \item
+    \texttt{geom\_boxplot()} creates the well-known boxplot;
+  \item
+    \texttt{geom\_violin()} is an application of \texttt{geom\_density()} displayed in \texttt{geom\_boxplot()} fashion.
+  \end{itemize}
+\item
+  Text and Labels:
 
-\texttt{geom\_boxplot()} and \texttt{geom\_violin()}
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{geom\_text} and \texttt{geom\_label} (see example\ldots);
+  \item
+    the package \texttt{\{ggrepel\}} provides alternative functions (\texttt{geom\_text\_repel()} and \texttt{geom\_label\_repel()}) that re-position labels to avoid overlapping (\emph{repel} stands for \emph{repulsive}).
+  \end{itemize}
+\item
+  Rectangles\footnote{In Sensory and Consumer science, this will often be used for building surface plot responses (e.g.~external preference map), and hence is associated to \texttt{geom\_contour()} to show the different lines.}:
 
-\hypertarget{text}{%
-\subsubsection{Text}\label{text}}
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{geom\_tile()}, \texttt{geom\_rect} creates area either using its center point (\texttt{geom\_tile()}) or its four corner (\texttt{geom\_rect()}) defined by \texttt{xmin}, \texttt{xmax}, \texttt{ymin}, and \texttt{ymax} (see example\ldots);
+  \item
+    \texttt{geom\_raster()} is a high performance special case of \texttt{geom\_tile()}/\texttt{geom\_rect} where all the tiles have the same size.
+  \end{itemize}
+\end{itemize}
 
-\texttt{geom\_text} and \texttt{geom\_label}
-presentation of \textbf{\{ggrepel\}}
+Besides \texttt{geom*()}, a lot of graphical parameters can further be controlled. This includes of course the \texttt{theme()} and the \texttt{aes()}:
 
-\hypertarget{rectangles}{%
-\subsubsection{Rectangles}\label{rectangles}}
+\begin{itemize}
+\tightlist
+\item
+  For pre-defined themes, see example;
+\item
+  \texttt{axis} parameters including its title (\texttt{axis.title}), text (\texttt{axis.text}), ticks (\texttt{axis.ticks}), line (\texttt{axis.line}), and all their sub-levels.
+\item
+  \texttt{legend} parameters including its position (\texttt{legend.position}), direction (\texttt{legend.direction}), its text (\texttt{legend.text}, \texttt{legend.title}), the design of the box (\texttt{legend.box}, \texttt{legend.background}) etc.
+\item
+  \texttt{panel} parameters including its background (\texttt{panel.background}), the grid lines (\texttt{panel.grid}), the border (\texttt{panel.border}), etc.
+\item
+  \texttt{plot} parameters including the different titles (\texttt{plot.title}, \texttt{plot.subtitle}, \texttt{plot.caption}), the background (\texttt{plot.backgorund}), etc.
+\end{itemize}
 
-\texttt{geom\_tile()}, \texttt{geom\_rect}, and \texttt{geom\_raster()}
+Most of these parameters can be controlled at different levels of granularity:
 
-\hypertarget{themes-and-legend}{%
-\subsubsection{Themes and legend}\label{themes-and-legend}}
+\begin{itemize}
+\tightlist
+\item
+  overall, e.g.~\texttt{panel.grid};
+\item
+  more detailed, e.g.~\texttt{panel.grid.major} and \texttt{panel.grid.minor};
+\item
+  most detailed, e.g.~\texttt{panel.grid.major.x}, \texttt{panel.grid.major.y}, etc.
+\end{itemize}
 
-\texttt{theme()}, and pre-defined themes like \texttt{theme\_bw()}, \texttt{theme\_minimal()}, etc.
-\texttt{ggtitle()}
-\texttt{xlab()}, \texttt{ylab()}, or \texttt{labs()}
+Depending whether the option to modify is some text, a line, or a rectangle, \texttt{element\_text()}, \texttt{element\_line()}, or \texttt{element\_rect()} is used to control them. These functions provide general (e.g.~\texttt{color}) as well as specific options (e.g.~\texttt{family} and \texttt{face} for text, \texttt{linetype} for lines etc.) to each type.
 
-\hypertarget{additional-topics}{%
-\subsection{Additional Topics}\label{additional-topics}}
+Note that if some elements should be left blank, \texttt{element\_blank()} can be used regardless of the nature of the element.
 
-\hypertarget{playing-around-with-axes}{%
-\subsubsection{Playing around with axes}\label{playing-around-with-axes}}
+Let's illustrate these concepts using our previous graph stored in \texttt{line\_p}. Here, the goal is to remove the grid line, to replace the x and y axis lines by arrows, and to re-position the axis titles to the far end of the axis so that it is next to the arrow head.
 
-\texttt{coord\_fixed()}, \texttt{coord\_cartesian()}, \texttt{coord\_trans()}
-\texttt{scale\_x\_}, \texttt{scale\_y\_}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{line\_p }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{panel.grid=}\FunctionTok{element\_blank}\NormalTok{(), }
+        \AttributeTok{panel.border=}\FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{axis.line=}\FunctionTok{element\_line}\NormalTok{(}\AttributeTok{arrow =} \FunctionTok{arrow}\NormalTok{(}\AttributeTok{ends =} \StringTok{"last"}\NormalTok{, }\AttributeTok{type =} \StringTok{"closed"}\NormalTok{)),}
+        \AttributeTok{axis.title=}\FunctionTok{element\_text}\NormalTok{(}\AttributeTok{hjust=}\DecValTok{1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
 
-\hypertarget{transposing-the-plot}{%
-\subsubsection{Transposing the plot}\label{transposing-the-plot}}
+Similarly to the theme, aesthetics can also be adjusted. In previous examples, we controlled the x-axis in \texttt{bar\_p} by setting limits, providing breaks and replacing the values by certain labels using \texttt{scale\_x\_continuous()}.
+Most aesthetics parameters can be controlled by equivalent functions, named using the following structure \texttt{scale\_*nameaes*\_*typescale*}, and where:
 
-\texttt{coord\_flip()} and \texttt{coord\_polar()}
+\begin{itemize}
+\tightlist
+\item
+  \emph{nameaes} corresponds to any aesthetics including \texttt{x}, \texttt{y}, \texttt{colour} or \texttt{fill}, \texttt{alpha}, etc.
+\item
+  \emph{typescale} corresponds to the type of scale, where it is \texttt{continuous}, \texttt{discrete}, or \texttt{manual} amongst others.
+\end{itemize}
 
-\hypertarget{splitting-plots}{%
-\subsubsection{Splitting plots}\label{splitting-plots}}
+Such function fully controls how the corresponding aesthetic should behave, by providing the correspondence between a variable level and its color for instance. In the graph saved in \texttt{bar\_p}, remember that we filled in the bar chart using the product information. Let's imagine that we are particularly interested in biscuit P3, and want to compare it to the rest of the biscuits. We propose to make P3 stand out by filling it in orange, and by setting all the other biscuits in the same gray tone.
+Such procedure can be done using \texttt{scale\_fill\_manual()}.
 
-\texttt{facet\_wrap()}, \texttt{facet\_grid()}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bar\_p }\SpecialCharTok{+} 
+  \FunctionTok{scale\_fill\_manual}\NormalTok{(}\AttributeTok{values=}\FunctionTok{c}\NormalTok{(}\StringTok{"P1"}\OtherTok{=}\StringTok{"gray50"}\NormalTok{, }\StringTok{"P2"}\OtherTok{=}\StringTok{"gray50"}\NormalTok{, }\StringTok{"P3"}\OtherTok{=}\StringTok{"darkorange"}\NormalTok{, }\StringTok{"P4"}\OtherTok{=}\StringTok{"gray50"}\NormalTok{, }\StringTok{"P5"}\OtherTok{=}\StringTok{"gray50"}\NormalTok{,}
+                             \StringTok{"P6"}\OtherTok{=}\StringTok{"gray50"}\NormalTok{, }\StringTok{"P7"}\OtherTok{=}\StringTok{"gray50"}\NormalTok{, }\StringTok{"P8"}\OtherTok{=}\StringTok{"gray50"}\NormalTok{, }\StringTok{"P9"}\OtherTok{=}\StringTok{"gray50"}\NormalTok{, }\StringTok{"P10"}\OtherTok{=}\StringTok{"gray50"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+When multiple aesthetics are being used, the legend might become overwhelming or redundant. It is possible to turn off some of these visuals within the \texttt{scale\_*()} functions, or by using \texttt{guides()} and by setting \texttt{nameaes=\textquotesingle{}none\textquotesingle{}} as shown in the \texttt{line\_p} example.
+
+\hypertarget{miscealleneous}{%
+\subsection{Miscealleneous}\label{miscealleneous}}
+
+\hypertarget{structuring-the-axis}{%
+\subsubsection{Structuring the axis}\label{structuring-the-axis}}
+
+By default, \texttt{ggplot()} generates plot that fits the data and that fits within the output screen. This means that some graphics might not be perfectly representing the data due to some distortion. In a previous example (\texttt{line\_p}), we showed how to ensure that the dimensions are directly comparable through \texttt{coord\_fixed()}.
+
+Other transformation can also be performed. For instance, the graphic can be transposed using \texttt{coord\_flip()} as in the following example:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bar\_p }\SpecialCharTok{+} \FunctionTok{coord\_flip}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+To conclude this section, and summarize most concepts that we presented in this chapter, let's introduce the well-known spider plots. We are aware that such plots are quite polarizing amongst analysts. The decision of presenting such plots here is purely educational, as 1. there are no pre-defined options \texttt{\{ggplot2\}} that provides such charts, and 2. they present some interesting challenges.
+
+Let's start with deconstructing a spider-plot: a splider plot is a line chart presented in a circular way. So let's start with building a line chart that suits us of sensory profiles (we consider the means here). For more clarity, we only represent two of the samples (\texttt{P1} and \texttt{POpt}).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Constructing the Mean Table}
+\NormalTok{sensory\_mean }\OtherTok{\textless{}{-}}\NormalTok{ sensory }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_longer}\NormalTok{(Shiny}\SpecialCharTok{:}\NormalTok{Melting, }\AttributeTok{names\_to=}\StringTok{"Variables"}\NormalTok{, }\AttributeTok{values\_to=}\StringTok{"Scores"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Variables =} \FunctionTok{fct\_inorder}\NormalTok{(Variables)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(Product, Variables) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{Mean =} \FunctionTok{mean}\NormalTok{(Scores)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ungroup}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(Product }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"P03"}\NormalTok{, }\StringTok{"POpt"}\NormalTok{))}
+
+\CommentTok{\# Building the Line Chart}
+\NormalTok{spider\_line }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(sensory\_mean, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Variables, }\AttributeTok{y=}\NormalTok{Mean, }\AttributeTok{colour=}\NormalTok{Product, }\AttributeTok{linetype=}\NormalTok{Product))}\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{pch=}\DecValTok{20}\NormalTok{, }\AttributeTok{cex=}\DecValTok{2}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{group=}\NormalTok{Product), }\AttributeTok{lwd=}\DecValTok{1}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{xlab}\NormalTok{(}\StringTok{""}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{name=}\StringTok{""}\NormalTok{, }\AttributeTok{labels=}\ConstantTok{NULL}\NormalTok{, }\AttributeTok{limits=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{50}\NormalTok{))}\SpecialCharTok{+}
+  \FunctionTok{scale\_colour\_manual}\NormalTok{(}\AttributeTok{values=}\FunctionTok{c}\NormalTok{(}\StringTok{"P03"}\OtherTok{=}\StringTok{"darkorange"}\NormalTok{, }\StringTok{"POpt"}\OtherTok{=}\StringTok{"grey50"}\NormalTok{))}\SpecialCharTok{+}
+  \FunctionTok{scale\_linetype\_manual}\NormalTok{(}\AttributeTok{values=}\FunctionTok{c}\NormalTok{(}\StringTok{"P03"}\OtherTok{=}\StringTok{"solid"}\NormalTok{, }\StringTok{"POpt"}\OtherTok{=}\StringTok{"dashed"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+Next step is to represent this line chart in a circular way. This can be done using \texttt{coord\_polar()}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{spider\_line }\SpecialCharTok{+} \FunctionTok{coord\_polar}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+This already looks like a spider plot! However, a closer look at it highlights a point that needs improvement: there is no connection between the last attribute (\texttt{Melting}) and the first one (\texttt{Shiny}).
+
+To counter this, the following twofold solution is proposed:
+1. Associated each attribute to its position (e.g.~\texttt{Shiny} is 1, \texttt{External\ color\ intensity} is 2, until \texttt{Melting} which would be 32 here);
+2. Duplicate the last attribute (\texttt{Melting}) and associate it to position 0.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{var }\OtherTok{\textless{}{-}} \FunctionTok{levels}\NormalTok{(sensory\_mean}\SpecialCharTok{$}\NormalTok{Variables)}
+\NormalTok{sensory\_mean\_pos }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}\AttributeTok{Variables =} \FunctionTok{c}\NormalTok{(var[}\FunctionTok{length}\NormalTok{(var)], var),}
+                  \AttributeTok{Position =} \DecValTok{0}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(var)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{full\_join}\NormalTok{(sensory\_mean, var\_pos, }\AttributeTok{by=}\StringTok{"Variables"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+We rebuild the previous graph except that the x-axis is now defined by \texttt{Position} (we use \texttt{Variables} as labels). Although position 0 is not being included, we only show labels going from 1 to the last variable.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{spiderplot }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(sensory\_mean\_pos, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Position, }\AttributeTok{y=}\NormalTok{Mean, }\AttributeTok{colour=}\NormalTok{Product, }\AttributeTok{linetype=}\NormalTok{Product))}\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{pch=}\DecValTok{20}\NormalTok{, }\AttributeTok{cex=}\DecValTok{2}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{group=}\NormalTok{Product), }\AttributeTok{lwd=}\DecValTok{1}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{name=}\StringTok{""}\NormalTok{, }\AttributeTok{breaks=}\DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(var), }\AttributeTok{labels=}\NormalTok{var, }\AttributeTok{limits=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\FunctionTok{length}\NormalTok{(var)))}\SpecialCharTok{+}
+  \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{name=}\StringTok{""}\NormalTok{, }\AttributeTok{labels=}\ConstantTok{NULL}\NormalTok{, }\AttributeTok{limits=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{50}\NormalTok{))}\SpecialCharTok{+}
+  \FunctionTok{scale\_colour\_manual}\NormalTok{(}\AttributeTok{values=}\FunctionTok{c}\NormalTok{(}\StringTok{"P03"}\OtherTok{=}\StringTok{"darkorange"}\NormalTok{, }\StringTok{"POpt"}\OtherTok{=}\StringTok{"grey50"}\NormalTok{))}\SpecialCharTok{+}
+  \FunctionTok{scale\_linetype\_manual}\NormalTok{(}\AttributeTok{values=}\FunctionTok{c}\NormalTok{(}\StringTok{"P03"}\OtherTok{=}\StringTok{"solid"}\NormalTok{, }\StringTok{"POpt"}\OtherTok{=}\StringTok{"dashed"}\NormalTok{))}\SpecialCharTok{+}
+  \FunctionTok{coord\_polar}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
 
 \hypertarget{combining-plots}{%
 \subsubsection{Combining plots}\label{combining-plots}}
 
-\textbf{\{patchwork\}}
+When multiple plots should be generated using the same pattern on subset of data, it is possible to generate them automatically using \texttt{facet\_wrap()} or \texttt{facet\_grid()}. The difference between these two functions rely in the number of variables to use for the split: in \texttt{facet\_wrap()}, the graphics are \emph{vectorized}, meaning that each element of the split is represented independently. For \texttt{facet\_grid()} however, the graphics is represented in a matrix, meaning that two blocks of split variables are required, one defining the columns and one the rows.
+
+An example of \texttt{facet\_wrap()} is provided in (ref data analysis).
+
+For these two functions, the parameter \texttt{scales} is particularly interesting as it allows each separate graph to use its own axis scales (\texttt{free} or individually using \texttt{free\_x}/\texttt{free\_y}) or not (\texttt{fixed}).
+
+Such procedure is very handy to produce multiple graphs all at once\ldots when the data allow it.
+When multiple plot are being generated separately (using different data set, or producing different types of plots), it can still be relevant to combine them all in one. To perform such collage, the package \texttt{\{patchwork\}} becomes very handy thanks to its ease of use and its power.
+
+Indeed, \texttt{\{patchwork\}} is a package that allows combining easily \texttt{ggplot()} graphs using mathematical operations.
+To add two elements next to each others, they should simply be separated by \texttt{+}. To add two elements on top of each others, just separate them using \texttt{/}. This operation can be combined with \texttt{()} to generate fancy collage.
+
+Let's illustrate this by creating a plot with one the left side \texttt{spiderplot}, and on the right side \texttt{bar\_p} on top of \texttt{line\_p}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(patchwork)}
+
+\NormalTok{p }\OtherTok{=}\NormalTok{ spiderplot }\SpecialCharTok{+}\NormalTok{ (bar\_p }\SpecialCharTok{/}\NormalTok{ line\_p)}
+\NormalTok{p}
+\end{Highlighting}
+\end{Shaded}
+
+We could then add a title as well as tag levels (handy for publications!) to the results using \texttt{plot\_annotation()}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p }\SpecialCharTok{+} \FunctionTok{plot\_annotation}\NormalTok{(}\AttributeTok{title =} \StringTok{"Example of \textquotesingle{}ggplots\textquotesingle{} I\textquotesingle{}ve learned today"}\NormalTok{, }\AttributeTok{tag\_levels=}\StringTok{\textquotesingle{}a\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{few-tips-and-tricks}{%
+\subsection{Few Tips and Tricks}\label{few-tips-and-tricks}}
+
+\hypertarget{combining-data-transformation-and-ggplot2-grammar}{%
+\subsubsection{\texorpdfstring{Combining data transformation and \texttt{\{ggplot2\}} grammar}{Combining data transformation and \{ggplot2\} grammar}}\label{combining-data-transformation-and-ggplot2-grammar}}
+
+Both the \texttt{\{tidyverse\}} and \texttt{\{ggplot2\}} are using pipes to combine lines of code or layers.
+However, the pipes themselves are defined differently since \texttt{\{maggritr\}} uses \texttt{\%\textgreater{}\%} whereas \texttt{\{ggplot2\}} uses \texttt{+}.
+It is however to combine both systems one after each other, just remember to switch from \texttt{\%\textgreater{}\%} to \texttt{+} as you transition from data transformation/tidying to building your graph (see example\ldots).
+
+\hypertarget{ordering-elements-in-a-plot}{%
+\subsubsection{Ordering elements in a plot}\label{ordering-elements-in-a-plot}}
+
+When building a graph using a categorical variables, \texttt{\{ggplot2\}} tends to represent the different levels in alphabetical order, especially if the variable is defined as character. Such situation can make the graph more difficult to read, as the categories may not be presented in a logical order (e.g.~fall, spring, summer, winter instead of spring, summer, fall, winter).
+
+To ensure that the elements are in the order that are relevant for you, either consider transforming the variables into factor (using \texttt{factor()} and by indicating the levels order of your choice, or using \texttt{fct\_inorder()} if you want to keep the order as is in the file, see example\ldots) or by using a position variable as in the \texttt{spiderplot} example. The former option also works for ordering elements in the legend.
+
+If the order of the elements to change are \emph{within the charts}, they may be reverted within the \texttt{geom\_*()} function directly. This is for instance the case with stacked bar chart, in which the order may be reverted using the parameter \texttt{position\ =\ position\_fill(reverse\ =\ TRUE)} for instance (suggesting here that the split was defined through \texttt{fill} in \texttt{aes()}).
+
+\hypertarget{fixing-overlapping-axis-text}{%
+\subsubsection{Fixing overlapping axis text}\label{fixing-overlapping-axis-text}}
+
+When \texttt{ggplot()} are being built using categorical variables, the labels used on the x-axis are often overlapping making some (or all) of them unreadable. If it is possible to reduce the size of the label, and/or to shorten them without losing clarity, then this can be first good step. However, this might not always possible or sufficient. In these latter instances, we need to adjust them. Let's use \texttt{spider\_line} as illustration to show three possible solutions.
+
+The first option consists in using \texttt{theme()} and rotating the labels (here at 45 degrees, but use 90 degrees to get the names vertically). Note that by default, \texttt{ggplot()} center the labels: to avoid having them crossing the x-axis line, we need to left-center them using \texttt{hadj=1}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{spider\_line }\SpecialCharTok{+} 
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.x =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{angle=}\DecValTok{45}\NormalTok{, }\AttributeTok{hjust=}\DecValTok{1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+A second option consists in dodging one every two labels along the x-axis. This option works if the labels are not too long, as can be seen in the example below. Note that this option is accessible within \texttt{scale\_x\_discrete()}, not within \texttt{theme()} as we would expect:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{spider\_line }\SpecialCharTok{+} 
+  \FunctionTok{scale\_x\_discrete}\NormalTok{(}\AttributeTok{guide =} \FunctionTok{guide\_axis}\NormalTok{(}\AttributeTok{n.dodge =} \DecValTok{2}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+Last option consists in transposing the graph using \texttt{coord\_flip()}. This solution works well since labels on the y-axis are written horizontally. However, this option is not always suitable due to conventions: we would definitely recommend it for bar charts, but not for line charts for instance.
+
+\hypertarget{exporting-graphs}{%
+\subsubsection{Exporting graphs}\label{exporting-graphs}}
+
+There are various ways to save or export \texttt{ggplot()} charts. To save these plots to your computer in various formats (e.g.~png, pdf, etc.), we recommend the use of \texttt{ggsave()}. By default, \texttt{ggsave()} exports the last plot build and saves it in the location defined by \texttt{filename}, in the format defined by \texttt{device} (additional information regarding the width, height, dpi etc. can also be configured).
+
+For instance, we can save \texttt{spiderplot}\footnote{Since \texttt{spiderplot} is not the last plot generated, we need to define it in \texttt{plot}.} as following:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggsave}\NormalTok{(}\AttributeTok{filename=}\StringTok{"spiderplot.png"}\NormalTok{, }\AttributeTok{plot=}\NormalTok{spiderplot, }\AttributeTok{device=}\StringTok{"png"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+As an alternative, \texttt{ggplot()} graphs can also be exported in PowerPoint or Word through the \texttt{\{rvg\}} package (see example).
+
+\hypertarget{additional-libraries}{%
+\subsubsection{Additional libraries}\label{additional-libraries}}
+
+\texttt{\{ggplot2\}} is a very powerful tool for data visualization. By default, it offers a very large variety of possibilities, which should cover most situations that you would encounter. If not, please search as you will most likely find ggplot extensions in alternative packages. Here is a non-exhaustive list of specific packages that we find relevant:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{ggcharts}: This package provides nice and clear alternatives to some \texttt{\{ggplot2\}} options through simple functions in one line of code, including \texttt{bar\_chart()}, \texttt{line\_chart()}, \texttt{lollipop\_chart()} and \texttt{dumbbell\_chart()} just to name a few.
+\item
+  \texttt{\{factoextra\}}: Although the latest version of \texttt{\{FactoMineR\}} also proposes generating graphs in \texttt{\{ggplot2\}}, \texttt{\{factoextra\}} is a great extension as it is easy to use and provides a wide variety of options to customize your plots.
+\item
+  \texttt{\{ggcorrplot\}}: There are many packages that propose to visualize graphically tables of correlations, however we particularly like this one for its simplicity and its flexibility.
+\item
+  \texttt{\{ggwordcloud\}}: It is a great package for building word-clouds as it provides a large degree of control. With this package, the words can either be positioned totally randomly, but can also be positioned in a given shape, or words can be positioned semi-randomly, hence giving more interpretation power to the final results (for more information, please visit \url{https://lepennec.github.io/ggwordcloud/}\href{https://lepennec.github.io/ggwordcloud/}{link}).
+\item
+  \texttt{\{ggraph\}}: This package provides neat solutions to build network visualization in \texttt{\{ggplot2\}}.
+\end{itemize}
+
+To learn more about \texttt{\{ggplot2\}} basics, we recommend two additional source of information:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{\{esquisse\}}: After loading the package, run the function \texttt{esquisser()}. This command opens a window in which you can select your data set (the data set should be available within you R environment), the type of plot to build, which variable to be used as x-axis, y-axis, etc. Not only this tool provides with an easy way to build your graph, it is also educational as the code thus generated is visible (so you can re-use it and/or try to understand to apply it in other situations).
+\item
+  \url{https://www.data-to-viz.com/}\href{https://www.data-to-viz.com/}{link} provides a wide gallery of graphics sorted by the type of data that you have. Each graphic proposed is illustrated with an example provided in R (\texttt{\{ggplot2\}}) and in Python. This website is hence inspirational and educational both at the same time!
+\end{itemize}
 
 \hypertarget{auto-report}{%
 \chapter{Automated Reporting}\label{auto-report}}
@@ -1948,7 +2290,7 @@ Unlike a pptx with separate slides, a word document is a continuous object. To c
 \addcontentsline{toc}{part}{Bon Appétit}
 
 \hypertarget{example-projects}{%
-\chapter{Example Project: the biscuit study}\label{example-projects}}
+\chapter{Example Project: The Biscuit Study}\label{example-projects}}
 
 The dataset that we use as a main example throughout this book comes from a sensory study on biscuits. The study was part of project BISENS funded by the French National Research Agency (ANR, programme ALIA 2008). These biscuits were developed for breakfast consumption and specifically designed to improve satiety.
 The study was conducted in France with one hundred and seven consumers who tested a total of 10 biscuit recipes (including 9 experimental products varying in their fiber and protein content). Fibers and proteins are known to increase satiety.\\
