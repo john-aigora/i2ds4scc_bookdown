@@ -3,42 +3,51 @@ knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 ```
 # Automated Reporting {#auto-report}
 
-Effective communication of results is among the essential duties of the sensory scientist, but the sometimes tedious mechanics of report production together with the sheer volume of data that many scientists now must process combine to make reporting design an afterthought in too many cases.  In this tutorial, we review recent advances in automated report production that liberate resources for scientists to focus on the interpretation and communication of results, while simultaneously reducing errors and increasing the consistency of their analyses. We teach the tutorial through an extended example, cumulatively building an R script that takes participates from receipt of an example dataset to a beautifully-designed and nearly completed PowerPoint presentation automatically and using freely available, open-source packages.  Details of how to customize the final presentation to incorporate corporate branding - such as logos, font choices, and color palettes - will also be covered.
+## What and why Automated Reporting?
 
-## What is Automated Reporting?
-Why Script?
-Save time
-Reduce errors
-Collaboration
-Share code with others
-Read own code later
-Explain choices for analysis, table presentation, charts
-Save steps for result creation
-Main tools
-R/RStudio
-RMarkdown, HTML output, etc. (mention but don’t focus)
-Packages for Microsoft office production
-Officer suite (PowerPoint, Word)
-Charts, especially RVG
-Extract from Word/PowerPoint
-Index
-Flextable
-Images?
-Packages for formatting
-extrafont
-extrafontdb
-Rcolorbrewer
+Effective communication of results is amongst the essential duties of sensory scientists...and so is the data collection, data preparation, data analysis etc. Worst, the sometimes tedious mechanics of report production together with the sheer volume of data that many scientists must process combine to make reporting design and nice story-telling an afterthought in too many cases.
+Although this should preferably not be happening, it is necessary sometimes as presentation deadlines approach and time becomes limited. 
 
-## Excel
+Add to this work-load some last-minute changes due to either a change in the data, in the analysis, or maybe an error (e.g. copy/paste the wrong column, etc.) you have just been detected...how can we be sure that the latest version of the report is fully up-to-date, and that all the results/conclusions are correct? As the statistical software (e.g. R) is often separated from the reporting tool (e.g. Microsoft Office), it is easy to miss to transfer updated statistical outputs (e.g. values, tables, figures, etc.) to the report, hence creating inconsistencies.
 
-Although Excel is not our preferred tool for automated reporting, it is still one of the major ways to access and share data. Most data collection software offer the possibility to export data and results in an Excel format, and most data analysis tools accept Excel format as inputs.  With the large use of Excel, it is no surprise that many of our colleagues or clients like to share data and results using such spreadsheets. It is even less a surprise that R provides multiple solutions to import/export results from/to Excel. 
+Let's consider another scenario, in which all the preliminary steps have been successfully done: you are now presenting your report to your manager or clients, and they come with a question such as: "Can we deep-dive into the results by looking at a particular group of consumers (e.g. gender split, or cluster split)?" Do you feel like going through the entire process again?
 
-For the import of datasets, we have already presented the package `{readxl}` among others. For exporting results, two complementary packages (yet again, among others!) in terms of ease of use and flexibility in the outcome are proposed: `{writexl}` and `{openxlsx}`.
+How would you feel if we would tell you that there is a way to build your report while running the analysis, by using the same script file? This means that in few clicks, say after updating the data to analyze (e.g. filter to the target group of consumers only), your report gets automatically re-generated with all the new updated results. Will you be interesting in such approach?
 
-As its name suggests, `{writexl}` is the extension of `{readxl}` dedicated to exporting tables to Excel through the `write_xlsx()` function. Its use is very simple as it only takes as inputs the table (or list of tables) to export to the file specified in the `path` parameter. 
+Such solution seems ideal since it increases efficiency while reducing errors due to manual processing of results. More importantly, this gain in time and effort allow you designing nicer slides and building a better story. 
+
+
+## Integrating reports within analyses scripts
+
+In this section, let's integrate our report building process within our data analysis. By doing so, we do not focus on building a story yet. Instead, we improve our way of working by exporting directly all the statistical outputs that could^[We say *could* as we are in a process of mass-exportation of results, most of them being used for building the story although they would not be kept in the final deck.] be useful for our future story-telling. By doing so, we increase efficiency (especially if code can then be re-used for other studies) by *killing two birds with one stone*: We simultaneously run our analysis, create usable content for our final presentation, while reducing errors due to manual processing.
+
+Since Microsoft Office is often the tool used for sharing results, we will focus our attention in exporting results to Excel, PowerPoint, and Word. 
+
+<!-- 
+Integrating reporting within the analysis part, or integrating the analysis within the reporting part?
+ -> Improved WoW
+ -> Connection analysis/report reduce risks of mistakes (copy/paste updated values/tables, etc.)
+ -> Keep track of what has been done (reproducible research): Explain choices for analysis, table presentation, charts
+ -> Sharing code/analysis
+ -> Gain in time/efficiency
+ -> Massive slide production
+ -> Less time require for analysis/slides production, more time for design/story-telling
+To improve way of work (efficiency) and to keep track of steps taken along the way
+-->
+
+### Excel
+
+Although Excel is not our preferred tool for automated reporting, it is still one of the major ways to access and share data. Most data collection software offer the possibility to export data and results in Excel, while most data analysis software accept Excel format as inputs.  With the large use of Excel, it is no surprise that many of our colleagues or clients like to share data and results using spreadsheets. It is even less a surprise that R provides multiple solutions to import/export results from/to Excel. 
+
+For importing Excel files, we have already presented the package `{readxl}` among others (see REF). For exporting results, two complementary packages (yet again, among others!) in terms of ease of use and flexibility in the outcome are proposed: `{writexl}` and `{openxlsx}`.
+
+As its name suggests, `{writexl}` is dedicated to exporting tables to Excel through the `write_xlsx()` function. Its use is very simple as it only takes as inputs the table (or list of tables)^[List of tables will generate multiple sheets within the same spreadsheet, one table being placed in each sheet.] to export to the file specified in the `path` parameter. 
+
+Let's illustrate this by using our *Sensory Profile.xlsx* file: Let's imagine that we would like to reduce our data set by only considering products that are high in Protein:
 
 
 ```{r}
+library(tidyverse)
 library(readxl)
 library(writexl)
 library(dplyr)
@@ -50,34 +59,86 @@ product_info <- read_excel(path  = file_path,
                            range = "A1:D12",
                            col_names = TRUE)
 
-#Basic data manipulation: writing a subset into a new xlsx
-product_info %>% 
+# Selecting Products with High Protein
+high_prot <- product_info %>% 
   filter(Protein %in% "High") %>% 
-  write_xlsx(path = file.path("output", "High Protein Products.xlsx"),
-             col_names = TRUE)
+  pull(Product)
+
+# Filter Data to only keep Products with High Protein
+high_prot_data <- read_xlsx(path = file_path,
+                  sheet = "Data") %>% 
+  filter(Product %in% high_prot)
+
+# Exporting Table to Excel
+write_xlsx(data, 
+           path = file.path("output", "High Protein Products only.xlsx"),
+           col_names = TRUE)
 
 ```
 
 The export of tables using the `{writexl}` package is easy, yet simplistic as it does not allow formatting the tables (except for some minor possibilities for the header), nor does it allow exporting multiple tables within the same sheet. For more advanced exporting options, the use of **{openxlsx}** package is preferred as it allows more flexibility in structuring and formatting the Excel output.
 
-With `{openxlsx}`, the procedure starts with creating a workbook object `wb` using the `createWorkbook()` function, to which we add worksheets through the `addWorksheet()` function. 
-On a given worksheet, any table can be exported using `writeData()` or `writeDataTable()`, which controls where to write the table through the `startRow` and `startCol` options.
-Through these different functions, many additional formatting procedure can be applied:  
+With `{openxlsx}`, the procedure starts with creating a workbook object (e.g. `wb`) using the `createWorkbook()` function. We can add worksheets to `wb` through the `addWorksheet()` function. 
 
-- `createWorksheet()` allows:
+```{r}
+library(openxlsx)
+
+# Create workbook object
+wb <- openxlsx::createWorkbook()
+
+# Add a new worksheet
+addWorksheet(wb, sheetName = "Mean", gridLines = FALSE)
+
+```
+
+
+Note that `addWorksheet()` allows controlling further the appearance of the worksheet:
   * show/hide grid lines using `gridLines`;
   * color the sheet using `tabColour`;
   * change the zoom on the sheet through `zoom`;
   * show/hide the tab using `visible`;
   * format the worksheet by specifying its size (`paperSize`) and orientation (`orientation`).
-  
-- `writeData()` and `writeDataTable()` allow:
-  * controlling where to print the data using `startRow` and `startCol` (or alternatively `xy`: `xy = c("B",12)` prints the table starting in cell B12), hence allowing exporting multiple tables within the same sheet;
-  * including the row names and column names through `rowNames` and `colNames`;
-  * formatting the header using `headerStyle` (incl. color of the text and/or background, font, font size, etc.);
-  * shaping the borders using predefined solutions through `borders`, or customizing them with `borderStyle` and `borderColour`;
-  * adding a filter to the table using `withFilter`;
-  * converts missing data to "#N/A" or any other string using `keepNA` and `na.string`.
+
+On a given worksheet, any table can be exported using `writeData()` or `writeDataTable()`, which controls where to write the table through the `startRow` and `startCol` options.
+
+Let's imagine we want to compute the sensory profiles of the products, and we want to export that into Excel. Rather then simply exporting the results, we want to customize the output a little bit by applying the Excel style named *TabelStyleLight9*:
+
+
+```{r}
+
+# Creating the Sensory Profiles with some Product Information
+p_info <- read_xlsx(file_path, sheet = "Product Info") %>% 
+  dplyr::select(-Type)
+
+sensory <- read_xlsx(file_path, sheet="Data") %>% 
+  inner_join(p_info, by="Product") %>% 
+  relocate(Protein:Fiber, .after=Product)
+
+senso_mean <- sensory %>% 
+  pivot_longer(Shiny:Melting, names_to="Attribute", values_to="Score") %>% 
+  dplyr::select(-Judge) %>% 
+  pivot_wider(names_from=Attribute, values_from=Score, values_fn=mean)
+
+
+# Exporting the Results to Excel
+writeDataTable(wb,
+               sheet = "Mean",
+               x = senso_mean, 
+               startCol = 1,
+               startRow = 1,
+               colNames = TRUE, rowNames = FALSE, 
+               tableStyle = "TableStyleLight9")
+
+```
+
+Here again, `writeData()` and `writeDataTable()` gives us a lot of control on our export. For instance, we can:
+  * control where to print the data by using `startRow` and `startCol` (or alternatively `xy`: `xy = c("B",12)` prints the table starting in cell B12), hence allowing exporting multiple tables within the same sheet;
+  * include the row names and column names through `rowNames` and `colNames`;
+  * format the header using `headerStyle` (incl. color of the text and/or background, font, font size, etc.);
+  * apply a specific style to our table using `tableStyle`;
+  * shape the borders using predefined solutions through `borders`, or customizing them with `borderStyle` and `borderColour`;
+  * add a filter to the table using `withFilter`;
+  * convert missing data to "#N/A" or any other string using `keepNA` and `na.string`.
   
 - Additional formatting can be controlled using:
   * `options()` to pre-define number formatting, border colors and style that will be applied automatically to each table;
@@ -87,12 +148,29 @@ Through these different functions, many additional formatting procedure can be a
   * `setColWidths` to control column width;
   * `conditionalFormatting()` styling of cells when they meet pre-defined rules, as for instance to highlight significant p-values. 
   
-When using `{openxlsx}`, we recommend to use the same procedure as for Word and PowerPoint: 
+When using `{openxlsx}`, we recommend to following procedure (same will apply for PowerPoint and Word): 
 
 - Start with setting the default parameters that should be applied to each table;
 - Create styles for text or table headers that you save in different elements, and that you apply where needed. 
 
-In the following example, the sensory profiles are exported into a newly created sheet. 
+For illustration, let's consider *Sensory Profile.xlsx*. More precisely, we want to export the sensory profiles into a newly create Excel spreadsheet.
+
+
+```{r}
+p_info <- read_xlsx(file_path, sheet = "Product Info") %>% 
+  dplyr::select(-Type)
+
+sensory <- read_xlsx(file_path, sheet="Data") %>% 
+  inner_join(p_info, by="Product") %>% 
+  relocate(Protein:Fiber, .after=Product)
+
+senso_mean <- sensory %>% 
+  pivot_longer(Shiny:Melting, names_to="Attribute", values_to="Score") %>% 
+  dplyr::select(-Judge) %>% 
+  pivot_wider(names_from=Attribute, values_from=Score, values_fn=mean)
+
+```
+
 
 To introduce conditional formatting with `{openxlsx}`, the sensory profiles are color coded as following: for each cell, the value is compared to the overall mean computed for that column and is colored in red (resp. blue) if it's higher (resp. lower) than the mean.
 In practice, the color style is pre-defined in two parameters called `pos_style` (red) and `neg_style` (blue) using `createStyle()`. The decision whether `pos_style` or `neg_style` should be used is defined by the `rule` parameter from the `conditionalFormatting()`^[In `conditionalFormatting()`, you can specify to which `rows` and `cols` the formatting applies. In this example, `cols` takes `2` because the first column contains the row names.] function.
@@ -178,7 +256,7 @@ TIPS: At any time, you can visualize your file using `openXL()`: This function o
 
 For more details on using **{openxlsx}** see <https://rdrr.io/cran/openxlsx/>.
 
-## PowerPoint
+### PowerPoint
 
 ```{r}
 library(tidyverse)
@@ -197,7 +275,7 @@ Through these different functions, many additional formatting procedure can be a
   
 
 
-### Creating a PowerPoint Deck
+#### Creating a PowerPoint Deck
 
 **Key functions:**
 `read_pptx(path)` `add_slide(x, layout, master)` `layout_summary(x)` 
@@ -216,7 +294,7 @@ pptx_obj %>%
   print(target = file.path("output","example_1.pptx"))
 ```
 
-### PowerPoint Themes
+#### PowerPoint Themes
 
 A blank Deck is by default set up with the *Office Theme*. To use a custom theme, we must create a Deck using the Powerpoint software and use it as input.
 
@@ -233,7 +311,7 @@ pptx_obj <- pptx_obj %>% # add slide
 ```
 
 
-### Placeholders and Shapes
+#### Placeholders and Shapes
 
 - `ph_location_type()` allows use predefined placeholders for content:
   * title, body
@@ -289,7 +367,7 @@ pptx_obj %>%
   print(target = file.path("output","example_3.pptx"))
 ```
 
-### Working with Text
+#### Working with Text
 
 Each new text item added to a PowerPoint via officer is a paragraph object
 
@@ -321,7 +399,7 @@ pptx_obj %>%
 For more details on using **{officer}** see <https://davidgohel.github.io/officer>.
 
 
-## Tables
+### Tables
 
 `ph_with` accepts a data.frame as value and renders it in a default format
 
@@ -342,7 +420,7 @@ pptx_obj <- read_pptx() %>%
   print(target = file.path("output","table_1.pptx"))
 ```
 
-### Introduction to flextable
+#### Introduction to flextable
 
 With `{flextable}`, the procedure starts with creating a flextable object `ft_table` using the `flextable()` function.
 Flextable objects are compatible with `{officer}` and therefore are our primary tool for table formatting.
@@ -366,7 +444,7 @@ print(ft_table)
 
 ```
 
-### Formatting examples
+#### Formatting examples
 
 ```{r 4.4 demonstration}
 ft_table <- ft_table %>%
@@ -423,7 +501,7 @@ print(ft_table)
 ```
 
 
-### Add flextable object to a powerpoint slide
+#### Add flextable object to a powerpoint slide
 
 ```{r 4.7 original example}
 # Add table to slide
@@ -435,9 +513,9 @@ pptx_obj <- read_pptx() %>%
 
 For more details on using **{flextable}** see <https://davidgohel.github.io/flextable/>.
 
-## Charts
+### Charts
 
-### Adding charts as images
+#### Adding charts as images
 
 ```{r 5.1 rvg package}
 # Using ggplot2 as plotting library
@@ -452,7 +530,7 @@ chart_to_plot <- senso_mean %>%
 print(chart_to_plot) #in Plots window of Rstudio
 ```
 
-### rvg package
+#### rvg package
 
 rvg is providing two graphics devices that produces Vector Graphics outputs in `DrawingML` format for Microsoft PowerPoint with dml_pptx and for Microsoft Excel with dml_xlsx.
 
@@ -477,7 +555,7 @@ pptx_obj <- read_pptx() %>%
 
 ```
 
-### mschart package
+#### mschart package
 
 ```{r 5.3 mschart example}
 library(mschart)
@@ -505,7 +583,7 @@ pptx_obj <- read_pptx() %>%
   print(target = file.path("output","rvg_2.pptx"))
 ```
 
-## Word
+### Word
 
 Word documents are created using `read_docx()`. 
 
@@ -546,3 +624,54 @@ doc <- read_docx() %>%
   print(target = file.path("output","doc_3.docx"))
 
 ```
+
+
+### Notes on applying corporate branding
+
+Pre-define parameters/options (fonts, logos, etc.) in a separate file that you can source at the start and call easily.
+Import company templates (PowerPoint, Word) that already includes pre-defined options.
+
+
+
+## Integrating analyses scripts within reporting tools
+
+Integrating reporting within the analysis part, or integrating the analysis within the reporting part?
+ -> Keep track of what has been done (reproducible research): Explain choices for analysis, table presentation, charts
+ -> Sharing code/analysis
+To improve way of work (efficiency) and to keep track of steps taken along the way
+
+Rmarkdown
+
+
+
+
+
+
+
+
+
+
+In this section, we review recent advances in automated report production that:
+
+1. Connects our analysis tool to our preferred reporting tool;
+2. Liberate resources for scientists to focus on the interpretation and communication of results...
+3. ...while simultaneously reducing errors and increasing the consistency of their analyses. 
+
+
+Through this section, we will show you how to generate directly from R different types of report within the Microsoft Office suit. More precisely, we will start by showing you how to export results to Excel, which we will then extend to PowerPoint, and Word. With this approach, you can then incorporate some code within your analysis script, meaning that as soon as your data change, a new updated report will be generated. 
+
+Details of how to customize the final presentation (PowerPoint) to incorporate corporate branding - such as logos, font choices, and color palettes - is also tackled here.
+
+
+RMarkdown, HTML output, etc. (mention but don’t focus)
+Packages for Microsoft office production
+Officer suite (PowerPoint, Word)
+Charts, especially RVG
+Extract from Word/PowerPoint
+Index
+Flextable
+Images?
+Packages for formatting
+extrafont
+extrafontdb
+Rcolorbrewer
