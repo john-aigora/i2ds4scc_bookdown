@@ -129,9 +129,14 @@ writeDataTable(wb,
                colNames = TRUE, rowNames = FALSE, 
                tableStyle = "TableStyleLight9")
 
+openXL(wb)
+
 ```
 
-Here again, `writeData()` and `writeDataTable()` gives us a lot of control on our export. For instance, we can:
+
+At any time, you can visualize the Excel file that is being produced without exporting it yet using `openXL()`. This function comes very handy as it allows you checking that the output looks like what you would wish for.
+
+As can be seen, `writeData()` and `writeDataTable()` give us a lot of control on our export. For instance, we can:
   * control where to print the data by using `startRow` and `startCol` (or alternatively `xy`: `xy = c("B",12)` prints the table starting in cell B12), hence allowing exporting multiple tables within the same sheet;
   * include the row names and column names through `rowNames` and `colNames`;
   * format the header using `headerStyle` (incl. color of the text and/or background, font, font size, etc.);
@@ -139,122 +144,142 @@ Here again, `writeData()` and `writeDataTable()` gives us a lot of control on ou
   * shape the borders using predefined solutions through `borders`, or customizing them with `borderStyle` and `borderColour`;
   * add a filter to the table using `withFilter`;
   * convert missing data to "#N/A" or any other string using `keepNA` and `na.string`.
-  
-- Additional formatting can be controlled using:
-  * `options()` to pre-define number formatting, border colors and style that will be applied automatically to each table;
-  * `modifyBaseFont()` to define the font name and font size;
-  * `freezePane()` to freeze the first row and/or column of the table using `firstRow = TRUE` and `firstCol = TRUE`;
-  * `createStyle()` to pre-define a style, or `addStyle()` to apply the styling to selected cells;
-  * `setColWidths` to control column width;
-  * `conditionalFormatting()` styling of cells when they meet pre-defined rules, as for instance to highlight significant p-values. 
-  
-When using `{openxlsx}`, we recommend to following procedure (same will apply for PowerPoint and Word): 
 
-- Start with setting the default parameters that should be applied to each table;
-- Create styles for text or table headers that you save in different elements, and that you apply where needed. 
 
-For illustration, let's consider *Sensory Profile.xlsx*. More precisely, we want to export the sensory profiles into a newly create Excel spreadsheet.
+Rather than using some pre-defined formatting as was the case with `tableStyle`, let's consider some more advanced options in which we control (almost) everything. Let's start with setting up the formatting style we would like to apply:
 
 
 ```{r}
-p_info <- read_xlsx(file_path, sheet = "Product Info") %>% 
-  dplyr::select(-Type)
-
-sensory <- read_xlsx(file_path, sheet="Data") %>% 
-  inner_join(p_info, by="Product") %>% 
-  relocate(Protein:Fiber, .after=Product)
-
-senso_mean <- sensory %>% 
-  pivot_longer(Shiny:Melting, names_to="Attribute", values_to="Score") %>% 
-  dplyr::select(-Judge) %>% 
-  pivot_wider(names_from=Attribute, values_from=Score, values_fn=mean)
-
-```
-
-
-To introduce conditional formatting with `{openxlsx}`, the sensory profiles are color coded as following: for each cell, the value is compared to the overall mean computed for that column and is colored in red (resp. blue) if it's higher (resp. lower) than the mean.
-In practice, the color style is pre-defined in two parameters called `pos_style` (red) and `neg_style` (blue) using `createStyle()`. The decision whether `pos_style` or `neg_style` should be used is defined by the `rule` parameter from the `conditionalFormatting()`^[In `conditionalFormatting()`, you can specify to which `rows` and `cols` the formatting applies. In this example, `cols` takes `2` because the first column contains the row names.] function.
-
-
-```{r openxlsx}
-library(openxlsx)
 
 # Pre-define options to control the borders 
 options("openxlsx.borderColour" = "#4F80BD")
 options("openxlsx.borderStyle" = "thin")
 
 # Automatically set Number formats to 3 values after the decimal
-options("openxlsx.numFmt" = "0.000")
+options("openxlsx.numFmt" = "0.0")
 
-# Create a header style in which 
-  # a blue background is used,
-  # borders on top and on the bottom, 
-  # the text is centered and is bold
+# Change the font to Calibri size 10
+modifyBaseFont(wb,fontName = "Calibri", fontSize = 10)
 
+# Header Style (blue background, top/bottom borders, text centered/bold)
 headSty <- createStyle(fgFill = "#DCE6F1",
                        border = "TopBottom",
                        halign = "center",
                        textDecoration = "bold")
 
-# Data preparation
-senso_mean <- sensory %>% 
-  group_by(Product) %>% 
-  summarise(across(where(is.numeric), mean)) %>% 
-  tibble::column_to_rownames(var = "Product")
+```
 
-overall_mean <- apply(senso_mean, 2, mean)
 
-# Create workbook object
-wb <- openxlsx::createWorkbook()
+Note that many more formatting options can be configured through:
 
-# Change the font to Calibri size 10
-modifyBaseFont(wb,fontName = "Calibri", fontSize = 10)
+  * `options()` to pre-define number formatting, border colors and style, etc.;
+  * `modifyBaseFont()` to define the font name and font size;
+  * `freezePane()` to freeze the first row and/or column of the table;
+  * `createStyle()` to pre-define a style, or `addStyle()` to apply the styling to selected cells;
+  * `setColWidths` to control column width;
+  * `conditionalFormatting()` to format cells based on pre-defined conditions (see next for an example). 
+  
+Let's export again the sensory profiles in a second sheet after applying these formatting:
 
-# Add a new worksheet
-addWorksheet(wb, sheetName = "Mean", gridLines = FALSE)
 
-# Write table: note that 
-writeDataTable(wb,
-               sheet = "Mean",
-               x = senso_mean, 
-               startCol = 1,
-               startRow = 1,
-               colNames = TRUE, rowNames = TRUE, 
-               tableStyle = "TableStyleLight9")
+```{r}
+addWorksheet(wb, sheetName = "Mean (manual formatting)", gridLines = FALSE)
 
-# Freezing the table
-freezePane(wb, sheet = "Mean", firstRow = TRUE, firstCol = TRUE)
+# Freeze first row and first column
+freezePane(wb, sheet=2, firstRow=TRUE, firstCol=TRUE)
+
+# Export the data using writeData
+writeData(wb,
+          sheet =2,
+          x = senso_mean, 
+          startCol = 1,
+          startRow = 1,
+          colNames = TRUE, rowNames = FALSE, 
+          headerStyle = headSty)
+
+openXL(wb)
+
+```
+
+
+You'll notice that the same table is now presented in a fairly different way. 
+
+Let's now consider a third export of the sensory profiles, with an additional twist: for a given variable (i.e. column), the value is colored in red (resp. blue) if it is higher (resp. lower) than its mean. To do so, we need to use conditional formatting.  
+
+Let's start with creating two pre-defined parameters called `pos_style` (red) and `neg_style` (blue) using `createStyle()`that we will use to color the different cells. Let's also compute the overall mean per attribute.
+
+
+```{r openxlsx}
 
 # Styles for conditional formatting
 pos_style <- createStyle(fontColour = "firebrick3", bgFill = "mistyrose1")
 neg_style <- createStyle(fontColour = "navy", bgFill = "lightsteelblue")
 
-# Adding formatting to the second column
-conditionalFormatting(wb,
-                      sheet = "Mean", 
-                      cols  = 2,
-                      rows  = 1 + 1:nrow(senso_mean), 
-                      rule  = paste0(">",overall_mean[2]),
-                      style = pos_style)
-
-conditionalFormatting(wb,
-                      sheet = "Mean",
-                      cols  = 2,
-                      rows  = 1 + 1:nrow(senso_mean), 
-                      rule  = paste0("<",overall_mean[2]),
-                      style = neg_style)
-
-setColWidths(wb, sheet = "Mean",
-             cols = 1:(1+ncol(senso_mean)), widths = 12)
+# Compute the overall mean
+overall_mean <- senso_mean %>% 
+  summarize(across(where(is.numeric), mean))
 
 ```
 
 
-The file is created using `saveWorkbook()` by specifying the name of the workbook `wb` and its path through `file`. In case such workbook already exists, it can be overwritten using `overwrite`. 
+Let's then create a new worksheet in which we print the data of interest:
 
-TIPS: At any time, you can visualize your file using `openXL()`: This function opens within Excel the temporary file that is currently being built, hence allowing you to double-check that your code matches your expectations.
+```{r}
+
+# Add a new worksheet
+addWorksheet(wb, sheetName = "Conditional Formatting", gridLines=FALSE)
+
+# Write table: note that 
+writeDataTable(wb,
+               sheet = 3,
+               x = senso_mean, 
+               startCol = 1,
+               startRow = 1,
+               colNames = TRUE, rowNames = FALSE)
+
+```
+
+
+Finally, we color the cells according to the rules that was defined earlier. To do so, the decision whether `pos_style` or `neg_style` should be used is defined by the `rule` parameter from the `conditionalFormatting()`^[In `conditionalFormatting()`, you can specify to which `rows` and `cols` the formatting applies. In this example, `cols` takes `2` because the first column contains the row names.] function.
+
+
+```{r}
+# Adding formatting to the second column
+for (v in 1:ncol(overall_mean)){
+  
+  conditionalFormatting(wb,
+                        sheet = 3,
+                        cols  = v + 3,
+                        rows  = 1 + 1:nrow(senso_mean), 
+                        rule  = paste0(">", overall_mean[1,v]),
+                        style = pos_style)
+  
+  conditionalFormatting(wb,
+                        sheet = 3,
+                        cols  = v + 3,
+                        rows  = 1 + 1:nrow(senso_mean), 
+                        rule  = paste0("<", overall_mean[1,v]),
+                        style = neg_style)
+  
+}
+
+openXL(wb)
+
+```
+
+
+Few things should be noted: 
+
+  * We want to run this for each sensory attribute, hence the `for` loop that goes from 1 to the number of columns stored in `overall_mean` (`overall_mean` only contains the overall mean scores for the sensory attributes);
+  * `senso_mean` however contains 3 extra columns: `Product`, `Protein`, and `Fiber` hence the parameter `cols = v + 3`;
+  * We apply the formatting to all the rows except the header, hence `rows = 1 + 1:nrow(senso_mean)`;
+  * Finally, we apply `pos_style` (resp. `neg_style`) if the value is larger (resp. lower) than the overall mean for that attribute using `rule = paste0(">", overall_mean[1,v])`.
+ 
+
+Note that the spreadsheet is complete, we create the file using `saveWorkbook()` by specifying the name of the workbook `wb` and its path through `file`. In case such workbook already exists, it can be overwritten using `overwrite`. 
 
 For more details on using **{openxlsx}** see <https://rdrr.io/cran/openxlsx/>.
+
 
 ### PowerPoint
 
@@ -628,9 +653,11 @@ doc <- read_docx() %>%
 
 ### Notes on applying corporate branding
 
-Pre-define parameters/options (fonts, logos, etc.) in a separate file that you can source at the start and call easily.
-Import company templates (PowerPoint, Word) that already includes pre-defined options.
 
+You may have noticed that we have been consistent with our approach to export results to reports, regardless of the final output:
+We start with pre-defining our styling parameters that we then apply to our different tables or slides. This is not a rule, yet we strongly recommend you doing so: If you start with creating your different styling parameters at the start of your script file, these lines of code do not interfere with the rest of your code. And keeping well-structured code gains in clarity, and will be game changer when trouble-shooting for some errors.
+
+In fact, we would recommend you going one step further and store all this styling parameters in a separate file that you can then load any time you need it using `source()`. By doing so, you **reduce** the size of your script file (hence gaining in clarity), while **harmonizing** all your exports by **centralizing** your code in one unique place. The last point is particularly important since any change/update done in one place will then be automatically applied to any new report.
 
 
 ## Integrating analyses scripts within reporting tools
