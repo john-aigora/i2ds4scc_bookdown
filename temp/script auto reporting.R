@@ -1,11 +1,9 @@
 library(tidyverse)
 library(readxl)
-library(writexl)
-library(dplyr)
-
 
 # writexl -----------------------------------------------------------------
 
+library(writexl)
 file_path <- file.path("data", "Sensory Profile.xlsx")
 
 product_info <- read_excel(path  = file_path,
@@ -96,8 +94,6 @@ writeData(wb,
           colNames = TRUE, rowNames = FALSE, 
           headerStyle = headSty)
 
-
-
 openXL(wb)
 
   # Conditional Formatting
@@ -134,6 +130,41 @@ for (v in 1:ncol(overall_mean)){
   
 }
 
-setColWidths(wb, sheet = 3,
-             cols = 1:ncol(senso_mean), widths = 12)
+openXL(wb)
 
+# saveWorbook(wb, file="temp/excel export.xlsx")
+
+# PowerPoint --------------------------------------------------------------
+
+library(officer)
+
+  ## Creating template
+pptx_obj <- read_pptx()
+
+pptx_obj2 <- read_pptx(file.path("data", "templates", "intergral.pptx"))
+
+pptx_obj %>%
+  layout_summary()
+
+pptx_obj2 %>%
+  layout_summary()
+
+pptx_obj %>% 
+  layout_properties() %>% 
+  filter(name == "Title and Content")
+
+master = "Office Theme"
+pptx_obj <- pptx_obj %>% 
+  add_slide(layout = 'Title and Content', master = master)
+
+my_data <- c("My functions are:", "ph_with", "ph_location_type")
+pptx_obj <- pptx_obj %>%
+  ph_with(value = "My first title", location = ph_location_type(type = "title")) %>% 
+  ph_with(value = my_data, location = ph_location_type(type = 'body'))
+
+my_data <- "My new text positioned using ph_location()"
+pptx_obj <- pptx_obj %>%
+  add_slide(layout = "Title and Content", master = master) %>% 
+  ph_with(value = my_data, location = ph_location(left = 2, top = 2, width = 3, height = 1))
+
+  

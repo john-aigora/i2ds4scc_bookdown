@@ -35,6 +35,9 @@ Integrating reporting within the analysis part, or integrating the analysis with
 To improve way of work (efficiency) and to keep track of steps taken along the way
 -->
 
+
+<!--  --------------------------------- Excel ---------------------------------  -->
+
 ### Excel
 
 Although Excel is not our preferred tool for automated reporting, it is still one of the major ways to access and share data. Most data collection software offer the possibility to export data and results in Excel, while most data analysis software accept Excel format as inputs.  With the large use of Excel, it is no surprise that many of our colleagues or clients like to share data and results using spreadsheets. It is even less a surprise that R provides multiple solutions to import/export results from/to Excel. 
@@ -276,123 +279,143 @@ Few things should be noted:
   * Finally, we apply `pos_style` (resp. `neg_style`) if the value is larger (resp. lower) than the overall mean for that attribute using `rule = paste0(">", overall_mean[1,v])`.
  
 
-Note that the spreadsheet is complete, we create the file using `saveWorkbook()` by specifying the name of the workbook `wb` and its path through `file`. In case such workbook already exists, it can be overwritten using `overwrite`. 
+Note that once the spreadsheet is complete, we create the file using `saveWorkbook()` by specifying the name of the workbook `wb` and its path through `file`. In case such workbook already exists, it can be overwritten using `overwrite`. 
+
+```{r}
+
+saveWorbook(wb, file="temp/excel export.xlsx")
+
+```
+
 
 For more details on using **{openxlsx}** see <https://rdrr.io/cran/openxlsx/>.
 
 
+<!--  --------------------------------- PowerPoint ---------------------------------  -->
+
+
 ### PowerPoint
-
-```{r}
-library(tidyverse)
-library(officer)
-library(flextable)
-```
-
-With `{officer}`, the procedure starts with creating a powerpoint object `pptx_obj` using the `read_pptx()` function, to which we add slides through the `add_slide()` function. 
-On a given worksheet, any type of content (text, graph, table) can be exported using `ph_with()` (ph ~ placeholder) which controls where to write the content through the `location` and `ph_location` options.
-
-Through these different functions, many additional formatting procedure can be applied.
-
-- `add_slide()` with arguments:
-  * `layout` type of slide;
-  * `master` theme of the deck;
-  
-
 
 #### Creating a PowerPoint Deck
 
-**Key functions:**
-`read_pptx(path)` `add_slide(x, layout, master)` `layout_summary(x)` 
+
+Throughout the years, PowerPoint became one of the main support for presenting results, whether it is in academia, in conference, or in companies. It is hence important for us to show how to generate reports in PowerPoint from R directly. This can be done in different ways, yet we propose to use the `{officer}` package, as its application is vast while still remaining easy to use.
+
+
+```{r}
+library(officer)
+```
+
+
+With `{officer}`, the procedure starts with creating a PowerPoint object (`pptx_obj`) using the `read_pptx()` function. 
+
 
 ```{r 1.1 creating a PPT deck}
-pptx_obj <- read_pptx() # new empty file
-pptx_obj <- pptx_obj %>% 
-  add_slide(layout  = 'Title and Content', master = "Office Theme")
 
-class(pptx_obj)
+pptx_obj <- read_pptx() # new empty file
+
+```
+
+
+A blank Deck is by default set up with the *Office Theme*. To use a custom theme, we must create a Deck using the PowerPoint software and use it as input. Let's import the *intergral.pptx* template:
+
+
+```{r themes2}
+
+pptx_obj2 <- read_pptx(file.path("data", "templates", "intergral.pptx"))
+
+```
+
+
+To inspect the content of the template, we use `layout_summary()`:
+
+```{r}
 
 pptx_obj %>%
   layout_summary()
 
-pptx_obj %>% 
-  print(target = file.path("output","example_1.pptx"))
-```
-
-#### PowerPoint Themes
-
-A blank Deck is by default set up with the *Office Theme*. To use a custom theme, we must create a Deck using the Powerpoint software and use it as input.
-
-Loading a template with a custom theme
-```{r themes2}
-pptx_obj <- read_pptx(file.path("data", "templates", "intergral.pptx"))
-
-pptx_obj %>% 
+pptx_obj2 %>% 
   layout_summary()
 
-pptx_obj <- pptx_obj %>% # add slide
-  add_slide(layout = "Title and Content", master = "Integral")
+```
+
+
+As can be seen by `layout_summary()`, the template imported (also called **master**, which is defined here as *Office Theme*) proposes 7 types of slides including *Title Slide*, *Title and Content*, *Section Header*, *Two Content*, *Comparison*, *Title Only*, and finally *Blank* (the *intergral.pptx* template has 11 different types of slides). Each of these slides present some pre-defined properties (e.g. a box for text of tables/images, a header etc.). Let's look at the properties of *Title and Content* using `layout_properties()`
+
+
+```{r}
+pptx_obj %>% 
+  layout_properties() %>% 
+  filter(name == "Title and Content")
+```
+
+
+This code provides more details about the different sections, their identifier and position of the slide. This information will be particularly useful when we will want to export certain information in some particular areas.
+
+
+#### Adding/Moving/Removing Slides
+
+
+With `{officer}`, various actions can be done on the slides. The first logical action consists in adding a new slide to a presentation, in which we will later on write some text, tables, figures, etc. Such action can be done using `add_slide()`, in which we inform the type of slide to add, and from which master:
+
+
+```{r}
+
+master = "Office Theme"
+pptx_obj <- pptx_obj %>% 
+  add_slide(layout = 'Title and Content', master = master)
 
 ```
 
 
-#### Placeholders and Shapes
+This code will add a *Title and Content* slide to your deck.
 
-- `ph_location_type()` allows use predefined placeholders for content:
-  * title, body
-  * ctrTitle, subTitle, dt, ftr, sldNum
+Additional operations on the slides themselves can be done. In particular, you can re-organize your deck by changing the orders of your slides using `move_slide()`, delete slides that are no longer needed through `remove_slide()`, or modify a pre-existing slides by making it active using `on_slide()` (by default, the last slide created is the active one).
 
-```{r 2.1 shapes1}
-# Example 1
+
+#### Positioning Information to the Slide
+
+
+On a given slide, any type of content (text, graph, table, etc.) can be exported. To do so, we need to inform where to write what.
+
+As we will see in the next sections, the *what* can be any R element including simple text, tables, figures, etc. So let's ignore it for the moment, and let's focus on the *where*. 
+To inform where to print elements on the slide, the function `ph_with()` (*ph* stands for *placeholder*) is used. In practice, `ph_with()` comes with the parameter `location`, which takes as input a *placeholder location object* pre-defined by the function `ph_location()` or one of its derivative, one of the most useful one being `ph_location_type()`. To do so, simply provide the name stored in the column type from the `layout_properties()` output presented before, as following:
+
+
+```{r}
+
 my_data <- c("My functions are:", "ph_with", "ph_location_type")
 
-# first slide
-pptx_obj <- read_pptx() %>%
-  add_slide(layout = "Title and Content", master = "Office Theme")
-
 pptx_obj <- pptx_obj %>%
+  ph_with(value = "My first title", location = ph_location_type(type = "title")) %>% 
   ph_with(value = my_data, location = ph_location_type(type = 'body'))
 
-pptx_obj <- pptx_obj %>% 
-  on_slide(index = 1) # set active slide
-
-slide_summary(pptx_obj) # technical content summary
-
-my_data <- head(mtcars)[,1:4]
-
-# second slide
-pptx_obj <- pptx_obj %>% 
-    add_slide(layout = "Title and Content", master = "Office Theme")
-
-pptx_obj <- pptx_obj %>% 
-  ph_with(value = my_data, location = ph_location_type(type = 'body')) 
-
-pptx_obj %>%
-  print(target = file.path("output","example_2.pptx"))
-
 ```
 
-- `ph_location()` allows to specify exact positions for content
-  * for left/top/width/height units are inches
 
-```{r 2.3 shapes3}
-# Example 3
-# We add a text box item in a custom position
-# The same can be done for an image, logo, custom objects, etc.
+This will add a title ("My first title") and the text stored in `my_data` to the *body* of the slide (*Title and Content*) created previously.
 
-my_data <- "My text"
+Other pre-defined alternatives to `ph_location()` include:
 
-pptx_obj <- read_pptx() %>%
-  add_slide(layout = "Title and Content", master = "Office Theme")
+ * `ph_location_fullsize()` to produce an output that covers the entire slide;
+ * `ph_location_left()` and `ph_location_right()` to write in the left/right box in *Two Content* types of slide;
+ * `ph_location_labe()` is similar to `ph_location_type()` except that it uses the label rather than the type.
+
+To gain full control of the exact position of the element to print, `ph_location()` is used. It allows specifying exact positions for content (for left/top/width/height, units are inches):
+
+```{r}
+
+my_data <- "My new text positioned using ph_location()"
 
 pptx_obj <- pptx_obj %>%
+  add_slide(layout = "Title and Content", master = master) %>% 
   ph_with(value = my_data, location = ph_location(left = 2, top = 2, width = 3, height = 1))
 
-pptx_obj %>%
-  print(target = file.path("output","example_3.pptx"))
 ```
 
-#### Working with Text
+
+#### Exporting Text
+
 
 Each new text item added to a PowerPoint via officer is a paragraph object
 
@@ -424,7 +447,7 @@ pptx_obj %>%
 For more details on using **{officer}** see <https://davidgohel.github.io/officer>.
 
 
-### Tables
+#### Exporting Tables with `{flextable}`
 
 `ph_with` accepts a data.frame as value and renders it in a default format
 
@@ -445,7 +468,7 @@ pptx_obj <- read_pptx() %>%
   print(target = file.path("output","table_1.pptx"))
 ```
 
-#### Introduction to flextable
+##### Introduction to flextable
 
 With `{flextable}`, the procedure starts with creating a flextable object `ft_table` using the `flextable()` function.
 Flextable objects are compatible with `{officer}` and therefore are our primary tool for table formatting.
@@ -469,7 +492,7 @@ print(ft_table)
 
 ```
 
-#### Formatting examples
+##### Formatting examples
 
 ```{r 4.4 demonstration}
 ft_table <- ft_table %>%
@@ -526,7 +549,7 @@ print(ft_table)
 ```
 
 
-#### Add flextable object to a powerpoint slide
+##### Add flextable object to a powerpoint slide
 
 ```{r 4.7 original example}
 # Add table to slide
@@ -538,9 +561,8 @@ pptx_obj <- read_pptx() %>%
 
 For more details on using **{flextable}** see <https://davidgohel.github.io/flextable/>.
 
-### Charts
+#### Exporting Plots
 
-#### Adding charts as images
 
 ```{r 5.1 rvg package}
 # Using ggplot2 as plotting library
@@ -555,7 +577,7 @@ chart_to_plot <- senso_mean %>%
 print(chart_to_plot) #in Plots window of Rstudio
 ```
 
-#### rvg package
+##### rvg package
 
 rvg is providing two graphics devices that produces Vector Graphics outputs in `DrawingML` format for Microsoft PowerPoint with dml_pptx and for Microsoft Excel with dml_xlsx.
 
@@ -580,7 +602,7 @@ pptx_obj <- read_pptx() %>%
 
 ```
 
-#### mschart package
+##### mschart package
 
 ```{r 5.3 mschart example}
 library(mschart)
@@ -607,6 +629,12 @@ pptx_obj <- read_pptx() %>%
   ph_with(value = my_barchart, location = ph_location_type(type = "body")) %>%
   print(target = file.path("output","rvg_2.pptx"))
 ```
+
+#### Finalizing the Document
+
+
+<!--  --------------------------------- Word ---------------------------------  -->
+
 
 ### Word
 
@@ -655,9 +683,11 @@ doc <- read_docx() %>%
 
 
 You may have noticed that we have been consistent with our approach to export results to reports, regardless of the final output:
-We start with pre-defining our styling parameters that we then apply to our different tables or slides. This is not a rule, yet we strongly recommend you doing so: If you start with creating your different styling parameters at the start of your script file, these lines of code do not interfere with the rest of your code. And keeping well-structured code gains in clarity, and will be game changer when trouble-shooting for some errors.
+We start with pre-defining our styling parameters that we then apply to our different tables, slides, etc. This is not a formal rule, yet we strongly recommend you adopting this way of working. 
 
-In fact, we would recommend you going one step further and store all this styling parameters in a separate file that you can then load any time you need it using `source()`. By doing so, you **reduce** the size of your script file (hence gaining in clarity), while **harmonizing** all your exports by **centralizing** your code in one unique place. The last point is particularly important since any change/update done in one place will then be automatically applied to any new report.
+If you create your different styling parameters at the start of your script file, these lines of code do not interfere with your analyses. At a later stage, you will thank yourself for keeping well-structured code as it gains in clarity, and hence facilitates debugging your code in case of error or changes.
+
+In fact, we would recommend you going one step further and store all this styling parameters in a separate file that you can  load any time you need using `source()`. This process **reduces** the size of your script file (increasing clarity), while **harmonizing** all your exports by **centralizing** your *formatting code* in one unique place. The last point is particularly important since any changes required, or update made only need to be done once, yet they will be applied to all your reports.
 
 
 ## Integrating analyses scripts within reporting tools
@@ -702,3 +732,9 @@ Packages for formatting
 extrafont
 extrafontdb
 Rcolorbrewer
+
+
+## To go further...
+
+Creating dashboards using shiny, that generate the reports as well
+Building report and sending them automatically by email to clients/partners
