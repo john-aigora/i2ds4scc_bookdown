@@ -1,7 +1,10 @@
 library(tidyverse)
 library(readxl)
 
-# writexl -----------------------------------------------------------------
+
+# Excel -------------------------------------------------------------------
+
+  ## writexl 
 
 library(writexl)
 file_path <- file.path("data", "Sensory Profile.xlsx")
@@ -25,9 +28,7 @@ high_prot_data <- read_xlsx(path = file_path,
 write_xlsx(data, 
            path = file.path("output", "High Protein Products only.xlsx"),
            col_names = TRUE)
-
-
-# openxlsx ----------------------------------------------------------------
+  ## openxlsx
 
 library(openxlsx)
 
@@ -167,4 +168,44 @@ pptx_obj <- pptx_obj %>%
   add_slide(layout = "Title and Content", master = master) %>% 
   ph_with(value = my_data, location = ph_location(left = 2, top = 2, width = 3, height = 1))
 
-  
+print(pptx_obj, "temp/my powerpoint export.pptx")
+
+  ## Formatting Text
+my_prop <- fp_text(color = "red", font.size = 14) # Formatting option
+my_text <- ftext("First Line in Red", prop = my_prop) # First line of text, formatted
+
+my_par <- fpar(my_text) # text into a paragraph
+blank_line <- fpar("") # other empty paragraph to introduce an empty line
+
+my_par2 <- fpar("Second Line") # second line of text, unformatted
+my_list <- block_list(my_par, blank_line, my_par2) # Final block with the two lines of text separated by the empty line
+
+pptx_obj <- pptx_obj %>%
+  add_slide(layout = "Title and Content", master = master) %>% 
+  ph_with(value = my_list, location = ph_location_type(type = "body") )
+
+print(pptx_obj, target = "temp/my powerpoint export.pptx")
+
+text1 <- fpar("FIRST SENTENCE")
+text2 <- fpar("second sentence")
+text3 <- fpar("THIRD SENTENCE")
+my_data <- block_list(text1, text2, text3)
+
+pptx_obj <- pptx_obj %>%
+  add_slide(layout = "Title and Content", master = master) %>% 
+  ph_with(value = my_data, level_list = c(1,2,1), location = ph_location_type(type = 'body'))
+
+print(pptx_obj, target = "temp/my powerpoint export.pptx")
+
+  ## Exporting Tables
+
+ft_data <- senso_mean %>%
+  dplyr::select(Product, Salty, Sweet, Sour, Bitter) %>% 
+  mutate(across(where(is.numeric), round, 2)) 
+
+pptx_obj <- pptx_obj %>%
+  add_slide(layout = "Title and Content", master = master) %>%
+  ph_with(value = ft_data, location = ph_location_type(type = "body")) %>%
+  print(target = "temp/my powerpoint export.pptx")
+
+  ## {flextable}

@@ -299,7 +299,7 @@ For more details on using **{openxlsx}** see <https://rdrr.io/cran/openxlsx/>.
 #### Creating a PowerPoint Deck
 
 
-Throughout the years, PowerPoint became one of the main support for presenting results, whether it is in academia, in conference, or in companies. It is hence important for us to show how to generate reports in PowerPoint from R directly. This can be done in different ways, yet we propose to use the `{officer}` package, as its application is vast while still remaining easy to use.
+Throughout the years, PowerPoint became one of the main support for presenting results, whether it is in academia, in conference, or in companies. It is hence important for us to show how to generate reports in PowerPoint from R directly. This can be done in different ways, yet we propose to use the `{officer}`^[It should be noted that {officer} contains conflicting function names with other packages we use (e.g. `read_xlsx()`). To ensure you use the right function, call the function from the package of interest (e.g. `readxl::read_xlsx()`).] package, as its application is vast while still remaining easy to use.
 
 
 ```{r}
@@ -352,6 +352,8 @@ pptx_obj %>%
 
 This code provides more details about the different sections, their identifier and position of the slide. This information will be particularly useful when we will want to export certain information in some particular areas.
 
+Unfortunately, `{officer}` does not provide a function similar to `openxlsx::openXL()` which allows visualizing the file that is currently being build. Instead, we need to save the document directly on the disk using the `print()` function, which takes as entries the PowerPoint file to export (here `pptx_obj`) and its output location.
+
 
 #### Adding/Moving/Removing Slides
 
@@ -403,6 +405,7 @@ Other pre-defined alternatives to `ph_location()` include:
 
 To gain full control of the exact position of the element to print, `ph_location()` is used. It allows specifying exact positions for content (for left/top/width/height, units are inches):
 
+
 ```{r}
 
 my_data <- "My new text positioned using ph_location()"
@@ -414,83 +417,127 @@ pptx_obj <- pptx_obj %>%
 ```
 
 
+To visualize the different steps done so far, let's save the results on our computers:
+
+
+```{r}
+print(pptx_obj, "temp/my powerpoint export.pptx")
+```
+
+
 #### Exporting Text
 
 
-Each new text item added to a PowerPoint via officer is a paragraph object
+In the previous section, we already exported text to slides. Let's go a bit deeper in the process by also showing how to format the text.
 
-`fpar()` ("formatted paragraph") creates this object
+By default, each new text item added to a PowerPoint via `{officer}` is a paragraph object. To further format the paragraph, three main functions are being used:
 
-`block_list()` allows us to wrap multiple paragraphs together
+  * `fpar()` (*formatted paragraph*) creates the paragraph;
+  * `ftext()` (*formatted text*) allows editing the text before pasting into paragraphs. `ftext()` requires a second argument called `prop` which contains the formatting properties;
+  * `block_list()` allows us to wrap multiple paragraphs together.
+  
+Let's go through an example to illustrate the use of these functions:
 
-`ftext()` ("formatted text") to edit the text before pasting into paragraphs. `ftext()` requires a second argument called prop which contains the formatting properties.
 
-```{r 3.1 text1}
+```{r}
 
-my_prop <- fp_text(color = "red", font.size = 14)
-my_text <- ftext("First Line in Red", prop = my_prop)
+my_prop <- fp_text(color = "red", font.size = 14) # Formatting option
+my_text <- ftext("First Line in Red", prop = my_prop) # First line of text, formatted
 
-my_par <- fpar(my_text) # formatted
-blank_line <- fpar("") #optional
+my_par <- fpar(my_text) # text into a paragraph
+blank_line <- fpar("") # other empty paragraph to introduce an empty line
 
-my_par2 <- fpar("Second Line") # unformatted
-my_list <- block_list(my_par, blank_line, my_par2)
+my_par2 <- fpar("Second Line") # second line of text, unformatted
+my_list <- block_list(my_par, blank_line, my_par2) # Final block with the two lines of text separated by the empty line
 
-pptx_obj <- read_pptx() %>%
-  add_slide(layout = "Title and Content", master = "Office Theme") %>% 
+pptx_obj <- pptx_obj %>%
+  add_slide(layout = "Title and Content", master = master) %>% 
   ph_with(value = my_list, location = ph_location_type(type = "body") )
 
-pptx_obj %>%
-  print(target = file.path("output","example_4.pptx"))
+print(pptx_obj, target = "temp/my powerpoint export.pptx")
 ```
+
+
+This add an additional slide to our previous PowerPoint deck with our formatted text.
+
+Last element of formatting to consider is the hierarchy in bullet points. Let's add a slide containing three bullet points with a hierarchy so that the 1st and 3rd lines are primary points, and the second line is a secondary point.
+Such hierarchy can be informed using the `level_list` parameter, which informs the hierarchy of each element:
+
+```{r}
+
+text1 <- fpar("FIRST SENTENCE")
+text2 <- fpar("second sentence")
+text3 <- fpar("THIRD SENTENCE")
+my_data <- block_list(text1, text2, text3)
+
+pptx_obj <- pptx_obj %>%
+  add_slide(layout = "Title and Content", master = master) %>% 
+  ph_with(value = my_data, level_list = c(1,2,1), location = ph_location_type(type = 'body'))
+
+print(pptx_obj, target = "temp/my powerpoint export.pptx")
+
+```
+
 
 For more details on using **{officer}** see <https://davidgohel.github.io/officer>.
 
 
-#### Exporting Tables with `{flextable}`
+#### Exporting Tables
 
-`ph_with` accepts a data.frame as value and renders it in a default format
+
+Now we know how to export formatted text to slides, let's export tables. This can easily be done by rendering a data frame rather than text as `ph_with()` accepts it and renders it in a default format. Let's use a subset of `senso_mean` for illustration:
+
 
 ```{r 4.1 basic code}
 ft_data <- senso_mean %>%
-  dplyr::select(Salty, Sweet, Sour, Bitter) %>% 
-  tibble::rownames_to_column() %>% 
-  rename(Product = rowname) %>% 
-  mutate(across(Salty:Bitter, as.numeric)) %>% 
-  bind_rows(summarise(.,
-                      across(where(is.numeric), mean),
-                      across(where(is.character), ~"Average"))) %>% 
+  dplyr::select(Product, Salty, Sweet, Sour, Bitter) %>% 
   mutate(across(where(is.numeric), round, 2)) 
 
 pptx_obj <- read_pptx() %>%
-  add_slide(layout = "Title and Content", master = "Office Theme") %>%
+  add_slide(layout = "Title and Content", master = master) %>%
   ph_with(value = ft_data, location = ph_location_type(type = "body")) %>%
-  print(target = file.path("output","table_1.pptx"))
+  print(target = "temp/my powerpoint export.pptx")
 ```
+
+
+Although this solution works fine, it does not allow formatting the table as much as we would want. Instead, we prefer to use another package called `{flextable}` which was developed by the same author as `{officer}` (both packages being complementary).
+
 
 ##### Introduction to flextable
 
-With `{flextable}`, the procedure starts with creating a flextable object `ft_table` using the `flextable()` function.
-Flextable objects are compatible with `{officer}` and therefore are our primary tool for table formatting.
-Through different functions, many custom formatting procedure can be applied:  
 
-**key functions:**
- `align()` `bold()` `font()` `color()` `bg()` `height()` & `width()` 
- `border_outer()` & `border_inner()` & `border_inner_h()` `border_inner_v()` `autofit()`
-
-Additional function to learn: `merge()`, `compose()` & `as_chunk()`, `style()`
+With `{flextable}`, the procedure starts with creating a *flextable* object (here `ft_table`) using the `flextable()` function.
 
 ```{r flextable2}
 library(flextable)
 
-# Create a flextable object
 ft_table <- ft_data %>% 
   flextable()
 
-# Flextable objects can be found in the Viewer tab of Rstudio
 print(ft_table)
 
 ```
+
+
+By printing the table, it opens in the Rstudio viewer as an html file.
+
+Through different functions, many custom formatting procedure can be applied:  
+
+  * `align()`
+  * `bold()`
+  * `font()`
+  * `color()`
+  * `bg()`
+  * `height()` & `width()` 
+  * `border_outer()` & `border_inner()` & `border_inner_h()` & `border_inner_v()`
+  * `autofit()`
+
+To go further, you can also consider the following functions: 
+
+  * `merge()`
+  * `compose()` & `as_chunk()`
+  * `style()`
+
 
 ##### Formatting examples
 
