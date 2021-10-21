@@ -1,7 +1,7 @@
 ```{r include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 ```
-
+<!-- I guess it can be interesting to have chapter 7, about data collection/import, before data manipulation. In this way the reader doesn't need to go to chapter 7 before starting this one to check how to import data. -->
 
 # Data Manipulation {#data-manip}
 
@@ -62,6 +62,8 @@ sensory %>%
 
 And here are the recoded names:
 
+<!-- Although by reading the sentence above we can presume how the arguments should be written, I  think it is a good idea to explicit explain it. In this case, maybe it would be a good idea to emphasize that the first name refers to the new name and the second the old name you want to change --> 
+
 ```{r}
 sensory %>% 
   rename(Panellist = Judge, Sample = Product) %>% 
@@ -70,7 +72,7 @@ sensory %>%
 
 If this procedure of renaming variables should be applied on many variables following a structured form (e.g. transforming names into snake_case, CamelCase, etc.), the use of the `{janitor}` package comes handy thanks to its `clean_names()` function and the `case` parameter:
 
-
+<!-- It may be a good idea to explain what "snake" is. Maybe a argument is not really necessary here? -->
 ```{r}
 library(janitor)
 sensory %>% 
@@ -206,7 +208,7 @@ It can happen that some columns of a data set contain information (strings) that
 For illustration, let's consider the information stored in the *Product Info* sheet from *Sensory Profile.xlsx*. This table includes information regarding the cookies, and more precisely whether their Protein and Fiber content (Low or High). After importing the data, let's merge these two columns so that both information is stored in one column called `ProtFib`. 
 To do so, we use the `unite()` function from the `{tidyr}` package, which takes as first element the name of the new variables, followed by all the columns to *unite*, and by providing the separation between the elements (here *-*):
 
-
+<!-- What does "here" mean? Maybe it would be better to call file.path? Maybe it is a good idea to mention at the beginning of the chapter the library needed. --> 
 ```{r}
 file_path <- here("data","Sensory Profile.xlsx") 
 prodinfo <- read_xlsx(file_path, sheet="Product Info") %>%  
@@ -264,7 +266,7 @@ sensory %>%
 
 
 Other relevant test characters are the following:
-
+<!-- Maybe the topic "for multiple conditions shouldn't be in a bullet point as the others. --> 
  - `!Product == "P02"` or `Product != "P02"` means different from, and will keep all samples except `P02`;
  - `%in% my_vector` keeps any value included within the vector `my_vector` (e.g. `Product %in% c("P01","P02","P03")`);
  - for multiple conditions: 
@@ -273,7 +275,8 @@ Other relevant test characters are the following:
   
 As we will see later, this option is particularly useful when you have missing values as you could remove all the rows that contain missing values for a given variable. Since we do not have missing values here, let's create some by replacing all the evaluations for Shiny that are larger than 40 by missing values. In a second step, we can filter out all missing values from Shiny:
 
-
+<!-- If this function is not explained later, I think it would be a good idea to explain ifelse.-->
+<!-- I noticed that here a space was given between the function and output, which is not the case of the codes above. I think this way is clearer-->
 ```{r}
 sensory_na <- sensory %>% 
   dplyr::select(Judge, Product, Shiny) %>% 
@@ -296,7 +299,7 @@ As we can see, this procedure removed 20 rows since the original table had 99 ro
 After filtering data, the next logical step is to split data into subsets based on a given variable (e.g. by gender). For such purpose, one could consider using `filter()` by applying it to each subgroup. To some extent, this is what we have done when we only filtered data from sample `P02`. To get sub-groups of data for each sample, we could repeat the same procedure for all the other samples. However, this procedure becomes tedious as the number of samples increases. 
 For such task, we prefer the use of the function `split()`, which takes as argument the column to split from:
 
-
+<!-- Maybe is a good idea to quick mention the rest of the argument ".$" -->
 ```{r}
 sensory %>% 
   split(.$Product)
@@ -499,7 +502,8 @@ To do so, we use the file *excel-scrap.xlsx* which contains a fake example in wh
 
 To combine the tables vertically, we could use the basic R function `rbind()`. However, we prefer the use of `bind_rows()` from the `{dplyr}` package since it better controls for the columns by ensuring that the order is well respected (in case one table contains a variable that the other tables do not, it will keep the variables and allocate NAs when this information is missing). To keep the distinction between the three tables, the parameter `.id` is used. This will create a column called `Session` in this example that will assign a 1 to the first table, a 2 to the second one, and a 3 to the third one (we do this here since this information was not available within the tables: If it were, the parameter `.id` could have been ignored).
 
-
+<!-- This word "here" sounds confusing to me -->
+<!-- I would suggest mentioning the necessary library for the chapter only once, at the beginning Also, for consistence, to codes to open all files should be similar, using the same names. E.g. compare section 3.1.1.1.4 codes and this one.  -->
 ```{r}
 library(here)
 library(readxl)
