@@ -495,8 +495,9 @@ ft_data <- senso_mean %>%
 
 pptx_obj <- read_pptx() %>%
   add_slide(layout = "Title and Content", master = master) %>%
-  ph_with(value = ft_data, location = ph_location_type(type = "body")) %>%
-  print(target = "temp/my powerpoint export.pptx")
+  ph_with(value = ft_data, location = ph_location_type(type = "body"))
+
+print(pptx_obj, target = "temp/my powerpoint export.pptx")
 ```
 
 
@@ -508,10 +509,12 @@ Although this solution works fine, it does not allow formatting the table as muc
 
 With `{flextable}`, the procedure starts with creating a *flextable* object (here `ft_table`) using the `flextable()` function.
 
+
 ```{r flextable2}
 library(flextable)
 
 ft_table <- ft_data %>% 
+  arrange(Product) %>% 
   flextable()
 
 print(ft_table)
@@ -519,165 +522,146 @@ print(ft_table)
 ```
 
 
-By printing the table, it opens in the Rstudio viewer as an html file.
+By printing the table, it opens in the Rstudio viewer as an html file. This table can then be customized in various different ways through various functions:  
 
-Through different functions, many custom formatting procedure can be applied:  
+  * `align()` and `rotate()` controls for the text alignment and its rotation;
+  * `bold()` and `italic` writes the text in bold or italic; 
+  * `font()` and `fontsize` controls the font type and the size to use;
+  * `color()` and `bg()` allows changing the color of the text and of the background.
+  
+All these functions require informing the rows (parameter `i`) and the columns (`j`) as well as the `part` (`"body"`, `"header"`, `"footer"`, or `"all"`) to modify.
 
-  * `align()`
-  * `bold()`
-  * `font()`
-  * `color()`
-  * `bg()`
-  * `height()` & `width()` 
-  * `border_outer()` & `border_inner()` & `border_inner_h()` & `border_inner_v()`
-  * `autofit()`
+Additionally, further formatting can be applied to the table itself through the following functions:
+  
+  * `height()` & `width()` control for the row height and column width;
+  * `border_outer()`, `border_inner()`, `border_inner_h()` & `border_inner_v()` help design the table by adding borders;
+  * `autofit()` and `padding()` are used to control the final size of the table.
 
-To go further, you can also consider the following functions: 
-
-  * `merge()`
-  * `compose()` & `as_chunk()`
-  * `style()`
+For illustration, let's apply some of these functions to `ft_table`:
 
 
-##### Formatting examples
-
-```{r 4.4 demonstration}
-ft_table <- ft_table %>%
-  autofit() %>% # column width
-  # alignment of header: we use part argument
-  align(align = "center", part = "header") %>%
-  # alignment of content: we can use part = "body" or specify exact lines 
-  align(i = 1:nrow(ft_data), j = 1:ncol(ft_data), align = "center") 
-
-print(ft_table)
-
-```
-
-Set font names, sizes and colors
 ```{r 4.5 demonstration cont.1}
 ft_table <- ft_table %>% 
-  # main formatting
   fontsize(size = 11) %>%
-  font(fontname = "Calibri") %>% # since no i or j are input, change is for all data
-  font(fontname = "Roboto", part = "header") %>% #different font for header
+  # Formatting the header
+  font(fontname = "Roboto", part = "header") %>%
   color(color = "white", part = "header") %>%
   bold(part = "header") %>%
-  # format last row
-  bold(i = nrow(ft_data), j = 1:ncol(ft_data)) %>% #
-  italic(i = nrow(ft_data), j = ~Product + Salty + Sweet + Sour + Bitter) %>% # using ~ notation
+  align(align = "center", part = "header") %>%
+  bg(bg = "#324C63", part = "header") %>%
+  # Formatting the body
+  font(fontname = "Calibri", part = "body") %>% 
+  bg(i = 1:nrow(ft_data), bg = "#EDEDED") %>% 
+  # Formatting the last row of the table
+  bold(i = nrow(ft_data), j = 1:ncol(ft_data)) %>% 
+  italic(i = nrow(ft_data), j = ~Product + Salty + Sweet + Sour + Bitter) %>%
   color(i =  nrow(ft_data), j = ~Sour, color = "red") %>%
-  color(i =  nrow(ft_data), j = ~Sweet, color = "orange") %>%
-  # background colors
-  bg(bg = "#324C63", part = "header") %>% # a custom background for the header
-  bg(i = 1:nrow(ft_data), bg = "#EDEDED") # a custom background for some cells
+  color(i =  nrow(ft_data), j = ~Sweet, color = "orange") %>% 
+  autofit()
 
-print(ft_table)
-```
+# Set up the border style
+my_border <- fp_border(color = "black", style = "solid", width = 1)
 
-Set borders and adjust cells heights and widths
-```{r 4.6 demonstration cont.2}
-#BORDERS
-# For borders we need to use nested functions (similar to fpar>ftext>fp_text)
-# fp_border() is the second level function we will use to specify border"s characteristics
-# as argument it takes color, style, and width
-my_border <- officer::fp_border(color = "black", style = "solid", width = 1)
-
-# We use this second level function inside various main border functions
-# border_outer(), border_inner(), border_inner_h(), border_inner_v()
 ft_table <- ft_table %>%
-  border_outer(part = "all", border = my_border) %>% # using predefined border
-  border_inner(part = "body", border = officer::fp_border(style = "dashed")) %>% 
-
-  # all measurements are in inches
-  width(j = 1, width = 1.2) %>% # column 1 wider
-  height(i = 12, height = 1) # last row's height
+  border_outer(part = "all", border = my_border) %>%
+  border_inner(part = "body", border = fp_border(style = "dashed")) %>% 
+  width(j = 1, width = 1.2) %>%
+  height(i = 12, height = 1)
 
 print(ft_table)
+
 ```
 
 
-##### Add flextable object to a powerpoint slide
+This is just an overview of the most relevant and used functions in `{flextable}`, yet there are more possibilities.
+To go further, you can also consider the following functions (amongst many more): 
+
+  * `merge()` merges vertically or horizontally cells with the same content;
+  * `compose()`, `as_chunk()`, and `as_paragraph()` works hands in hands to create more complex text formatting (e.g. sentence with parts of the text colored differently, or with sub/superscript);
+  * `style()` applies a set of formatting properties to the same selection of the rows/columns.
+
+Finally, to export a flextable to a PowerPoint deck, simply export it as we have seen before:
+
 
 ```{r 4.7 original example}
-# Add table to slide
-pptx_obj <- read_pptx() %>%
+
+pptx_obj <- pptx_obj %>%
   add_slide(layout = "Title and Content", master = "Office Theme") %>%
-  ph_with(value = ft_table, ph_location(left = 2, top = 2, width = 4)) %>% 
-  print(target = file.path("output","table_2.pptx"))
+  ph_with(value = ft_table, ph_location(left = 2, top = 2, width = 4)) 
+
+print(pptx_obj, target = "temp/my powerpoint export.pptx")
+
 ```
 
 For more details on using **{flextable}** see <https://davidgohel.github.io/flextable/>.
 
+
 #### Exporting Plots
+
+The last type of R outputs we want to export to PowerPoint is figures. Before showing how to export them, let's build a simple bar chart from `senso_mean` using `{ggplot2}`:
 
 
 ```{r 5.1 rvg package}
-# Using ggplot2 as plotting library
 chart_to_plot <- senso_mean %>%
-  dplyr::select(Salty, Sweet, Sour, Bitter) %>% 
-  tibble::rownames_to_column() %>% 
-  rename(Product = rowname) %>%
-  pivot_longer(cols = Salty:Bitter, names_to = 'Attribute', values_to = 'Value') %>% 
+  dplyr::select(Product, Salty, Sweet, Sour, Bitter) %>% 
+  arrange(Product) %>% 
+  pivot_longer(Salty:Bitter, names_to = 'Attribute', values_to = 'Value') %>% 
   ggplot(aes(x = Product, y = Value, fill = Attribute)) + 
-  geom_col(position = 'dodge')
-
-print(chart_to_plot) #in Plots window of Rstudio
+  geom_col(position = 'dodge')+
+  xlab("")+
+  theme_bw()
 ```
 
-##### rvg package
 
-rvg is providing two graphics devices that produces Vector Graphics outputs in `DrawingML` format for Microsoft PowerPoint with dml_pptx and for Microsoft Excel with dml_xlsx.
+To export any `ggplot2` object to PowerPoint, the package `{rvg}` is required. This package provides two graphics devices that produces Vector Graphics outputs in `DrawingML` format for Microsoft PowerPoint with `dml_pptx()` and for Microsoft Excel with `dml_xlsx()`, meaning the the graphics is being 'rebuilt' in PowerPoint or Word. To simplify, the generic `dml()` function is used^[Depending on the output format, the corresponding function is being called.]. 
+
 
 ```{r 5.2 rvg example}
-# body location
 library(rvg)
 
-# all items on the chart inside the pptx can be editable
-pptx_obj <- read_pptx() %>%
+pptx_obj <- pptx_obj %>%
   add_slide(layout = "Title and Content", master = "Office Theme") %>%
   ph_with(value = dml(ggobj = chart_to_plot, editable = TRUE),
-          location= ph_location_type(type = 'body')) %>% 
-  print(target = file.path("output","rvg_1.pptx"))
+          location= ph_location_type(type = 'body'))
 
-#custom location, all units are in inches
-pptx_obj <- read_pptx() %>%
-  add_slide(layout = "Title and Content", master = "Office Theme") %>%
-  ph_with(value = dml(ggobj = chart_to_plot, editable = FALSE),
-          location =  ph_location(left = 1, top = 1, width = 8, height = 6))  %>%
-  print(target = file.path("output","rvg_2.pptx"))
-
+print(pptx_obj, target = "temp/my powerpoint export.pptx")
 
 ```
 
-##### mschart package
+
+For simple graphics (such as line chart, bar charts, etc.), the `{mschart}` package creates the graphs directly in PowerPoint or Word. These graphics have then the advantage to be interactive.
+In this case, the `ggplot2` graphs are not needed: instead, we use functions such as `ms_barchart()` to produce them.
+
 
 ```{r 5.3 mschart example}
 library(mschart)
-# sample dataframe
-mydata <- senso_mean %>%
-  dplyr::select(Salty, Sweet, Sour, Bitter) %>% 
-  tibble::rownames_to_column() %>% 
-  rename(Product = rowname) %>%
-  pivot_longer(cols = Salty:Bitter, names_to = 'Attribute', values_to = 'Value')
 
-# syntaxis is similar to ggplot2's aes() with x,y,group
+mydata <- senso_mean %>%
+  dplyr::select(Product, Salty, Sweet, Sour, Bitter) %>% 
+  arrange(Product) %>% 
+  pivot_longer(Salty:Bitter, names_to = 'Attribute', values_to = 'Value')
+
+# Building the barchart using ms_barchart()
 my_barchart <- ms_barchart(data = mydata,
                            x = "Product",
                            y = "Value",
                            group = "Attribute")
 
-#the chart is a Powerpoint native object and can be viewed using the preview option in print
+# The chart is a Powerpoint native object and can be viewed using the preview option in print
 print(my_barchart, preview = TRUE)
-#the command will work on machines with a Powerpoint Viewer
 
-# to add the object to a powerpoint slide we can use the officer's native ph_with
-pptx_obj <- read_pptx() %>%
+# To add the object to a powerpoint slide we can use the officer's native ph_with
+pptx_obj <- pptx_obj %>%
   add_slide(layout = "Title and Content", master = "Office Theme") %>%
-  ph_with(value = my_barchart, location = ph_location_type(type = "body")) %>%
-  print(target = file.path("output","rvg_2.pptx"))
+  ph_with(value = my_barchart, location = ph_location_type(type = "body"))
+
+print(pptx_obj, target = "temp/my powerpoint export.pptx")
 ```
 
-#### Finalizing the Document
+
+If you open the PowerPoint just exported, on the final slide, you'll find the barchart generated by `{mschart}`. By clicking the graph, you'll find a 'funnel' icon on the left side, which allows you filter attributes or products, hence making your graph interactive.
+
+At last, `{officer}` also allows you adding images that are stored on your computer into a PowerPoint deck. This can be done through the `external_img()` function, which takes as input the location of the file. Like for any other graph, simply apply this function within `ph_with()` by specifying then the location where the image should be printed.
 
 
 <!--  --------------------------------- Word ---------------------------------  -->

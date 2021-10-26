@@ -1,7 +1,6 @@
 library(tidyverse)
 library(readxl)
 
-
 # Excel -------------------------------------------------------------------
 
   ## writexl 
@@ -198,14 +197,70 @@ pptx_obj <- pptx_obj %>%
 print(pptx_obj, target = "temp/my powerpoint export.pptx")
 
   ## Exporting Tables
-
 ft_data <- senso_mean %>%
   dplyr::select(Product, Salty, Sweet, Sour, Bitter) %>% 
   mutate(across(where(is.numeric), round, 2)) 
 
 pptx_obj <- pptx_obj %>%
   add_slide(layout = "Title and Content", master = master) %>%
-  ph_with(value = ft_data, location = ph_location_type(type = "body")) %>%
-  print(target = "temp/my powerpoint export.pptx")
+  ph_with(value = ft_data, location = ph_location_type(type = "body"))
+
+print(pptx_obj, target = "temp/my powerpoint export.pptx")
 
   ## {flextable}
+ft_table <- ft_data %>% 
+  arrange(Product) %>% 
+  flextable()
+
+print(ft_table)
+
+ft_table <- ft_table %>% 
+  fontsize(size = 11) %>%
+  font(fontname = "Roboto", part = "header") %>%
+  color(color = "white", part = "header") %>%
+  bold(part = "header") %>%
+  align(align = "center", part = "header") %>%
+  bg(bg = "#324C63", part = "header") %>%
+  font(fontname = "Calibri", part = "body") %>% 
+  bg(i = 1:nrow(ft_data), bg = "#EDEDED") %>% 
+  bold(i = nrow(ft_data), j = 1:ncol(ft_data)) %>% 
+  italic(i = nrow(ft_data), j = ~Product + Salty + Sweet + Sour + Bitter) %>%
+  color(i =  nrow(ft_data), j = ~Sour, color = "red") %>%
+  color(i =  nrow(ft_data), j = ~Sweet, color = "orange") %>% 
+  autofit()
+
+my_border <- fp_border(color = "black", style = "solid", width = 1)
+
+ft_table <- ft_table %>%
+  border_outer(part = "all", border = my_border) %>%
+  border_inner(part = "body", border = fp_border(style = "dashed")) %>% 
+  width(j = 1, width = 1.2) %>%
+  height(i = 8, height = 1)
+
+print(ft_table)
+
+pptx_obj <- pptx_obj %>%
+  add_slide(layout = "Title and Content", master = "Office Theme") %>%
+  ph_with(value = ft_table, ph_location(left = 2, top = 2, width = 4)) 
+
+print(pptx_obj, target = "temp/my powerpoint export.pptx")
+
+  ## Exporting graphics
+chart_to_plot <- senso_mean %>%
+  dplyr::select(Product, Salty, Sweet, Sour, Bitter) %>% 
+  arrange(Product) %>% 
+  pivot_longer(Salty:Bitter, names_to = 'Attribute', values_to = 'Value') %>% 
+  ggplot(aes(x = Product, y = Value, fill = Attribute)) + 
+  geom_col(position = 'dodge')+
+  xlab("")+
+  theme_bw()
+
+library(rvg)
+
+pptx_obj <- pptx_obj %>%
+  add_slide(layout = "Title and Content", master = "Office Theme") %>%
+  ph_with(value = dml(ggobj = chart_to_plot, editable = TRUE),
+          location= ph_location_type(type = 'body'))
+
+print(pptx_obj, target = "temp/my powerpoint export.pptx")
+
