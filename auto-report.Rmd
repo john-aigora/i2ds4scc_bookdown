@@ -479,9 +479,6 @@ print(pptx_obj, target = "temp/my powerpoint export.pptx")
 ```
 
 
-For more details on using **{officer}** see <https://davidgohel.github.io/officer>.
-
-
 #### Exporting Tables
 
 
@@ -669,56 +666,100 @@ At last, `{officer}` also allows you adding images that are stored on your compu
 
 ### Word
 
-Word documents are created using `read_docx()`. 
 
-`body_add_par()` to add a text paragraph. Paragraphs are automatically separated by line breaks.
+The process for building Word document directly from R is very similar to the one for PowerPoint, since it is also handled though `{officer}`. 
 
-```{r 6.1 word doc1}
-my_doc <- read_docx() %>% 
+To start a new Word document, the `read_docx()` function is being used. Since Word documents are more *text oriented* than PowerPoint, blocks of text are defined as paragraph. To introduce a new paragraph, the `body_add_par()` function is called. Note that paragraphs are automatically separated by line breaks:
+
+
+```{r}
+docx_obj <- read_docx() %>% 
   body_add_par(value = "My Text", style = "Normal") %>%
   body_add_par(value = "Other Text", style = "Normal") %>% 
-  body_add_par(value = "Conclusion", style = "Normal") %>% 
-  print(target = file.path("output","doc_1.docx"))
+  body_add_par(value = "Conclusion", style = "Normal")
+
+print(docx_obj, target = "temp/my word export.docx")
 ```
 
-Unlike a pptx with separate slides, a word document is a continuous object. To create a new page and continue to write on it `body_add_break()` is used.
 
-```{r 6.2 word doc2}
-my_doc <- read_docx() %>% 
-  body_add_par(value = "My Text", style = "Normal") %>%
-  body_add_break() %>% 
-  body_add_par(value = "Conclusion", style = "Normal") %>% 
-  print(target = file.path("output","doc_2.docx"))
-```
+Of course, it is not required to use the default formatting options from the word document in use. Instead, we can format it directly from R using `body_add_fpar()` to add a formatted text paragraph, or apply pre-defined styles to the previous function suggested (as is the case here with `style = "heading 1"` to set the text as a title of level 1).
 
-`body_add_fpar()` to add a formatted text paragraph
-`body_add_table()` to add a table
 
-```{r 6.3 word doc3}
+```{r}
 my_format <- fp_text(font.family = 'Calibri', font.size = 14, bold = TRUE, color = 'blue')
-my_text <- ftext('My dataset is:', my_format)
+my_text <- ftext('Here is another example of text', my_format)
 my_par <- fpar(my_text)
 
-doc <- read_docx() %>% 
+docx_obj <- read_docx() %>% 
   body_add_par(value = "Document Title", style = "heading 1") %>% 
   body_add_par(value = "", style = "Normal") %>% 
-  body_add_fpar(my_par, style = "Normal") %>% #formatted paragraph function
-  body_add_par(value = "", style = "Normal") %>% 
-  body_add_table(value = head(mtcars)[, 1:4], style = "table_template" ) %>% 
-  print(target = file.path("output","doc_3.docx"))
+  body_add_fpar(my_par, style = "Normal")
+
+print(docx_obj, target = "temp/my word export.docx")
 
 ```
+
+
+To export tables or figures, additional functions including `body_add_table()` (for tables) and `body_add_gg()`^[Note that `body_add_img()` and `body_add_plot()` can also be used.]) (for `ggplot2()` figures) are used. These can be combined to `body_add_caption()` to add a caption to your table/figure:
+
+
+```{r}
+
+table_num <- run_autonum(seq_id = "tab", pre_label = "Table ", bkm = "tables")
+figure_num <- run_autonum(seq_id = "fig", pre_label = "Figure ", bkm = "figures")
+
+docx_obj <- docx_obj %>% 
+  body_add_par(value = "Exporting Tables", style = "heading 2") %>% 
+  body_add_par(value = "", style = "Normal") %>% 
+  body_add_par(value = "Here is my first table:", style = "Normal") %>% 
+  body_add_par(value = "", style = "Normal") %>% 
+  body_add_table(value = head(mtcars)[,1:4], style = "table_template") %>% 
+  body_add_caption(block_caption("My first table.", style="centered", autonum=table_num)) %>% 
+  body_add_par(value = "Exporting Figures", style = "heading 2") %>% 
+  body_add_par(value = "", style = "Normal") %>% 
+  body_add_par(value = "Here is my first figure:", style = "Normal") %>% 
+  body_add_par(value = "", style = "Normal") %>% 
+  body_add_gg(value = chart_to_plot) %>% 
+  body_add_caption(block_caption("My first figure.", style="centered", autonum=figure_num))
+
+print(docx_obj, target = "temp/my word export.docx")
+
+```
+
+
+As can be seen, `body_add_caption()` is combined to `block_caption()`, and can have some automated numbering, as defined previously using `table_num` for tables, and `figure_num` for figures.
+
+Unlike a PowerPoint file that contains separate slides, a word document is a continuous object. Hence, to emphasize a break and add content to a new page, `body_add_break()` needs to be called. Additionally, tables of content can be generated using `body_add_toc()`:
+
+
+```{r}
+docx_obj <- docx_obj %>% 
+  body_add_break() %>% 
+  body_add_par(value = "Conclusion", style = "heading 1") %>% 
+  body_add_break() %>%
+  body_add_par("Table of Contents", style = "heading 1") %>% 
+  body_add_toc(level = 2)
+
+print(docx_obj, target = "temp/my word export.docx")
+```
+
+
+As can be seen, it is possible to format a nice report in Word directly from R, that integrates text, tables, and figures. 
+
+For more information regarding `{officer}`, and on how to export results to Word and PowerPoint, see <https://ardata-fr.github.io/officeverse/index.html>.
 
 
 ### Notes on applying corporate branding
 
 
 You may have noticed that we have been consistent with our approach to export results to reports, regardless of the final output:
-We start with pre-defining our styling parameters that we then apply to our different tables, slides, etc. This is not a formal rule, yet we strongly recommend you adopting this way of working. 
+We start with pre-defining our styling parameters that we then apply to our different tables, slides, paragraphs, etc. This is not a formal rule, yet we strongly recommend you adopting this way of working. Indeed, by creating your different styling parameters at the start of your script file, these lines of code do not interfere with your analyses. At a later stage, you will thank yourself for keeping well-structured code as it gains in clarity, and hence facilitates debugging your code in case of error or changes.
 
-If you create your different styling parameters at the start of your script file, these lines of code do not interfere with your analyses. At a later stage, you will thank yourself for keeping well-structured code as it gains in clarity, and hence facilitates debugging your code in case of error or changes.
+To go one step further, we would recommend you storing all these styling parameters in a separate file you load any time you need them using `source()`. This process **reduces** the size of your script file (increasing clarity), while **harmonizing** all your exports by **centralizing** your **formatting code** in one unique place. The last point is particularly important since any changes required only need to be done once, yet they will be applied to all your reports.
 
-In fact, we would recommend you going one step further and store all this styling parameters in a separate file that you can  load any time you need using `source()`. This process **reduces** the size of your script file (increasing clarity), while **harmonizing** all your exports by **centralizing** your *formatting code* in one unique place. The last point is particularly important since any changes required, or update made only need to be done once, yet they will be applied to all your reports.
+As we have seen, `{officer}` gives you the  opportunity to import pre-defined templates (PowerPoint or Word). This is very valuable as your report can easily match your corporate style. 
+
+Ultimately, to ensure optimal efficiency, we advise you to spend a bit more time when constructing your report by ensuring that as many details are being taken care of, so that later on, you can spend more time in the story building part and less on the analysis and slide generation. For instance, don't be afraid of mass-exporting results, as it is easier to remove some slides, tables, or figures (in case they are not needed for building your story) then it is to re-generate them at a later stage (in case they are missing).
 
 
 ## Integrating analyses scripts within reporting tools

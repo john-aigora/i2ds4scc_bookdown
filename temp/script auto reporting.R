@@ -24,9 +24,9 @@ high_prot_data <- read_xlsx(path = file_path,
   filter(Product %in% high_prot)
 
   # Exporting Table to Excel
-write_xlsx(data, 
-           path = file.path("output", "High Protein Products only.xlsx"),
-           col_names = TRUE)
+# write_xlsx(high_prot_data, 
+#            path = "Temp/High Protein Products only.xlsx",
+#            col_names = TRUE)
   ## openxlsx
 
 library(openxlsx)
@@ -208,6 +208,7 @@ pptx_obj <- pptx_obj %>%
 print(pptx_obj, target = "temp/my powerpoint export.pptx")
 
   ## {flextable}
+library(flextable)
 ft_table <- ft_data %>% 
   arrange(Product) %>% 
   flextable()
@@ -264,3 +265,65 @@ pptx_obj <- pptx_obj %>%
 
 print(pptx_obj, target = "temp/my powerpoint export.pptx")
 
+# Word --------------------------------------------------------------------
+
+docx_obj <- read_docx() %>% 
+  body_add_par(value = "My Text", style = "Normal") %>%
+  body_add_par(value = "Other Text", style = "Normal") %>% 
+  body_add_par(value = "Conclusion", style = "Normal")
+
+print(docx_obj, target = "temp/my word export.docx")
+
+my_format <- fp_text(font.family = 'Calibri', font.size = 14, bold = TRUE, color = 'blue')
+my_text <- ftext('My dataset is:', my_format)
+my_par <- fpar(my_text)
+
+docx_obj <- read_docx() %>% 
+  body_add_par(value = "Document Title", style = "heading 1") %>% 
+  body_add_par(value = "", style = "Normal") %>% 
+  body_add_fpar(my_par, style = "Normal") %>% #formatted paragraph function
+  body_add_par(value = "", style = "Normal") %>% 
+  body_add_table(value = head(mtcars)[,1:4], style = "table_template" )
+
+print(docx_obj, target = "temp/my word export.docx")
+
+docx_obj <- docx_obj %>% 
+  body_add_break() %>% 
+  body_add_par(value = "Second Conclusion", style = "Normal")
+
+print(docx_obj, target = "temp/my word export.docx")
+
+my_format <- fp_text(font.family = 'Calibri', font.size = 14, bold = TRUE, color = 'blue')
+my_text <- ftext('My dataset is:', my_format)
+my_par <- fpar(my_text)
+
+docx_obj <- read_docx() %>% 
+  body_add_par(value = "Document Title", style = "heading 1") %>% 
+  body_add_par(value = "", style = "Normal") %>% 
+  body_add_fpar(my_par, style = "Normal")
+
+table_num <- run_autonum(seq_id = "tab", pre_label = "Table ", bkm = "tables")
+figure_num <- run_autonum(seq_id = "fig", pre_label = "Figure ", bkm = "figures")
+
+docx_obj <- docx_obj %>% 
+  body_add_par(value = "Exporting Tables", style = "heading 2") %>% 
+  body_add_par(value = "", style = "Normal") %>% 
+  body_add_par(value = "Here is my first table:", style = "Normal") %>% 
+  body_add_par(value = "", style = "Normal") %>% 
+  body_add_table(value = head(mtcars)[,1:4], style = "table_template") %>% 
+  body_add_caption(block_caption("My first table.", style="centered", autonum=table_num)) %>% 
+  body_add_par(value = "Exporting Figures", style = "heading 2") %>% 
+  body_add_par(value = "", style = "Normal") %>% 
+  body_add_par(value = "Here is my first figure:", style = "Normal") %>% 
+  body_add_par(value = "", style = "Normal") %>% 
+  body_add_gg(value = chart_to_plot) %>% 
+  body_add_caption(block_caption("My first figure.", style="centered", autonum=figure_num))
+
+docx_obj <- docx_obj %>% 
+  body_add_break() %>% 
+  body_add_par(value = "Conclusion", style = "heading 1") %>% 
+  body_add_break() %>%
+  body_add_par("Table of Contents", style = "heading 1") %>% 
+  body_add_toc(level = 2)
+
+print(docx_obj, target = "temp/my word export.docx")
