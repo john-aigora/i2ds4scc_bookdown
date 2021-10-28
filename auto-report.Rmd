@@ -53,7 +53,7 @@ As its name suggests, `{writexl}` is dedicated to exporting tables to Excel thro
 
 Let's illustrate this by using our *Sensory Profile.xlsx* file: Let's imagine that we would like to reduce our data set by only considering products that are high in Protein:
 
-
+<!-- I guess the file path "data" can be confusing. It depends on the name of the folder of each user. Maybe instead of calling "data" it could be "name of the folder" or something like that? Or have a observation explaining that this is the name of the folder where the file is. Maybe it worth also a observation for output.-->
 ```{r}
 library(tidyverse)
 library(readxl)
@@ -83,7 +83,8 @@ write_xlsx(data,
            col_names = TRUE)
 
 ```
-
+<!-- When I run this code, I get an error for the last command saying: "Error in write_xlsx(data, path = file.path("output", "High Protein Products only.xlsx"),  : 
+  Argument x must be a data frame or list of data frames --> 
 The export of tables using the `{writexl}` package is easy, yet simplistic as it does not allow formatting the tables (except for some minor possibilities for the header), nor does it allow exporting multiple tables within the same sheet. For more advanced exporting options, the use of **{openxlsx}** package is preferred as it allows more flexibility in structuring and formatting the Excel output.
 
 With `{openxlsx}`, the procedure starts with creating a workbook object (e.g. `wb`) using the `createWorkbook()` function. We can add worksheets to `wb` through the `addWorksheet()` function. 
@@ -177,7 +178,7 @@ headSty <- createStyle(fgFill = "#DCE6F1",
 
 ```
 
-
+  <!-- Is there a parentheses missing in 'setColWidths' ? -->
 Note that many more formatting options can be configured through:
 
   * `options()` to pre-define number formatting, border colors and style, etc.;
@@ -291,7 +292,8 @@ Note that once the spreadsheet is complete, we create the file using `saveWorkbo
 saveWorbook(wb, file="temp/excel export.xlsx")
 
 ```
-
+ <!-- I got this message when ran this last code: Error in saveWorbook(wb, file = "temp/excel export.xlsx") : 
+  could not find function "saveWorbook" -->
 
 For more details on using **{openxlsx}** see <https://rdrr.io/cran/openxlsx/>.
 
