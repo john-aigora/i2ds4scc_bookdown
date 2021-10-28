@@ -321,7 +321,8 @@ pptx_obj <- read_pptx() # new empty file
 
 A blank Deck is by default set up with the *Office Theme*. To use a custom theme, we must create a Deck using the PowerPoint software and use it as input. Let's import the *intergral.pptx* template:
 
-
+ <!-- I guess it is a good to add a note to clarify "data" and "templates"--> 
+ <!-- Would the name be "integral" instead of "intergral"? --> 
 ```{r themes2}
 
 pptx_obj2 <- read_pptx(file.path("data", "templates", "intergral.pptx"))
@@ -362,7 +363,7 @@ Unfortunately, `{officer}` does not provide a function similar to `openxlsx::ope
 
 With `{officer}`, various actions can be done on the slides. The first logical action consists in adding a new slide to a presentation, in which we will later on write some text, tables, figures, etc. Such action can be done using `add_slide()`, in which we inform the type of slide to add, and from which master:
 
-
+ <!-- Should it be "<-" instead of "="?--> 
 ```{r}
 
 master = "Office Theme"
@@ -421,7 +422,7 @@ pptx_obj <- pptx_obj %>%
 
 To visualize the different steps done so far, let's save the results on our computers:
 
-
+<!-- Maybe it worth  a note explain that temp is the name given for the folder... --> 
 ```{r}
 print(pptx_obj, "temp/my powerpoint export.pptx")
 ```
@@ -433,11 +434,11 @@ print(pptx_obj, "temp/my powerpoint export.pptx")
 In the previous section, we already exported text to slides. Let's go a bit deeper in the process by also showing how to format the text.
 
 By default, each new text item added to a PowerPoint via `{officer}` is a paragraph object. To further format the paragraph, three main functions are being used:
-
+<!-- I guess fp_text could be included in the list above -->
   * `fpar()` (*formatted paragraph*) creates the paragraph;
   * `ftext()` (*formatted text*) allows editing the text before pasting into paragraphs. `ftext()` requires a second argument called `prop` which contains the formatting properties;
   * `block_list()` allows us to wrap multiple paragraphs together.
-  
+ 
 Let's go through an example to illustrate the use of these functions:
 
 
@@ -486,7 +487,7 @@ print(pptx_obj, target = "temp/my powerpoint export.pptx")
 
 Now we know how to export formatted text to slides, let's export tables. This can easily be done by rendering a data frame rather than text as `ph_with()` accepts it and renders it in a default format. Let's use a subset of `senso_mean` for illustration:
 
-
+<!-- Just a comment, the reader may need to go back to the beginning of the chapter to run the codes again to obtain senso_mean --> 
 ```{r 4.1 basic code}
 ft_data <- senso_mean %>%
   dplyr::select(Product, Salty, Sweet, Sour, Bitter) %>% 
@@ -570,7 +571,9 @@ ft_table <- ft_table %>%
 print(ft_table)
 
 ```
-
+<!-- In the second commend of #Set up the border style, I got this message:
+Error in get_rows_id(x[[part]], i) : 
+  invalid row selection: out of range selection --> 
 
 This is just an overview of the most relevant and used functions in `{flextable}`, yet there are more possibilities.
 To go further, you can also consider the following functions (amongst many more): 
