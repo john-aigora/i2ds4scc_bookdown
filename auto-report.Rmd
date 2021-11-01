@@ -48,7 +48,7 @@ As its name suggests, `{writexl}` is dedicated to exporting tables to Excel thro
 
 Let's illustrate this by using our *Sensory Profile.xlsx* file: Let's imagine that we would like to reduce our data set by only considering products that are high in Protein:
 
-
+<!-- I guess the file path "data" can be confusing. It depends on the name of the folder of each user. Maybe instead of calling "data" it could be "name of the folder" or something like that? Or have a observation explaining that this is the name of the folder where the file is. Maybe it worth also a observation for output.-->
 ```{r}
 library(tidyverse)
 library(readxl)
@@ -78,7 +78,8 @@ write_xlsx(data,
            col_names = TRUE)
 
 ```
-
+<!-- When I run this code, I get an error for the last command saying: "Error in write_xlsx(data, path = file.path("output", "High Protein Products only.xlsx"),  : 
+  Argument x must be a data frame or list of data frames --> 
 The export of tables using the `{writexl}` package is easy, yet simplistic as it does not allow formatting the tables (except for some minor possibilities for the header), nor does it allow exporting multiple tables within the same sheet. For more advanced exporting options, the use of **{openxlsx}** package is preferred as it allows more flexibility in structuring and formatting the Excel output.
 
 With `{openxlsx}`, the procedure starts with creating a workbook object (e.g. `wb`) using the `createWorkbook()` function. We can add worksheets to `wb` through the `addWorksheet()` function. 
@@ -172,7 +173,7 @@ headSty <- createStyle(fgFill = "#DCE6F1",
 
 ```
 
-
+  <!-- Is there a parentheses missing in 'setColWidths' ? -->
 Note that many more formatting options can be configured through:
 
   * `options()` to pre-define number formatting, border colors and style, etc.;
@@ -286,7 +287,8 @@ Note that once the spreadsheet is complete, we create the file using `saveWorkbo
 saveWorbook(wb, file="temp/excel export.xlsx")
 
 ```
-
+ <!-- I got this message when I ran this last code saying: Error in saveWorbook(wb, file = "temp/excel export.xlsx") : 
+  could not find function "saveWorbook" -->
 
 For more details on using **{openxlsx}** see <https://rdrr.io/cran/openxlsx/>.
 
@@ -319,7 +321,8 @@ pptx_obj <- read_pptx() # new empty file
 
 A blank Deck is by default set up with the *Office Theme*. To use a custom theme, we must create a Deck using the PowerPoint software and use it as input. Let's import the *intergral.pptx* template:
 
-
+ <!-- I guess it is a good idea to add a note to clarify "data" and "templates"--> 
+ <!-- Would the name be "integral" instead of "intergral"? --> 
 ```{r themes2}
 
 pptx_obj2 <- read_pptx(file.path("data", "templates", "intergral.pptx"))
@@ -360,7 +363,7 @@ Unfortunately, `{officer}` does not provide a function similar to `openxlsx::ope
 
 With `{officer}`, various actions can be done on the slides. The first logical action consists in adding a new slide to a presentation, in which we will later on write some text, tables, figures, etc. Such action can be done using `add_slide()`, in which we inform the type of slide to add, and from which master:
 
-
+ <!-- Should it be "<-" instead of "="?--> 
 ```{r}
 
 master = "Office Theme"
@@ -373,7 +376,7 @@ pptx_obj <- pptx_obj %>%
 This code will add a *Title and Content* slide to your deck.
 
 Additional operations on the slides themselves can be done. In particular, you can re-organize your deck by changing the orders of your slides using `move_slide()`, delete slides that are no longer needed through `remove_slide()`, or modify a pre-existing slides by making it active using `on_slide()` (by default, the last slide created is the active one).
-
+<!-- I guess it might be interesting an example showing the use of those functions. -->
 
 #### Positioning Information to the Slide
 
@@ -419,7 +422,7 @@ pptx_obj <- pptx_obj %>%
 
 To visualize the different steps done so far, let's save the results on our computers:
 
-
+<!-- Maybe it worth a note explaining that temp is the name given for the folder... --> 
 ```{r}
 print(pptx_obj, "temp/my powerpoint export.pptx")
 ```
@@ -431,11 +434,11 @@ print(pptx_obj, "temp/my powerpoint export.pptx")
 In the previous section, we already exported text to slides. Let's go a bit deeper in the process by also showing how to format the text.
 
 By default, each new text item added to a PowerPoint via `{officer}` is a paragraph object. To further format the paragraph, three main functions are being used:
-
+<!-- I guess fp_text could be included in the list below -->
   * `fpar()` (*formatted paragraph*) creates the paragraph;
   * `ftext()` (*formatted text*) allows editing the text before pasting into paragraphs. `ftext()` requires a second argument called `prop` which contains the formatting properties;
   * `block_list()` allows us to wrap multiple paragraphs together.
-  
+ 
 Let's go through an example to illustrate the use of these functions:
 
 
@@ -484,7 +487,7 @@ print(pptx_obj, target = "temp/my powerpoint export.pptx")
 
 Now we know how to export formatted text to slides, let's export tables. This can easily be done by rendering a data frame rather than text as `ph_with()` accepts it and renders it in a default format. Let's use a subset of `senso_mean` for illustration:
 
-
+<!-- Just a comment, the reader may need to go back to the beginning of the chapter to run the codes again to obtain senso_mean --> 
 ```{r 4.1 basic code}
 ft_data <- senso_mean %>%
   dplyr::select(Product, Salty, Sweet, Sour, Bitter) %>% 
@@ -568,7 +571,9 @@ ft_table <- ft_table %>%
 print(ft_table)
 
 ```
-
+<!-- In the second command of #Set up the border style, I got this message:
+Error in get_rows_id(x[[part]], i) : 
+  invalid row selection: out of range selection --> 
 
 This is just an overview of the most relevant and used functions in `{flextable}`, yet there are more possibilities.
 To go further, you can also consider the following functions (amongst many more): 
@@ -748,7 +753,7 @@ As can be seen, it is possible to format a nice report in Word directly from R, 
 
 For more information regarding `{officer}`, and on how to export results to Word and PowerPoint, see <https://ardata-fr.github.io/officeverse/index.html>.
 
-
+<!-- I guess it would be interesting to mention how to save in pdf format --> 
 ### Notes on applying corporate branding
 
 
