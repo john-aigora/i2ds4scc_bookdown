@@ -126,7 +126,7 @@
 
 \title{Data Science for Sensory and Consumer Scientists}
 \author{John Ennis, Julien Delarue, and Thierry Worch}
-\date{2021-10-07}
+\date{2021-11-01}
 
 \begin{document}
 \maketitle
@@ -153,19 +153,13 @@ This book is for practitioners or students of sensory and consumer science who w
 \section*{How to Use This Book}\label{how-to-use-this-book}}
 \addcontentsline{toc}{section}{How to Use This Book}
 
-This book is meant to be interactive, with the reader ideally typing and running all of the code presented in the parts labeled ``Hors d'Oeurves'' and ``Bon Appétit.'' Computer languages are like human languages in that they need to be practiced to be learned, so we highly recommend the reader actually typing all of the code from these parts, running it, and verifying they receive the results shown in the book. To help with this practice, we have created a special GitHub repository that contains folders called \texttt{work\_along} and \texttt{sample\_code}. Please see Appendix \ref{start-R} for guidance on how to get started with R and GitHub. In the the \texttt{sample\_code} folder, we have included the code as presented in the book, while in the \texttt{work\_along} folder we have provided blank files for each chapter that load the libraries\footnote{You may need to load these libraries before the code will run, please see Appendix \ref{start-R} for more information on this topic as well.}.
-
-\hypertarget{cautions-dont-that-everybody-does}{%
-\section*{Cautions: Don't that Everybody Does}\label{cautions-dont-that-everybody-does}}
-\addcontentsline{toc}{section}{Cautions: Don't that Everybody Does}
-
-\hypertarget{how-to-contact-us}{%
-\section*{How to Contact Us}\label{how-to-contact-us}}
-\addcontentsline{toc}{section}{How to Contact Us}
+This book is meant to be interactive, with the reader ideally typing and running all of the code presented in the parts labeled ``Hors d'Oeurves'' and ``Bon Appétit.'' Computer languages are like human languages in that they need to be practiced to be learned, so we highly recommend the reader actually typing all of the code from these parts, running it, and verifying they receive the results shown in the book. To help with this practice, we have created a \href{https://github.com/aigorahub/data_science_for_sensory_sample_code}{special GitHub repository} that contains folders called \texttt{work\_along} and \texttt{sample\_code}. Please see Appendix \ref{start-R} for guidance on how to get started with R and GitHub. In the the \texttt{sample\_code} folder, we have included the code as presented in the book, while in the \texttt{work\_along} folder we have provided blank files for each chapter that load the libraries\footnote{You may need to load these libraries before the code will run, please see Appendix \ref{start-R} for more information on this topic as well.}.
 
 \hypertarget{acknowledgements}{%
 \section*{Acknowledgements}\label{acknowledgements}}
 \addcontentsline{toc}{section}{Acknowledgements}
+
+First and foremost we all thank our wives for their continual support. Professionally, Vanessa Rios de Souza helped us get us across the finish line through her excellent management and reviewing. Arkadi Avanesyan, Jakub Kwiecien, and Veerle van Leemput all contributed to the content in various important ways.
 
 \hypertarget{bienvenue}{%
 \chapter{Bienvenue!}\label{bienvenue}}
@@ -180,11 +174,11 @@ Located at the crossroads of biology, social science, and design, sensory and co
 \subsection*{Core principles in Sensory and Consumer Science}\label{core-principles-in-sensory-and-consumer-science}}
 \addcontentsline{toc}{subsection}{Core principles in Sensory and Consumer Science}
 
-Sensory and consumer science is consider as a pillar of food science and technology and is useful to product development, quality control and market research. Most scientific and methodological advances in the field are applied to food. This book makes no exception as we chose a cookie formulation dataset as a main thread. However, SCS widely applies to many other consumer goods so are the content of this book and the principles set out below.
+Sensory and consumer science is considered as a pillar of food science and technology and is useful to product development, quality control and market research. Most scientific and methodological advances in the field are applied to food. This book makes no exception as we chose a cookie formulation dataset as a main thread. However, SCS widely applies to many other consumer goods so are the content of this book and the principles set out below.
 
 \hypertarget{measuring-and-analyzing-human-responses}{%
-\subsection*{Measuring and analyzing human responses}\label{measuring-and-analyzing-human-responses}}
-\addcontentsline{toc}{subsection}{Measuring and analyzing human responses}
+\subsubsection*{Measuring and analyzing human responses}\label{measuring-and-analyzing-human-responses}}
+\addcontentsline{toc}{subsubsection}{Measuring and analyzing human responses}
 
 Sensory and consumer science aims at measuring and understanding consumers' sensory perceptions as well as the judgements, emotions and behaviors that may arise from these perceptions. SCS is thus primarily a science of measurement, although a very particular one that uses human beings and their senses as measuring instruments. In other words, sensory and consumer researchers measure and analyze human responses.
 
@@ -195,14 +189,14 @@ A detailed description of sensory methods is beyond the scope of this book and m
 \begin{itemize}
 \tightlist
 \item
-  Discrimination tests that aim at detecting subtle differences between two products.
+  Discrimination tests that aim at detecting subtle differences between products.
 \item
   Descriptive analysis (DA), also referred to as `sensory profiling', aims at providing both qualitative and quantitative information about product sensory properties.
 \item
-  Hedonic tests. This category gathers affective tests that aim at measuring consumers' liking for the tested products or their preferences among a product set.
+  Affective tests. This category includes hedonic tests that aim at measuring consumers' liking for the tested products or their preferences among a product set.
 \end{itemize}
 
-Each test category generates its own type of data and related statistical questions in relation to the objectives of the study. Typically, data from difference tests consist in series of binary answers (correct/failed) depending on whether judges successfully picked the odd sample(s) among a set of three or more samples. These are used to determine whether the number of correct choices is above the level expected by chance.
+Each test category generates its own type of data and related statistical questions in relation to the objectives of the study. Typically, data from difference tests with forced-choice procedures (e.g.~triangle test, duo-trio, 2-AFC, etc.) consist in series of binary answers (correct/failed) depending on whether judges successfully picked the odd sample(s) among a set of three or more samples \footnote{Other procedures like the \emph{different from control} test or the \emph{degree of difference} test generate rating data}. These data are used to determine whether the number of correct choices is above the level expected by chance.
 
 Conventional descriptive analysis data consist in intensity scores given by each panelist to evaluated samples on a series of sensory attributes, hence resulting in a product x attribute x panelist dataset (Figure 1). Note that depending on the DA method, quantifying means other than intensity ratings can be used (ranks, frequency, etc.). Most frequently, each panelist evaluates all the samples in the product set. However, the use of balanced incomplete design can also be found when the experimenters aim to limit the number of samples evaluated by each subject.
 
@@ -211,7 +205,7 @@ Eventually, hedonic test datasets consist in hedonic scores (ratings for consume
 Sensory and consumer researchers also borrow methods from other fields, in particular from sociology and experimental psychology. Definitely a multidisciplinary area, SCS develops in many directions and reaches disciplines that range from genetics and physiology to social marketing, behavioral economics and computational neuroscience. So have diversified the types of data sensory and consumer scientists must deal with.
 
 \hypertarget{measuring-humanproduct-interactions--}{%
-\subsection{Measuring human*product interactions \{-\}}\label{measuring-humanproduct-interactions--}}
+\subsubsection{Measuring human*product interactions \{-\}}\label{measuring-humanproduct-interactions--}}
 
 As in many scientific fields, the development of sophisticated statistical techniques and access to powerful data analysis tools have played an important role in the evolution of sensory \& consumer science. Statisticians and data analysts in SCS have developed their own field of research, coined Sensometrics {[}REF to (Schlich, 1995){]}. So, what makes sensory \& consumer science special? And how does it influence the way sensory and consumer data are handled?
 
@@ -417,6 +411,11 @@ In the final step of our data scientific workflow, we incorporate feedback recei
 
 Learning data science is much like learning a language or learning to play an instrument - you have to practice. Our advice based on mentoring many students and clients is to get started sooner rather than later, and to accept that the code you'll write in the future will always be better than the code you'll write today. Also, many of the small details that separate an proficient data scientist from a novice can only be learned through practice as there are too many small details to learn them all in advice. So, starting today, do your best to write at least some code for all your projects. If a time deadline prevents you from completing the analysis in R, that's fine, but at least gain the experience of making an RStudio project and loading the data in R\footnote{We recommend following the instructions in Appendix \ref{start-R} to get started.}. Then, as time allows, try to duplicate your analyses in R, being quick to search for solutions when you run into errors. Often simply copying and pasting your error into a search engine will be enough to find the solution to your problem. Moreover, searching for solutions is its own skill that also requires practice. Finally, if you are really stuck, reach out to a colleague (or even the authors of this book) for help.
 
+\hypertarget{cautions-dont-that-everybody-does}{%
+\section{Cautions: Don't that Everybody Does}\label{cautions-dont-that-everybody-does}}
+
+Don't edit raw data. {[}ADD MORE{]}
+
 With these preliminaries completed, and with you (hopefully) sufficiently motivated, let's begin learning data science!
 
 \hypertarget{data-manip}{%
@@ -586,7 +585,7 @@ Tip: If you want to transform a variable, say by changing its type, or re-writin
 
 \texttt{mutate()} being one of the most important function from the \texttt{\{dplyr\}} package, it will be used extensively throughout this book.
 
-Since performing mathematical computation on non-numerical columns is not possible, conditions can easily be added through \texttt{mutate()} combined with \texttt{across()}. An example could be to round all variables to 0 decimal, which can only be applied to numerical variables:
+Since performing mathematical computations on non-numerical columns is not possible, conditions can easily be added through \texttt{mutate()} combined with \texttt{across()}. An example could be to round all variables to 0 decimal, which can only be applied to numerical variables:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -597,8 +596,8 @@ Since performing mathematical computation on non-numerical columns is not possib
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{mergeing-and-separating-columns}{%
-\paragraph{Mergeing and Separating columns}\label{mergeing-and-separating-columns}}
+\hypertarget{merging-and-separating-columns}{%
+\paragraph{Merging and Separating columns}\label{merging-and-separating-columns}}
 
 It can happen that some columns of a data set contain information (strings) that cover different types of information. For instance, we could imagine coding the name of our panelists as FirstName\_LastName or Gender\_Name, and we would want to separate them into two columns to make the distinction between the different information, i.e.~FirstName and LastName or Gender and Last Name respectively. In other situations, we may want to merge information present in multiple columns in one.
 
@@ -668,20 +667,11 @@ To define sub-set of data, the \texttt{filter()} function is being used. This fu
 \end{Shaded}
 
 Other relevant test characters are the following:
-
-\begin{itemize}
-\tightlist
-\item
-  \texttt{!Product\ ==\ "P02"} or \texttt{Product\ !=\ "P02"} means different from, and will keep all samples except \texttt{P02};
-\item
-  \texttt{\%in\%\ my\_vector} keeps any value included within the vector \texttt{my\_vector} (e.g.~\texttt{Product\ \%in\%\ c("P01","P02","P03")});
-\item
-  for multiple conditions:
-\item
-  \texttt{\&} (read `and') is multiplicative, meaning that all the conditions need to be true (\texttt{Product\ ==\ "P02"\ \&\ Shiny\ \textgreater{}\ 40});
-\item
-  \texttt{\textbar{}} (read `or') is additive, meaning that only one of the conditions needs to be true (\texttt{Product\ ==\ "P03"\ \textbar{}\ Shiny\ \textgreater{}\ 40})
-\end{itemize}
+- \texttt{!Product\ ==\ "P02"} or \texttt{Product\ !=\ "P02"} means different from, and will keep all samples except \texttt{P02};
+- \texttt{\%in\%\ my\_vector} keeps any value included within the vector \texttt{my\_vector} (e.g.~\texttt{Product\ \%in\%\ c("P01","P02","P03")});
+- for multiple conditions:
+- \texttt{\&} (read `and') is multiplicative, meaning that all the conditions need to be true (\texttt{Product\ ==\ "P02"\ \&\ Shiny\ \textgreater{}\ 40});
+- \texttt{\textbar{}} (read `or') is additive, meaning that only one of the conditions needs to be true (\texttt{Product\ ==\ "P03"\ \textbar{}\ Shiny\ \textgreater{}\ 40})
 
 As we will see later, this option is particularly useful when you have missing values as you could remove all the rows that contain missing values for a given variable. Since we do not have missing values here, let's create some by replacing all the evaluations for Shiny that are larger than 40 by missing values. In a second step, we can filter out all missing values from Shiny:
 
@@ -1197,7 +1187,7 @@ This code adds a regression line to the graphic (here, we specified that the reg
 In fact, most \texttt{geom\_*()} function comes with a statistical process to it. This means that we can provide raw data, and the \texttt{geom\_*()} function calls its \texttt{stat\_*()} function that runs the corresponding analysis. In the previous example, \texttt{geom\_smooth()} calls \texttt{stat\_smooth()}.
 
 Let's illustrate this concept again using another example: bar-charts that we apply on the data stored in \texttt{Nbiscuit}.
-Here, we want to see the distribution (through bar-charts) of number of biscuits eaten per biscuit. A quick look at the data shows that some respondents ate portions of the cookies. To simplify the analysis, let's consider the total number of entire cookies eaten: if a respondent has eaten 3.5 biscuits, we will consider that they ate 3 full cookies.
+Here, we want to see the distribution (through bar-charts) of number of biscuits eaten per consumer. A quick look at the data shows that some respondents ate portions of the cookies. To simplify the analysis, let's consider the total number of entire cookies eaten: if a respondent has eaten 3.5 biscuits, we will consider that they ate 3 full cookies.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1632,21 +1622,782 @@ To learn more about \texttt{\{ggplot2\}} basics, we recommend two additional sou
 \hypertarget{auto-report}{%
 \chapter{Automated Reporting}\label{auto-report}}
 
-Effective communication of results is among the essential duties of the sensory scientist, but the sometimes tedious mechanics of report production together with the sheer volume of data that many scientists now must process combine to make reporting design an afterthought in too many cases. In this tutorial, we review recent advances in automated report production that liberate resources for scientists to focus on the interpretation and communication of results, while simultaneously reducing errors and increasing the consistency of their analyses. We teach the tutorial through an extended example, cumulatively building an R script that takes participates from receipt of an example dataset to a beautifully-designed and nearly completed PowerPoint presentation automatically and using freely available, open-source packages. Details of how to customize the final presentation to incorporate corporate branding - such as logos, font choices, and color palettes - will also be covered.
+\hypertarget{what-and-why-automated-reporting}{%
+\section{What and why Automated Reporting?}\label{what-and-why-automated-reporting}}
 
-\hypertarget{what-is-automated-reporting}{%
-\section{What is Automated Reporting?}\label{what-is-automated-reporting}}
+Effective communication of results is amongst the essential duties of sensory scientists\ldots and so is the data collection, data preparation, data analysis etc. Worst, the sometimes tedious mechanics of report production together with the sheer volume of data that many scientists must process combine to make reporting design and nice story-telling an afterthought in too many cases.
+Although this should preferably not be happening, it is necessary sometimes as presentation deadlines approach and time becomes limited.
 
-Why Script?
-Save time
-Reduce errors
-Collaboration
-Share code with others
-Read own code later
-Explain choices for analysis, table presentation, charts
-Save steps for result creation
-Main tools
-R/RStudio
+Add to this work-load some last-minute changes due to either a change in the data, in the analysis, or maybe an error (e.g.~copy/paste the wrong column, etc.) you have just been detected\ldots how can we be sure that the latest version of the report is fully up-to-date, and that all the results/conclusions are correct? As the statistical software (e.g.~R) is often separated from the reporting tool (e.g.~Microsoft Office), it is easy to miss to transfer updated statistical outputs (e.g.~values, tables, figures, etc.) to the report, hence creating inconsistencies.
+
+Let's consider another scenario, in which all the preliminary steps have been successfully done: you are now presenting your report to your manager or clients, and they come with a question such as: ``Can we deep-dive into the results by looking at a particular group of consumers (e.g.~gender split, or cluster split)?'' Do you feel like going through the entire process again?
+
+How would you feel if we would tell you that there is a way to build your report while running the analysis, by using the same script file? This means that in few clicks, say after updating the data to analyze (e.g.~filter to the target group of consumers only), your report gets automatically re-generated with all the new updated results. Will you be interesting in such approach?
+
+Such solution seems ideal since it increases efficiency while reducing errors due to manual processing of results. More importantly, this gain in time and effort allow you designing nicer slides and building a better story.
+
+\hypertarget{integrating-reports-within-analyses-scripts}{%
+\section{Integrating reports within analyses scripts}\label{integrating-reports-within-analyses-scripts}}
+
+In this section, let's integrate our report building process within our data analysis. By doing so, we do not focus on building a story yet. Instead, we improve our way of working by exporting directly all the statistical outputs that could\footnote{We say \emph{could} as we are in a process of mass-exportation of results, most of them being used for building the story although they would not be kept in the final deck.} be useful for our future story-telling. By doing so, we increase efficiency (especially if code can then be re-used for other studies) by \emph{killing two birds with one stone}: We simultaneously run our analysis, create usable content for our final presentation, while reducing errors due to manual processing.
+
+Since Microsoft Office is often the tool used for sharing results, we will focus our attention in exporting results to Excel, PowerPoint, and Word.
+
+\hypertarget{excel}{%
+\subsection{Excel}\label{excel}}
+
+Although Excel is not our preferred tool for automated reporting, it is still one of the major ways to access and share data. Most data collection software offer the possibility to export data and results in Excel, while most data analysis software accept Excel format as inputs. With the large use of Excel, it is no surprise that many of our colleagues or clients like to share data and results using spreadsheets. It is even less a surprise that R provides multiple solutions to import/export results from/to Excel.
+
+For importing Excel files, we have already presented the package \texttt{\{readxl\}} among others (see REF). For exporting results, two complementary packages (yet again, among others!) in terms of ease of use and flexibility in the outcome are proposed: \texttt{\{writexl\}} and \texttt{\{openxlsx\}}.
+
+As its name suggests, \texttt{\{writexl\}} is dedicated to exporting tables to Excel through the \texttt{write\_xlsx()} function. Its use is very simple as it only takes as inputs the table (or list of tables)\footnote{List of tables will generate multiple sheets within the same spreadsheet, one table being placed in each sheet.} to export to the file specified in the \texttt{path} parameter.
+
+Let's illustrate this by using our \emph{Sensory Profile.xlsx} file: Let's imagine that we would like to reduce our data set by only considering products that are high in Protein:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{library}\NormalTok{(readxl)}
+\FunctionTok{library}\NormalTok{(writexl)}
+\FunctionTok{library}\NormalTok{(dplyr)}
+
+\NormalTok{file\_path }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"Sensory Profile.xlsx"}\NormalTok{)}
+
+\NormalTok{product\_info }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(}\AttributeTok{path  =}\NormalTok{ file\_path,}
+                           \AttributeTok{sheet =} \StringTok{"Product Info"}\NormalTok{,}
+                           \AttributeTok{range =} \StringTok{"A1:D12"}\NormalTok{,}
+                           \AttributeTok{col\_names =} \ConstantTok{TRUE}\NormalTok{)}
+
+\CommentTok{\# Selecting Products with High Protein}
+\NormalTok{high\_prot }\OtherTok{\textless{}{-}}\NormalTok{ product\_info }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(Protein }\SpecialCharTok{\%in\%} \StringTok{"High"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pull}\NormalTok{(Product)}
+
+\CommentTok{\# Filter Data to only keep Products with High Protein}
+\NormalTok{high\_prot\_data }\OtherTok{\textless{}{-}} \FunctionTok{read\_xlsx}\NormalTok{(}\AttributeTok{path =}\NormalTok{ file\_path,}
+                  \AttributeTok{sheet =} \StringTok{"Data"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(Product }\SpecialCharTok{\%in\%}\NormalTok{ high\_prot)}
+
+\CommentTok{\# Exporting Table to Excel}
+\FunctionTok{write\_xlsx}\NormalTok{(data, }
+           \AttributeTok{path =} \FunctionTok{file.path}\NormalTok{(}\StringTok{"output"}\NormalTok{, }\StringTok{"High Protein Products only.xlsx"}\NormalTok{),}
+           \AttributeTok{col\_names =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+The export of tables using the \texttt{\{writexl\}} package is easy, yet simplistic as it does not allow formatting the tables (except for some minor possibilities for the header), nor does it allow exporting multiple tables within the same sheet. For more advanced exporting options, the use of \textbf{\{openxlsx\}} package is preferred as it allows more flexibility in structuring and formatting the Excel output.
+
+With \texttt{\{openxlsx\}}, the procedure starts with creating a workbook object (e.g.~\texttt{wb}) using the \texttt{createWorkbook()} function. We can add worksheets to \texttt{wb} through the \texttt{addWorksheet()} function.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(openxlsx)}
+
+\CommentTok{\# Create workbook object}
+\NormalTok{wb }\OtherTok{\textless{}{-}}\NormalTok{ openxlsx}\SpecialCharTok{::}\FunctionTok{createWorkbook}\NormalTok{()}
+
+\CommentTok{\# Add a new worksheet}
+\FunctionTok{addWorksheet}\NormalTok{(wb, }\AttributeTok{sheetName =} \StringTok{"Mean"}\NormalTok{, }\AttributeTok{gridLines =} \ConstantTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Note that \texttt{addWorksheet()} allows controlling further the appearance of the worksheet:
+* show/hide grid lines using \texttt{gridLines};
+* color the sheet using \texttt{tabColour};
+* change the zoom on the sheet through \texttt{zoom};
+* show/hide the tab using \texttt{visible};
+* format the worksheet by specifying its size (\texttt{paperSize}) and orientation (\texttt{orientation}).
+
+On a given worksheet, any table can be exported using \texttt{writeData()} or \texttt{writeDataTable()}, which controls where to write the table through the \texttt{startRow} and \texttt{startCol} options.
+
+Let's imagine we want to compute the sensory profiles of the products, and we want to export that into Excel. Rather then simply exporting the results, we want to customize the output a little bit by applying the Excel style named \emph{TabelStyleLight9}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Creating the Sensory Profiles with some Product Information}
+\NormalTok{p\_info }\OtherTok{\textless{}{-}} \FunctionTok{read\_xlsx}\NormalTok{(file\_path, }\AttributeTok{sheet =} \StringTok{"Product Info"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Type)}
+
+\NormalTok{sensory }\OtherTok{\textless{}{-}} \FunctionTok{read\_xlsx}\NormalTok{(file\_path, }\AttributeTok{sheet=}\StringTok{"Data"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{inner\_join}\NormalTok{(p\_info, }\AttributeTok{by=}\StringTok{"Product"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{relocate}\NormalTok{(Protein}\SpecialCharTok{:}\NormalTok{Fiber, }\AttributeTok{.after=}\NormalTok{Product)}
+
+\NormalTok{senso\_mean }\OtherTok{\textless{}{-}}\NormalTok{ sensory }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_longer}\NormalTok{(Shiny}\SpecialCharTok{:}\NormalTok{Melting, }\AttributeTok{names\_to=}\StringTok{"Attribute"}\NormalTok{, }\AttributeTok{values\_to=}\StringTok{"Score"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Judge) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_wider}\NormalTok{(}\AttributeTok{names\_from=}\NormalTok{Attribute, }\AttributeTok{values\_from=}\NormalTok{Score, }\AttributeTok{values\_fn=}\NormalTok{mean)}
+
+
+\CommentTok{\# Exporting the Results to Excel}
+\FunctionTok{writeDataTable}\NormalTok{(wb,}
+               \AttributeTok{sheet =} \StringTok{"Mean"}\NormalTok{,}
+               \AttributeTok{x =}\NormalTok{ senso\_mean, }
+               \AttributeTok{startCol =} \DecValTok{1}\NormalTok{,}
+               \AttributeTok{startRow =} \DecValTok{1}\NormalTok{,}
+               \AttributeTok{colNames =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{rowNames =} \ConstantTok{FALSE}\NormalTok{, }
+               \AttributeTok{tableStyle =} \StringTok{"TableStyleLight9"}\NormalTok{)}
+
+\FunctionTok{openXL}\NormalTok{(wb)}
+\end{Highlighting}
+\end{Shaded}
+
+At any time, you can visualize the Excel file that is being produced without exporting it yet using \texttt{openXL()}. This function comes very handy as it allows you checking that the output looks like what you would wish for.
+
+As can be seen, \texttt{writeData()} and \texttt{writeDataTable()} give us a lot of control on our export. For instance, we can:
+* control where to print the data by using \texttt{startRow} and \texttt{startCol} (or alternatively \texttt{xy}: \texttt{xy\ =\ c("B",12)} prints the table starting in cell B12), hence allowing exporting multiple tables within the same sheet;
+* include the row names and column names through \texttt{rowNames} and \texttt{colNames};
+* format the header using \texttt{headerStyle} (incl.~color of the text and/or background, font, font size, etc.);
+* apply a specific style to our table using \texttt{tableStyle};
+* shape the borders using predefined solutions through \texttt{borders}, or customizing them with \texttt{borderStyle} and \texttt{borderColour};
+* add a filter to the table using \texttt{withFilter};
+* convert missing data to ``\#N/A'' or any other string using \texttt{keepNA} and \texttt{na.string}.
+
+Rather than using some pre-defined formatting as was the case with \texttt{tableStyle}, let's consider some more advanced options in which we control (almost) everything. Let's start with setting up the formatting style we would like to apply:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Pre{-}define options to control the borders }
+\FunctionTok{options}\NormalTok{(}\StringTok{"openxlsx.borderColour"} \OtherTok{=} \StringTok{"\#4F80BD"}\NormalTok{)}
+\FunctionTok{options}\NormalTok{(}\StringTok{"openxlsx.borderStyle"} \OtherTok{=} \StringTok{"thin"}\NormalTok{)}
+
+\CommentTok{\# Automatically set Number formats to 3 values after the decimal}
+\FunctionTok{options}\NormalTok{(}\StringTok{"openxlsx.numFmt"} \OtherTok{=} \StringTok{"0.0"}\NormalTok{)}
+
+\CommentTok{\# Change the font to Calibri size 10}
+\FunctionTok{modifyBaseFont}\NormalTok{(wb,}\AttributeTok{fontName =} \StringTok{"Calibri"}\NormalTok{, }\AttributeTok{fontSize =} \DecValTok{10}\NormalTok{)}
+
+\CommentTok{\# Header Style (blue background, top/bottom borders, text centered/bold)}
+\NormalTok{headSty }\OtherTok{\textless{}{-}} \FunctionTok{createStyle}\NormalTok{(}\AttributeTok{fgFill =} \StringTok{"\#DCE6F1"}\NormalTok{,}
+                       \AttributeTok{border =} \StringTok{"TopBottom"}\NormalTok{,}
+                       \AttributeTok{halign =} \StringTok{"center"}\NormalTok{,}
+                       \AttributeTok{textDecoration =} \StringTok{"bold"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Note that many more formatting options can be configured through:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{options()} to pre-define number formatting, border colors and style, etc.;
+\item
+  \texttt{modifyBaseFont()} to define the font name and font size;
+\item
+  \texttt{freezePane()} to freeze the first row and/or column of the table;
+\item
+  \texttt{createStyle()} to pre-define a style, or \texttt{addStyle()} to apply the styling to selected cells;
+\item
+  \texttt{setColWidths} to control column width;
+\item
+  \texttt{conditionalFormatting()} to format cells based on pre-defined conditions (see next for an example).
+\end{itemize}
+
+Let's export again the sensory profiles in a second sheet after applying these formatting:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{addWorksheet}\NormalTok{(wb, }\AttributeTok{sheetName =} \StringTok{"Mean (manual formatting)"}\NormalTok{, }\AttributeTok{gridLines =} \ConstantTok{FALSE}\NormalTok{)}
+
+\CommentTok{\# Freeze first row and first column}
+\FunctionTok{freezePane}\NormalTok{(wb, }\AttributeTok{sheet=}\DecValTok{2}\NormalTok{, }\AttributeTok{firstRow=}\ConstantTok{TRUE}\NormalTok{, }\AttributeTok{firstCol=}\ConstantTok{TRUE}\NormalTok{)}
+
+\CommentTok{\# Export the data using writeData}
+\FunctionTok{writeData}\NormalTok{(wb,}
+          \AttributeTok{sheet =}\DecValTok{2}\NormalTok{,}
+          \AttributeTok{x =}\NormalTok{ senso\_mean, }
+          \AttributeTok{startCol =} \DecValTok{1}\NormalTok{,}
+          \AttributeTok{startRow =} \DecValTok{1}\NormalTok{,}
+          \AttributeTok{colNames =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{rowNames =} \ConstantTok{FALSE}\NormalTok{, }
+          \AttributeTok{headerStyle =}\NormalTok{ headSty)}
+
+\FunctionTok{openXL}\NormalTok{(wb)}
+\end{Highlighting}
+\end{Shaded}
+
+You'll notice that the same table is now presented in a fairly different way.
+
+Let's now consider a third export of the sensory profiles, with an additional twist: for a given variable (i.e.~column), the value is colored in red (resp. blue) if it is higher (resp. lower) than its mean. To do so, we need to use conditional formatting.
+
+Let's start with creating two pre-defined parameters called \texttt{pos\_style} (red) and \texttt{neg\_style} (blue) using \texttt{createStyle()}that we will use to color the different cells. Let's also compute the overall mean per attribute.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Styles for conditional formatting}
+\NormalTok{pos\_style }\OtherTok{\textless{}{-}} \FunctionTok{createStyle}\NormalTok{(}\AttributeTok{fontColour =} \StringTok{"firebrick3"}\NormalTok{, }\AttributeTok{bgFill =} \StringTok{"mistyrose1"}\NormalTok{)}
+\NormalTok{neg\_style }\OtherTok{\textless{}{-}} \FunctionTok{createStyle}\NormalTok{(}\AttributeTok{fontColour =} \StringTok{"navy"}\NormalTok{, }\AttributeTok{bgFill =} \StringTok{"lightsteelblue"}\NormalTok{)}
+
+\CommentTok{\# Compute the overall mean}
+\NormalTok{overall\_mean }\OtherTok{\textless{}{-}}\NormalTok{ senso\_mean }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarize}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{where}\NormalTok{(is.numeric), mean))}
+\end{Highlighting}
+\end{Shaded}
+
+Let's then create a new worksheet in which we print the data of interest:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Add a new worksheet}
+\FunctionTok{addWorksheet}\NormalTok{(wb, }\AttributeTok{sheetName =} \StringTok{"Conditional Formatting"}\NormalTok{, }\AttributeTok{gridLines=}\ConstantTok{FALSE}\NormalTok{)}
+
+\CommentTok{\# Write table: note that }
+\FunctionTok{writeDataTable}\NormalTok{(wb,}
+               \AttributeTok{sheet =} \DecValTok{3}\NormalTok{,}
+               \AttributeTok{x =}\NormalTok{ senso\_mean, }
+               \AttributeTok{startCol =} \DecValTok{1}\NormalTok{,}
+               \AttributeTok{startRow =} \DecValTok{1}\NormalTok{,}
+               \AttributeTok{colNames =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{rowNames =} \ConstantTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Finally, we color the cells according to the rules that was defined earlier. To do so, the decision whether \texttt{pos\_style} or \texttt{neg\_style} should be used is defined by the \texttt{rule} parameter from the \texttt{conditionalFormatting()}\footnote{In \texttt{conditionalFormatting()}, you can specify to which \texttt{rows} and \texttt{cols} the formatting applies. In this example, \texttt{cols} takes \texttt{2} because the first column contains the row names.} function.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Adding formatting to the second column}
+\ControlFlowTok{for}\NormalTok{ (v }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{ncol}\NormalTok{(overall\_mean))\{}
+  
+  \FunctionTok{conditionalFormatting}\NormalTok{(wb,}
+                        \AttributeTok{sheet =} \DecValTok{3}\NormalTok{,}
+                        \AttributeTok{cols  =}\NormalTok{ v }\SpecialCharTok{+} \DecValTok{3}\NormalTok{,}
+                        \AttributeTok{rows  =} \DecValTok{1} \SpecialCharTok{+} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(senso\_mean), }
+                        \AttributeTok{rule  =} \FunctionTok{paste0}\NormalTok{(}\StringTok{"\textgreater{}"}\NormalTok{, overall\_mean[}\DecValTok{1}\NormalTok{,v]),}
+                        \AttributeTok{style =}\NormalTok{ pos\_style)}
+  
+  \FunctionTok{conditionalFormatting}\NormalTok{(wb,}
+                        \AttributeTok{sheet =} \DecValTok{3}\NormalTok{,}
+                        \AttributeTok{cols  =}\NormalTok{ v }\SpecialCharTok{+} \DecValTok{3}\NormalTok{,}
+                        \AttributeTok{rows  =} \DecValTok{1} \SpecialCharTok{+} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(senso\_mean), }
+                        \AttributeTok{rule  =} \FunctionTok{paste0}\NormalTok{(}\StringTok{"\textless{}"}\NormalTok{, overall\_mean[}\DecValTok{1}\NormalTok{,v]),}
+                        \AttributeTok{style =}\NormalTok{ neg\_style)}
+  
+\NormalTok{\}}
+
+\FunctionTok{openXL}\NormalTok{(wb)}
+\end{Highlighting}
+\end{Shaded}
+
+Few things should be noted:
+
+\begin{itemize}
+\tightlist
+\item
+  We want to run this for each sensory attribute, hence the \texttt{for} loop that goes from 1 to the number of columns stored in \texttt{overall\_mean} (\texttt{overall\_mean} only contains the overall mean scores for the sensory attributes);
+\item
+  \texttt{senso\_mean} however contains 3 extra columns: \texttt{Product}, \texttt{Protein}, and \texttt{Fiber} hence the parameter \texttt{cols\ =\ v\ +\ 3};
+\item
+  We apply the formatting to all the rows except the header, hence \texttt{rows\ =\ 1\ +\ 1:nrow(senso\_mean)};
+\item
+  Finally, we apply \texttt{pos\_style} (resp. \texttt{neg\_style}) if the value is larger (resp. lower) than the overall mean for that attribute using \texttt{rule\ =\ paste0("\textgreater{}",\ overall\_mean{[}1,v{]})}.
+\end{itemize}
+
+Note that once the spreadsheet is complete, we create the file using \texttt{saveWorkbook()} by specifying the name of the workbook \texttt{wb} and its path through \texttt{file}. In case such workbook already exists, it can be overwritten using \texttt{overwrite}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{saveWorbook}\NormalTok{(wb, }\AttributeTok{file=}\StringTok{"temp/excel export.xlsx"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+For more details on using \textbf{\{openxlsx\}} see \url{https://rdrr.io/cran/openxlsx/}.
+
+\hypertarget{powerpoint}{%
+\subsection{PowerPoint}\label{powerpoint}}
+
+\hypertarget{creating-a-powerpoint-deck}{%
+\subsubsection{Creating a PowerPoint Deck}\label{creating-a-powerpoint-deck}}
+
+Throughout the years, PowerPoint became one of the main support for presenting results, whether it is in academia, in conference, or in companies. It is hence important for us to show how to generate reports in PowerPoint from R directly. This can be done in different ways, yet we propose to use the \texttt{\{officer\}}\footnote{It should be noted that \{officer\} contains conflicting function names with other packages we use (e.g.~\texttt{read\_xlsx()}). To ensure you use the right function, call the function from the package of interest (e.g.~\texttt{readxl::read\_xlsx()}).} package, as its application is vast while still remaining easy to use.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(officer)}
+\end{Highlighting}
+\end{Shaded}
+
+With \texttt{\{officer\}}, the procedure starts with creating a PowerPoint object (\texttt{pptx\_obj}) using the \texttt{read\_pptx()} function.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}} \FunctionTok{read\_pptx}\NormalTok{() }\CommentTok{\# new empty file}
+\end{Highlighting}
+\end{Shaded}
+
+A blank Deck is by default set up with the \emph{Office Theme}. To use a custom theme, we must create a Deck using the PowerPoint software and use it as input. Let's import the \emph{intergral.pptx} template:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pptx\_obj2 }\OtherTok{\textless{}{-}} \FunctionTok{read\_pptx}\NormalTok{(}\FunctionTok{file.path}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"templates"}\NormalTok{, }\StringTok{"intergral.pptx"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+To inspect the content of the template, we use \texttt{layout\_summary()}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pptx\_obj }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{layout\_summary}\NormalTok{()}
+
+\NormalTok{pptx\_obj2 }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{layout\_summary}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+As can be seen by \texttt{layout\_summary()}, the template imported (also called \textbf{master}, which is defined here as \emph{Office Theme}) proposes 7 types of slides including \emph{Title Slide}, \emph{Title and Content}, \emph{Section Header}, \emph{Two Content}, \emph{Comparison}, \emph{Title Only}, and finally \emph{Blank} (the \emph{intergral.pptx} template has 11 different types of slides). Each of these slides present some pre-defined properties (e.g.~a box for text of tables/images, a header etc.). Let's look at the properties of \emph{Title and Content} using \texttt{layout\_properties()}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pptx\_obj }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{layout\_properties}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(name }\SpecialCharTok{==} \StringTok{"Title and Content"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+This code provides more details about the different sections, their identifier and position of the slide. This information will be particularly useful when we will want to export certain information in some particular areas.
+
+Unfortunately, \texttt{\{officer\}} does not provide a function similar to \texttt{openxlsx::openXL()} which allows visualizing the file that is currently being build. Instead, we need to save the document directly on the disk using the \texttt{print()} function, which takes as entries the PowerPoint file to export (here \texttt{pptx\_obj}) and its output location.
+
+\hypertarget{addingmovingremoving-slides}{%
+\subsubsection{Adding/Moving/Removing Slides}\label{addingmovingremoving-slides}}
+
+With \texttt{\{officer\}}, various actions can be done on the slides. The first logical action consists in adding a new slide to a presentation, in which we will later on write some text, tables, figures, etc. Such action can be done using \texttt{add\_slide()}, in which we inform the type of slide to add, and from which master:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{master }\OtherTok{=} \StringTok{"Office Theme"}
+\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}}\NormalTok{ pptx\_obj }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{add\_slide}\NormalTok{(}\AttributeTok{layout =} \StringTok{\textquotesingle{}Title and Content\textquotesingle{}}\NormalTok{, }\AttributeTok{master =}\NormalTok{ master)}
+\end{Highlighting}
+\end{Shaded}
+
+This code will add a \emph{Title and Content} slide to your deck.
+
+Additional operations on the slides themselves can be done. In particular, you can re-organize your deck by changing the orders of your slides using \texttt{move\_slide()}, delete slides that are no longer needed through \texttt{remove\_slide()}, or modify a pre-existing slides by making it active using \texttt{on\_slide()} (by default, the last slide created is the active one).
+
+\hypertarget{positioning-information-to-the-slide}{%
+\subsubsection{Positioning Information to the Slide}\label{positioning-information-to-the-slide}}
+
+On a given slide, any type of content (text, graph, table, etc.) can be exported. To do so, we need to inform where to write what.
+
+As we will see in the next sections, the \emph{what} can be any R element including simple text, tables, figures, etc. So let's ignore it for the moment, and let's focus on the \emph{where}.
+To inform where to print elements on the slide, the function \texttt{ph\_with()} (\emph{ph} stands for \emph{placeholder}) is used. In practice, \texttt{ph\_with()} comes with the parameter \texttt{location}, which takes as input a \emph{placeholder location object} pre-defined by the function \texttt{ph\_location()} or one of its derivative, one of the most useful one being \texttt{ph\_location\_type()}. To do so, simply provide the name stored in the column type from the \texttt{layout\_properties()} output presented before, as following:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_data }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"My functions are:"}\NormalTok{, }\StringTok{"ph\_with"}\NormalTok{, }\StringTok{"ph\_location\_type"}\NormalTok{)}
+
+\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}}\NormalTok{ pptx\_obj }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ph\_with}\NormalTok{(}\AttributeTok{value =} \StringTok{"My first title"}\NormalTok{, }\AttributeTok{location =} \FunctionTok{ph\_location\_type}\NormalTok{(}\AttributeTok{type =} \StringTok{"title"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ph\_with}\NormalTok{(}\AttributeTok{value =}\NormalTok{ my\_data, }\AttributeTok{location =} \FunctionTok{ph\_location\_type}\NormalTok{(}\AttributeTok{type =} \StringTok{\textquotesingle{}body\textquotesingle{}}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+This will add a title (``My first title'') and the text stored in \texttt{my\_data} to the \emph{body} of the slide (\emph{Title and Content}) created previously.
+
+Other pre-defined alternatives to \texttt{ph\_location()} include:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{ph\_location\_fullsize()} to produce an output that covers the entire slide;
+\item
+  \texttt{ph\_location\_left()} and \texttt{ph\_location\_right()} to write in the left/right box in \emph{Two Content} types of slide;
+\item
+  \texttt{ph\_location\_labe()} is similar to \texttt{ph\_location\_type()} except that it uses the label rather than the type.
+\end{itemize}
+
+To gain full control of the exact position of the element to print, \texttt{ph\_location()} is used. It allows specifying exact positions for content (for left/top/width/height, units are inches):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_data }\OtherTok{\textless{}{-}} \StringTok{"My new text positioned using ph\_location()"}
+
+\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}}\NormalTok{ pptx\_obj }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{add\_slide}\NormalTok{(}\AttributeTok{layout =} \StringTok{"Title and Content"}\NormalTok{, }\AttributeTok{master =}\NormalTok{ master) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ph\_with}\NormalTok{(}\AttributeTok{value =}\NormalTok{ my\_data, }\AttributeTok{location =} \FunctionTok{ph\_location}\NormalTok{(}\AttributeTok{left =} \DecValTok{2}\NormalTok{, }\AttributeTok{top =} \DecValTok{2}\NormalTok{, }\AttributeTok{width =} \DecValTok{3}\NormalTok{, }\AttributeTok{height =} \DecValTok{1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+To visualize the different steps done so far, let's save the results on our computers:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(pptx\_obj, }\StringTok{"temp/my powerpoint export.pptx"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{exporting-text}{%
+\subsubsection{Exporting Text}\label{exporting-text}}
+
+In the previous section, we already exported text to slides. Let's go a bit deeper in the process by also showing how to format the text.
+
+By default, each new text item added to a PowerPoint via \texttt{\{officer\}} is a paragraph object. To further format the paragraph, three main functions are being used:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{fpar()} (\emph{formatted paragraph}) creates the paragraph;
+\item
+  \texttt{ftext()} (\emph{formatted text}) allows editing the text before pasting into paragraphs. \texttt{ftext()} requires a second argument called \texttt{prop} which contains the formatting properties;
+\item
+  \texttt{block\_list()} allows us to wrap multiple paragraphs together.
+\end{itemize}
+
+Let's go through an example to illustrate the use of these functions:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_prop }\OtherTok{\textless{}{-}} \FunctionTok{fp\_text}\NormalTok{(}\AttributeTok{color =} \StringTok{"red"}\NormalTok{, }\AttributeTok{font.size =} \DecValTok{14}\NormalTok{) }\CommentTok{\# Formatting option}
+\NormalTok{my\_text }\OtherTok{\textless{}{-}} \FunctionTok{ftext}\NormalTok{(}\StringTok{"First Line in Red"}\NormalTok{, }\AttributeTok{prop =}\NormalTok{ my\_prop) }\CommentTok{\# First line of text, formatted}
+
+\NormalTok{my\_par }\OtherTok{\textless{}{-}} \FunctionTok{fpar}\NormalTok{(my\_text) }\CommentTok{\# text into a paragraph}
+\NormalTok{blank\_line }\OtherTok{\textless{}{-}} \FunctionTok{fpar}\NormalTok{(}\StringTok{""}\NormalTok{) }\CommentTok{\# other empty paragraph to introduce an empty line}
+
+\NormalTok{my\_par2 }\OtherTok{\textless{}{-}} \FunctionTok{fpar}\NormalTok{(}\StringTok{"Second Line"}\NormalTok{) }\CommentTok{\# second line of text, unformatted}
+\NormalTok{my\_list }\OtherTok{\textless{}{-}} \FunctionTok{block\_list}\NormalTok{(my\_par, blank\_line, my\_par2) }\CommentTok{\# Final block with the two lines of text separated by the empty line}
+
+\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}}\NormalTok{ pptx\_obj }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{add\_slide}\NormalTok{(}\AttributeTok{layout =} \StringTok{"Title and Content"}\NormalTok{, }\AttributeTok{master =}\NormalTok{ master) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ph\_with}\NormalTok{(}\AttributeTok{value =}\NormalTok{ my\_list, }\AttributeTok{location =} \FunctionTok{ph\_location\_type}\NormalTok{(}\AttributeTok{type =} \StringTok{"body"}\NormalTok{) )}
+
+\FunctionTok{print}\NormalTok{(pptx\_obj, }\AttributeTok{target =} \StringTok{"temp/my powerpoint export.pptx"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+This add an additional slide to our previous PowerPoint deck with our formatted text.
+
+Last element of formatting to consider is the hierarchy in bullet points. Let's add a slide containing three bullet points with a hierarchy so that the 1st and 3rd lines are primary points, and the second line is a secondary point.
+Such hierarchy can be informed using the \texttt{level\_list} parameter, which informs the hierarchy of each element:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{text1 }\OtherTok{\textless{}{-}} \FunctionTok{fpar}\NormalTok{(}\StringTok{"FIRST SENTENCE"}\NormalTok{)}
+\NormalTok{text2 }\OtherTok{\textless{}{-}} \FunctionTok{fpar}\NormalTok{(}\StringTok{"second sentence"}\NormalTok{)}
+\NormalTok{text3 }\OtherTok{\textless{}{-}} \FunctionTok{fpar}\NormalTok{(}\StringTok{"THIRD SENTENCE"}\NormalTok{)}
+\NormalTok{my\_data }\OtherTok{\textless{}{-}} \FunctionTok{block\_list}\NormalTok{(text1, text2, text3)}
+
+\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}}\NormalTok{ pptx\_obj }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{add\_slide}\NormalTok{(}\AttributeTok{layout =} \StringTok{"Title and Content"}\NormalTok{, }\AttributeTok{master =}\NormalTok{ master) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ph\_with}\NormalTok{(}\AttributeTok{value =}\NormalTok{ my\_data, }\AttributeTok{level\_list =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{1}\NormalTok{), }\AttributeTok{location =} \FunctionTok{ph\_location\_type}\NormalTok{(}\AttributeTok{type =} \StringTok{\textquotesingle{}body\textquotesingle{}}\NormalTok{))}
+
+\FunctionTok{print}\NormalTok{(pptx\_obj, }\AttributeTok{target =} \StringTok{"temp/my powerpoint export.pptx"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{exporting-tables}{%
+\subsubsection{Exporting Tables}\label{exporting-tables}}
+
+Now we know how to export formatted text to slides, let's export tables. This can easily be done by rendering a data frame rather than text as \texttt{ph\_with()} accepts it and renders it in a default format. Let's use a subset of \texttt{senso\_mean} for illustration:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ft\_data }\OtherTok{\textless{}{-}}\NormalTok{ senso\_mean }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Product, Salty, Sweet, Sour, Bitter) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{where}\NormalTok{(is.numeric), round, }\DecValTok{2}\NormalTok{)) }
+
+\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}} \FunctionTok{read\_pptx}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{add\_slide}\NormalTok{(}\AttributeTok{layout =} \StringTok{"Title and Content"}\NormalTok{, }\AttributeTok{master =}\NormalTok{ master) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ph\_with}\NormalTok{(}\AttributeTok{value =}\NormalTok{ ft\_data, }\AttributeTok{location =} \FunctionTok{ph\_location\_type}\NormalTok{(}\AttributeTok{type =} \StringTok{"body"}\NormalTok{))}
+
+\FunctionTok{print}\NormalTok{(pptx\_obj, }\AttributeTok{target =} \StringTok{"temp/my powerpoint export.pptx"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Although this solution works fine, it does not allow formatting the table as much as we would want. Instead, we prefer to use another package called \texttt{\{flextable\}} which was developed by the same author as \texttt{\{officer\}} (both packages being complementary).
+
+\hypertarget{introduction-to-flextable}{%
+\paragraph{Introduction to flextable}\label{introduction-to-flextable}}
+
+With \texttt{\{flextable\}}, the procedure starts with creating a \emph{flextable} object (here \texttt{ft\_table}) using the \texttt{flextable()} function.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(flextable)}
+
+\NormalTok{ft\_table }\OtherTok{\textless{}{-}}\NormalTok{ ft\_data }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{arrange}\NormalTok{(Product) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{flextable}\NormalTok{()}
+
+\FunctionTok{print}\NormalTok{(ft\_table)}
+\end{Highlighting}
+\end{Shaded}
+
+By printing the table, it opens in the Rstudio viewer as an html file. This table can then be customized in various different ways through various functions:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{align()} and \texttt{rotate()} controls for the text alignment and its rotation;
+\item
+  \texttt{bold()} and \texttt{italic} writes the text in bold or italic;
+\item
+  \texttt{font()} and \texttt{fontsize} controls the font type and the size to use;
+\item
+  \texttt{color()} and \texttt{bg()} allows changing the color of the text and of the background.
+\end{itemize}
+
+All these functions require informing the rows (parameter \texttt{i}) and the columns (\texttt{j}) as well as the \texttt{part} (\texttt{"body"}, \texttt{"header"}, \texttt{"footer"}, or \texttt{"all"}) to modify.
+
+Additionally, further formatting can be applied to the table itself through the following functions:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{height()} \& \texttt{width()} control for the row height and column width;
+\item
+  \texttt{border\_outer()}, \texttt{border\_inner()}, \texttt{border\_inner\_h()} \& \texttt{border\_inner\_v()} help design the table by adding borders;
+\item
+  \texttt{autofit()} and \texttt{padding()} are used to control the final size of the table.
+\end{itemize}
+
+For illustration, let's apply some of these functions to \texttt{ft\_table}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ft\_table }\OtherTok{\textless{}{-}}\NormalTok{ ft\_table }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{fontsize}\NormalTok{(}\AttributeTok{size =} \DecValTok{11}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \CommentTok{\# Formatting the header}
+  \FunctionTok{font}\NormalTok{(}\AttributeTok{fontname =} \StringTok{"Roboto"}\NormalTok{, }\AttributeTok{part =} \StringTok{"header"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{color}\NormalTok{(}\AttributeTok{color =} \StringTok{"white"}\NormalTok{, }\AttributeTok{part =} \StringTok{"header"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{bold}\NormalTok{(}\AttributeTok{part =} \StringTok{"header"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{align}\NormalTok{(}\AttributeTok{align =} \StringTok{"center"}\NormalTok{, }\AttributeTok{part =} \StringTok{"header"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{bg}\NormalTok{(}\AttributeTok{bg =} \StringTok{"\#324C63"}\NormalTok{, }\AttributeTok{part =} \StringTok{"header"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \CommentTok{\# Formatting the body}
+  \FunctionTok{font}\NormalTok{(}\AttributeTok{fontname =} \StringTok{"Calibri"}\NormalTok{, }\AttributeTok{part =} \StringTok{"body"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{bg}\NormalTok{(}\AttributeTok{i =} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(ft\_data), }\AttributeTok{bg =} \StringTok{"\#EDEDED"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \CommentTok{\# Formatting the last row of the table}
+  \FunctionTok{bold}\NormalTok{(}\AttributeTok{i =} \FunctionTok{nrow}\NormalTok{(ft\_data), }\AttributeTok{j =} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{ncol}\NormalTok{(ft\_data)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{italic}\NormalTok{(}\AttributeTok{i =} \FunctionTok{nrow}\NormalTok{(ft\_data), }\AttributeTok{j =} \SpecialCharTok{\textasciitilde{}}\NormalTok{Product }\SpecialCharTok{+}\NormalTok{ Salty }\SpecialCharTok{+}\NormalTok{ Sweet }\SpecialCharTok{+}\NormalTok{ Sour }\SpecialCharTok{+}\NormalTok{ Bitter) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{color}\NormalTok{(}\AttributeTok{i =}  \FunctionTok{nrow}\NormalTok{(ft\_data), }\AttributeTok{j =} \SpecialCharTok{\textasciitilde{}}\NormalTok{Sour, }\AttributeTok{color =} \StringTok{"red"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{color}\NormalTok{(}\AttributeTok{i =}  \FunctionTok{nrow}\NormalTok{(ft\_data), }\AttributeTok{j =} \SpecialCharTok{\textasciitilde{}}\NormalTok{Sweet, }\AttributeTok{color =} \StringTok{"orange"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{autofit}\NormalTok{()}
+
+\CommentTok{\# Set up the border style}
+\NormalTok{my\_border }\OtherTok{\textless{}{-}} \FunctionTok{fp\_border}\NormalTok{(}\AttributeTok{color =} \StringTok{"black"}\NormalTok{, }\AttributeTok{style =} \StringTok{"solid"}\NormalTok{, }\AttributeTok{width =} \DecValTok{1}\NormalTok{)}
+
+\NormalTok{ft\_table }\OtherTok{\textless{}{-}}\NormalTok{ ft\_table }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{border\_outer}\NormalTok{(}\AttributeTok{part =} \StringTok{"all"}\NormalTok{, }\AttributeTok{border =}\NormalTok{ my\_border) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{border\_inner}\NormalTok{(}\AttributeTok{part =} \StringTok{"body"}\NormalTok{, }\AttributeTok{border =} \FunctionTok{fp\_border}\NormalTok{(}\AttributeTok{style =} \StringTok{"dashed"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{width}\NormalTok{(}\AttributeTok{j =} \DecValTok{1}\NormalTok{, }\AttributeTok{width =} \FloatTok{1.2}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{height}\NormalTok{(}\AttributeTok{i =} \DecValTok{12}\NormalTok{, }\AttributeTok{height =} \DecValTok{1}\NormalTok{)}
+
+\FunctionTok{print}\NormalTok{(ft\_table)}
+\end{Highlighting}
+\end{Shaded}
+
+This is just an overview of the most relevant and used functions in \texttt{\{flextable\}}, yet there are more possibilities.
+To go further, you can also consider the following functions (amongst many more):
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{merge()} merges vertically or horizontally cells with the same content;
+\item
+  \texttt{compose()}, \texttt{as\_chunk()}, and \texttt{as\_paragraph()} works hands in hands to create more complex text formatting (e.g.~sentence with parts of the text colored differently, or with sub/superscript);
+\item
+  \texttt{style()} applies a set of formatting properties to the same selection of the rows/columns.
+\end{itemize}
+
+Finally, to export a flextable to a PowerPoint deck, simply export it as we have seen before:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}}\NormalTok{ pptx\_obj }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{add\_slide}\NormalTok{(}\AttributeTok{layout =} \StringTok{"Title and Content"}\NormalTok{, }\AttributeTok{master =} \StringTok{"Office Theme"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ph\_with}\NormalTok{(}\AttributeTok{value =}\NormalTok{ ft\_table, }\FunctionTok{ph\_location}\NormalTok{(}\AttributeTok{left =} \DecValTok{2}\NormalTok{, }\AttributeTok{top =} \DecValTok{2}\NormalTok{, }\AttributeTok{width =} \DecValTok{4}\NormalTok{)) }
+
+\FunctionTok{print}\NormalTok{(pptx\_obj, }\AttributeTok{target =} \StringTok{"temp/my powerpoint export.pptx"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+For more details on using \textbf{\{flextable\}} see \url{https://davidgohel.github.io/flextable/}.
+
+\hypertarget{exporting-plots}{%
+\subsubsection{Exporting Plots}\label{exporting-plots}}
+
+The last type of R outputs we want to export to PowerPoint is figures. Before showing how to export them, let's build a simple bar chart from \texttt{senso\_mean} using \texttt{\{ggplot2\}}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{chart\_to\_plot }\OtherTok{\textless{}{-}}\NormalTok{ senso\_mean }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Product, Salty, Sweet, Sour, Bitter) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{arrange}\NormalTok{(Product) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_longer}\NormalTok{(Salty}\SpecialCharTok{:}\NormalTok{Bitter, }\AttributeTok{names\_to =} \StringTok{\textquotesingle{}Attribute\textquotesingle{}}\NormalTok{, }\AttributeTok{values\_to =} \StringTok{\textquotesingle{}Value\textquotesingle{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Product, }\AttributeTok{y =}\NormalTok{ Value, }\AttributeTok{fill =}\NormalTok{ Attribute)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_col}\NormalTok{(}\AttributeTok{position =} \StringTok{\textquotesingle{}dodge\textquotesingle{}}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{xlab}\NormalTok{(}\StringTok{""}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+To export any \texttt{ggplot2} object to PowerPoint, the package \texttt{\{rvg\}} is required. This package provides two graphics devices that produces Vector Graphics outputs in \texttt{DrawingML} format for Microsoft PowerPoint with \texttt{dml\_pptx()} and for Microsoft Excel with \texttt{dml\_xlsx()}, meaning the the graphics is being `rebuilt' in PowerPoint or Word. To simplify, the generic \texttt{dml()} function is used\footnote{Depending on the output format, the corresponding function is being called.}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(rvg)}
+
+\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}}\NormalTok{ pptx\_obj }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{add\_slide}\NormalTok{(}\AttributeTok{layout =} \StringTok{"Title and Content"}\NormalTok{, }\AttributeTok{master =} \StringTok{"Office Theme"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ph\_with}\NormalTok{(}\AttributeTok{value =} \FunctionTok{dml}\NormalTok{(}\AttributeTok{ggobj =}\NormalTok{ chart\_to\_plot, }\AttributeTok{editable =} \ConstantTok{TRUE}\NormalTok{),}
+          \AttributeTok{location=} \FunctionTok{ph\_location\_type}\NormalTok{(}\AttributeTok{type =} \StringTok{\textquotesingle{}body\textquotesingle{}}\NormalTok{))}
+
+\FunctionTok{print}\NormalTok{(pptx\_obj, }\AttributeTok{target =} \StringTok{"temp/my powerpoint export.pptx"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+For simple graphics (such as line chart, bar charts, etc.), the \texttt{\{mschart\}} package creates the graphs directly in PowerPoint or Word. These graphics have then the advantage to be interactive.
+In this case, the \texttt{ggplot2} graphs are not needed: instead, we use functions such as \texttt{ms\_barchart()} to produce them.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(mschart)}
+
+\NormalTok{mydata }\OtherTok{\textless{}{-}}\NormalTok{ senso\_mean }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Product, Salty, Sweet, Sour, Bitter) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{arrange}\NormalTok{(Product) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_longer}\NormalTok{(Salty}\SpecialCharTok{:}\NormalTok{Bitter, }\AttributeTok{names\_to =} \StringTok{\textquotesingle{}Attribute\textquotesingle{}}\NormalTok{, }\AttributeTok{values\_to =} \StringTok{\textquotesingle{}Value\textquotesingle{}}\NormalTok{)}
+
+\CommentTok{\# Building the barchart using ms\_barchart()}
+\NormalTok{my\_barchart }\OtherTok{\textless{}{-}} \FunctionTok{ms\_barchart}\NormalTok{(}\AttributeTok{data =}\NormalTok{ mydata,}
+                           \AttributeTok{x =} \StringTok{"Product"}\NormalTok{,}
+                           \AttributeTok{y =} \StringTok{"Value"}\NormalTok{,}
+                           \AttributeTok{group =} \StringTok{"Attribute"}\NormalTok{)}
+
+\CommentTok{\# The chart is a Powerpoint native object and can be viewed using the preview option in print}
+\FunctionTok{print}\NormalTok{(my\_barchart, }\AttributeTok{preview =} \ConstantTok{TRUE}\NormalTok{)}
+
+\CommentTok{\# To add the object to a powerpoint slide we can use the officer\textquotesingle{}s native ph\_with}
+\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}}\NormalTok{ pptx\_obj }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{add\_slide}\NormalTok{(}\AttributeTok{layout =} \StringTok{"Title and Content"}\NormalTok{, }\AttributeTok{master =} \StringTok{"Office Theme"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ph\_with}\NormalTok{(}\AttributeTok{value =}\NormalTok{ my\_barchart, }\AttributeTok{location =} \FunctionTok{ph\_location\_type}\NormalTok{(}\AttributeTok{type =} \StringTok{"body"}\NormalTok{))}
+
+\FunctionTok{print}\NormalTok{(pptx\_obj, }\AttributeTok{target =} \StringTok{"temp/my powerpoint export.pptx"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+If you open the PowerPoint just exported, on the final slide, you'll find the barchart generated by \texttt{\{mschart\}}. By clicking the graph, you'll find a `funnel' icon on the left side, which allows you filter attributes or products, hence making your graph interactive.
+
+At last, \texttt{\{officer\}} also allows you adding images that are stored on your computer into a PowerPoint deck. This can be done through the \texttt{external\_img()} function, which takes as input the location of the file. Like for any other graph, simply apply this function within \texttt{ph\_with()} by specifying then the location where the image should be printed.
+
+\hypertarget{word}{%
+\subsection{Word}\label{word}}
+
+The process for building Word document directly from R is very similar to the one for PowerPoint, since it is also handled though \texttt{\{officer\}}.
+
+To start a new Word document, the \texttt{read\_docx()} function is being used. Since Word documents are more \emph{text oriented} than PowerPoint, blocks of text are defined as paragraph. To introduce a new paragraph, the \texttt{body\_add\_par()} function is called. Note that paragraphs are automatically separated by line breaks:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{docx\_obj }\OtherTok{\textless{}{-}} \FunctionTok{read\_docx}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{body\_add\_par}\NormalTok{(}\AttributeTok{value =} \StringTok{"My Text"}\NormalTok{, }\AttributeTok{style =} \StringTok{"Normal"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{body\_add\_par}\NormalTok{(}\AttributeTok{value =} \StringTok{"Other Text"}\NormalTok{, }\AttributeTok{style =} \StringTok{"Normal"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{body\_add\_par}\NormalTok{(}\AttributeTok{value =} \StringTok{"Conclusion"}\NormalTok{, }\AttributeTok{style =} \StringTok{"Normal"}\NormalTok{)}
+
+\FunctionTok{print}\NormalTok{(docx\_obj, }\AttributeTok{target =} \StringTok{"temp/my word export.docx"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Of course, it is not required to use the default formatting options from the word document in use. Instead, we can format it directly from R using \texttt{body\_add\_fpar()} to add a formatted text paragraph, or apply pre-defined styles to the previous function suggested (as is the case here with \texttt{style\ =\ "heading\ 1"} to set the text as a title of level 1).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_format }\OtherTok{\textless{}{-}} \FunctionTok{fp\_text}\NormalTok{(}\AttributeTok{font.family =} \StringTok{\textquotesingle{}Calibri\textquotesingle{}}\NormalTok{, }\AttributeTok{font.size =} \DecValTok{14}\NormalTok{, }\AttributeTok{bold =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{color =} \StringTok{\textquotesingle{}blue\textquotesingle{}}\NormalTok{)}
+\NormalTok{my\_text }\OtherTok{\textless{}{-}} \FunctionTok{ftext}\NormalTok{(}\StringTok{\textquotesingle{}Here is another example of text\textquotesingle{}}\NormalTok{, my\_format)}
+\NormalTok{my\_par }\OtherTok{\textless{}{-}} \FunctionTok{fpar}\NormalTok{(my\_text)}
+
+\NormalTok{docx\_obj }\OtherTok{\textless{}{-}} \FunctionTok{read\_docx}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{body\_add\_par}\NormalTok{(}\AttributeTok{value =} \StringTok{"Document Title"}\NormalTok{, }\AttributeTok{style =} \StringTok{"heading 1"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{body\_add\_par}\NormalTok{(}\AttributeTok{value =} \StringTok{""}\NormalTok{, }\AttributeTok{style =} \StringTok{"Normal"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{body\_add\_fpar}\NormalTok{(my\_par, }\AttributeTok{style =} \StringTok{"Normal"}\NormalTok{)}
+
+\FunctionTok{print}\NormalTok{(docx\_obj, }\AttributeTok{target =} \StringTok{"temp/my word export.docx"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+To export tables or figures, additional functions including \texttt{body\_add\_table()} (for tables) and \texttt{body\_add\_gg()}\footnote{Note that \texttt{body\_add\_img()} and \texttt{body\_add\_plot()} can also be used.}) (for \texttt{ggplot2()} figures) are used. These can be combined to \texttt{body\_add\_caption()} to add a caption to your table/figure:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{table\_num }\OtherTok{\textless{}{-}} \FunctionTok{run\_autonum}\NormalTok{(}\AttributeTok{seq\_id =} \StringTok{"tab"}\NormalTok{, }\AttributeTok{pre\_label =} \StringTok{"Table "}\NormalTok{, }\AttributeTok{bkm =} \StringTok{"tables"}\NormalTok{)}
+\NormalTok{figure\_num }\OtherTok{\textless{}{-}} \FunctionTok{run\_autonum}\NormalTok{(}\AttributeTok{seq\_id =} \StringTok{"fig"}\NormalTok{, }\AttributeTok{pre\_label =} \StringTok{"Figure "}\NormalTok{, }\AttributeTok{bkm =} \StringTok{"figures"}\NormalTok{)}
+
+\NormalTok{docx\_obj }\OtherTok{\textless{}{-}}\NormalTok{ docx\_obj }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{body\_add\_par}\NormalTok{(}\AttributeTok{value =} \StringTok{"Exporting Tables"}\NormalTok{, }\AttributeTok{style =} \StringTok{"heading 2"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{body\_add\_par}\NormalTok{(}\AttributeTok{value =} \StringTok{""}\NormalTok{, }\AttributeTok{style =} \StringTok{"Normal"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{body\_add\_par}\NormalTok{(}\AttributeTok{value =} \StringTok{"Here is my first table:"}\NormalTok{, }\AttributeTok{style =} \StringTok{"Normal"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{body\_add\_par}\NormalTok{(}\AttributeTok{value =} \StringTok{""}\NormalTok{, }\AttributeTok{style =} \StringTok{"Normal"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{body\_add\_table}\NormalTok{(}\AttributeTok{value =} \FunctionTok{head}\NormalTok{(mtcars)[,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{], }\AttributeTok{style =} \StringTok{"table\_template"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{body\_add\_caption}\NormalTok{(}\FunctionTok{block\_caption}\NormalTok{(}\StringTok{"My first table."}\NormalTok{, }\AttributeTok{style=}\StringTok{"centered"}\NormalTok{, }\AttributeTok{autonum=}\NormalTok{table\_num)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{body\_add\_par}\NormalTok{(}\AttributeTok{value =} \StringTok{"Exporting Figures"}\NormalTok{, }\AttributeTok{style =} \StringTok{"heading 2"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{body\_add\_par}\NormalTok{(}\AttributeTok{value =} \StringTok{""}\NormalTok{, }\AttributeTok{style =} \StringTok{"Normal"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{body\_add\_par}\NormalTok{(}\AttributeTok{value =} \StringTok{"Here is my first figure:"}\NormalTok{, }\AttributeTok{style =} \StringTok{"Normal"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{body\_add\_par}\NormalTok{(}\AttributeTok{value =} \StringTok{""}\NormalTok{, }\AttributeTok{style =} \StringTok{"Normal"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{body\_add\_gg}\NormalTok{(}\AttributeTok{value =}\NormalTok{ chart\_to\_plot) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{body\_add\_caption}\NormalTok{(}\FunctionTok{block\_caption}\NormalTok{(}\StringTok{"My first figure."}\NormalTok{, }\AttributeTok{style=}\StringTok{"centered"}\NormalTok{, }\AttributeTok{autonum=}\NormalTok{figure\_num))}
+
+\FunctionTok{print}\NormalTok{(docx\_obj, }\AttributeTok{target =} \StringTok{"temp/my word export.docx"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+As can be seen, \texttt{body\_add\_caption()} is combined to \texttt{block\_caption()}, and can have some automated numbering, as defined previously using \texttt{table\_num} for tables, and \texttt{figure\_num} for figures.
+
+Unlike a PowerPoint file that contains separate slides, a word document is a continuous object. Hence, to emphasize a break and add content to a new page, \texttt{body\_add\_break()} needs to be called. Additionally, tables of content can be generated using \texttt{body\_add\_toc()}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{docx\_obj }\OtherTok{\textless{}{-}}\NormalTok{ docx\_obj }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{body\_add\_break}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{body\_add\_par}\NormalTok{(}\AttributeTok{value =} \StringTok{"Conclusion"}\NormalTok{, }\AttributeTok{style =} \StringTok{"heading 1"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{body\_add\_break}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{body\_add\_par}\NormalTok{(}\StringTok{"Table of Contents"}\NormalTok{, }\AttributeTok{style =} \StringTok{"heading 1"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{body\_add\_toc}\NormalTok{(}\AttributeTok{level =} \DecValTok{2}\NormalTok{)}
+
+\FunctionTok{print}\NormalTok{(docx\_obj, }\AttributeTok{target =} \StringTok{"temp/my word export.docx"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+As can be seen, it is possible to format a nice report in Word directly from R, that integrates text, tables, and figures.
+
+For more information regarding \texttt{\{officer\}}, and on how to export results to Word and PowerPoint, see \url{https://ardata-fr.github.io/officeverse/index.html}.
+
+\hypertarget{notes-on-applying-corporate-branding}{%
+\subsection{Notes on applying corporate branding}\label{notes-on-applying-corporate-branding}}
+
+You may have noticed that we have been consistent with our approach to export results to reports, regardless of the final output:
+We start with pre-defining our styling parameters that we then apply to our different tables, slides, paragraphs, etc. This is not a formal rule, yet we strongly recommend you adopting this way of working. Indeed, by creating your different styling parameters at the start of your script file, these lines of code do not interfere with your analyses. At a later stage, you will thank yourself for keeping well-structured code as it gains in clarity, and hence facilitates debugging your code in case of error or changes.
+
+To go one step further, we would recommend you storing all these styling parameters in a separate file you load any time you need them using \texttt{source()}. This process \textbf{reduces} the size of your script file (increasing clarity), while \textbf{harmonizing} all your exports by \textbf{centralizing} your \textbf{formatting code} in one unique place. The last point is particularly important since any changes required only need to be done once, yet they will be applied to all your reports.
+
+As we have seen, \texttt{\{officer\}} gives you the opportunity to import pre-defined templates (PowerPoint or Word). This is very valuable as your report can easily match your corporate style.
+
+Ultimately, to ensure optimal efficiency, we advise you to spend a bit more time when constructing your report by ensuring that as many details are being taken care of, so that later on, you can spend more time in the story building part and less on the analysis and slide generation. For instance, don't be afraid of mass-exporting results, as it is easier to remove some slides, tables, or figures (in case they are not needed for building your story) then it is to re-generate them at a later stage (in case they are missing).
+
+\hypertarget{integrating-analyses-scripts-within-reporting-tools}{%
+\section{Integrating analyses scripts within reporting tools}\label{integrating-analyses-scripts-within-reporting-tools}}
+
+Integrating reporting within the analysis part, or integrating the analysis within the reporting part?
+-\textgreater{} Keep track of what has been done (reproducible research): Explain choices for analysis, table presentation, charts
+-\textgreater{} Sharing code/analysis
+To improve way of work (efficiency) and to keep track of steps taken along the way
+
+Rmarkdown
+
+In this section, we review recent advances in automated report production that:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Connects our analysis tool to our preferred reporting tool;
+\item
+  Liberate resources for scientists to focus on the interpretation and communication of results\ldots{}
+\item
+  \ldots while simultaneously reducing errors and increasing the consistency of their analyses.
+\end{enumerate}
+
+Through this section, we will show you how to generate directly from R different types of report within the Microsoft Office suit. More precisely, we will start by showing you how to export results to Excel, which we will then extend to PowerPoint, and Word. With this approach, you can then incorporate some code within your analysis script, meaning that as soon as your data change, a new updated report will be generated.
+
+Details of how to customize the final presentation (PowerPoint) to incorporate corporate branding - such as logos, font choices, and color palettes - is also tackled here.
+
 RMarkdown, HTML output, etc. (mention but don't focus)
 Packages for Microsoft office production
 Officer suite (PowerPoint, Word)
@@ -1660,630 +2411,11 @@ extrafont
 extrafontdb
 Rcolorbrewer
 
-\hypertarget{excel}{%
-\section{Excel}\label{excel}}
-
-Although Excel is not our preferred tool for automated reporting, it is still one of the major ways to access and share data. Most data collection software offer the possibility to export data and results in an Excel format, and most data analysis tools accept Excel format as inputs. With the large use of Excel, it is no surprise that many of our colleagues or clients like to share data and results using such spreadsheets. It is even less a surprise that R provides multiple solutions to import/export results from/to Excel.
-
-For the import of datasets, we have already presented the package \texttt{\{readxl\}} among others. For exporting results, two complementary packages (yet again, among others!) in terms of ease of use and flexibility in the outcome are proposed: \texttt{\{writexl\}} and \texttt{\{openxlsx\}}.
-
-As its name suggests, \texttt{\{writexl\}} is the extension of \texttt{\{readxl\}} dedicated to exporting tables to Excel through the \texttt{write\_xlsx()} function. Its use is very simple as it only takes as inputs the table (or list of tables) to export to the file specified in the \texttt{path} parameter.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(readxl)}
-\FunctionTok{library}\NormalTok{(writexl)}
-\FunctionTok{library}\NormalTok{(dplyr)}
-
-\NormalTok{file\_path }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"Sensory Profile.xlsx"}\NormalTok{)}
-
-\NormalTok{product\_info }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(}\AttributeTok{path  =}\NormalTok{ file\_path,}
-                           \AttributeTok{sheet =} \StringTok{"Product Info"}\NormalTok{,}
-                           \AttributeTok{range =} \StringTok{"A1:D12"}\NormalTok{,}
-                           \AttributeTok{col\_names =} \ConstantTok{TRUE}\NormalTok{)}
-
-\CommentTok{\#Basic data manipulation: writing a subset into a new xlsx}
-\NormalTok{product\_info }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{filter}\NormalTok{(Protein }\SpecialCharTok{\%in\%} \StringTok{"High"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{write\_xlsx}\NormalTok{(}\AttributeTok{path =} \FunctionTok{file.path}\NormalTok{(}\StringTok{"output"}\NormalTok{, }\StringTok{"High Protein Products.xlsx"}\NormalTok{),}
-             \AttributeTok{col\_names =} \ConstantTok{TRUE}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-The export of tables using the \texttt{\{writexl\}} package is easy, yet simplistic as it does not allow formatting the tables (except for some minor possibilities for the header), nor does it allow exporting multiple tables within the same sheet. For more advanced exporting options, the use of \textbf{\{openxlsx\}} package is preferred as it allows more flexibility in structuring and formatting the Excel output.
-
-With \texttt{\{openxlsx\}}, the procedure starts with creating a workbook object \texttt{wb} using the \texttt{createWorkbook()} function, to which we add worksheets through the \texttt{addWorksheet()} function.
-On a given worksheet, any table can be exported using \texttt{writeData()} or \texttt{writeDataTable()}, which controls where to write the table through the \texttt{startRow} and \texttt{startCol} options.
-Through these different functions, many additional formatting procedure can be applied:
-
-\begin{itemize}
-\tightlist
-\item
-  \texttt{createWorksheet()} allows:
-
-  \begin{itemize}
-  \tightlist
-  \item
-    show/hide grid lines using \texttt{gridLines};
-  \item
-    color the sheet using \texttt{tabColour};
-  \item
-    change the zoom on the sheet through \texttt{zoom};
-  \item
-    show/hide the tab using \texttt{visible};
-  \item
-    format the worksheet by specifying its size (\texttt{paperSize}) and orientation (\texttt{orientation}).
-  \end{itemize}
-\item
-  \texttt{writeData()} and \texttt{writeDataTable()} allow:
-
-  \begin{itemize}
-  \tightlist
-  \item
-    controlling where to print the data using \texttt{startRow} and \texttt{startCol} (or alternatively \texttt{xy}: \texttt{xy\ =\ c("B",12)} prints the table starting in cell B12), hence allowing exporting multiple tables within the same sheet;
-  \item
-    including the row names and column names through \texttt{rowNames} and \texttt{colNames};
-  \item
-    formatting the header using \texttt{headerStyle} (incl.~color of the text and/or background, font, font size, etc.);
-  \item
-    shaping the borders using predefined solutions through \texttt{borders}, or customizing them with \texttt{borderStyle} and \texttt{borderColour};
-  \item
-    adding a filter to the table using \texttt{withFilter};
-  \item
-    converts missing data to ``\#N/A'' or any other string using \texttt{keepNA} and \texttt{na.string}.
-  \end{itemize}
-\item
-  Additional formatting can be controlled using:
-
-  \begin{itemize}
-  \tightlist
-  \item
-    \texttt{options()} to pre-define number formatting, border colors and style that will be applied automatically to each table;
-  \item
-    \texttt{modifyBaseFont()} to define the font name and font size;
-  \item
-    \texttt{freezePane()} to freeze the first row and/or column of the table using \texttt{firstRow\ =\ TRUE} and \texttt{firstCol\ =\ TRUE};
-  \item
-    \texttt{createStyle()} to pre-define a style, or \texttt{addStyle()} to apply the styling to selected cells;
-  \item
-    \texttt{setColWidths} to control column width;
-  \item
-    \texttt{conditionalFormatting()} styling of cells when they meet pre-defined rules, as for instance to highlight significant p-values.
-  \end{itemize}
-\end{itemize}
-
-When using \texttt{\{openxlsx\}}, we recommend to use the same procedure as for Word and PowerPoint:
-
-\begin{itemize}
-\tightlist
-\item
-  Start with setting the default parameters that should be applied to each table;
-\item
-  Create styles for text or table headers that you save in different elements, and that you apply where needed.
-\end{itemize}
-
-In the following example, the sensory profiles are exported into a newly created sheet.
-
-To introduce conditional formatting with \texttt{\{openxlsx\}}, the sensory profiles are color coded as following: for each cell, the value is compared to the overall mean computed for that column and is colored in red (resp. blue) if it's higher (resp. lower) than the mean.
-In practice, the color style is pre-defined in two parameters called \texttt{pos\_style} (red) and \texttt{neg\_style} (blue) using \texttt{createStyle()}. The decision whether \texttt{pos\_style} or \texttt{neg\_style} should be used is defined by the \texttt{rule} parameter from the \texttt{conditionalFormatting()}\footnote{In \texttt{conditionalFormatting()}, you can specify to which \texttt{rows} and \texttt{cols} the formatting applies. In this example, \texttt{cols} takes \texttt{2} because the first column contains the row names.} function.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(openxlsx)}
-
-\CommentTok{\# Pre{-}define options to control the borders }
-\FunctionTok{options}\NormalTok{(}\StringTok{"openxlsx.borderColour"} \OtherTok{=} \StringTok{"\#4F80BD"}\NormalTok{)}
-\FunctionTok{options}\NormalTok{(}\StringTok{"openxlsx.borderStyle"} \OtherTok{=} \StringTok{"thin"}\NormalTok{)}
-
-\CommentTok{\# Automatically set Number formats to 3 values after the decimal}
-\FunctionTok{options}\NormalTok{(}\StringTok{"openxlsx.numFmt"} \OtherTok{=} \StringTok{"0.000"}\NormalTok{)}
-
-\CommentTok{\# Create a header style in which }
-  \CommentTok{\# a blue background is used,}
-  \CommentTok{\# borders on top and on the bottom, }
-  \CommentTok{\# the text is centered and is bold}
-
-\NormalTok{headSty }\OtherTok{\textless{}{-}} \FunctionTok{createStyle}\NormalTok{(}\AttributeTok{fgFill =} \StringTok{"\#DCE6F1"}\NormalTok{,}
-                       \AttributeTok{border =} \StringTok{"TopBottom"}\NormalTok{,}
-                       \AttributeTok{halign =} \StringTok{"center"}\NormalTok{,}
-                       \AttributeTok{textDecoration =} \StringTok{"bold"}\NormalTok{)}
-
-\CommentTok{\# Data preparation}
-\NormalTok{senso\_mean }\OtherTok{\textless{}{-}}\NormalTok{ sensory }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{group\_by}\NormalTok{(Product) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{summarise}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{where}\NormalTok{(is.numeric), mean)) }\SpecialCharTok{\%\textgreater{}\%} 
-\NormalTok{  tibble}\SpecialCharTok{::}\FunctionTok{column\_to\_rownames}\NormalTok{(}\AttributeTok{var =} \StringTok{"Product"}\NormalTok{)}
-
-\NormalTok{overall\_mean }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(senso\_mean, }\DecValTok{2}\NormalTok{, mean)}
-
-\CommentTok{\# Create workbook object}
-\NormalTok{wb }\OtherTok{\textless{}{-}}\NormalTok{ openxlsx}\SpecialCharTok{::}\FunctionTok{createWorkbook}\NormalTok{()}
-
-\CommentTok{\# Change the font to Calibri size 10}
-\FunctionTok{modifyBaseFont}\NormalTok{(wb,}\AttributeTok{fontName =} \StringTok{"Calibri"}\NormalTok{, }\AttributeTok{fontSize =} \DecValTok{10}\NormalTok{)}
-
-\CommentTok{\# Add a new worksheet}
-\FunctionTok{addWorksheet}\NormalTok{(wb, }\AttributeTok{sheetName =} \StringTok{"Mean"}\NormalTok{, }\AttributeTok{gridLines =} \ConstantTok{FALSE}\NormalTok{)}
-
-\CommentTok{\# Write table: note that }
-\FunctionTok{writeDataTable}\NormalTok{(wb,}
-               \AttributeTok{sheet =} \StringTok{"Mean"}\NormalTok{,}
-               \AttributeTok{x =}\NormalTok{ senso\_mean, }
-               \AttributeTok{startCol =} \DecValTok{1}\NormalTok{,}
-               \AttributeTok{startRow =} \DecValTok{1}\NormalTok{,}
-               \AttributeTok{colNames =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{rowNames =} \ConstantTok{TRUE}\NormalTok{, }
-               \AttributeTok{tableStyle =} \StringTok{"TableStyleLight9"}\NormalTok{)}
-
-\CommentTok{\# Freezing the table}
-\FunctionTok{freezePane}\NormalTok{(wb, }\AttributeTok{sheet =} \StringTok{"Mean"}\NormalTok{, }\AttributeTok{firstRow =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{firstCol =} \ConstantTok{TRUE}\NormalTok{)}
-
-\CommentTok{\# Styles for conditional formatting}
-\NormalTok{pos\_style }\OtherTok{\textless{}{-}} \FunctionTok{createStyle}\NormalTok{(}\AttributeTok{fontColour =} \StringTok{"firebrick3"}\NormalTok{, }\AttributeTok{bgFill =} \StringTok{"mistyrose1"}\NormalTok{)}
-\NormalTok{neg\_style }\OtherTok{\textless{}{-}} \FunctionTok{createStyle}\NormalTok{(}\AttributeTok{fontColour =} \StringTok{"navy"}\NormalTok{, }\AttributeTok{bgFill =} \StringTok{"lightsteelblue"}\NormalTok{)}
-
-\CommentTok{\# Adding formatting to the second column}
-\FunctionTok{conditionalFormatting}\NormalTok{(wb,}
-                      \AttributeTok{sheet =} \StringTok{"Mean"}\NormalTok{, }
-                      \AttributeTok{cols  =} \DecValTok{2}\NormalTok{,}
-                      \AttributeTok{rows  =} \DecValTok{1} \SpecialCharTok{+} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(senso\_mean), }
-                      \AttributeTok{rule  =} \FunctionTok{paste0}\NormalTok{(}\StringTok{"\textgreater{}"}\NormalTok{,overall\_mean[}\DecValTok{2}\NormalTok{]),}
-                      \AttributeTok{style =}\NormalTok{ pos\_style)}
-
-\FunctionTok{conditionalFormatting}\NormalTok{(wb,}
-                      \AttributeTok{sheet =} \StringTok{"Mean"}\NormalTok{,}
-                      \AttributeTok{cols  =} \DecValTok{2}\NormalTok{,}
-                      \AttributeTok{rows  =} \DecValTok{1} \SpecialCharTok{+} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(senso\_mean), }
-                      \AttributeTok{rule  =} \FunctionTok{paste0}\NormalTok{(}\StringTok{"\textless{}"}\NormalTok{,overall\_mean[}\DecValTok{2}\NormalTok{]),}
-                      \AttributeTok{style =}\NormalTok{ neg\_style)}
-
-\FunctionTok{setColWidths}\NormalTok{(wb, }\AttributeTok{sheet =} \StringTok{"Mean"}\NormalTok{,}
-             \AttributeTok{cols =} \DecValTok{1}\SpecialCharTok{:}\NormalTok{(}\DecValTok{1}\SpecialCharTok{+}\FunctionTok{ncol}\NormalTok{(senso\_mean)), }\AttributeTok{widths =} \DecValTok{12}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-The file is created using \texttt{saveWorkbook()} by specifying the name of the workbook \texttt{wb} and its path through \texttt{file}. In case such workbook already exists, it can be overwritten using \texttt{overwrite}.
-
-TIPS: At any time, you can visualize your file using \texttt{openXL()}: This function opens within Excel the temporary file that is currently being built, hence allowing you to double-check that your code matches your expectations.
-
-For more details on using \textbf{\{openxlsx\}} see \url{https://rdrr.io/cran/openxlsx/}.
-
-\hypertarget{powerpoint}{%
-\section{PowerPoint}\label{powerpoint}}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(tidyverse)}
-\FunctionTok{library}\NormalTok{(officer)}
-\FunctionTok{library}\NormalTok{(flextable)}
-\end{Highlighting}
-\end{Shaded}
-
-With \texttt{\{officer\}}, the procedure starts with creating a powerpoint object \texttt{pptx\_obj} using the \texttt{read\_pptx()} function, to which we add slides through the \texttt{add\_slide()} function.
-On a given worksheet, any type of content (text, graph, table) can be exported using \texttt{ph\_with()} (ph \textasciitilde{} placeholder) which controls where to write the content through the \texttt{location} and \texttt{ph\_location} options.
-
-Through these different functions, many additional formatting procedure can be applied.
-
-\begin{itemize}
-\tightlist
-\item
-  \texttt{add\_slide()} with arguments:
-
-  \begin{itemize}
-  \tightlist
-  \item
-    \texttt{layout} type of slide;
-  \item
-    \texttt{master} theme of the deck;
-  \end{itemize}
-\end{itemize}
-
-\hypertarget{creating-a-powerpoint-deck}{%
-\subsection{Creating a PowerPoint Deck}\label{creating-a-powerpoint-deck}}
-
-\textbf{Key functions:}
-\texttt{read\_pptx(path)} \texttt{add\_slide(x,\ layout,\ master)} \texttt{layout\_summary(x)}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}} \FunctionTok{read\_pptx}\NormalTok{() }\CommentTok{\# new empty file}
-\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}}\NormalTok{ pptx\_obj }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{add\_slide}\NormalTok{(}\AttributeTok{layout  =} \StringTok{\textquotesingle{}Title and Content\textquotesingle{}}\NormalTok{, }\AttributeTok{master =} \StringTok{"Office Theme"}\NormalTok{)}
-
-\FunctionTok{class}\NormalTok{(pptx\_obj)}
-
-\NormalTok{pptx\_obj }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{layout\_summary}\NormalTok{()}
-
-\NormalTok{pptx\_obj }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{print}\NormalTok{(}\AttributeTok{target =} \FunctionTok{file.path}\NormalTok{(}\StringTok{"output"}\NormalTok{,}\StringTok{"example\_1.pptx"}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
-
-\hypertarget{powerpoint-themes}{%
-\subsection{PowerPoint Themes}\label{powerpoint-themes}}
-
-A blank Deck is by default set up with the \emph{Office Theme}. To use a custom theme, we must create a Deck using the Powerpoint software and use it as input.
-
-Loading a template with a custom theme
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}} \FunctionTok{read\_pptx}\NormalTok{(}\FunctionTok{file.path}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"templates"}\NormalTok{, }\StringTok{"intergral.pptx"}\NormalTok{))}
-
-\NormalTok{pptx\_obj }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{layout\_summary}\NormalTok{()}
-
-\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}}\NormalTok{ pptx\_obj }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# add slide}
-  \FunctionTok{add\_slide}\NormalTok{(}\AttributeTok{layout =} \StringTok{"Title and Content"}\NormalTok{, }\AttributeTok{master =} \StringTok{"Integral"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\hypertarget{placeholders-and-shapes}{%
-\subsection{Placeholders and Shapes}\label{placeholders-and-shapes}}
-
-\begin{itemize}
-\tightlist
-\item
-  \texttt{ph\_location\_type()} allows use predefined placeholders for content:
-
-  \begin{itemize}
-  \tightlist
-  \item
-    title, body
-  \item
-    ctrTitle, subTitle, dt, ftr, sldNum
-  \end{itemize}
-\end{itemize}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# Example 1}
-\NormalTok{my\_data }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"My functions are:"}\NormalTok{, }\StringTok{"ph\_with"}\NormalTok{, }\StringTok{"ph\_location\_type"}\NormalTok{)}
-
-\CommentTok{\# first slide}
-\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}} \FunctionTok{read\_pptx}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{add\_slide}\NormalTok{(}\AttributeTok{layout =} \StringTok{"Title and Content"}\NormalTok{, }\AttributeTok{master =} \StringTok{"Office Theme"}\NormalTok{)}
-
-\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}}\NormalTok{ pptx\_obj }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ph\_with}\NormalTok{(}\AttributeTok{value =}\NormalTok{ my\_data, }\AttributeTok{location =} \FunctionTok{ph\_location\_type}\NormalTok{(}\AttributeTok{type =} \StringTok{\textquotesingle{}body\textquotesingle{}}\NormalTok{))}
-
-\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}}\NormalTok{ pptx\_obj }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{on\_slide}\NormalTok{(}\AttributeTok{index =} \DecValTok{1}\NormalTok{) }\CommentTok{\# set active slide}
-
-\FunctionTok{slide\_summary}\NormalTok{(pptx\_obj) }\CommentTok{\# technical content summary}
-
-\NormalTok{my\_data }\OtherTok{\textless{}{-}} \FunctionTok{head}\NormalTok{(mtcars)[,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{]}
-
-\CommentTok{\# second slide}
-\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}}\NormalTok{ pptx\_obj }\SpecialCharTok{\%\textgreater{}\%} 
-    \FunctionTok{add\_slide}\NormalTok{(}\AttributeTok{layout =} \StringTok{"Title and Content"}\NormalTok{, }\AttributeTok{master =} \StringTok{"Office Theme"}\NormalTok{)}
-
-\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}}\NormalTok{ pptx\_obj }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{ph\_with}\NormalTok{(}\AttributeTok{value =}\NormalTok{ my\_data, }\AttributeTok{location =} \FunctionTok{ph\_location\_type}\NormalTok{(}\AttributeTok{type =} \StringTok{\textquotesingle{}body\textquotesingle{}}\NormalTok{)) }
-
-\NormalTok{pptx\_obj }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{print}\NormalTok{(}\AttributeTok{target =} \FunctionTok{file.path}\NormalTok{(}\StringTok{"output"}\NormalTok{,}\StringTok{"example\_2.pptx"}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{itemize}
-\tightlist
-\item
-  \texttt{ph\_location()} allows to specify exact positions for content
-
-  \begin{itemize}
-  \tightlist
-  \item
-    for left/top/width/height units are inches
-  \end{itemize}
-\end{itemize}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# Example 3}
-\CommentTok{\# We add a text box item in a custom position}
-\CommentTok{\# The same can be done for an image, logo, custom objects, etc.}
-
-\NormalTok{my\_data }\OtherTok{\textless{}{-}} \StringTok{"My text"}
-
-\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}} \FunctionTok{read\_pptx}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{add\_slide}\NormalTok{(}\AttributeTok{layout =} \StringTok{"Title and Content"}\NormalTok{, }\AttributeTok{master =} \StringTok{"Office Theme"}\NormalTok{)}
-
-\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}}\NormalTok{ pptx\_obj }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ph\_with}\NormalTok{(}\AttributeTok{value =}\NormalTok{ my\_data, }\AttributeTok{location =} \FunctionTok{ph\_location}\NormalTok{(}\AttributeTok{left =} \DecValTok{2}\NormalTok{, }\AttributeTok{top =} \DecValTok{2}\NormalTok{, }\AttributeTok{width =} \DecValTok{3}\NormalTok{, }\AttributeTok{height =} \DecValTok{1}\NormalTok{))}
-
-\NormalTok{pptx\_obj }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{print}\NormalTok{(}\AttributeTok{target =} \FunctionTok{file.path}\NormalTok{(}\StringTok{"output"}\NormalTok{,}\StringTok{"example\_3.pptx"}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
-
-\hypertarget{working-with-text}{%
-\subsection{Working with Text}\label{working-with-text}}
-
-Each new text item added to a PowerPoint via officer is a paragraph object
-
-\texttt{fpar()} (``formatted paragraph'') creates this object
-
-\texttt{block\_list()} allows us to wrap multiple paragraphs together
-
-\texttt{ftext()} (``formatted text'') to edit the text before pasting into paragraphs. \texttt{ftext()} requires a second argument called prop which contains the formatting properties.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{my\_prop }\OtherTok{\textless{}{-}} \FunctionTok{fp\_text}\NormalTok{(}\AttributeTok{color =} \StringTok{"red"}\NormalTok{, }\AttributeTok{font.size =} \DecValTok{14}\NormalTok{)}
-\NormalTok{my\_text }\OtherTok{\textless{}{-}} \FunctionTok{ftext}\NormalTok{(}\StringTok{"First Line in Red"}\NormalTok{, }\AttributeTok{prop =}\NormalTok{ my\_prop)}
-
-\NormalTok{my\_par }\OtherTok{\textless{}{-}} \FunctionTok{fpar}\NormalTok{(my\_text) }\CommentTok{\# formatted}
-\NormalTok{blank\_line }\OtherTok{\textless{}{-}} \FunctionTok{fpar}\NormalTok{(}\StringTok{""}\NormalTok{) }\CommentTok{\#optional}
-
-\NormalTok{my\_par2 }\OtherTok{\textless{}{-}} \FunctionTok{fpar}\NormalTok{(}\StringTok{"Second Line"}\NormalTok{) }\CommentTok{\# unformatted}
-\NormalTok{my\_list }\OtherTok{\textless{}{-}} \FunctionTok{block\_list}\NormalTok{(my\_par, blank\_line, my\_par2)}
-
-\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}} \FunctionTok{read\_pptx}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{add\_slide}\NormalTok{(}\AttributeTok{layout =} \StringTok{"Title and Content"}\NormalTok{, }\AttributeTok{master =} \StringTok{"Office Theme"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{ph\_with}\NormalTok{(}\AttributeTok{value =}\NormalTok{ my\_list, }\AttributeTok{location =} \FunctionTok{ph\_location\_type}\NormalTok{(}\AttributeTok{type =} \StringTok{"body"}\NormalTok{) )}
-
-\NormalTok{pptx\_obj }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{print}\NormalTok{(}\AttributeTok{target =} \FunctionTok{file.path}\NormalTok{(}\StringTok{"output"}\NormalTok{,}\StringTok{"example\_4.pptx"}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
-
-For more details on using \textbf{\{officer\}} see \url{https://davidgohel.github.io/officer}.
-
-\hypertarget{tables}{%
-\section{Tables}\label{tables}}
-
-\texttt{ph\_with} accepts a data.frame as value and renders it in a default format
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{ft\_data }\OtherTok{\textless{}{-}}\NormalTok{ senso\_mean }\SpecialCharTok{\%\textgreater{}\%}
-\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Salty, Sweet, Sour, Bitter) }\SpecialCharTok{\%\textgreater{}\%} 
-\NormalTok{  tibble}\SpecialCharTok{::}\FunctionTok{rownames\_to\_column}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{rename}\NormalTok{(}\AttributeTok{Product =}\NormalTok{ rowname) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{mutate}\NormalTok{(}\FunctionTok{across}\NormalTok{(Salty}\SpecialCharTok{:}\NormalTok{Bitter, as.numeric)) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{bind\_rows}\NormalTok{(}\FunctionTok{summarise}\NormalTok{(.,}
-                      \FunctionTok{across}\NormalTok{(}\FunctionTok{where}\NormalTok{(is.numeric), mean),}
-                      \FunctionTok{across}\NormalTok{(}\FunctionTok{where}\NormalTok{(is.character), }\SpecialCharTok{\textasciitilde{}}\StringTok{"Average"}\NormalTok{))) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{mutate}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{where}\NormalTok{(is.numeric), round, }\DecValTok{2}\NormalTok{)) }
-
-\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}} \FunctionTok{read\_pptx}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{add\_slide}\NormalTok{(}\AttributeTok{layout =} \StringTok{"Title and Content"}\NormalTok{, }\AttributeTok{master =} \StringTok{"Office Theme"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ph\_with}\NormalTok{(}\AttributeTok{value =}\NormalTok{ ft\_data, }\AttributeTok{location =} \FunctionTok{ph\_location\_type}\NormalTok{(}\AttributeTok{type =} \StringTok{"body"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{print}\NormalTok{(}\AttributeTok{target =} \FunctionTok{file.path}\NormalTok{(}\StringTok{"output"}\NormalTok{,}\StringTok{"table\_1.pptx"}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
-
-\hypertarget{introduction-to-flextable}{%
-\subsection{Introduction to flextable}\label{introduction-to-flextable}}
-
-With \texttt{\{flextable\}}, the procedure starts with creating a flextable object \texttt{ft\_table} using the \texttt{flextable()} function.
-Flextable objects are compatible with \texttt{\{officer\}} and therefore are our primary tool for table formatting.
-Through different functions, many custom formatting procedure can be applied:
-
-\textbf{key functions:}
-\texttt{align()} \texttt{bold()} \texttt{font()} \texttt{color()} \texttt{bg()} \texttt{height()} \& \texttt{width()}
-\texttt{border\_outer()} \& \texttt{border\_inner()} \& \texttt{border\_inner\_h()} \texttt{border\_inner\_v()} \texttt{autofit()}
-
-Additional function to learn: \texttt{merge()}, \texttt{compose()} \& \texttt{as\_chunk()}, \texttt{style()}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(flextable)}
-
-\CommentTok{\# Create a flextable object}
-\NormalTok{ft\_table }\OtherTok{\textless{}{-}}\NormalTok{ ft\_data }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{flextable}\NormalTok{()}
-
-\CommentTok{\# Flextable objects can be found in the Viewer tab of Rstudio}
-\FunctionTok{print}\NormalTok{(ft\_table)}
-\end{Highlighting}
-\end{Shaded}
-
-\hypertarget{formatting-examples}{%
-\subsection{Formatting examples}\label{formatting-examples}}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{ft\_table }\OtherTok{\textless{}{-}}\NormalTok{ ft\_table }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{autofit}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# column width}
-  \CommentTok{\# alignment of header: we use part argument}
-  \FunctionTok{align}\NormalTok{(}\AttributeTok{align =} \StringTok{"center"}\NormalTok{, }\AttributeTok{part =} \StringTok{"header"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \CommentTok{\# alignment of content: we can use part = "body" or specify exact lines }
-  \FunctionTok{align}\NormalTok{(}\AttributeTok{i =} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(ft\_data), }\AttributeTok{j =} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{ncol}\NormalTok{(ft\_data), }\AttributeTok{align =} \StringTok{"center"}\NormalTok{) }
-
-\FunctionTok{print}\NormalTok{(ft\_table)}
-\end{Highlighting}
-\end{Shaded}
-
-Set font names, sizes and colors
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{ft\_table }\OtherTok{\textless{}{-}}\NormalTok{ ft\_table }\SpecialCharTok{\%\textgreater{}\%} 
-  \CommentTok{\# main formatting}
-  \FunctionTok{fontsize}\NormalTok{(}\AttributeTok{size =} \DecValTok{11}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{font}\NormalTok{(}\AttributeTok{fontname =} \StringTok{"Calibri"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# since no i or j are input, change is for all data}
-  \FunctionTok{font}\NormalTok{(}\AttributeTok{fontname =} \StringTok{"Roboto"}\NormalTok{, }\AttributeTok{part =} \StringTok{"header"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\#different font for header}
-  \FunctionTok{color}\NormalTok{(}\AttributeTok{color =} \StringTok{"white"}\NormalTok{, }\AttributeTok{part =} \StringTok{"header"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{bold}\NormalTok{(}\AttributeTok{part =} \StringTok{"header"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \CommentTok{\# format last row}
-  \FunctionTok{bold}\NormalTok{(}\AttributeTok{i =} \FunctionTok{nrow}\NormalTok{(ft\_data), }\AttributeTok{j =} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{ncol}\NormalTok{(ft\_data)) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\#}
-  \FunctionTok{italic}\NormalTok{(}\AttributeTok{i =} \FunctionTok{nrow}\NormalTok{(ft\_data), }\AttributeTok{j =} \SpecialCharTok{\textasciitilde{}}\NormalTok{Product }\SpecialCharTok{+}\NormalTok{ Salty }\SpecialCharTok{+}\NormalTok{ Sweet }\SpecialCharTok{+}\NormalTok{ Sour }\SpecialCharTok{+}\NormalTok{ Bitter) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# using \textasciitilde{} notation}
-  \FunctionTok{color}\NormalTok{(}\AttributeTok{i =}  \FunctionTok{nrow}\NormalTok{(ft\_data), }\AttributeTok{j =} \SpecialCharTok{\textasciitilde{}}\NormalTok{Sour, }\AttributeTok{color =} \StringTok{"red"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{color}\NormalTok{(}\AttributeTok{i =}  \FunctionTok{nrow}\NormalTok{(ft\_data), }\AttributeTok{j =} \SpecialCharTok{\textasciitilde{}}\NormalTok{Sweet, }\AttributeTok{color =} \StringTok{"orange"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \CommentTok{\# background colors}
-  \FunctionTok{bg}\NormalTok{(}\AttributeTok{bg =} \StringTok{"\#324C63"}\NormalTok{, }\AttributeTok{part =} \StringTok{"header"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# a custom background for the header}
-  \FunctionTok{bg}\NormalTok{(}\AttributeTok{i =} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(ft\_data), }\AttributeTok{bg =} \StringTok{"\#EDEDED"}\NormalTok{) }\CommentTok{\# a custom background for some cells}
-
-\FunctionTok{print}\NormalTok{(ft\_table)}
-\end{Highlighting}
-\end{Shaded}
-
-Set borders and adjust cells heights and widths
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\#BORDERS}
-\CommentTok{\# For borders we need to use nested functions (similar to fpar\textgreater{}ftext\textgreater{}fp\_text)}
-\CommentTok{\# fp\_border() is the second level function we will use to specify border"s characteristics}
-\CommentTok{\# as argument it takes color, style, and width}
-\NormalTok{my\_border }\OtherTok{\textless{}{-}}\NormalTok{ officer}\SpecialCharTok{::}\FunctionTok{fp\_border}\NormalTok{(}\AttributeTok{color =} \StringTok{"black"}\NormalTok{, }\AttributeTok{style =} \StringTok{"solid"}\NormalTok{, }\AttributeTok{width =} \DecValTok{1}\NormalTok{)}
-
-\CommentTok{\# We use this second level function inside various main border functions}
-\CommentTok{\# border\_outer(), border\_inner(), border\_inner\_h(), border\_inner\_v()}
-\NormalTok{ft\_table }\OtherTok{\textless{}{-}}\NormalTok{ ft\_table }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{border\_outer}\NormalTok{(}\AttributeTok{part =} \StringTok{"all"}\NormalTok{, }\AttributeTok{border =}\NormalTok{ my\_border) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# using predefined border}
-  \FunctionTok{border\_inner}\NormalTok{(}\AttributeTok{part =} \StringTok{"body"}\NormalTok{, }\AttributeTok{border =}\NormalTok{ officer}\SpecialCharTok{::}\FunctionTok{fp\_border}\NormalTok{(}\AttributeTok{style =} \StringTok{"dashed"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
-
-  \CommentTok{\# all measurements are in inches}
-  \FunctionTok{width}\NormalTok{(}\AttributeTok{j =} \DecValTok{1}\NormalTok{, }\AttributeTok{width =} \FloatTok{1.2}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# column 1 wider}
-  \FunctionTok{height}\NormalTok{(}\AttributeTok{i =} \DecValTok{12}\NormalTok{, }\AttributeTok{height =} \DecValTok{1}\NormalTok{) }\CommentTok{\# last row\textquotesingle{}s height}
-
-\FunctionTok{print}\NormalTok{(ft\_table)}
-\end{Highlighting}
-\end{Shaded}
-
-\hypertarget{add-flextable-object-to-a-powerpoint-slide}{%
-\subsection{Add flextable object to a powerpoint slide}\label{add-flextable-object-to-a-powerpoint-slide}}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# Add table to slide}
-\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}} \FunctionTok{read\_pptx}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{add\_slide}\NormalTok{(}\AttributeTok{layout =} \StringTok{"Title and Content"}\NormalTok{, }\AttributeTok{master =} \StringTok{"Office Theme"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ph\_with}\NormalTok{(}\AttributeTok{value =}\NormalTok{ ft\_table, }\FunctionTok{ph\_location}\NormalTok{(}\AttributeTok{left =} \DecValTok{2}\NormalTok{, }\AttributeTok{top =} \DecValTok{2}\NormalTok{, }\AttributeTok{width =} \DecValTok{4}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{print}\NormalTok{(}\AttributeTok{target =} \FunctionTok{file.path}\NormalTok{(}\StringTok{"output"}\NormalTok{,}\StringTok{"table\_2.pptx"}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
-
-For more details on using \textbf{\{flextable\}} see \url{https://davidgohel.github.io/flextable/}.
-
-\hypertarget{charts}{%
-\section{Charts}\label{charts}}
-
-\hypertarget{adding-charts-as-images}{%
-\subsection{Adding charts as images}\label{adding-charts-as-images}}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# Using ggplot2 as plotting library}
-\NormalTok{chart\_to\_plot }\OtherTok{\textless{}{-}}\NormalTok{ senso\_mean }\SpecialCharTok{\%\textgreater{}\%}
-\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Salty, Sweet, Sour, Bitter) }\SpecialCharTok{\%\textgreater{}\%} 
-\NormalTok{  tibble}\SpecialCharTok{::}\FunctionTok{rownames\_to\_column}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{rename}\NormalTok{(}\AttributeTok{Product =}\NormalTok{ rowname) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{pivot\_longer}\NormalTok{(}\AttributeTok{cols =}\NormalTok{ Salty}\SpecialCharTok{:}\NormalTok{Bitter, }\AttributeTok{names\_to =} \StringTok{\textquotesingle{}Attribute\textquotesingle{}}\NormalTok{, }\AttributeTok{values\_to =} \StringTok{\textquotesingle{}Value\textquotesingle{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Product, }\AttributeTok{y =}\NormalTok{ Value, }\AttributeTok{fill =}\NormalTok{ Attribute)) }\SpecialCharTok{+} 
-  \FunctionTok{geom\_col}\NormalTok{(}\AttributeTok{position =} \StringTok{\textquotesingle{}dodge\textquotesingle{}}\NormalTok{)}
-
-\FunctionTok{print}\NormalTok{(chart\_to\_plot) }\CommentTok{\#in Plots window of Rstudio}
-\end{Highlighting}
-\end{Shaded}
-
-\hypertarget{rvg-package}{%
-\subsection{rvg package}\label{rvg-package}}
-
-rvg is providing two graphics devices that produces Vector Graphics outputs in \texttt{DrawingML} format for Microsoft PowerPoint with dml\_pptx and for Microsoft Excel with dml\_xlsx.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# body location}
-\FunctionTok{library}\NormalTok{(rvg)}
-
-\CommentTok{\# all items on the chart inside the pptx can be editable}
-\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}} \FunctionTok{read\_pptx}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{add\_slide}\NormalTok{(}\AttributeTok{layout =} \StringTok{"Title and Content"}\NormalTok{, }\AttributeTok{master =} \StringTok{"Office Theme"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ph\_with}\NormalTok{(}\AttributeTok{value =} \FunctionTok{dml}\NormalTok{(}\AttributeTok{ggobj =}\NormalTok{ chart\_to\_plot, }\AttributeTok{editable =} \ConstantTok{TRUE}\NormalTok{),}
-          \AttributeTok{location=} \FunctionTok{ph\_location\_type}\NormalTok{(}\AttributeTok{type =} \StringTok{\textquotesingle{}body\textquotesingle{}}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{print}\NormalTok{(}\AttributeTok{target =} \FunctionTok{file.path}\NormalTok{(}\StringTok{"output"}\NormalTok{,}\StringTok{"rvg\_1.pptx"}\NormalTok{))}
-
-\CommentTok{\#custom location, all units are in inches}
-\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}} \FunctionTok{read\_pptx}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{add\_slide}\NormalTok{(}\AttributeTok{layout =} \StringTok{"Title and Content"}\NormalTok{, }\AttributeTok{master =} \StringTok{"Office Theme"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ph\_with}\NormalTok{(}\AttributeTok{value =} \FunctionTok{dml}\NormalTok{(}\AttributeTok{ggobj =}\NormalTok{ chart\_to\_plot, }\AttributeTok{editable =} \ConstantTok{FALSE}\NormalTok{),}
-          \AttributeTok{location =}  \FunctionTok{ph\_location}\NormalTok{(}\AttributeTok{left =} \DecValTok{1}\NormalTok{, }\AttributeTok{top =} \DecValTok{1}\NormalTok{, }\AttributeTok{width =} \DecValTok{8}\NormalTok{, }\AttributeTok{height =} \DecValTok{6}\NormalTok{))  }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{print}\NormalTok{(}\AttributeTok{target =} \FunctionTok{file.path}\NormalTok{(}\StringTok{"output"}\NormalTok{,}\StringTok{"rvg\_2.pptx"}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
-
-\hypertarget{mschart-package}{%
-\subsection{mschart package}\label{mschart-package}}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(mschart)}
-\CommentTok{\# sample dataframe}
-\NormalTok{mydata }\OtherTok{\textless{}{-}}\NormalTok{ senso\_mean }\SpecialCharTok{\%\textgreater{}\%}
-\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Salty, Sweet, Sour, Bitter) }\SpecialCharTok{\%\textgreater{}\%} 
-\NormalTok{  tibble}\SpecialCharTok{::}\FunctionTok{rownames\_to\_column}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{rename}\NormalTok{(}\AttributeTok{Product =}\NormalTok{ rowname) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{pivot\_longer}\NormalTok{(}\AttributeTok{cols =}\NormalTok{ Salty}\SpecialCharTok{:}\NormalTok{Bitter, }\AttributeTok{names\_to =} \StringTok{\textquotesingle{}Attribute\textquotesingle{}}\NormalTok{, }\AttributeTok{values\_to =} \StringTok{\textquotesingle{}Value\textquotesingle{}}\NormalTok{)}
-
-\CommentTok{\# syntaxis is similar to ggplot2\textquotesingle{}s aes() with x,y,group}
-\NormalTok{my\_barchart }\OtherTok{\textless{}{-}} \FunctionTok{ms\_barchart}\NormalTok{(}\AttributeTok{data =}\NormalTok{ mydata,}
-                           \AttributeTok{x =} \StringTok{"Product"}\NormalTok{,}
-                           \AttributeTok{y =} \StringTok{"Value"}\NormalTok{,}
-                           \AttributeTok{group =} \StringTok{"Attribute"}\NormalTok{)}
-
-\CommentTok{\#the chart is a Powerpoint native object and can be viewed using the preview option in print}
-\FunctionTok{print}\NormalTok{(my\_barchart, }\AttributeTok{preview =} \ConstantTok{TRUE}\NormalTok{)}
-\CommentTok{\#the command will work on machines with a Powerpoint Viewer}
-
-\CommentTok{\# to add the object to a powerpoint slide we can use the officer\textquotesingle{}s native ph\_with}
-\NormalTok{pptx\_obj }\OtherTok{\textless{}{-}} \FunctionTok{read\_pptx}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{add\_slide}\NormalTok{(}\AttributeTok{layout =} \StringTok{"Title and Content"}\NormalTok{, }\AttributeTok{master =} \StringTok{"Office Theme"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ph\_with}\NormalTok{(}\AttributeTok{value =}\NormalTok{ my\_barchart, }\AttributeTok{location =} \FunctionTok{ph\_location\_type}\NormalTok{(}\AttributeTok{type =} \StringTok{"body"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{print}\NormalTok{(}\AttributeTok{target =} \FunctionTok{file.path}\NormalTok{(}\StringTok{"output"}\NormalTok{,}\StringTok{"rvg\_2.pptx"}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
-
-\hypertarget{word}{%
-\section{Word}\label{word}}
-
-Word documents are created using \texttt{read\_docx()}.
-
-\texttt{body\_add\_par()} to add a text paragraph. Paragraphs are automatically separated by line breaks.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{my\_doc }\OtherTok{\textless{}{-}} \FunctionTok{read\_docx}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{body\_add\_par}\NormalTok{(}\AttributeTok{value =} \StringTok{"My Text"}\NormalTok{, }\AttributeTok{style =} \StringTok{"Normal"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{body\_add\_par}\NormalTok{(}\AttributeTok{value =} \StringTok{"Other Text"}\NormalTok{, }\AttributeTok{style =} \StringTok{"Normal"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{body\_add\_par}\NormalTok{(}\AttributeTok{value =} \StringTok{"Conclusion"}\NormalTok{, }\AttributeTok{style =} \StringTok{"Normal"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{print}\NormalTok{(}\AttributeTok{target =} \FunctionTok{file.path}\NormalTok{(}\StringTok{"output"}\NormalTok{,}\StringTok{"doc\_1.docx"}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
-
-Unlike a pptx with separate slides, a word document is a continuous object. To create a new page and continue to write on it \texttt{body\_add\_break()} is used.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{my\_doc }\OtherTok{\textless{}{-}} \FunctionTok{read\_docx}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{body\_add\_par}\NormalTok{(}\AttributeTok{value =} \StringTok{"My Text"}\NormalTok{, }\AttributeTok{style =} \StringTok{"Normal"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{body\_add\_break}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{body\_add\_par}\NormalTok{(}\AttributeTok{value =} \StringTok{"Conclusion"}\NormalTok{, }\AttributeTok{style =} \StringTok{"Normal"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{print}\NormalTok{(}\AttributeTok{target =} \FunctionTok{file.path}\NormalTok{(}\StringTok{"output"}\NormalTok{,}\StringTok{"doc\_2.docx"}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
-
-\texttt{body\_add\_fpar()} to add a formatted text paragraph
-\texttt{body\_add\_table()} to add a table
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{my\_format }\OtherTok{\textless{}{-}} \FunctionTok{fp\_text}\NormalTok{(}\AttributeTok{font.family =} \StringTok{\textquotesingle{}Calibri\textquotesingle{}}\NormalTok{, }\AttributeTok{font.size =} \DecValTok{14}\NormalTok{, }\AttributeTok{bold =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{color =} \StringTok{\textquotesingle{}blue\textquotesingle{}}\NormalTok{)}
-\NormalTok{my\_text }\OtherTok{\textless{}{-}} \FunctionTok{ftext}\NormalTok{(}\StringTok{\textquotesingle{}My dataset is:\textquotesingle{}}\NormalTok{, my\_format)}
-\NormalTok{my\_par }\OtherTok{\textless{}{-}} \FunctionTok{fpar}\NormalTok{(my\_text)}
-
-\NormalTok{doc }\OtherTok{\textless{}{-}} \FunctionTok{read\_docx}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{body\_add\_par}\NormalTok{(}\AttributeTok{value =} \StringTok{"Document Title"}\NormalTok{, }\AttributeTok{style =} \StringTok{"heading 1"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{body\_add\_par}\NormalTok{(}\AttributeTok{value =} \StringTok{""}\NormalTok{, }\AttributeTok{style =} \StringTok{"Normal"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{body\_add\_fpar}\NormalTok{(my\_par, }\AttributeTok{style =} \StringTok{"Normal"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\#formatted paragraph function}
-  \FunctionTok{body\_add\_par}\NormalTok{(}\AttributeTok{value =} \StringTok{""}\NormalTok{, }\AttributeTok{style =} \StringTok{"Normal"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{body\_add\_table}\NormalTok{(}\AttributeTok{value =} \FunctionTok{head}\NormalTok{(mtcars)[, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{], }\AttributeTok{style =} \StringTok{"table\_template"}\NormalTok{ ) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{print}\NormalTok{(}\AttributeTok{target =} \FunctionTok{file.path}\NormalTok{(}\StringTok{"output"}\NormalTok{,}\StringTok{"doc\_3.docx"}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
+\hypertarget{to-go-further}{%
+\section{To go further\ldots{}}\label{to-go-further}}
+
+Creating dashboards using shiny, that generate the reports as well
+Building report and sending them automatically by email to clients/partners
 
 \hypertarget{part-bon-appuxe9tit}{%
 \part*{Bon Appétit}\label{part-bon-appuxe9tit}}
@@ -4568,9 +4700,6 @@ Introduction to machine learning associated to text mining
 
 \hypertarget{code-examples-2}{%
 \section{Code Examples}\label{code-examples-2}}
-
-\hypertarget{pipelines}{%
-\chapter{Pipelines}\label{pipelines}}
 
 \hypertarget{dashboards}{%
 \chapter{Dashboards}\label{dashboards}}
