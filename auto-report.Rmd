@@ -292,7 +292,7 @@ Note that once the spreadsheet is complete, we create the file using `saveWorkbo
 saveWorbook(wb, file="temp/excel export.xlsx")
 
 ```
- <!-- I got this message when ran this last code: Error in saveWorbook(wb, file = "temp/excel export.xlsx") : 
+ <!-- I got this message when I ran this last code saying: Error in saveWorbook(wb, file = "temp/excel export.xlsx") : 
   could not find function "saveWorbook" -->
 
 For more details on using **{openxlsx}** see <https://rdrr.io/cran/openxlsx/>.
@@ -326,7 +326,8 @@ pptx_obj <- read_pptx() # new empty file
 
 A blank Deck is by default set up with the *Office Theme*. To use a custom theme, we must create a Deck using the PowerPoint software and use it as input. Let's import the *intergral.pptx* template:
 
-
+ <!-- I guess it is a good idea to add a note to clarify "data" and "templates"--> 
+ <!-- Would the name be "integral" instead of "intergral"? --> 
 ```{r themes2}
 
 pptx_obj2 <- read_pptx(file.path("data", "templates", "intergral.pptx"))
@@ -367,7 +368,7 @@ Unfortunately, `{officer}` does not provide a function similar to `openxlsx::ope
 
 With `{officer}`, various actions can be done on the slides. The first logical action consists in adding a new slide to a presentation, in which we will later on write some text, tables, figures, etc. Such action can be done using `add_slide()`, in which we inform the type of slide to add, and from which master:
 
-
+ <!-- Should it be "<-" instead of "="?--> 
 ```{r}
 
 master = "Office Theme"
@@ -380,7 +381,7 @@ pptx_obj <- pptx_obj %>%
 This code will add a *Title and Content* slide to your deck.
 
 Additional operations on the slides themselves can be done. In particular, you can re-organize your deck by changing the orders of your slides using `move_slide()`, delete slides that are no longer needed through `remove_slide()`, or modify a pre-existing slides by making it active using `on_slide()` (by default, the last slide created is the active one).
-
+<!-- I guess it might be interesting an example showing the use of those functions. -->
 
 #### Positioning Information to the Slide
 
@@ -426,7 +427,7 @@ pptx_obj <- pptx_obj %>%
 
 To visualize the different steps done so far, let's save the results on our computers:
 
-
+<!-- Maybe it worth a note explaining that temp is the name given for the folder... --> 
 ```{r}
 print(pptx_obj, "temp/my powerpoint export.pptx")
 ```
@@ -438,11 +439,11 @@ print(pptx_obj, "temp/my powerpoint export.pptx")
 In the previous section, we already exported text to slides. Let's go a bit deeper in the process by also showing how to format the text.
 
 By default, each new text item added to a PowerPoint via `{officer}` is a paragraph object. To further format the paragraph, three main functions are being used:
-
+<!-- I guess fp_text could be included in the list below -->
   * `fpar()` (*formatted paragraph*) creates the paragraph;
   * `ftext()` (*formatted text*) allows editing the text before pasting into paragraphs. `ftext()` requires a second argument called `prop` which contains the formatting properties;
   * `block_list()` allows us to wrap multiple paragraphs together.
-  
+ 
 Let's go through an example to illustrate the use of these functions:
 
 
@@ -491,7 +492,7 @@ print(pptx_obj, target = "temp/my powerpoint export.pptx")
 
 Now we know how to export formatted text to slides, let's export tables. This can easily be done by rendering a data frame rather than text as `ph_with()` accepts it and renders it in a default format. Let's use a subset of `senso_mean` for illustration:
 
-
+<!-- Just a comment, the reader may need to go back to the beginning of the chapter to run the codes again to obtain senso_mean --> 
 ```{r 4.1 basic code}
 ft_data <- senso_mean %>%
   dplyr::select(Product, Salty, Sweet, Sour, Bitter) %>% 
@@ -575,7 +576,9 @@ ft_table <- ft_table %>%
 print(ft_table)
 
 ```
-
+<!-- In the second command of #Set up the border style, I got this message:
+Error in get_rows_id(x[[part]], i) : 
+  invalid row selection: out of range selection --> 
 
 This is just an overview of the most relevant and used functions in `{flextable}`, yet there are more possibilities.
 To go further, you can also consider the following functions (amongst many more): 
@@ -758,6 +761,9 @@ For more information regarding `{officer}`, and on how to export results to Word
 To go further, it is worth mentioning that `{officer}` also allows extracting information from existing reports (Word and PowerPoint). It is however outside the scope of this book, so it will not be further developed here. 
 
 
+=======
+<!-- I guess it would be interesting to mention how to save in pdf format --> 
+
 ### Notes on applying corporate branding
 
 
@@ -776,7 +782,54 @@ Ultimately, to ensure optimal efficiency, we advise you to spend a bit more time
 
 As we have just see, we can generate reports in the Microsoft Office suit directly from our R script. Although the results are being showed, the script used to reach these results is completely hidden. Of course, we could add them as text, but the logic would suggest that the researcher can just get back to the script to decode how certain outputs have been obtained. 
 
-Let's now change our way of working by proposing an alternative in which we integrate our R analysis directly within a reporting tool. For that, we need to introduce another useful package for reporting and document building: `{rmarkdown}`^[Note that this book was written in `{rmarkdown}` and its extension `{bookdown}`.].
+Let's now change our way of working by proposing an alternative in which we integrate our R analysis directly within a reporting tool. For that, we need to introduce another useful package for reporting and document building: `{rmarkdown}`.
+
+### What is `{rmarkdown}`
+
+Markdown is an ecosystem specific to text document, in which authors *program* their documents by controlling various features including:
+
+  * paragraphs and inline formatting (e.g. bold, italic, etc.)
+  * (section) headers
+  * blocks (code, or quotations)
+  * (un)numbered lists
+  * horizontal rules
+  * tables and figures (including legends)
+  * LaTeX math expressions, formulas, and theorems
+  * links, citations, and footnotes
+
+Limiting the creation of Markdown document through this list of elements is more an advantage than a drawback as it suffice to create technical and non-technical document while still keeping it a certain simplicity.
+
+In practice, R Markdown provides an authoring framework for data science, as it can be use for both saving/documenting/executing code and generating high quality reports.
+
+Once the document is being created, you can then compile it to build it in the output format of your choice (e.g. word, pdf, html, etc.)
+
+
+### Starting with {rmarkdown}
+
+To start, you need to install the `{rmarkdown}` package using the `install.packages()` function. 
+To load this package, just type `library(rmarkdown)`.
+
+If you intend to build your report in pdf, you also need to install a LaTeX library. For its simplicity, recommend you installing the TinyTeX library using `install.packages("tinytex")`.
+
+Let's start with a simple example that is provided by RStudio. To start a RMarkdown document, click File > New File > R Markdown...
+This opens a new window in which you can inform the name of your file, the author name, and the type of report to create (HTML, PDF, or Word). Once set, click OK. A new script file of type *.Rmd* opens.
+
+In this document, there are three components: metadata, text, and code.
+
+The document starts with the metadata. It is easily recognizable as it starts and ends with 3 successive dashes (`---`), and its syntax is YAML (YAML Ain't Markup Language). In this part, information regarding the properties of the final document is being stored. This includes (amongst other) the title, authorship, date, export format, etc. of the final document.
+
+Be aware that indentation matters in YAML, so follow the rules to ensure that your document compiles correctly.
+
+Right after the metadata is the body of document. The syntax for the text is Markdown, and the main features will be presented in the next section. Within the body, computer code can be added, either as a chunk, or within the text.
+
+To illustrate the use of `{rmarkdown}`, let's consider this simple document (REF):
+
+
+### Creating a document using `{knitr}`
+
+### Example of applications
+
+
 
 
 
