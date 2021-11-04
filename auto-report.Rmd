@@ -786,7 +786,7 @@ Let's now change our way of working by proposing an alternative in which we inte
 
 ### What is `{rmarkdown}`
 
-Markdown is an ecosystem specific to text document, in which authors *program* their documents by controlling various features including:
+Markdown is an ecosystem specific to text document, in which authors *script* their reports by controlling various features including:
 
   * paragraphs and inline formatting (e.g. bold, italic, etc.)
   * (section) headers
@@ -797,7 +797,7 @@ Markdown is an ecosystem specific to text document, in which authors *program* t
   * LaTeX math expressions, formulas, and theorems
   * links, citations, and footnotes
 
-Limiting the creation of Markdown document through this list of elements is more an advantage than a drawback as it suffice to create technical and non-technical document while still keeping it a certain simplicity.
+Limiting the creation of Markdown document to this list of elements is more an advantage than a drawback as it suffice to create technical and non-technical documents while still keeping it simple.
 
 In practice, R Markdown provides an authoring framework for data science, as it can be use for both saving/documenting/executing code and generating high quality reports.
 
@@ -809,7 +809,7 @@ Once the document is being created, you can then compile it to build it in the o
 To start, you need to install the `{rmarkdown}` package using the `install.packages()` function. 
 To load this package, just type `library(rmarkdown)`.
 
-If you intend to build your report in pdf, you also need to install a LaTeX library. For its simplicity, recommend you installing the TinyTeX library using `install.packages("tinytex")`.
+If you intend to build your report in pdf, you also need to install a LaTeX library. For its simplicity, we recommend you installing the TinyTeX library using `install.packages("tinytex")`.
 
 Let's start with a simple example that is provided by RStudio. To start a RMarkdown document, click File > New File > R Markdown...
 This opens a new window in which you can inform the name of your file, the author name, and the type of report to create (HTML, PDF, or Word). Once set, click OK. A new script file of type *.Rmd* opens.
@@ -822,60 +822,58 @@ Be aware that indentation matters in YAML, so follow the rules to ensure that yo
 
 Right after the metadata is the body of document. The syntax for the text is Markdown, and the main features will be presented in the next section. Within the body, computer code can be added, either as a chunk, or within the text.
 
-To illustrate the use of `{rmarkdown}`, let's consider this simple document (REF):
+### `{rmarkdown}` through a Simple Example
+
+To illustrate the use of `{rmarkdown}`, let's consider this simple document (inspired from REF):
+
+
+<!-- Insert a Print Screen of the Simple Example Code -->
+
+
+The top of the document contains the metadata, which (in our case) will generate the report in an HTML document.
+
+Next, we have a first chunk of code that sets the main options on how the code should be handled. If the same philosophy should be applied everywhere, it is handy to set it at the start. However, when different chunks of code should be handled differently, it may be easier to define for each section how it should be handled. 
+
+There are mainly four ways to handle code.
+
+The first way is defined here on the code chunk *header* as `include = FALSE`^[When set manually, this is where you should indicate how to handle each chunk of code]: `include` always run the code, yet it allows printing (`include = TRUE`) or not (`include = FALSE`) the code and its outputs in the final document. 
+
+The second option is `echo`. In this code chunk, we automatically set that all the code chunk should be defined as `echo = TRUE`, which means that the code will run and be printed (together with its output) in the document. This seems very similar to `include`, yet it differs from it as `echo = FALSE` runs the code, prints the outputs, but not the code. 
+
+If you only want to show some code without running it, the `eval` parameter is used (`eval = FALSE` means that the code will be displayed but will not run). This is useful for displaying example code, or for disabling large or time-consuming chunk of codes without having to set it up as comment. 
+
+last, we can control whether outputs should be shown or hidden using `results` (printed output) and `fig.show` (plots). By default, the results are shown, unless it is set as `results = "hide"` or `fig.show = "hide"`.
+
+The document then continues with a section header, which starts with #. The hierarchy of headers is defined by the number of adjacent # (for a header of level 3, starts the header with ###). 
+
+In this section, a first paragraph is being written. This is plain text, except for two particular words, one written between two *backticks*, and one written between 2 double *stars*. Here, the *backticks* are used to write text in R font (or as we will see later, to render results from R), whereas the double *stars* write the text in bold (instead of double *stars*, we can also use double *underscore*). For italic, one single *stars* (or single *underscores*) are used.
+
+If the following section and sub-section, we introduce numbered and unnumbered list of elements. For numbered list, starts with a *number* followed by a *.* (numbers will be incremented automatically). For unnumbered list, you can either start with a *dash*, or with *star* for bullet points. For sub-list, indent your marker by pressing the *Tab* key.
+
+In the next section called *Analysis*, we are running our first lines of code. 
+
+The first code chunk runs a regression model. In the text under the second chunk of code, we are retrieving automatically a value from R by including a *r* at the starts of two *backticks* followed by the element to retrieve. In our final report, this code will automatically be replaced by the value 3.93.
+
+The second code chunk shows how the results can printed, either directly from R, or in a nicer way using the `knitr::kable()` function.
+
+Finally, the last code chunk of this section creates a plot with a caption, that is automatically numbered (and referred to in the text).
 
 
 ### Creating a document using `{knitr}`
 
+Once the document is ready, you can neat it using the `knit` button. This will create the report in the format of interest (here HTML).
+
 ### Example of applications
 
+`{rmarkdown}` is a very powerful tool for building report, in particular in the context of reproducible research since it allows sharing code, and running analyses within the report (part of the text around the code can justify the decisions made in terms of analyses to ensure transparency). The latter point is particularly interesting since any change in the data will automatically provide updated results throughout the report, without you having to change them manually.
 
+Its application is various, and can go from report, to teaching material, publication or even books (this book has been written in `{rmarkdown}` and its extension `{bookdown}`), emails, websites, dashboards, surveys etc. Even more interestingly, `{rmarkdown}` can also be combined to `{shiny}` to build interactive reports, dashboards, or teaching materials in which users would (say) import their data set, select the variables to analyze through buttons, chose which analyses and which options to perform, and the results will automatically be generated accordingly.
 
-
-
-Integrating reporting within the analysis part, or integrating the analysis within the reporting part?
- -> Keep track of what has been done (reproducible research): Explain choices for analysis, table presentation, charts
- -> Sharing code/analysis
-To improve way of work (efficiency) and to keep track of steps taken along the way
-
-Rmarkdown
-
-
-
-
-
-
-
-
-
-
-In this section, we review recent advances in automated report production that:
-
-1. Connects our analysis tool to our preferred reporting tool;
-2. Liberate resources for scientists to focus on the interpretation and communication of results...
-3. ...while simultaneously reducing errors and increasing the consistency of their analyses. 
-
-
-Through this section, we will show you how to generate directly from R different types of report within the Microsoft Office suit. More precisely, we will start by showing you how to export results to Excel, which we will then extend to PowerPoint, and Word. With this approach, you can then incorporate some code within your analysis script, meaning that as soon as your data change, a new updated report will be generated. 
-
-Details of how to customize the final presentation (PowerPoint) to incorporate corporate branding - such as logos, font choices, and color palettes - is also tackled here.
-
-
-RMarkdown, HTML output, etc. (mention but don’t focus)
-Packages for Microsoft office production
-Officer suite (PowerPoint, Word)
-Charts, especially RVG
-Extract from Word/PowerPoint
-Index
-Flextable
-Images?
-Packages for formatting
-extrafont
-extrafontdb
-Rcolorbrewer
+For more information on `{rmarkdown}` and related packages, please visit (REF)
 
 
 ## To go further...
 
-Creating dashboards using shiny, that generate the reports as well
-Building report and sending them automatically by email to clients/partners
+If R allows you saving time by creating your report within your R-script, or by running your analysis within your report document, it cannot communicate the presentation to your partners/clients for you. However, if the report is very standard (say only key results, tables or figures), or running routinely (say in quality control), R could automatically run the analysis as soon as new data is available, build the report, and send it automatically to you, your manager or your colleagues and partners by email. 
+
+Such process can be done thanks to the `{blastula}` package (see REF).
