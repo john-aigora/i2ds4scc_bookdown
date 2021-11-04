@@ -126,7 +126,7 @@
 
 \title{Data Science for Sensory and Consumer Scientists}
 \author{John Ennis, Julien Delarue, and Thierry Worch}
-\date{2021-11-01}
+\date{2021-11-04}
 
 \begin{document}
 \maketitle
@@ -153,7 +153,7 @@ This book is for practitioners or students of sensory and consumer science who w
 \section*{How to Use This Book}\label{how-to-use-this-book}}
 \addcontentsline{toc}{section}{How to Use This Book}
 
-This book is meant to be interactive, with the reader ideally typing and running all of the code presented in the parts labeled ``Hors d'Oeurves'' and ``Bon Appétit.'' Computer languages are like human languages in that they need to be practiced to be learned, so we highly recommend the reader actually typing all of the code from these parts, running it, and verifying they receive the results shown in the book. To help with this practice, we have created a \href{https://github.com/aigorahub/data_science_for_sensory_sample_code}{special GitHub repository} that contains folders called \texttt{work\_along} and \texttt{sample\_code}. Please see Appendix \ref{start-R} for guidance on how to get started with R and GitHub. In the the \texttt{sample\_code} folder, we have included the code as presented in the book, while in the \texttt{work\_along} folder we have provided blank files for each chapter that load the libraries\footnote{You may need to load these libraries before the code will run, please see Appendix \ref{start-R} for more information on this topic as well.}.
+This book is meant to be interactive, with the reader ideally typing and running all of the code presented in the parts labeled ``Hors d'Oeuvres'' and ``Bon Appétit.'' Computer languages are like human languages in that they need to be practiced to be learned, so we highly recommend the reader actually typing all of the code from these parts, running it, and verifying they receive the results shown in the book. To help with this practice, we have created a \href{https://github.com/aigorahub/data_science_for_sensory_sample_code}{special GitHub repository} that contains folders called \texttt{work\_along} and \texttt{sample\_code}. Please see Appendix \ref{start-R} for guidance on how to get started with R and GitHub. In the the \texttt{sample\_code} folder, we have included the code as presented in the book, while in the \texttt{work\_along} folder we have provided blank files for each chapter that load the libraries\footnote{You may need to load these libraries before the code will run, please see Appendix \ref{start-R} for more information on this topic as well.}.
 
 \hypertarget{acknowledgements}{%
 \section*{Acknowledgements}\label{acknowledgements}}
@@ -1643,6 +1643,8 @@ In this section, let's integrate our report building process within our data ana
 
 Since Microsoft Office is often the tool used for sharing results, we will focus our attention in exporting results to Excel, PowerPoint, and Word.
 
+Note that in this chapter on automated reporting, some results (tables, figures) that are being created in one of the first section will be re-used in subsequent sections. In case you do not read this chapter linearly, you might get errors as you might be calling objects that do not exist yet. We advise you to read through the previous sections, find the script where the elements (table or figure) is being generated, run it, and resume your read.
+
 \hypertarget{excel}{%
 \subsection{Excel}\label{excel}}
 
@@ -2031,16 +2033,9 @@ To visualize the different steps done so far, let's save the results on our comp
 In the previous section, we already exported text to slides. Let's go a bit deeper in the process by also showing how to format the text.
 
 By default, each new text item added to a PowerPoint via \texttt{\{officer\}} is a paragraph object. To further format the paragraph, three main functions are being used:
-
-\begin{itemize}
-\tightlist
-\item
-  \texttt{fpar()} (\emph{formatted paragraph}) creates the paragraph;
-\item
-  \texttt{ftext()} (\emph{formatted text}) allows editing the text before pasting into paragraphs. \texttt{ftext()} requires a second argument called \texttt{prop} which contains the formatting properties;
-\item
-  \texttt{block\_list()} allows us to wrap multiple paragraphs together.
-\end{itemize}
+* \texttt{fpar()} (\emph{formatted paragraph}) creates the paragraph;
+* \texttt{ftext()} (\emph{formatted text}) allows editing the text before pasting into paragraphs. \texttt{ftext()} requires a second argument called \texttt{prop} which contains the formatting properties;
+* \texttt{block\_list()} allows us to wrap multiple paragraphs together.
 
 Let's go through an example to illustrate the use of these functions:
 
@@ -2359,6 +2354,10 @@ As can be seen, it is possible to format a nice report in Word directly from R, 
 
 For more information regarding \texttt{\{officer\}}, and on how to export results to Word and PowerPoint, see \url{https://ardata-fr.github.io/officeverse/index.html}.
 
+To go further, it is worth mentioning that \texttt{\{officer\}} also allows extracting information from existing reports (Word and PowerPoint). It is however outside the scope of this book, so it will not be further developed here.
+
+=======
+
 \hypertarget{notes-on-applying-corporate-branding}{%
 \subsection{Notes on applying corporate branding}\label{notes-on-applying-corporate-branding}}
 
@@ -2371,8 +2370,70 @@ As we have seen, \texttt{\{officer\}} gives you the opportunity to import pre-de
 
 Ultimately, to ensure optimal efficiency, we advise you to spend a bit more time when constructing your report by ensuring that as many details are being taken care of, so that later on, you can spend more time in the story building part and less on the analysis and slide generation. For instance, don't be afraid of mass-exporting results, as it is easier to remove some slides, tables, or figures (in case they are not needed for building your story) then it is to re-generate them at a later stage (in case they are missing).
 
-\hypertarget{integrating-analyses-scripts-within-reporting-tools}{%
-\section{Integrating analyses scripts within reporting tools}\label{integrating-analyses-scripts-within-reporting-tools}}
+\hypertarget{integrating-analyses-scripts-within-your-reporting-tool}{%
+\section{Integrating analyses scripts within your reporting tool}\label{integrating-analyses-scripts-within-your-reporting-tool}}
+
+As we have just see, we can generate reports in the Microsoft Office suit directly from our R script. Although the results are being showed, the script used to reach these results is completely hidden. Of course, we could add them as text, but the logic would suggest that the researcher can just get back to the script to decode how certain outputs have been obtained.
+
+Let's now change our way of working by proposing an alternative in which we integrate our R analysis directly within a reporting tool. For that, we need to introduce another useful package for reporting and document building: \texttt{\{rmarkdown\}}.
+
+\hypertarget{what-is-rmarkdown}{%
+\subsection{\texorpdfstring{What is \texttt{\{rmarkdown\}}}{What is \{rmarkdown\}}}\label{what-is-rmarkdown}}
+
+Markdown is an ecosystem specific to text document, in which authors \emph{program} their documents by controlling various features including:
+
+\begin{itemize}
+\tightlist
+\item
+  paragraphs and inline formatting (e.g.~bold, italic, etc.)
+\item
+  (section) headers
+\item
+  blocks (code, or quotations)
+\item
+  (un)numbered lists
+\item
+  horizontal rules
+\item
+  tables and figures (including legends)
+\item
+  LaTeX math expressions, formulas, and theorems
+\item
+  links, citations, and footnotes
+\end{itemize}
+
+Limiting the creation of Markdown document through this list of elements is more an advantage than a drawback as it suffice to create technical and non-technical document while still keeping it a certain simplicity.
+
+In practice, R Markdown provides an authoring framework for data science, as it can be use for both saving/documenting/executing code and generating high quality reports.
+
+Once the document is being created, you can then compile it to build it in the output format of your choice (e.g.~word, pdf, html, etc.)
+
+\hypertarget{starting-with-rmarkdown}{%
+\subsection{Starting with \{rmarkdown\}}\label{starting-with-rmarkdown}}
+
+To start, you need to install the \texttt{\{rmarkdown\}} package using the \texttt{install.packages()} function.
+To load this package, just type \texttt{library(rmarkdown)}.
+
+If you intend to build your report in pdf, you also need to install a LaTeX library. For its simplicity, recommend you installing the TinyTeX library using \texttt{install.packages("tinytex")}.
+
+Let's start with a simple example that is provided by RStudio. To start a RMarkdown document, click File \textgreater{} New File \textgreater{} R Markdown\ldots{}
+This opens a new window in which you can inform the name of your file, the author name, and the type of report to create (HTML, PDF, or Word). Once set, click OK. A new script file of type \emph{.Rmd} opens.
+
+In this document, there are three components: metadata, text, and code.
+
+The document starts with the metadata. It is easily recognizable as it starts and ends with 3 successive dashes (\texttt{-\/-\/-}), and its syntax is YAML (YAML Ain't Markup Language). In this part, information regarding the properties of the final document is being stored. This includes (amongst other) the title, authorship, date, export format, etc. of the final document.
+
+Be aware that indentation matters in YAML, so follow the rules to ensure that your document compiles correctly.
+
+Right after the metadata is the body of document. The syntax for the text is Markdown, and the main features will be presented in the next section. Within the body, computer code can be added, either as a chunk, or within the text.
+
+To illustrate the use of \texttt{\{rmarkdown\}}, let's consider this simple document (REF):
+
+\hypertarget{creating-a-document-using-knitr}{%
+\subsection{\texorpdfstring{Creating a document using \texttt{\{knitr\}}}{Creating a document using \{knitr\}}}\label{creating-a-document-using-knitr}}
+
+\hypertarget{example-of-applications}{%
+\subsection{Example of applications}\label{example-of-applications}}
 
 Integrating reporting within the analysis part, or integrating the analysis within the reporting part?
 -\textgreater{} Keep track of what has been done (reproducible research): Explain choices for analysis, table presentation, charts
@@ -4674,38 +4735,8 @@ Presentation of graph-theory applied to text mining
 
 Introduction to machine learning associated to text mining
 
-\hypertarget{linear-programming}{%
-\chapter{Linear Programming}\label{linear-programming}}
-
-\hypertarget{overview-2}{%
-\section{Overview}\label{overview-2}}
-
-\hypertarget{common-applications-2}{%
-\section{Common Applications}\label{common-applications-2}}
-
-\hypertarget{experimental-design}{%
-\subsection{Experimental Design}\label{experimental-design}}
-
-\hypertarget{sample-selection}{%
-\subsection{Sample Selection}\label{sample-selection}}
-
-\hypertarget{compact-letter-displays}{%
-\subsection{Compact Letter Displays}\label{compact-letter-displays}}
-
-\hypertarget{turf-analysis}{%
-\subsection{TURF Analysis}\label{turf-analysis}}
-
-\hypertarget{bundle-optimization}{%
-\subsection{Bundle Optimization}\label{bundle-optimization}}
-
-\hypertarget{code-examples-2}{%
-\section{Code Examples}\label{code-examples-2}}
-
 \hypertarget{dashboards}{%
 \chapter{Dashboards}\label{dashboards}}
-
-\hypertarget{graph-db}{%
-\chapter{Graph Databases}\label{graph-db}}
 
 \hypertarget{appendix-uxe0-la-carte}{%
 \appendix}
@@ -4956,6 +4987,9 @@ Git is a version control system that allows you to revert to earlier versions of
 
 \hypertarget{text-mining-wtih-r}{%
 \subsection{Text Mining wtih R}\label{text-mining-wtih-r}}
+
+\hypertarget{databases-graph-and-otherwise}{%
+\section{Databases (Graph and Otherwise)}\label{databases-graph-and-otherwise}}
 
 \hypertarget{python-and-other-languages}{%
 \section{Python and Other Languages}\label{python-and-other-languages}}
