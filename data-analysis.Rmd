@@ -11,7 +11,7 @@ The following sections are divided based on the type of data to consider and the
 
 ## Sensory Data
 
-
+<!-- Just a note to check the library "here". As I commented before, I guess it worth a note every time a folder(e.g. "data") is assigned, just to make clear that this name may change according to the reader's folder name.  -->
 Let's start with the analysis of our sensory data. If not done already, import the file *Sensory Profile.xlsx*.
 To do so, we need the `{here}` and `{readxl}` packages. Since most of the analyses we are going to perform require tools from the `{tidyverse}`, we also load this group of packages.
 
@@ -57,7 +57,7 @@ senso_aov_data <- sensory %>%
 From this structure, the first approach consists in splitting the data by attribute. Once done, we run the ANOVA for each data subset (the model is then defined as `Score ~ Product + Judge`), and we extract the results of interest using the `{broom}` package^[The `{broom}` package is a very useful package that convert statistical objects into tidy tables.] 
 Ultimately, the results can be combined again using `enframe()` and `unnest()`.
 
-
+<!-- I guess it would be helpful to explain a bit about this map () function. --> 
 ```{r}
 senso_aov1 <- senso_aov_data %>% 
   split(.$Attribute) %>% 
@@ -131,7 +131,7 @@ Once the significant differences have been checked, a follow-up analysis consist
 
 In practice, PCA is performed on the mean table crossing the products in rows, and the sensory attributes in columns. In \@ref(data-manip), many different approaches to generate such table have been proposed:
 
-
+<!-- Maybe this last sentence above could say that one of the many approaches presented on chap 3 would be: ... In the way it is written I had the impression that the many different approaches would be showed --> 
 ```{r}
 senso_mean <- sensory %>% 
   pivot_longer(Shiny:Melting, names_to="Attribute", values_to="Score") %>% 
@@ -173,7 +173,7 @@ fviz_pca_biplot(senso_pca)
 
 ``` 
 <!-- Of course, we will want to see the outcome of the PCA and factoextra plots here. -->
-
+<!-- A few comments/suggestions about PCA: 1) the argument repel could have a short explanation note 2) It would be nice if an example editing the PCA (e.g color) was shown, 3) It was not clear to me how/where P0pt was included as a supplementary analysis, 4) I guess it would be valuable to show how to plot the Scree plot and how to choose the dimension to plot. One may want to plot dim 1 and dim3-->
 On the first dimension, `P10` is opposed to `P09` and `P03` as it is more intense for attributes such as `Sweet`, and `Dairy flavor` for example, and less intense for attributes such as `Dry in mouth` and `External color intensity`. On the second dimension, `P08`, `P06`, and `POpt` are opposed to `P02` and `P07` as they score higher for `Qty of inclusions`, and `Initial hardness`, and score lower for `RawDough flavor` and `Shiny`.
 
 
