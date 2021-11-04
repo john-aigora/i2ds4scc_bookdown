@@ -5,6 +5,7 @@ knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 
 ## What and why Automated Reporting?
 
+
 Effective communication of results is amongst the essential duties of sensory scientists...and so is the data collection, data preparation, data analysis etc. Worst, the sometimes tedious mechanics of report production together with the sheer volume of data that many scientists must process combine to make reporting design and nice story-telling an afterthought in too many cases.
 Although this should preferably not be happening, it is necessary sometimes as presentation deadlines approach and time becomes limited. 
 
@@ -18,6 +19,7 @@ Such solution seems ideal since it increases efficiency while reducing errors du
 
 
 ## Integrating reports within analyses scripts
+
 
 In this section, let's integrate our report building process within our data analysis. By doing so, we do not focus on building a story yet. Instead, we improve our way of working by exporting directly all the statistical outputs that could^[We say *could* as we are in a process of mass-exportation of results, most of them being used for building the story although they would not be kept in the final deck.] be useful for our future story-telling. By doing so, we increase efficiency (especially if code can then be re-used for other studies) by *killing two birds with one stone*: We simultaneously run our analysis, create usable content for our final presentation, while reducing errors due to manual processing.
 
@@ -34,6 +36,9 @@ Integrating reporting within the analysis part, or integrating the analysis with
  -> Less time require for analysis/slides production, more time for design/story-telling
 To improve way of work (efficiency) and to keep track of steps taken along the way
 -->
+
+
+Note that in this chapter on automated reporting, some results (tables, figures) that are being created in one of the first section will be re-used in subsequent sections. In case you do not read this chapter linearly, you might get errors as you might be calling objects that do not exist yet. We advise you to read through the previous sections, find the script where the elements (table or figure) is being generated, run it, and resume your read.
 
 
 <!--  --------------------------------- Excel ---------------------------------  -->
@@ -753,7 +758,12 @@ As can be seen, it is possible to format a nice report in Word directly from R, 
 
 For more information regarding `{officer}`, and on how to export results to Word and PowerPoint, see <https://ardata-fr.github.io/officeverse/index.html>.
 
+To go further, it is worth mentioning that `{officer}` also allows extracting information from existing reports (Word and PowerPoint). It is however outside the scope of this book, so it will not be further developed here. 
+
+
+=======
 <!-- I guess it would be interesting to mention how to save in pdf format --> 
+
 ### Notes on applying corporate branding
 
 
@@ -767,7 +777,61 @@ As we have seen, `{officer}` gives you the  opportunity to import pre-defined te
 Ultimately, to ensure optimal efficiency, we advise you to spend a bit more time when constructing your report by ensuring that as many details are being taken care of, so that later on, you can spend more time in the story building part and less on the analysis and slide generation. For instance, don't be afraid of mass-exporting results, as it is easier to remove some slides, tables, or figures (in case they are not needed for building your story) then it is to re-generate them at a later stage (in case they are missing).
 
 
-## Integrating analyses scripts within reporting tools
+## Integrating analyses scripts within your reporting tool
+
+
+As we have just see, we can generate reports in the Microsoft Office suit directly from our R script. Although the results are being showed, the script used to reach these results is completely hidden. Of course, we could add them as text, but the logic would suggest that the researcher can just get back to the script to decode how certain outputs have been obtained. 
+
+Let's now change our way of working by proposing an alternative in which we integrate our R analysis directly within a reporting tool. For that, we need to introduce another useful package for reporting and document building: `{rmarkdown}`.
+
+### What is `{rmarkdown}`
+
+Markdown is an ecosystem specific to text document, in which authors *program* their documents by controlling various features including:
+
+  * paragraphs and inline formatting (e.g. bold, italic, etc.)
+  * (section) headers
+  * blocks (code, or quotations)
+  * (un)numbered lists
+  * horizontal rules
+  * tables and figures (including legends)
+  * LaTeX math expressions, formulas, and theorems
+  * links, citations, and footnotes
+
+Limiting the creation of Markdown document through this list of elements is more an advantage than a drawback as it suffice to create technical and non-technical document while still keeping it a certain simplicity.
+
+In practice, R Markdown provides an authoring framework for data science, as it can be use for both saving/documenting/executing code and generating high quality reports.
+
+Once the document is being created, you can then compile it to build it in the output format of your choice (e.g. word, pdf, html, etc.)
+
+
+### Starting with {rmarkdown}
+
+To start, you need to install the `{rmarkdown}` package using the `install.packages()` function. 
+To load this package, just type `library(rmarkdown)`.
+
+If you intend to build your report in pdf, you also need to install a LaTeX library. For its simplicity, recommend you installing the TinyTeX library using `install.packages("tinytex")`.
+
+Let's start with a simple example that is provided by RStudio. To start a RMarkdown document, click File > New File > R Markdown...
+This opens a new window in which you can inform the name of your file, the author name, and the type of report to create (HTML, PDF, or Word). Once set, click OK. A new script file of type *.Rmd* opens.
+
+In this document, there are three components: metadata, text, and code.
+
+The document starts with the metadata. It is easily recognizable as it starts and ends with 3 successive dashes (`---`), and its syntax is YAML (YAML Ain't Markup Language). In this part, information regarding the properties of the final document is being stored. This includes (amongst other) the title, authorship, date, export format, etc. of the final document.
+
+Be aware that indentation matters in YAML, so follow the rules to ensure that your document compiles correctly.
+
+Right after the metadata is the body of document. The syntax for the text is Markdown, and the main features will be presented in the next section. Within the body, computer code can be added, either as a chunk, or within the text.
+
+To illustrate the use of `{rmarkdown}`, let's consider this simple document (REF):
+
+
+### Creating a document using `{knitr}`
+
+### Example of applications
+
+
+
+
 
 Integrating reporting within the analysis part, or integrating the analysis within the reporting part?
  -> Keep track of what has been done (reproducible research): Explain choices for analysis, table presentation, charts
