@@ -128,12 +128,53 @@ Note however that although pipes are very powerful, they are not always the best
 
 ### Tips on *how to read this book?*
 
-Writing the code to get used to it.
+For you to get the most out of this book, you need to understand (and eventually adhere to) our philosophy of scripting, and our way of working. This is why we are providing you with some tips to use, if you're comfortable with them:
 
-Showing vs. Saving changes (example of renaming variables) --> use of parenthesis to save and show?
-Overwriting results vs. Saving results in a new variable
-Long pipes: *debugging* by running some small portion of codes
- 
+  1. Create a folder for this book on your computer, and create a script for each chapter in which you re-write yourself the code. If you work with the online version, you could copy/paste the code to go faster, but you may miss some subtleties.
+  2. Do not be discourage when you get some errors: we all get some regularly. At first, this can be very frustrating, especially when you are not able to fix them quickly. If you get stuck on an error and cannot fix it immediately, take a break and come back later with fresh eyes, you may solve it then. And with time and experience, you'll notice that you can reduce the amount of errors, and will also solve them faster.
+  3. The more code, the more difficult it is to find errors. This is true whether you use "regular" R-code or pipes. The best way to solve errors in such circumstances is to run the code line by line until you find the error, and understand why the input/output does not match expectations. 
+  4. In the particular case of pipes, debugging errors means that you shouldn't run the entire block of code, but select parts of it and run it by adding in each run a new line. This can either be done by stopping your selection just before the adequate `%>%` sign, or by adding after that `%>%` sign the function `identity()`^[`identity()` is a function that returns as output the input as it is. This function is particularly useful in pipes as you can finish your pipes with it, meaning that you can put any line in comments (starting with '#') without worrying about finishing your pipe with a `%>%`].
+  5. In many examples here, we apply changes to certain elements without actually saving them in an R object. This is quite convenient for us as many changes we do are only done for pedagogic reasons, and are not necessarily relevant for our analysis. This is for instance the case with the following code (REF):
+
+
+```{r}
+sensory %>% 
+  rename(Panellist = Judge, Sample = Product)
+```
+
+
+If you run this code, you'll notice that we rename `Judge` to `Panellist`, and `Product` to `Sample`...at least this is what you see on screen. However, if you look at `sensory`, the dataset still contains the column `Judge` and `Product` (`Panellist` and `Sample` do not exist!). This is simply because we did not save the changes in any R object.
+
+If we would want to save the element in a new object, we should save the outcome in an element using `<-`:
+
+
+```{r}
+newsensory <- sensory %>% 
+  rename(Panellist = Judge, Sample = Product)
+```
+
+
+Here, `newsensory` corresponds to `sensory`, but with the new names. Of course, if you would want to overwrite the previous file with the new names, you simply need to ensure that the name of the output is the same as the name of the input (this saves computer memory and is saves you thinking about new names all the time). Concretely, we replace here `newsensory` by `sensory`, meaning that the new names are saved in `sensory` (so the old names `Judge` and `Product` and definitely lost):
+
+
+```{r}
+sensory <- sensory %>% 
+  rename(Panellist = Judge, Sample = Product)
+```
+
+
+In the latter cases, this means that to see what `newsensory` or `sensory` contains, you need to type it back in R.
+Another (faster) way to visualize it is to put the entire block of code between brackets (putting codes like this in brackets is equivalent to asking to print the output).
+
+
+```{r}
+(sensory <- sensory %>% 
+  rename(Panellist = Judge, Sample = Product))
+```
+
+
+Note that if you run all these lines of codes in R, you will get an error stating `Column 'Judge' doesn't exist.` This is due to the fact that previously, we overwrote the original `sensory` (containing `Judge` and `Product`) with another version in which these columns were renamed `Panellist` and `Sample`. So when you re-run this code, you are trying to apply again the same changes to columns that no longer exist, hence the error...This is something that you need to take into consideration when overwriting elements (in this case, you should initialize `sensory` to its original version before trying).
+
 ## RStudio
 
 ### Steps to Install RStudio
