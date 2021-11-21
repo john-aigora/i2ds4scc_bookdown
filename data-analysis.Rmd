@@ -173,7 +173,7 @@ fviz_pca_biplot(senso_pca)
 
 ``` 
 <!-- Of course, we will want to see the outcome of the PCA and factoextra plots here. -->
-<!-- A few comments/suggestions about PCA: 1) the argument repel could have a short explanation note 2) It would be nice if an example editing the PCA (e.g color) was shown, 3) It was not clear to me how/where P0pt was included as a supplementary analysis, 4) I guess it would be valuable to show how to plot the Scree plot and how to choose the dimension to plot. One may want to plot dim 1 and dim3-->
+<!-- A few comments/suggestions about PCA: 1) the argument repel could have a short explanation note 2) It would be nice if an example editing the PCA (e.g color) was shown, 3) It was not clear to me how/where P0pt was included as a supplementary analysis, 4) I guess it would be valuable to show how to plot the Scree plot and how to choose the dimension to plot. One may want to plot dim 1 and dim3 and also the contribution plot -->
 On the first dimension, `P10` is opposed to `P09` and `P03` as it is more intense for attributes such as `Sweet`, and `Dairy flavor` for example, and less intense for attributes such as `Dry in mouth` and `External color intensity`. On the second dimension, `P08`, `P06`, and `POpt` are opposed to `P02` and `P07` as they score higher for `Qty of inclusions`, and `Initial hardness`, and score lower for `RawDough flavor` and `Shiny`.
 
 
@@ -344,7 +344,7 @@ TFEQ_freq %>%
   theme_bw()+
   facet_wrap(~TFEQ, scales="free")
 ```
-
+<!-- Maybe it is a good idea to mention or add a function to avoid the x-labels overlap. --> 
 
 Structured questionnaires such as the TFEQ are very frequent in sensory and consumer science. They are used to measure individual patterns as diverse as personality traits, attitudes, food choice motives, engagement, social desirability bias, etc. Ultimately, the TFEQ questionnaire consists in a set of structured questions whose respective answers combine to provide a TFEQ score (actually, three scores, one for Disinhibition, one for Restriction and one for sensitivity to Hunger). This TFEQ scores translate into certain food behavior tendencies.  
 
@@ -384,7 +384,7 @@ TFEQ <- demographic %>%
   mutate(Total = sum(across(where(is.numeric))))
 ```
 
-
+<!-- I though this last part a bit harder to follow, maybe it is a good idea to explain the last code in more detail or break to in a way the reader can clearly understand what is happening in each step... --> 
 Such results can then be visualized graphically, for instance by representing the distribution of the TFEQ score for the 3 categories of questions (or TFEQ-factor):
 
 
@@ -578,7 +578,7 @@ fviz_pca_ind(res_mdpref, habillage=1)
 fviz_pca_var(res_mdpref, label="quanti.sup", select.var=list(cos2=0.5), repel=TRUE)
 
 ```
-
+<!-- I guess it is always good to have some little comments in the line code to clarify things. Like quali.sup, = 1:2, quanti.sup = 3:34, habillage, cos2... This will save time from the reader that may need to stop and search about  those things to fully understand the code --> 
 
 As can be seen, the consumers are fairly in agreement as all the consumers (black arrows) are pointed in a similar direction.
 In overall, they seem to like biscuits that are sweet, with cereal flavor, and fatty/dairy flavor and odor, and dislike biscuits defined as astringent, dry in mouth, uneven and with dark external color.
@@ -589,7 +589,7 @@ In overall, they seem to like biscuits that are sweet, with cereal flavor, and f
 Although the data show a fairly good agreement between consumers, let's cluster them in more homogeneous groups based on liking.
 Various solutions for clustering exist, depending on the type of distance (similarity or dissimilarity), the linkage (single, average, Ward, etc.), and of course the algorithm itself (e.g. AHC, k-means, etc.).
 Here, we opt for the Agglomerative Hierarchical Clustering (AHC) approach with Euclidean distance (dissimilarity) and Ward criterion.
-
+<!-- Is the a reson why this approach was chose here? -->
 Such analysis can be done using `stats::hclust()` or `cluster::agnes()`. 
 
 Note that before computing the distance between consumers, it is advised to at least center their liking scores (subtracting their mean liking scores to each of their individual scores) as it allows grouping consumers based on similar preferences, rather than on their scale usage (otherwise, consumers who scored high on all samples are be grouped together, and separated from consumers who scored low on all samples, which isn't so much informative). 
@@ -605,7 +605,7 @@ consumer_dist <- consumer_wide %>%
   t(.) %>% 
   dist(., method="euclidean")
 ```
-
+<!-- Same comment before. Some commands may not be very familiar to the reader and it worth a note or comment, like t(.)-->
 
 We then run the AHC using the `hclust()` function and the `method = "ward.D2"` parameter, which is the equivalent to the `method = "ward"` for `agnes()`. To visualize the dendrogram, we use the `factoextra::fviz_dend()` function:
 
@@ -617,7 +617,7 @@ fviz_dend(res_hclust, k=2)
 fviz_dend(res_hclust, k=2, type="phylogenic")
 
 ```
-
+<!-- What does the argument k mean? How we define that? --> 
 
 Since we are satisfied with the 2 clusters solution, we cut the tree at this level using, hence generating a group of 74 and a group of 33 consumers.
 
@@ -759,7 +759,9 @@ p <- ggplot(df, aes(x=Score, y=`1 (74)`, label=Product))+
   facet_wrap(~Attribute, scales="free_x")
 
 ```
-
+<!-- I got this error: error: Problem with `filter()` input `..1`.
+i Input `..1` is `Attribute %in% unique(c(lin, quad))`.
+x object 'lin' not found -->
 
 Let's now add a regression line to the model. To do so, `geom_smooth()` is being used, in which `method = lm` as we are adding a regression line based on a linear model, and `formula = 'y ~ x'` for a linear relationship, and `formula = 'y ~ x + I(x^2)'` for a quadratic relationship.
 
