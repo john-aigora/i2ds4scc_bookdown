@@ -3,50 +3,85 @@ knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 ```
 # Text Analysis {#text-analysis}
 
-## What is Text Analysis
+Humans exchange information through the use of languages. In the world, there is a very large number of languages, each of them having its own specificity. The science that studies languages per se is called *linguistics*: It focuses on areas such as phonetics, phonology, morphology, syntax, semantics, and pragmatics.
 
-*NLP* for *N*atural *L*anguage *P*rocessing
+Natural Language Processing (NLP) is a subfield of linguistics, computer science, and artificial intelligence. It connects computers to human language by processing, analyzing, and modeling large amounts of natural language data. One of the main goals of NLP is to "understand" the contents of documents, and to extract accurately information and insights from those documents.
 
-### What?
+In Sensory and Consumer Research, *Text Analysis* usually refers to NLP.
+
+Since the fields of linguistics and NLP are widely studied, a lot of documentations is already available. 
+In this chapter, the objective is not to go deep in the details, but to provide sufficient information for you to be familiar with textual data, and to give you the keys to run the most useful analyses in Sensory and Consumer Research.
+
+### Applicaion of Text Analysis in Sensory and Consumer Science
+
+In recent years, open-ended comments have gained interest as it is the fastest, safest, most unbiased (and sometimes cheapest) way to collect spontaneous data from participants (REF Betina's chapter in Julien's book). 
+
+At first, most S&C questionnaires primarily relied on closed questions, to which open-ended questions were added to uncover the consumers' reasons for liking or disliking products. In practice, these open-ended questions were positioned right after liking questions, and aimed in partially understanding why a product may or may not be liked, and to give the consumers the chance to reduce their frustration by explaining their responses to certain questions. Hence, these questions were not deeply analyzed.
+
+With the development of the so-called *rapid* methods, the benefits of open-ended questions became more apparent as they provide a new way to uncover the perception of respondents. In practice, respondents are asked to freely list a number of terms that describe their sensory perception of the products. Such questions can either be coupled to intensity or ranking questions, (e.g. Free Choice Profile, Flash Profile), or justify the similarities and dissimilarities between products perceived by the respondents (e.g. Free Sorting Task, and Ultra Flash Profile  as an extension of Napping). Since the textual responses are now an integral part of the questionnaire, its analysis can no longer be ignored.
+
+The importance of open-ended questions increased further as it has been shown that respondents can describe in their own words their full experience (perception, emotion, or any other sort of association) with products. Recently, Mahieu et al. showed the benefits of using open-ended questions over CATA^[CATA can be seen as a simplified version of free-comments in the sense that respondents also associate products to words, however they lose the freedom of using their own as they need to select them from a pre-defined list.]. In this study, consumers were asked to describe with their own words both the products and their ideal. Similarly, Luc et al. proposed an alternative to Just About Right (JAR) called free-JAR in which consumers described the samples using their own words, by still following a JAR terminology (too little, too much, or JAR, etc.)
+
+The inclusion of open-ended questions as one of the primary elements of sensory and consumer tasks blurs the line with other fields, including psychology and sociology where these qualitative methods originated. More recently, advances in the technology opened new doors (web-scraping, social listening, etc.) that brought us closer to other fields such as marketing for instance. In these applications, although the amount of data can be considerably larger, the aim of the analysis stays the same: extracting information from text/comments. 
+
+
 ### Objectives of Text Analysis
 
-Extract information from text
-Transforming qualitative data into quantitative
-Understanding connections between words, or between words and concepts (products)
 
-### Examples of application
+Open-ended comments, and more generally textual responses in questionnaires, are by definition qualitative. This means that the primary analysis should be qualitative, which could consist in reading all these comments, and eventually summarizing the information gathered. 
 
-Open-ended comments (simplest form: CATA)
-Topic oriented questions: *Why do you (dis)like this product?*
-Reference to free-JAR (Alexiane Luc) and ideal from free comments (Benjamin Mahieu)
+But as the number of comments increases, such approach quickly becomes too time/energy consuming for the analysts. How can we transform such qualitative data into some quantitative measures, that digest and summarize the information contained in these comments, without losing the overall meaning of the messages (context)?
 
-Specific description (Free Sorting Task, Napping) [Ref + thanks to Jacob Lahne data]
+As one can imagine, such solution can easily be done by simply counting how often a certain word is being used in a certain context (e.g. how often the word `sweet` is being associated to each product evaluated.) However, if such solution is a reasonable one to start with, we will show some alternatives that allow going deeper into the understanding of textual inputs.
+This is the objective of the textual analysis and NLP that we are going to tackle in the next sections.
 
-Social media
-Web-scrapping
-Corpus (documents, book, etc.)
-
-Speech to text to analysis
-Spam filters, text prediction (emails)
 
 ### Warnings
 
-Complexity of words/sentences (example of a sentence with/without punctuation? or Twitter example?)
 
-Text analysis can easily become tedious due to size of documents, double meanings of words, context (e.g. irony) etc.
-That's why automating is and is not a good idea:
- - saves time, effort, and provide quick summary
- - loses part of abstracts things, which can lead to misinterpretations
+Languages are complex, as many aspects can influence the meaning of a message. For instance, in spoken languages, the intonation is as important as the message itself. In written languages, non-word items (e.g. punctuation, emojis) can also change completely the meaning of a sentence (e.g.irony). Worst, some words have different meanings depending on their use (e.g. *like*), and the context of the message provides its meaning. Unfortunately, the full *context* is only available when analyzed manually (e.g. when the analyst reads all the comments), meaning that automating analyses do not always allow capturing it properly. However, reading all the comments is also not a solution, as it quickly becomes too tedious to be done by hand.
+
+This is why we suggest to automate the analysis to extract as much information as possible, before going back to the raw text to ensure that the conclusions drawn actually match the data. 
+
 
 ## Illustration using Sorting Task Data
 
+
+To illustrate this chapter, the data set that we are using was kindly shared by Dr. Jacob Lahne. It is part of a study that aimed in developing a CATA lexicon for Virginia Hard (Alcoholic) Ciders (REF.). The data can be found in *cider_data.xlsx*.
+
+
 ## Data Pre-processing
 
-Use of `{tidytext}`
-Also, have a look at `{Xplortext}`, or IRaMuTeQ (software using R in the background)
-For basic stuff, look at `{SensoMineR}` and `textual()`
 
-### Introduction to working with strings (`{forcats}`)
+Before starting, it is important to mention that there are a large variety of packages in R that handle textual data. Amongst others, we can mention the `{tm}` package for text mining, `{SnowballC}` for text stemming, `{SpacyR}` for Natural Language Processing, or `{Xplortext}` for deep understanding and analysis of textual data. 
+
+<!-- More relevant package to add? -->
+
+However, to ensure a continuity with the rest of the book, we will emphasize the use of the `{stringr}` package (it is part of the `tidyverse`) for handling strings (here text) combined with the `{tidytext}` package as it applies the `{tidyverse}` philosophy to textual data. 
+
+For the more curious readers, you can also have a look at the project IRaMuTeQ^[See [http://www.iramuteq.org/](http://www.iramuteq.org/), which is a free software dedicated to text analysis and developed in R and Python. 
+
+
+### Introduction to working with strings (`{stringr}`)
+
+
+As mentioned earlier, `{stringr}` is one of the packages included in the `{tidyverse}`. This package brings a large set of tools that allow working with strings. Most functions included in `{stringr}` start with `str_*()`. Amongst the most convenient functions, we can mention:
+
+  - `str_length()` to extract the strength of the string;
+  - `str_c()` to combine multiple strings into one;
+  - `str_detect()` to search for a pattern in a string, and `str_which()` find the position of a pattern within the string;
+  - `str_extract()` and `str_extract_all()` to extract the first (or all) matching pattern from a string;
+  - `str_remove()` and `str_remove_all()` to remove the first (or all) matching pattern from a string;
+  - `str_replace()`, `str_replace_all()`, to replace the first (or all) matching pattern with another one.
+  
+It also includes *formatting* options that can be applied to strings, including:
+
+  - `str_to_upper()` and `str_to_lower()` to convert strings to uppercase or lowercase;
+  - `str_trim()` to trim white spaces;
+  - `str_order` to order the element of a character vector.
+  
+Examples of application of some of these functions will be provided in the next sections.
+  
 ### Tokenization
 ### Simple Transformation (lowercase, punctuation)
 ### Stopwords
@@ -63,11 +98,14 @@ Incl. Wordclouds and CA
 
 Including word graphs
 
+### Sentiment Analysis
+
 ### Cluster Analysis
 
 ## To go further...
 
-Sentiment Analysis
+References to book and other packages such as twitter, etc.
+
 Contrast Plot
 Topic Modeling
 Machine Learning
