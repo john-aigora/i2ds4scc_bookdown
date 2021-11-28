@@ -6,15 +6,37 @@ knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 ## Design
 ### Designs of sensory experiments
 #### General approach
-Sensory and consumer science relies on experiments during which subjects usually evaluate several samples. This type of procedure is called 'monadic sequential' and is common practice for all three main categories of tests (difference testing, descriptive analysis, hedonic testing). The main advantage of proceeding this way is that responses can be analyzed at the individual level so that analysis and interpretation can account for interindividual differences, which is a constant feature of sensory data.
-However, this type of approach also comes with drawbacks as it may imply order effects and carry-over effects. It may even induce response biases. Fortunately, most of these effects can be controlled with a proper design of experiment. A good design ensures that order and carry-over effects are not confounded with what you are actually interested to measure (most frequently, the differences between products) by balancing these effects across the panel. However, it is important to note that the design does not eliminate these effects and that each subject in your panel may still experience order and carry-over effect, as well as boredom, sensory fatigue, etc.
-<!-- See if pure monadic designs should be briefly mentioned here -->
- 
-#### Cross-over designs
+Sensory and consumer science relies on experiments during which subjects usually evaluate several samples one after the other. This type of procedure is called 'monadic sequential' and is common practice for all three main categories of tests (difference testing, descriptive analysis, hedonic testing). The main advantage of proceeding this way is that responses can be analyzed at the individual level so that analysis and interpretation can account for interindividual differences, which is a constant feature of sensory data.
+However, this type of approach also comes with drawbacks^[Market researchers would argue that evaluating several products in a row doesn't usually happen in real life and that proceeding this way may induce response biases. They thus advocate the use of pure monadic designs in which participants are only given one sample to evaluate. This corresponds to a between-group design that is also frequently used in fields where only one treatment per subject is possible (drug testing, nutrition studies, etc.).] as it may imply order effects and carry-over effects. Fortunately, most of these effects can be controlled with a proper design of experiment. A good design ensures that order and carryover effects are not confounded with what you are actually interested to measure (most frequently, the differences between products) by balancing these effects across the panel. However, it is important to note that the design does not eliminate these effects and that each subject in your panel may still experience order and carry-over effect, as well as boredom, sensory fatigue, etc.
 
+ 
+#### Crossover designs
+For any sensory experiment that implies the evaluation of more than one sample, first-order carryover effects should be expected. That is to say, the evaluation of a sample may affect the evaluation of the next sample even though sensory scientists try to lower such effects by asking panelists to pause between samples and use of appropriate mouth-cleansing techniques (drinking water, eating unsalted crackers, or a piece of apple, etc.). The use of crossover designs is thus highly recommended [REF REF]. Williams's Latin-Square designs offer a perfect solution to to balance carryover effects. They are very simple to create using the `williams` function from the `{crossdes}` package. For instance, if you have three samples to test, `williams(3)` would create a 6x3 matrix containing the position at which each of three samples should be evaluated by 6 judges (the required number of judges per design block).
+Alternately, the `WilliamsDesign` function in `{SensoMineR}` allows you to create a matrix with numbered Judges as row names and numbered Ranks as column names. You only have to specify the number of samples to be evaluated, as in the example below for 3 samples.
+
+```{r}
+wdes_3samples <- SensoMineR::WilliamsDesign(3)
+wdes_3samples
+```
+
+The downside of Williams's Latin square designs is that the number of samples (*k*) to be evaluated dictates the number of judges. For an even number of samples you must have a multiple of *k* judges, and a multiple of *2k* judges for an odd number of samples. As the total number of judges in your study may not always be exactly known in advance (participants not showing up to your test, extra participants recruited at the last minute), it can be useful to add some flexibility to the design. Of course, additional rows would depart from the perfectly balanced design, but it is possible to optimize them using Federov's algorithm thanks to `optFederov()` function of the `{AlgDesign}` package.
+<!-- Add design codes and procedure from Husson / SensoMineR-->
+
+
+<!-- Brief intro, adapted from Earthy, MacFie, etc -->
+<!-- What if number of subjects is not perfect fit for the number of products? -->
+<!-- What if number of subjects varies during the experiments (people don't show up or you manage to recruit more people)? -->
 
 
 #### Incomplete balanced block designs
+
+<!-- diagnostic of your plan with a contingency table using stats::xtabs(~variable1+variable2+variable3, data) -->
+<!-- power analysis with the pwr package  -->
+
+#### Incomplete designs for hedonic tests
+
+One may also be tempted to use incomplete balanced block designs for hedonic tests too. However, proceeding this way incurs the risk to induce a bias,
+because each participant to the consumer tests will only see part of the product set.
 
 
 ### Product-related design
@@ -24,6 +46,11 @@ However, this type of approach also comes with drawbacks as it may imply order e
 
 
 ## Execute
+<!-- run the experiment / collect the data -->
+<!-- -->
+
+<!-- randomization by judge, by product -->
+
 
 ## Import {#data-import}
 
