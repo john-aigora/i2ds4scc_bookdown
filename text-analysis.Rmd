@@ -53,7 +53,7 @@ To illustrate this chapter, the data set that we are using was kindly shared by 
 ## Data Pre-processing
 
 
-Before starting, it is important to mention that there are a large variety of packages in R that handle textual data. Amongst others, we can mention the `{tm}` package for text mining, `{SnowballC}` for text stemming, `{SpacyR}` for Natural Language Processing, or `{Xplortext}` for deep understanding and analysis of textual data. 
+Before starting, it is important to mention that there are a large variety of packages in R that handle textual data. Amongst others, we can mention the `{tm}` package for text mining, `{tokenizers}` to transform strings into tokens, `{SnowballC}` for text stemming, `{SpacyR}` for Natural Language Processing, or `{Xplortext}` for deep understanding and analysis of textual data. 
 
 <!-- More relevant package to add? -->
 
@@ -77,15 +77,255 @@ As mentioned earlier, `{stringr}` is one of the packages included in the `{tidyv
 It also includes *formatting* options that can be applied to strings, including:
 
   - `str_to_upper()` and `str_to_lower()` to convert strings to uppercase or lowercase;
-  - `str_trim()` to trim white spaces;
+  - `str_trim()` and `str_squish()` to remove white spaces;
   - `str_order` to order the element of a character vector.
   
 Examples of application of some of these functions will be provided in the next sections.
   
+  
 ### Tokenization
-### Simple Transformation (lowercase, punctuation)
+
+
+The analysis of textual data starts with defining the statistical unit of interest, also known as *token*. This can either be a single word, a group of words, a sentence, a paragraph, a whole document etc. The procedure to transform the document into tokens is called *tokenization*. 
+
+Let's have a look at our data here:
+
+
+```{r}
+library(tidyverse)
+library(readxl)
+library(here)
+
+file_path <- here("data","cider_data.xlsx") 
+cider <- read_xlsx(file_path) %>% 
+  mutate(sample = as.character(sample))
+
+```
+
+
+We notice here that for each sample evaluated, respondents are providing a set of descriptions, which can be a single word (e.g. `yeasty`) or a group of words (`like it will taste dry and acidic`). This dataset is fairly well structure since the tokens are separated by a `;` or `,`.
+
+Let's transform this text into tokens using `unnest_tokens()` from the `{tidytext}` package. The function `unnest_tokens()` already proposes different options for the tokenization, including "words", "ngrams", or "sentences" for instance. However, since we want to use a specific character to separate the tokens (here `;`, `,` etc.), we are using "regex" by specifying the different patterns.
+
+
+```{r}
+(cider <- cider %>% 
+  unnest_tokens(tokens, comments, token="regex", pattern="[;|,|:|.|/]", to_lower=FALSE))
+```
+
+
+This procedure already provides some interesting information as we already could count how often the word *apple* for instance is used to describe each samples. However, a deeper look at the data shows some inconsistencies, since some words starts with a space, or have capital letters (remember that R is case-sensitive!).
+
+
+### Simple Transformation (lowercase)
+
+
+To improve the analysis, let's standardize the text by removing all the white spaces (*irrelevant* spaces in the text, e.g. at  the start/end, double spaces, etc.), transforming everything to lower case (we could have done directly through `unnest_tokens()` already), removing some special letters, replacing some misplaced characters etc.^[This process is done in iterations: the more you clean your document, the more you find some small things to fix...until you're set!]
+
+
+```{r}
+(cider <- cider %>% 
+  mutate(tokens = str_to_lower(tokens)) %>% 
+  mutate(tokens = str_trim(tokens)) %>% 
+  mutate(tokens = str_squish(tokens)) %>% 
+  mutate(tokens = str_remove_all(tokens, pattern="[(|)|?|!]")) %>% 
+  mutate(tokens = str_remove_all(tokens, pattern="[ó|ò]")) %>% 
+  mutate(tokens = str_replace_all(tokens, pattern="õ", replacement="'")))
+```
+
+
+Let's produce the list of tokens generated here (and its corresponding frequency):
+
+
+```{r}
+cider %>% 
+  count(tokens) %>% 
+  arrange(desc(n)) %>%
+  View()
+```
+
+
+At first, it seems that the most used words to describe the ciders are `sweet` (55 occurrences), `fruity` (33 occurrences), and `sour` (32 occurrences). However, a deeper look at this list highlights a few things that still need to get tackled: 
+
+  - The same concept can be described in different ways: `spicy`, `spices`, and `spiced` may all refer to the same concept, yet they are written differently and hence are considered as different tokens. We will see how we can handle this in a later stage.
+  - Multiple concepts are still joined (and hence considered separately: `sour and sweet` is currently neither associated to `sour`, nor to `sweet`, and we may want to merge them.
+  - There could be some typo: Is `sweat` a typo and should read `sweet`? Or did that respondent really perceived the cider as `sweat`?
+  - Although most tokens are made of one (or few) words, some others are defined as a whole sentence (e.g. `this has a very lovely floral and fruity smell`)
+
+
 ### Stopwords
+
+
+*Stop words* refer to *common* words that do not carry much (if at all) information. In general, stop words include words (in English) such as *I*, *you*, *or*, *of*, *and*, *is*, *has*, etc. It is hence common practice to remove such stop words before any analysis, as they would *pollute* the results with unnecessary information.
+
+Building lists of stop words can be tedious. Fortunately, it is possible to find some pre-defined lists, and to eventually adjust them to our own needs by adding and/or removing words. In particular, the package `{stopwords}` contains a comprehensive collection of stop word lists:
+
+
+```{r}
+library(stopwords)
+length(stopwords(source="snowball"))
+length(stopwords(source="stopwords-iso"))
+```
+
+
+Here, we can see that English Snowball list contains 175 terms, whereas the English list from the Stopwords ISO collection contains 1298 words.
+
+A deeper look at these lists (and particularly to the Stopwords ISO list) shows that certain words including *like*, *not* and *don't* (just to name a few) are considered as stop words. If we would use this list blindly, we would remove these words from our comments. 
+
+Although using such list on our current example would have a limited impact on the analysis (most comments are just few descriptive words), it would have a more critical impact on other studies in which consumers give their opinion on samples. Indeed, the analysis of the two following comments *I like Sample A* and *I don't like Sample B* would be lost although they provide some relevant information.
+
+It is hence important to remember that although a lot of stop words are common, there are also a lot of them that are topic specific, and that should be (or should not be) used in certain contexts. Hence inspecting and adapting these lists before use is strongly recommended.
+
+For further cleaning, let's go one step further and split the remaining tokens into words by using the space as separator. To ensure that we can still recover which words belong to the same token (as defined previously, as this information can be relevant later for *bigrams*), we are adding an increasing number next to each token for each assessor using `row_number()`:
+
+
+```{r}
+cider <- cider %>% 
+  relocate(subject, .before=sample) %>% 
+  group_by(subject, sample) %>% 
+  mutate(num = row_number()) %>% 
+  ungroup() %>% 
+  unnest_tokens(tokens, tokens, token="regex", pattern=" ")
+
+head(cider)
+```
+
+
+We can see here that for `J1` and `182`, the first token is now separated into three words: `hard`, `cider`, and `smell`.
+
+We can now again count how often each word has been used, using the exact same code as previously. 
+It appears now that `sweet` appears 91 times, and `apple` 80 times. Interestingly, terms such as `a`, `like`, `the`, `of`, `and` etc. also appear fairly frequently.
+
+Since we have a fairly small set of text, let's use the *SnowBall Stopword* list as a start, and look at the terms that are shared in both our list and this stopword list:
+
+
+```{r}
+stopword_list <- stopwords(source="snowball")
+word_list <- cider %>% 
+  count(tokens) %>% 
+  pull(tokens)
+
+intersect(stopword_list, word_list)
+```
+
+
+As we can see, some words such as *off*, *not*, *no*, *too*, and *very* would be removed. Since we prefer to keep them, we will remove them from our list.
+
+Similarly, we can look at the words from our data that we would not remove. We can then track the words that we would not consider relevant and add them to the list:
+
+
+```{r}
+word_list[!word_list %in% stopword_list]
+```
+
+
+For instance, words such as *like*, *sample*, *just*, *think*, or *though* for instance do not seem to bring any relevant information here. Hence, we propose to remove these (together with some others).
+Ultimately, we update the list by removing some of the words we want to keep, and by adding words we want to remove:
+
+
+```{r}
+stopword_list <- stopword_list[!stopword_list %in% c("off","no","not","too","very")]
+stopword_list <- c(stopword_list, c("accompany","amount","anything","considering","despite","expected",
+                                    "just","like","neither","one","order","others","products",
+                                    "sample","seems","something","thank","think","though","time","way",
+                                    "-"))
+```
+
+
+Finally, we clean our data by removing all the words stored in `stopword_list`. This can easily be done either using `filter()` (we keep tokens that are not contained in `stopword_list`), or by using `anti_join()`^[Note that if we were using the original list of stopwords, `anti_join()` can directly be associated to `get_stopwords(source="snowball")`.]:
+
+
+```{r}
+cider <- cider %>% 
+  anti_join(tibble(tokens = stopword_list), by="tokens")
+```
+
+
 ### Stemming and Lemmatization
+
+
+After removing the stop words, we finally have a list of 334 different words. However a closer look at this list shows that it is still not optimal, as for instance `apple` (80 occurrences) and `apples` (24 occurrences) are considered as two separate words although we could argue that they refer to the same concept.
+
+To further *clean* the data, two similar approaches can be considered: **stemming** and **lemmatization**. 
+
+The procedure of stemming consists in performing a step-by-step algorithm that reduces each word to its base word (or *stem*). The most used algorithm is the one introduced by REF (Porter, 1980) which is available in the `{SnowballC}` package through the `wordStem()` function:
+
+
+```{r}
+cider <- cider %>% 
+  mutate(stem = wordStem(tokens))
+
+cider %>% 
+  count(stem) %>% 
+  arrange(desc(n))
+```
+
+
+The stemming reduced further the list to 309 words. In particular, `apple` and `apples` have been combined into `appl` (104 occurrences). However, due to the way the algorithm works, the final tokens are no longer English^[Different algorithms for different languages exist, so we are not limited to stemming English words.] words.
+
+Alternatively, we can *lemmatize* words. Lemmatization is similar to stemming except that it does not cut words to their stems: Instead it uses knowledge about the language's structure to reduce words down to their dictionary form (also called *lemma*). Such approach is implemented in the `{spacyr}` package^[spaCy is a library written in Python: for the `{spacyr}` package to work, you'll need to go through a series of steps that are described here: (https://cran.r-project.org/web/packages/spacyr/readme/README.html)[https://cran.r-project.org/web/packages/spacyr/readme/README.html]] and the `spacy_parse()` function:
+
+
+```{r}
+library(spacyr)
+
+spacy_initialize(entity=FALSE)
+lemma <- spacy_parse(cider$tokens) %>% 
+  as_tibble() %>% 
+  dplyr::select(tokens=token, lemma) %>% 
+  unique()
+
+cider <- full_join(cider, lemma, by="tokens")
+
+```
+
+
+As can be seen, as opposed to stems, lemmas consist in *regular* words. Here, the grouping provides similar number of terms (309 vs. 307) yet some differences can be noticed:
+
+
+```{r}
+cider %>% count(stem)
+cider %>% count(lemma)
+```
+
+
+In the case of lemmatization, `acid`, `acidity`, and `acidic` are still considered as separate words whereas they are all grouped under `acid` with the stemming procedure. This particular example shows the advantage and disadvantage of each method, as it may (resp. may not) group words that are not (resp. that are) meant to be grouped. Hence, the use of lemmatization/stemming procedures should be thought carefully.
+
+It should also be said that neither the lemmatization nor the stemming procedure will combine words that are different, yet with similar meanings. For instance, the words `moldy` and `rotten` have been used, and some researchers may decide to group them if they consider them equivalent (same could apply to `acid`, `acidity`, and `acidic` from the lemmatization procedure). Such third step of grouping can be done using `str_replace()`:
+
+
+```{r}
+cider %>% 
+  count(lemma) %>% 
+  filter(lemma %in% c("moldy","rotten"))
+
+cider %>% 
+  mutate(lemma = str_replace(lemma, "moldy", "rotten")) %>% 
+  count(lemma) %>% 
+  filter(lemma %in% c("moldy","rotten"))
+```
+
+
+As can be seen here, originally, `moldy` was stated twice whereas `rotten` was stated 5 times. After re-placing `moldy` by `rotten`, the newer version contains 7 occurrences of `rotten` and none of `modly`. 
+
+Doing such transformation can quickly be tedious to do directly in R. As an alternative solution, we propose to export the list of words in Excel, create a new column with the new grouping names, and merge the newly acquired names to the previous file. This is the approach we used to create the file entitled *Example of word grouping.xlsx*. In this example, one can notice that we limited the grouping to a strict minimum for most words except `bubble` that we also combined to `bubbly`, `carbonate`, `champagne`, `moscato`, `fizzy`, and `sparkle`:
+
+
+```{r}
+new_list <- read_xlsx("temp/Example of word grouping.xlsx")
+cider <- cider %>% 
+  full_join(new_list, by="lemma") %>% 
+  mutate(lemma = ifelse(is.na(`new name`), lemma, `new name`)) %>% 
+  dplyr::select(-`new name`)
+
+cider %>% count(lemma)
+
+```
+
+
+This last *cleaning* approach reduces further the number of words to 279.
+
+
 ### Word Embedding (?)
 
 ## Text Analysis
