@@ -16,7 +16,7 @@ However, this type of approach also comes with drawbacks^[Market researchers wou
 
  
 #### Crossover designs
-For any sensory experiment that implies the evaluation of more than one sample, first-order carryover effects should be expected. That is to say, the evaluation of a sample may affect the evaluation of the next sample even though sensory scientists try to lower such effects by asking panelists to pause between samples and use of appropriate mouth-cleansing techniques (drinking water, eating unsalted crackers, or a piece of apple, etc.). The use of crossover designs is thus highly recommended [REF REF]. Williams's Latin-Square designs offer a perfect solution to to balance carryover effects. They are very simple to create using the `williams()` function from the `{crossdes}` package. For instance, if you have five samples to test, `williams(5)` would create a 10x5 matrix containing the position at which each of three samples should be evaluated by 10 judges (the required number of judges per design block).
+For any sensory experiment that implies the evaluation of more than one sample, first-order carryover effects should be expected. That is to say, the evaluation of a sample may affect the evaluation of the next sample even though sensory scientists try to lower such effects by asking panelists to pause between samples and use of appropriate mouth-cleansing techniques (drinking water, eating unsalted crackers, or a piece of apple, etc.). The use of crossover designs is thus highly recommended [REF REF (MacFie et al., 1989)]. Williams's Latin-Square designs offer a perfect solution to to balance carryover effects. They are very simple to create using the `williams()` function from the `{crossdes}` package. For instance, if you have five samples to test, `williams(5)` would create a 10x5 matrix containing the position at which each of three samples should be evaluated by 10 judges (the required number of judges per design block).
 Alternately, the `WilliamsDesign()` function in `{SensoMineR}` allows you to create a matrix of samples (as numbers) with numbered Judges as row names and numbered Ranks as column names. You only have to specify the number of samples to be evaluated, as in the example below for 5 samples. 
 
 ```{r}
@@ -35,6 +35,7 @@ The downside of Williams's Latin square designs is that the number of samples (*
 As the total number of judges in your study may not always be exactly known in advance (participants not showing up to your test, extra participants recruited at the last minute), it can be useful to add some flexibility to the design. Of course, additional rows would depart from the perfectly balanced design, but it is possible to optimize them using Federov's algorithm thanks to the `optFederov()` function of the `{AlgDesign}` package, by specifying `augment = TRUE`. For example we can add three more judges to the Williams Latin square design that we just built for 5 products and 10 judges, hence leading to a total number of 13 judges.
 
 ```{r}
+library(SensoMineR)
 library(AlgDesign)
 nbJ=13
 nbP=5
@@ -46,6 +47,8 @@ tab <- cbind(prod=as.vector(t(wdes5P10J)),judge=rep(1:nbJ,each=nbR),rank=rep(1:n
 optdes5P13J <- optFederov(~prod+judge+rank,data=tab,augment=TRUE,nTrials=nbJ*nbP,rows=1:(nbJ*nbP),nRepeats = 100)
 xtabs(optdes5P13J$design)
 ```
+
+In the code above, `xtabs()` is used to arrange the design in a table format that is convenient for the experimenter.
 
 Note that it would also be possible to start from an optimal design and expand it to add one judge at a time. The code below first builds a design for 5 products and 13 judges and then adds one judge to make the design optimal for 5 products and 14 judges.
 
@@ -63,7 +66,7 @@ optdes5P14J <- optFederov(~prod+judge+rank,data=rbind(tab,add),augment=TRUE,nTri
 ```
 
 #### Balanced incomplete block designs (BIBD)
-Sensory and consumer scientists may sometimes consider using incomplete designs. That is to say, experiments in which each judge evaluates only a subset of the complete product set. In this case, the number of samples evaluated by each judge remains constant but is lower than the number of products included in the study. You might want to choose this approach for example if you want to reduce the workload for each panelist and limit sensory fatigue, boredom and inattention. It might also be useful when you cannot "afford" a complete design because of sample-related constraints (limited production capacity, very expensive samples, etc.). The challenge then, is to balance sample evaluation across the panel as well as the context (i.e. other samples) in which each sample is being evaluated. For such a design you thus want each pair of products to be evaluated together the same number of times.
+Sensory and consumer scientists may sometimes consider using incomplete designs. That is to say, experiments in which each judge evaluates only a subset of the complete product set ([REF]Wakeling & MacFie, 1995). In this case, the number of samples evaluated by each judge remains constant but is lower than the number of products included in the study. You might want to choose this approach for example if you want to reduce the workload for each panelist and limit sensory fatigue, boredom and inattention. It might also be useful when you cannot "afford" a complete design because of sample-related constraints (limited production capacity, very expensive samples, etc.). The challenge then, is to balance sample evaluation across the panel as well as the context (i.e. other samples) in which each sample is being evaluated. For such a design you thus want each pair of products to be evaluated together the same number of times.
 The `optimaldesign()` function of `{SensoMineR}` can be used to search for a balanced incomplete block design.
 
 ```{r}
@@ -74,24 +77,27 @@ incompDesign1$design
 BIBD are only possible for certain combinations of numbers of treatment (products), numbers of blocks (judges) and block size (number of samples per judge). Note that `optimaldesign()` will yield a design even if it is not balanced but it will also generate contingency tables allowing you to evaluate the design's orthogonality, and how well balanced are ranks and carryover effects.
 You can also use the `{crossdes}` package to generate an BIBD with this simple syntax: `find.BIB(trt, b, k, iter)`, with trt = number of products, b = number of judges, k = number of samples per judge, iter = number of iteration. With this package, you can apply `isGYD()` to know if an incomplete design is balanced or not. If the design is a BIBD, you may then use `williams.BIB()` to combine it with a Williams design to balance carryover effects.
 
+
 Incomplete balanced designs also have drawbacks. First, from a purely statistical perspective, they are conducive to fewer observations and thus to a lower statistical power. Product and Judge effects are also partially confounded even though the confusion is usually considered as acceptable. Besides, the estimation of the *ProductxJudge* interaction in analysis of variance is impossible.
 
 
-
-<!-- diagnostic of your plan with a contingency table using stats::xtabs(~variable1+variable2+variable3, data) -->
-<!-- power analysis with the pwr package  -->
-
 #### Incomplete designs for hedonic tests: Sensory informed designs
 
-One may also be tempted to use incomplete balanced block designs for hedonic tests too. However, proceeding this way is likely to induce framing bias. Indeed, each participant to the consumer tests will only see part of the product set which would affect their frame of reference if the subset of product they evaluate only covers a limited area of the sensory space. For example, suppose you are designing consumer test of chocolate chip cookies and that a majority of cookies are made with milk chocolate while few cookies are made with dark chocolate chips. If a participant evaluates a set of samples that only have the milk chocolate chips, this participant will not know about the existence of dark chocolate and give very different scores compared to what they would have if they had a full view of the product category.
-To reduce the risks incured by the use of BIBD, it is possible to...
+One may also be tempted to use incomplete balanced block designs for hedonic tests. However, proceeding this way is likely to induce framing bias. Indeed, each participant to the consumer tests will only see part of the product set which would affect their frame of reference if the subset of product they evaluate only covers a limited area of the sensory space. For example, suppose you are designing a consumer test of chocolate chip cookies and that a majority of cookies are made with milk chocolate while few cookies are made with dark chocolate chips. If a participant only evaluates samples that have milk chocolate chips, this participant will not know about the existence of dark chocolate and will potentially give very different scores compared to what they would have if they had a full view of the product category.
+To reduce the risks incurred by the use of BIBD, an alternative strategy is to use a sensory informed design. Its principle is to allocate each panelist a subset of products that best cover the sensory diversity of the initial product set. Pragmatically, this amounts to maximizing the sensory distance between drawn products. Of course, this supposes that one has sensory data to rely on in the first place. 
 
-
+```{r fig.align='center', echo=FALSE, eval=TRUE}
+# pseudo-code for sensory informed design (Franczak et al., 2015)
+knitr::include_graphics("images/sensory_doe.png")
+```
 
 ### Product-related design
 #### Factorial designs
 #### Sensory informed designs & selection of factors
 #### Screening designs
+
+
+<!-- power analysis with the pwr package  -->
 
 
 ## Execute
