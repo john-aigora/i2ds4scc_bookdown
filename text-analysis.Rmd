@@ -5,7 +5,7 @@ knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 
 Humans exchange information through the use of languages. In the world, there is a very large number of languages, each of them having its own specificity. The science that studies languages per se is called *linguistics*: It focuses on areas such as phonetics, phonology, morphology, syntax, semantics, and pragmatics.
 
-Natural Language Processing (NLP) is a subfield of linguistics, computer science, and artificial intelligence. It connects computers to human language by processing, analyzing, and modeling large amounts of natural language data. One of the main goals of NLP is to "understand" the contents of documents, and to extract accurately information and insights from those documents.
+Natural Language Processing (NLP) is a sub-field of linguistics, computer science, and artificial intelligence. It connects computers to human language by processing, analyzing, and modeling large amounts of natural language data. One of the main goals of NLP is to "understand" the contents of documents, and to extract accurately information and insights from those documents.
 
 In Sensory and Consumer Research, *Text Analysis* usually refers to NLP.
 
@@ -326,17 +326,145 @@ cider %>% count(lemma)
 This last *cleaning* approach reduces further the number of words to 279.
 
 
-### Word Embedding (?)
-
 ## Text Analysis
 
-### Raw Frequencies
+Now the text has been sufficiently cleaned, we can run some analysis and actually compare the samples in the way they have been described by the respondents. To do so, let's start with simple analyses. 
 
-Incl. Wordclouds and CA
+### Raw Frequencies and Visualization
+
+In the previous sections, we have already shown how to count the number of occurrences of each word. We can reproduce this and show the top 10 words the most used to describe our ciders:
+
+
+```{r}
+cider %>% 
+  group_by(lemma) %>% 
+  count() %>% 
+  arrange(desc(n)) %>% 
+  filter(n>=10, !is.na(lemma)) %>% 
+  ggplot(aes(x=reorder(lemma, n), y=n))+
+  geom_col()+
+  theme_minimal()+
+  xlab("")+
+  ylab("")+
+  theme(axis.line = element_line(colour="grey80"))+
+  coord_flip()+
+  ggtitle("List of words mentioned at least 10 times")
+```
+
+
+As seen previously, the most mentioned words are `apple`, `sweet`, `fruity`, and `sour`.
+
+Let's now assess the number of time each word has been used to characterize each product.
+
+
+```{r}
+cider %>% 
+  filter(!is.na(lemma), !is.na(sample)) %>% 
+  group_by(sample, lemma) %>% 
+  count() %>% 
+  ungroup() %>% 
+  pivot_wider(names_from=lemma, values_from=n, values_fill=0)
+```
+
+
+A first look at the contingency table shows that `apple` has been used 24 times to characterize sample `365` while it has only be used 9 times to characterize sample `401`.
+
+Since the list of terms is quite large, we can visualize these frequencies in different ways: First, we could re-adapt the histogram produced previously overall but per product. This could give a good overview on which words characterize each sample:
+
+
+```{r}
+prod_term <- cider %>% 
+  filter(!is.na(lemma), !is.na(sample)) %>% 
+  group_by(sample, lemma) %>% 
+  count() %>% 
+  ungroup() %>% 
+  split(.$sample) %>% 
+  map(function(data){
+    
+    data %>% 
+      arrange(desc(n)) %>% 
+      filter(n>=5) %>% 
+      ggplot(aes(x=reorder(lemma, n), y=n))+
+      geom_col()+
+      theme_minimal()+
+      xlab("")+
+      ylab("")+
+      theme(axis.line = element_line(colour="grey80"))+
+      coord_flip()+
+      ggtitle(paste0("List of words mentioned at least 5 times for ", 
+                     data %>% pull(sample) %>% unique()))
+    
+  })
+
+```
+
+
+Another approach consists in visualizing the association between the samples and the words in a multiple way using Correspondence Analysis (CA). Since the CA can be sensitive to low frequencies (Add REF), we reduce the frequency table by only keeping terms that were at least mentioned 5 times across all samples. We then use the `CA()` function from `{FactoMineR}` to build the CA map:
+
+
+```{r}
+cider_ct <- cider %>% 
+  filter(!is.na(lemma), !is.na(sample)) %>% 
+  group_by(sample, lemma) %>% 
+  count() %>% 
+  ungroup() %>% 
+  filter(n >= 5) %>% 
+  pivot_wider(names_from=lemma, values_from=n, values_fill=0) %>% 
+  as.data.frame() %>% 
+  column_to_rownames(var="sample")
+
+library(FactoMineR)
+cider_CA <- CA(cider_ct)
+
+```
+
+
+As can be seen, sample `731` is more associated to alcoholic terms such as `alcohol` or `wine`, and colors (`red`, `green`). Samples `239` and `401` are more associated to `sour` and `bitter` (and `pear` for `239`), whereas samples `519` and `182` are more descibed by terms such as `fruity`, and `sweet` (`floral` is also used to characterize `182`).
+
+
+These frequencies can also be visualized using wordclouds, which can easily be done using the `{ggwordcloud}` package which has the advantage to build such representation in a `{ggplot2}` format. Such wordcloud (here separated the wordclouds per product) can be obtained using the following code:
+
+```{r}
+cider_wc <- cider %>% 
+  filter(!is.na(lemma), !is.na(sample)) %>% 
+  group_by(sample, lemma) %>% 
+  count() %>% 
+  ungroup() %>% 
+  filter(n >= 5)
+
+library(ggwordcloud)
+ggplot(cider_wc, aes(x=sample, colour=sample, label=lemma, size=n))+
+  geom_text_wordcloud(eccentricity = 2.5)+
+  xlab("")+
+  theme_minimal()
+
+```
+
+
+In these wordclouds, we notice that `apple` and `sweet` appear big for (almost) all the samples, which can make the comparison quite difficult between samples. Fortunately, the `geom_text_wordcloud()` function provides an interesting parameter in its aesthetics called `angle_group` which allows controlling the position of the words. To illustrate this, let's apply the following rule: for a given sample, if the proportion of association of a word is larger than 1/6 (as we have 6 samples), the word will be printed in the upper part of its wordcloud, and in the lower part otherwise. To facilitate the readability, the color code used follow the same rule.
+
+
+```{r}
+cider_wc %>% 
+  group_by(lemma) %>% 
+  mutate(prop = n/sum(n)) %>% 
+  ungroup() %>% 
+  ggplot(aes(colour= prop<1/2, label=lemma, size=n, angle_group = prop < 1/2))+
+  geom_text_wordcloud(eccentricity = 2.5)+
+  xlab("")+
+  theme_minimal()+
+  facet_wrap(~sample)
+```
+
+
+As can be seen, the term `apple` is used more frequently (i.e. more than 1/6) used to characterize samples `182`, `239`, `365`, and `731`. The term `sweet` is more frequently used to characterize samples `182` and `519`. Such conclusions would have been more difficult to reach based on the previous *unstructured* wordcloud.
+
 
 ### Bigrams, *n*-grams
 
 Including word graphs
+
+### Word Embedding (?)
 
 ### Sentiment Analysis
 
@@ -349,7 +477,6 @@ References to book and other packages such as twitter, etc.
 Contrast Plot
 Topic Modeling
 Machine Learning
-
 
 
 <!--

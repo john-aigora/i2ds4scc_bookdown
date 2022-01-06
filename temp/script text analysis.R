@@ -85,6 +85,7 @@ cider %>%
   count(lemma) %>% 
   filter(lemma %in% c("moldy","rotten"))
 
+  ## Manual grouping
 cider %>% 
   mutate(lemma = str_replace(lemma, "moldy", "rotten")) %>% 
   count(lemma) %>% 
@@ -95,3 +96,87 @@ cider <- cider %>%
   full_join(new_list, by="lemma") %>% 
   mutate(lemma = ifelse(is.na(`new name`), lemma, `new name`)) %>% 
   dplyr::select(-`new name`)
+
+  ## Visualization (Overall)
+cider %>% 
+  group_by(lemma) %>% 
+  count() %>% 
+  ungroup() %>% 
+  arrange(desc(n)) %>% 
+  filter(n>=10, !is.na(lemma)) %>% 
+  ggplot(aes(x=reorder(lemma, n), y=n))+
+  geom_col()+
+  theme_minimal()+
+  xlab("")+
+  ylab("")+
+  theme(axis.line = element_line(colour="grey80"))+
+  coord_flip()+
+  ggtitle("List of words mentioned at least 10 times")
+
+  ## Contingency Table and CA
+cider %>% 
+  filter(!is.na(lemma), !is.na(sample)) %>% 
+  group_by(sample, lemma) %>% 
+  count() %>% 
+  ungroup() %>% 
+  pivot_wider(names_from=lemma, values_from=n, values_fill=0)
+
+cider_ct <- cider %>% 
+  filter(!is.na(lemma), !is.na(sample)) %>% 
+  group_by(sample, lemma) %>% 
+  count() %>% 
+  ungroup() %>% 
+  filter(n >= 5) %>% 
+  pivot_wider(names_from=lemma, values_from=n, values_fill=0) %>% 
+  as.data.frame() %>% 
+  column_to_rownames(var="sample")
+
+library(FactoMineR)
+cider_CA <- CA(cider_ct)
+
+  ## Words mentioned >5 times (Product)
+cider %>% 
+  filter(!is.na(lemma), !is.na(sample)) %>% 
+  group_by(sample, lemma) %>% 
+  count() %>% 
+  ungroup() %>% 
+  split(.$sample) %>% 
+  map(function(data){
+    
+    data %>% 
+      arrange(desc(n)) %>% 
+      filter(n>=5) %>% 
+      ggplot(aes(x=reorder(lemma, n), y=n))+
+      geom_col()+
+      theme_minimal()+
+      xlab("")+
+      ylab("")+
+      theme(axis.line = element_line(colour="grey80"))+
+      coord_flip()+
+      ggtitle(paste0("List of words mentioned at least 5 times for ", data %>% pull(sample) %>% unique()))
+    
+  })
+
+  ## Wordclouds
+cider_wc <- cider %>% 
+  filter(!is.na(lemma), !is.na(sample)) %>% 
+  group_by(sample, lemma) %>% 
+  count() %>% 
+  ungroup() %>% 
+  filter(n >= 5)
+
+library(ggwordcloud)
+ggplot(cider_wc, aes(x=sample, colour=sample, label=lemma, size=n))+
+  geom_text_wordcloud(eccentricity = 2.5)+
+  xlab("")+
+  theme_minimal()
+
+cider_wc %>% 
+  group_by(lemma) %>% 
+  mutate(prop = n/sum(n)) %>% 
+  ungroup() %>% 
+  ggplot(aes(colour = prop < 1/6, label=lemma, size=n, angle_group = prop < 1/6))+
+  geom_text_wordcloud(eccentricity = 2.5)+
+  xlab("")+
+  theme_minimal()+
+  facet_wrap(~sample)
