@@ -126,7 +126,7 @@
 
 \title{Data Science for Sensory and Consumer Scientists}
 \author{John Ennis, Julien Delarue, and Thierry Worch}
-\date{2021-11-04}
+\date{2022-01-04}
 
 \begin{document}
 \maketitle
@@ -2380,7 +2380,7 @@ Let's now change our way of working by proposing an alternative in which we inte
 \hypertarget{what-is-rmarkdown}{%
 \subsection{\texorpdfstring{What is \texttt{\{rmarkdown\}}}{What is \{rmarkdown\}}}\label{what-is-rmarkdown}}
 
-Markdown is an ecosystem specific to text document, in which authors \emph{program} their documents by controlling various features including:
+Markdown is an ecosystem specific to text document, in which authors \emph{script} their reports by controlling various features including:
 
 \begin{itemize}
 \tightlist
@@ -2402,7 +2402,7 @@ Markdown is an ecosystem specific to text document, in which authors \emph{progr
   links, citations, and footnotes
 \end{itemize}
 
-Limiting the creation of Markdown document through this list of elements is more an advantage than a drawback as it suffice to create technical and non-technical document while still keeping it a certain simplicity.
+Limiting the creation of Markdown document to this list of elements is more an advantage than a drawback as it suffice to create technical and non-technical documents while still keeping it simple.
 
 In practice, R Markdown provides an authoring framework for data science, as it can be use for both saving/documenting/executing code and generating high quality reports.
 
@@ -2414,7 +2414,7 @@ Once the document is being created, you can then compile it to build it in the o
 To start, you need to install the \texttt{\{rmarkdown\}} package using the \texttt{install.packages()} function.
 To load this package, just type \texttt{library(rmarkdown)}.
 
-If you intend to build your report in pdf, you also need to install a LaTeX library. For its simplicity, recommend you installing the TinyTeX library using \texttt{install.packages("tinytex")}.
+If you intend to build your report in pdf, you also need to install a LaTeX library. For its simplicity, we recommend you installing the TinyTeX library using \texttt{install.packages("tinytex")}.
 
 Let's start with a simple example that is provided by RStudio. To start a RMarkdown document, click File \textgreater{} New File \textgreater{} R Markdown\ldots{}
 This opens a new window in which you can inform the name of your file, the author name, and the type of report to create (HTML, PDF, or Word). Once set, click OK. A new script file of type \emph{.Rmd} opens.
@@ -2427,56 +2427,61 @@ Be aware that indentation matters in YAML, so follow the rules to ensure that yo
 
 Right after the metadata is the body of document. The syntax for the text is Markdown, and the main features will be presented in the next section. Within the body, computer code can be added, either as a chunk, or within the text.
 
-To illustrate the use of \texttt{\{rmarkdown\}}, let's consider this simple document (REF):
+\hypertarget{rmarkdown-through-a-simple-example}{%
+\subsection{\texorpdfstring{\texttt{\{rmarkdown\}} through a Simple Example}{\{rmarkdown\} through a Simple Example}}\label{rmarkdown-through-a-simple-example}}
+
+To illustrate the use of \texttt{\{rmarkdown\}}, let's consider this simple document (inspired from REF):
+
+The top of the document contains the metadata, which (in our case) will generate the report in an HTML document.
+
+Next, we have a first chunk of code that sets the main options on how the code should be handled. If the same philosophy should be applied everywhere, it is handy to set it at the start. However, when different chunks of code should be handled differently, it may be easier to define for each section how it should be handled.
+
+There are mainly four ways to handle code.
+
+The first way is defined here on the code chunk \emph{header} as \texttt{include\ =\ FALSE}\footnote{When set manually, this is where you should indicate how to handle each chunk of code}: \texttt{include} always run the code, yet it allows printing (\texttt{include\ =\ TRUE}) or not (\texttt{include\ =\ FALSE}) the code and its outputs in the final document.
+
+The second option is \texttt{echo}. In this code chunk, we automatically set that all the code chunk should be defined as \texttt{echo\ =\ TRUE}, which means that the code will run and be printed (together with its output) in the document. This seems very similar to \texttt{include}, yet it differs from it as \texttt{echo\ =\ FALSE} runs the code, prints the outputs, but not the code.
+
+If you only want to show some code without running it, the \texttt{eval} parameter is used (\texttt{eval\ =\ FALSE} means that the code will be displayed but will not run). This is useful for displaying example code, or for disabling large or time-consuming chunk of codes without having to set it up as comment.
+
+last, we can control whether outputs should be shown or hidden using \texttt{results} (printed output) and \texttt{fig.show} (plots). By default, the results are shown, unless it is set as \texttt{results\ =\ "hide"} or \texttt{fig.show\ =\ "hide"}.
+
+The document then continues with a section header, which starts with \#. The hierarchy of headers is defined by the number of adjacent \# (for a header of level 3, starts the header with \#\#\#).
+
+In this section, a first paragraph is being written. This is plain text, except for two particular words, one written between two \emph{backticks}, and one written between 2 double \emph{stars}. Here, the \emph{backticks} are used to write text in R font (or as we will see later, to render results from R), whereas the double \emph{stars} write the text in bold (instead of double \emph{stars}, we can also use double \emph{underscore}). For italic, one single \emph{stars} (or single \emph{underscores}) are used.
+
+If the following section and sub-section, we introduce numbered and unnumbered list of elements. For numbered list, starts with a \emph{number} followed by a \emph{.} (numbers will be incremented automatically). For unnumbered list, you can either start with a \emph{dash}, or with \emph{star} for bullet points. For sub-list, indent your marker by pressing the \emph{Tab} key.
+
+In the next section called \emph{Analysis}, we are running our first lines of code.
+
+The first code chunk runs a regression model. In the text under the second chunk of code, we are retrieving automatically a value from R by including a \emph{r} at the starts of two \emph{backticks} followed by the element to retrieve. In our final report, this code will automatically be replaced by the value 3.93.
+
+The second code chunk shows how the results can printed, either directly from R, or in a nicer way using the \texttt{knitr::kable()} function.
+
+Finally, the last code chunk of this section creates a plot with a caption, that is automatically numbered.
 
 \hypertarget{creating-a-document-using-knitr}{%
 \subsection{\texorpdfstring{Creating a document using \texttt{\{knitr\}}}{Creating a document using \{knitr\}}}\label{creating-a-document-using-knitr}}
 
+Once the document is ready, you can neat it using the \texttt{knit} button. This will create the report in the format of interest (here HTML).
+
 \hypertarget{example-of-applications}{%
 \subsection{Example of applications}\label{example-of-applications}}
 
-Integrating reporting within the analysis part, or integrating the analysis within the reporting part?
--\textgreater{} Keep track of what has been done (reproducible research): Explain choices for analysis, table presentation, charts
--\textgreater{} Sharing code/analysis
-To improve way of work (efficiency) and to keep track of steps taken along the way
+\texttt{\{rmarkdown\}} is a very powerful tool for building report, in particular in the context of reproducible research since it allows sharing code, and running analyses within the report (part of the text around the code can justify the decisions made in terms of analyses to ensure transparency). The latter point is particularly interesting since any change in the data will automatically provide updated results throughout the report, without you having to change them manually.
 
-Rmarkdown
+Its application is various, and can go from report, to teaching material, publication or even books (this book has been written in \texttt{\{rmarkdown\}} and its extension \texttt{\{bookdown\}}), emails, websites, dashboards, surveys etc. Even more interestingly, \texttt{\{rmarkdown\}} can also be combined to \texttt{\{shiny\}} to build interactive reports, dashboards, or teaching materials in which users would (say) import their data set, select the variables to analyze through buttons, chose which analyses and which options to perform, and the results will automatically be generated accordingly.
 
-In this section, we review recent advances in automated report production that:
+For more information on \texttt{\{rmarkdown\}} and related packages, please visit (REF)
 
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\tightlist
-\item
-  Connects our analysis tool to our preferred reporting tool;
-\item
-  Liberate resources for scientists to focus on the interpretation and communication of results\ldots{}
-\item
-  \ldots while simultaneously reducing errors and increasing the consistency of their analyses.
-\end{enumerate}
-
-Through this section, we will show you how to generate directly from R different types of report within the Microsoft Office suit. More precisely, we will start by showing you how to export results to Excel, which we will then extend to PowerPoint, and Word. With this approach, you can then incorporate some code within your analysis script, meaning that as soon as your data change, a new updated report will be generated.
-
-Details of how to customize the final presentation (PowerPoint) to incorporate corporate branding - such as logos, font choices, and color palettes - is also tackled here.
-
-RMarkdown, HTML output, etc. (mention but don't focus)
-Packages for Microsoft office production
-Officer suite (PowerPoint, Word)
-Charts, especially RVG
-Extract from Word/PowerPoint
-Index
-Flextable
-Images?
-Packages for formatting
-extrafont
-extrafontdb
-Rcolorbrewer
+As mentioned earlier, R Markdown can also be used to generate other types of documents, including presentations. This can be done directly from the \texttt{\{rmarkdown\}} package using \emph{ioslides} presentation (\texttt{output:\ ioslides\_presentation} in the metadata), \emph{Slidy} presentation (\texttt{output:\ slidy\_presentation}), or \emph{PowerPoint} presentation (\texttt{output:\ powerpoint\_presentation} with \texttt{reference\_doc:\ my-styles.pptx} to apply your own template) just to name these. It can also be done using additional packages such as the \texttt{\{xarigan\}} package. However, in this section, we deliberately chose to use \texttt{\{officer\}} because of its simplicity and flexibility.
 
 \hypertarget{to-go-further}{%
 \section{To go further\ldots{}}\label{to-go-further}}
 
-Creating dashboards using shiny, that generate the reports as well
-Building report and sending them automatically by email to clients/partners
+If R allows you saving time by creating your report within your R-script, or by running your analysis within your report document, it cannot communicate the presentation to your partners/clients for you. However, if the report is very standard (say only key results, tables or figures), or running routinely (say in quality control), R could automatically run the analysis as soon as new data is available, build the report, and send it automatically to you, your manager or your colleagues and partners by email.
+
+Such process can be done thanks to the \texttt{\{blastula\}} package (see REF).
 
 \hypertarget{part-bon-appuxe9tit}{%
 \part*{Bon Appétit}\label{part-bon-appuxe9tit}}
@@ -2654,6 +2659,113 @@ List of the variables in each data sets (or just the size of each data set?).
 
 \hypertarget{design-1}{%
 \section{Design}\label{design-1}}
+
+\hypertarget{designs-of-sensory-experiments}{%
+\subsection{Designs of sensory experiments}\label{designs-of-sensory-experiments}}
+
+\hypertarget{general-approach}{%
+\subsubsection{General approach}\label{general-approach}}
+
+Sensory and consumer science relies on experiments during which subjects usually evaluate several samples one after the other. This type of procedure is called `monadic sequential' and is common practice for all three main categories of tests (difference testing, descriptive analysis, hedonic testing). The main advantage of proceeding this way is that responses can be analyzed at the individual level so that analysis and interpretation can account for interindividual differences, which is a constant feature of sensory data.
+However, this type of approach also comes with drawbacks\footnote{Market researchers would argue that evaluating several products in a row doesn't usually happen in real life and that proceeding this way may induce response biases. They thus advocate the use of pure monadic designs in which participants are only given one sample to evaluate. This corresponds to a between-group design that is also frequently used in fields where only one treatment per subject is possible (drug testing, nutrition studies, etc.).} as it may imply order effects and carry-over effects. Fortunately, most of these effects can be controlled with a proper design of experiment. A good design ensures that order and carryover effects are not confounded with what you are actually interested to measure (most frequently, the differences between products) by balancing these effects across the panel. However, it is important to note that the design does not eliminate these effects and that each subject in your panel may still experience order and carry-over effect, as well as boredom, sensory fatigue, etc.
+
+\hypertarget{crossover-designs}{%
+\subsubsection{Crossover designs}\label{crossover-designs}}
+
+For any sensory experiment that implies the evaluation of more than one sample, first-order carryover effects should be expected. That is to say, the evaluation of a sample may affect the evaluation of the next sample even though sensory scientists try to lower such effects by asking panelists to pause between samples and use of appropriate mouth-cleansing techniques (drinking water, eating unsalted crackers, or a piece of apple, etc.). The use of crossover designs is thus highly recommended {[}REF REF (MacFie et al., 1989){]}. Williams's Latin-Square designs offer a perfect solution to to balance carryover effects. They are very simple to create using the \texttt{williams()} function from the \texttt{\{crossdes\}} package. For instance, if you have five samples to test, \texttt{williams(5)} would create a 10x5 matrix containing the position at which each of three samples should be evaluated by 10 judges (the required number of judges per design block).
+Alternately, the \texttt{WilliamsDesign()} function in \texttt{\{SensoMineR\}} allows you to create a matrix of samples (as numbers) with numbered Judges as row names and numbered Ranks as column names. You only have to specify the number of samples to be evaluated, as in the example below for 5 samples.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(SensoMineR)}
+\NormalTok{wdes5P10J }\OtherTok{\textless{}{-}} \FunctionTok{WilliamsDesign}\NormalTok{(}\DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Suppose you want to include 20 judges in the experiment, you would then need to duplicate the initial design.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{wdes5P20J }\OtherTok{\textless{}{-}} \FunctionTok{do.call}\NormalTok{(rbind, }\FunctionTok{replicate}\NormalTok{(}\DecValTok{2}\NormalTok{, wdes5P10J, }\AttributeTok{simplify=}\ConstantTok{FALSE}\NormalTok{))}
+\FunctionTok{rownames}\NormalTok{(wdes5P20J) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"judge"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{20}\NormalTok{, }\AttributeTok{sep=}\StringTok{""}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+The downside of Williams's Latin square designs is that the number of samples (\emph{k}) to be evaluated dictates the number of judges. For an even number of samples you must have a multiple of \emph{k} judges, and a multiple of \emph{2k} judges for an odd number of samples.
+As the total number of judges in your study may not always be exactly known in advance (participants not showing up to your test, extra participants recruited at the last minute), it can be useful to add some flexibility to the design. Of course, additional rows would depart from the perfectly balanced design, but it is possible to optimize them using Federov's algorithm thanks to the \texttt{optFederov()} function of the \texttt{\{AlgDesign\}} package, by specifying \texttt{augment\ =\ TRUE}. For example we can add three more judges to the Williams Latin square design that we just built for 5 products and 10 judges, hence leading to a total number of 13 judges.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(SensoMineR)}
+\FunctionTok{library}\NormalTok{(AlgDesign)}
+\NormalTok{nbJ}\OtherTok{=}\DecValTok{13}
+\NormalTok{nbP}\OtherTok{=}\DecValTok{5}
+\NormalTok{nbR}\OtherTok{=}\NormalTok{nbP}
+
+\NormalTok{wdes5P10J }\OtherTok{\textless{}{-}} \FunctionTok{WilliamsDesign}\NormalTok{(nbP)}
+\NormalTok{tab }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(}\AttributeTok{prod=}\FunctionTok{as.vector}\NormalTok{(}\FunctionTok{t}\NormalTok{(wdes5P10J)),}\AttributeTok{judge=}\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{nbJ,}\AttributeTok{each=}\NormalTok{nbR),}\AttributeTok{rank=}\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{nbR,nbJ))}
+
+\NormalTok{optdes5P13J }\OtherTok{\textless{}{-}} \FunctionTok{optFederov}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{prod}\SpecialCharTok{+}\NormalTok{judge}\SpecialCharTok{+}\NormalTok{rank,}\AttributeTok{data=}\NormalTok{tab,}\AttributeTok{augment=}\ConstantTok{TRUE}\NormalTok{,}\AttributeTok{nTrials=}\NormalTok{nbJ}\SpecialCharTok{*}\NormalTok{nbP,}\AttributeTok{rows=}\DecValTok{1}\SpecialCharTok{:}\NormalTok{(nbJ}\SpecialCharTok{*}\NormalTok{nbP),}\AttributeTok{nRepeats =} \DecValTok{100}\NormalTok{)}
+\FunctionTok{xtabs}\NormalTok{(optdes5P13J}\SpecialCharTok{$}\NormalTok{design)}
+\end{Highlighting}
+\end{Shaded}
+
+In the code above, \texttt{xtabs()} is used to arrange the design in a table format that is convenient for the experimenter.
+
+Note that it would also be possible to start from an optimal design and expand it to add one judge at a time. The code below first builds a design for 5 products and 13 judges and then adds one judge to make the design optimal for 5 products and 14 judges.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(AlgDesign)}
+\NormalTok{nbJ}\OtherTok{=}\DecValTok{13}
+\NormalTok{nbP}\OtherTok{=}\DecValTok{5}
+\NormalTok{nbR}\OtherTok{=}\NormalTok{nbP}
+
+\NormalTok{optdes }\OtherTok{\textless{}{-}} \FunctionTok{optimaldesign}\NormalTok{(nbP,nbP,nbR)}\SpecialCharTok{$}\NormalTok{design}
+\NormalTok{tab }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(}\AttributeTok{prod=}\FunctionTok{as.vector}\NormalTok{(}\FunctionTok{t}\NormalTok{(optDes)),}\AttributeTok{judge=}\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{nbJ,}\AttributeTok{each=}\NormalTok{nbR),}\AttributeTok{rank=}\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{nbR,nbJ))}
+\NormalTok{add }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(}\AttributeTok{prod=}\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{nbP,nbR),}\AttributeTok{judge=}\FunctionTok{rep}\NormalTok{(nbJ}\SpecialCharTok{+}\DecValTok{1}\NormalTok{,nbP}\SpecialCharTok{*}\NormalTok{nbR),}\AttributeTok{rank=}\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{nbR,}\AttributeTok{each=}\NormalTok{nbP))}
+
+\NormalTok{optdes5P14J }\OtherTok{\textless{}{-}} \FunctionTok{optFederov}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{prod}\SpecialCharTok{+}\NormalTok{judge}\SpecialCharTok{+}\NormalTok{rank,}\AttributeTok{data=}\FunctionTok{rbind}\NormalTok{(tab,add),}\AttributeTok{augment=}\ConstantTok{TRUE}\NormalTok{,}\AttributeTok{nTrials=}\NormalTok{(nbJ}\SpecialCharTok{+}\DecValTok{1}\NormalTok{)}\SpecialCharTok{*}\NormalTok{nbP,}\AttributeTok{rows=}\DecValTok{1}\SpecialCharTok{:}\NormalTok{(nbJ}\SpecialCharTok{*}\NormalTok{nbP),}\AttributeTok{nRepeats =} \DecValTok{100}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{balanced-incomplete-block-designs-bibd}{%
+\subsubsection{Balanced incomplete block designs (BIBD)}\label{balanced-incomplete-block-designs-bibd}}
+
+Sensory and consumer scientists may sometimes consider using incomplete designs. That is to say, experiments in which each judge evaluates only a subset of the complete product set ({[}REF{]}Wakeling \& MacFie, 1995). In this case, the number of samples evaluated by each judge remains constant but is lower than the number of products included in the study. You might want to choose this approach for example if you want to reduce the workload for each panelist and limit sensory fatigue, boredom and inattention. It might also be useful when you cannot ``afford'' a complete design because of sample-related constraints (limited production capacity, very expensive samples, etc.). The challenge then, is to balance sample evaluation across the panel as well as the context (i.e.~other samples) in which each sample is being evaluated. For such a design you thus want each pair of products to be evaluated together the same number of times.
+The \texttt{optimaldesign()} function of \texttt{\{SensoMineR\}} can be used to search for a balanced incomplete block design.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{incompDesign1 }\OtherTok{\textless{}{-}}\NormalTok{ SensoMineR}\SpecialCharTok{::}\FunctionTok{optimaldesign}\NormalTok{(}\AttributeTok{nbPanelist =} \DecValTok{30}\NormalTok{, }\AttributeTok{nbProd=} \DecValTok{10}\NormalTok{, }\AttributeTok{nbProdByPanelist =} \DecValTok{4}\NormalTok{)}
+\NormalTok{incompDesign1}\SpecialCharTok{$}\NormalTok{design}
+\end{Highlighting}
+\end{Shaded}
+
+BIBD are only possible for certain combinations of numbers of treatment (products), numbers of blocks (judges) and block size (number of samples per judge). Note that \texttt{optimaldesign()} will yield a design even if it is not balanced but it will also generate contingency tables allowing you to evaluate the design's orthogonality, and how well balanced are ranks and carryover effects.
+You can also use the \texttt{\{crossdes\}} package to generate an BIBD with this simple syntax: \texttt{find.BIB(trt,\ b,\ k,\ iter)}, with trt = number of products, b = number of judges, k = number of samples per judge, iter = number of iteration. With this package, you can apply \texttt{isGYD()} to know if an incomplete design is balanced or not. If the design is a BIBD, you may then use \texttt{williams.BIB()} to combine it with a Williams design to balance carryover effects.
+
+Incomplete balanced designs also have drawbacks. First, from a purely statistical perspective, they are conducive to fewer observations and thus to a lower statistical power. Product and Judge effects are also partially confounded even though the confusion is usually considered as acceptable. Besides, the estimation of the \emph{ProductxJudge} interaction in analysis of variance is impossible.
+
+\hypertarget{incomplete-designs-for-hedonic-tests-sensory-informed-designs}{%
+\subsubsection{Incomplete designs for hedonic tests: Sensory informed designs}\label{incomplete-designs-for-hedonic-tests-sensory-informed-designs}}
+
+One may also be tempted to use incomplete balanced block designs for hedonic tests. However, proceeding this way is likely to induce framing bias. Indeed, each participant to the consumer tests will only see part of the product set which would affect their frame of reference if the subset of product they evaluate only covers a limited area of the sensory space. For example, suppose you are designing a consumer test of chocolate chip cookies and that a majority of cookies are made with milk chocolate while few cookies are made with dark chocolate chips. If a participant only evaluates samples that have milk chocolate chips, this participant will not know about the existence of dark chocolate and will potentially give very different scores compared to what they would have if they had a full view of the product category.
+To reduce the risks incurred by the use of BIBD, an alternative strategy is to use a sensory informed design. Its principle is to allocate each panelist a subset of products that best cover the sensory diversity of the initial product set. Pragmatically, this amounts to maximizing the sensory distance between drawn products. Of course, this supposes that one has sensory data to rely on in the first place.
+
+\begin{center}\includegraphics[width=10.57in]{images/sensory_doe} \end{center}
+
+\hypertarget{product-related-design}{%
+\subsection{Product-related design}\label{product-related-design}}
+
+\hypertarget{factorial-designs}{%
+\subsubsection{Factorial designs}\label{factorial-designs}}
+
+\hypertarget{sensory-informed-designs-selection-of-factors}{%
+\subsubsection{Sensory informed designs \& selection of factors}\label{sensory-informed-designs-selection-of-factors}}
+
+\hypertarget{screening-designs}{%
+\subsubsection{Screening designs}\label{screening-designs}}
 
 \hypertarget{execute-1}{%
 \section{Execute}\label{execute-1}}
@@ -3758,7 +3870,6 @@ In overall, they seem to like biscuits that are sweet, with cereal flavor, and f
 Although the data show a fairly good agreement between consumers, let's cluster them in more homogeneous groups based on liking.
 Various solutions for clustering exist, depending on the type of distance (similarity or dissimilarity), the linkage (single, average, Ward, etc.), and of course the algorithm itself (e.g.~AHC, k-means, etc.).
 Here, we opt for the Agglomerative Hierarchical Clustering (AHC) approach with Euclidean distance (dissimilarity) and Ward criterion.
-
 Such analysis can be done using \texttt{stats::hclust()} or \texttt{cluster::agnes()}.
 
 Note that before computing the distance between consumers, it is advised to at least center their liking scores (subtracting their mean liking scores to each of their individual scores) as it allows grouping consumers based on similar preferences, rather than on their scale usage (otherwise, consumers who scored high on all samples are be grouped together, and separated from consumers who scored low on all samples, which isn't so much informative).
@@ -4001,7 +4112,7 @@ Let's start with preparing the data:
 \end{Highlighting}
 \end{Shaded}
 
-To build the plot, we need many layers that will use different source of data (\texttt{senso}, \texttt{senso\_sup}, and \texttt{PrefMap\_plot} that is). Hence, the initiation of the plot thorugh the \texttt{ggplot()} function will not specify any data. Instead, the data to use at each step are included within the \texttt{geom\_*()} functions of interest. In particular, \texttt{geom\_tile()} and \texttt{geom\_contour()} are used to build the surface plot.
+To build the plot, we need many layers that will use different source of data (\texttt{senso}, \texttt{senso\_sup}, and \texttt{PrefMap\_plot} that is). Hence, the initiation of the plot through the \texttt{ggplot()} function will not specify any data. Instead, the data to use at each step are included within the \texttt{geom\_*()} functions of interest. In particular, \texttt{geom\_tile()} and \texttt{geom\_contour()} are used to build the surface plot.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4602,138 +4713,368 @@ As can be seen, \texttt{POpt} is not so close from the optimal area suggested by
 \hypertarget{text-analysis}{%
 \chapter{Text Analysis}\label{text-analysis}}
 
-\hypertarget{overview-1}{%
-\section{Overview}\label{overview-1}}
+Humans exchange information through the use of languages. In the world, there is a very large number of languages, each of them having its own specificity. The science that studies languages per se is called \emph{linguistics}: It focuses on areas such as phonetics, phonology, morphology, syntax, semantics, and pragmatics.
 
-\hypertarget{key-topics-1}{%
-\section{Key Topics}\label{key-topics-1}}
+Natural Language Processing (NLP) is a subfield of linguistics, computer science, and artificial intelligence. It connects computers to human language by processing, analyzing, and modeling large amounts of natural language data. One of the main goals of NLP is to ``understand'' the contents of documents, and to extract accurately information and insights from those documents.
 
-\hypertarget{data-sources}{%
-\subsection{Data Sources}\label{data-sources}}
+In Sensory and Consumer Research, \emph{Text Analysis} usually refers to NLP.
 
-\hypertarget{working-with-strings}{%
-\subsection{Working with Strings}\label{working-with-strings}}
+Since the fields of linguistics and NLP are widely studied, a lot of documentations is already available.
+In this chapter, the objective is not to go deep in the details, but to provide sufficient information for you to be familiar with textual data, and to give you the keys to run the most useful analyses in Sensory and Consumer Research.
 
-\hypertarget{tokenizing}{%
-\subsection{Tokenizing}\label{tokenizing}}
+\hypertarget{applicaion-of-text-analysis-in-sensory-and-consumer-science}{%
+\subsection{Applicaion of Text Analysis in Sensory and Consumer Science}\label{applicaion-of-text-analysis-in-sensory-and-consumer-science}}
 
-\hypertarget{lemmatization-stemming-and-stop-word-removal}{%
-\subsection{Lemmatization, stemming, and stop word removal}\label{lemmatization-stemming-and-stop-word-removal}}
+In recent years, open-ended comments have gained interest as it is the fastest, safest, most unbiased (and sometimes cheapest) way to collect spontaneous data from participants (REF Betina's chapter in Julien's book).
 
-\hypertarget{part-of-speech-tagging}{%
-\subsection{Part of Speech Tagging}\label{part-of-speech-tagging}}
+At first, most S\&C questionnaires primarily relied on closed questions, to which open-ended questions were added to uncover the consumers' reasons for liking or disliking products. In practice, these open-ended questions were positioned right after liking questions, and aimed in partially understanding why a product may or may not be liked, and to give the consumers the chance to reduce their frustration by explaining their responses to certain questions. Hence, these questions were not deeply analyzed.
 
-\hypertarget{common-applications-1}{%
-\section{Common Applications}\label{common-applications-1}}
+With the development of the so-called \emph{rapid} methods, the benefits of open-ended questions became more apparent as they provide a new way to uncover the perception of respondents. In practice, respondents are asked to freely list a number of terms that describe their sensory perception of the products. Such questions can either be coupled to intensity or ranking questions, (e.g.~Free Choice Profile, Flash Profile), or justify the similarities and dissimilarities between products perceived by the respondents (e.g.~Free Sorting Task, and Ultra Flash Profile as an extension of Napping). Since the textual responses are now an integral part of the questionnaire, its analysis can no longer be ignored.
 
-\hypertarget{frequency-counts-and-summary-statistics}{%
-\subsection{Frequency counts and summary statistics}\label{frequency-counts-and-summary-statistics}}
+The importance of open-ended questions increased further as it has been shown that respondents can describe in their own words their full experience (perception, emotion, or any other sort of association) with products. Recently, Mahieu et al.~showed the benefits of using open-ended questions over CATA\footnote{CATA can be seen as a simplified version of free-comments in the sense that respondents also associate products to words, however they lose the freedom of using their own as they need to select them from a pre-defined list.}. In this study, consumers were asked to describe with their own words both the products and their ideal. Similarly, Luc et al.~proposed an alternative to Just About Right (JAR) called free-JAR in which consumers described the samples using their own words, by still following a JAR terminology (too little, too much, or JAR, etc.)
 
-\hypertarget{word-clouds}{%
-\subsection{Word clouds}\label{word-clouds}}
+The inclusion of open-ended questions as one of the primary elements of sensory and consumer tasks blurs the line with other fields, including psychology and sociology where these qualitative methods originated. More recently, advances in the technology opened new doors (web-scraping, social listening, etc.) that brought us closer to other fields such as marketing for instance. In these applications, although the amount of data can be considerably larger, the aim of the analysis stays the same: extracting information from text/comments.
 
-\hypertarget{contrast-plots}{%
-\subsection{Contrast plots}\label{contrast-plots}}
+\hypertarget{objectives-of-text-analysis}{%
+\subsection{Objectives of Text Analysis}\label{objectives-of-text-analysis}}
+
+Open-ended comments, and more generally textual responses in questionnaires, are by definition qualitative. This means that the primary analysis should be qualitative, which could consist in reading all these comments, and eventually summarizing the information gathered.
+
+But as the number of comments increases, such approach quickly becomes too time/energy consuming for the analysts. How can we transform such qualitative data into some quantitative measures, that digest and summarize the information contained in these comments, without losing the overall meaning of the messages (context)?
+
+As one can imagine, such solution can easily be done by simply counting how often a certain word is being used in a certain context (e.g.~how often the word \texttt{sweet} is being associated to each product evaluated.) However, if such solution is a reasonable one to start with, we will show some alternatives that allow going deeper into the understanding of textual inputs.
+This is the objective of the textual analysis and NLP that we are going to tackle in the next sections.
+
+\hypertarget{warnings}{%
+\subsection{Warnings}\label{warnings}}
+
+Languages are complex, as many aspects can influence the meaning of a message. For instance, in spoken languages, the intonation is as important as the message itself. In written languages, non-word items (e.g.~punctuation, emojis) can also change completely the meaning of a sentence (e.g.irony). Worst, some words have different meanings depending on their use (e.g.~\emph{like}), and the context of the message provides its meaning. Unfortunately, the full \emph{context} is only available when analyzed manually (e.g.~when the analyst reads all the comments), meaning that automating analyses do not always allow capturing it properly. However, reading all the comments is also not a solution, as it quickly becomes too tedious to be done by hand.
+
+This is why we suggest to automate the analysis to extract as much information as possible, before going back to the raw text to ensure that the conclusions drawn actually match the data.
+
+\hypertarget{illustration-using-sorting-task-data}{%
+\section{Illustration using Sorting Task Data}\label{illustration-using-sorting-task-data}}
+
+To illustrate this chapter, the data set that we are using was kindly shared by Dr.~Jacob Lahne. It is part of a study that aimed in developing a CATA lexicon for Virginia Hard (Alcoholic) Ciders (REF.). The data can be found in \emph{cider\_data.xlsx}.
+
+\hypertarget{data-pre-processing}{%
+\section{Data Pre-processing}\label{data-pre-processing}}
+
+Before starting, it is important to mention that there are a large variety of packages in R that handle textual data. Amongst others, we can mention the \texttt{\{tm\}} package for text mining, \texttt{\{tokenizers\}} to transform strings into tokens, \texttt{\{SnowballC\}} for text stemming, \texttt{\{SpacyR\}} for Natural Language Processing, or \texttt{\{Xplortext\}} for deep understanding and analysis of textual data.
+
+However, to ensure a continuity with the rest of the book, we will emphasize the use of the \texttt{\{stringr\}} package (it is part of the \texttt{tidyverse}) for handling strings (here text) combined with the \texttt{\{tidytext\}} package as it applies the \texttt{\{tidyverse\}} philosophy to textual data.
+
+For the more curious readers, you can also have a look at the project IRaMuTeQ\^{}{[}See \url{http://www.iramuteq.org/}, which is a free software dedicated to text analysis and developed in R and Python.
+
+\hypertarget{introduction-to-working-with-strings-stringr}{%
+\subsection{\texorpdfstring{Introduction to working with strings (\texttt{\{stringr\}})}{Introduction to working with strings (\{stringr\})}}\label{introduction-to-working-with-strings-stringr}}
+
+As mentioned earlier, \texttt{\{stringr\}} is one of the packages included in the \texttt{\{tidyverse\}}. This package brings a large set of tools that allow working with strings. Most functions included in \texttt{\{stringr\}} start with \texttt{str\_*()}. Amongst the most convenient functions, we can mention:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{str\_length()} to extract the strength of the string;
+\item
+  \texttt{str\_c()} to combine multiple strings into one;
+\item
+  \texttt{str\_detect()} to search for a pattern in a string, and \texttt{str\_which()} find the position of a pattern within the string;
+\item
+  \texttt{str\_extract()} and \texttt{str\_extract\_all()} to extract the first (or all) matching pattern from a string;
+\item
+  \texttt{str\_remove()} and \texttt{str\_remove\_all()} to remove the first (or all) matching pattern from a string;
+\item
+  \texttt{str\_replace()}, \texttt{str\_replace\_all()}, to replace the first (or all) matching pattern with another one.
+\end{itemize}
+
+It also includes \emph{formatting} options that can be applied to strings, including:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{str\_to\_upper()} and \texttt{str\_to\_lower()} to convert strings to uppercase or lowercase;
+\item
+  \texttt{str\_trim()} and \texttt{str\_squish()} to remove white spaces;
+\item
+  \texttt{str\_order} to order the element of a character vector.
+\end{itemize}
+
+Examples of application of some of these functions will be provided in the next sections.
+
+\hypertarget{tokenization}{%
+\subsection{Tokenization}\label{tokenization}}
+
+The analysis of textual data starts with defining the statistical unit of interest, also known as \emph{token}. This can either be a single word, a group of words, a sentence, a paragraph, a whole document etc. The procedure to transform the document into tokens is called \emph{tokenization}.
+
+Let's have a look at our data here:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{library}\NormalTok{(readxl)}
+\FunctionTok{library}\NormalTok{(here)}
+
+\NormalTok{file\_path }\OtherTok{\textless{}{-}} \FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{,}\StringTok{"cider\_data.xlsx"}\NormalTok{) }
+\NormalTok{cider }\OtherTok{\textless{}{-}} \FunctionTok{read\_xlsx}\NormalTok{(file\_path) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{sample =} \FunctionTok{as.character}\NormalTok{(sample))}
+\end{Highlighting}
+\end{Shaded}
+
+We notice here that for each sample evaluated, respondents are providing a set of descriptions, which can be a single word (e.g.~\texttt{yeasty}) or a group of words (\texttt{like\ it\ will\ taste\ dry\ and\ acidic}). This dataset is fairly well structure since the tokens are separated by a \texttt{;} or \texttt{,}.
+
+Let's transform this text into tokens using \texttt{unnest\_tokens()} from the \texttt{\{tidytext\}} package. The function \texttt{unnest\_tokens()} already proposes different options for the tokenization, including ``words'', ``ngrams'', or ``sentences'' for instance. However, since we want to use a specific character to separate the tokens (here \texttt{;}, \texttt{,} etc.), we are using ``regex'' by specifying the different patterns.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(cider }\OtherTok{\textless{}{-}}\NormalTok{ cider }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{unnest\_tokens}\NormalTok{(tokens, comments, }\AttributeTok{token=}\StringTok{"regex"}\NormalTok{, }\AttributeTok{pattern=}\StringTok{"[;|,|:|.|/]"}\NormalTok{, }\AttributeTok{to\_lower=}\ConstantTok{FALSE}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+This procedure already provides some interesting information as we already could count how often the word \emph{apple} for instance is used to describe each samples. However, a deeper look at the data shows some inconsistencies, since some words starts with a space, or have capital letters (remember that R is case-sensitive!).
+
+\hypertarget{simple-transformation-lowercase}{%
+\subsection{Simple Transformation (lowercase)}\label{simple-transformation-lowercase}}
+
+To improve the analysis, let's standardize the text by removing all the white spaces (\emph{irrelevant} spaces in the text, e.g.~at the start/end, double spaces, etc.), transforming everything to lower case (we could have done directly through \texttt{unnest\_tokens()} already), removing some special letters, replacing some misplaced characters etc.\footnote{This process is done in iterations: the more you clean your document, the more you find some small things to fix\ldots until you're set!}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(cider }\OtherTok{\textless{}{-}}\NormalTok{ cider }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{tokens =} \FunctionTok{str\_to\_lower}\NormalTok{(tokens)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{tokens =} \FunctionTok{str\_trim}\NormalTok{(tokens)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{tokens =} \FunctionTok{str\_squish}\NormalTok{(tokens)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{tokens =} \FunctionTok{str\_remove\_all}\NormalTok{(tokens, }\AttributeTok{pattern=}\StringTok{"[(|)|?|!]"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{tokens =} \FunctionTok{str\_remove\_all}\NormalTok{(tokens, }\AttributeTok{pattern=}\StringTok{"[ó|ò]"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{tokens =} \FunctionTok{str\_replace\_all}\NormalTok{(tokens, }\AttributeTok{pattern=}\StringTok{"õ"}\NormalTok{, }\AttributeTok{replacement=}\StringTok{"\textquotesingle{}"}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+
+Let's produce the list of tokens generated here (and its corresponding frequency):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cider }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{count}\NormalTok{(tokens) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(n)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{View}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+At first, it seems that the most used words to describe the ciders are \texttt{sweet} (55 occurrences), \texttt{fruity} (33 occurrences), and \texttt{sour} (32 occurrences). However, a deeper look at this list highlights a few things that still need to get tackled:
+
+\begin{itemize}
+\tightlist
+\item
+  The same concept can be described in different ways: \texttt{spicy}, \texttt{spices}, and \texttt{spiced} may all refer to the same concept, yet they are written differently and hence are considered as different tokens. We will see how we can handle this in a later stage.
+\item
+  Multiple concepts are still joined (and hence considered separately: \texttt{sour\ and\ sweet} is currently neither associated to \texttt{sour}, nor to \texttt{sweet}, and we may want to merge them.
+\item
+  There could be some typo: Is \texttt{sweat} a typo and should read \texttt{sweet}? Or did that respondent really perceived the cider as \texttt{sweat}?
+\item
+  Although most tokens are made of one (or few) words, some others are defined as a whole sentence (e.g.~\texttt{this\ has\ a\ very\ lovely\ floral\ and\ fruity\ smell})
+\end{itemize}
+
+\hypertarget{stopwords}{%
+\subsection{Stopwords}\label{stopwords}}
+
+\emph{Stop words} refer to \emph{common} words that do not carry much (if at all) information. In general, stop words include words (in English) such as \emph{I}, \emph{you}, \emph{or}, \emph{of}, \emph{and}, \emph{is}, \emph{has}, etc. It is hence common practice to remove such stop words before any analysis, as they would \emph{pollute} the results with unnecessary information.
+
+Building lists of stop words can be tedious. Fortunately, it is possible to find some pre-defined lists, and to eventually adjust them to our own needs by adding and/or removing words. In particular, the package \texttt{\{stopwords\}} contains a comprehensive collection of stop word lists:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(stopwords)}
+\FunctionTok{length}\NormalTok{(}\FunctionTok{stopwords}\NormalTok{(}\AttributeTok{source=}\StringTok{"snowball"}\NormalTok{))}
+\FunctionTok{length}\NormalTok{(}\FunctionTok{stopwords}\NormalTok{(}\AttributeTok{source=}\StringTok{"stopwords{-}iso"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+Here, we can see that English Snowball list contains 175 terms, whereas the English list from the Stopwords ISO collection contains 1298 words.
+
+A deeper look at these lists (and particularly to the Stopwords ISO list) shows that certain words including \emph{like}, \emph{not} and \emph{don't} (just to name a few) are considered as stop words. If we would use this list blindly, we would remove these words from our comments.
+
+Although using such list on our current example would have a limited impact on the analysis (most comments are just few descriptive words), it would have a more critical impact on other studies in which consumers give their opinion on samples. Indeed, the analysis of the two following comments \emph{I like Sample A} and \emph{I don't like Sample B} would be lost although they provide some relevant information.
+
+It is hence important to remember that although a lot of stop words are common, there are also a lot of them that are topic specific, and that should be (or should not be) used in certain contexts. Hence inspecting and adapting these lists before use is strongly recommended.
+
+For further cleaning, let's go one step further and split the remaining tokens into words by using the space as separator. To ensure that we can still recover which words belong to the same token (as defined previously, as this information can be relevant later for \emph{bigrams}), we are adding an increasing number next to each token for each assessor using \texttt{row\_number()}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cider }\OtherTok{\textless{}{-}}\NormalTok{ cider }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{relocate}\NormalTok{(subject, }\AttributeTok{.before=}\NormalTok{sample) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(subject, sample) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{num =} \FunctionTok{row\_number}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ungroup}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{unnest\_tokens}\NormalTok{(tokens, tokens, }\AttributeTok{token=}\StringTok{"regex"}\NormalTok{, }\AttributeTok{pattern=}\StringTok{" "}\NormalTok{)}
+
+\FunctionTok{head}\NormalTok{(cider)}
+\end{Highlighting}
+\end{Shaded}
+
+We can see here that for \texttt{J1} and \texttt{182}, the first token is now separated into three words: \texttt{hard}, \texttt{cider}, and \texttt{smell}.
+
+We can now again count how often each word has been used, using the exact same code as previously.
+It appears now that \texttt{sweet} appears 91 times, and \texttt{apple} 80 times. Interestingly, terms such as \texttt{a}, \texttt{like}, \texttt{the}, \texttt{of}, \texttt{and} etc. also appear fairly frequently.
+
+Since we have a fairly small set of text, let's use the \emph{SnowBall Stopword} list as a start, and look at the terms that are shared in both our list and this stopword list:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{stopword\_list }\OtherTok{\textless{}{-}} \FunctionTok{stopwords}\NormalTok{(}\AttributeTok{source=}\StringTok{"snowball"}\NormalTok{)}
+\NormalTok{word\_list }\OtherTok{\textless{}{-}}\NormalTok{ cider }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{count}\NormalTok{(tokens) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pull}\NormalTok{(tokens)}
+
+\FunctionTok{intersect}\NormalTok{(stopword\_list, word\_list)}
+\end{Highlighting}
+\end{Shaded}
+
+As we can see, some words such as \emph{off}, \emph{not}, \emph{no}, \emph{too}, and \emph{very} would be removed. Since we prefer to keep them, we will remove them from our list.
+
+Similarly, we can look at the words from our data that we would not remove. We can then track the words that we would not consider relevant and add them to the list:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{word\_list[}\SpecialCharTok{!}\NormalTok{word\_list }\SpecialCharTok{\%in\%}\NormalTok{ stopword\_list]}
+\end{Highlighting}
+\end{Shaded}
+
+For instance, words such as \emph{like}, \emph{sample}, \emph{just}, \emph{think}, or \emph{though} for instance do not seem to bring any relevant information here. Hence, we propose to remove these (together with some others).
+Ultimately, we update the list by removing some of the words we want to keep, and by adding words we want to remove:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{stopword\_list }\OtherTok{\textless{}{-}}\NormalTok{ stopword\_list[}\SpecialCharTok{!}\NormalTok{stopword\_list }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"off"}\NormalTok{,}\StringTok{"no"}\NormalTok{,}\StringTok{"not"}\NormalTok{,}\StringTok{"too"}\NormalTok{,}\StringTok{"very"}\NormalTok{)]}
+\NormalTok{stopword\_list }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(stopword\_list, }\FunctionTok{c}\NormalTok{(}\StringTok{"accompany"}\NormalTok{,}\StringTok{"amount"}\NormalTok{,}\StringTok{"anything"}\NormalTok{,}\StringTok{"considering"}\NormalTok{,}\StringTok{"despite"}\NormalTok{,}\StringTok{"expected"}\NormalTok{,}
+                                    \StringTok{"just"}\NormalTok{,}\StringTok{"like"}\NormalTok{,}\StringTok{"neither"}\NormalTok{,}\StringTok{"one"}\NormalTok{,}\StringTok{"order"}\NormalTok{,}\StringTok{"others"}\NormalTok{,}\StringTok{"products"}\NormalTok{,}
+                                    \StringTok{"sample"}\NormalTok{,}\StringTok{"seems"}\NormalTok{,}\StringTok{"something"}\NormalTok{,}\StringTok{"thank"}\NormalTok{,}\StringTok{"think"}\NormalTok{,}\StringTok{"though"}\NormalTok{,}\StringTok{"time"}\NormalTok{,}\StringTok{"way"}\NormalTok{,}
+                                    \StringTok{"{-}"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+Finally, we clean our data by removing all the words stored in \texttt{stopword\_list}. This can easily be done either using \texttt{filter()} (we keep tokens that are not contained in \texttt{stopword\_list}), or by using \texttt{anti\_join()}\footnote{Note that if we were using the original list of stopwords, \texttt{anti\_join()} can directly be associated to \texttt{get\_stopwords(source="snowball")}.}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cider }\OtherTok{\textless{}{-}}\NormalTok{ cider }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{anti\_join}\NormalTok{(}\FunctionTok{tibble}\NormalTok{(}\AttributeTok{tokens =}\NormalTok{ stopword\_list), }\AttributeTok{by=}\StringTok{"tokens"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{stemming-and-lemmatization}{%
+\subsection{Stemming and Lemmatization}\label{stemming-and-lemmatization}}
+
+After removing the stop words, we finally have a list of 334 different words. However a closer look at this list shows that it is still not optimal, as for instance \texttt{apple} (80 occurrences) and \texttt{apples} (24 occurrences) are considered as two separate words although we could argue that they refer to the same concept.
+
+To further \emph{clean} the data, two similar approaches can be considered: \textbf{stemming} and \textbf{lemmatization}.
+
+The procedure of stemming consists in performing a step-by-step algorithm that reduces each word to its base word (or \emph{stem}). The most used algorithm is the one introduced by REF (Porter, 1980) which is available in the \texttt{\{SnowballC\}} package through the \texttt{wordStem()} function:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cider }\OtherTok{\textless{}{-}}\NormalTok{ cider }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{stem =} \FunctionTok{wordStem}\NormalTok{(tokens))}
+
+\NormalTok{cider }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{count}\NormalTok{(stem) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(n))}
+\end{Highlighting}
+\end{Shaded}
+
+The stemming reduced further the list to 309 words. In particular, \texttt{apple} and \texttt{apples} have been combined into \texttt{appl} (104 occurrences). However, due to the way the algorithm works, the final tokens are no longer English\footnote{Different algorithms for different languages exist, so we are not limited to stemming English words.} words.
+
+Alternatively, we can \emph{lemmatize} words. Lemmatization is similar to stemming except that it does not cut words to their stems: Instead it uses knowledge about the language's structure to reduce words down to their dictionary form (also called \emph{lemma}). Such approach is implemented in the \texttt{\{spacyr\}} package\footnote{spaCy is a library written in Python: for the \texttt{\{spacyr\}} package to work, you'll need to go through a series of steps that are described here: (\url{https://cran.r-project.org/web/packages/spacyr/readme/README.html}){[}\url{https://cran.r-project.org/web/packages/spacyr/readme/README.html}{]}} and the \texttt{spacy\_parse()} function:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(spacyr)}
+
+\FunctionTok{spacy\_initialize}\NormalTok{(}\AttributeTok{entity=}\ConstantTok{FALSE}\NormalTok{)}
+\NormalTok{lemma }\OtherTok{\textless{}{-}} \FunctionTok{spacy\_parse}\NormalTok{(cider}\SpecialCharTok{$}\NormalTok{tokens) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{as\_tibble}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\AttributeTok{tokens=}\NormalTok{token, lemma) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{unique}\NormalTok{()}
+
+\NormalTok{cider }\OtherTok{\textless{}{-}} \FunctionTok{full\_join}\NormalTok{(cider, lemma, }\AttributeTok{by=}\StringTok{"tokens"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+As can be seen, as opposed to stems, lemmas consist in \emph{regular} words. Here, the grouping provides similar number of terms (309 vs.~307) yet some differences can be noticed:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cider }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{count}\NormalTok{(stem)}
+\NormalTok{cider }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{count}\NormalTok{(lemma)}
+\end{Highlighting}
+\end{Shaded}
+
+In the case of lemmatization, \texttt{acid}, \texttt{acidity}, and \texttt{acidic} are still considered as separate words whereas they are all grouped under \texttt{acid} with the stemming procedure. This particular example shows the advantage and disadvantage of each method, as it may (resp. may not) group words that are not (resp. that are) meant to be grouped. Hence, the use of lemmatization/stemming procedures should be thought carefully.
+
+It should also be said that neither the lemmatization nor the stemming procedure will combine words that are different, yet with similar meanings. For instance, the words \texttt{moldy} and \texttt{rotten} have been used, and some researchers may decide to group them if they consider them equivalent (same could apply to \texttt{acid}, \texttt{acidity}, and \texttt{acidic} from the lemmatization procedure). Such third step of grouping can be done using \texttt{str\_replace()}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cider }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{count}\NormalTok{(lemma) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(lemma }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"moldy"}\NormalTok{,}\StringTok{"rotten"}\NormalTok{))}
+
+\NormalTok{cider }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{lemma =} \FunctionTok{str\_replace}\NormalTok{(lemma, }\StringTok{"moldy"}\NormalTok{, }\StringTok{"rotten"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{count}\NormalTok{(lemma) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(lemma }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"moldy"}\NormalTok{,}\StringTok{"rotten"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+As can be seen here, originally, \texttt{moldy} was stated twice whereas \texttt{rotten} was stated 5 times. After re-placing \texttt{moldy} by \texttt{rotten}, the newer version contains 7 occurrences of \texttt{rotten} and none of \texttt{modly}.
+
+Doing such transformation can quickly be tedious to do directly in R. As an alternative solution, we propose to export the list of words in Excel, create a new column with the new grouping names, and merge the newly acquired names to the previous file. This is the approach we used to create the file entitled \emph{Example of word grouping.xlsx}. In this example, one can notice that we limited the grouping to a strict minimum for most words except \texttt{bubble} that we also combined to \texttt{bubbly}, \texttt{carbonate}, \texttt{champagne}, \texttt{moscato}, \texttt{fizzy}, and \texttt{sparkle}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{new\_list }\OtherTok{\textless{}{-}} \FunctionTok{read\_xlsx}\NormalTok{(}\StringTok{"temp/Example of word grouping.xlsx"}\NormalTok{)}
+\NormalTok{cider }\OtherTok{\textless{}{-}}\NormalTok{ cider }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{full\_join}\NormalTok{(new\_list, }\AttributeTok{by=}\StringTok{"lemma"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{lemma =} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{new name}\StringTok{\textasciigrave{}}\NormalTok{), lemma, }\StringTok{\textasciigrave{}}\AttributeTok{new name}\StringTok{\textasciigrave{}}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\StringTok{\textasciigrave{}}\AttributeTok{new name}\StringTok{\textasciigrave{}}\NormalTok{)}
+
+\NormalTok{cider }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{count}\NormalTok{(lemma)}
+\end{Highlighting}
+\end{Shaded}
+
+This last \emph{cleaning} approach reduces further the number of words to 279.
+
+\hypertarget{word-embedding}{%
+\subsection{Word Embedding (?)}\label{word-embedding}}
+
+\hypertarget{text-analysis-1}{%
+\section{Text Analysis}\label{text-analysis-1}}
+
+\hypertarget{raw-frequencies}{%
+\subsection{Raw Frequencies}\label{raw-frequencies}}
+
+Incl. Wordclouds and CA
+
+\hypertarget{bigrams-n-grams}{%
+\subsection{\texorpdfstring{Bigrams, \emph{n}-grams}{Bigrams, n-grams}}\label{bigrams-n-grams}}
+
+Including word graphs
 
 \hypertarget{sentiment-analysis}{%
-\subsection{Sentiment analysis}\label{sentiment-analysis}}
+\subsection{Sentiment Analysis}\label{sentiment-analysis}}
 
-\hypertarget{topic-modeling}{%
-\subsection{Topic Modeling}\label{topic-modeling}}
+\hypertarget{cluster-analysis-1}{%
+\subsection{Cluster Analysis}\label{cluster-analysis-1}}
 
-\hypertarget{bigrams-and-word-graphs}{%
-\subsection{Bigrams and word graphs}\label{bigrams-and-word-graphs}}
+\hypertarget{to-go-further-1}{%
+\section{To go further\ldots{}}\label{to-go-further-1}}
 
-\hypertarget{code-examples-1}{%
-\section{Code Examples}\label{code-examples-1}}
+References to book and other packages such as twitter, etc.
 
-Introduction to \textbf{\{tidytext\}} and \textbf{\{Xplortext\}}
-
-\hypertarget{statistical-entities}{%
-\subsection{Statistical entities}\label{statistical-entities}}
-
-What are we considering as statistical entities?
-
-\begin{itemize}
-\tightlist
-\item
-  documents
-\item
-  sentences
-\item
-  words
-\item
-  cleaned words
-\end{itemize}
-
-Depends on objectives of study and how data are being collected:
-
-\begin{itemize}
-\tightlist
-\item
-  directly from consumers in a CLT (directed questions)
-\item
-  analysis of social media (e.g.~twitter)
-\item
-  web-scrapping from website
-\end{itemize}
-
-Discussion around CATA as a simplified version of text analysis\ldots{}
-
-\hypertarget{notion-of-tokenization}{%
-\subsubsection{Notion of tokenization}\label{notion-of-tokenization}}
-
-\hypertarget{cleaning-the-data}{%
-\subsubsection{Cleaning the data}\label{cleaning-the-data}}
-
-Notions of lemmatization, stemming, and stopwords removal
-
-\begin{itemize}
-\tightlist
-\item
-  grouping words
-\item
-  removing stopwords
-\item
-  tf-idf
-\end{itemize}
-
-\hypertarget{analysis-of-frequencies-and-term-frequency-document}{%
-\subsection{Analysis of Frequencies and term-frequency document}\label{analysis-of-frequencies-and-term-frequency-document}}
-
-\hypertarget{contingency-table}{%
-\subsubsection{Contingency table}\label{contingency-table}}
-
-Presentation of the tf/contingency table
-
-\hypertarget{wordclouds}{%
-\subsubsection{wordclouds}\label{wordclouds}}
-
-\textbf{\{ggwordclouds\}}
-
-\hypertarget{correspondence-analysis}{%
-\subsubsection{Correspondence Analysis}\label{correspondence-analysis}}
-
-\textbf{\{FactoMineR\}} and \textbf{\{Xplortext\}}
-
-\hypertarget{futher-analysis-of-the-words}{%
-\subsection{Futher Analysis of the words}\label{futher-analysis-of-the-words}}
-
-\hypertarget{sentiment-analysis-1}{%
-\subsubsection{Sentiment Analysis}\label{sentiment-analysis-1}}
-
-Sentiment analysis and its relationship to hedonic statement
-Introduction to free-JAR?
-
-\hypertarget{bi-grams-and-n-grams}{%
-\subsubsection{Bi-grams and N-grams}\label{bi-grams-and-n-grams}}
-
-Presentation of graph-theory applied to text mining
-
-\hypertarget{machine-learning-1}{%
-\subsubsection{Machine learning}\label{machine-learning-1}}
-
-Introduction to machine learning associated to text mining
+Contrast Plot
+Topic Modeling
+Machine Learning
 
 \hypertarget{dashboards}{%
 \chapter{Dashboards}\label{dashboards}}
@@ -4779,9 +5120,6 @@ The universe of available packages is vast
 R excels at data manipulation and results reporting
 R has more specialized tools for sensory analysis than other programming language
 
-\hypertarget{why-r-1}{%
-\section{Why R?}\label{why-r-1}}
-
 For sensory and consumer scientists, we recommend the R ecosystem of tools for three main reasons. The first reason is cultural - R has from its inception been oriented more towards statistics than to computer science, making the feeling of programming in R more natural (in our experience) for sensory and consumer scientists than programming in Python. This opinion of experience is not to say that a sensory and consumer scientist shouldn't learn Python if they are so inclined, or even that Python tools aren't sometimes superior to R tools (in fact, they sometimes are). This latter point leads to our second reason, which is that R tools are typically better suited to sensory and consumer science than are Python tools. Even when Python tools are superior, the R tools are still sufficient for sensory and consumer science purposes, plus there are many custom packages such as SensR, SensoMineR, and FactorMineR that have been specifically developed for sensory and consumer science. Finally, the recent work by the RStudio company, and especially the exceptional work of Hadley Wickham, has lead to a very low barrier to entry for programming within R together with exceptional tools for data manipulation.
 
 \hypertarget{steps-to-install-r}{%
@@ -4795,6 +5133,153 @@ Install R with default options
 You will almost certainly be running 64-bit R
 Note: If you are running R 4.0 or higher, you might need to install Rtools:
 \url{https://cran.r-project.org/bin/windows/Rtools/}
+
+In this book, we assume that the readers have already some very basic knowledge in R.
+If you are completely new to R, we recommend you reading or looking at some documentation online to get you started with the basics.
+
+However, just like with any spoken language, the same message can be said in various ways. The same applies with writing scripts in R, each of us having our own styles, or our own preferences towards certain procedures, packages, functions, etc. In other words, writing scripts is personal. Through this book, we are not trying to impose our way of thinking/proceeding/building scripts, instead we aim in sharing our knowledge built through past experiences to help you find your own style.
+
+But to fully decode our message, you'll need some reading keys. These keys will be described in the next sections.
+
+\hypertarget{introduction-to-the-magrittr-and-the-notion-of-pipes}{%
+\subsection{\texorpdfstring{Introduction to the \texttt{\{magrittr\}} and the notion of \emph{pipes}}{Introduction to the \{magrittr\} and the notion of pipes}}\label{introduction-to-the-magrittr-and-the-notion-of-pipes}}
+
+R is a living programming language that evolves and expends very rapidly.
+If most additions/improvements have a fairly limited reach, the introduction of the \texttt{\{tidyverse\}} in 2016 by H. Wickham revolutionized the way of scripting in R for many users. At least for us, it had a large impact as we fully embraced its philosophy, as we see its advantage for Data Science and for analyzing our sensory and consumer data. It is hence no surprise that you'll read and learn a lot about it in this book.
+
+As you may know, the \texttt{\{tidyverse\}} is a grouping of packages dedicated to Data Science, which includes (amongst others) \texttt{\{readr\}} for data importation, \texttt{\{tibble\}} for the data structure, \texttt{\{stringr\}} and \texttt{\{forcats\}} for handling strings and factors, \texttt{\{dplyr\}} and \texttt{\{tidyr\}} for manipulating and tidying data, \texttt{\{ggplot2\}} for data visualization, and \texttt{\{purrr\}} for functional programming. But more importantly, it also includes \texttt{\{magrittr\}}, the package that arguably impacted the most our way of scripting by introducing the notion of \emph{pipes} (defined as \texttt{\%\textgreater{}\%}) as it provides code that is much easier to read and understand.
+
+To illustrate the advantage of the use of pipes, let's use the example provided by H. Wickham in his book \emph{R for Data Science}.
+It is some code that tells a story about a little bunny names Foo Foo:
+\emph{Little bunny Foo Foo}
+\emph{Went hopping through the forest}
+\emph{Scooping up the field mice}
+\emph{and bopping them on the head}
+
+If we were meant to tell this story though code, we would start by creating an object name \texttt{FooFoo} which is a little bunny:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{foo\_foo }\OtherTok{\textless{}{-}} \FunctionTok{little\_bunny}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+To this object, we then apply different functions (we save each step as a different object):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{foo\_foo\_1 }\OtherTok{\textless{}{-}} \FunctionTok{hop}\NormalTok{(foo\_foo, }\AttributeTok{through=}\NormalTok{forest)}
+\NormalTok{foo\_foo\_2 }\OtherTok{\textless{}{-}} \FunctionTok{scoop}\NormalTok{(foo\_foo\_1, }\AttributeTok{up=}\NormalTok{field\_mice)}
+\NormalTok{foo\_foo\_3 }\OtherTok{\textless{}{-}} \FunctionTok{bop}\NormalTok{(foo\_foo\_2, }\AttributeTok{on=}\NormalTok{head)}
+\end{Highlighting}
+\end{Shaded}
+
+One of the main downsides of this approach is that you'll need to create intermediate names for each step. If natural names can be used, this will not be a problem, otherwise it can quickly become a source of error (using the wrong object for instance)! Additionally, such approach may affect your disk memory (your creating a new object in each step), especially if the data set is large.
+
+As an alternative, we could consider running the same code by over-writing the original object:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{foo\_foo }\OtherTok{\textless{}{-}} \FunctionTok{hop}\NormalTok{(foo\_foo, }\AttributeTok{through=}\NormalTok{forest)}
+\NormalTok{foo\_foo }\OtherTok{\textless{}{-}} \FunctionTok{scoop}\NormalTok{(foo\_foo, }\AttributeTok{up=}\NormalTok{field\_mice)}
+\NormalTok{foo\_foo }\OtherTok{\textless{}{-}} \FunctionTok{bop}\NormalTok{(foo\_foo, }\AttributeTok{on=}\NormalTok{head)}
+\end{Highlighting}
+\end{Shaded}
+
+If this solution looks neater and more efficient (less thinking, less typing, less memory use), it is more painful to debug, as the entire code should be re-run from the beginning (when \texttt{foo\_foo} was originally created). Moreover, calling the same object in each step obscures the changes performed in each line.
+
+To these two approaches, we prefer a third one that strings all the functions together without intermediate steps of saving the results. This procedure uses the so-called pipes ( defined by \texttt{\%\textgreater{}\%}), which takes automatically as input the output generated by the previous line of code:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{foo\_foo }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{hop}\NormalTok{(}\AttributeTok{through =}\NormalTok{ forest) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{scoop}\NormalTok{(}\AttributeTok{up =}\NormalTok{ field\_mice) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{bop}\NormalTok{(}\AttributeTok{on =}\NormalTok{ head)}
+\end{Highlighting}
+\end{Shaded}
+
+This code is easier to read and understand as it focuses more on the verbs (here \texttt{hop}, \texttt{scoop}, and \texttt{bop}) rather than names
+(\texttt{foo\_foo\_1}, or \texttt{foo\_foo}). It can be surprising at first, but no worries, by the time you've read this book, you'll be fully familiar with this concept.
+
+When lines are piped, R runs the entire block at once. So how can we understand the intermediate steps that were done, or how can we fix the code if an error occur? The answer to these questions is simple: run back the code bits by bits.
+
+For instance, in this previous example, we could start by printing \texttt{foo\_foo} (in practice, only select \texttt{foo\_foo} and run this code only) only to ensure that it is the object that we were supposed to have.
+If it is the case, we can then extend the selection to the next line by selecting all the code before the pipe (do not select the pipe, else R is expecting additional code after it and will not show results).
+Repeat this until you found your error, or you ensure that all the steps have been performed correctly.
+
+While reading this book, we advise you to apply this trick to each block of code for you to visualize the steps performed.
+
+Note however that although pipes are very powerful, they are not always the best option:
+
+\begin{itemize}
+\tightlist
+\item
+  A rule of thumb suggests that if you are piping more than 10 lines of code, you're probably better of splitting it into 2 or more blocks (saving results in intermediate step) as this simplifies debugging.
+\item
+  If some steps require multiple inputs, or provides multiple outputs, pipes should not be used as they usually require a primary object to transform.
+\item
+  The system of pipes works linearly: if your code requires a complex dependency structure, the pipes should be avoided.
+\end{itemize}
+
+\hypertarget{tips-on-how-to-read-this-book}{%
+\subsection{\texorpdfstring{Tips on \emph{how to read this book?}}{Tips on how to read this book?}}\label{tips-on-how-to-read-this-book}}
+
+For you to get the most out of this book, you need to understand (and eventually adhere to) our philosophy of scripting, and our way of working. This is why we are providing you with some tips to use, if you're comfortable with them:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Create a folder for this book on your computer, and create a script for each chapter in which you re-write yourself the code. If you work with the online version, you could copy/paste the code to go faster, but you may miss some subtleties.
+\item
+  Do not be discourage when you get some errors: we all get some regularly. At first, this can be very frustrating, especially when you are not able to fix them quickly. If you get stuck on an error and cannot fix it immediately, take a break and come back later with fresh eyes, you may solve it then. And with time and experience, you'll notice that you can reduce the amount of errors, and will also solve them faster.
+\item
+  The more code, the more difficult it is to find errors. This is true whether you use ``regular'' R-code or pipes. The best way to solve errors in such circumstances is to run the code line by line until you find the error, and understand why the input/output does not match expectations.
+\item
+  In the particular case of pipes, debugging errors means that you shouldn't run the entire block of code, but select parts of it and run it by adding in each run a new line. This can either be done by stopping your selection just before the adequate \texttt{\%\textgreater{}\%} sign, or by adding after that \texttt{\%\textgreater{}\%} sign the function \texttt{identity()}\footnote{\texttt{identity()} is a function that returns as output the input as it is. This function is particularly useful in pipes as you can finish your pipes with it, meaning that you can put any line in comments (starting with `\#') without worrying about finishing your pipe with a \texttt{\%\textgreater{}\%}}.
+\item
+  In many examples here, we apply changes to certain elements without actually saving them in an R object. This is quite convenient for us as many changes we do are only done for pedagogic reasons, and are not necessarily relevant for our analysis. This is for instance the case with the following code (REF):
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sensory }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{Panellist =}\NormalTok{ Judge, }\AttributeTok{Sample =}\NormalTok{ Product)}
+\end{Highlighting}
+\end{Shaded}
+
+If you run this code, you'll notice that we rename \texttt{Judge} to \texttt{Panellist}, and \texttt{Product} to \texttt{Sample}\ldots at least this is what you see on screen. However, if you look at \texttt{sensory}, the dataset still contains the column \texttt{Judge} and \texttt{Product} (\texttt{Panellist} and \texttt{Sample} do not exist!). This is simply because we did not save the changes in any R object.
+
+If we would want to save the element in a new object, we should save the outcome in an element using \texttt{\textless{}-}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{newsensory }\OtherTok{\textless{}{-}}\NormalTok{ sensory }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{Panellist =}\NormalTok{ Judge, }\AttributeTok{Sample =}\NormalTok{ Product)}
+\end{Highlighting}
+\end{Shaded}
+
+Here, \texttt{newsensory} corresponds to \texttt{sensory}, but with the new names. Of course, if you would want to overwrite the previous file with the new names, you simply need to ensure that the name of the output is the same as the name of the input (this saves computer memory and is saves you thinking about new names all the time). Concretely, we replace here \texttt{newsensory} by \texttt{sensory}, meaning that the new names are saved in \texttt{sensory} (so the old names \texttt{Judge} and \texttt{Product} and definitely lost):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sensory }\OtherTok{\textless{}{-}}\NormalTok{ sensory }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{Panellist =}\NormalTok{ Judge, }\AttributeTok{Sample =}\NormalTok{ Product)}
+\end{Highlighting}
+\end{Shaded}
+
+In the latter cases, this means that to see what \texttt{newsensory} or \texttt{sensory} contains, you need to type it back in R.
+Another (faster) way to visualize it is to put the entire block of code between brackets (putting codes like this in brackets is equivalent to asking to print the output).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(sensory }\OtherTok{\textless{}{-}}\NormalTok{ sensory }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{Panellist =}\NormalTok{ Judge, }\AttributeTok{Sample =}\NormalTok{ Product))}
+\end{Highlighting}
+\end{Shaded}
+
+Note that if you run all these lines of codes in R, you will get an error stating \texttt{Column\ \textquotesingle{}Judge\textquotesingle{}\ doesn\textquotesingle{}t\ exist.} This is due to the fact that previously, we overwrote the original \texttt{sensory} (containing \texttt{Judge} and \texttt{Product}) with another version in which these columns were renamed \texttt{Panellist} and \texttt{Sample}. So when you re-run this code, you are trying to apply again the same changes to columns that no longer exist, hence the error\ldots This is something that you need to take into consideration when overwriting elements (in this case, you should initialize \texttt{sensory} to its original version before trying).
 
 \hypertarget{rstudio}{%
 \section{RStudio}\label{rstudio}}
