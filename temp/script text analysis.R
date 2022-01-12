@@ -6,11 +6,11 @@ library(tidytext)
 library(here)
 file_path <- here("data","cider_data.xlsx") 
 
-cider <- read_xlsx(file_path) %>% 
+cider_og <- read_xlsx(file_path) %>% 
   mutate(sample = as.character(sample))
 
   # Tokenization
-cider <- cider %>% 
+cider <- cider_og %>% 
   unnest_tokens(tokens, comments, token="regex", pattern="[;|,|:|.|/]", to_lower=FALSE)
 
 cider <- cider %>% 
@@ -180,3 +180,18 @@ cider_wc %>%
   xlab("")+
   theme_minimal()+
   facet_wrap(~sample)
+
+  # n-grams
+cider_2grams <- cider_og %>% 
+  unnest_tokens(bigrams, comments, token="ngrams", n=2)
+
+cider_2grams %>% 
+  count(bigrams) %>% 
+  arrange(desc(n))
+
+cider_2grams %>% 
+  group_by(sample) %>% 
+  count(bigrams) %>% 
+  ungroup() %>% 
+  arrange(desc(n)) %>% 
+  filter(sample == "182")

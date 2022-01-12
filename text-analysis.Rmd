@@ -97,7 +97,7 @@ library(readxl)
 library(here)
 
 file_path <- here("data","cider_data.xlsx") 
-cider <- read_xlsx(file_path) %>% 
+cider_og <- read_xlsx(file_path) %>% 
   mutate(sample = as.character(sample))
 
 ```
@@ -109,7 +109,7 @@ Let's transform this text into tokens using `unnest_tokens()` from the `{tidytex
 
 
 ```{r}
-(cider <- cider %>% 
+(cider <- cider_og %>% 
   unnest_tokens(tokens, comments, token="regex", pattern="[;|,|:|.|/]", to_lower=FALSE))
 ```
 
@@ -193,10 +193,10 @@ head(cider)
 
 We can see here that for `J1` and `182`, the first token is now separated into three words: `hard`, `cider`, and `smell`.
 
-We can now again count how often each word has been used, using the exact same code as previously. 
+We can re-count how often each word has been used, using the exact same code as previously. 
 It appears now that `sweet` appears 91 times, and `apple` 80 times. Interestingly, terms such as `a`, `like`, `the`, `of`, `and` etc. also appear fairly frequently.
 
-Since we have a fairly small set of text, let's use the *SnowBall Stopword* list as a start, and look at the terms that are shared in both our list and this stopword list:
+Since we have a small set of text, let's use the *SnowBall Stopword* list as a start, and look at the terms that are shared in both our list and this stopword list:
 
 
 ```{r}
@@ -209,9 +209,7 @@ intersect(stopword_list, word_list)
 ```
 
 
-As we can see, some words such as *off*, *not*, *no*, *too*, and *very* would be removed. Since we prefer to keep them, we will remove them from our list.
-
-Similarly, we can look at the words from our data that we would not remove. We can then track the words that we would not consider relevant and add them to the list:
+As we can see, some words such as *off*, *not*, *no*, *too*, and *very* would be removed. Since we prefer to keep them, we will remove them from the original list. Similarly, we can look at the words from our data that we would not remove. We can then track the words that we would not consider relevant and add them to the list:
 
 
 ```{r}
@@ -219,8 +217,7 @@ word_list[!word_list %in% stopword_list]
 ```
 
 
-For instance, words such as *like*, *sample*, *just*, *think*, or *though* for instance do not seem to bring any relevant information here. Hence, we propose to remove these (together with some others).
-Ultimately, we update the list by removing some of the words we want to keep, and by adding words we want to remove:
+For instance, words such as *like*, *sample*, *just*, *think*, or *though* for instance do not seem to bring any relevant information here. Hence, we propose to remove these as well:
 
 
 ```{r}
@@ -419,10 +416,10 @@ cider_CA <- CA(cider_ct)
 ```
 
 
-As can be seen, sample `731` is more associated to alcoholic terms such as `alcohol` or `wine`, and colors (`red`, `green`). Samples `239` and `401` are more associated to `sour` and `bitter` (and `pear` for `239`), whereas samples `519` and `182` are more descibed by terms such as `fruity`, and `sweet` (`floral` is also used to characterize `182`).
+As can be seen, sample `731` is more associated to alcoholic terms such as `alcohol` or `wine`, and colors (`red`, `green`). Samples `239` and `401` are more associated to `sour` and `bitter` (and `pear` for `239`), whereas samples `519` and `182` are more described by terms such as `fruity`, and `sweet` (`floral` is also used to characterize `182`).
 
 
-These frequencies can also be visualized using wordclouds, which can easily be done using the `{ggwordcloud}` package which has the advantage to build such representation in a `{ggplot2}` format. Such wordcloud (here separated the wordclouds per product) can be obtained using the following code:
+These frequencies can also be visualized using wordclouds, which can easily be done using the `{ggwordcloud}` package which has the advantage to build such representation in a `{ggplot2}` format. Such wordcloud (here one per product) can be obtained using the following code:
 
 ```{r}
 cider_wc <- cider %>% 
@@ -457,105 +454,75 @@ cider_wc %>%
 ```
 
 
-As can be seen, the term `apple` is used more frequently (i.e. more than 1/6) used to characterize samples `182`, `239`, `365`, and `731`. The term `sweet` is more frequently used to characterize samples `182` and `519`. Such conclusions would have been more difficult to reach based on the previous *unstructured* wordcloud.
+As can be seen, the term `apple` is more frequently (i.e. more than 1/6) used to characterize samples `182`, `239`, `365`, and `731`. The term `sweet` is more frequently used to characterize samples `182` and `519`. Such conclusions would have been more difficult to reach based on the previous *unstructured* wordcloud.
 
 
 ### Bigrams, *n*-grams
 
-Including word graphs
 
-### Word Embedding (?)
+In the previous set of analyses, we defined each word as a token. This procedure disconnects words from each others, hence discarding the context of the word. Although this approach is common, it can lead to misinterpretation since a product that would often be associated to (say) *not sweet* would in the end be characterized as *not* and *sweet*. A comparison of samples based on the sole word *sweet* could suggest that the previous product is often characterized by it although it should be the opposite.
+
+To avoid this misinterpretation, two solutions exist:
+
+1. Replace *not sweet* by *not_sweet*, so that it is considered as one token rather than two;
+2. Look at groups of words, i.e. at words within their surroundings.
+
+The latter option requires us introducing the notion of bi-grams (groups of 2 following words), tri-grams (groups of 3 following words), or more generally *n*-grams (groups of *n* following words). More precisely, we are applying the same frequency count as before except that we are no longer considering one word as a token, but a sequence of 2, 3, or more generally *n* words as a token. Such grouping can be obtained by the `unnest_tokens()` from `{tidytext}` in which `token='ngrams'`, with `n` defining the number of words to consider.
+
+For simplicity, let's apply this to the original data, although it could be applied to the cleaned version (here we consider bi-grams).
+
+```{r}
+cider_2grams <- cider_og %>% 
+  unnest_tokens(bigrams, comments, token="ngrams", n=2)
+
+cider_2grams %>% 
+  count(bigrams) %>% 
+  arrange(desc(n))
+```
+
+
+In overall, the stronger 2-words association is between `sweet fruity`. Other relevant associations are `green apple`, `sweet apple`, or `very sweet`.
+Of course, such bi-grams can also be obtained per product:
+
+```{r}
+cider_2grams %>% 
+  group_by(sample) %>% 
+  count(bigrams) %>% 
+  ungroup() %>% 
+  arrange(desc(n)) %>% 
+  filter(sample == "182")
+
+```
+
+For sample `182`, `not sweet` appears 3 times which can be surprising since it was one of the sample the most associated to `sweet` with 22 occurrences.
+
+
+### Word Embedding
+
+
+The previous section introduces the concept of context, as words are associated to their direct neighbors. Another approach called *word embedding* goes one step further by looking at connections between words present within a certain window: for instance, how often are *not* and *sweet* connected within a window of 3, 5, or 7 words? Such approach is not presented here as it is only relevant for longer text documents. 
+
+In the previous sections, we already introduced the notion of *term frequency* (*tf*), which corresponds to the number of times a word is being used in a document. When a collection of documents are analyzed and compared, it is also interesting to look at the *inverse document frequency* (*idf*), which consists in highlighting words that discriminate between documents by reducing the weight of common words and by increasing the weight of words that are specific to certain documents only. In practice, both concepts are associated (by multiplication) to compute a term's *tf-idf*, which measures the frequency of a term adjusted for its rarity in use.
+
 
 ### Sentiment Analysis
 
-### Cluster Analysis
+
+In our current example, the textual data we analyze is descriptive. In other words, the items that we analyze have no particular valence (i.e. they are neither negative, nor positive). When text data are more spontaneous (e.g. social media such as tweets, or consumers' responses to open-ended questions), they can be the charged with positive or negative connotations. A good way to measure the overall valence of a message is through *Sentiment Analysis*. 
+
+To perform *Sentiment Analysis*, we start by deconstructing the message into words (tokenization approach considered previously). Then, in a similar approach to the stop words, we can combine our list of words with a pre-defined list that defines which words should be considered as positive or negative (the rest being neutral). Ultimately, all the scores associated to each message can be summed, hence providing the overall valence score of a message. 
+
+To get examples of *sentiment* list, the `get_sentiments()` function from the `{tidytext}` package can be used. This function proposes 4 potential lists: `"bing"`, `"afinn"`, `"loughran"`, and `"nrc"` (REFERENCES). Of course, such lists can be modified and adapted to your own needs in case they do not fit perfectly.
+
 
 ## To go further...
 
-References to book and other packages such as twitter, etc.
 
-Contrast Plot
-Topic Modeling
-Machine Learning
+Text Mining and Natural Language Processing is a topic that has been (and is still being) studied for a very long time. Recently, it has made a lot of progress thanks to the advances in technology, and has gain even more interest with the abundance of text through social media, websites, blogs, etc. It is hence no surprise that a lot of machine learning models use text data (topic modelling, classification of emails to spam, etc.). Even current handy additions to simplify our life are based on text analysis (e.g. suggestions in emails, translation, etc.) 
 
+In case you would want to go further on this topic, we strongly recommend the following books:
 
-<!--
-## Overview
-
-## Key Topics
-
-### Data Sources
-### Working with Strings
-### Tokenizing
-### Lemmatization, stemming, and stop word removal
-### Part of Speech Tagging
-
-## Common Applications
-### Frequency counts and summary statistics
-### Word clouds
-### Contrast plots
-### Sentiment analysis
-### Topic Modeling
-### Bigrams and word graphs
-
-## Code Examples
-
-Introduction to **{tidytext}** and **{Xplortext}**
-
-### Statistical entities
-
-What are we considering as statistical entities?
-
-- documents
-- sentences
-- words
-- cleaned words
-
-Depends on objectives of study and how data are being collected:
-
-- directly from consumers in a CLT (directed questions)
-- analysis of social media (e.g. twitter)
-- web-scrapping from website
-
-Discussion around CATA as a simplified version of text analysis...
-
-#### Notion of tokenization
-
-#### Cleaning the data
-
-Notions of lemmatization, stemming, and stopwords removal
-
-- grouping words
-- removing stopwords
-- tf-idf
-
-### Analysis of Frequencies and term-frequency document
-
-#### Contingency table
-
-Presentation of the tf/contingency table
-
-#### wordclouds
-
-**{ggwordclouds}**
-
-#### Correspondence Analysis
-
-**{FactoMineR}** and **{Xplortext}**
-
-### Futher Analysis of the words
-
-#### Sentiment Analysis
-
-Sentiment analysis and its relationship to hedonic statement
-Introduction to free-JAR?
-
-#### Bi-grams and N-grams
-
-Presentation of graph-theory applied to text mining
-
-#### Machine learning
-
-Introduction to machine learning associated to text mining
-
--->
+ - Text Mining with R
+ - Supervised Machine Learning for Text Analysis in R
+ - Textual Data Science with R
+ - R for Data Science (introduction to web-scrapping etc.)
