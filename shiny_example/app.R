@@ -1,10 +1,7 @@
 library(shiny)
 library(shinyjs)
-
 library(tidyverse)
 library(writexl)
-
-
 
 # Define UI for application that draws a spider plot type of graph
 ui <- fluidPage(
@@ -33,10 +30,13 @@ ui <- fluidPage(
     # Showing the Plot
     mainPanel(
       
-      downloadButton("plotDL", "Download Plot"),
-      br(),
-      plotOutput("finalplot", height=600, width=600)
-      
+      tabsetPanel(id="The Tabs",
+                  tabPanel("Mean Table", 
+                           tableOutput("meantable")),
+                  tabPanel("Visual Rep.",
+                           downloadButton("plotDL", "Download Plot"),
+                           br(),
+                           plotOutput("finalplot", height=600, width=600)))
     )
   )
 )
@@ -80,6 +80,27 @@ server <- function(input, output) {
       unique()
     
     checkboxGroupInput("product", "Select the Products to Display:", choices=items, selected=items)
+    
+  })
+  
+  # Format and Export the Mean Table
+  mymean <- reactive({
+    
+    req(mydata(), input$attribute, input$product)
+    mymean <- mydata() %>% 
+      mutate(across(c("Product", "Attribute"), as.character)) %>%
+      filter(Attribute %in% input$attribute, Product %in% input$product) %>% 
+      mutate(Product = factor(Product, input$product),
+             Attribute = factor(Attribute, input$attribute),
+             Score = format(round(Score, 2), nsmall=2)) %>% 
+      pivot_wider(names_from=Product, values_from=Score)
+    
+    return(mymean)
+  })
+  output$meantable <- renderTable({
+    
+    req(mymean())
+    mymean()
     
   })
   
