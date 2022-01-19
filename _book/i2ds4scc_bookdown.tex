@@ -126,7 +126,7 @@
 
 \title{Data Science for Sensory and Consumer Scientists}
 \author{John Ennis, Julien Delarue, and Thierry Worch}
-\date{2022-01-18}
+\date{2022-01-19}
 
 \begin{document}
 \maketitle
@@ -208,12 +208,12 @@ Sensory and consumer researchers also borrow methods from other fields, in parti
 \subsubsection*{Dealing with human diversity}\label{dealing-with-human-diversity}}
 \addcontentsline{toc}{subsubsection}{Dealing with human diversity}
 
-Sensory evaluation attempts to isolate the sensory properties of foods and provides important and useful information about these properties to product developers, food scientists, and managers (\citet{LawlessHeym2010}). However, one should bear in mind that these `sensory properties' actually result from the interaction between the object (the food) and the perceiver of that object (the consumer). In fact, we may very well consider the true object of evaluation in SCS to be mental representations. They are nonetheless very concrete and directly impact behaviors, health and economic decisions (REF Kahneman \& Tversky, 2002).
+Sensory evaluation attempts to isolate the sensory properties of foods and provides important and useful information about these properties to product developers, food scientists, and managers (\citet{LawlessHeym2010}). However, one should bear in mind that these `sensory properties' actually result from the interaction between the object (the food) and the perceiver of that object (the consumer). In fact, we may very well consider the true object of evaluation in SCS to be mental representations. They are nonetheless very concrete and directly impact behaviors, health and economic decisions (\citet{Kahneman2000}).
 A direct consequence of this is that sensory data depend both on the product to be evaluated and on the subjects who evaluate the product. Because people are different, sensory data are expected to differ accordingly. In its core principle, SCS recognizes the diversity of human beings, biologically, socially and culturally speaking, not to mention the fact that each individual has their own personal history and experience with products. In short, people perceive things differently and like different things. For this reason, SCS only relies on groups of people (i.e.~a panel of judges, a sample of consumers) and never on a single individual's response. Yet, sensory and consumer scientists usually collect individual data and analyze them at a refined level of granularity (individual, subgroups) before considering larger groups (specific populations or marketing targets).
 
 This said, sensory and consumer studies must lead to operational recommendations, be useful to make informed decisions on product development, to launch new product, and sometimes to help define food and health policies. Data science can precisely help sensory and consumer scientists to reach those objectives while taking diversity into account.
 
-For measures of sensory description, sensory and consumer scientists can manage the diversity of human responses to a certain extent by training panels to use a consensual vocabulary, by aligning evaluated concepts and calibrating the quantification of evaluations on scales (REF ASTM Bleibaum,2021). However, this won't eliminate interindividual differences in sensitivity, simply because we are genetically determined to be different on top of differences due to age, physiological state, illness, etc. Nowadays, as the field becomes more and more consumer-oriented, it becomes clear that the use of several subjects in a panel cannot be assimilated to a mere repetition of individual measurements. Accordingly, sensory methods have been developed to allow panelists to better express their own perceptions and to get a more accurate picture of how people perceive products (REF Varela \& Ares, 2012). These methods yield richer and more complex data that require more advanced analysis techniques to extract relevant and actionable information. Historically, one the first methodological innovations in this direction has been the use of free choice profiling combined to Generalized Procrustes Analysis (REF Williams \& Langron, 1989). Since then, sensory and data analysis methods have multiplied greatly (see Delarue, et al 2014). Naturally, data science has become even more crucial to accompany this evolution.
+For measures of sensory description, sensory and consumer scientists can manage the diversity of human responses to a certain extent by training panels to use a consensual vocabulary, by aligning evaluated concepts and calibrating the quantification of evaluations on scales (\citet{Bleibaum2020}). However, this won't eliminate interindividual differences in sensitivity, simply because we are genetically determined to be different on top of differences due to age, physiological state, illness, etc. Nowadays, as the field becomes more and more consumer-oriented, it becomes clear that the use of several subjects in a panel cannot be assimilated to a mere repetition of individual measurements. Accordingly, sensory methods have been developed to allow panelists to better express their own perceptions and to get a more accurate picture of how people perceive products (\citet{Varela2012}). These methods yield richer and more complex data that require more advanced analysis techniques to extract relevant and actionable information. Historically, one the first methodological innovations in this direction has been the use of free choice profiling combined to Generalized Procrustes Analysis (\citet{Williams1984}). Since then, sensory and data analysis methods have multiplied greatly (\citet{Delarue2015}). Naturally, data science has become even more crucial to accompany this evolution.
 
 As regards hedonic tests (liking, acceptance, preference\ldots), the measurements are in essence subjective and participants to such tests are by definition `untrained' consumers. A constant of these tests is to find important interindividual differences and it is very common to find consumers who have opposite sensory preference patterns. Clustering and segmentation techniques are thus routinely applied to consumer data. One difficulty though, is to link these differences in preferences to other consumer variables, should they be sociodemographic, psychographic, ore related to usage and attitudes. Most often, on set of variables is not enough to fully explain preference patterns.
 
@@ -3919,7 +3919,7 @@ Histograms are a nice way to visualize proportions and to compare them over seve
 \hypertarget{personality-traits-and-eating-behavior-tfeq-data}{%
 \subsection{Personality traits and eating behavior: TFEQ data}\label{personality-traits-and-eating-behavior-tfeq-data}}
 
-In the same data set, consumers also answered some behavioral questions that reflect on their relation to food. These questions can be categorized into three groups relating to three underlying factors, respectively: Disinhibition (variables starting with \texttt{D}), Restriction (variables starting with \texttt{R}), and sensitivity to Hunger (variables starting with \texttt{H}).
+In the same data set, consumers also answered some questions that reflect on their eating behavior and their relation to food (REF REF). These questions can be categorized into three groups relating to three underlying factors, respectively: Disinhibition (variables starting with \texttt{D}), Restriction (variables starting with \texttt{R}), and sensitivity to Hunger (variables starting with \texttt{H}).
 
 In order to analyze these three factors separately, we first need to select the corresponding variables. When variable names are well structured with a recurring pattern (here, they all start with the letters D, R, or H, followed by a number) the use of a \emph{regular expression} is very powerful.
 
@@ -4515,45 +4515,143 @@ As can be seen, \texttt{POpt} is not so close from the optimal area suggested by
 \hypertarget{communicate2}{%
 \section{Communicate}\label{communicate2}}
 
-\hypertarget{know-your-audience}{%
-\subsection{Know Your Audience}\label{know-your-audience}}
+Being able to communicate effectively is perhaps one of the most important skills that any consultant should master. Communication is a simple act of transferring information and although undervalued by many, plays a key role in any business's success. Let's start this chapter reminding that there are different ways to communicate, and this process usually includes a combination of two or more types of languages, which are:
+
+\begin{itemize}
+\item
+  Vocal -- the language produced by articulate sounds. It is the language used in client's meetings and presentations for instance.
+\item
+  Non-verbally -- is related to the body language, gestures, and the tone and pitch of voice.
+\item
+  Written -- is the representation of a spoken language in a writing system, like proposals, technical documents, or final reports.
+\item
+  Visual -- is the communication using visual elements, such as the visual quality of presentations or other written documents, including formatting, logo, colors, figures, plots, etc.
+\end{itemize}
+
+It is through effective communication that you will bring potential clients' attention and interest in your company and the services you provide, that will make you truly understand your client's needs, gain their trust and provide the right solutions that will ultimately bring to a long-term partnership. Efficacious communication will be responsible for keeping a friendly relationship and your client's commitment throughout the project development and will also help you to properly convey the outcomes of a project in a way that surpass and at the very least meet the expectations of your client and opens possibilities for follow-up engagements and/or recommendations.
+
+The ability to communicate accurately, clearly and as intended, is definitely something that consultants should not overlook because although it seems straightforward, it involves a number of skills that may take several years of practice to master. You will find plenty of materials on the Internet and books to help you to understand better and develop your very basic skills for effective communication. We will not focus on that in this chapter, but it is worth highlighting some important aptitudes for vocal communication, which may configure one of the most powerful types of communication with your client:
+
+\begin{itemize}
+\item
+  Confidence. Being confident makes you be to be seen as an expert on the topic and as you are under the control of the situation. The audience will be more likely to trust, believe, be connected, and give credit to a confident person.
+\item
+  Passion and Enthusiasm. You must be passionate about what you do and convinced and enthusiastic about the solution you provide. The audience can easily capture that on your vocally and non-verbally language and will be much more interested if they can see and feel your passion.
+\item
+  Ability to be succinct. No matter how interesting you feel about a topic, you must know that the audience will lose interest after some time, especially if there is a lot of technical and detailed information. Be aware that the attention span of your audience isn't long, so use your time wisely during the presentation, keeping it short and at the point.
+\item
+  Feeling. This is a skill that definitely one needs time to master, but it is crucial that you pick what is going on with your client, if they seem to be understanding and following you, or if they seem to be confused or not sure about what you are talking about.
+\end{itemize}
+
+In this chapter, we will be focused on three topics that we believe any successful consultant should have in mind which are: Audience Awareness, Method to Communicate, and Storytelling.
+
+\hypertarget{audience-awareness}{%
+\subsection{Audience Awareness}\label{audience-awareness}}
+
+One of the most important things about being a successful consultant is Audience Awareness! No matter how good you, your team, and the service or product your company offers if you fail to communicate with your target audience. Knowing the audience, the target people you will be, for instance, presenting the outcomes of a project or sending a final report, is just the cornerstone of any successful business. Knowing your audience makes you be better able to connect to them.
+
+In order to know your audience, you must gather some information about them beforehand, such as:
+
+Background. Do they have a sensory science background? Statistical background? Do they have experience in data science, including R language? Do they have experience in automated reporting dashboards, machine learning, etc? If so, are they juniors, specialists, seniors?
+
+Vocabulary. Will your audience understand very technical terms, or do you need to use simplified terms to convey the same message? This topic is closely related to the audience's background.
+
+Expectations. What is your audience expecting in a presentation or final report? A short summary of the project's outcomes? A detailed explanation of the statistical analysis including appendixes with further details? Recommendations for follow-up projects? Interpretation and conclusion of the analysis?
+
+Role. What is the role your audience plays in the project? Are they the decisions makers? Are they the final users of a dashboard, for instance?
+
+In general, according to the profile, the audience will likely fall into one of the three categories: Technical Audience, Management (Decisions Makers), and General Interest. There is no magical formula on how to deal exactly with each of these types of audience, but in general, based on our experience, we must highlight that one of the key differences are in the focus, language, level of technical and detailed information you will provide for each of those target public. In general, it tends to be necessary a higher level of details and technical information and a lower level of the big picture once you move from your general interest audience to the management, and further down to the technical audience (Figure 1). We will further discuss the main differences between each audience above.
+
+Figure 1. Trade-off curve based on the level of technical details and the big picture for each type of audience
 
 \hypertarget{technical-audience}{%
 \subsubsection{Technical Audience}\label{technical-audience}}
 
+The technical audience refers to the ones who will likely have a significant background and experience in or related to the field you are providing consulting service, which means, for instance, Sensory Scientists, Statisticians, Data Analysts, Data Architecture, or your client's IT group. They are the team that will likely be working closely with you throughout the project development, at different stages. This type of audience is usually more exigent and/or engaged and because of its expertise in the field, will likely be expecting a presentation, report, or any other technical document in a higher level of details and with a more technical vocabulary, otherwise, you will sound that you are not an expert in the topic. This audience usually needs a lower sense of the big picture of the project, which means, that they are less interested in the details like the timelines, main outcomes, etc. But be aware, it is very important to be able to distinguish your technical audience. For instance, you should not use sensory technical language to talk to the IT team and vice versa.
+
 \hypertarget{management}{%
 \subsubsection{Management}\label{management}}
+
+Although a person in a management position will likely have a broad experience and background in the field, maybe even higher than your technical audience, they tend to be more interested in the whole picture, which means timelines, progress of the project, potential issues, outcomes, applicability, next steps, etc. A person in a management position has many other projects and roles in a company and will not have time to be involved in the details, instead, they will likely designate a team, which will be your technical audience, to be closely involved. In this case, you should be more concise in a meeting, presentation, or report, for instance. It is advised to keep a certain level of technical language, but it is better to present things in a simpler way and in a lower level of detail than you would do for the technical audience. Additionally, the focus should be different, since as we mentioned, this audience is likely to be more interested in the whole picture instead of the specifics of the project.
 
 \hypertarget{general-interest}{%
 \subsubsection{General Interest}\label{general-interest}}
 
+The general audience usually refers to the ones that will likely be the final users or are somehow related, contributed, or are interested in the project. In this way, this public is usually the least interested in the details and the most interested in the whole picture. The general audience usually refers to a larger group of people with different backgrounds and distinct levels of expertise, for instance, an R\&D internship, a Chemistry Researcher, and a Senior Sensory Specialist can be all final users of a dashboard you developed. In this case, to make sure everyone follows you in a training, for instance, you must use less technical language and a lower level of details, otherwise, you will lose part of your audience's attention. But at the same time, you may need to consider covering things that sound obvious to you, you ought to be careful about not skipping topics assuming that everyone knows about that or using certain terms and expressions considering that is evident for all. This can be the most challenging audience to deal with due to its diversity, but in a meeting, training session, or presentation, you should be very attentive and use your feeling to capture what going on and maybe change your position be better to connect with the audience
+
+A valuable tip shared by Cole Nussbaumer, in her book Storytelling with data, is to avoid general audiences, such as the technical and management team at the same time, or general audience such as ``anyone related to the field that might be interested in the project''. Having a broad audience will put you in a position where you can't communicate effectively to any of them as you would be if the audience was narrowed down.
+
+\hypertarget{method-to-communicate}{%
+\subsection{Method to Communicate}\label{method-to-communicate}}
+
+How will you communicate to your audience? Are you going to deliver a live presentation? Are you going to present a proposal in a live meeting? Or will the communication be a written document you will send through email?
+
+What is the format you will be using to communicate? Word, Excel, or PowerPoint? Are you going to send the document in PDF format? Are you going to present a dashboard? Are you going to share R Scripts?
+
+As we will discuss in more detail above, the way and the format you use to communicate to your clients or audience have a huge impact on successful communication, and you should be well aware of that!
+
+\hypertarget{consider-the-mechanism}{%
+\subsubsection{Consider the Mechanism}\label{consider-the-mechanism}}
+
+You should be aware that the primary method or mechanism you will use to communicate will strongly affect the way your audience effectively gets the information and so you should tailor it accordantly. One of the most important aspects is related to the amount of control you will have over the audience, how they get the information, and hence the level of details needed (Cole Nussbaumer).
+
+In a live presentation, for instance, you are in full control. You can answer questions your audience may have, you can slow down and go into a particular detail you deem important, or you can speed up over repetitive, obvious, or not-so-important topics. In short words, you are the expert there and so, you can easily provide effective communication, and because of that, you don't need to overcrowd your slides or any other document and divert or lose your audience's attention with very detailed information. You can for instance just show a plot or graph and a very simple interpretation or bullet points because you will be covering the nuances and details about that.
+
+In the case the communication will be through a written document in a non-live situation, you have much less control over your audience, on how they will take the information, on whether they will get the main point. In this situation, you will need to be more careful and likely provide a higher level of details to answer or clarify potential questions or doubts your audience may have. In this situation, showing a plot or graph and just a very simple interpretation or bullet points will likely not be enough.
+
+It can be a great idea to merge those two formats, when possible, where you can give time to the audience to consume the information on their own for a while and give the topic thought and a moment where you can discuss it in a live situation, not in this order necessarily. So, for example, let's pretend you have to present a proposal for a client. Instead of sending a dense document to explain all the details and just wait for the client's response, you can make a more concise document, easier to go through if you have a live moment with the client. You can for instance present the proposal initially in a live meeting, where you cover in general all the important topics and details, and then send the written document to the client.
+
 \hypertarget{pick-the-correct-format}{%
-\subsection{Pick the Correct Format}\label{pick-the-correct-format}}
+\subsubsection{Pick the Correct Format}\label{pick-the-correct-format}}
 
-\hypertarget{powerpoint-1}{%
-\subsubsection{PowerPoint}\label{powerpoint-1}}
+The second point of this topic on the method of communication is related to the correct format to pick. There are certainly many ways for you to communicate with your client - word, excel, or PowerPoint whether in pdf format or not, dashboard, or even scripts -- but surely one is the most suitable. Again, there is no universal answer for the best format to pick since it may vary according to clients' requests and the type of project you are dealing with. But there is one thing you should always follow, unless strictly necessary, do not share documents in an editable format. You may use Word to write proposals or final reports, Excel for plots or tables, and PowerPoint for live presentations, and that's totally fine, but never share that in the editable format. We always recommend saving in pdf format to share with your client or audience and this is because of two simple reasons. First, the pdf format cannot be modified! You definitely don't want to take the risks of others changing your document which can lead to misunderstanding, putting you in a delicate situation. Second, the pdf format preserves document formatting which means that it retains the intended format if the file is viewed online or printed. In short words, it is very unprofessional to share documents in editable format.
 
-\hypertarget{word-1}{%
-\subsubsection{Word}\label{word-1}}
+You may be wondering, so in what type of situation would you share an editable format? When would you share a document in Word, PowerPoint, or Excel? In the situation where you are working with a partner for instance. So, for example, a project that you are working on involves multiple partners and one unique report or presentation. In this case, it may be convenient to share the Word or PowerPoint document for each of the partners to include their inputs. After the document is ready, make sure you carefully review the formatting and save it in pdf before sending it out to the client.
 
-\hypertarget{pdf}{%
-\subsubsection{PDF}\label{pdf}}
+There are two other formats that may be common in the sensory data science field, which are dashboards and scripts. If you are developing a graphical user interface for your client, you will need to deploy the dashboard at some point to a server for your client to be able to access it. The deployment can be done in two ways: web-based, as a simple client web page, or locally, as a locally installed desktop application. The choice should be based on the client's preference.
 
-\hypertarget{dashboard}{%
-\subsubsection{Dashboard}\label{dashboard}}
-
-\hypertarget{excel-1}{%
-\subsubsection{Excel}\label{excel-1}}
+The last method of communication that is fairly common in the field is R or any other programming language script. It is very common that the client requests the scripts used for a specific project, the text file containing the set of commands and comments you used for instance to develop an automated analysis reporting dashboard. You can share the repository where the scripts are hosted, or you can zip the scripts and share them with your clients. The details should be discussed with the client's IT team since each company has a particular preference. As the scripts should always be available under the client's requests, you should be careful to not display sensitive or confidential information by reusing codes or throughout the comments.
 
 \hypertarget{storytelling}{%
 \subsection{Storytelling}\label{storytelling}}
 
-Cite ``Beyond Bullet Points,'' ``Storytelling with Data,'' ``Once Upon an Innovation.''
+There are basically two ways to communicate with our audience, the first is called conventional rhetoric. A PowerPoint full of facts, filled with bullet points and statistics with a presenter with a formal and memorized speech and using the same voice tone, would be the best way to illustrate the conventional rhetoric style. This way to communicate, which drove the businesses of the past, has a more analytical approach, where statistics, charts, metrics would be dumped on the audience and left to them to digest. There is no need to say that this approach is completely outdated, it clearly fails to stimulate the audience's attention or evoke their energy or emotions.
 
-Format of stories: Balance, imbalance, balance restored
+The second way to communicate, which is the last topic we want to cover in this chapter and also happens to be a critical skill for any successful consultant, is through storytelling! Storytelling is something that we all know, from an early age we were introduced to the notion of narrative structure, which means a clear beginning, middle, and end. The ability of one going throughout this structure to tell us a story is what makes a book, play, or movie grab our attention and evoke our emotional responses, is what makes it interesting! In short words, storytelling is one of the most powerful and effective ways to attract people's attention because we were taught to communicate with stories throughout history. This universal language that everyone can understand has the power to truly engage your audience because it translates abstract facts, numbers, and plots into compelling pictures; it inspires, motivates, and drive actions because it taps into people's emotions.
 
-\hypertarget{reformulate2}{%
-\section{Reformulate}\label{reformulate2}}
+In a real situation, you as a consultant will have many pieces of information that you will collect throughout the journey with a client, from the very first communication until the end of a project. You will have valuable information about your client company's situation, challenges and issues, needs, expectations, potential solutions and/or failed attempts, and final outcomes. Storytelling is the master of tying all together and articulating it into the context of a story in a creative way to engage and persuade your audience. A good story will allow you to successfully connect with your audience, it will make your audience understand, reflect, and act in a way that plots, numbers, and facts altogether simply can't.
+
+You may be wondering. How exactly should I construct a story? What should be covered in each piece of the narrative? We will provide here a summary of the pieces of a good story and the specifics based on our experience and also on the books Storytelling with Data by Cole Nussbaumer and Beyond Bullet Points by Cliff Atkinson. Both books dedicate a good part to Storytelling making them a great resource on this topic.
+
+\hypertarget{the-beginning-context}{%
+\subsubsection{The beginning (Context)}\label{the-beginning-context}}
+
+The key piece of any story is the context, the description of the situation, and surrounding details. This first step is the moment to set up the essential information or background on the topic you will be covering to get everyone on common ground. You should initially spend time to make sure your audience clearly understands the context, why this is important or necessary, and why they are there before diving into actions or results. Subsequently, you will raise the challenges or problems and also the recommended solutions. It is at this very first step that you will first grab your audience's attention. If you fail at this moment, it is very unlike that you will recover their interest in the subsequent steps.
+
+For live presentations, it is strongly recommended to use the first few minutes to be an icebreaker to make everyone feel more comfortable and create a more friendly environment. In order to do so, you can start introducing yourself in case you haven't met everyone yet, you can have a conversation and talk about the latest news, ask about how they and their families are doing, etc. The second piece of advice is to start the presentation by stating bullets of the main points that will be covered, so your audience will have awareness of what you will be talking about.
+
+\hypertarget{the-middle-action-and-impact}{%
+\subsubsection{The middle (Action and Impact)}\label{the-middle-action-and-impact}}
+
+Now is when you get to the crux of your story, it is at this moment that you will explain your solutions or actions and highlight the impacts. You will continue it in a way you will convince your audience of the solution you are proposing or make them clearly understand, agree, and be excited about the outcomes and possibilities of a solution you worked on. You should be careful to retain your audience's attention addressing how they can be part and/or benefited from the solution you are referring to. In the case of a live presentation, pose always confidently, show enthusiasm about what you are talking about, and watch out for hidden clues, try to constantly catch your audience's response/feedback through their expressions and body language.
+
+The content to build out your story at this moment is very dependent on the context of the situation, but from a consultant perspective, it will be likely the moment you will further develop the situation or problem covering relevant information, show some data to illustrate the situation, discuss potential solutions to address a particular topic or present the outcomes of your project.
+
+\hypertarget{the-end-conclusion}{%
+\subsubsection{The end (Conclusion)}\label{the-end-conclusion}}
+
+This is the moment you close your story; it is when you should tie it back to the beginning to somehow recap the problem, highlight the basic idea and conclude the story. You should finish your presentation in a very impactful way, re-emphasizing and repeating your main point, what you want to stick deeply in your audience's mind. Once more, the content at the end of the story can be somehow dependent on the context of the situation, but in a consulting world, it would likely include a conclusion of the topic and also next steps and further recommendations.
+
+\hypertarget{to-go-further-1}{%
+\section{To go further\ldots{}}\label{to-go-further-1}}
+
+In case you want to go further on this topic, we strongly recommend the following books:
+
+• Storytelling with data -- a data visualization guide for business professionals
+• Beyond bullet Points
+• Once Upon an Innovation: Business Storytelling Techniques for Creative Problem Solving
+
+Bibliography
 
 \hypertarget{part-haute-cuisine}{%
 \part*{Haute Cuisine}\label{part-haute-cuisine}}
@@ -5638,8 +5736,8 @@ To perform \emph{Sentiment Analysis}, we start by deconstructing the message int
 
 To get examples of \emph{sentiment} list, the \texttt{get\_sentiments()} function from the \texttt{\{tidytext\}} package can be used. This function proposes 4 potential lists: \texttt{"bing"}, \texttt{"afinn"}, \texttt{"loughran"}, and \texttt{"nrc"} (REFERENCES). Of course, such lists can be modified and adapted to your own needs in case they do not fit perfectly.
 
-\hypertarget{to-go-further-1}{%
-\section{To go further\ldots{}}\label{to-go-further-1}}
+\hypertarget{to-go-further-2}{%
+\section{To go further\ldots{}}\label{to-go-further-2}}
 
 Text Mining and Natural Language Processing is a topic that has been (and is still being) studied for a very long time. Recently, it has made a lot of progress thanks to the advances in technology, and has gain even more interest with the abundance of text through social media, websites, blogs, etc. It is hence no surprise that a lot of machine learning models use text data (topic modelling, classification of emails to spam, etc.). Even current handy additions to simplify our life are based on text analysis (e.g.~suggestions in emails, translation, etc.)
 
@@ -5659,6 +5757,94 @@ In case you would want to go further on this topic, we strongly recommend the fo
 
 \hypertarget{dashboards}{%
 \chapter{Dashboards}\label{dashboards}}
+
+\hypertarget{objectives}{%
+\section{Objectives}\label{objectives}}
+
+For good communication, importance of having the right tool.
+Interactivity has always played an important role.
+Even better, imagine you are presenting results to your manager and colleagues, and as questions arise, you have a tool that provide answers to most of their questions based on data.
+
+or\ldots{}
+
+Introduce an experienced situation: I'm sure we've all been through situations in which we spend a lot of time analyzing data for a study, we build our story, spend time in perfecting our presentation: when comes the day of the presentation to your manager and colleagues, you get questions (e.g.~how about a split between users/non users, or between gender, etc.) that you can only answer with: ``let me re-run some analyses and I'll update you on that!''
+
+Disappointment because 1) you did not think about it, 2) you know that you have to go through all your analyses again, but just on a portion of it\ldots{}
+
+What if we had a tool that would allow you to provide such results (up to a certain extent) instantly, as the question arises?
+This is the role of dashboard: interactivity of results/representations based on updated data (filter, zoom in\ldots)
+
+\hypertarget{introduction-to-shiny-through-an-example}{%
+\section{Introduction to Shiny through an Example}\label{introduction-to-shiny-through-an-example}}
+
+To illustrate what a Shiny Application, we propose to build a simple application that will:
+- Import a data containing the results of a sensory test (\emph{Sensory Profile.xlsx})
+- Compute automatically the table of means by product for all the sensory attributes
+- Represent these profiles in either a spider plot, or a circular barchart
+- Provide the possibility to show/hide products
+- Possibility to show/hide and order the attributes
+- Allow downloading the final plot to our computer
+
+Technicalities:
+- Allow importing a file to the application that is stored somewhere in our computer
+- The data file should have a certain structure: the Panelist and Product column should be called \emph{Judge} and \emph{Product}, and all the attributes should be sensory attributes (quantitative)
+- Create an option that controls the type of graph to create
+- Retrieve from the data imported the list of products and present it as a checkbox list
+- Retrieve from the data imported the list of attributes that can be re-arranged manually
+- Create and provide a way to save the final plot to your computer
+
+\hypertarget{what-is-shiny}{%
+\subsection{What is Shiny}\label{what-is-shiny}}
+
+What is shiny, and how does it work
+
+\hypertarget{starting-with-shiny}{%
+\subsection{Starting with Shiny}\label{starting-with-shiny}}
+
+\hypertarget{user-interface-ui}{%
+\subsubsection{User Interface (ui)}\label{user-interface-ui}}
+
+inputs
+
+\hypertarget{server}{%
+\subsubsection{Server}\label{server}}
+
+outputs
+
+\hypertarget{functionalities}{%
+\subsection{Functionalities}\label{functionalities}}
+
+Reactivity
+Communication between ui and server
+
+\hypertarget{tips}{%
+\subsection{Tips}\label{tips}}
+
+\hypertarget{deploying-the-application}{%
+\subsection{Deploying the Application}\label{deploying-the-application}}
+
+\hypertarget{to-go-further-3}{%
+\section{To go further\ldots{}}\label{to-go-further-3}}
+
+\hypertarget{extension-to-other-dedicated-packages}{%
+\subsection{Extension to other dedicated packages}\label{extension-to-other-dedicated-packages}}
+
+DT
+\ldots{}
+
+\hypertarget{improving-through-css-and-html}{%
+\subsection{Improving through CSS and HTML}\label{improving-through-css-and-html}}
+
+\hypertarget{interactive-tutorial}{%
+\subsection{Interactive Tutorial}\label{interactive-tutorial}}
+
+Incorporate Shiny within RMarkdown documents\ldots{}
+
+\hypertarget{documentation-and-books}{%
+\subsection{Documentation and Books}\label{documentation-and-books}}
+
+Shiny gallery
+Books
 
 \hypertarget{digestifs}{%
 \chapter*{Digestifs}\label{digestifs}}
