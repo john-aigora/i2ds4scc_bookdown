@@ -126,7 +126,7 @@
 
 \title{Data Science for Sensory and Consumer Scientists}
 \author{John Ennis, Julien Delarue, and Thierry Worch}
-\date{2022-01-19}
+\date{2022-01-20}
 
 \begin{document}
 \maketitle
@@ -654,7 +654,7 @@ Related to the idea of reproducible research is that of standardized reporting. 
 \item
   \textbf{Consistent Formatting} When standardized reporting is used, outputs created by a team are formatted consistently regardless of who creates them. This consistency helps consumers of the reports - whether those consumers are executives, clients, or other team members - quickly interpret results.
 \item
-  \textbf{Upstream Data Consistency} Once a standardized workflow is put in place, consistency of data formatting gains a new importance as producers of the report can save significant time by not having to reformat new data. This fact puts pressure on the data collection produce to become more consistent, which ultimately supports knowledge management (see Chapter \ref{graph-db}).
+  \textbf{Upstream Data Consistency} Once a standardized workflow is put in place, consistency of data formatting gains a new importance as producers of the report can save significant time by not having to reformat new data. This fact puts pressure on the data collection produce to become more consistent, which ultimately supports knowledge management (ADD DATABASE REFERENCES).
 \item
   \textbf{Shared Learning} Once a team combines standardized reporting with tools for online collaboration such as GitHub (see Appendix \ref{git-and-github}), any improvement to reporting (for example, to a table, chart, text output, or even to the reporting format itself) can be leveraged by all members of the team. Thus improvements compound over time, to the benefit of all team members.
 \end{itemize}
@@ -695,7 +695,7 @@ Since Fisher's time, ideas around experimental design have relaxed somewhat, wit
 Experiments and certain planned inquires provide some exceptions and partial exceptions to this rule. They do this because one line of data analysis was planned as a part of the experiment or inquiry. \emph{Even here, however, restricting one's self to the planned analysis -- failing to accompany it with exploration -- loses sight of the most interesting results too frequently to be comfortable.} (Emphasis original)"
 \end{quote}
 
-In this book, we take no strong opinions on this topic, as they belong more properly to the study of statistics than to data science. However, we agree that results from an experiment explicitly designed to test a specific hypothesis should be viewed as more trustworthy than results incidentally obtained. Moreover, as we will describe in Chapters \ref{machine-learning} and \ref{linear-programming}, well-selected sample sets support more generalizable predictions from machine learning models.
+In this book, we take no strong opinions on this topic, as they belong more properly to the study of statistics than to data science. However, we agree that results from an experiment explicitly designed to test a specific hypothesis should be viewed as more trustworthy than results incidentally obtained. Moreover, as we describe in Chapter \ref{machine-learning}, well-selected sample sets support more generalizable predictions from machine learning models.
 
 \hypertarget{execute}{%
 \subsubsection{Execute}\label{execute}}
@@ -3045,7 +3045,7 @@ However, this type of approach also comes with drawbacks\footnote{Market researc
 \hypertarget{crossover-designs}{%
 \subsubsection{Crossover designs}\label{crossover-designs}}
 
-For any sensory experiment that implies the evaluation of more than one sample, first-order carryover effects should be expected. That is to say, the evaluation of a sample may affect the evaluation of the next sample even though sensory scientists try to lower such effects by asking panelists to pause between samples and use of appropriate mouth-cleansing techniques (drinking water, eating unsalted crackers, or a piece of apple, etc.). The use of crossover designs is thus highly recommended {[}REF REF (MacFie et al., 1989){]}. Williams's Latin-Square designs offer a perfect solution to to balance carryover effects. They are very simple to create using the \texttt{williams()} function from the \texttt{\{crossdes\}} package. For instance, if you have five samples to test, \texttt{williams(5)} would create a 10x5 matrix containing the position at which each of three samples should be evaluated by 10 judges (the required number of judges per design block).
+For any sensory experiment that implies the evaluation of more than one sample, first-order carryover effects should be expected. That is to say, the evaluation of a sample may affect the evaluation of the next sample even though sensory scientists try to lower such effects by asking panelists to pause between samples and use of appropriate mouth-cleansing techniques (drinking water, eating unsalted crackers, or a piece of apple, etc.). The use of crossover designs is thus highly recommended (\citet{Macfie1989}). Williams's Latin-Square designs offer a perfect solution to to balance carryover effects. They are very simple to create using the \texttt{williams()} function from the \texttt{\{crossdes\}} package. For instance, if you have five samples to test, \texttt{williams(5)} would create a 10x5 matrix containing the position at which each of three samples should be evaluated by 10 judges (the required number of judges per design block).
 Alternately, the \texttt{WilliamsDesign()} function in \texttt{\{SensoMineR\}} allows you to create a matrix of samples (as numbers) with numbered Judges as row names and numbered Ranks as column names. You only have to specify the number of samples to be evaluated, as in the example below for 5 samples.
 
 \begin{Shaded}
@@ -3105,7 +3105,7 @@ Note that it would also be possible to start from an optimal design and expand i
 \hypertarget{balanced-incomplete-block-designs-bibd}{%
 \subsubsection{Balanced incomplete block designs (BIBD)}\label{balanced-incomplete-block-designs-bibd}}
 
-Sensory and consumer scientists may sometimes consider using incomplete designs. That is to say, experiments in which each judge evaluates only a subset of the complete product set ({[}REF{]}Wakeling \& MacFie, 1995). In this case, the number of samples evaluated by each judge remains constant but is lower than the number of products included in the study. You might want to choose this approach for example if you want to reduce the workload for each panelist and limit sensory fatigue, boredom and inattention. It might also be useful when you cannot ``afford'' a complete design because of sample-related constraints (limited production capacity, very expensive samples, etc.). The challenge then, is to balance sample evaluation across the panel as well as the context (i.e.~other samples) in which each sample is being evaluated. For such a design you thus want each pair of products to be evaluated together the same number of times.
+Sensory and consumer scientists may sometimes consider using incomplete designs. That is to say, experiments in which each judge evaluates only a subset of the complete product set (\citet{Wakeling1995}). In this case, the number of samples evaluated by each judge remains constant but is lower than the number of products included in the study. You might want to choose this approach for example if you want to reduce the workload for each panelist and limit sensory fatigue, boredom and inattention. It might also be useful when you cannot ``afford'' a complete design because of sample-related constraints (limited production capacity, very expensive samples, etc.). The challenge then, is to balance sample evaluation across the panel as well as the context (i.e.~other samples) in which each sample is being evaluated. For such a design you thus want each pair of products to be evaluated together the same number of times.
 The \texttt{optimaldesign()} function of \texttt{\{SensoMineR\}} can be used to search for a balanced incomplete block design.
 
 \begin{Shaded}
@@ -3124,7 +3124,7 @@ Incomplete balanced designs also have drawbacks. First, from a purely statistica
 \subsubsection{Incomplete designs for hedonic tests: Sensory informed designs}\label{incomplete-designs-for-hedonic-tests-sensory-informed-designs}}
 
 One may also be tempted to use incomplete balanced block designs for hedonic tests. However, proceeding this way is likely to induce framing bias. Indeed, each participant to the consumer tests will only see part of the product set which would affect their frame of reference if the subset of product they evaluate only covers a limited area of the sensory space. For example, suppose you are designing a consumer test of chocolate chip cookies and that a majority of cookies are made with milk chocolate while few cookies are made with dark chocolate chips. If a participant only evaluates samples that have milk chocolate chips, this participant will not know about the existence of dark chocolate and will potentially give very different scores compared to what they would have if they had a full view of the product category.
-To reduce the risks incurred by the use of BIBD, an alternative strategy is to use a sensory informed design. Its principle is to allocate each panelist a subset of products that best cover the sensory diversity of the initial product set. Pragmatically, this amounts to maximizing the sensory distance between drawn products. Of course, this supposes that one has sensory data to rely on in the first place.
+To reduce the risks incurred by the use of BIBD, an alternative strategy is to use a sensory informed design. Its principle is to allocate each panelist a subset of products that best cover the sensory diversity of the initial product set. Pragmatically, this amounts to maximizing the sensory distance between drawn products (\citet{Franczak2015}). Of course, this supposes that one has sensory data to rely on in the first place.
 
 \begin{center}\includegraphics[width=10.57in]{images/sensory_doe} \end{center}
 
@@ -4642,6 +4642,11 @@ The content to build out your story at this moment is very dependent on the cont
 
 This is the moment you close your story; it is when you should tie it back to the beginning to somehow recap the problem, highlight the basic idea and conclude the story. You should finish your presentation in a very impactful way, re-emphasizing and repeating your main point, what you want to stick deeply in your audience's mind. Once more, the content at the end of the story can be somehow dependent on the context of the situation, but in a consulting world, it would likely include a conclusion of the topic and also next steps and further recommendations.
 
+\hypertarget{reformulate-reformulate2}{%
+\subsection{Reformulate \{reformulate2\}}\label{reformulate-reformulate2}}
+
+ADD COMMENTS ABOUT REFORUMULATING FOLLOWING FEEDBACK
+
 \hypertarget{to-go-further-1}{%
 \section{To go further\ldots{}}\label{to-go-further-1}}
 
@@ -5796,7 +5801,9 @@ Technicalities:
 \hypertarget{what-is-shiny}{%
 \subsection{What is Shiny}\label{what-is-shiny}}
 
-What is shiny, and how does it work
+Shiny is an R package (\texttt{\{shiny\}}) that allows you to directly create from R interactive web applications. The goal of shiny is to `convert' your R code into an application that can be accessible and used by anyone through your web browser, without seeing any line of code, nor without having to be familiar with R.
+
+To so, \texttt{\{shiny\}} requires some carefully curated set of user interface (UI) functions that are s
 
 \hypertarget{starting-with-shiny}{%
 \subsection{Starting with Shiny}\label{starting-with-shiny}}
@@ -5846,9 +5853,9 @@ Incorporate Shiny within RMarkdown documents\ldots{}
 Shiny gallery
 Books
 
-\hypertarget{digestifs}{%
-\chapter*{Digestifs}\label{digestifs}}
-\addcontentsline{toc}{chapter}{Digestifs}
+\hypertarget{part-digestifs}{%
+\part*{Digestifs}\label{part-digestifs}}
+\addcontentsline{toc}{part}{Digestifs}
 
 \hypertarget{next-steps}{%
 \chapter{Next Steps}\label{next-steps}}
