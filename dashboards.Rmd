@@ -20,29 +20,40 @@ This is the role of dashboard: interactivity of results/representations based on
 
 ## Introduction to Shiny through an Example
 
-To illustrate what a Shiny Application, we propose to build a simple application that will:
- - Import a data containing the results of a sensory test (*Sensory Profile.xlsx*)
- - Compute automatically the table of means by product for all the sensory attributes
- - Represent these profiles in either a spider plot, or a circular barchart
- - Provide the possibility to show/hide products
- - Possibility to show/hide and order the attributes
- - Allow downloading the final plot to our computer
- 
-Technicalities:
- - Allow importing a file to the application that is stored somewhere in our computer
- - The data file should have a certain structure: the Panelist and Product column should be called *Judge* and *Product*, and all the attributes should be sensory attributes (quantitative)
- - Create an option that controls the type of graph to create
- - Retrieve from the data imported the list of products and present it as a checkbox list
- - Retrieve from the data imported the list of attributes that can be re-arranged manually
- - Create and provide a way to save the final plot to your computer 
+Before digging straight into the code, let's shortly introduce what 
 
 ### What is Shiny
 
-Shiny is an R package (`{shiny}`) that allows you to directly create from R interactive web applications. The goal of shiny is to 'convert' your R code into an application that can be accessible and used by anyone through your web browser, without seeing any line of code, nor without having to be familiar with R.
+Shiny is an R package (`{shiny}`) that allows you to directly create from R interactive web applications. The goal of shiny is to 'convert' your R code into an application that can be accessible and used by anyone through their web browser, without seeing any line of code, nor being familiar with R.
 
-To so, `{shiny}` requires some carefully curated set of user interface (UI) functions that are s
+This procedure is made available as `{shiny}` uses some carefully curated set of user interface (UI) functions that generate the HTML, CSS, and JavaScript code needed for most common tasks. In most cases, further knowledge of these languages is not required...unless you want to push your application further. Additionally, it introduces a new way of programming called *reactive programming*, which tracks automatically dependencies between code: When a change in an input is detected, any code that is affected by this change will automatically be updated accordingly. 
 
 ### Starting with Shiny
+
+To create your very first shiny application, you can click on R studio in the *new page* icon and select *Shiny Web App...*
+Once you filled in the relevant information (name, author), you can then decide whether you want to create one unique file (`app.R`) or multiple files (`ui.R` and `server.R`).
+
+Both solutions are equivalent and work the same: In both cases, a `ui()` and a `server()` function are generated. Due to better readability, and to ease its maintenance over time, we recommend to use the single file for short applications, and to use multiple files for larger applications (larger meaning with more code lines).
+
+For our short application, we consider that a single file was more convenient and hence we used that solution.
+
+#### Illustration 
+
+For illustration, let's consider a simple application in which we import a data set that contains sensory data, as collected from a trained panel. In this example, the data set structure follows the one in *Sensory Profile.xlsx*. 
+
+For simplification purposes, the code developed for this application requires that the data set contains one column called *Judge* (containing the panelist information), one column called *Product* (containing the product information), all the other columns being quantitative (corresponding to the sensory attributes).
+
+The goal of the application is then to compute from this raw data set the sensory profiles of the products (mean table with attributes in rows, and products in columns) that we display on screen. Furthermore, we also represent these sensory profiles graphically in a spider plot or in a circular bar plot. 
+Since the main goal of shiny application is in its reactivity and interactivity, we give the user the opportunity to remove/add/reorder the attributes on the table and plots, and to hide/show products to increase visibility.
+
+Once the graphics match our needs, we also propose to download it as a *.png* file to integrate it in our report.
+
+From a learning perspective, this application will then introduce specifically to
+
+ - Importing an external file to the application;
+ - Create options that that are both independent (type of graph to produce) and depend of the file imported (list of attributes and products);
+ - Run some analyses (compute the means) and display the results as a table and as a plot;
+ - Export the graph to your computer as a png file. 
 
 #### User Interface (ui)
 

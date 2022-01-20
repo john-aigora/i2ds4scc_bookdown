@@ -89,7 +89,7 @@ server <- function(input, output) {
     req(mydata(), input$attribute, input$product)
     mymean <- mydata() %>% 
       mutate(across(c("Product", "Attribute"), as.character)) %>%
-      filter(Attribute %in% input$attribute, Product %in% input$product) %>% 
+      filter(Attribute %in% input$attribute) %>% 
       mutate(Product = factor(Product, input$product),
              Attribute = factor(Attribute, input$attribute),
              Score = format(round(Score, 2), nsmall=2)) %>% 
