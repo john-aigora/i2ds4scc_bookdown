@@ -48,16 +48,30 @@ Since the main goal of shiny application is in its reactivity and interactivity,
 
 Once the graphics match our needs, we also propose to download it as a *.png* file to integrate it in our report.
 
-From a learning perspective, this application will then introduce specifically to
+From a learning perspective, this application introduces you specifically to:
 
  - Importing an external file to the application;
  - Create options that that are both independent (type of graph to produce) and depend of the file imported (list of attributes and products);
  - Run some analyses (compute the means) and display the results as a table and as a plot;
  - Export the graph to your computer as a png file. 
 
-#### User Interface (ui)
+#### User Interface
 
-inputs
+The user interface (UI) is the part of the application that controls what the user sees and controls. 
+In our example, the UI is separated into two parts: 
+
+ - the left panel which contains the options that the user can manually change; 
+ - the right (or main) panel which contains the outputs.
+ 
+In the *app.R* file, this information is stored in the `ui()` function, and the two panels can be found in `sidebarPanel()` and in `mainPanel()` respectively.
+
+In `sidebarPanel()`, all the options are set up. These options include `fileInput()` for importing the data set, or `radioButtons()` to control the type of plot to generate. A large list of options exist including `numericInput()`, `sliderInput()`, `textInput()`, `passwordInput()`, `dateInput()`, `selectInput()`, `checkboxInput()` etc. Note that we also extended our library of options by adding `checkboxGroupInput()` from the `{shinyjs}` package^[To use `{shinyjs}`, you need to load the library and add `useShinyjs(),` at the start of your `ui()` code.].
+
+In some cases, the option of interest cannot be defined on the UI side since they depend on the data itself. It is the case for the product or attribute selection, which are then defined using `uiOutput()`. As we will seen in the next section, these options are created on the server side.
+
+On `mainPanel()`, `tabsetPanel()` and `tabPanel()` control for the design of the output section. In our example, we create two tabs, one for the table and one for the graph, but we could have opted out to print everything on one page. 
+
+In our case, the `mainPanel()` only aims in exporting results computed on the server side. Depending on the type of output generated, the corresponding function should be used. In this case, we use `tableOutput()` to retrieve the table generated with `renderTable()`, `plotOutput()` to retrieve the plot generated with `renderPlot()`, or `downloadButton()` to retrieve the plot generated with `downloadHandler()`. Generally speaking, the `xxxOutput()` function (UI side) is used to retrieve the output generated (server side) from the corresponding `renderXxx()` function.
 
 #### Server
 
@@ -69,6 +83,10 @@ Reactivity
 Communication between ui and server
 
 ### Tips
+
+`{shiny}` provides tools to design your outputs the way you want. In practice, each panel is based on tables with as many rows as needed, and up to 12 columns. When not specified, the whole width of the screen is used, but this could be controlled (or options could be set side by side) through the `column()` function. 
+
+The `tableOutput()`/`renderTable()` combination is very handy, yet limited in its layout. Many additional packages provide solution to build more flexible tables. In particular, we recommend the use of the `{DT}` package as it provides a large variety of design options, including coloring cells or text, merging rows or columns, search/filter fields, interactivity, etc. This is then done through the functions `renderDataTable()` and `dataTableOutput()`, or its concise forms `renderDT()` and `DTOutput()`^[the table should be generated using `datatable()`.]. 
 
 ### Deploying the Application
 
