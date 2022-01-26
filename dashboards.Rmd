@@ -75,12 +75,113 @@ In our case, the `mainPanel()` only aims in exporting results computed on the se
 
 #### Server
 
-outputs
+The server side of the application is where all the computations are being performed, including the construction of tables, figures, etc.
 
-### Functionalities
+Since the options defined on the UI side should affect the computations performed (e.g. our decision on the type of plot to design should affect the plot generated), we need to communicate these decisions to the server, and use them.
+On the server side, any information (or option) passed to the server side is done through `input$name_option`. In our previous example regarding the type of graph to generate, this is shown as `input$plottype`, as defined by:
 
-Reactivity
-Communication between ui and server
+```{r}
+radioButtons("plottype", "Type of Plot to Draw:", 
+             choices=c("Spider Plot"="line", "Circular Barplot"="bar"), 
+             selected="line", inline=TRUE)
+```
+
+In this case, if the user select *Spider Plot* (resp. *Circular Barplot*), `input$plottype` will take the value *line* (resp. *bar*).
+
+Reversely, any information that is being build on the server side and that should be passed on the UI part of the application can either be done via the `xxxOutput()`/`renderXxx()` combination presented before (useful for showing results), or by using the `renderUI()`/`uiOutput()` combination (useful for options that are *server-dependent*). 
+
+Following a similar communication system than the one from UI to server, the part generated on the server side is stored as `output$name_option` (defined as `renderUI()`) and is captured on the UI side using `uiOutput("name_option")`.
+
+In our example, the latter combination is used for the two options that require reading the data set first, namely the selection of attributes and the selection of products.
+
+```{r}
+
+# server side:
+  output$attribute <- renderUI({
+    
+    req(mydata())
+    
+    items <- mydata() %>% 
+      pull(Attribute) %>% 
+      as.character() %>% 
+      unique()
+    
+    selectInput("attribute", "Select the Attributes (in order) ", choices=items, selected=items, multiple=TRUE)
+    
+  })
+
+  output$product <- renderUI({
+    
+    req(mydata())
+    items <- mydata() %>% 
+      pull(Product) %>% 
+      unique()
+    
+    checkboxGroupInput("product", "Select the Products to Display:", choices=items, selected=items)
+    
+  })
+  
+# UI side:
+  uiOutput("attribute")
+  uiOutput("product")
+
+```
+
+Lastly, we have elements that are only relevant on the server side, namely the computation themselves. In our example, these are results of a function called `reactive()`.
+
+Reactivity (and its corresponding `reactive()` function) is a great *lazy* feature of `{shiny}` that was designed so that the computations are only performed when necessary, i.e. when the changes applied in the options affect the computations. This laziness is of great power since only computations that are strictly needed are being performed, hence increasing speed by limiting the computation power required to its minimum. 
+
+Let's break this down in a simple example:
+
+```{r}
+  mydata <- reactive({
+    
+    req(input$datafile)
+    data <- readxl::read_xlsx(input$datafile$datapath, sheet=1) %>% 
+      pivot_longer(-c(Judge, Product), names_to="Attribute", values_to="Score") %>% 
+      mutate(Attribute = fct_inorder(Attribute), Score = as.numeric(Score)) %>% 
+      group_by(Product, Attribute) %>% 
+      summarize(Score = mean(Score)) %>% 
+      ungroup()
+    
+    return(data)
+    
+  })
+
+```
+
+
+In this section, we read the file that was selected through the `fileInput()` option called `datafile` from the UI side. Note that in this case, the path of the file is stored in the object called `datapath`, meaning that to access this file, we need to read `input$datafile$datapath`.
+
+Once read (here using `{readxl}`), we do some small transformations to the data before saving its final version in an object called `mydata`. Since this block of code only depends on `input$datafile` (UI side), this part will no longer be in use unless `datafile` is being updated or changed.
+
+For the mean computation, the same procedure applies as well: 
+
+```{r}
+  mymean <- reactive({
+    
+    req(mydata(), input$attribute, input$product)
+    mymean <- mydata() %>% 
+      mutate(across(c("Product", "Attribute"), as.character)) %>%
+      filter(Attribute %in% input$attribute) %>% 
+      mutate(Product = factor(Product, input$product),
+             Attribute = factor(Attribute, input$attribute),
+             Score = format(round(Score, 2), nsmall=2)) %>% 
+      pivot_wider(names_from=Product, values_from=Score)
+    
+    return(mymean)
+  })
+```
+
+For this `reactive()` block, `mymean` depends on `mydata`, `input$attribute`, and `input$product`. This means that if `datafile` (meaning that `mydata` changes), `input$attribute` and/or `input$product` change, the computations will be redone and `mymean` is getting updated.
+
+Remarks/Comments:
+
+ - Put in reactive as much code as possible: notice that we create the graphs in reactive, and we retrieve them when displaying the graph (thanks to laziness of reactive)
+ - Results from reactive should be called as a function: here we do not call it mydata by mydata(). If mydata had two comments, say mydata$data and mydata$properties, we would retrieve the element as mydata()$data for instance.
+ - Use of the function req() to avoid getting error: example with the options attribute and product
+ - Mention some alternative options, including reactiveEvent() etc. to add for instance a button that computations are only run if the button is being pushed. Mention that in our case, every time we remove an attribute/product, the application is busy: we could make it so that we only update the application after clicking on a button called "Update".
+
 
 ### Tips
 
