@@ -173,30 +173,38 @@ For the mean computation, the same procedure applies as well:
   })
 ```
 
-For this `reactive()` block, `mymean` depends on `mydata`, `input$attribute`, and `input$product`. This means that if `datafile` (meaning that `mydata` changes), `input$attribute` and/or `input$product` change, the computations will be redone and `mymean` is getting updated.
 
-Remarks/Comments:
+For this `reactive()` block, `mymean` depends on `mydata`, `input$attribute`, and `input$product`. This means that if `datafile` (read `mydata`), `input$attribute` and/or `input$product` change, the computations re-run and `mymean` is getting updated.
 
- - Put in reactive as much code as possible: notice that we create the graphs in reactive, and we retrieve them when displaying the graph (thanks to laziness of reactive)
- - Results from reactive should be called as a function: here we do not call it mydata by mydata(). If mydata had two comments, say mydata$data and mydata$properties, we would retrieve the element as mydata()$data for instance.
- - Use of the function req() to avoid getting error: example with the options attribute and product
- - Mention some alternative options, including reactiveEvent() etc. to add for instance a button that computations are only run if the button is being pushed. Mention that in our case, every time we remove an attribute/product, the application is busy: we could make it so that we only update the application after clicking on a button called "Update".
+For small and simple examples like ours, this domain of reactivity may be sufficient, and would be sufficient in many cases. There are however some few points that require a bit more explanations.
 
+First, we advise that you use `reactive()` as much as possible: In our example, we could have created the code to build the graph within `renderPlot()`. However, this way of coding is not efficient since it would always updated, even when it is not necessary. For small examples such as the one proposed here, this may not make much difference, but for larger applications it would have a larger impact. This is why we prefer to create the graphs in a `reactive()` instance, and simply retrieve it for display.
 
-### Tips
+Second, and as you may have seen already, the output of a `reactive()` section can be re-used in other sections. This means that just like in *regular coding*, you can save elements in R object that you can re-use later (e.g. `mydata`, `mymean`, or `myplot`). However, these elements act like functions, meaning that if you want to call them, you should do it as `mydata()` for instance. More generally, let's imagine that `mydata` is a list with two elements (say `mydata$element1` and `mydata$element2`), we would retrieve `element1` as `mydata()$element1`.
 
-`{shiny}` provides tools to design your outputs the way you want. In practice, each panel is based on tables with as many rows as needed, and up to 12 columns. When not specified, the whole width of the screen is used, but this could be controlled (or options could be set side by side) through the `column()` function. 
+Third, let's introduce the function `req()` that is used at the start of almost every block of code on the server side. To do so, let's take the example of `output$attribute` which starts with `req(mydata())`. The `req()` functions aims in requiring the object mentioned (here `mydata()`) before running: if `mydata()` doesn't exist, then `output$attribute` is set as `NULL`. This small line of code comes handy as it avoids returning errors until a data set is being loaded: How to read the list of attributes to consider from data that do not exist yet?
 
-The `tableOutput()`/`renderTable()` combination is very handy, yet limited in its layout. Many additional packages provide solution to build more flexible tables. In particular, we recommend the use of the `{DT}` package as it provides a large variety of design options, including coloring cells or text, merging rows or columns, search/filter fields, interactivity, etc. This is then done through the functions `renderDataTable()` and `dataTableOutput()`, or its concise forms `renderDT()` and `DTOutput()`^[the table should be generated using `datatable()`.]. 
+Finally, the application that we are developing here is *over-reactive* as every change we do will create update results. To highlight this, just remove some attributes from the list and you'll see the mean table or graphic being updated. In our small example, this is not too problematic since the application runs fast, but in other instances in which more computation is required, you may not want to wait that each little change done is being processed. To over come this, you can replace `reactive()` by `eventReactive()` by creating a button (e.g. *Run* or *Apply changes*) that will only trigger changes once pushed. This means that changes are only performed on a users' action.
 
 ### Deploying the Application
 
+To run your application, you can simply do it in two different ways from RStudio: You can either push the *Run app* button on the task bar of your script (a menu allows you to run the app in the Viewer window, or as a new window), or you can use the shortcut *CTRL*+*SHIFT*+*ENTER* (on windows). In this case, your computer (and RStudio) will use a virtual local server to build the application.
+
+Unfortunately, this solution is not sufficient in case you really want to share it with colleagues. In such case, you need to publish your app by installing it on a server. Ideally, you have access to a server that can host such application (check with your IT). If not, you can always create an account on <https://www.shinyapps.io/admin/>[https://www.shinyapps.io/admin/] and install it there. Note that there is a free registration option, which comes with limitations (number of applications to install). Also, before using their services, make sure that their conditions (privacy, protection of the data, etc.) suit you and your company policy.
+
 ## To go further...
+
+### Personalizing and Tuning your application
+
+Example of layouts
+
+`{shiny}` provides tools to design your outputs the way you want. In practice, each panel is based on tables with as many rows as needed, and up to 12 columns. When not specified, the whole width of the screen is used, but this could be controlled (or options could be set side by side) through the `column()` function. 
 
 ### Extension to other dedicated packages
 
-DT
-...
+The `tableOutput()`/`renderTable()` combination is very handy, yet limited in its layout. Many additional packages provide solution to build more flexible tables. In particular, we recommend the use of the `{DT}` package as it provides a large variety of design options, including coloring cells or text, merging rows or columns, search/filter fields, interactivity, etc. This is then done through the functions `renderDataTable()` and `dataTableOutput()`, or its concise forms `renderDT()` and `DTOutput()`^[the table should be generated using `datatable()`.]. 
+
+`plotly` for interactive graphs
 
 ### Improving through CSS and HTML
 
