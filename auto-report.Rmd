@@ -5,6 +5,7 @@ knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 
 ## What and why Automated Reporting?
 
+
 Effective communication of results is amongst the essential duties of sensory scientists...and so is the data collection, data preparation, data analysis etc. Worst, the sometimes tedious mechanics of report production together with the sheer volume of data that many scientists must process combine to make reporting design and nice story-telling an afterthought in too many cases.
 Although this should preferably not be happening, it is necessary sometimes as presentation deadlines approach and time becomes limited. 
 
@@ -18,6 +19,7 @@ Such solution seems ideal since it increases efficiency while reducing errors du
 
 
 ## Integrating reports within analyses scripts
+
 
 In this section, let's integrate our report building process within our data analysis. By doing so, we do not focus on building a story yet. Instead, we improve our way of working by exporting directly all the statistical outputs that could^[We say *could* as we are in a process of mass-exportation of results, most of them being used for building the story although they would not be kept in the final deck.] be useful for our future story-telling. By doing so, we increase efficiency (especially if code can then be re-used for other studies) by *killing two birds with one stone*: We simultaneously run our analysis, create usable content for our final presentation, while reducing errors due to manual processing.
 
@@ -35,6 +37,12 @@ Integrating reporting within the analysis part, or integrating the analysis with
 To improve way of work (efficiency) and to keep track of steps taken along the way
 -->
 
+
+Note that in this chapter on automated reporting, some results (tables, figures) that are being created in one of the first section will be re-used in subsequent sections. In case you do not read this chapter linearly, you might get errors as you might be calling objects that do not exist yet. We advise you to read through the previous sections, find the script where the elements (table or figure) is being generated, run it, and resume your read.
+
+
+<!--  --------------------------------- Excel ---------------------------------  -->
+
 ### Excel
 
 Although Excel is not our preferred tool for automated reporting, it is still one of the major ways to access and share data. Most data collection software offer the possibility to export data and results in Excel, while most data analysis software accept Excel format as inputs.  With the large use of Excel, it is no surprise that many of our colleagues or clients like to share data and results using spreadsheets. It is even less a surprise that R provides multiple solutions to import/export results from/to Excel. 
@@ -45,7 +53,7 @@ As its name suggests, `{writexl}` is dedicated to exporting tables to Excel thro
 
 Let's illustrate this by using our *Sensory Profile.xlsx* file: Let's imagine that we would like to reduce our data set by only considering products that are high in Protein:
 
-
+<!-- I guess the file path "data" can be confusing. It depends on the name of the folder of each user. Maybe instead of calling "data" it could be "name of the folder" or something like that? Or have a observation explaining that this is the name of the folder where the file is. Maybe it worth also a observation for output.-->
 ```{r}
 library(tidyverse)
 library(readxl)
@@ -75,7 +83,8 @@ write_xlsx(data,
            col_names = TRUE)
 
 ```
-
+<!-- When I run this code, I get an error for the last command saying: "Error in write_xlsx(data, path = file.path("output", "High Protein Products only.xlsx"),  : 
+  Argument x must be a data frame or list of data frames --> 
 The export of tables using the `{writexl}` package is easy, yet simplistic as it does not allow formatting the tables (except for some minor possibilities for the header), nor does it allow exporting multiple tables within the same sheet. For more advanced exporting options, the use of **{openxlsx}** package is preferred as it allows more flexibility in structuring and formatting the Excel output.
 
 With `{openxlsx}`, the procedure starts with creating a workbook object (e.g. `wb`) using the `createWorkbook()` function. We can add worksheets to `wb` through the `addWorksheet()` function. 
@@ -129,9 +138,14 @@ writeDataTable(wb,
                colNames = TRUE, rowNames = FALSE, 
                tableStyle = "TableStyleLight9")
 
+openXL(wb)
+
 ```
 
-Here again, `writeData()` and `writeDataTable()` gives us a lot of control on our export. For instance, we can:
+
+At any time, you can visualize the Excel file that is being produced without exporting it yet using `openXL()`. This function comes very handy as it allows you checking that the output looks like what you would wish for.
+
+As can be seen, `writeData()` and `writeDataTable()` give us a lot of control on our export. For instance, we can:
   * control where to print the data by using `startRow` and `startCol` (or alternatively `xy`: `xy = c("B",12)` prints the table starting in cell B12), hence allowing exporting multiple tables within the same sheet;
   * include the row names and column names through `rowNames` and `colNames`;
   * format the header using `headerStyle` (incl. color of the text and/or background, font, font size, etc.);
@@ -139,539 +153,730 @@ Here again, `writeData()` and `writeDataTable()` gives us a lot of control on ou
   * shape the borders using predefined solutions through `borders`, or customizing them with `borderStyle` and `borderColour`;
   * add a filter to the table using `withFilter`;
   * convert missing data to "#N/A" or any other string using `keepNA` and `na.string`.
-  
-- Additional formatting can be controlled using:
-  * `options()` to pre-define number formatting, border colors and style that will be applied automatically to each table;
-  * `modifyBaseFont()` to define the font name and font size;
-  * `freezePane()` to freeze the first row and/or column of the table using `firstRow = TRUE` and `firstCol = TRUE`;
-  * `createStyle()` to pre-define a style, or `addStyle()` to apply the styling to selected cells;
-  * `setColWidths` to control column width;
-  * `conditionalFormatting()` styling of cells when they meet pre-defined rules, as for instance to highlight significant p-values. 
-  
-When using `{openxlsx}`, we recommend to following procedure (same will apply for PowerPoint and Word): 
 
-- Start with setting the default parameters that should be applied to each table;
-- Create styles for text or table headers that you save in different elements, and that you apply where needed. 
 
-For illustration, let's consider *Sensory Profile.xlsx*. More precisely, we want to export the sensory profiles into a newly create Excel spreadsheet.
+Rather than using some pre-defined formatting as was the case with `tableStyle`, let's consider some more advanced options in which we control (almost) everything. Let's start with setting up the formatting style we would like to apply:
 
 
 ```{r}
-p_info <- read_xlsx(file_path, sheet = "Product Info") %>% 
-  dplyr::select(-Type)
-
-sensory <- read_xlsx(file_path, sheet="Data") %>% 
-  inner_join(p_info, by="Product") %>% 
-  relocate(Protein:Fiber, .after=Product)
-
-senso_mean <- sensory %>% 
-  pivot_longer(Shiny:Melting, names_to="Attribute", values_to="Score") %>% 
-  dplyr::select(-Judge) %>% 
-  pivot_wider(names_from=Attribute, values_from=Score, values_fn=mean)
-
-```
-
-
-To introduce conditional formatting with `{openxlsx}`, the sensory profiles are color coded as following: for each cell, the value is compared to the overall mean computed for that column and is colored in red (resp. blue) if it's higher (resp. lower) than the mean.
-In practice, the color style is pre-defined in two parameters called `pos_style` (red) and `neg_style` (blue) using `createStyle()`. The decision whether `pos_style` or `neg_style` should be used is defined by the `rule` parameter from the `conditionalFormatting()`^[In `conditionalFormatting()`, you can specify to which `rows` and `cols` the formatting applies. In this example, `cols` takes `2` because the first column contains the row names.] function.
-
-
-```{r openxlsx}
-library(openxlsx)
 
 # Pre-define options to control the borders 
 options("openxlsx.borderColour" = "#4F80BD")
 options("openxlsx.borderStyle" = "thin")
 
 # Automatically set Number formats to 3 values after the decimal
-options("openxlsx.numFmt" = "0.000")
+options("openxlsx.numFmt" = "0.0")
 
-# Create a header style in which 
-  # a blue background is used,
-  # borders on top and on the bottom, 
-  # the text is centered and is bold
+# Change the font to Calibri size 10
+modifyBaseFont(wb,fontName = "Calibri", fontSize = 10)
 
+# Header Style (blue background, top/bottom borders, text centered/bold)
 headSty <- createStyle(fgFill = "#DCE6F1",
                        border = "TopBottom",
                        halign = "center",
                        textDecoration = "bold")
 
-# Data preparation
-senso_mean <- sensory %>% 
-  group_by(Product) %>% 
-  summarise(across(where(is.numeric), mean)) %>% 
-  tibble::column_to_rownames(var = "Product")
+```
 
-overall_mean <- apply(senso_mean, 2, mean)
+  <!-- Is there a parentheses missing in 'setColWidths' ? -->
+Note that many more formatting options can be configured through:
 
-# Create workbook object
-wb <- openxlsx::createWorkbook()
+  * `options()` to pre-define number formatting, border colors and style, etc.;
+  * `modifyBaseFont()` to define the font name and font size;
+  * `freezePane()` to freeze the first row and/or column of the table;
+  * `createStyle()` to pre-define a style, or `addStyle()` to apply the styling to selected cells;
+  * `setColWidths` to control column width;
+  * `conditionalFormatting()` to format cells based on pre-defined conditions (see next for an example). 
+  
+Let's export again the sensory profiles in a second sheet after applying these formatting:
 
-# Change the font to Calibri size 10
-modifyBaseFont(wb,fontName = "Calibri", fontSize = 10)
 
-# Add a new worksheet
-addWorksheet(wb, sheetName = "Mean", gridLines = FALSE)
+```{r}
+addWorksheet(wb, sheetName = "Mean (manual formatting)", gridLines = FALSE)
 
-# Write table: note that 
-writeDataTable(wb,
-               sheet = "Mean",
-               x = senso_mean, 
-               startCol = 1,
-               startRow = 1,
-               colNames = TRUE, rowNames = TRUE, 
-               tableStyle = "TableStyleLight9")
+# Freeze first row and first column
+freezePane(wb, sheet=2, firstRow=TRUE, firstCol=TRUE)
 
-# Freezing the table
-freezePane(wb, sheet = "Mean", firstRow = TRUE, firstCol = TRUE)
+# Export the data using writeData
+writeData(wb,
+          sheet =2,
+          x = senso_mean, 
+          startCol = 1,
+          startRow = 1,
+          colNames = TRUE, rowNames = FALSE, 
+          headerStyle = headSty)
+
+openXL(wb)
+
+```
+
+
+You'll notice that the same table is now presented in a fairly different way. 
+
+Let's now consider a third export of the sensory profiles, with an additional twist: for a given variable (i.e. column), the value is colored in red (resp. blue) if it is higher (resp. lower) than its mean. To do so, we need to use conditional formatting.  
+
+Let's start with creating two pre-defined parameters called `pos_style` (red) and `neg_style` (blue) using `createStyle()`that we will use to color the different cells. Let's also compute the overall mean per attribute.
+
+
+```{r openxlsx}
 
 # Styles for conditional formatting
 pos_style <- createStyle(fontColour = "firebrick3", bgFill = "mistyrose1")
 neg_style <- createStyle(fontColour = "navy", bgFill = "lightsteelblue")
 
-# Adding formatting to the second column
-conditionalFormatting(wb,
-                      sheet = "Mean", 
-                      cols  = 2,
-                      rows  = 1 + 1:nrow(senso_mean), 
-                      rule  = paste0(">",overall_mean[2]),
-                      style = pos_style)
-
-conditionalFormatting(wb,
-                      sheet = "Mean",
-                      cols  = 2,
-                      rows  = 1 + 1:nrow(senso_mean), 
-                      rule  = paste0("<",overall_mean[2]),
-                      style = neg_style)
-
-setColWidths(wb, sheet = "Mean",
-             cols = 1:(1+ncol(senso_mean)), widths = 12)
+# Compute the overall mean
+overall_mean <- senso_mean %>% 
+  summarize(across(where(is.numeric), mean))
 
 ```
 
 
-The file is created using `saveWorkbook()` by specifying the name of the workbook `wb` and its path through `file`. In case such workbook already exists, it can be overwritten using `overwrite`. 
+Let's then create a new worksheet in which we print the data of interest:
 
-TIPS: At any time, you can visualize your file using `openXL()`: This function opens within Excel the temporary file that is currently being built, hence allowing you to double-check that your code matches your expectations.
+```{r}
+
+# Add a new worksheet
+addWorksheet(wb, sheetName = "Conditional Formatting", gridLines=FALSE)
+
+# Write table: note that 
+writeDataTable(wb,
+               sheet = 3,
+               x = senso_mean, 
+               startCol = 1,
+               startRow = 1,
+               colNames = TRUE, rowNames = FALSE)
+
+```
+
+
+Finally, we color the cells according to the rules that was defined earlier. To do so, the decision whether `pos_style` or `neg_style` should be used is defined by the `rule` parameter from the `conditionalFormatting()`^[In `conditionalFormatting()`, you can specify to which `rows` and `cols` the formatting applies. In this example, `cols` takes `2` because the first column contains the row names.] function.
+
+
+```{r}
+# Adding formatting to the second column
+for (v in 1:ncol(overall_mean)){
+  
+  conditionalFormatting(wb,
+                        sheet = 3,
+                        cols  = v + 3,
+                        rows  = 1 + 1:nrow(senso_mean), 
+                        rule  = paste0(">", overall_mean[1,v]),
+                        style = pos_style)
+  
+  conditionalFormatting(wb,
+                        sheet = 3,
+                        cols  = v + 3,
+                        rows  = 1 + 1:nrow(senso_mean), 
+                        rule  = paste0("<", overall_mean[1,v]),
+                        style = neg_style)
+  
+}
+
+openXL(wb)
+
+```
+
+
+Few things should be noted: 
+
+  * We want to run this for each sensory attribute, hence the `for` loop that goes from 1 to the number of columns stored in `overall_mean` (`overall_mean` only contains the overall mean scores for the sensory attributes);
+  * `senso_mean` however contains 3 extra columns: `Product`, `Protein`, and `Fiber` hence the parameter `cols = v + 3`;
+  * We apply the formatting to all the rows except the header, hence `rows = 1 + 1:nrow(senso_mean)`;
+  * Finally, we apply `pos_style` (resp. `neg_style`) if the value is larger (resp. lower) than the overall mean for that attribute using `rule = paste0(">", overall_mean[1,v])`.
+ 
+
+Note that once the spreadsheet is complete, we create the file using `saveWorkbook()` by specifying the name of the workbook `wb` and its path through `file`. In case such workbook already exists, it can be overwritten using `overwrite`. 
+
+```{r}
+
+saveWorbook(wb, file="temp/excel export.xlsx")
+
+```
+ <!-- I got this message when I ran this last code saying: Error in saveWorbook(wb, file = "temp/excel export.xlsx") : 
+  could not find function "saveWorbook" -->
 
 For more details on using **{openxlsx}** see <https://rdrr.io/cran/openxlsx/>.
 
+
+<!--  --------------------------------- PowerPoint ---------------------------------  -->
+
+
 ### PowerPoint
-
-```{r}
-library(tidyverse)
-library(officer)
-library(flextable)
-```
-
-With `{officer}`, the procedure starts with creating a powerpoint object `pptx_obj` using the `read_pptx()` function, to which we add slides through the `add_slide()` function. 
-On a given worksheet, any type of content (text, graph, table) can be exported using `ph_with()` (ph ~ placeholder) which controls where to write the content through the `location` and `ph_location` options.
-
-Through these different functions, many additional formatting procedure can be applied.
-
-- `add_slide()` with arguments:
-  * `layout` type of slide;
-  * `master` theme of the deck;
-  
-
 
 #### Creating a PowerPoint Deck
 
-**Key functions:**
-`read_pptx(path)` `add_slide(x, layout, master)` `layout_summary(x)` 
+
+Throughout the years, PowerPoint became one of the main support for presenting results, whether it is in academia, in conference, or in companies. It is hence important for us to show how to generate reports in PowerPoint from R directly. This can be done in different ways, yet we propose to use the `{officer}`^[It should be noted that {officer} contains conflicting function names with other packages we use (e.g. `read_xlsx()`). To ensure you use the right function, call the function from the package of interest (e.g. `readxl::read_xlsx()`).] package, as its application is vast while still remaining easy to use.
+
+
+```{r}
+library(officer)
+```
+
+
+With `{officer}`, the procedure starts with creating a PowerPoint object (`pptx_obj`) using the `read_pptx()` function. 
+
 
 ```{r 1.1 creating a PPT deck}
-pptx_obj <- read_pptx() # new empty file
-pptx_obj <- pptx_obj %>% 
-  add_slide(layout  = 'Title and Content', master = "Office Theme")
 
-class(pptx_obj)
+pptx_obj <- read_pptx() # new empty file
+
+```
+
+
+A blank Deck is by default set up with the *Office Theme*. To use a custom theme, we must create a Deck using the PowerPoint software and use it as input. Let's import the *intergral.pptx* template:
+
+ <!-- I guess it is a good idea to add a note to clarify "data" and "templates"--> 
+ <!-- Would the name be "integral" instead of "intergral"? --> 
+```{r themes2}
+
+pptx_obj2 <- read_pptx(file.path("data", "templates", "intergral.pptx"))
+
+```
+
+
+To inspect the content of the template, we use `layout_summary()`:
+
+```{r}
 
 pptx_obj %>%
   layout_summary()
 
-pptx_obj %>% 
-  print(target = file.path("output","example_1.pptx"))
-```
-
-#### PowerPoint Themes
-
-A blank Deck is by default set up with the *Office Theme*. To use a custom theme, we must create a Deck using the Powerpoint software and use it as input.
-
-Loading a template with a custom theme
-```{r themes2}
-pptx_obj <- read_pptx(file.path("data", "templates", "intergral.pptx"))
-
-pptx_obj %>% 
+pptx_obj2 %>% 
   layout_summary()
 
-pptx_obj <- pptx_obj %>% # add slide
-  add_slide(layout = "Title and Content", master = "Integral")
+```
+
+
+As can be seen by `layout_summary()`, the template imported (also called **master**, which is defined here as *Office Theme*) proposes 7 types of slides including *Title Slide*, *Title and Content*, *Section Header*, *Two Content*, *Comparison*, *Title Only*, and finally *Blank* (the *intergral.pptx* template has 11 different types of slides). Each of these slides present some pre-defined properties (e.g. a box for text of tables/images, a header etc.). Let's look at the properties of *Title and Content* using `layout_properties()`
+
+
+```{r}
+pptx_obj %>% 
+  layout_properties() %>% 
+  filter(name == "Title and Content")
+```
+
+
+This code provides more details about the different sections, their identifier and position of the slide. This information will be particularly useful when we will want to export certain information in some particular areas.
+
+Unfortunately, `{officer}` does not provide a function similar to `openxlsx::openXL()` which allows visualizing the file that is currently being build. Instead, we need to save the document directly on the disk using the `print()` function, which takes as entries the PowerPoint file to export (here `pptx_obj`) and its output location.
+
+
+#### Adding/Moving/Removing Slides
+
+
+With `{officer}`, various actions can be done on the slides. The first logical action consists in adding a new slide to a presentation, in which we will later on write some text, tables, figures, etc. Such action can be done using `add_slide()`, in which we inform the type of slide to add, and from which master:
+
+ <!-- Should it be "<-" instead of "="?--> 
+```{r}
+
+master = "Office Theme"
+pptx_obj <- pptx_obj %>% 
+  add_slide(layout = 'Title and Content', master = master)
 
 ```
 
 
-#### Placeholders and Shapes
+This code will add a *Title and Content* slide to your deck.
 
-- `ph_location_type()` allows use predefined placeholders for content:
-  * title, body
-  * ctrTitle, subTitle, dt, ftr, sldNum
+Additional operations on the slides themselves can be done. In particular, you can re-organize your deck by changing the orders of your slides using `move_slide()`, delete slides that are no longer needed through `remove_slide()`, or modify a pre-existing slides by making it active using `on_slide()` (by default, the last slide created is the active one).
+<!-- I guess it might be interesting an example showing the use of those functions. -->
 
-```{r 2.1 shapes1}
-# Example 1
+#### Positioning Information to the Slide
+
+
+On a given slide, any type of content (text, graph, table, etc.) can be exported. To do so, we need to inform where to write what.
+
+As we will see in the next sections, the *what* can be any R element including simple text, tables, figures, etc. So let's ignore it for the moment, and let's focus on the *where*. 
+To inform where to print elements on the slide, the function `ph_with()` (*ph* stands for *placeholder*) is used. In practice, `ph_with()` comes with the parameter `location`, which takes as input a *placeholder location object* pre-defined by the function `ph_location()` or one of its derivative, one of the most useful one being `ph_location_type()`. To do so, simply provide the name stored in the column type from the `layout_properties()` output presented before, as following:
+
+
+```{r}
+
 my_data <- c("My functions are:", "ph_with", "ph_location_type")
 
-# first slide
-pptx_obj <- read_pptx() %>%
-  add_slide(layout = "Title and Content", master = "Office Theme")
-
 pptx_obj <- pptx_obj %>%
+  ph_with(value = "My first title", location = ph_location_type(type = "title")) %>% 
   ph_with(value = my_data, location = ph_location_type(type = 'body'))
 
-pptx_obj <- pptx_obj %>% 
-  on_slide(index = 1) # set active slide
-
-slide_summary(pptx_obj) # technical content summary
-
-my_data <- head(mtcars)[,1:4]
-
-# second slide
-pptx_obj <- pptx_obj %>% 
-    add_slide(layout = "Title and Content", master = "Office Theme")
-
-pptx_obj <- pptx_obj %>% 
-  ph_with(value = my_data, location = ph_location_type(type = 'body')) 
-
-pptx_obj %>%
-  print(target = file.path("output","example_2.pptx"))
-
 ```
 
-- `ph_location()` allows to specify exact positions for content
-  * for left/top/width/height units are inches
 
-```{r 2.3 shapes3}
-# Example 3
-# We add a text box item in a custom position
-# The same can be done for an image, logo, custom objects, etc.
+This will add a title ("My first title") and the text stored in `my_data` to the *body* of the slide (*Title and Content*) created previously.
 
-my_data <- "My text"
+Other pre-defined alternatives to `ph_location()` include:
 
-pptx_obj <- read_pptx() %>%
-  add_slide(layout = "Title and Content", master = "Office Theme")
+ * `ph_location_fullsize()` to produce an output that covers the entire slide;
+ * `ph_location_left()` and `ph_location_right()` to write in the left/right box in *Two Content* types of slide;
+ * `ph_location_labe()` is similar to `ph_location_type()` except that it uses the label rather than the type.
+
+To gain full control of the exact position of the element to print, `ph_location()` is used. It allows specifying exact positions for content (for left/top/width/height, units are inches):
+
+
+```{r}
+
+my_data <- "My new text positioned using ph_location()"
 
 pptx_obj <- pptx_obj %>%
+  add_slide(layout = "Title and Content", master = master) %>% 
   ph_with(value = my_data, location = ph_location(left = 2, top = 2, width = 3, height = 1))
 
-pptx_obj %>%
-  print(target = file.path("output","example_3.pptx"))
 ```
 
-#### Working with Text
 
-Each new text item added to a PowerPoint via officer is a paragraph object
+To visualize the different steps done so far, let's save the results on our computers:
 
-`fpar()` ("formatted paragraph") creates this object
+<!-- Maybe it worth a note explaining that temp is the name given for the folder... --> 
+```{r}
+print(pptx_obj, "temp/my powerpoint export.pptx")
+```
 
-`block_list()` allows us to wrap multiple paragraphs together
 
-`ftext()` ("formatted text") to edit the text before pasting into paragraphs. `ftext()` requires a second argument called prop which contains the formatting properties.
+#### Exporting Text
 
-```{r 3.1 text1}
 
-my_prop <- fp_text(color = "red", font.size = 14)
-my_text <- ftext("First Line in Red", prop = my_prop)
+In the previous section, we already exported text to slides. Let's go a bit deeper in the process by also showing how to format the text.
 
-my_par <- fpar(my_text) # formatted
-blank_line <- fpar("") #optional
+By default, each new text item added to a PowerPoint via `{officer}` is a paragraph object. To further format the paragraph, three main functions are being used:
+<!-- I guess fp_text could be included in the list below -->
+  * `fpar()` (*formatted paragraph*) creates the paragraph;
+  * `ftext()` (*formatted text*) allows editing the text before pasting into paragraphs. `ftext()` requires a second argument called `prop` which contains the formatting properties;
+  * `block_list()` allows us to wrap multiple paragraphs together.
+ 
+Let's go through an example to illustrate the use of these functions:
 
-my_par2 <- fpar("Second Line") # unformatted
-my_list <- block_list(my_par, blank_line, my_par2)
 
-pptx_obj <- read_pptx() %>%
-  add_slide(layout = "Title and Content", master = "Office Theme") %>% 
+```{r}
+
+my_prop <- fp_text(color = "red", font.size = 14) # Formatting option
+my_text <- ftext("First Line in Red", prop = my_prop) # First line of text, formatted
+
+my_par <- fpar(my_text) # text into a paragraph
+blank_line <- fpar("") # other empty paragraph to introduce an empty line
+
+my_par2 <- fpar("Second Line") # second line of text, unformatted
+my_list <- block_list(my_par, blank_line, my_par2) # Final block with the two lines of text separated by the empty line
+
+pptx_obj <- pptx_obj %>%
+  add_slide(layout = "Title and Content", master = master) %>% 
   ph_with(value = my_list, location = ph_location_type(type = "body") )
 
-pptx_obj %>%
-  print(target = file.path("output","example_4.pptx"))
+print(pptx_obj, target = "temp/my powerpoint export.pptx")
 ```
 
-For more details on using **{officer}** see <https://davidgohel.github.io/officer>.
+
+This add an additional slide to our previous PowerPoint deck with our formatted text.
+
+Last element of formatting to consider is the hierarchy in bullet points. Let's add a slide containing three bullet points with a hierarchy so that the 1st and 3rd lines are primary points, and the second line is a secondary point.
+Such hierarchy can be informed using the `level_list` parameter, which informs the hierarchy of each element:
+
+```{r}
+
+text1 <- fpar("FIRST SENTENCE")
+text2 <- fpar("second sentence")
+text3 <- fpar("THIRD SENTENCE")
+my_data <- block_list(text1, text2, text3)
+
+pptx_obj <- pptx_obj %>%
+  add_slide(layout = "Title and Content", master = master) %>% 
+  ph_with(value = my_data, level_list = c(1,2,1), location = ph_location_type(type = 'body'))
+
+print(pptx_obj, target = "temp/my powerpoint export.pptx")
+
+```
 
 
-### Tables
+#### Exporting Tables
 
-`ph_with` accepts a data.frame as value and renders it in a default format
 
+Now we know how to export formatted text to slides, let's export tables. This can easily be done by rendering a data frame rather than text as `ph_with()` accepts it and renders it in a default format. Let's use a subset of `senso_mean` for illustration:
+
+<!-- Just a comment, the reader may need to go back to the beginning of the chapter to run the codes again to obtain senso_mean --> 
 ```{r 4.1 basic code}
 ft_data <- senso_mean %>%
-  dplyr::select(Salty, Sweet, Sour, Bitter) %>% 
-  tibble::rownames_to_column() %>% 
-  rename(Product = rowname) %>% 
-  mutate(across(Salty:Bitter, as.numeric)) %>% 
-  bind_rows(summarise(.,
-                      across(where(is.numeric), mean),
-                      across(where(is.character), ~"Average"))) %>% 
+  dplyr::select(Product, Salty, Sweet, Sour, Bitter) %>% 
   mutate(across(where(is.numeric), round, 2)) 
 
 pptx_obj <- read_pptx() %>%
-  add_slide(layout = "Title and Content", master = "Office Theme") %>%
-  ph_with(value = ft_data, location = ph_location_type(type = "body")) %>%
-  print(target = file.path("output","table_1.pptx"))
+  add_slide(layout = "Title and Content", master = master) %>%
+  ph_with(value = ft_data, location = ph_location_type(type = "body"))
+
+print(pptx_obj, target = "temp/my powerpoint export.pptx")
 ```
 
-#### Introduction to flextable
 
-With `{flextable}`, the procedure starts with creating a flextable object `ft_table` using the `flextable()` function.
-Flextable objects are compatible with `{officer}` and therefore are our primary tool for table formatting.
-Through different functions, many custom formatting procedure can be applied:  
+Although this solution works fine, it does not allow formatting the table as much as we would want. Instead, we prefer to use another package called `{flextable}` which was developed by the same author as `{officer}` (both packages being complementary).
 
-**key functions:**
- `align()` `bold()` `font()` `color()` `bg()` `height()` & `width()` 
- `border_outer()` & `border_inner()` & `border_inner_h()` `border_inner_v()` `autofit()`
 
-Additional function to learn: `merge()`, `compose()` & `as_chunk()`, `style()`
+##### Introduction to flextable
+
+
+With `{flextable}`, the procedure starts with creating a *flextable* object (here `ft_table`) using the `flextable()` function.
+
 
 ```{r flextable2}
 library(flextable)
 
-# Create a flextable object
 ft_table <- ft_data %>% 
+  arrange(Product) %>% 
   flextable()
 
-# Flextable objects can be found in the Viewer tab of Rstudio
 print(ft_table)
 
 ```
 
-#### Formatting examples
 
-```{r 4.4 demonstration}
-ft_table <- ft_table %>%
-  autofit() %>% # column width
-  # alignment of header: we use part argument
-  align(align = "center", part = "header") %>%
-  # alignment of content: we can use part = "body" or specify exact lines 
-  align(i = 1:nrow(ft_data), j = 1:ncol(ft_data), align = "center") 
+By printing the table, it opens in the Rstudio viewer as an html file. This table can then be customized in various different ways through various functions:  
 
-print(ft_table)
+  * `align()` and `rotate()` controls for the text alignment and its rotation;
+  * `bold()` and `italic` writes the text in bold or italic; 
+  * `font()` and `fontsize` controls the font type and the size to use;
+  * `color()` and `bg()` allows changing the color of the text and of the background.
+  
+All these functions require informing the rows (parameter `i`) and the columns (`j`) as well as the `part` (`"body"`, `"header"`, `"footer"`, or `"all"`) to modify.
 
-```
+Additionally, further formatting can be applied to the table itself through the following functions:
+  
+  * `height()` & `width()` control for the row height and column width;
+  * `border_outer()`, `border_inner()`, `border_inner_h()` & `border_inner_v()` help design the table by adding borders;
+  * `autofit()` and `padding()` are used to control the final size of the table.
 
-Set font names, sizes and colors
+For illustration, let's apply some of these functions to `ft_table`:
+
+
 ```{r 4.5 demonstration cont.1}
 ft_table <- ft_table %>% 
-  # main formatting
   fontsize(size = 11) %>%
-  font(fontname = "Calibri") %>% # since no i or j are input, change is for all data
-  font(fontname = "Roboto", part = "header") %>% #different font for header
+  # Formatting the header
+  font(fontname = "Roboto", part = "header") %>%
   color(color = "white", part = "header") %>%
   bold(part = "header") %>%
-  # format last row
-  bold(i = nrow(ft_data), j = 1:ncol(ft_data)) %>% #
-  italic(i = nrow(ft_data), j = ~Product + Salty + Sweet + Sour + Bitter) %>% # using ~ notation
+  align(align = "center", part = "header") %>%
+  bg(bg = "#324C63", part = "header") %>%
+  # Formatting the body
+  font(fontname = "Calibri", part = "body") %>% 
+  bg(i = 1:nrow(ft_data), bg = "#EDEDED") %>% 
+  # Formatting the last row of the table
+  bold(i = nrow(ft_data), j = 1:ncol(ft_data)) %>% 
+  italic(i = nrow(ft_data), j = ~Product + Salty + Sweet + Sour + Bitter) %>%
   color(i =  nrow(ft_data), j = ~Sour, color = "red") %>%
-  color(i =  nrow(ft_data), j = ~Sweet, color = "orange") %>%
-  # background colors
-  bg(bg = "#324C63", part = "header") %>% # a custom background for the header
-  bg(i = 1:nrow(ft_data), bg = "#EDEDED") # a custom background for some cells
+  color(i =  nrow(ft_data), j = ~Sweet, color = "orange") %>% 
+  autofit()
 
-print(ft_table)
-```
+# Set up the border style
+my_border <- fp_border(color = "black", style = "solid", width = 1)
 
-Set borders and adjust cells heights and widths
-```{r 4.6 demonstration cont.2}
-#BORDERS
-# For borders we need to use nested functions (similar to fpar>ftext>fp_text)
-# fp_border() is the second level function we will use to specify border"s characteristics
-# as argument it takes color, style, and width
-my_border <- officer::fp_border(color = "black", style = "solid", width = 1)
-
-# We use this second level function inside various main border functions
-# border_outer(), border_inner(), border_inner_h(), border_inner_v()
 ft_table <- ft_table %>%
-  border_outer(part = "all", border = my_border) %>% # using predefined border
-  border_inner(part = "body", border = officer::fp_border(style = "dashed")) %>% 
-
-  # all measurements are in inches
-  width(j = 1, width = 1.2) %>% # column 1 wider
-  height(i = 12, height = 1) # last row's height
+  border_outer(part = "all", border = my_border) %>%
+  border_inner(part = "body", border = fp_border(style = "dashed")) %>% 
+  width(j = 1, width = 1.2) %>%
+  height(i = 12, height = 1)
 
 print(ft_table)
+
 ```
+<!-- In the second command of #Set up the border style, I got this message:
+Error in get_rows_id(x[[part]], i) : 
+  invalid row selection: out of range selection --> 
 
+This is just an overview of the most relevant and used functions in `{flextable}`, yet there are more possibilities.
+To go further, you can also consider the following functions (amongst many more): 
 
-#### Add flextable object to a powerpoint slide
+  * `merge()` merges vertically or horizontally cells with the same content;
+  * `compose()`, `as_chunk()`, and `as_paragraph()` works hands in hands to create more complex text formatting (e.g. sentence with parts of the text colored differently, or with sub/superscript);
+  * `style()` applies a set of formatting properties to the same selection of the rows/columns.
+
+Finally, to export a flextable to a PowerPoint deck, simply export it as we have seen before:
+
 
 ```{r 4.7 original example}
-# Add table to slide
-pptx_obj <- read_pptx() %>%
+
+pptx_obj <- pptx_obj %>%
   add_slide(layout = "Title and Content", master = "Office Theme") %>%
-  ph_with(value = ft_table, ph_location(left = 2, top = 2, width = 4)) %>% 
-  print(target = file.path("output","table_2.pptx"))
+  ph_with(value = ft_table, ph_location(left = 2, top = 2, width = 4)) 
+
+print(pptx_obj, target = "temp/my powerpoint export.pptx")
+
 ```
 
 For more details on using **{flextable}** see <https://davidgohel.github.io/flextable/>.
 
-### Charts
 
-#### Adding charts as images
+#### Exporting Plots
+
+The last type of R outputs we want to export to PowerPoint is figures. Before showing how to export them, let's build a simple bar chart from `senso_mean` using `{ggplot2}`:
+
 
 ```{r 5.1 rvg package}
-# Using ggplot2 as plotting library
 chart_to_plot <- senso_mean %>%
-  dplyr::select(Salty, Sweet, Sour, Bitter) %>% 
-  tibble::rownames_to_column() %>% 
-  rename(Product = rowname) %>%
-  pivot_longer(cols = Salty:Bitter, names_to = 'Attribute', values_to = 'Value') %>% 
+  dplyr::select(Product, Salty, Sweet, Sour, Bitter) %>% 
+  arrange(Product) %>% 
+  pivot_longer(Salty:Bitter, names_to = 'Attribute', values_to = 'Value') %>% 
   ggplot(aes(x = Product, y = Value, fill = Attribute)) + 
-  geom_col(position = 'dodge')
-
-print(chart_to_plot) #in Plots window of Rstudio
+  geom_col(position = 'dodge')+
+  xlab("")+
+  theme_bw()
 ```
 
-#### rvg package
 
-rvg is providing two graphics devices that produces Vector Graphics outputs in `DrawingML` format for Microsoft PowerPoint with dml_pptx and for Microsoft Excel with dml_xlsx.
+To export any `ggplot2` object to PowerPoint, the package `{rvg}` is required. This package provides two graphics devices that produces Vector Graphics outputs in `DrawingML` format for Microsoft PowerPoint with `dml_pptx()` and for Microsoft Excel with `dml_xlsx()`, meaning the the graphics is being 'rebuilt' in PowerPoint or Word. To simplify, the generic `dml()` function is used^[Depending on the output format, the corresponding function is being called.]. 
+
 
 ```{r 5.2 rvg example}
-# body location
 library(rvg)
 
-# all items on the chart inside the pptx can be editable
-pptx_obj <- read_pptx() %>%
+pptx_obj <- pptx_obj %>%
   add_slide(layout = "Title and Content", master = "Office Theme") %>%
   ph_with(value = dml(ggobj = chart_to_plot, editable = TRUE),
-          location= ph_location_type(type = 'body')) %>% 
-  print(target = file.path("output","rvg_1.pptx"))
+          location= ph_location_type(type = 'body'))
 
-#custom location, all units are in inches
-pptx_obj <- read_pptx() %>%
-  add_slide(layout = "Title and Content", master = "Office Theme") %>%
-  ph_with(value = dml(ggobj = chart_to_plot, editable = FALSE),
-          location =  ph_location(left = 1, top = 1, width = 8, height = 6))  %>%
-  print(target = file.path("output","rvg_2.pptx"))
-
+print(pptx_obj, target = "temp/my powerpoint export.pptx")
 
 ```
 
-#### mschart package
+
+For simple graphics (such as line chart, bar charts, etc.), the `{mschart}` package creates the graphs directly in PowerPoint or Word. These graphics have then the advantage to be interactive.
+In this case, the `ggplot2` graphs are not needed: instead, we use functions such as `ms_barchart()` to produce them.
+
 
 ```{r 5.3 mschart example}
 library(mschart)
-# sample dataframe
-mydata <- senso_mean %>%
-  dplyr::select(Salty, Sweet, Sour, Bitter) %>% 
-  tibble::rownames_to_column() %>% 
-  rename(Product = rowname) %>%
-  pivot_longer(cols = Salty:Bitter, names_to = 'Attribute', values_to = 'Value')
 
-# syntaxis is similar to ggplot2's aes() with x,y,group
+mydata <- senso_mean %>%
+  dplyr::select(Product, Salty, Sweet, Sour, Bitter) %>% 
+  arrange(Product) %>% 
+  pivot_longer(Salty:Bitter, names_to = 'Attribute', values_to = 'Value')
+
+# Building the barchart using ms_barchart()
 my_barchart <- ms_barchart(data = mydata,
                            x = "Product",
                            y = "Value",
                            group = "Attribute")
 
-#the chart is a Powerpoint native object and can be viewed using the preview option in print
+# The chart is a Powerpoint native object and can be viewed using the preview option in print
 print(my_barchart, preview = TRUE)
-#the command will work on machines with a Powerpoint Viewer
 
-# to add the object to a powerpoint slide we can use the officer's native ph_with
-pptx_obj <- read_pptx() %>%
+# To add the object to a powerpoint slide we can use the officer's native ph_with
+pptx_obj <- pptx_obj %>%
   add_slide(layout = "Title and Content", master = "Office Theme") %>%
-  ph_with(value = my_barchart, location = ph_location_type(type = "body")) %>%
-  print(target = file.path("output","rvg_2.pptx"))
+  ph_with(value = my_barchart, location = ph_location_type(type = "body"))
+
+print(pptx_obj, target = "temp/my powerpoint export.pptx")
 ```
+
+
+If you open the PowerPoint just exported, on the final slide, you'll find the barchart generated by `{mschart}`. By clicking the graph, you'll find a 'funnel' icon on the left side, which allows you filter attributes or products, hence making your graph interactive.
+
+At last, `{officer}` also allows you adding images that are stored on your computer into a PowerPoint deck. This can be done through the `external_img()` function, which takes as input the location of the file. Like for any other graph, simply apply this function within `ph_with()` by specifying then the location where the image should be printed.
+
+
+<!--  --------------------------------- Word ---------------------------------  -->
+
 
 ### Word
 
-Word documents are created using `read_docx()`. 
 
-`body_add_par()` to add a text paragraph. Paragraphs are automatically separated by line breaks.
+The process for building Word document directly from R is very similar to the one for PowerPoint, since it is also handled though `{officer}`. 
 
-```{r 6.1 word doc1}
-my_doc <- read_docx() %>% 
+To start a new Word document, the `read_docx()` function is being used. Since Word documents are more *text oriented* than PowerPoint, blocks of text are defined as paragraph. To introduce a new paragraph, the `body_add_par()` function is called. Note that paragraphs are automatically separated by line breaks:
+
+
+```{r}
+docx_obj <- read_docx() %>% 
   body_add_par(value = "My Text", style = "Normal") %>%
   body_add_par(value = "Other Text", style = "Normal") %>% 
-  body_add_par(value = "Conclusion", style = "Normal") %>% 
-  print(target = file.path("output","doc_1.docx"))
+  body_add_par(value = "Conclusion", style = "Normal")
+
+print(docx_obj, target = "temp/my word export.docx")
 ```
 
-Unlike a pptx with separate slides, a word document is a continuous object. To create a new page and continue to write on it `body_add_break()` is used.
 
-```{r 6.2 word doc2}
-my_doc <- read_docx() %>% 
-  body_add_par(value = "My Text", style = "Normal") %>%
-  body_add_break() %>% 
-  body_add_par(value = "Conclusion", style = "Normal") %>% 
-  print(target = file.path("output","doc_2.docx"))
-```
+Of course, it is not required to use the default formatting options from the word document in use. Instead, we can format it directly from R using `body_add_fpar()` to add a formatted text paragraph, or apply pre-defined styles to the previous function suggested (as is the case here with `style = "heading 1"` to set the text as a title of level 1).
 
-`body_add_fpar()` to add a formatted text paragraph
-`body_add_table()` to add a table
 
-```{r 6.3 word doc3}
+```{r}
 my_format <- fp_text(font.family = 'Calibri', font.size = 14, bold = TRUE, color = 'blue')
-my_text <- ftext('My dataset is:', my_format)
+my_text <- ftext('Here is another example of text', my_format)
 my_par <- fpar(my_text)
 
-doc <- read_docx() %>% 
+docx_obj <- read_docx() %>% 
   body_add_par(value = "Document Title", style = "heading 1") %>% 
   body_add_par(value = "", style = "Normal") %>% 
-  body_add_fpar(my_par, style = "Normal") %>% #formatted paragraph function
-  body_add_par(value = "", style = "Normal") %>% 
-  body_add_table(value = head(mtcars)[, 1:4], style = "table_template" ) %>% 
-  print(target = file.path("output","doc_3.docx"))
+  body_add_fpar(my_par, style = "Normal")
+
+print(docx_obj, target = "temp/my word export.docx")
 
 ```
 
+
+To export tables or figures, additional functions including `body_add_table()` (for tables) and `body_add_gg()`^[Note that `body_add_img()` and `body_add_plot()` can also be used.]) (for `ggplot2()` figures) are used. These can be combined to `body_add_caption()` to add a caption to your table/figure:
+
+
+```{r}
+
+table_num <- run_autonum(seq_id = "tab", pre_label = "Table ", bkm = "tables")
+figure_num <- run_autonum(seq_id = "fig", pre_label = "Figure ", bkm = "figures")
+
+docx_obj <- docx_obj %>% 
+  body_add_par(value = "Exporting Tables", style = "heading 2") %>% 
+  body_add_par(value = "", style = "Normal") %>% 
+  body_add_par(value = "Here is my first table:", style = "Normal") %>% 
+  body_add_par(value = "", style = "Normal") %>% 
+  body_add_table(value = head(mtcars)[,1:4], style = "table_template") %>% 
+  body_add_caption(block_caption("My first table.", style="centered", autonum=table_num)) %>% 
+  body_add_par(value = "Exporting Figures", style = "heading 2") %>% 
+  body_add_par(value = "", style = "Normal") %>% 
+  body_add_par(value = "Here is my first figure:", style = "Normal") %>% 
+  body_add_par(value = "", style = "Normal") %>% 
+  body_add_gg(value = chart_to_plot) %>% 
+  body_add_caption(block_caption("My first figure.", style="centered", autonum=figure_num))
+
+print(docx_obj, target = "temp/my word export.docx")
+
+```
+
+
+As can be seen, `body_add_caption()` is combined to `block_caption()`, and can have some automated numbering, as defined previously using `table_num` for tables, and `figure_num` for figures.
+
+Unlike a PowerPoint file that contains separate slides, a word document is a continuous object. Hence, to emphasize a break and add content to a new page, `body_add_break()` needs to be called. Additionally, tables of content can be generated using `body_add_toc()`:
+
+
+```{r}
+docx_obj <- docx_obj %>% 
+  body_add_break() %>% 
+  body_add_par(value = "Conclusion", style = "heading 1") %>% 
+  body_add_break() %>%
+  body_add_par("Table of Contents", style = "heading 1") %>% 
+  body_add_toc(level = 2)
+
+print(docx_obj, target = "temp/my word export.docx")
+```
+
+
+As can be seen, it is possible to format a nice report in Word directly from R, that integrates text, tables, and figures. 
+
+For more information regarding `{officer}`, and on how to export results to Word and PowerPoint, see <https://ardata-fr.github.io/officeverse/index.html>.
+
+To go further, it is worth mentioning that `{officer}` also allows extracting information from existing reports (Word and PowerPoint). It is however outside the scope of this book, so it will not be further developed here. 
+
+
+=======
+<!-- I guess it would be interesting to mention how to save in pdf format --> 
 
 ### Notes on applying corporate branding
 
-Pre-define parameters/options (fonts, logos, etc.) in a separate file that you can source at the start and call easily.
-Import company templates (PowerPoint, Word) that already includes pre-defined options.
+
+You may have noticed that we have been consistent with our approach to export results to reports, regardless of the final output:
+We start with pre-defining our styling parameters that we then apply to our different tables, slides, paragraphs, etc. This is not a formal rule, yet we strongly recommend you adopting this way of working. Indeed, by creating your different styling parameters at the start of your script file, these lines of code do not interfere with your analyses. At a later stage, you will thank yourself for keeping well-structured code as it gains in clarity, and hence facilitates debugging your code in case of error or changes.
+
+To go one step further, we would recommend you storing all these styling parameters in a separate file you load any time you need them using `source()`. This process **reduces** the size of your script file (increasing clarity), while **harmonizing** all your exports by **centralizing** your **formatting code** in one unique place. The last point is particularly important since any changes required only need to be done once, yet they will be applied to all your reports.
+
+As we have seen, `{officer}` gives you the  opportunity to import pre-defined templates (PowerPoint or Word). This is very valuable as your report can easily match your corporate style. 
+
+Ultimately, to ensure optimal efficiency, we advise you to spend a bit more time when constructing your report by ensuring that as many details are being taken care of, so that later on, you can spend more time in the story building part and less on the analysis and slide generation. For instance, don't be afraid of mass-exporting results, as it is easier to remove some slides, tables, or figures (in case they are not needed for building your story) then it is to re-generate them at a later stage (in case they are missing).
 
 
-
-## Integrating analyses scripts within reporting tools
-
-Integrating reporting within the analysis part, or integrating the analysis within the reporting part?
- -> Keep track of what has been done (reproducible research): Explain choices for analysis, table presentation, charts
- -> Sharing code/analysis
-To improve way of work (efficiency) and to keep track of steps taken along the way
-
-Rmarkdown
+## Integrating analyses scripts within your reporting tool
 
 
+As we have just see, we can generate reports in the Microsoft Office suit directly from our R script. Although the results are being showed, the script used to reach these results is completely hidden. Of course, we could add them as text, but the logic would suggest that the researcher can just get back to the script to decode how certain outputs have been obtained. 
+
+Let's now change our way of working by proposing an alternative in which we integrate our R analysis directly within a reporting tool. For that, we need to introduce another useful package for reporting and document building: `{rmarkdown}`.
+
+### What is `{rmarkdown}`
+
+Markdown is an ecosystem specific to text document, in which authors *script* their reports by controlling various features including:
+
+  * paragraphs and inline formatting (e.g. bold, italic, etc.)
+  * (section) headers
+  * blocks (code, or quotations)
+  * (un)numbered lists
+  * horizontal rules
+  * tables and figures (including legends)
+  * LaTeX math expressions, formulas, and theorems
+  * links, citations, and footnotes
+
+Limiting the creation of Markdown document to this list of elements is more an advantage than a drawback as it suffice to create technical and non-technical documents while still keeping it simple.
+
+In practice, R Markdown provides an authoring framework for data science, as it can be use for both saving/documenting/executing code and generating high quality reports.
+
+Once the document is being created, you can then compile it to build it in the output format of your choice (e.g. word, pdf, html, etc.)
 
 
+### Starting with {rmarkdown}
+
+To start, you need to install the `{rmarkdown}` package using the `install.packages()` function. 
+To load this package, just type `library(rmarkdown)`.
+
+If you intend to build your report in pdf, you also need to install a LaTeX library. For its simplicity, we recommend you installing the TinyTeX library using `install.packages("tinytex")`.
+
+Let's start with a simple example that is provided by RStudio. To start a RMarkdown document, click File > New File > R Markdown...
+This opens a new window in which you can inform the name of your file, the author name, and the type of report to create (HTML, PDF, or Word). Once set, click OK. A new script file of type *.Rmd* opens.
+
+In this document, there are three components: metadata, text, and code.
+
+The document starts with the metadata. It is easily recognizable as it starts and ends with 3 successive dashes (`---`), and its syntax is YAML (YAML Ain't Markup Language). In this part, information regarding the properties of the final document is being stored. This includes (amongst other) the title, authorship, date, export format, etc. of the final document.
+
+Be aware that indentation matters in YAML, so follow the rules to ensure that your document compiles correctly.
+
+Right after the metadata is the body of document. The syntax for the text is Markdown, and the main features will be presented in the next section. Within the body, computer code can be added, either as a chunk, or within the text.
+
+### `{rmarkdown}` through a Simple Example
+
+To illustrate the use of `{rmarkdown}`, let's consider this simple document (inspired from REF):
 
 
+<!-- Insert a Print Screen of the Simple Example Code -->
 
 
+The top of the document contains the metadata, which (in our case) will generate the report in an HTML document.
+
+Next, we have a first chunk of code that sets the main options on how the code should be handled. If the same philosophy should be applied everywhere, it is handy to set it at the start. However, when different chunks of code should be handled differently, it may be easier to define for each section how it should be handled. 
+
+There are mainly four ways to handle code.
+
+The first way is defined here on the code chunk *header* as `include = FALSE`^[When set manually, this is where you should indicate how to handle each chunk of code]: `include` always run the code, yet it allows printing (`include = TRUE`) or not (`include = FALSE`) the code and its outputs in the final document. 
+
+The second option is `echo`. In this code chunk, we automatically set that all the code chunk should be defined as `echo = TRUE`, which means that the code will run and be printed (together with its output) in the document. This seems very similar to `include`, yet it differs from it as `echo = FALSE` runs the code, prints the outputs, but not the code. 
+
+If you only want to show some code without running it, the `eval` parameter is used (`eval = FALSE` means that the code will be displayed but will not run). This is useful for displaying example code, or for disabling large or time-consuming chunk of codes without having to set it up as comment. 
+
+last, we can control whether outputs should be shown or hidden using `results` (printed output) and `fig.show` (plots). By default, the results are shown, unless it is set as `results = "hide"` or `fig.show = "hide"`.
+
+The document then continues with a section header, which starts with #. The hierarchy of headers is defined by the number of adjacent # (for a header of level 3, starts the header with ###). 
+
+In this section, a first paragraph is being written. This is plain text, except for two particular words, one written between two *backticks*, and one written between 2 double *stars*. Here, the *backticks* are used to write text in R font (or as we will see later, to render results from R), whereas the double *stars* write the text in bold (instead of double *stars*, we can also use double *underscore*). For italic, one single *stars* (or single *underscores*) are used.
+
+If the following section and sub-section, we introduce numbered and unnumbered list of elements. For numbered list, starts with a *number* followed by a *.* (numbers will be incremented automatically). For unnumbered list, you can either start with a *dash*, or with *star* for bullet points. For sub-list, indent your marker by pressing the *Tab* key.
+
+In the next section called *Analysis*, we are running our first lines of code. 
+
+The first code chunk runs a regression model. In the text under the second chunk of code, we are retrieving automatically a value from R by including a *r* at the starts of two *backticks* followed by the element to retrieve. In our final report, this code will automatically be replaced by the value 3.93.
+
+The second code chunk shows how the results can printed, either directly from R, or in a nicer way using the `knitr::kable()` function.
+
+Finally, the last code chunk of this section creates a plot with a caption, that is automatically numbered.
 
 
-In this section, we review recent advances in automated report production that:
+### Creating a document using `{knitr}`
 
-1. Connects our analysis tool to our preferred reporting tool;
-2. Liberate resources for scientists to focus on the interpretation and communication of results...
-3. ...while simultaneously reducing errors and increasing the consistency of their analyses. 
+Once the document is ready, you can neat it using the `knit` button. This will create the report in the format of interest (here HTML).
 
-
-Through this section, we will show you how to generate directly from R different types of report within the Microsoft Office suit. More precisely, we will start by showing you how to export results to Excel, which we will then extend to PowerPoint, and Word. With this approach, you can then incorporate some code within your analysis script, meaning that as soon as your data change, a new updated report will be generated. 
-
-Details of how to customize the final presentation (PowerPoint) to incorporate corporate branding - such as logos, font choices, and color palettes - is also tackled here.
+### Example of applications
 
 
-RMarkdown, HTML output, etc. (mention but don’t focus)
-Packages for Microsoft office production
-Officer suite (PowerPoint, Word)
-Charts, especially RVG
-Extract from Word/PowerPoint
-Index
-Flextable
-Images?
-Packages for formatting
-extrafont
-extrafontdb
-Rcolorbrewer
+`{rmarkdown}` is a very powerful tool for building report, in particular in the context of reproducible research since it allows sharing code, and running analyses within the report (part of the text around the code can justify the decisions made in terms of analyses to ensure transparency). The latter point is particularly interesting since any change in the data will automatically provide updated results throughout the report, without you having to change them manually.
+
+Its application is various, and can go from report, to teaching material, publication or even books (this book has been written in `{rmarkdown}` and its extension `{bookdown}`), emails, websites, dashboards, surveys etc. Even more interestingly, `{rmarkdown}` can also be combined to `{shiny}` to build interactive reports, dashboards, or teaching materials in which users would (say) import their data set, select the variables to analyze through buttons, chose which analyses and which options to perform, and the results will automatically be generated accordingly.
+
+For more information on `{rmarkdown}` and related packages, please visit (REF)
+
+As mentioned earlier, R Markdown can also be used to generate other types of documents, including presentations. This can be done directly from the `{rmarkdown}` package using *ioslides* presentation (`output: ioslides_presentation` in the metadata), *Slidy* presentation (`output: slidy_presentation`), or *PowerPoint* presentation (`output: powerpoint_presentation` with `reference_doc: my-styles.pptx` to apply your own template) just to name these. It can also be done using additional packages such as the `{xarigan}` package. However, in this section, we deliberately chose to use `{officer}` because of its simplicity and flexibility.
+
+
+## To go further...
+
+If R allows you saving time by creating your report within your R-script, or by running your analysis within your report document, it cannot communicate the presentation to your partners/clients for you. However, if the report is very standard (say only key results, tables or figures), or running routinely (say in quality control), R could automatically run the analysis as soon as new data is available, build the report, and send it automatically to you, your manager or your colleagues and partners by email. 
+
+Such process can be done thanks to the `{blastula}` package (see REF).

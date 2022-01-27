@@ -1,7 +1,7 @@
 ```{r include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 ```
-# Apéritifs (Getting Started) {#start-R}
+# Getting Started {#start-R}
 
 ## R
 
@@ -34,8 +34,6 @@ The universe of available packages is vast
 R excels at data manipulation and results reporting
 R has more specialized tools for sensory analysis than other programming language
 
-## Why R?
-
 For sensory and consumer scientists, we recommend the R ecosystem of tools for three main reasons.  The first reason is cultural - R has from its inception been oriented more towards statistics than to computer science, making the feeling of programming in R more natural (in our experience) for sensory and consumer scientists than programming in Python.  This opinion of experience is not to say that a sensory and consumer scientist shouldn't learn Python if they are so inclined, or even that Python tools aren't sometimes superior to R tools (in fact, they sometimes are).  This latter point leads to our second reason, which is that R tools are typically better suited to sensory and consumer science than are Python tools.  Even when Python tools are superior, the R tools are still sufficient for sensory and consumer science purposes, plus there are many custom packages such as SensR, SensoMineR, and FactorMineR that have been specifically developed for sensory and consumer science.  Finally, the recent work by the RStudio company, and especially the exceptional work of Hadley Wickham, has lead to a very low barrier to entry for programming within R together with exceptional tools for data manipulation.
 
 
@@ -50,13 +48,136 @@ You will almost certainly be running 64-bit R
 Note: If you are running R 4.0 or higher, you might need to install Rtools:
 https://cran.r-project.org/bin/windows/Rtools/
 
+<!-- ADD REFERENCE FOR AN INTRODUCTION TO R -->
+
+In this book, we assume that the readers have already some very basic knowledge in R.
+If you are completely new to R, we recommend you reading <!-- REF --> or looking at some documentation online to get you started with the basics. 
+
+However, just like with any spoken language, the same message can be said in various ways. The same applies with writing scripts in R, each of us having our own styles, or our own preferences towards certain procedures, packages, functions, etc. In other words, writing scripts is personal. Through this book, we are not trying to impose our way of thinking/proceeding/building scripts, instead we aim in sharing our knowledge built through past experiences to help you find your own style.
+
+But to fully decode our message, you'll need some reading keys. These keys will be described in the next sections. 
+
+
+### Introduction to the `{magrittr}` and the notion of *pipes*
+
+R is a living programming language that evolves and expends very rapidly. 
+If most additions/improvements have a fairly limited reach, the introduction of the `{tidyverse}` in 2016 by H. Wickham revolutionized the way of scripting in R for many users. At least for us, it had a large impact as we fully embraced its philosophy, as we see its advantage for Data Science and for analyzing our sensory and consumer data. It is hence no surprise that you'll read and learn a lot about it in this book.
+
+As you may know, the `{tidyverse}` is a grouping of packages dedicated to Data Science, which includes (amongst others) `{readr}` for data importation, `{tibble}` for the data structure, `{stringr}` and `{forcats}` for handling strings and factors, `{dplyr}` and `{tidyr}` for manipulating and tidying data, `{ggplot2}` for data visualization, and `{purrr}` for functional programming. But more importantly, it also includes `{magrittr}`, the package that arguably impacted the most our way of scripting by introducing the notion of *pipes* (defined as `%>%`) as it provides code that is much easier to read and understand.
+
+To illustrate the advantage of the use of pipes, let's use the example provided by H. Wickham in his book *R for Data Science*.
+It is some code that tells a story about a little bunny names Foo Foo:
+*Little bunny Foo Foo*
+*Went hopping through the forest*
+*Scooping up the field mice*
+*and bopping them on the head*
+
+If we were meant to tell this story though code, we would start by creating an object name `FooFoo` which is a little bunny:
+
+
+```{r}
+foo_foo <- little_bunny()
+```
+ 
+To this object, we then apply different functions (we save each step as a different object):
+
+```{r}
+foo_foo_1 <- hop(foo_foo, through=forest)
+foo_foo_2 <- scoop(foo_foo_1, up=field_mice)
+foo_foo_3 <- bop(foo_foo_2, on=head)
+```
+
+One of the main downsides of this approach is that you'll need to create intermediate names for each step. If natural names can be used, this will not be a problem, otherwise it can quickly become a source of error (using the wrong object for instance)! Additionally, such approach may affect your disk memory (your creating a new object in each step), especially if the data set is large.
+
+As an alternative, we could consider running the same code by over-writing the original object:
+
+```{r}
+foo_foo <- hop(foo_foo, through=forest)
+foo_foo <- scoop(foo_foo, up=field_mice)
+foo_foo <- bop(foo_foo, on=head)
+
+```
+
+If this solution looks neater and more efficient (less thinking, less typing, less memory use), it is more painful to debug, as the entire code should be re-run from the beginning (when `foo_foo` was originally created). Moreover, calling the same object in each step obscures the changes performed in each line.
+
+To these two approaches, we prefer a third one that strings all the functions together without intermediate steps of saving the results. This procedure uses the so-called pipes ( defined by `%>%`), which takes automatically as input the output generated by the previous line of code:
+
+```{r}
+foo_foo %>% 
+  hop(through = forest) %>% 
+  scoop(up = field_mice) %>% 
+  bop(on = head)
+```
+
+This code is easier to read and understand as it focuses more on the verbs (here `hop`, `scoop`, and `bop`) rather than names
+(`foo_foo_1`, or `foo_foo`). It can be surprising at first, but no worries, by the time you've read this book, you'll be fully familiar with this concept. 
+
+When lines are piped, R runs the entire block at once. So how can we understand the intermediate steps that were done, or how can we fix the code if an error occur? The answer to these questions is simple: run back the code bits by bits.
+
+For instance, in this previous example, we could start by printing `foo_foo` (in practice, only select `foo_foo` and run this code only) only to ensure that it is the object that we were supposed to have. 
+If it is the case, we can then extend the selection to the next line by selecting all the code before the pipe (do not select the pipe, else R is expecting additional code after it and will not show results).
+Repeat this until you found your error, or you ensure that all the steps have been performed correctly.
+
+While reading this book, we advise you to apply this trick to each block of code for you to visualize the steps performed. 
+
+Note however that although pipes are very powerful, they are not always the best option:
+
+  - A rule of thumb suggests that if you are piping more than 10 lines of code, you're probably better of splitting it into 2 or more blocks (saving results in intermediate step) as this simplifies debugging. 
+  - If some steps require multiple inputs, or provides multiple outputs, pipes should not be used as they usually require a primary object to transform.
+  - The system of pipes works linearly: if your code requires a complex dependency structure, the pipes should be avoided.
+
+### Tips on *how to read this book?*
+
+For you to get the most out of this book, you need to understand (and eventually adhere to) our philosophy of scripting, and our way of working. This is why we are providing you with some tips to use, if you're comfortable with them:
+
+  1. Create a folder for this book on your computer, and create a script for each chapter in which you re-write yourself the code. If you work with the online version, you could copy/paste the code to go faster, but you may miss some subtleties.
+  2. Do not be discourage when you get some errors: we all get some regularly. At first, this can be very frustrating, especially when you are not able to fix them quickly. If you get stuck on an error and cannot fix it immediately, take a break and come back later with fresh eyes, you may solve it then. And with time and experience, you'll notice that you can reduce the amount of errors, and will also solve them faster.
+  3. The more code, the more difficult it is to find errors. This is true whether you use "regular" R-code or pipes. The best way to solve errors in such circumstances is to run the code line by line until you find the error, and understand why the input/output does not match expectations. 
+  4. In the particular case of pipes, debugging errors means that you shouldn't run the entire block of code, but select parts of it and run it by adding in each run a new line. This can either be done by stopping your selection just before the adequate `%>%` sign, or by adding after that `%>%` sign the function `identity()`^[`identity()` is a function that returns as output the input as it is. This function is particularly useful in pipes as you can finish your pipes with it, meaning that you can put any line in comments (starting with '#') without worrying about finishing your pipe with a `%>%`].
+  5. In many examples here, we apply changes to certain elements without actually saving them in an R object. This is quite convenient for us as many changes we do are only done for pedagogic reasons, and are not necessarily relevant for our analysis. This is for instance the case with the following code (REF):
+
+
+```{r}
+sensory %>% 
+  rename(Panellist = Judge, Sample = Product)
+```
+
+
+If you run this code, you'll notice that we rename `Judge` to `Panellist`, and `Product` to `Sample`...at least this is what you see on screen. However, if you look at `sensory`, the dataset still contains the column `Judge` and `Product` (`Panellist` and `Sample` do not exist!). This is simply because we did not save the changes in any R object.
+
+If we would want to save the element in a new object, we should save the outcome in an element using `<-`:
+
+
+```{r}
+newsensory <- sensory %>% 
+  rename(Panellist = Judge, Sample = Product)
+```
+
+
+Here, `newsensory` corresponds to `sensory`, but with the new names. Of course, if you would want to overwrite the previous file with the new names, you simply need to ensure that the name of the output is the same as the name of the input (this saves computer memory and is saves you thinking about new names all the time). Concretely, we replace here `newsensory` by `sensory`, meaning that the new names are saved in `sensory` (so the old names `Judge` and `Product` and definitely lost):
+
+
+```{r}
+sensory <- sensory %>% 
+  rename(Panellist = Judge, Sample = Product)
+```
+
+
+In the latter cases, this means that to see what `newsensory` or `sensory` contains, you need to type it back in R.
+Another (faster) way to visualize it is to put the entire block of code between brackets (putting codes like this in brackets is equivalent to asking to print the output).
+
+
+```{r}
+(sensory <- sensory %>% 
+  rename(Panellist = Judge, Sample = Product))
+```
+
+
+Note that if you run all these lines of codes in R, you will get an error stating `Column 'Judge' doesn't exist.` This is due to the fact that previously, we overwrote the original `sensory` (containing `Judge` and `Product`) with another version in which these columns were renamed `Panellist` and `Sample`. So when you re-run this code, you are trying to apply again the same changes to columns that no longer exist, hence the error...This is something that you need to take into consideration when overwriting elements (in this case, you should initialize `sensory` to its original version before trying).
 
 ## RStudio
 
-
-
 ### Steps to Install RStudio
-
 
 Next you need to install RStudio, which is our recommended integrated development environment (IDE) for developing R code.  To do so, visit the [RStudio desktop download page](https://rstudio.com/products/rstudio/download/) and follow the installation instructions.
 
@@ -70,7 +191,6 @@ y <- 2
 x + y
 
 ```
-
 
 Some recommendations upon installing RStudio:
 

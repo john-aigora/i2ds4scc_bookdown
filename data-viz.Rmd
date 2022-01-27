@@ -45,7 +45,8 @@ library(tidyverse)
 
 To illustrate the use of `{ggplot2}`, we will use both the sensory dataset stored in *Sensory Profile.xlsx* and the number of biscuit eaten by each respondents and stored in *Consumer Test.xlsx*.
 
-
+<!-- What does "here" mean in 'library (here)' and 'here("data","Sensory Profile.xlsx")'? -->
+<!-- I guess the file path "data" can be confusing. It depends on the name of the folder of each user. Maybe instead of calling "data" it could be "name of the folder" or something like that? -->
 ```{r}
 library(here)
 library(readxl)
@@ -177,7 +178,7 @@ This code adds a regression line to the graphic (here, we specified that the reg
 In fact, most `geom_*()` function comes with a statistical process to it. This means that we can provide raw data, and the `geom_*()` function calls its `stat_*()` function that runs the corresponding analysis. In the previous example, `geom_smooth()` calls `stat_smooth()`.
 
 Let's illustrate this concept again using another example: bar-charts that we apply on the data stored in `Nbiscuit`. 
-Here, we want to see the distribution (through bar-charts) of number of biscuits eaten per biscuit. A quick look at the data shows that some respondents ate portions of the cookies. To simplify the analysis, let's consider the total number of entire cookies eaten: if a respondent has eaten 3.5 biscuits, we will consider that they ate 3 full cookies. 
+Here, we want to see the distribution (through bar-charts) of number of biscuits eaten per consumer. A quick look at the data shows that some respondents ate portions of the cookies. To simplify the analysis, let's consider the total number of entire cookies eaten: if a respondent has eaten 3.5 biscuits, we will consider that they ate 3 full cookies. 
 
 
 ```{r}
@@ -219,7 +220,7 @@ Let's start with a quick win by completely changing the overall appearance of th
 
 Let's start with improving `bar_p` using `theme_minimal()`:
 
-
+<!-- The functions below are using = instead of <- -->
 ```{r}
 bar_p = bar_p + theme_minimal()
 ```
@@ -460,7 +461,7 @@ p + plot_annotation(title = "Example of 'ggplots' I've learned today", tag_level
 ### Few Tips and Tricks
 
 #### Combining data transformation and `{ggplot2}` grammar
-
+<!-- Is there anything missing in this sentence: 'It is however to combine'? Maybe would that be: It is however possible to combine... --> 
 Both the `{tidyverse}` and `{ggplot2}` are using pipes to combine lines of code or layers. 
 However, the pipes themselves are defined differently since `{maggritr}` uses `%>%` whereas `{ggplot2}` uses `+`.
 It is however to combine both systems one after each other, just remember to switch from `%>%` to `+` as you transition from data transformation/tidying to building your graph (see example...).
@@ -488,7 +489,7 @@ spider_line +
 
 A second option consists in dodging one every two labels along the x-axis. This option works if the labels are not too long, as can be seen in the example below. Note that this option is accessible within `scale_x_discrete()`, not within `theme()` as we would expect:
 
-
+<!-- When reading the sentence above I would expect to have an example where the labels are not loo long, but when we run the code, this is not the case. The labels are long and overlap between them --> 
 ```{r}
 spider_line + 
   scale_x_discrete(guide = guide_axis(n.dodge = 2))

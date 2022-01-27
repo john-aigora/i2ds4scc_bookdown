@@ -24,7 +24,7 @@
 <meta name="author" content="John Ennis, Julien Delarue, and Thierry Worch" />
 
 
-<meta name="date" content="2021-10-13" />
+<meta name="date" content="2022-01-20" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="index.html"/>
-<link rel="next" href="data-science.html"/>
+<link rel="next" href="start-R.html"/>
 <script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -51,8 +51,71 @@
 
 
 
+<link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet" />
 
 
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -74,8 +137,6 @@
 <ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#who-should-read-this-book"><i class="fa fa-check"></i>Who Should Read This Book?</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-to-use-this-book"><i class="fa fa-check"></i>How to Use This Book</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#cautions-dont-that-everybody-does"><i class="fa fa-check"></i>Cautions: Don’t that Everybody Does</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-to-contact-us"><i class="fa fa-check"></i>How to Contact Us</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i>Acknowledgements</a></li>
 </ul></li>
 <li class="chapter" data-level="1" data-path="bienvenue.html"><a href="bienvenue.html"><i class="fa fa-check"></i><b>1</b> Bienvenue!</a>
@@ -83,261 +144,260 @@
 <li class="chapter" data-level="" data-path="bienvenue.html"><a href="bienvenue.html#why-data-science-for-sensory-and-consumer-science"><i class="fa fa-check"></i>Why Data Science for Sensory and Consumer Science?</a>
 <ul>
 <li class="chapter" data-level="" data-path="bienvenue.html"><a href="bienvenue.html#core-principles-in-sensory-and-consumer-science"><i class="fa fa-check"></i>Core principles in Sensory and Consumer Science</a></li>
-<li class="chapter" data-level="" data-path="bienvenue.html"><a href="bienvenue.html#measuring-and-analyzing-human-responses"><i class="fa fa-check"></i>Measuring and analyzing human responses</a></li>
-<li class="chapter" data-level="1.0.1" data-path="bienvenue.html"><a href="bienvenue.html#measuring-humanproduct-interactions--"><i class="fa fa-check"></i><b>1.0.1</b> Measuring human*product interactions {-}</a></li>
 <li class="chapter" data-level="" data-path="bienvenue.html"><a href="bienvenue.html#computational-sensory-science"><i class="fa fa-check"></i>Computational Sensory Science</a></li>
 </ul></li>
 </ul></li>
+<li class="part"><span><b>Apéritifs</b></span></li>
+<li class="chapter" data-level="2" data-path="start-R.html"><a href="start-R.html"><i class="fa fa-check"></i><b>2</b> Getting Started</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="start-R.html"><a href="start-R.html#r"><i class="fa fa-check"></i><b>2.1</b> R</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="start-R.html"><a href="start-R.html#why-learn-a-programming-language"><i class="fa fa-check"></i><b>2.1.1</b> Why Learn a Programming Language?</a></li>
+<li class="chapter" data-level="2.1.2" data-path="start-R.html"><a href="start-R.html#why-r"><i class="fa fa-check"></i><b>2.1.2</b> Why R?</a></li>
+<li class="chapter" data-level="2.1.3" data-path="start-R.html"><a href="start-R.html#steps-to-install-r"><i class="fa fa-check"></i><b>2.1.3</b> Steps to Install R</a></li>
+<li class="chapter" data-level="2.1.4" data-path="start-R.html"><a href="start-R.html#introduction-to-the-magrittr-and-the-notion-of-pipes"><i class="fa fa-check"></i><b>2.1.4</b> Introduction to the <code>{magrittr}</code> and the notion of <em>pipes</em></a></li>
+<li class="chapter" data-level="2.1.5" data-path="start-R.html"><a href="start-R.html#tips-on-how-to-read-this-book"><i class="fa fa-check"></i><b>2.1.5</b> Tips on <em>how to read this book?</em></a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="start-R.html"><a href="start-R.html#rstudio"><i class="fa fa-check"></i><b>2.2</b> RStudio</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="start-R.html"><a href="start-R.html#steps-to-install-rstudio"><i class="fa fa-check"></i><b>2.2.1</b> Steps to Install RStudio</a></li>
+<li class="chapter" data-level="2.2.2" data-path="start-R.html"><a href="start-R.html#create-a-local-project"><i class="fa fa-check"></i><b>2.2.2</b> Create a Local Project</a></li>
+<li class="chapter" data-level="2.2.3" data-path="start-R.html"><a href="start-R.html#install-and-load-packages"><i class="fa fa-check"></i><b>2.2.3</b> Install and Load Packages</a></li>
+<li class="chapter" data-level="2.2.4" data-path="start-R.html"><a href="start-R.html#run-sample-code"><i class="fa fa-check"></i><b>2.2.4</b> Run Sample Code</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="start-R.html"><a href="start-R.html#git-and-github"><i class="fa fa-check"></i><b>2.3</b> Git and GitHub</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="start-R.html"><a href="start-R.html#git"><i class="fa fa-check"></i><b>2.3.1</b> Git</a></li>
+<li class="chapter" data-level="2.3.2" data-path="start-R.html"><a href="start-R.html#github"><i class="fa fa-check"></i><b>2.3.2</b> GitHub</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="start-R.html"><a href="start-R.html#raw-material"><i class="fa fa-check"></i><b>2.4</b> RAW MATERIAL</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="start-R.html"><a href="start-R.html#principles"><i class="fa fa-check"></i><b>2.4.1</b> Principles</a></li>
+<li class="chapter" data-level="2.4.2" data-path="start-R.html"><a href="start-R.html#tools"><i class="fa fa-check"></i><b>2.4.2</b> Tools</a></li>
+<li class="chapter" data-level="2.4.3" data-path="start-R.html"><a href="start-R.html#documentation"><i class="fa fa-check"></i><b>2.4.3</b> Documentation</a></li>
+<li class="chapter" data-level="2.4.4" data-path="start-R.html"><a href="start-R.html#version-control"><i class="fa fa-check"></i><b>2.4.4</b> Version control</a></li>
+<li class="chapter" data-level="2.4.5" data-path="start-R.html"><a href="start-R.html#online-repositories-for-team-collaboration"><i class="fa fa-check"></i><b>2.4.5</b> Online repositories for team collaboration</a></li>
+<li class="chapter" data-level="2.4.6" data-path="start-R.html"><a href="start-R.html#building-a-code-base"><i class="fa fa-check"></i><b>2.4.6</b> Building a code base</a></li>
+</ul></li>
+</ul></li>
 <li class="part"><span><b>Hors d’Oeuvres</b></span></li>
-<li class="chapter" data-level="2" data-path="data-science.html"><a href="data-science.html"><i class="fa fa-check"></i><b>2</b> Why Data Science?</a>
+<li class="chapter" data-level="3" data-path="data-science.html"><a href="data-science.html"><i class="fa fa-check"></i><b>3</b> Why Data Science?</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="data-science.html"><a href="data-science.html#history-and-definition"><i class="fa fa-check"></i><b>2.1</b> History and Definition</a></li>
-<li class="chapter" data-level="2.2" data-path="data-science.html"><a href="data-science.html#benefits-of-data-science"><i class="fa fa-check"></i><b>2.2</b> Benefits of Data Science</a>
+<li class="chapter" data-level="3.1" data-path="data-science.html"><a href="data-science.html#history-and-definition"><i class="fa fa-check"></i><b>3.1</b> History and Definition</a></li>
+<li class="chapter" data-level="3.2" data-path="data-science.html"><a href="data-science.html#benefits-of-data-science"><i class="fa fa-check"></i><b>3.2</b> Benefits of Data Science</a>
 <ul>
-<li class="chapter" data-level="2.2.1" data-path="data-science.html"><a href="data-science.html#reproducible-research"><i class="fa fa-check"></i><b>2.2.1</b> Reproducible Research</a></li>
-<li class="chapter" data-level="2.2.2" data-path="data-science.html"><a href="data-science.html#standardized-reporting"><i class="fa fa-check"></i><b>2.2.2</b> Standardized Reporting</a></li>
+<li class="chapter" data-level="3.2.1" data-path="data-science.html"><a href="data-science.html#reproducible-research"><i class="fa fa-check"></i><b>3.2.1</b> Reproducible Research</a></li>
+<li class="chapter" data-level="3.2.2" data-path="data-science.html"><a href="data-science.html#standardized-reporting"><i class="fa fa-check"></i><b>3.2.2</b> Standardized Reporting</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="data-science.html"><a href="data-science.html#data-scientific-workflow"><i class="fa fa-check"></i><b>2.3</b> Data Scientific Workflow</a>
+<li class="chapter" data-level="3.3" data-path="data-science.html"><a href="data-science.html#data-scientific-workflow"><i class="fa fa-check"></i><b>3.3</b> Data Scientific Workflow</a>
 <ul>
-<li class="chapter" data-level="2.3.1" data-path="data-science.html"><a href="data-science.html#data-collection2"><i class="fa fa-check"></i><b>2.3.1</b> Data Collection</a></li>
-<li class="chapter" data-level="2.3.2" data-path="data-science.html"><a href="data-science.html#data-preparation"><i class="fa fa-check"></i><b>2.3.2</b> Data Preparation</a></li>
-<li class="chapter" data-level="2.3.3" data-path="data-science.html"><a href="data-science.html#data-analysis2"><i class="fa fa-check"></i><b>2.3.3</b> Data Analysis</a></li>
-<li class="chapter" data-level="2.3.4" data-path="data-science.html"><a href="data-science.html#value-delivery2"><i class="fa fa-check"></i><b>2.3.4</b> Value Delivery</a></li>
+<li class="chapter" data-level="3.3.1" data-path="data-science.html"><a href="data-science.html#data-collection2"><i class="fa fa-check"></i><b>3.3.1</b> Data Collection</a></li>
+<li class="chapter" data-level="3.3.2" data-path="data-science.html"><a href="data-science.html#data-preparation"><i class="fa fa-check"></i><b>3.3.2</b> Data Preparation</a></li>
+<li class="chapter" data-level="3.3.3" data-path="data-science.html"><a href="data-science.html#data-analysis2"><i class="fa fa-check"></i><b>3.3.3</b> Data Analysis</a></li>
+<li class="chapter" data-level="3.3.4" data-path="data-science.html"><a href="data-science.html#value-delivery2"><i class="fa fa-check"></i><b>3.3.4</b> Value Delivery</a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="data-science.html"><a href="data-science.html#how-to-learn-data-science"><i class="fa fa-check"></i><b>2.4</b> How to Learn Data Science</a></li>
+<li class="chapter" data-level="3.4" data-path="data-science.html"><a href="data-science.html#how-to-learn-data-science"><i class="fa fa-check"></i><b>3.4</b> How to Learn Data Science</a></li>
+<li class="chapter" data-level="3.5" data-path="data-science.html"><a href="data-science.html#cautions-dont-that-everybody-does"><i class="fa fa-check"></i><b>3.5</b> Cautions: Don’t that Everybody Does</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="data-manip.html"><a href="data-manip.html"><i class="fa fa-check"></i><b>3</b> Data Manipulation</a>
+<li class="chapter" data-level="4" data-path="data-manip.html"><a href="data-manip.html"><i class="fa fa-check"></i><b>4</b> Data Manipulation</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="data-manip.html"><a href="data-manip.html#tidy-data"><i class="fa fa-check"></i><b>3.1</b> Tidying Data</a>
+<li class="chapter" data-level="4.1" data-path="data-manip.html"><a href="data-manip.html#tidy-data"><i class="fa fa-check"></i><b>4.1</b> Tidying Data</a>
 <ul>
-<li class="chapter" data-level="3.1.1" data-path="data-manip.html"><a href="data-manip.html#simple-manipulations"><i class="fa fa-check"></i><b>3.1.1</b> Simple Manipulations</a></li>
-<li class="chapter" data-level="3.1.2" data-path="data-manip.html"><a href="data-manip.html#reshaping-the-data"><i class="fa fa-check"></i><b>3.1.2</b> Reshaping the Data</a></li>
-<li class="chapter" data-level="3.1.3" data-path="data-manip.html"><a href="data-manip.html#transformation-that-alters-the-data"><i class="fa fa-check"></i><b>3.1.3</b> Transformation that Alters the Data</a></li>
-<li class="chapter" data-level="3.1.4" data-path="data-manip.html"><a href="data-manip.html#combining-data-from-different-sources"><i class="fa fa-check"></i><b>3.1.4</b> Combining Data from Different Sources</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="4" data-path="data-viz.html"><a href="data-viz.html"><i class="fa fa-check"></i><b>4</b> Data Visualization</a>
-<ul>
-<li class="chapter" data-level="4.1" data-path="data-viz.html"><a href="data-viz.html#design-principles"><i class="fa fa-check"></i><b>4.1</b> Design Principles</a></li>
-<li class="chapter" data-level="4.2" data-path="data-viz.html"><a href="data-viz.html#table-making"><i class="fa fa-check"></i><b>4.2</b> Table Making</a></li>
-<li class="chapter" data-level="4.3" data-path="data-viz.html"><a href="data-viz.html#chart-making"><i class="fa fa-check"></i><b>4.3</b> Chart Making</a>
-<ul>
-<li class="chapter" data-level="4.3.1" data-path="data-viz.html"><a href="data-viz.html#philosophy-of-ggplot2"><i class="fa fa-check"></i><b>4.3.1</b> Philosophy of <code>{ggplot2}</code></a></li>
-<li class="chapter" data-level="4.3.2" data-path="data-viz.html"><a href="data-viz.html#getting-started-with-ggplot2"><i class="fa fa-check"></i><b>4.3.2</b> Getting started with <code>{ggplot2}</code></a></li>
-<li class="chapter" data-level="4.3.3" data-path="data-viz.html"><a href="data-viz.html#common-charts"><i class="fa fa-check"></i><b>4.3.3</b> Common Charts</a></li>
-<li class="chapter" data-level="4.3.4" data-path="data-viz.html"><a href="data-viz.html#miscealleneous"><i class="fa fa-check"></i><b>4.3.4</b> Miscealleneous</a></li>
-<li class="chapter" data-level="4.3.5" data-path="data-viz.html"><a href="data-viz.html#few-tips-and-tricks"><i class="fa fa-check"></i><b>4.3.5</b> Few Tips and Tricks</a></li>
+<li class="chapter" data-level="4.1.1" data-path="data-manip.html"><a href="data-manip.html#simple-manipulations"><i class="fa fa-check"></i><b>4.1.1</b> Simple Manipulations</a></li>
+<li class="chapter" data-level="4.1.2" data-path="data-manip.html"><a href="data-manip.html#reshaping-the-data"><i class="fa fa-check"></i><b>4.1.2</b> Reshaping the Data</a></li>
+<li class="chapter" data-level="4.1.3" data-path="data-manip.html"><a href="data-manip.html#transformation-that-alters-the-data"><i class="fa fa-check"></i><b>4.1.3</b> Transformation that Alters the Data</a></li>
+<li class="chapter" data-level="4.1.4" data-path="data-manip.html"><a href="data-manip.html#combining-data-from-different-sources"><i class="fa fa-check"></i><b>4.1.4</b> Combining Data from Different Sources</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="auto-report.html"><a href="auto-report.html"><i class="fa fa-check"></i><b>5</b> Automated Reporting</a>
+<li class="chapter" data-level="5" data-path="data-viz.html"><a href="data-viz.html"><i class="fa fa-check"></i><b>5</b> Data Visualization</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="auto-report.html"><a href="auto-report.html#what-is-automated-reporting"><i class="fa fa-check"></i><b>5.1</b> What is Automated Reporting?</a></li>
-<li class="chapter" data-level="5.2" data-path="auto-report.html"><a href="auto-report.html#excel"><i class="fa fa-check"></i><b>5.2</b> Excel</a></li>
-<li class="chapter" data-level="5.3" data-path="auto-report.html"><a href="auto-report.html#powerpoint"><i class="fa fa-check"></i><b>5.3</b> PowerPoint</a>
+<li class="chapter" data-level="5.1" data-path="data-viz.html"><a href="data-viz.html#design-principles"><i class="fa fa-check"></i><b>5.1</b> Design Principles</a></li>
+<li class="chapter" data-level="5.2" data-path="data-viz.html"><a href="data-viz.html#table-making"><i class="fa fa-check"></i><b>5.2</b> Table Making</a></li>
+<li class="chapter" data-level="5.3" data-path="data-viz.html"><a href="data-viz.html#chart-making"><i class="fa fa-check"></i><b>5.3</b> Chart Making</a>
 <ul>
-<li class="chapter" data-level="5.3.1" data-path="auto-report.html"><a href="auto-report.html#creating-a-powerpoint-deck"><i class="fa fa-check"></i><b>5.3.1</b> Creating a PowerPoint Deck</a></li>
-<li class="chapter" data-level="5.3.2" data-path="auto-report.html"><a href="auto-report.html#powerpoint-themes"><i class="fa fa-check"></i><b>5.3.2</b> PowerPoint Themes</a></li>
-<li class="chapter" data-level="5.3.3" data-path="auto-report.html"><a href="auto-report.html#placeholders-and-shapes"><i class="fa fa-check"></i><b>5.3.3</b> Placeholders and Shapes</a></li>
-<li class="chapter" data-level="5.3.4" data-path="auto-report.html"><a href="auto-report.html#working-with-text"><i class="fa fa-check"></i><b>5.3.4</b> Working with Text</a></li>
+<li class="chapter" data-level="5.3.1" data-path="data-viz.html"><a href="data-viz.html#philosophy-of-ggplot2"><i class="fa fa-check"></i><b>5.3.1</b> Philosophy of <code>{ggplot2}</code></a></li>
+<li class="chapter" data-level="5.3.2" data-path="data-viz.html"><a href="data-viz.html#getting-started-with-ggplot2"><i class="fa fa-check"></i><b>5.3.2</b> Getting started with <code>{ggplot2}</code></a></li>
+<li class="chapter" data-level="5.3.3" data-path="data-viz.html"><a href="data-viz.html#common-charts"><i class="fa fa-check"></i><b>5.3.3</b> Common Charts</a></li>
+<li class="chapter" data-level="5.3.4" data-path="data-viz.html"><a href="data-viz.html#miscealleneous"><i class="fa fa-check"></i><b>5.3.4</b> Miscealleneous</a></li>
+<li class="chapter" data-level="5.3.5" data-path="data-viz.html"><a href="data-viz.html#few-tips-and-tricks"><i class="fa fa-check"></i><b>5.3.5</b> Few Tips and Tricks</a></li>
 </ul></li>
-<li class="chapter" data-level="5.4" data-path="auto-report.html"><a href="auto-report.html#tables"><i class="fa fa-check"></i><b>5.4</b> Tables</a>
-<ul>
-<li class="chapter" data-level="5.4.1" data-path="auto-report.html"><a href="auto-report.html#introduction-to-flextable"><i class="fa fa-check"></i><b>5.4.1</b> Introduction to flextable</a></li>
-<li class="chapter" data-level="5.4.2" data-path="auto-report.html"><a href="auto-report.html#formatting-examples"><i class="fa fa-check"></i><b>5.4.2</b> Formatting examples</a></li>
-<li class="chapter" data-level="5.4.3" data-path="auto-report.html"><a href="auto-report.html#add-flextable-object-to-a-powerpoint-slide"><i class="fa fa-check"></i><b>5.4.3</b> Add flextable object to a powerpoint slide</a></li>
 </ul></li>
-<li class="chapter" data-level="5.5" data-path="auto-report.html"><a href="auto-report.html#charts"><i class="fa fa-check"></i><b>5.5</b> Charts</a>
+<li class="chapter" data-level="6" data-path="auto-report.html"><a href="auto-report.html"><i class="fa fa-check"></i><b>6</b> Automated Reporting</a>
 <ul>
-<li class="chapter" data-level="5.5.1" data-path="auto-report.html"><a href="auto-report.html#adding-charts-as-images"><i class="fa fa-check"></i><b>5.5.1</b> Adding charts as images</a></li>
-<li class="chapter" data-level="5.5.2" data-path="auto-report.html"><a href="auto-report.html#rvg-package"><i class="fa fa-check"></i><b>5.5.2</b> rvg package</a></li>
-<li class="chapter" data-level="5.5.3" data-path="auto-report.html"><a href="auto-report.html#mschart-package"><i class="fa fa-check"></i><b>5.5.3</b> mschart package</a></li>
+<li class="chapter" data-level="6.1" data-path="auto-report.html"><a href="auto-report.html#what-and-why-automated-reporting"><i class="fa fa-check"></i><b>6.1</b> What and why Automated Reporting?</a></li>
+<li class="chapter" data-level="6.2" data-path="auto-report.html"><a href="auto-report.html#integrating-reports-within-analyses-scripts"><i class="fa fa-check"></i><b>6.2</b> Integrating reports within analyses scripts</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="auto-report.html"><a href="auto-report.html#excel"><i class="fa fa-check"></i><b>6.2.1</b> Excel</a></li>
+<li class="chapter" data-level="6.2.2" data-path="auto-report.html"><a href="auto-report.html#powerpoint"><i class="fa fa-check"></i><b>6.2.2</b> PowerPoint</a></li>
+<li class="chapter" data-level="6.2.3" data-path="auto-report.html"><a href="auto-report.html#word"><i class="fa fa-check"></i><b>6.2.3</b> Word</a></li>
+<li class="chapter" data-level="6.2.4" data-path="auto-report.html"><a href="auto-report.html#notes-on-applying-corporate-branding"><i class="fa fa-check"></i><b>6.2.4</b> Notes on applying corporate branding</a></li>
 </ul></li>
-<li class="chapter" data-level="5.6" data-path="auto-report.html"><a href="auto-report.html#word"><i class="fa fa-check"></i><b>5.6</b> Word</a></li>
+<li class="chapter" data-level="6.3" data-path="auto-report.html"><a href="auto-report.html#integrating-analyses-scripts-within-your-reporting-tool"><i class="fa fa-check"></i><b>6.3</b> Integrating analyses scripts within your reporting tool</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="auto-report.html"><a href="auto-report.html#what-is-rmarkdown"><i class="fa fa-check"></i><b>6.3.1</b> What is <code>{rmarkdown}</code></a></li>
+<li class="chapter" data-level="6.3.2" data-path="auto-report.html"><a href="auto-report.html#starting-with-rmarkdown"><i class="fa fa-check"></i><b>6.3.2</b> Starting with {rmarkdown}</a></li>
+<li class="chapter" data-level="6.3.3" data-path="auto-report.html"><a href="auto-report.html#rmarkdown-through-a-simple-example"><i class="fa fa-check"></i><b>6.3.3</b> <code>{rmarkdown}</code> through a Simple Example</a></li>
+<li class="chapter" data-level="6.3.4" data-path="auto-report.html"><a href="auto-report.html#creating-a-document-using-knitr"><i class="fa fa-check"></i><b>6.3.4</b> Creating a document using <code>{knitr}</code></a></li>
+<li class="chapter" data-level="6.3.5" data-path="auto-report.html"><a href="auto-report.html#example-of-applications"><i class="fa fa-check"></i><b>6.3.5</b> Example of applications</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="auto-report.html"><a href="auto-report.html#to-go-further"><i class="fa fa-check"></i><b>6.4</b> To go further…</a></li>
 </ul></li>
 <li class="part"><span><b>Bon Appétit</b></span></li>
-<li class="chapter" data-level="6" data-path="example-projects.html"><a href="example-projects.html"><i class="fa fa-check"></i><b>6</b> Example Project: The Biscuit Study</a>
+<li class="chapter" data-level="7" data-path="example-projects.html"><a href="example-projects.html"><i class="fa fa-check"></i><b>7</b> Example Project: The Biscuit Study</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="example-projects.html"><a href="example-projects.html#products"><i class="fa fa-check"></i><b>6.1</b> Products</a></li>
-<li class="chapter" data-level="6.2" data-path="example-projects.html"><a href="example-projects.html#consumer-test"><i class="fa fa-check"></i><b>6.2</b> Consumer test</a>
+<li class="chapter" data-level="7.1" data-path="example-projects.html"><a href="example-projects.html#products"><i class="fa fa-check"></i><b>7.1</b> Products</a></li>
+<li class="chapter" data-level="7.2" data-path="example-projects.html"><a href="example-projects.html#consumer-test"><i class="fa fa-check"></i><b>7.2</b> Consumer test</a>
 <ul>
-<li class="chapter" data-level="6.2.1" data-path="example-projects.html"><a href="example-projects.html#participants"><i class="fa fa-check"></i><b>6.2.1</b> Participants</a></li>
-<li class="chapter" data-level="6.2.2" data-path="example-projects.html"><a href="example-projects.html#test-design"><i class="fa fa-check"></i><b>6.2.2</b> Test design</a></li>
+<li class="chapter" data-level="7.2.1" data-path="example-projects.html"><a href="example-projects.html#participants"><i class="fa fa-check"></i><b>7.2.1</b> Participants</a></li>
+<li class="chapter" data-level="7.2.2" data-path="example-projects.html"><a href="example-projects.html#test-design"><i class="fa fa-check"></i><b>7.2.2</b> Test design</a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="example-projects.html"><a href="example-projects.html#sensory-descriptive-analysis-data"><i class="fa fa-check"></i><b>6.3</b> Sensory descriptive analysis data</a></li>
-<li class="chapter" data-level="6.4" data-path="example-projects.html"><a href="example-projects.html#summary-of-the-datasets"><i class="fa fa-check"></i><b>6.4</b> Summary of the datasets</a></li>
+<li class="chapter" data-level="7.3" data-path="example-projects.html"><a href="example-projects.html#sensory-descriptive-analysis-data"><i class="fa fa-check"></i><b>7.3</b> Sensory descriptive analysis data</a></li>
+<li class="chapter" data-level="7.4" data-path="example-projects.html"><a href="example-projects.html#summary-of-the-datasets"><i class="fa fa-check"></i><b>7.4</b> Summary of the datasets</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="data-collection.html"><a href="data-collection.html"><i class="fa fa-check"></i><b>7</b> Data Collection</a>
+<li class="chapter" data-level="8" data-path="data-collection.html"><a href="data-collection.html"><i class="fa fa-check"></i><b>8</b> Data Collection</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="data-collection.html"><a href="data-collection.html#design-1"><i class="fa fa-check"></i><b>7.1</b> Design</a></li>
-<li class="chapter" data-level="7.2" data-path="data-collection.html"><a href="data-collection.html#execute-1"><i class="fa fa-check"></i><b>7.2</b> Execute</a></li>
-<li class="chapter" data-level="7.3" data-path="data-collection.html"><a href="data-collection.html#data-import"><i class="fa fa-check"></i><b>7.3</b> Import</a>
+<li class="chapter" data-level="8.1" data-path="data-collection.html"><a href="data-collection.html#design-1"><i class="fa fa-check"></i><b>8.1</b> Design</a>
 <ul>
-<li class="chapter" data-level="7.3.1" data-path="data-collection.html"><a href="data-collection.html#importing-structured-excel-file"><i class="fa fa-check"></i><b>7.3.1</b> Importing Structured Excel File</a></li>
-<li class="chapter" data-level="7.3.2" data-path="data-collection.html"><a href="data-collection.html#importing-unstructured-excel-file"><i class="fa fa-check"></i><b>7.3.2</b> Importing Unstructured Excel File</a></li>
-<li class="chapter" data-level="7.3.3" data-path="data-collection.html"><a href="data-collection.html#import-mult-sheet"><i class="fa fa-check"></i><b>7.3.3</b> Importing Data Stored in Multiple Sheets</a></li>
+<li class="chapter" data-level="8.1.1" data-path="data-collection.html"><a href="data-collection.html#designs-of-sensory-experiments"><i class="fa fa-check"></i><b>8.1.1</b> Designs of sensory experiments</a></li>
+<li class="chapter" data-level="8.1.2" data-path="data-collection.html"><a href="data-collection.html#product-related-design"><i class="fa fa-check"></i><b>8.1.2</b> Product-related design</a></li>
 </ul></li>
-</ul></li>
-<li class="chapter" data-level="8" data-path="data-prep.html"><a href="data-prep.html"><i class="fa fa-check"></i><b>8</b> Data Preparation</a>
+<li class="chapter" data-level="8.2" data-path="data-collection.html"><a href="data-collection.html#execute-1"><i class="fa fa-check"></i><b>8.2</b> Execute</a></li>
+<li class="chapter" data-level="8.3" data-path="data-collection.html"><a href="data-collection.html#data-import"><i class="fa fa-check"></i><b>8.3</b> Import</a>
 <ul>
-<li class="chapter" data-level="8.1" data-path="data-prep.html"><a href="data-prep.html#inspect"><i class="fa fa-check"></i><b>8.1</b> Inspect</a>
-<ul>
-<li class="chapter" data-level="8.1.1" data-path="data-prep.html"><a href="data-prep.html#data-inspection"><i class="fa fa-check"></i><b>8.1.1</b> Data Inspection</a></li>
-<li class="chapter" data-level="8.1.2" data-path="data-prep.html"><a href="data-prep.html#design-inspection"><i class="fa fa-check"></i><b>8.1.2</b> Design Inspection</a></li>
-<li class="chapter" data-level="8.1.3" data-path="data-prep.html"><a href="data-prep.html#missing-data-inspection"><i class="fa fa-check"></i><b>8.1.3</b> Missing Data Inspection</a></li>
-<li class="chapter" data-level="8.1.4" data-path="data-prep.html"><a href="data-prep.html#checks-for-consistency-and-reliability"><i class="fa fa-check"></i><b>8.1.4</b> Checks for Consistency and Reliability</a></li>
-<li class="chapter" data-level="8.1.5" data-path="data-prep.html"><a href="data-prep.html#preliminary-tables-and-charts"><i class="fa fa-check"></i><b>8.1.5</b> Preliminary Tables and Charts</a></li>
-</ul></li>
-<li class="chapter" data-level="8.2" data-path="data-prep.html"><a href="data-prep.html#clean"><i class="fa fa-check"></i><b>8.2</b> Clean</a>
-<ul>
-<li class="chapter" data-level="8.2.1" data-path="data-prep.html"><a href="data-prep.html#renaming-variables-1"><i class="fa fa-check"></i><b>8.2.1</b> Renaming Variables</a></li>
-<li class="chapter" data-level="8.2.2" data-path="data-prep.html"><a href="data-prep.html#handling-data-type"><i class="fa fa-check"></i><b>8.2.2</b> Handling Data Type</a></li>
-<li class="chapter" data-level="8.2.3" data-path="data-prep.html"><a href="data-prep.html#converting-between-types"><i class="fa fa-check"></i><b>8.2.3</b> Converting between Types</a></li>
-<li class="chapter" data-level="8.2.4" data-path="data-prep.html"><a href="data-prep.html#handling-missing-values"><i class="fa fa-check"></i><b>8.2.4</b> Handling Missing Values</a></li>
-<li class="chapter" data-level="8.2.5" data-path="data-prep.html"><a href="data-prep.html#restructuring-data"><i class="fa fa-check"></i><b>8.2.5</b> Restructuring Data</a></li>
+<li class="chapter" data-level="8.3.1" data-path="data-collection.html"><a href="data-collection.html#importing-structured-excel-file"><i class="fa fa-check"></i><b>8.3.1</b> Importing Structured Excel File</a></li>
+<li class="chapter" data-level="8.3.2" data-path="data-collection.html"><a href="data-collection.html#importing-unstructured-excel-file"><i class="fa fa-check"></i><b>8.3.2</b> Importing Unstructured Excel File</a></li>
+<li class="chapter" data-level="8.3.3" data-path="data-collection.html"><a href="data-collection.html#import-mult-sheet"><i class="fa fa-check"></i><b>8.3.3</b> Importing Data Stored in Multiple Sheets</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="data-analysis.html"><a href="data-analysis.html"><i class="fa fa-check"></i><b>9</b> Data Analysis</a>
+<li class="chapter" data-level="9" data-path="data-prep.html"><a href="data-prep.html"><i class="fa fa-check"></i><b>9</b> Data Preparation</a>
 <ul>
-<li class="chapter" data-level="9.1" data-path="data-analysis.html"><a href="data-analysis.html#sensory-data"><i class="fa fa-check"></i><b>9.1</b> Sensory Data</a></li>
-<li class="chapter" data-level="9.2" data-path="data-analysis.html"><a href="data-analysis.html#demographic-and-questionnaire-data"><i class="fa fa-check"></i><b>9.2</b> Demographic and Questionnaire Data</a>
+<li class="chapter" data-level="9.1" data-path="data-prep.html"><a href="data-prep.html#inspect"><i class="fa fa-check"></i><b>9.1</b> Inspect</a>
 <ul>
-<li class="chapter" data-level="9.2.1" data-path="data-analysis.html"><a href="data-analysis.html#demographic-data-frequency-and-proportion"><i class="fa fa-check"></i><b>9.2.1</b> Demographic Data: Frequency and Proportion</a></li>
-<li class="chapter" data-level="9.2.2" data-path="data-analysis.html"><a href="data-analysis.html#personality-traits-and-eating-behavior-tfeq-data"><i class="fa fa-check"></i><b>9.2.2</b> Personality traits and eating behavior: TFEQ data</a></li>
+<li class="chapter" data-level="9.1.1" data-path="data-prep.html"><a href="data-prep.html#data-inspection"><i class="fa fa-check"></i><b>9.1.1</b> Data Inspection</a></li>
+<li class="chapter" data-level="9.1.2" data-path="data-prep.html"><a href="data-prep.html#design-inspection"><i class="fa fa-check"></i><b>9.1.2</b> Design Inspection</a></li>
+<li class="chapter" data-level="9.1.3" data-path="data-prep.html"><a href="data-prep.html#missing-data-inspection"><i class="fa fa-check"></i><b>9.1.3</b> Missing Data Inspection</a></li>
+<li class="chapter" data-level="9.1.4" data-path="data-prep.html"><a href="data-prep.html#checks-for-consistency-and-reliability"><i class="fa fa-check"></i><b>9.1.4</b> Checks for Consistency and Reliability</a></li>
+<li class="chapter" data-level="9.1.5" data-path="data-prep.html"><a href="data-prep.html#preliminary-tables-and-charts"><i class="fa fa-check"></i><b>9.1.5</b> Preliminary Tables and Charts</a></li>
 </ul></li>
-<li class="chapter" data-level="9.3" data-path="data-analysis.html"><a href="data-analysis.html#consumer-data"><i class="fa fa-check"></i><b>9.3</b> Consumer Data</a></li>
-<li class="chapter" data-level="9.4" data-path="data-analysis.html"><a href="data-analysis.html#combining-sensory-and-consumer-data"><i class="fa fa-check"></i><b>9.4</b> Combining Sensory and Consumer Data</a>
+<li class="chapter" data-level="9.2" data-path="data-prep.html"><a href="data-prep.html#clean"><i class="fa fa-check"></i><b>9.2</b> Clean</a>
 <ul>
-<li class="chapter" data-level="9.4.1" data-path="data-analysis.html"><a href="data-analysis.html#internal-preference-mapping"><i class="fa fa-check"></i><b>9.4.1</b> Internal Preference Mapping</a></li>
-<li class="chapter" data-level="9.4.2" data-path="data-analysis.html"><a href="data-analysis.html#consumers-clustering"><i class="fa fa-check"></i><b>9.4.2</b> Consumers Clustering</a></li>
-<li class="chapter" data-level="9.4.3" data-path="data-analysis.html"><a href="data-analysis.html#drivers-of-liking"><i class="fa fa-check"></i><b>9.4.3</b> Drivers of Liking</a></li>
-<li class="chapter" data-level="9.4.4" data-path="data-analysis.html"><a href="data-analysis.html#external-preference-mapping"><i class="fa fa-check"></i><b>9.4.4</b> External Preference Mapping</a></li>
+<li class="chapter" data-level="9.2.1" data-path="data-prep.html"><a href="data-prep.html#renaming-variables-1"><i class="fa fa-check"></i><b>9.2.1</b> Renaming Variables</a></li>
+<li class="chapter" data-level="9.2.2" data-path="data-prep.html"><a href="data-prep.html#handling-data-type"><i class="fa fa-check"></i><b>9.2.2</b> Handling Data Type</a></li>
+<li class="chapter" data-level="9.2.3" data-path="data-prep.html"><a href="data-prep.html#converting-between-types"><i class="fa fa-check"></i><b>9.2.3</b> Converting between Types</a></li>
+<li class="chapter" data-level="9.2.4" data-path="data-prep.html"><a href="data-prep.html#handling-missing-values"><i class="fa fa-check"></i><b>9.2.4</b> Handling Missing Values</a></li>
+<li class="chapter" data-level="9.2.5" data-path="data-prep.html"><a href="data-prep.html#restructuring-data"><i class="fa fa-check"></i><b>9.2.5</b> Restructuring Data</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="value-delivery.html"><a href="value-delivery.html"><i class="fa fa-check"></i><b>10</b> Value Delivery</a>
+<li class="chapter" data-level="10" data-path="data-analysis.html"><a href="data-analysis.html"><i class="fa fa-check"></i><b>10</b> Data Analysis</a>
 <ul>
-<li class="chapter" data-level="10.1" data-path="value-delivery.html"><a href="value-delivery.html#communicate2"><i class="fa fa-check"></i><b>10.1</b> Communicate</a>
+<li class="chapter" data-level="10.1" data-path="data-analysis.html"><a href="data-analysis.html#sensory-data"><i class="fa fa-check"></i><b>10.1</b> Sensory Data</a></li>
+<li class="chapter" data-level="10.2" data-path="data-analysis.html"><a href="data-analysis.html#demographic-and-questionnaire-data"><i class="fa fa-check"></i><b>10.2</b> Demographic and Questionnaire Data</a>
 <ul>
-<li class="chapter" data-level="10.1.1" data-path="value-delivery.html"><a href="value-delivery.html#know-your-audience"><i class="fa fa-check"></i><b>10.1.1</b> Know Your Audience</a></li>
-<li class="chapter" data-level="10.1.2" data-path="value-delivery.html"><a href="value-delivery.html#pick-the-correct-format"><i class="fa fa-check"></i><b>10.1.2</b> Pick the Correct Format</a></li>
-<li class="chapter" data-level="10.1.3" data-path="value-delivery.html"><a href="value-delivery.html#storytelling"><i class="fa fa-check"></i><b>10.1.3</b> Storytelling</a></li>
+<li class="chapter" data-level="10.2.1" data-path="data-analysis.html"><a href="data-analysis.html#demographic-data-frequency-and-proportion"><i class="fa fa-check"></i><b>10.2.1</b> Demographic Data: Frequency and Proportion</a></li>
+<li class="chapter" data-level="10.2.2" data-path="data-analysis.html"><a href="data-analysis.html#personality-traits-and-eating-behavior-tfeq-data"><i class="fa fa-check"></i><b>10.2.2</b> Personality traits and eating behavior: TFEQ data</a></li>
 </ul></li>
-<li class="chapter" data-level="10.2" data-path="value-delivery.html"><a href="value-delivery.html#reformulate2"><i class="fa fa-check"></i><b>10.2</b> Reformulate</a></li>
+<li class="chapter" data-level="10.3" data-path="data-analysis.html"><a href="data-analysis.html#consumer-data"><i class="fa fa-check"></i><b>10.3</b> Consumer Data</a></li>
+<li class="chapter" data-level="10.4" data-path="data-analysis.html"><a href="data-analysis.html#combining-sensory-and-consumer-data"><i class="fa fa-check"></i><b>10.4</b> Combining Sensory and Consumer Data</a>
+<ul>
+<li class="chapter" data-level="10.4.1" data-path="data-analysis.html"><a href="data-analysis.html#internal-preference-mapping"><i class="fa fa-check"></i><b>10.4.1</b> Internal Preference Mapping</a></li>
+<li class="chapter" data-level="10.4.2" data-path="data-analysis.html"><a href="data-analysis.html#consumers-clustering"><i class="fa fa-check"></i><b>10.4.2</b> Consumers Clustering</a></li>
+<li class="chapter" data-level="10.4.3" data-path="data-analysis.html"><a href="data-analysis.html#drivers-of-liking"><i class="fa fa-check"></i><b>10.4.3</b> Drivers of Liking</a></li>
+<li class="chapter" data-level="10.4.4" data-path="data-analysis.html"><a href="data-analysis.html#external-preference-mapping"><i class="fa fa-check"></i><b>10.4.4</b> External Preference Mapping</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="value-delivery.html"><a href="value-delivery.html"><i class="fa fa-check"></i><b>11</b> Value Delivery</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="value-delivery.html"><a href="value-delivery.html#communicate2"><i class="fa fa-check"></i><b>11.1</b> Communicate</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="value-delivery.html"><a href="value-delivery.html#audience-awareness"><i class="fa fa-check"></i><b>11.1.1</b> Audience Awareness</a></li>
+<li class="chapter" data-level="11.1.2" data-path="value-delivery.html"><a href="value-delivery.html#method-to-communicate"><i class="fa fa-check"></i><b>11.1.2</b> Method to Communicate</a></li>
+<li class="chapter" data-level="11.1.3" data-path="value-delivery.html"><a href="value-delivery.html#storytelling"><i class="fa fa-check"></i><b>11.1.3</b> Storytelling</a></li>
+<li class="chapter" data-level="11.1.4" data-path="value-delivery.html"><a href="value-delivery.html#reformulate-reformulate2"><i class="fa fa-check"></i><b>11.1.4</b> Reformulate {reformulate2}</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="value-delivery.html"><a href="value-delivery.html#to-go-further-1"><i class="fa fa-check"></i><b>11.2</b> To go further…</a></li>
 </ul></li>
 <li class="part"><span><b>Haute Cuisine</b></span></li>
-<li class="chapter" data-level="11" data-path="machine-learning.html"><a href="machine-learning.html"><i class="fa fa-check"></i><b>11</b> Machine Learning</a>
+<li class="chapter" data-level="12" data-path="machine-learning.html"><a href="machine-learning.html"><i class="fa fa-check"></i><b>12</b> Machine Learning</a>
 <ul>
-<li class="chapter" data-level="11.1" data-path="machine-learning.html"><a href="machine-learning.html#overview"><i class="fa fa-check"></i><b>11.1</b> Overview</a></li>
-<li class="chapter" data-level="11.2" data-path="machine-learning.html"><a href="machine-learning.html#key-topics"><i class="fa fa-check"></i><b>11.2</b> Key Topics</a>
+<li class="chapter" data-level="12.1" data-path="machine-learning.html"><a href="machine-learning.html#overview"><i class="fa fa-check"></i><b>12.1</b> Overview</a></li>
+<li class="chapter" data-level="12.2" data-path="machine-learning.html"><a href="machine-learning.html#key-topics"><i class="fa fa-check"></i><b>12.2</b> Key Topics</a>
 <ul>
-<li class="chapter" data-level="11.2.1" data-path="machine-learning.html"><a href="machine-learning.html#model-validation"><i class="fa fa-check"></i><b>11.2.1</b> Model Validation</a></li>
-<li class="chapter" data-level="11.2.2" data-path="machine-learning.html"><a href="machine-learning.html#unsupervised-learning"><i class="fa fa-check"></i><b>11.2.2</b> Unsupervised learning</a></li>
-<li class="chapter" data-level="11.2.3" data-path="machine-learning.html"><a href="machine-learning.html#semisupervised-learning"><i class="fa fa-check"></i><b>11.2.3</b> Semisupervised learning</a></li>
-<li class="chapter" data-level="11.2.4" data-path="machine-learning.html"><a href="machine-learning.html#supervised-learning"><i class="fa fa-check"></i><b>11.2.4</b> Supervised learning</a></li>
-<li class="chapter" data-level="11.2.5" data-path="machine-learning.html"><a href="machine-learning.html#interpretability"><i class="fa fa-check"></i><b>11.2.5</b> Interpretability</a></li>
+<li class="chapter" data-level="12.2.1" data-path="machine-learning.html"><a href="machine-learning.html#model-validation"><i class="fa fa-check"></i><b>12.2.1</b> Model Validation</a></li>
+<li class="chapter" data-level="12.2.2" data-path="machine-learning.html"><a href="machine-learning.html#unsupervised-learning"><i class="fa fa-check"></i><b>12.2.2</b> Unsupervised learning</a></li>
+<li class="chapter" data-level="12.2.3" data-path="machine-learning.html"><a href="machine-learning.html#semisupervised-learning"><i class="fa fa-check"></i><b>12.2.3</b> Semisupervised learning</a></li>
+<li class="chapter" data-level="12.2.4" data-path="machine-learning.html"><a href="machine-learning.html#supervised-learning"><i class="fa fa-check"></i><b>12.2.4</b> Supervised learning</a></li>
+<li class="chapter" data-level="12.2.5" data-path="machine-learning.html"><a href="machine-learning.html#interpretability"><i class="fa fa-check"></i><b>12.2.5</b> Interpretability</a></li>
 </ul></li>
-<li class="chapter" data-level="11.3" data-path="machine-learning.html"><a href="machine-learning.html#common-applications"><i class="fa fa-check"></i><b>11.3</b> Common Applications</a>
+<li class="chapter" data-level="12.3" data-path="machine-learning.html"><a href="machine-learning.html#common-applications"><i class="fa fa-check"></i><b>12.3</b> Common Applications</a>
 <ul>
-<li class="chapter" data-level="11.3.1" data-path="machine-learning.html"><a href="machine-learning.html#predicting-sensory-profiles-from-instrumental-data"><i class="fa fa-check"></i><b>11.3.1</b> Predicting sensory profiles from instrumental data</a></li>
-<li class="chapter" data-level="11.3.2" data-path="machine-learning.html"><a href="machine-learning.html#predicting-consumer-response-from-sensory-profiles"><i class="fa fa-check"></i><b>11.3.2</b> Predicting consumer response from sensory profiles</a></li>
-<li class="chapter" data-level="11.3.3" data-path="machine-learning.html"><a href="machine-learning.html#characterizing-consumer-clusters"><i class="fa fa-check"></i><b>11.3.3</b> Characterizing consumer clusters</a></li>
+<li class="chapter" data-level="12.3.1" data-path="machine-learning.html"><a href="machine-learning.html#predicting-sensory-profiles-from-instrumental-data"><i class="fa fa-check"></i><b>12.3.1</b> Predicting sensory profiles from instrumental data</a></li>
+<li class="chapter" data-level="12.3.2" data-path="machine-learning.html"><a href="machine-learning.html#predicting-consumer-response-from-sensory-profiles"><i class="fa fa-check"></i><b>12.3.2</b> Predicting consumer response from sensory profiles</a></li>
+<li class="chapter" data-level="12.3.3" data-path="machine-learning.html"><a href="machine-learning.html#characterizing-consumer-clusters"><i class="fa fa-check"></i><b>12.3.3</b> Characterizing consumer clusters</a></li>
 </ul></li>
-<li class="chapter" data-level="11.4" data-path="machine-learning.html"><a href="machine-learning.html#code-examples"><i class="fa fa-check"></i><b>11.4</b> Code Examples</a>
+<li class="chapter" data-level="12.4" data-path="machine-learning.html"><a href="machine-learning.html#code-examples"><i class="fa fa-check"></i><b>12.4</b> Code Examples</a>
 <ul>
-<li class="chapter" data-level="11.4.1" data-path="machine-learning.html"><a href="machine-learning.html#data-prep-1"><i class="fa fa-check"></i><b>11.4.1</b> Data Prep</a></li>
-<li class="chapter" data-level="11.4.2" data-path="machine-learning.html"><a href="machine-learning.html#classification-code"><i class="fa fa-check"></i><b>11.4.2</b> Classification Code</a></li>
-<li class="chapter" data-level="11.4.3" data-path="machine-learning.html"><a href="machine-learning.html#regression-code"><i class="fa fa-check"></i><b>11.4.3</b> Regression Code</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="12" data-path="text-analysis.html"><a href="text-analysis.html"><i class="fa fa-check"></i><b>12</b> Text Analysis</a>
-<ul>
-<li class="chapter" data-level="12.1" data-path="text-analysis.html"><a href="text-analysis.html#overview-1"><i class="fa fa-check"></i><b>12.1</b> Overview</a></li>
-<li class="chapter" data-level="12.2" data-path="text-analysis.html"><a href="text-analysis.html#key-topics-1"><i class="fa fa-check"></i><b>12.2</b> Key Topics</a>
-<ul>
-<li class="chapter" data-level="12.2.1" data-path="text-analysis.html"><a href="text-analysis.html#data-sources"><i class="fa fa-check"></i><b>12.2.1</b> Data Sources</a></li>
-<li class="chapter" data-level="12.2.2" data-path="text-analysis.html"><a href="text-analysis.html#working-with-strings"><i class="fa fa-check"></i><b>12.2.2</b> Working with Strings</a></li>
-<li class="chapter" data-level="12.2.3" data-path="text-analysis.html"><a href="text-analysis.html#tokenizing"><i class="fa fa-check"></i><b>12.2.3</b> Tokenizing</a></li>
-<li class="chapter" data-level="12.2.4" data-path="text-analysis.html"><a href="text-analysis.html#lemmatization-stemming-and-stop-word-removal"><i class="fa fa-check"></i><b>12.2.4</b> Lemmatization, stemming, and stop word removal</a></li>
-<li class="chapter" data-level="12.2.5" data-path="text-analysis.html"><a href="text-analysis.html#part-of-speech-tagging"><i class="fa fa-check"></i><b>12.2.5</b> Part of Speech Tagging</a></li>
-</ul></li>
-<li class="chapter" data-level="12.3" data-path="text-analysis.html"><a href="text-analysis.html#common-applications-1"><i class="fa fa-check"></i><b>12.3</b> Common Applications</a>
-<ul>
-<li class="chapter" data-level="12.3.1" data-path="text-analysis.html"><a href="text-analysis.html#frequency-counts-and-summary-statistics"><i class="fa fa-check"></i><b>12.3.1</b> Frequency counts and summary statistics</a></li>
-<li class="chapter" data-level="12.3.2" data-path="text-analysis.html"><a href="text-analysis.html#word-clouds"><i class="fa fa-check"></i><b>12.3.2</b> Word clouds</a></li>
-<li class="chapter" data-level="12.3.3" data-path="text-analysis.html"><a href="text-analysis.html#contrast-plots"><i class="fa fa-check"></i><b>12.3.3</b> Contrast plots</a></li>
-<li class="chapter" data-level="12.3.4" data-path="text-analysis.html"><a href="text-analysis.html#sentiment-analysis"><i class="fa fa-check"></i><b>12.3.4</b> Sentiment analysis</a></li>
-<li class="chapter" data-level="12.3.5" data-path="text-analysis.html"><a href="text-analysis.html#topic-modeling"><i class="fa fa-check"></i><b>12.3.5</b> Topic Modeling</a></li>
-<li class="chapter" data-level="12.3.6" data-path="text-analysis.html"><a href="text-analysis.html#bigrams-and-word-graphs"><i class="fa fa-check"></i><b>12.3.6</b> Bigrams and word graphs</a></li>
-</ul></li>
-<li class="chapter" data-level="12.4" data-path="text-analysis.html"><a href="text-analysis.html#code-examples-1"><i class="fa fa-check"></i><b>12.4</b> Code Examples</a>
-<ul>
-<li class="chapter" data-level="12.4.1" data-path="text-analysis.html"><a href="text-analysis.html#statistical-entities"><i class="fa fa-check"></i><b>12.4.1</b> Statistical entities</a></li>
-<li class="chapter" data-level="12.4.2" data-path="text-analysis.html"><a href="text-analysis.html#analysis-of-frequencies-and-term-frequency-document"><i class="fa fa-check"></i><b>12.4.2</b> Analysis of Frequencies and term-frequency document</a></li>
-<li class="chapter" data-level="12.4.3" data-path="text-analysis.html"><a href="text-analysis.html#futher-analysis-of-the-words"><i class="fa fa-check"></i><b>12.4.3</b> Futher Analysis of the words</a></li>
+<li class="chapter" data-level="12.4.1" data-path="machine-learning.html"><a href="machine-learning.html#data-prep-1"><i class="fa fa-check"></i><b>12.4.1</b> Data Prep</a></li>
+<li class="chapter" data-level="12.4.2" data-path="machine-learning.html"><a href="machine-learning.html#classification-code"><i class="fa fa-check"></i><b>12.4.2</b> Classification Code</a></li>
+<li class="chapter" data-level="12.4.3" data-path="machine-learning.html"><a href="machine-learning.html#regression-code"><i class="fa fa-check"></i><b>12.4.3</b> Regression Code</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="linear-programming.html"><a href="linear-programming.html"><i class="fa fa-check"></i><b>13</b> Linear Programming</a>
+<li class="chapter" data-level="13" data-path="text-analysis.html"><a href="text-analysis.html"><i class="fa fa-check"></i><b>13</b> Text Analysis</a>
 <ul>
-<li class="chapter" data-level="13.1" data-path="linear-programming.html"><a href="linear-programming.html#overview-2"><i class="fa fa-check"></i><b>13.1</b> Overview</a></li>
-<li class="chapter" data-level="13.2" data-path="linear-programming.html"><a href="linear-programming.html#common-applications-2"><i class="fa fa-check"></i><b>13.2</b> Common Applications</a>
+<li class="chapter" data-level="13.0.1" data-path="text-analysis.html"><a href="text-analysis.html#applicaion-of-text-analysis-in-sensory-and-consumer-science"><i class="fa fa-check"></i><b>13.0.1</b> Applicaion of Text Analysis in Sensory and Consumer Science</a></li>
+<li class="chapter" data-level="13.0.2" data-path="text-analysis.html"><a href="text-analysis.html#objectives-of-text-analysis"><i class="fa fa-check"></i><b>13.0.2</b> Objectives of Text Analysis</a></li>
+<li class="chapter" data-level="13.0.3" data-path="text-analysis.html"><a href="text-analysis.html#warnings"><i class="fa fa-check"></i><b>13.0.3</b> Warnings</a></li>
+<li class="chapter" data-level="13.1" data-path="text-analysis.html"><a href="text-analysis.html#illustration-using-sorting-task-data"><i class="fa fa-check"></i><b>13.1</b> Illustration using Sorting Task Data</a></li>
+<li class="chapter" data-level="13.2" data-path="text-analysis.html"><a href="text-analysis.html#data-pre-processing"><i class="fa fa-check"></i><b>13.2</b> Data Pre-processing</a>
 <ul>
-<li class="chapter" data-level="13.2.1" data-path="linear-programming.html"><a href="linear-programming.html#experimental-design"><i class="fa fa-check"></i><b>13.2.1</b> Experimental Design</a></li>
-<li class="chapter" data-level="13.2.2" data-path="linear-programming.html"><a href="linear-programming.html#sample-selection"><i class="fa fa-check"></i><b>13.2.2</b> Sample Selection</a></li>
-<li class="chapter" data-level="13.2.3" data-path="linear-programming.html"><a href="linear-programming.html#compact-letter-displays"><i class="fa fa-check"></i><b>13.2.3</b> Compact Letter Displays</a></li>
-<li class="chapter" data-level="13.2.4" data-path="linear-programming.html"><a href="linear-programming.html#turf-analysis"><i class="fa fa-check"></i><b>13.2.4</b> TURF Analysis</a></li>
-<li class="chapter" data-level="13.2.5" data-path="linear-programming.html"><a href="linear-programming.html#bundle-optimization"><i class="fa fa-check"></i><b>13.2.5</b> Bundle Optimization</a></li>
+<li class="chapter" data-level="13.2.1" data-path="text-analysis.html"><a href="text-analysis.html#introduction-to-working-with-strings-stringr"><i class="fa fa-check"></i><b>13.2.1</b> Introduction to working with strings (<code>{stringr}</code>)</a></li>
+<li class="chapter" data-level="13.2.2" data-path="text-analysis.html"><a href="text-analysis.html#tokenization"><i class="fa fa-check"></i><b>13.2.2</b> Tokenization</a></li>
+<li class="chapter" data-level="13.2.3" data-path="text-analysis.html"><a href="text-analysis.html#simple-transformation-lowercase"><i class="fa fa-check"></i><b>13.2.3</b> Simple Transformation (lowercase)</a></li>
+<li class="chapter" data-level="13.2.4" data-path="text-analysis.html"><a href="text-analysis.html#stopwords"><i class="fa fa-check"></i><b>13.2.4</b> Stopwords</a></li>
+<li class="chapter" data-level="13.2.5" data-path="text-analysis.html"><a href="text-analysis.html#stemming-and-lemmatization"><i class="fa fa-check"></i><b>13.2.5</b> Stemming and Lemmatization</a></li>
 </ul></li>
-<li class="chapter" data-level="13.3" data-path="linear-programming.html"><a href="linear-programming.html#code-examples-2"><i class="fa fa-check"></i><b>13.3</b> Code Examples</a></li>
+<li class="chapter" data-level="13.3" data-path="text-analysis.html"><a href="text-analysis.html#text-analysis-1"><i class="fa fa-check"></i><b>13.3</b> Text Analysis</a>
+<ul>
+<li class="chapter" data-level="13.3.1" data-path="text-analysis.html"><a href="text-analysis.html#raw-frequencies-and-visualization"><i class="fa fa-check"></i><b>13.3.1</b> Raw Frequencies and Visualization</a></li>
+<li class="chapter" data-level="13.3.2" data-path="text-analysis.html"><a href="text-analysis.html#bigrams-n-grams"><i class="fa fa-check"></i><b>13.3.2</b> Bigrams, <em>n</em>-grams</a></li>
+<li class="chapter" data-level="13.3.3" data-path="text-analysis.html"><a href="text-analysis.html#word-embedding"><i class="fa fa-check"></i><b>13.3.3</b> Word Embedding</a></li>
+<li class="chapter" data-level="13.3.4" data-path="text-analysis.html"><a href="text-analysis.html#sentiment-analysis"><i class="fa fa-check"></i><b>13.3.4</b> Sentiment Analysis</a></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="pipelines.html"><a href="pipelines.html"><i class="fa fa-check"></i><b>14</b> Pipelines</a></li>
-<li class="chapter" data-level="15" data-path="dashboards.html"><a href="dashboards.html"><i class="fa fa-check"></i><b>15</b> Dashboards</a></li>
-<li class="chapter" data-level="16" data-path="graph-db.html"><a href="graph-db.html"><i class="fa fa-check"></i><b>16</b> Graph Databases</a></li>
-<li class="appendix"><span><b>À la Carte</b></span></li>
-<li class="chapter" data-level="A" data-path="start-R.html"><a href="start-R.html"><i class="fa fa-check"></i><b>A</b> Apéritifs (Getting Started)</a>
-<ul>
-<li class="chapter" data-level="A.1" data-path="start-R.html"><a href="start-R.html#r"><i class="fa fa-check"></i><b>A.1</b> R</a>
-<ul>
-<li class="chapter" data-level="A.1.1" data-path="start-R.html"><a href="start-R.html#why-learn-a-programming-language"><i class="fa fa-check"></i><b>A.1.1</b> Why Learn a Programming Language?</a></li>
-<li class="chapter" data-level="A.1.2" data-path="start-R.html"><a href="start-R.html#why-r"><i class="fa fa-check"></i><b>A.1.2</b> Why R?</a></li>
+<li class="chapter" data-level="13.4" data-path="text-analysis.html"><a href="text-analysis.html#to-go-further-2"><i class="fa fa-check"></i><b>13.4</b> To go further…</a></li>
 </ul></li>
-<li class="chapter" data-level="A.2" data-path="start-R.html"><a href="start-R.html#why-r-1"><i class="fa fa-check"></i><b>A.2</b> Why R?</a>
+<li class="chapter" data-level="14" data-path="dashboards.html"><a href="dashboards.html"><i class="fa fa-check"></i><b>14</b> Dashboards</a>
 <ul>
-<li class="chapter" data-level="A.2.1" data-path="start-R.html"><a href="start-R.html#steps-to-install-r"><i class="fa fa-check"></i><b>A.2.1</b> Steps to Install R</a></li>
+<li class="chapter" data-level="14.1" data-path="dashboards.html"><a href="dashboards.html#objectives"><i class="fa fa-check"></i><b>14.1</b> Objectives</a></li>
+<li class="chapter" data-level="14.2" data-path="dashboards.html"><a href="dashboards.html#introduction-to-shiny-through-an-example"><i class="fa fa-check"></i><b>14.2</b> Introduction to Shiny through an Example</a>
+<ul>
+<li class="chapter" data-level="14.2.1" data-path="dashboards.html"><a href="dashboards.html#what-is-shiny"><i class="fa fa-check"></i><b>14.2.1</b> What is Shiny</a></li>
+<li class="chapter" data-level="14.2.2" data-path="dashboards.html"><a href="dashboards.html#starting-with-shiny"><i class="fa fa-check"></i><b>14.2.2</b> Starting with Shiny</a></li>
+<li class="chapter" data-level="14.2.3" data-path="dashboards.html"><a href="dashboards.html#functionalities"><i class="fa fa-check"></i><b>14.2.3</b> Functionalities</a></li>
+<li class="chapter" data-level="14.2.4" data-path="dashboards.html"><a href="dashboards.html#tips"><i class="fa fa-check"></i><b>14.2.4</b> Tips</a></li>
+<li class="chapter" data-level="14.2.5" data-path="dashboards.html"><a href="dashboards.html#deploying-the-application"><i class="fa fa-check"></i><b>14.2.5</b> Deploying the Application</a></li>
 </ul></li>
-<li class="chapter" data-level="A.3" data-path="start-R.html"><a href="start-R.html#rstudio"><i class="fa fa-check"></i><b>A.3</b> RStudio</a>
+<li class="chapter" data-level="14.3" data-path="dashboards.html"><a href="dashboards.html#to-go-further-3"><i class="fa fa-check"></i><b>14.3</b> To go further…</a>
 <ul>
-<li class="chapter" data-level="A.3.1" data-path="start-R.html"><a href="start-R.html#steps-to-install-rstudio"><i class="fa fa-check"></i><b>A.3.1</b> Steps to Install RStudio</a></li>
-<li class="chapter" data-level="A.3.2" data-path="start-R.html"><a href="start-R.html#create-a-local-project"><i class="fa fa-check"></i><b>A.3.2</b> Create a Local Project</a></li>
-<li class="chapter" data-level="A.3.3" data-path="start-R.html"><a href="start-R.html#install-and-load-packages"><i class="fa fa-check"></i><b>A.3.3</b> Install and Load Packages</a></li>
-<li class="chapter" data-level="A.3.4" data-path="start-R.html"><a href="start-R.html#run-sample-code"><i class="fa fa-check"></i><b>A.3.4</b> Run Sample Code</a></li>
-</ul></li>
-<li class="chapter" data-level="A.4" data-path="start-R.html"><a href="start-R.html#git-and-github"><i class="fa fa-check"></i><b>A.4</b> Git and GitHub</a>
-<ul>
-<li class="chapter" data-level="A.4.1" data-path="start-R.html"><a href="start-R.html#git"><i class="fa fa-check"></i><b>A.4.1</b> Git</a></li>
-<li class="chapter" data-level="A.4.2" data-path="start-R.html"><a href="start-R.html#github"><i class="fa fa-check"></i><b>A.4.2</b> GitHub</a></li>
-</ul></li>
-<li class="chapter" data-level="A.5" data-path="start-R.html"><a href="start-R.html#raw-material"><i class="fa fa-check"></i><b>A.5</b> RAW MATERIAL</a>
-<ul>
-<li class="chapter" data-level="A.5.1" data-path="start-R.html"><a href="start-R.html#principles"><i class="fa fa-check"></i><b>A.5.1</b> Principles</a></li>
-<li class="chapter" data-level="A.5.2" data-path="start-R.html"><a href="start-R.html#tools"><i class="fa fa-check"></i><b>A.5.2</b> Tools</a></li>
-<li class="chapter" data-level="A.5.3" data-path="start-R.html"><a href="start-R.html#documentation"><i class="fa fa-check"></i><b>A.5.3</b> Documentation</a></li>
-<li class="chapter" data-level="A.5.4" data-path="start-R.html"><a href="start-R.html#version-control"><i class="fa fa-check"></i><b>A.5.4</b> Version control</a></li>
-<li class="chapter" data-level="A.5.5" data-path="start-R.html"><a href="start-R.html#online-repositories-for-team-collaboration"><i class="fa fa-check"></i><b>A.5.5</b> Online repositories for team collaboration</a></li>
-<li class="chapter" data-level="A.5.6" data-path="start-R.html"><a href="start-R.html#building-a-code-base"><i class="fa fa-check"></i><b>A.5.6</b> Building a code base</a></li>
+<li class="chapter" data-level="14.3.1" data-path="dashboards.html"><a href="dashboards.html#extension-to-other-dedicated-packages"><i class="fa fa-check"></i><b>14.3.1</b> Extension to other dedicated packages</a></li>
+<li class="chapter" data-level="14.3.2" data-path="dashboards.html"><a href="dashboards.html#improving-through-css-and-html"><i class="fa fa-check"></i><b>14.3.2</b> Improving through CSS and HTML</a></li>
+<li class="chapter" data-level="14.3.3" data-path="dashboards.html"><a href="dashboards.html#interactive-tutorial"><i class="fa fa-check"></i><b>14.3.3</b> Interactive Tutorial</a></li>
+<li class="chapter" data-level="14.3.4" data-path="dashboards.html"><a href="dashboards.html#documentation-and-books"><i class="fa fa-check"></i><b>14.3.4</b> Documentation and Books</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="B" data-path="next-steps.html"><a href="next-steps.html"><i class="fa fa-check"></i><b>B</b> Digestifs (Next Steps)</a>
+<li class="part"><span><b>Digestifs</b></span></li>
+<li class="chapter" data-level="15" data-path="next-steps.html"><a href="next-steps.html"><i class="fa fa-check"></i><b>15</b> Conclusion and Next Steps</a>
 <ul>
-<li class="chapter" data-level="B.1" data-path="next-steps.html"><a href="next-steps.html#sensory-analysis-in-r"><i class="fa fa-check"></i><b>B.1</b> Sensory Analysis in R</a></li>
-<li class="chapter" data-level="B.2" data-path="next-steps.html"><a href="next-steps.html#other-recommended-resources"><i class="fa fa-check"></i><b>B.2</b> Other Recommended Resources</a>
+<li class="chapter" data-level="15.1" data-path="next-steps.html"><a href="next-steps.html#sensory-analysis-in-r"><i class="fa fa-check"></i><b>15.1</b> Sensory Analysis in R</a></li>
+<li class="chapter" data-level="15.2" data-path="next-steps.html"><a href="next-steps.html#other-recommended-resources"><i class="fa fa-check"></i><b>15.2</b> Other Recommended Resources</a>
 <ul>
-<li class="chapter" data-level="B.2.1" data-path="next-steps.html"><a href="next-steps.html#r-for-data-science"><i class="fa fa-check"></i><b>B.2.1</b> R for Data Science</a></li>
-<li class="chapter" data-level="B.2.2" data-path="next-steps.html"><a href="next-steps.html#hands-on-machine-learning-with-r"><i class="fa fa-check"></i><b>B.2.2</b> Hands-On Machine Learning with R</a></li>
-<li class="chapter" data-level="B.2.3" data-path="next-steps.html"><a href="next-steps.html#factoextra"><i class="fa fa-check"></i><b>B.2.3</b> FactoExtra</a></li>
-<li class="chapter" data-level="B.2.4" data-path="next-steps.html"><a href="next-steps.html#r-graphics-cookbook"><i class="fa fa-check"></i><b>B.2.4</b> R Graphics Cookbook</a></li>
-<li class="chapter" data-level="B.2.5" data-path="next-steps.html"><a href="next-steps.html#storytelling-with-data"><i class="fa fa-check"></i><b>B.2.5</b> Storytelling with Data</a></li>
-<li class="chapter" data-level="B.2.6" data-path="next-steps.html"><a href="next-steps.html#text-mining-wtih-r"><i class="fa fa-check"></i><b>B.2.6</b> Text Mining wtih R</a></li>
+<li class="chapter" data-level="15.2.1" data-path="next-steps.html"><a href="next-steps.html#r-for-data-science"><i class="fa fa-check"></i><b>15.2.1</b> R for Data Science</a></li>
+<li class="chapter" data-level="15.2.2" data-path="next-steps.html"><a href="next-steps.html#hands-on-machine-learning-with-r"><i class="fa fa-check"></i><b>15.2.2</b> Hands-On Machine Learning with R</a></li>
+<li class="chapter" data-level="15.2.3" data-path="next-steps.html"><a href="next-steps.html#factoextra"><i class="fa fa-check"></i><b>15.2.3</b> FactoExtra</a></li>
+<li class="chapter" data-level="15.2.4" data-path="next-steps.html"><a href="next-steps.html#r-graphics-cookbook"><i class="fa fa-check"></i><b>15.2.4</b> R Graphics Cookbook</a></li>
+<li class="chapter" data-level="15.2.5" data-path="next-steps.html"><a href="next-steps.html#storytelling-with-data"><i class="fa fa-check"></i><b>15.2.5</b> Storytelling with Data</a></li>
+<li class="chapter" data-level="15.2.6" data-path="next-steps.html"><a href="next-steps.html#text-mining-wtih-r"><i class="fa fa-check"></i><b>15.2.6</b> Text Mining wtih R</a></li>
 </ul></li>
-<li class="chapter" data-level="B.3" data-path="next-steps.html"><a href="next-steps.html#python-and-other-languages"><i class="fa fa-check"></i><b>B.3</b> Python and Other Languages</a></li>
+<li class="chapter" data-level="15.3" data-path="next-steps.html"><a href="next-steps.html#databases-graph-and-otherwise"><i class="fa fa-check"></i><b>15.3</b> Databases (Graph and Otherwise)</a></li>
+<li class="chapter" data-level="15.4" data-path="next-steps.html"><a href="next-steps.html#python-and-other-languages"><i class="fa fa-check"></i><b>15.4</b> Python and Other Languages</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="bibliography.html"><a href="bibliography.html"><i class="fa fa-check"></i>Bibliography</a></li>
 <li class="divider"></li>
@@ -362,33 +422,36 @@
             <section class="normal" id="section-">
 <div id="bienvenue" class="section level1" number="1">
 <h1><span class="header-section-number">Chapter 1</span> Bienvenue!</h1>
-<!-- This is an example comment -->
 <div id="why-data-science-for-sensory-and-consumer-science" class="section level2 unnumbered">
 <h2>Why Data Science for Sensory and Consumer Science?</h2>
 <p>Located at the crossroads of biology, social science, and design, sensory and consumer science (SCS) is definitely the tastiest of all sciences. On the menu is a wide diversity of products and experiences that sensory and consumer scientists approach through the lens of human senses. Thanks to a wide set of refined methods, they have access to rich, complex and mouthwatering data. Delightedly, data science empowers them and leads them to explore new flavorful territories.</p>
 <div id="core-principles-in-sensory-and-consumer-science" class="section level3 unnumbered">
 <h3>Core principles in Sensory and Consumer Science</h3>
-<p>Sensory and consumer science is consider as a pillar of food science and technology and is useful to product development, quality control and market research. Most scientific and methodological advances in the field are applied to food. This book makes no exception as we chose a cookie formulation dataset as a main thread. However, SCS widely applies to many other consumer goods so are the content of this book and the principles set out below.</p>
-</div>
-<div id="measuring-and-analyzing-human-responses" class="section level3 unnumbered">
-<h3>Measuring and analyzing human responses</h3>
+<p>Sensory and consumer science is considered as a pillar of food science and technology and is useful to product development, quality control and market research. Most scientific and methodological advances in the field are applied to food. This book makes no exception as we chose a cookie formulation dataset as a main thread. However, SCS widely applies to many other consumer goods; so are the content of this book and the principles set out below.</p>
+<div id="measuring-and-analyzing-human-responses" class="section level4 unnumbered">
+<h4>Measuring and analyzing human responses</h4>
 <p>Sensory and consumer science aims at measuring and understanding consumers’ sensory perceptions as well as the judgements, emotions and behaviors that may arise from these perceptions. SCS is thus primarily a science of measurement, although a very particular one that uses human beings and their senses as measuring instruments. In other words, sensory and consumer researchers measure and analyze human responses.</p>
-<p>To this end, SCS relies essentially on sensory evaluation which comprises a set of techniques that mostly derive from psychophysics and behavioral research. It uses psychological models to help separate signal from noise in collected data [ref O’Mahony, D.Ennis, others?]. Besides, sensory evaluation has developed its own methodological framework that includes most refined techniques for the accurate measurement of product sensory properties while minimizing the potentially biasing effects of brand identity and the influence of other external information on consumer perception [Lawless &amp; Heymann, 2010].</p>
+<p>To this end, SCS relies essentially on sensory evaluation which comprises a set of techniques that mostly derive from psychophysics and behavioral research. It uses psychological models to help separate signal from noise in collected data [ref O’Mahony, D.Ennis, others?]. Besides, sensory evaluation has developed its own methodological framework that includes most refined techniques for the accurate measurement of product sensory properties while minimizing the potentially biasing effects of brand identity and the influence of other external information on consumer perception (<span class="citation"><a href="bibliography.html#ref-LawlessHeym2010" role="doc-biblioref">Lawless and Heymann</a> (<a href="bibliography.html#ref-LawlessHeym2010" role="doc-biblioref">2010</a>)</span>).</p>
 <p>A detailed description of sensory methods is beyond the scope of this book and many textbooks on sensory evaluation methods are available to readers seeking more information. However, just to give a brief overview, it is worth remembering that sensory methods can be roughly divided into three categories, each of them bearing many variants:</p>
 <ul>
-<li>Discrimination tests that aim at detecting subtle differences between two products.</li>
+<li>Discrimination tests that aim at detecting subtle differences between products.</li>
 <li>Descriptive analysis (DA), also referred to as ‘sensory profiling,’ aims at providing both qualitative and quantitative information about product sensory properties.</li>
-<li>Hedonic tests. This category gathers affective tests that aim at measuring consumers’ liking for the tested products or their preferences among a product set.</li>
+<li>Affective tests. This category includes hedonic tests that aim at measuring consumers’ liking for the tested products or their preferences among a product set.</li>
 </ul>
-<p>Each test category generates its own type of data and related statistical questions in relation to the objectives of the study. Typically, data from difference tests consist in series of binary answers (correct/failed) depending on whether judges successfully picked the odd sample(s) among a set of three or more samples. These are used to determine whether the number of correct choices is above the level expected by chance.</p>
+<p>Each test category generates its own type of data and related statistical questions in relation to the objectives of the study. Typically, data from difference tests with forced-choice procedures (e.g. triangle test, duo-trio, 2-AFC, etc.) consist in series of binary answers (correct/failed) depending on whether judges successfully picked the odd sample(s) among a set of three or more samples.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> These data are used to determine whether the number of correct choices is above the level expected by chance.</p>
 <p>Conventional descriptive analysis data consist in intensity scores given by each panelist to evaluated samples on a series of sensory attributes, hence resulting in a product x attribute x panelist dataset (Figure 1). Note that depending on the DA method, quantifying means other than intensity ratings can be used (ranks, frequency, etc.). Most frequently, each panelist evaluates all the samples in the product set. However, the use of balanced incomplete design can also be found when the experimenters aim to limit the number of samples evaluated by each subject.</p>
-<p>Eventually, hedonic test datasets consist in hedonic scores (ratings for consumers’ degree of liking or preference ranks) given by each interviewed consumer to a series of products. As for DA, each consumer usually evaluates all the samples in the product set, but balanced incomplete designs are sometimes used too. In addition, some companies favor pure monadic evaluation of product (i.e. between-subject design or independent groups design) which obviously result in unrelated sample datasets.</p>
-<p>Sensory and consumer researchers also borrow methods from other fields, in particular from sociology and experimental psychology. Definitely a multidisciplinary area, SCS develops in many directions and reaches disciplines that range from genetics and physiology to social marketing, behavioral economics and computational neuroscience. So have diversified the types of data sensory and consumer scientists must deal with.</p>
+<!-- Insert figure 1 about here -->
+<p>Eventually, datasets from hedonic test consist in hedonic scores (i.e. degrees of liking, or preference ranks) given by each interviewed consumer to a series of products. As for DA, each consumer usually evaluates all the samples in the product set, but balanced incomplete designs are sometimes used too. In addition, some companies favor pure monadic evaluation of product (i.e. between-subject design or independent groups design) which obviously result in unrelated sample datasets.</p>
+<p>Sensory and consumer researchers also borrow methods from other fields, in particular from sociology and experimental psychology. Definitely a multidisciplinary area, SCS develops in many directions and reaches disciplines that range from genetics and physiology to social marketing, behavioral economics and computational neuroscience. So have diversified the types of data sensory and consumer scientists must deal with. As in many scientific fields, the development of sophisticated statistical techniques and access to powerful data analysis tools have played an important role in the evolution of sensory &amp; consumer science. Statisticians and data analysts in SCS have developed their own field of research, coined Sensometrics (<span class="citation"><a href="bibliography.html#ref-Schlich1993" role="doc-biblioref">Schlich</a> (<a href="bibliography.html#ref-Schlich1993" role="doc-biblioref">1993</a>)</span>, <span class="citation"><a href="bibliography.html#ref-Brockhoff2011" role="doc-biblioref">Brockhoff</a> (<a href="bibliography.html#ref-Brockhoff2011" role="doc-biblioref">2011</a>)</span> ,<span class="citation"><a href="bibliography.html#ref-Qannari2017" role="doc-biblioref">Qannari</a> (<a href="bibliography.html#ref-Qannari2017" role="doc-biblioref">2017</a>)</span>). Now then, what makes sensory &amp; consumer science special? And how does it influence the way sensory and consumer data are handled?</p>
 </div>
-<div id="measuring-humanproduct-interactions--" class="section level3" number="1.0.1">
-<h3><span class="header-section-number">1.0.1</span> Measuring human*product interactions {-}</h3>
-<p>As in many scientific fields, the development of sophisticated statistical techniques and access to powerful data analysis tools have played an important role in the evolution of sensory &amp; consumer science. Statisticians and data analysts in SCS have developed their own field of research, coined Sensometrics [REF to (Schlich, 1995)]. So, what makes sensory &amp; consumer science special? And how does it influence the way sensory and consumer data are handled?</p>
-<p>According to Lawless and Heymann (2010), sensory evaluation attempts to isolate the sensory properties of foods themselves and provides important and useful information to product developers, food scientists, and managers. However, one should bear in mind that …</p>
+<div id="dealing-with-human-diversity" class="section level4 unnumbered">
+<h4>Dealing with human diversity</h4>
+<p>Sensory evaluation attempts to isolate the sensory properties of foods and provides important and useful information about these properties to product developers, food scientists, and managers (<span class="citation"><a href="bibliography.html#ref-LawlessHeym2010" role="doc-biblioref">Lawless and Heymann</a> (<a href="bibliography.html#ref-LawlessHeym2010" role="doc-biblioref">2010</a>)</span>). However, one should bear in mind that these ‘sensory properties’ actually result from the interaction between the object (the food) and the perceiver of that object (the consumer). In fact, we may very well consider the true object of evaluation in SCS to be mental representations. They are nonetheless very concrete and directly impact behaviors, health and economic decisions (<span class="citation"><a href="bibliography.html#ref-Kahneman2000" role="doc-biblioref">Kahneman and Tversky</a> (<a href="bibliography.html#ref-Kahneman2000" role="doc-biblioref">2000</a>)</span>).
+A direct consequence of this is that sensory data depend both on the product to be evaluated and on the subjects who evaluate the product. Because people are different, sensory data are expected to differ accordingly. In its core principle, SCS recognizes the diversity of human beings, biologically, socially and culturally speaking, not to mention the fact that each individual has their own personal history and experience with products. In short, people perceive things differently and like different things. For this reason, SCS only relies on groups of people (i.e. a panel of judges, a sample of consumers) and never on a single individual’s response. Yet, sensory and consumer scientists usually collect individual data and analyze them at a refined level of granularity (individual, subgroups) before considering larger groups (specific populations or marketing targets).</p>
+<p>This said, sensory and consumer studies must lead to operational recommendations, be useful to make informed decisions on product development, to launch new product, and sometimes to help define food and health policies. Data science can precisely help sensory and consumer scientists to reach those objectives while taking diversity into account.</p>
+<p>For measures of sensory description, sensory and consumer scientists can manage the diversity of human responses to a certain extent by training panels to use a consensual vocabulary, by aligning evaluated concepts and calibrating the quantification of evaluations on scales (<span class="citation"><a href="bibliography.html#ref-Bleibaum2020" role="doc-biblioref">Bleibaum</a> (<a href="bibliography.html#ref-Bleibaum2020" role="doc-biblioref">2020</a>)</span>). However, this won’t eliminate interindividual differences in sensitivity, simply because we are genetically determined to be different on top of differences due to age, physiological state, illness, etc. Nowadays, as the field becomes more and more consumer-oriented, it becomes clear that the use of several subjects in a panel cannot be assimilated to a mere repetition of individual measurements. Accordingly, sensory methods have been developed to allow panelists to better express their own perceptions and to get a more accurate picture of how people perceive products (<span class="citation"><a href="bibliography.html#ref-Varela2012" role="doc-biblioref">Varela and Ares</a> (<a href="bibliography.html#ref-Varela2012" role="doc-biblioref">2012</a>)</span>). These methods yield richer and more complex data that require more advanced analysis techniques to extract relevant and actionable information. Historically, one the first methodological innovations in this direction has been the use of free choice profiling combined to Generalized Procrustes Analysis (<span class="citation"><a href="bibliography.html#ref-Williams1984" role="doc-biblioref">Williams and Langron</a> (<a href="bibliography.html#ref-Williams1984" role="doc-biblioref">1984</a>)</span>). Since then, sensory and data analysis methods have multiplied greatly (<span class="citation"><a href="bibliography.html#ref-Delarue2015" role="doc-biblioref">Delarue, Lawlor, and Rogeaux</a> (<a href="bibliography.html#ref-Delarue2015" role="doc-biblioref">2015</a>)</span>). Naturally, data science has become even more crucial to accompany this evolution.</p>
+<p>As regards hedonic tests (liking, acceptance, preference…), the measurements are in essence subjective and participants to such tests are by definition ‘untrained’ consumers. A constant of these tests is to find important interindividual differences and it is very common to find consumers who have opposite sensory preference patterns. Clustering and segmentation techniques are thus routinely applied to consumer data. One difficulty though, is to link these differences in preferences to other consumer variables, should they be sociodemographic, psychographic, ore related to usage and attitudes. Most often, on set of variables is not enough to fully explain preference patterns.</p>
+</div>
 </div>
 <div id="computational-sensory-science" class="section level3 unnumbered">
 <h3>Computational Sensory Science</h3>
@@ -400,13 +463,19 @@
 
 
 </div>
+<div class="footnotes">
+<hr />
+<ol start="2">
+<li id="fn2"><p>Other procedures like the <em>different from control</em> test or the <em>degree of difference</em> test generate rating data<a href="bienvenue.html#fnref2" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
             </section>
 
           </div>
         </div>
       </div>
 <a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="data-science.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="start-R.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

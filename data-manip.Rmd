@@ -1,16 +1,19 @@
 ```{r include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 ```
-
+<!-- I guess it can be interesting to have chapter 7, about data collection/import, before data manipulation. In this way the reader doesn't need to go to chapter 7 before starting this one to check how to import data. -->
 
 # Data Manipulation {#data-manip}
 
+<!-- MENTIONING SOMEWHERE THAT SOME OF THE TRANSFORMATIONS MADE ARE TEMPORARY AS THEY ARE NOT BEING SAVED, SO RE-USING THE SAME DATA WILL STILL BE BACK TO ITS ORIGINAL VERSION... -->
+
+<!-- WE ARE ALSO MISSING A SECTION EXPLAINING PIPES...AND ADDING THAT INTO APERITIFS MIGHT BE CONFUSING AS APERITIFS IS AT THE END OF THE BOOK...SO SHOULD WE EXPLAIN IT IN THE INTRODUCTION? -->
 
 In sensory science, different data collection tools (e.g. different devices, software, methodologies, etc.) may provide the same data in different ways. Also, different statistical analyses may require having the data structured in different formats. 
 
 A simple example to illustrate this latter point is the analysis of liking data.
 Let C consumers provide their hedonic assessments on P samples. To evaluate if samples have received different liking means at the population level, an ANOVA is performed on a long thin table with (PxC) rows x 3 columns (consumer, sample, and the liking scores). 
-
+<!-- I think it would be easier to understand if it was written "ANOVA is performed on a long thin table with 3 columns (consumer, sample, and the liking scores), where the combination of CxP will be spread in the rows. --> 
 
 <!-- Insert Figure illustrating the data structure -->
 
@@ -61,6 +64,8 @@ sensory %>%
 
 And here are the recoded names:
 
+<!-- Although by reading the sentence above we can presume how the arguments should be written, I  think it is a good idea to explicit explain it. In this case, maybe it would be a good idea to emphasize that the first name refers to the new name and the second the old name you want to change --> 
+
 ```{r}
 sensory %>% 
   rename(Panellist = Judge, Sample = Product) %>% 
@@ -69,7 +74,7 @@ sensory %>%
 
 If this procedure of renaming variables should be applied on many variables following a structured form (e.g. transforming names into snake_case, CamelCase, etc.), the use of the `{janitor}` package comes handy thanks to its `clean_names()` function and the `case` parameter:
 
-
+<!-- It may be a good idea to explain what "snake" is. Maybe a argument is not really necessary here? -->
 ```{r}
 library(janitor)
 sensory %>% 
@@ -185,7 +190,7 @@ sensory %>%
 
 `mutate()` being one of the most important function from the `{dplyr}` package, it will be used extensively throughout this book.
 
-Since performing mathematical computation on non-numerical columns is not possible, conditions can easily be added through `mutate()` combined with `across()`. An example could be to round all variables to 0 decimal, which can only be applied to numerical variables:
+Since performing mathematical computations on non-numerical columns is not possible, conditions can easily be added through `mutate()` combined with `across()`. An example could be to round all variables to 0 decimal, which can only be applied to numerical variables:
 
 
 ```{r}
@@ -197,7 +202,7 @@ sensory %>%
 
 
 
-##### Mergeing and Separating columns
+##### Merging and Separating columns
 
 
 It can happen that some columns of a data set contain information (strings) that cover different types of information. For instance, we could imagine coding the name of our panelists as FirstName_LastName or Gender_Name, and we would want to separate them into two columns to make the distinction between the different information, i.e. FirstName and LastName or Gender and Last Name respectively. In other situations, we may want to merge information present in multiple columns in one. 
@@ -205,7 +210,7 @@ It can happen that some columns of a data set contain information (strings) that
 For illustration, let's consider the information stored in the *Product Info* sheet from *Sensory Profile.xlsx*. This table includes information regarding the cookies, and more precisely whether their Protein and Fiber content (Low or High). After importing the data, let's merge these two columns so that both information is stored in one column called `ProtFib`. 
 To do so, we use the `unite()` function from the `{tidyr}` package, which takes as first element the name of the new variables, followed by all the columns to *unite*, and by providing the separation between the elements (here *-*):
 
-
+<!-- What does "here" mean? Maybe it would be better to call file.path? Maybe it is a good idea to mention at the beginning of the chapter the library needed. --> 
 ```{r}
 file_path <- here("data","Sensory Profile.xlsx") 
 prodinfo <- read_xlsx(file_path, sheet="Product Info") %>%  
@@ -263,7 +268,7 @@ sensory %>%
 
 
 Other relevant test characters are the following:
-
+<!-- Maybe the topic "for multiple conditions shouldn't be in a bullet point as the others. --> 
  - `!Product == "P02"` or `Product != "P02"` means different from, and will keep all samples except `P02`;
  - `%in% my_vector` keeps any value included within the vector `my_vector` (e.g. `Product %in% c("P01","P02","P03")`);
  - for multiple conditions: 
@@ -272,7 +277,8 @@ Other relevant test characters are the following:
   
 As we will see later, this option is particularly useful when you have missing values as you could remove all the rows that contain missing values for a given variable. Since we do not have missing values here, let's create some by replacing all the evaluations for Shiny that are larger than 40 by missing values. In a second step, we can filter out all missing values from Shiny:
 
-
+<!-- If this function is not explained later, I think it would be a good idea to explain ifelse.-->
+<!-- I noticed that here a space was given between the function and output, which is not the case of the codes above. I think this way is clearer-->
 ```{r}
 sensory_na <- sensory %>% 
   dplyr::select(Judge, Product, Shiny) %>% 
@@ -295,7 +301,7 @@ As we can see, this procedure removed 20 rows since the original table had 99 ro
 After filtering data, the next logical step is to split data into subsets based on a given variable (e.g. by gender). For such purpose, one could consider using `filter()` by applying it to each subgroup. To some extent, this is what we have done when we only filtered data from sample `P02`. To get sub-groups of data for each sample, we could repeat the same procedure for all the other samples. However, this procedure becomes tedious as the number of samples increases. 
 For such task, we prefer the use of the function `split()`, which takes as argument the column to split from:
 
-
+<!-- Maybe is a good idea to quick mention the rest of the argument ".$" -->
 ```{r}
 sensory %>% 
   split(.$Product)
@@ -320,6 +326,7 @@ Reshaping the data itself is done through pivoting, hence either creating a long
 
 #### Pivotting Longer
 
+<!-- Add a section on melt() as special situation of pivotlonger in which all the columns should be pivotted... -->
 
 Currently, our `sensory` data table is a table in which we have as many rows as Judge x Product, the different attributes being spread across multiple columns. However, in certain situations, it is relevant to have all the attributes stacked vertically, meaning that the table will have Judge x Product x Attributes rows. Such simple transformation can be done through the `pivot_longer()` function from the `{dplyr}` package, which takes as inputs the attributes to pivot, the name of the variables that will contain these names (`names_to`), and the name of the column that will contain their entries (`values_to`)
 
@@ -497,7 +504,8 @@ To do so, we use the file *excel-scrap.xlsx* which contains a fake example in wh
 
 To combine the tables vertically, we could use the basic R function `rbind()`. However, we prefer the use of `bind_rows()` from the `{dplyr}` package since it better controls for the columns by ensuring that the order is well respected (in case one table contains a variable that the other tables do not, it will keep the variables and allocate NAs when this information is missing). To keep the distinction between the three tables, the parameter `.id` is used. This will create a column called `Session` in this example that will assign a 1 to the first table, a 2 to the second one, and a 3 to the third one (we do this here since this information was not available within the tables: If it were, the parameter `.id` could have been ignored).
 
-
+<!-- This word "here" sounds confusing to me -->
+<!-- I would suggest mentioning the necessary library for the chapter only once, at the beginning Also, for consistence, to codes to open all files should be similar, using the same names. E.g. compare section 3.1.1.1.4 codes and this one.  -->
 ```{r}
 library(here)
 library(readxl)
