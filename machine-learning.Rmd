@@ -3,29 +3,140 @@ knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 ```
 
 # Machine Learning {#machine-learning}
+ 
 
-## Overview
+## Methods Overview
+
+<!-- ### Unsupervised learning -->
+
+<!-- #### Cluster analysis -->
+
+<!-- Aim of cluster analysis is to discover in high-dimensional data groups of  -->
+<!-- observations that are similar to each other in the group and significantly -->
+<!-- different from the rest of observations. Common application in consumer science  -->
+<!-- is to cluster consumers based on their taste preference to understand and target -->
+<!-- specific segments. -->
+
+<!-- #### Factor analysis -->
+<!-- #### Principle components analysis -->
+<!-- #### t-SNE -->
+<!-- ### Semisupervised learning -->
+<!-- #### PLS regression -->
+<!-- #### Cluster Characterization -->
+### Supervised learning
+
+#### Regression
+
+Regression methods approximate the target variable^[This is a bit of simplification. 
+In some cases it is some transformation of combination of predictors that 
+approximates target variable. An example of this is logistic regression.]
+with (usually linear) combination of predictor variables. 
+
+There are multiple regression algorithms varying by type of data they can handle,
+type of target variable and additional aspects like ability to perform 
+dimensionality reduction. We will take a walk through the ones most relevant for 
+sensory and consumer science.
+
+##### Linear regression
+
+The simplest and most popular variant is linear regression in which continuous 
+target variable is approximated as linear combination of predictors in a way that 
+minimizes sum of squared estimates of errors (SSE). It can be for example used to 
+predict consumer liking of a product based on it's sensory profile, but user has
+to keep in mind that linear regression can in some cases return value outside 
+reasonable range of target values. This can be addressed by capping predictions 
+to desired range. Functions in R to apply linear regression are: `lm()` and `glm()`
+or `parsnip::linear_reg() %>% parsnip::set_engine("lm")` when using `tidymodels` workflow.
+
+##### Logistic regression
+
+Logistic regression is an algorithm which by use of logistic transformation allows
+to apply the same approach as linear regression to cases with binary target variables.
+It can be used in R with `glm(family = "binomial")` or
+`parsnip::logistic_reg() %>% parsnip::set_engine("glm")` when using `tidymodels` workflow.
+
+##### Penalized regression 
+
+It is often that the data we want to use for modeling have a lot of predictor 
+variables, possibly with lot of high correlations. In such cases linear/logistic
+regression may become unstable and produce unreasonable predictions. This can be
+addressed by use of so called penalized regression. It is a special case where 
+instead of minimizing pure error term, algorithm minimizes both error and regression 
+coefficients at the same time. This leads to more stable predictions.
+
+There are three variations of penalized regression and all of them can be accessed
+via function `glmnet::glmnet()` ($\beta$ is set of regression coefficients and 
+$\lambda$ is a parameter to be set by user or determined from cross-validation):
+
++ Ridge regression (L2 penalty) minimizes $SSE + \lambda \sum|\beta|^2$ and drives
+the coefficients to smaller values
++ Lasso regression (L1 penalty) $SSE + \lambda \sum|\beta|$ and forces some of the
+coefficients to vanish what can be used for variable selection
++ Elastic-net regression is a combination of the two previous variants 
+$SSE + \lambda_1 \sum|\beta| + \lambda_2 \sum|\beta|^2$.
+
+Penalized regression can be also runned in `tidymodels` workflow with 
+or `parsnip::linear_reg() %>% parsnip::set_engine("glmnet")`.
+
+##### MARS
+
+One limitation of all mentioned so far methods is that they assume linear relationship
+between predictor and target variables. Multivariate adaptive regression spline (MARS)
+addresses this by modeling nonlinearities with piecewise linear function. This
+gives a nice balance between simplicity and ability to fit complex data, for example
+$\Lambda$-shaped once where there is a maximal point from which function decreases 
+in both directions. In R this model can be accesed via `earth::earth()` function.
+
+##### PLS
+
+In case of multiple target variables one can apply partial least squares (PLS) regression
+which, similarly to PCA looks for components that maximizes explained variance of
+the predictors, but at the same time also maximizes their correlation to target variables.
+PLS can be applied with `lm()` specifying multiple targets or in `tidymodels` workflow
+with `plsmod::pls() %>% parsnip::set_engine("mixOmics")`.
+
+#### K-nearest neighbors
+
+A very simple, yet useful and robust algorithm that works for both numeric and nominal
+target variables is K-nearest neighbors. The idea is that for every new observation
+we want to predict the algorithms finds K closest points in training set and use
+either their mean value (for numeric targets) or most frequent value (for nominal targets)
+as prediction. This algorithm can be used with `kknn::kknn()` function or in `tidymodels` workflow
+with `parsnip::nearest_neighbor() %>% parsnip::set_engine("kknn")`.
+
+#### Decision trees
+
+Decision tree models the data by splitting the training set in smaller subsets 
+in a way that each split is done by a predictor variable so that it maximizes 
+the difference in target variable between the subsets. One important advantage 
+of decision trees is that they can model complex relationships and interactions
+between predictors. To use decision tree in R one can use `rpart::rpart()` or
+in `tidymodels` workflow with `parsnip::decision_tree() %>% parsnip::set_engine("rpart")`.
+
+#### Black boxes
+
+So called black boxes are class of models that have too complex structure to directly
+interpret relationship between predictor variables and a value predicted by the model.
+Their advantage usually is ability to model more complicated data than in case of
+interpretable models, but they have greater risk of overfitting (fitting to
+noise in training data). Also, lack of clear interpretation may be not acceptable
+in some business specific use cases. The later problem can be addressed by use of 
+explanation algorithms that will be discussed in later part of this chapter.
+
+##### Random forests
+
+A random forest is a set of decision trees, each one trained on random subset 
+of observations and/or predictors. The final prediction is an average of individual
+trees' predictions. This way 
+
+##### SVMs
+##### Neural networks
+##### Computer vision
 
 ## Key Topics
 
 ### Model Validation
-### Unsupervised learning
-#### Cluster analysis
-#### Factor analysis
-#### Principle components analysis
-#### t-SNE
-### Semisupervised learning
-#### PLS regression
-#### Cluster Characterization
-### Supervised learning
-#### Regression
-#### K-nearest neighbors
-#### Decision trees
-#### Black boxes
-##### Random forests
-##### SVMs
-##### Neural networks
-##### Computer vision
+
 ### Interpretability 
 #### LIME
 #### DALEX
@@ -35,477 +146,4 @@ knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 ### Predicting sensory profiles from instrumental data
 ### Predicting consumer response from sensory profiles
 ### Characterizing consumer clusters
-
-## Code Examples
-
-### Data Prep
-
-```{r data-prep}
-
-data <- readr::read_rds('data/masked_data.rds')
-nrows <- max(summary(data$Class)) * 2
-
-data_over <- ROSE::ROSE(Class ~ .,
-                        data = data %>% 
-                          mutate(across(starts_with('D'), factor, levels = c(0, 1))),
-                        N = nrows, seed = 1)$data
-
-readr::write_rds(data_over, 'data/data_classification.rds')
-
-readxl::read_excel('data/data_regression.xlsx') %>%
-  select(-`...1`, -judge, -product, -(steak:V64), -`qtt.drink.(%)`) %>%
-  rename(socio_professional = `socio-professional`) %>%
-  readr::write_rds('data/data_regression.rds')
-
-
-```
-
-
-### Classification Code
-
-```{r classification-code}
-
-library(tidyverse)
-library(tidymodels)
-
-
-# Load data ---------------------------------------------------------------
-
-data <- read_rds('data/data_classification.rds')
-
-# Inspect the data --------------------------------------------------------
-
-summary(data)
-
-data <- data %>% select(-ID)
-
-skimr::skim(data)
-
-data %>%
-  mutate(across(starts_with('D'), factor, levels = c(0, 1))) %>%
-  GGally::ggpairs(aes(fill = Class))
-
-
-
-# Split data for models ---------------------------------------------------
-
-# Set test set aside
-train_test_split <- initial_split(data)
-train_test_split
-
-train_set <- training(train_test_split)
-test_set <- testing(train_test_split)
-
-# Split set fot cross-validation
-resampling <- vfold_cv(train_set, 10)
-resampling
-
-
-# Fit MARS model ----------------------------------------------------------
-
-usemodels::use_earth(
-  Class ~ .,
-  data = train_set
-  )
-
-earth_recipe <- 
-  recipe(formula = Class ~ ., data = train_set) %>% 
-  step_novel(all_nominal(), -all_outcomes()) %>% 
-  step_dummy(all_nominal(), -all_outcomes()) %>% 
-  step_zv(all_predictors()) 
-
-earth_spec <- 
-  mars(
-    num_terms = tune(),
-    prod_degree = tune(),
-    prune_method = "none"
-    ) %>% 
-  set_mode("classification") %>% 
-  set_engine("earth") 
-
-earth_workflow <- 
-  workflow() %>% 
-  add_recipe(earth_recipe) %>% 
-  add_model(earth_spec) 
-
-earth_grid <- tidyr::crossing(num_terms = 2 * (1:6), prod_degree = 1:2) 
-earth_grid
-
-earth_tune <- 
-  tune_grid(
-    earth_workflow, 
-    resamples = resampling, 
-    # Save predictions for further steps
-    control = control_grid(save_pred = TRUE, verbose = TRUE),
-    # Test parameters on a grid defined above
-    grid = earth_grid
-  ) 
-
-
-# Check model performance -------------------------------------------------
-
-earth_tune %>% show_best(n = 10)
-earth_tune %>% autoplot()
-
-earth_predictions <- earth_tune %>%
-  collect_predictions(parameters = select_best(., 'roc_auc')) %>%
-  mutate(model = "MARS")
-
-earth_predictions %>%
-  roc_curve(Class, .pred_A) %>%
-  autoplot()
-
-earth_predictions %>%
-  lift_curve(Class, .pred_A) %>%
-  autoplot()
-
-earth_predictions %>%
-  pr_curve(Class, .pred_A) %>%
-  autoplot()
-
-earth_predictions %>%
-  conf_mat(Class, .pred_class) %>%
-  autoplot()
-
-
-# Fit decision tree -------------------------------------------------------
-
-tree_recipe <- 
-  recipe(formula = Class ~ ., data = train_set) %>% 
-  step_novel(all_nominal(), -all_outcomes()) %>% 
-  step_zv(all_predictors()) 
-
-tree_spec <- 
-  decision_tree(
-    cost_complexity = tune(),
-    tree_depth = tune(),
-    min_n = tune()
-    ) %>% 
-  set_mode("classification") %>% 
-  set_engine("rpart") 
-
-tree_workflow <- 
-  workflow() %>% 
-  add_recipe(tree_recipe) %>% 
-  add_model(tree_spec) 
-
-tree_tune <- 
-  tune_grid(
-    tree_workflow, 
-    resamples = resampling, 
-    # Save predictions for further steps
-    control = control_grid(save_pred = TRUE, verbose = TRUE),
-    # Test 20 random combinations of parameters
-    grid = 20
-  ) 
-
-# Check model performance -------------------------------------------------
-
-tree_tune %>% show_best(n = 10)
-tree_tune %>% autoplot()
-
-tree_predictions <- tree_tune %>%
-  collect_predictions(parameters = select_best(., 'roc_auc')) %>%
-  mutate(model = "Decision Tree")
-
-tree_predictions %>%
-  bind_rows(earth_predictions) %>%
-  group_by(model) %>%
-  roc_curve(Class, .pred_A) %>%
-  autoplot()
-
-tree_predictions %>%
-  bind_rows(earth_predictions) %>%
-  group_by(model) %>%
-  lift_curve(Class, .pred_A) %>%
-  autoplot()
-
-tree_predictions %>%
-  bind_rows(earth_predictions) %>%
-  group_by(model) %>%  pr_curve(Class, .pred_A) %>%
-  autoplot()
-
-tree_predictions %>%
-  conf_mat(Class, .pred_class) %>%
-  autoplot()
-
-
-# Let's go with MARS model ------------------------------------------------
-
-final_fit <- earth_workflow %>%
-  finalize_workflow(select_best(earth_tune, 'roc_auc')) %>%
-  last_fit(train_test_split)
-
-final_fit %>% collect_metrics()
-
-final_fit %>%
-  collect_predictions() %>%
-  roc_curve(Class, .pred_A) %>%
-  autoplot()
-
-final_model <- final_fit %>%
-  pluck(".workflow", 1) %>%
-  fit(data)
-
-final_model %>%
-  pull_workflow_fit() %>% 
-  vip::vip()
-
-final_model %>%
-  pull_workflow_fit() %>%
-  pluck("fit") %>%
-  summary
-
-write_rds(final_model, 'classification_model.rds')
-
-
-# Predict something -------------------------------------------------------
-
-model <- read_rds('classification_model.rds')
-
-new_observation <- tibble(
-  N1 = 1.8,
-  D1 = factor(0),
-  D2 = factor(0),
-  D3 = factor(1),
-  D4 = factor(0),
-  D5 = factor(1),
-  D6 = factor(0),
-  D7 = factor(1),
-  D8 = factor(1),
-  D9 = factor(1),
-  D10 = factor(1),
-  D11 = factor(0)
-)
-
-predict(model, new_observation, type = "class")
-predict(model, new_observation, type = "prob")
-
-
-
-
-
-```
-
-
-
-### Regression Code
-
-```{r regression-code}
-
-library(tidyverse)
-library(tidymodels)
-
-
-# Load data ---------------------------------------------------------------
-
-data <- read_rds('data/data_regression.rds')
-glimpse(data)
-
-# Inspect the data --------------------------------------------------------
-
-summary(data)
-
-skimr::skim(data)
-
-# Split data for models ---------------------------------------------------
-
-# Set test set aside
-train_test_split <- initial_split(data)
-train_test_split
-
-train_set <- training(train_test_split)
-test_set <- testing(train_test_split)
-
-# Split set fot cross-validation
-resampling <- vfold_cv(train_set, 10)
-resampling
-
-
-# Fit glmnet model ----------------------------------------------------------
-
-usemodels::use_glmnet(
-  Liking ~ .,
-  data = train_set
-)
-
-glmnet_recipe <- 
-  recipe(formula = Liking ~ ., data = train_set) %>% 
-  step_novel(all_nominal(), -all_outcomes()) %>% 
-  step_dummy(all_nominal(), -all_outcomes()) %>% 
-  step_zv(all_predictors()) %>% 
-  step_normalize(all_predictors(), -all_nominal())
-
-glmnet_spec <- 
-  linear_reg(penalty = tune(), mixture = tune()) %>% 
-  set_mode("regression") %>% 
-  set_engine("glmnet") 
-
-glmnet_workflow <- 
-  workflow() %>% 
-  add_recipe(glmnet_recipe) %>% 
-  add_model(glmnet_spec) 
-
-glmnet_grid <- tidyr::crossing(penalty = 10^seq(-6, -1, length.out = 20), 
-                               mixture = c(0.05, 0.2, 0.4, 0.6, 0.8, 1)) 
-
-glmnet_tune <- 
-  tune_grid(
-    glmnet_workflow, 
-    resamples = resampling, 
-    # Save predictions for further steps
-    control = control_grid(save_pred = TRUE, verbose = TRUE),
-    # Test parameters on a grid defined above
-    grid = glmnet_grid
-    ) 
-
-# Check model performance -------------------------------------------------
-
-glmnet_tune %>% show_best(n = 10)
-glmnet_tune %>% autoplot()
-
-glmnet_predictions <- glmnet_tune %>%
-  collect_predictions(parameters = select_best(., 'rmse')) %>%
-  mutate(model = "GLMNet",
-         .resid = Liking - .pred)
-
-glmnet_predictions %>%
-  ggplot(aes(sample = .resid)) +
-  geom_qq() +
-  geom_qq_line()
-
-glmnet_predictions %>%
-  ggplot(aes(.pred, Liking)) +
-  geom_point() +
-  geom_abline(slope = 1, intercept = 0)
-
-glmnet_predictions %>%
-  ggplot(aes(.pred, .resid)) +
-  geom_point() +
-  geom_hline(yintercept = 0)
-
-ggplot(glmnet_predictions, aes(x = .resid)) + 
-  geom_histogram(aes(y =..density..), fill = 'white', color = 'black') +
-  stat_function(fun = dnorm,
-                args = list(mean = mean(glmnet_predictions$.resid), 
-                            sd = sd(glmnet_predictions$.resid)),
-                size = 1)
-
-# Fit random forest -------------------------------------------------------
-
-rf_recipe <- 
-  recipe(formula = Liking ~ ., data = train_set) %>% 
-  step_novel(all_nominal(), -all_outcomes()) %>% 
-  step_zv(all_predictors()) 
-
-rf_spec <- 
-  rand_forest(
-    mtry = tune(), 
-    min_n = tune(),
-    trees = 50
-    ) %>% 
-  set_mode("regression") %>% 
-  set_engine("ranger", importance = "impurity") 
-
-rf_workflow <- 
-  workflow() %>% 
-  add_recipe(rf_recipe) %>% 
-  add_model(rf_spec) 
-
-rf_tune <- 
-  tune_grid(
-    rf_workflow, 
-    resamples = resampling, 
-    # Save predictions for further steps
-    control = control_grid(save_pred = TRUE, verbose = TRUE),
-    # Test 20 random combinations of parameters
-    grid = 20
-  ) 
-
-# Check model performance -------------------------------------------------
-
-rf_tune %>% show_best(n = 10)
-rf_tune %>% autoplot()
-
-rf_predictions <- rf_tune %>%
-  collect_predictions(parameters = select_best(., 'rmse')) %>%
-  mutate(model = "Random Forest",
-         .resid = Liking - .pred)
-
-rf_predictions %>%
-  bind_rows(glmnet_predictions) %>%
-  ggplot(aes(sample = .resid)) +
-  geom_qq() +
-  geom_qq_line() +
-  facet_wrap(~model)
-
-rf_predictions %>%
-  bind_rows(glmnet_predictions) %>%
-  ggplot(aes(.pred, Liking)) +
-  geom_point() +
-  geom_abline(slope = 1, intercept = 0) +
-  facet_wrap(~model)
-
-rf_predictions %>%
-  bind_rows(glmnet_predictions) %>%
-  ggplot(aes(.pred, .resid)) +
-  geom_point() +
-  geom_hline(yintercept = 0) +
-  facet_wrap(~model)
-
-rf_predictions %>%
-  ggplot(aes(x = .resid)) + 
-  geom_histogram(aes(y =..density..), fill = 'white', color = 'black') +
-  stat_function(fun = dnorm,
-                args = list(mean = mean(rf_predictions$.resid), 
-                            sd = sd(rf_predictions$.resid)),
-                size = 1)
-
-# Let's go with rf model ------------------------------------------------
-
-final_fit <- glmnet_workflow %>%
-  finalize_workflow(select_best(glmnet_tune, 'rmse')) %>%
-  last_fit(train_test_split)
-
-final_fit <- rf_workflow %>%
-  finalize_workflow(select_best(rf_tune, 'rmse')) %>%
-  last_fit(train_test_split)
-
-final_fit %>% collect_metrics()
-
-final_fit %>%
-  collect_predictions() %>%
-  mutate(.resid = Liking - .pred) %>%
-  ggplot(aes(sample = .resid)) +
-  geom_qq() +
-  geom_qq_line()
-
-final_model <-  final_fit %>%
-  pluck(".workflow", 1) %>%
-  fit(data)
-
-final_model %>%
-  pull_workflow_fit() %>%
-  vip::vip()
-
-# final_model %>%
-#   broom::tidy() %>%
-#   filter(estimate != 0)
-
-write_rds(final_model, 'regression_model.rds')
-
-# Predict something -------------------------------------------------------
-
-model <- read_rds('regression_model.rds')
-
-new_observations <- data[1:2,]
-new_observations
-
-predict(model, new_observations)
-
-
-
-
-```
-
 
