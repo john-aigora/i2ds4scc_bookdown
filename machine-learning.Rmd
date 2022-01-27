@@ -6,10 +6,357 @@ knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 
 ## Overview
 
-<!--
-Bartek drop content starting here, then Vanessa clean up
--->
+```{r classification_Aigora_ml_training}
 
+# Install and load libraries ----------------------------------------------
+
+# install.packages(c("tidyverse", "tidymodels", "rattle",
+#                    "ggplot2", " factoextra", "ranger",
+#                    "ggfortify", "cluster"))
+library(tidyverse)
+library(rattle) # wine dataset
+library(ggplot2)
+require(factoextra)
+library(tidymodels)
+library(ranger)
+library(ggfortify) # PCA visualization
+library(cluster)
+
+# Data ----------------------------------------------
+
+set.seed(123)
+wine_dataset <- tibble(wine) %>% 
+  select(-Type) # We drop type, to present possibility of generating the target using unsupervised methods
+
+
+# PCA without scaling -----------------------------------------------------
+
+pca_results_ws <- wine_dataset %>%
+  prcomp()
+
+summary(pca_results_ws)
+autoplot(pca_results_ws)
+
+pca_ws_plot <- autoplot(pca_results_ws, data = wine_dataset,,
+                   loadings = TRUE, loadings.colour = 'red',
+                   loadings.label = TRUE, loadings.label.size = 3) +
+  theme_minimal()
+
+pca_ws_plot
+# ggsave("output/pca_without_scaling.jpg", pca_ws_plot)
+
+# scaling data + PCA -----------------------------------------------------------
+
+pca_results <- wine_dataset %>%
+  prcomp(scale. = TRUE)
+
+summary(pca_results)
+plot(pca_results)
+
+pca_plot <- autoplot(pca_results, data = wine_dataset,,
+               loadings = TRUE, loadings.colour = 'red',
+               loadings.label = TRUE, loadings.label.size = 3) +
+  theme_minimal()
+
+pca_plot
+# ggsave("output/pca.jpg", pca_plot)
+
+reduced_dataset <- data.frame(pca_results$x[, 1:2]) %>%
+  tibble()
+# we can see that clustering should be easy
+
+# Clustering  -------------------------------------------------------------
+
+# Finding number of clusters - Elbow method
+wcss <- tibble()
+for (i in 1:10) {
+  
+  wcss <- wcss %>% 
+    bind_rows(tibble(n_clusters = i,
+                     wcss = kmeans(reduced_dataset, i)$tot.withinss))
+  
+}
+
+ggplot(data=wcss, aes(x=n_clusters, y=wcss, group=1)) +
+  geom_line(size = 1.5)+
+  geom_point(shape=21, fill="blue", color="darkred", size=5) +
+  theme_minimal() +
+  xlab("Number of clusters") +
+  ylab("Total within-cluster sum of squares")
+
+# ggsave("output/n_clusters_decision_Elbow.jpg")
+
+# Finding number of clusters - silhouette method
+fviz_nbclust(reduced_dataset, kmeans, method = "silhouette")
+# ggsave("output/n_clusters_decision_silhouette.jpg")
+
+# 3 clusters seems to be good fit
+
+km_dw <- kmeans(reduced_dataset, 3, nstart = 20)
+
+km_dw
+
+fviz_cluster(
+  list(data = reduced_dataset, cluster = km_dw$cluster),
+  ellipse.type = "norm",
+  geom = "point",
+  stand = FALSE
+)
+
+# ggsave("output/clustered_data.jpg")
+
+# Classification ----------------------------------------------------------
+
+# Dataset preparation
+wine_classification_dataset <- reduced_dataset %>% 
+  bind_cols(tibble(Wine_type = km_dw$cluster)) %>% # Our classification label is the clustering output
+  mutate(Wine_type = as.factor(Wine_type))
+
+initial_split <- initial_split(data = wine_classification_dataset, strata = "Wine_type", prop = 0.7)
+
+wine_train <- training(initial_split)
+wine_testing <- testing(initial_split)
+
+wine_cv <- wine_train %>% vfold_cv(5,strata = Wine_type)
+
+# Random forest model definition
+model_recipe <- wine_train %>% 
+  recipe(Wine_type ~ .)
+
+rf_spec <- rand_forest(
+  mtry = tune(),
+  trees = tune(),
+  min_n = tune()) %>%
+  set_mode("classification") %>% 
+  set_engine(engine = "ranger")
+
+rf_wf <- workflow() %>%
+  add_recipe(model_recipe) %>% 
+  add_model(rf_spec)
+
+
+# Best parameters searching
+
+params_grid <- rf_spec %>%
+  parameters() %>%
+  update(mtry = mtry(range = c(1, 2)),
+         trees = trees(range = c(10, 200))) %>% 
+  grid_regular(levels = 5)
+
+tuning <- tune_grid(
+  rf_wf,
+  resamples = wine_cv,
+  grid = params_grid
+)
+
+autoplot(tuning)
+
+params_best <- select_best(tuning, "roc_auc")
+
+# Finalize model 
+
+final_model <- rf_wf %>%
+  finalize_workflow(params_best) %>%
+  fit(wine_train)
+
+validation_data_pred <- wine_testing %>%
+  bind_cols(predict(final_model, .))
+
+cm <- conf_mat(validation_data_pred, Wine_type, .pred_class)
+
+autoplot(cm, type = "heatmap")
+```
+
+```{r regression_data_generation_Aigora_ml_training}
+library(tidyverse)
+
+n_rows <- 100
+
+with(set.seed(1),
+     data <- tibble(
+       id = sprintf("product_%d", 1:n_rows)
+     ) %>%
+       mutate(
+         sensory_1 = runif(n(), 0, 6),
+         sensory_2 = runif(n(), 4, 8),
+         sensory_3 = pmax(0, pmin(10, rnorm(n(), 6, 1.5))),
+         sensory_4 = runif(n(), 0, 2),
+         sensory_5 = runif(n(), 0, 2),
+         sensory_6 = pmax(0, pmin(10, rnorm(n(), 3, 1))),
+         sensory_7 = runif(n(), 3, 10)
+       ) %>%
+       mutate(
+         liking = 
+           - 0.2 * abs(sensory_1-2.5)
+         + 0.6 * sensory_2
+         + 0.4 * sensory_3
+         + 0.2 * abs(sensory_4-1)
+         - 0.3 * sensory_5
+         + 0.1 * sensory_6
+         + 0.2 * sensory_7
+       ) %>%
+       mutate(liking = pmin(9.74, rnorm(n(), 1, 0.1) * liking))
+)
+
+summary(data)
+
+# write_rds(data, "data/regression_data.rds")
+
+```
+
+```{r regression_Aigora_ml_training}
+# Tutorial content:
+#   1. Split data
+#   2. Define model
+#   3. Tune hyperparameters
+#   4. Visualize results
+#   5. Explore model with DALEX and modelStudio
+
+
+# Install and load libraries ----------------------------------------------
+
+# install.packages(c("tidyverse", "tidymodels", "remotes",
+#                    "DALEXtra", " modelStudio", "r2d3"))
+# remotes::install_github("aigorahub/aigoraOpen")
+library(tidyverse)
+library(tidymodels)
+library(aigoraOpen)
+
+
+# Load data ---------------------------------------------------------------
+
+data <- read_rds("data/regression_data.rds")
+
+set.seed(123)
+
+data_split <- initial_split(data)
+
+training_data <- training(data_split)
+validation_data <- testing(data_split)
+
+resampling <- vfold_cv(training_data, v = 10)
+
+# Define model ------------------------------------------------------------
+
+model_recipe <- training_data %>%
+  select(-id) %>% # id shouldn't be used by the model
+  recipe(liking ~ .) %>%
+  step_earth(all_predictors(), outcome = "liking")
+
+model_spec <- linear_reg(
+  penalty = tune(),
+  mixture = tune()
+) %>%
+  set_mode("regression") %>%
+  set_engine("glmnet")
+
+model_workflow <- workflow() %>%
+  add_recipe(model_recipe) %>%
+  add_model(model_spec)
+
+
+# Tune model hyperparameters (grid search) ---------------------------------
+
+set.seed(124)
+
+params_grid <- model_spec %>%
+  parameters() %>%
+  grid_regular(levels = 10)
+
+tuning <- tune_grid(
+  model_workflow,
+  resamples = resampling,
+  grid = params_grid
+)
+
+autoplot(tuning)
+
+params_best <- select_best(tuning, "rmse")
+
+
+# Zoom in grid search -----------------------------------------------------
+
+set.seed(125)
+
+penalty_levels <- sort(unique(params_grid$penalty))
+mixture_levels <- sort(unique(params_grid$mixture))
+
+penalty_new_range <- c(
+  penalty_levels[lead(penalty_levels, default = 0) == params_best$penalty],
+  penalty_levels[lag(penalty_levels, default = 0) == params_best$penalty]
+)
+mixture_new_range <- c(
+  mixture_levels[lead(mixture_levels, default = 0) == params_best$mixture],
+  mixture_levels[lag(mixture_levels, default = 0) == params_best$mixture]
+)
+
+params_grid_2 <- model_spec %>%
+  parameters() %>%
+  update(
+    penalty = penalty(log10(penalty_new_range)),
+    mixture = mixture(mixture_new_range)
+  ) %>%
+  grid_regular(levels = 10)
+
+tuning_2 <- tune_grid(
+  model_workflow,
+  resamples = resampling,
+  grid = params_grid_2
+)
+
+autoplot(tuning_2)
+
+params_best_2 <- select_best(tuning_2, "rmse")
+
+
+# Finalize model ----------------------------------------------------------
+
+final_model <- model_workflow %>%
+  finalize_workflow(params_best_2) %>%
+  fit(training_data)
+
+validation_data_pred <- validation_data %>%
+  bind_cols(predict(final_model, .))
+
+metric_set(rmse, rsq)(validation_data_pred, liking, .pred)
+
+validation_data_pred %>%
+  ggplot(aes(liking, .pred)) +
+  geom_point() +
+  geom_abline(slope = 1, intercept = 0, linetype = 2)
+
+
+# Model Studio ------------------------------------------------------------
+
+library(DALEXtra)
+library(modelStudio)
+
+explainer <- explain_tidymodels(
+  final_model, 
+  data = training_data %>% 
+    column_to_rownames("id") %>%
+    select(-liking),
+  y = training_data$liking
+)
+
+resid <- model_performance(explainer)
+resid
+plot(resid)
+
+var_imp <- variable_importance(explainer)
+plot(var_imp)
+
+ms <- modelStudio(
+  explainer,
+  new_observation = validation_data %>%
+    column_to_rownames("id") %>%
+    select(-liking),
+  new_observation_y = round(validation_data$liking, 3)
+)
+
+# r2d3::save_d3_html(ms, "output/modelstudio.html")
+
+```
 
 
 
