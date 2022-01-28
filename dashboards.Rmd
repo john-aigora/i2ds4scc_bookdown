@@ -24,6 +24,8 @@ Before digging straight into the code, let's shortly introduce what
 
 ### What is Shiny
 
+In case you have already been through the visualization chapter, you've already been briefly introduced to some sort of dashboard in R through the `{esquisse}` package. In the next section, we will show you how to build your own dashboard using `{shiny}`. 
+
 Shiny is an R package (`{shiny}`) that allows you to directly create from R interactive web applications. The goal of shiny is to 'convert' your R code into an application that can be accessible and used by anyone through their web browser, without seeing any line of code, nor being familiar with R.
 
 This procedure is made available as `{shiny}` uses some carefully curated set of user interface (UI) functions that generate the HTML, CSS, and JavaScript code needed for most common tasks. In most cases, further knowledge of these languages is not required...unless you want to push your application further. Additionally, it introduces a new way of programming called *reactive programming*, which tracks automatically dependencies between code: When a change in an input is detected, any code that is affected by this change will automatically be updated accordingly. 
@@ -194,19 +196,43 @@ Unfortunately, this solution is not sufficient in case you really want to share 
 
 ## To go further...
 
+Quickly, `{shiny}` became popular and many researchers developed additional packages and tools to further enhance it. Without being exhaustive, here are a few tools and packages that we often use as they provide interesting additional features. But don't hesitate to look online for features that answer your needs!
+
 ### Personalizing and Tuning your application
 
-Example of layouts
+ 
+If you start building many applications in `{shiny}`, you might get tired of its default layout. Fortunately, the overall appearance of applications can be modified easily, especially if you have notion in other programming language such as CSS and HTML. If not, no worries, there are alternative solutions for you, including the `{bslib}` package.
+To change the layout, simply load the library, and add the following piece of code at the start of your application (here for using the theme *darkly*):
 
-`{shiny}` provides tools to design your outputs the way you want. In practice, each panel is based on tables with as many rows as needed, and up to 12 columns. When not specified, the whole width of the screen is used, but this could be controlled (or options could be set side by side) through the `column()` function. 
+```{r}
+fluidPage(
+  theme = bslib::bs_theme(bootswatch = "darkly")
+)
+```
 
-### Extension to other dedicated packages
+`{bslib}` also allows you creating your own theme that match your company style. So do not hesitate to take some time to build it once, and to apply then to all your applications.
+
+Besides changing the overall theme of your applications, there are certain details that can make your overall application more appealing and easier to use. In our short example, you may have noticed that each option and each output is a separate line. This is sufficient here since the number of options and outputs are very limited. However, as the application grows is in size, this solution is no longer sustainable as you do not want the users to scroll down a long way to run adjust all the options. 
+
+Instead, you can combine different options (or outputs) on one line. To do so, `{shiny}` works by defining each panel as a table with as many rows as needed and 12 columns. When not specified, the whole width (i.e. the 12 columns) of the screen is used, but this could be controlled through the `column()` function. 
+
+In our example, we could have position the product selection and the attribute selection on the same line using:
+
+```{r}
+fixedRow(
+  column(6, uiOutput("product")),
+  column(6, uiOutput("attribute"))
+)
+```
+
+
+### Upgrading Tables
 
 The `tableOutput()`/`renderTable()` combination is very handy, yet limited in its layout. Many additional packages provide solution to build more flexible tables. In particular, we recommend the use of the `{DT}` package as it provides a large variety of design options, including coloring cells or text, merging rows or columns, search/filter fields, interactivity, etc. This is then done through the functions `renderDataTable()` and `dataTableOutput()`, or its concise forms `renderDT()` and `DTOutput()`^[the table should be generated using `datatable()`.]. 
 
-`plotly` for interactive graphs
+### Interactive Graphics
 
-### Improving through CSS and HTML
+`plotly` for interactive graphs
 
 ### Interactive Tutorial
 
