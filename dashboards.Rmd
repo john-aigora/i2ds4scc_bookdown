@@ -5,30 +5,23 @@ knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 
 ## Objectives
 
-For good communication, importance of having the right tool.
-Interactivity has always played an important role.
-Even better, imagine you are presenting results to your manager and colleagues, and as questions arise, you have a tool that provide answers to most of their questions based on data.
+We have certainly been all through situations in which we spent a lot of time analyzing data for our study, built our report and our story, spent time in perfecting our presentation. But when came the day of the presentation to your manager and colleagues, we get questions such as: What would happen if we split the results between users/non users, or between gender for instance? In case you haven't been prepared for this question, and didn't run the analysis up-front, you probably answered something like: "Let me re-run some analyses and I'll update you on that!"
 
-or...
+Now imagine that you are in a similar situation, except that when such question arises, you have a tool that can answer live their questions using the data and the same analysis. Wouldn't that bring your discussion to another level? 
+Even better: Imagine you can share this tool with your colleagues for them to use it and answer their own questions, or use it for their own projects, even if they are not good at coding (nor even slightly familiar with R)?
 
-Introduce an experienced situation: I'm sure we've all been through situations in which we spend a lot of time analyzing data for a study, we build our story, spend time in perfecting our presentation: when comes the day of the presentation to your manager and colleagues, you get questions (e.g. how about a split between users/non users, or between gender, etc.) that you can only answer with: "let me re-run some analyses and I'll update you on that!"
-
-Disappointment because 1) you did not think about it, 2) you know that you have to go through all your analyses again, but just on a portion of it...
-
-What if we had a tool that would allow you to provide such results (up to a certain extent) instantly, as the question arises?
-This is the role of dashboard: interactivity of results/representations based on updated data (filter, zoom in...) 
+Simply said, this is one of the roles of dashboards, as it brings interactivity to results (tables, graphs) by re-running and updating them when data (e.g. adding or removing data), options, and/or parameters are being altered.
+In this section, we will show you how to build such dashboard using R and the `{shiny}` package.
 
 ## Introduction to Shiny through an Example
 
-Before digging straight into the code, let's shortly introduce what 
-
-### What is Shiny
+### What is a Shiny application?
 
 In case you have already been through the visualization chapter, you've already been briefly introduced to some sort of dashboard in R through the `{esquisse}` package. In the next section, we will show you how to build your own dashboard using `{shiny}`. 
 
-Shiny is an R package (`{shiny}`) that allows you to directly create from R interactive web applications. The goal of shiny is to 'convert' your R code into an application that can be accessible and used by anyone through their web browser, without seeing any line of code, nor being familiar with R.
+Shiny is an R package (`{shiny}`) that allows you to directly create from R interactive web applications. The goal of shiny is to 'convert' your R code into an application that can be accessible and used by anyone through their web browser, without having to be familiar with R.
 
-This procedure is made available as `{shiny}` uses some carefully curated set of user interface (UI) functions that generate the HTML, CSS, and JavaScript code needed for most common tasks. In most cases, further knowledge of these languages is not required...unless you want to push your application further. Additionally, it introduces a new way of programming called *reactive programming*, which tracks automatically dependencies between code: When a change in an input is detected, any code that is affected by this change will automatically be updated accordingly. 
+This procedure is made available as `{shiny}` uses some carefully curated set of user interface (UI) functions that generate the HTML, CSS, and JavaScript code needed for most common tasks. In most cases, further knowledge of these languages is not required...unless you want to push your application further. Additionally, it introduces a new way of programming called *reactive programming*, which tracks automatically dependencies between code: When a change in an input is detected, any code that is affected by this change will automatically be updated. 
 
 ### Starting with Shiny
 
@@ -192,15 +185,14 @@ Finally, the application that we are developing here is *over-reactive* as every
 
 To run your application, you can simply do it in two different ways from RStudio: You can either push the *Run app* button on the task bar of your script (a menu allows you to run the app in the Viewer window, or as a new window), or you can use the shortcut *CTRL*+*SHIFT*+*ENTER* (on windows). In this case, your computer (and RStudio) will use a virtual local server to build the application.
 
-Unfortunately, this solution is not sufficient in case you really want to share it with colleagues. In such case, you need to publish your app by installing it on a server. Ideally, you have access to a server that can host such application (check with your IT). If not, you can always create an account on <https://www.shinyapps.io/admin/>[https://www.shinyapps.io/admin/] and install it there. Note that there is a free registration option, which comes with limitations (number of applications to install). Also, before using their services, make sure that their conditions (privacy, protection of the data, etc.) suit you and your company policy.
+Unfortunately, this solution is not sufficient in case you really want to share it with colleagues. In such case, you need to publish your app by installing it on a server. Ideally, you have access to a server that can host such application (check with your IT). If not, you can always create an account on [https://www.shinyapps.io/admin/](https://www.shinyapps.io/admin/) and install it there. Note that there is a free registration option, which comes with limitations (number of applications to install). Also, before using their services, make sure that their conditions (privacy, protection of the data, etc.) suit you and your company policy.
 
 ## To go further...
 
-Quickly, `{shiny}` became popular and many researchers developed additional packages and tools to further enhance it. Without being exhaustive, here are a few tools and packages that we often use as they provide interesting additional features. But don't hesitate to look online for features that answer your needs!
+Quickly, `{shiny}` became popular and many researchers developed additional packages and tools to further enhance it. Without being exhaustive, here are a few tools, widgets, and packages that we often use as they provide interesting additional features. But don't hesitate to look online for features that answer your needs!
 
 ### Personalizing and Tuning your application
 
- 
 If you start building many applications in `{shiny}`, you might get tired of its default layout. Fortunately, the overall appearance of applications can be modified easily, especially if you have notion in other programming language such as CSS and HTML. If not, no worries, there are alternative solutions for you, including the `{bslib}` package.
 To change the layout, simply load the library, and add the following piece of code at the start of your application (here for using the theme *darkly*):
 
@@ -228,17 +220,71 @@ fixedRow(
 
 ### Upgrading Tables
 
-The `tableOutput()`/`renderTable()` combination is very handy, yet limited in its layout. Many additional packages provide solution to build more flexible tables. In particular, we recommend the use of the `{DT}` package as it provides a large variety of design options, including coloring cells or text, merging rows or columns, search/filter fields, interactivity, etc. This is then done through the functions `renderDataTable()` and `dataTableOutput()`, or its concise forms `renderDT()` and `DTOutput()`^[the table should be generated using `datatable()`.]. 
+The default table built in `{shiny}` using the `tableOutput()`/`renderTable()` combination is very handy, yet limited in its layout. Fortunately, many additional packages that create HTML tables have been developed to provide alternative solution to build more flexible tables. 
+
+In particular, we recommend the use of the `{DT}` and `{rhandsontable}` packages as they are very simple to use, and yet provides a large variety of powerful design options. Just to name a few, it allows:
+
+ - cells or text formatting (e.g. coloring, rounding, adding currencies or other units, etc.);
+ - merge rows or columns;
+ - add search/filter fields to the table;
+ - provide interactivity, that for instance can be connected to graphics;
+ - include graphics within cells;
+ - allows manual editing, giving the user the chance to fill in or modify some cells;
+ - etc. 
+ 
+To build such table, you will need to load the corresponding packages. For `{DT}` tables, you can generate and retrieve them using the functions `renderDataTable()` and `dataTableOutput()`, or its concise forms `renderDT()` and `DTOutput()`^[the table should be generated using `datatable()`.]. For `{rhandontable}` tables, you can generate and retreve them using `renderRHandsontable()` and `rHandsontableOutput()`.
+
+For more information and examples, please look at [https://rstudio.github.io/DT/](https://rstudio.github.io/DT/) and [https://jrowen.github.io/rhandsontable/](https://jrowen.github.io/rhandsontable/).
+
+
+### Building Dashboard
+
+The example used here illustrates the power of `{shiny}`. However, it is here limited to our own data set, meaning that it is study specific. What if we would want to create a dashboard, that is connected to a database for instance and that updates its results as soon as new data is being collected?
+
+This is of course the next step, and `{shiny}` can handle this thanks to the `{shinydashboard}` package.
+
+In its principle, `{shinydashboard}` works in a similar way to `{shiny}` itself, except for the structure of the UI. For `{shinydashboard}`, the UI contains three sections as shown below (the example below generates an empty dashboard.): 
+
+```{r}
+library(shiny)
+library(shinydashboard)
+
+ui <- dashboardPage(
+  dashboardHeader(),
+  dashboardSidebar(),
+  dashboardBody()
+)
+
+server <- function(input, output) { }
+
+shinyApp(ui, server)
+```
+
+
+It is then your task to fill in the dashboard by for instance connecting to your data source (e.g. a simple data set, a database, etc.) and to fill in your different tabs with the interactivity and outputs of interest.
+
+For more information, including a comprehensive *Get started* section, we recommend you to visit [https://rstudio.github.io/shinydashboard/](https://rstudio.github.io/shinydashboard/)
 
 ### Interactive Graphics
 
-`plotly` for interactive graphs
+Through its way of working, `{shiny}` creates some interactivity to graphics by updating it when changing some options. This is hence done by replacing a static graph by another static graph. 
 
-### Interactive Tutorial
+However, R provides other options that creates interactive graphs directly. This can be done thanks to the `{plotly}` library. 
 
-Incorporate Shiny within RMarkdown documents...
+`{plotly]` is a library that can be used to build R graphics in general within the R environment: It is not specific to `{shiny}` and can be used outside Shiny applications. To build `{plotly}` visualizations, you can build it directly from scratch using the `plot_ly()` function. It is out of the scope of this book to develop further how `{plotly}` works, mainly because we made the decision to explain in details how `{ggplot2}` works. And fortunately, `{plotly}` provides an easy solution to convert automatically `{ggplot2}` graph to `{plotly}` thanks to the `ggplotly()` function.
+
+For more information, please visit [https://plotly.com/r/](https://plotly.com/r/)
+
+### Interactive Documents
+
+Ultimately, `{shiny}` can also be combined to other tools such as `{rmarkdown}` to build interactive tutorials, teaching material, etc. This is done by integrating the interactivity of `{shiny}` to propose options and reactive outputs into a text editor through `{rmarkdown}`.
+
+To integrate `{shiny}` in your `{rmarkdown}`, simply add `runtime: shiny` in the YAML metadata of your R markdown document.
 
 ### Documentation and Books
 
-Shiny gallery
-Books
+Thanks to its way of working and its numerous extensions, there is (almost) no limit to applications you can build (except maybe for your imagination?). For inspiration, and to get a better idea of the powerful applications that you can build, have a look at the gallery on the official shiny webpage:
+[https://shiny.rstudio.com/gallery/](https://shiny.rstudio.com/gallery/)
+
+In this section, we just introduced you to the main functions available in `{shiny}`, but if you want to go further, there is a whole world for you to explore. Of course, a lot of material is available online, and we would not know where to start to guide you. However, we strongly recommend you to start with the book from Hadley Wickham entitled *Mastering Shiny* (REF) as it is comprehensive and will give you the kick start that you need, and more.
+
