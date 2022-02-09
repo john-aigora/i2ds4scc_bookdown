@@ -5,20 +5,38 @@ knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 
 # Data Manipulation {#data-manip}
 
-<!-- MENTIONING SOMEWHERE THAT SOME OF THE TRANSFORMATIONS MADE ARE TEMPORARY AS THEY ARE NOT BEING SAVED, SO RE-USING THE SAME DATA WILL STILL BE BACK TO ITS ORIGINAL VERSION... -->
+<!-- 
+MENTIONING SOMEWHERE THAT SOME OF THE TRANSFORMATIONS MADE ARE TEMPORARY AS THEY ARE NOT BEING SAVED, SO RE-USING THE SAME DATA WILL STILL BE BACK TO ITS ORIGINAL VERSION...
+WE ARE ALSO MISSING A SECTION EXPLAINING PIPES...AND ADDING THAT INTO APERITIFS MIGHT BE CONFUSING AS APERITIFS IS AT THE END OF THE BOOK...SO SHOULD WE EXPLAIN IT IN THE INTRODUCTION? 
 
-<!-- WE ARE ALSO MISSING A SECTION EXPLAINING PIPES...AND ADDING THAT INTO APERITIFS MIGHT BE CONFUSING AS APERITIFS IS AT THE END OF THE BOOK...SO SHOULD WE EXPLAIN IT IN THE INTRODUCTION? -->
+TW: not completely sure where we are now with the re-organization of the book.
+I've added a sentence to explain here that readers need to look at the pre-requisite (how to read this book)
+Also, the section "pre-requisite" (or could be called "summary") is something I think John suggested which provides information about what are we going to use (which data set), which main packages, and what are the learning points. I think this is a good thing to have for readers to quickly see what's in there. But for printing, maybe this should be written in a box, or in italic, to separate it from the rest.
+-->
+
+## Pre-Requisite
+
+In this section, you learn how to manipulate, or transform your data. This goes from very simple transformation (e.g. renaming columns, sorting tables, relocating variables, etc.) to more complex work (transposing parts of the table, combining/merging tables, etc.). 
+
+Such transformations are done through simple examples, including the computation of the sensory profiles (mean scores per product and attribute) of products in different ways, following different transformation path.
+
+So the data set that we are using here are *Sensory Profile.xlsx*, 
+
+Most of the functions we use are accessible from the `{tidyverse}` package.
+
+Note that in many cases, we are not saving the results of the transformation that we do. If you want to apply these changes to your data set, please visit section (APERITIF).
+
+
 
 In sensory science, different data collection tools (e.g. different devices, software, methodologies, etc.) may provide the same data in different ways. Also, different statistical analyses may require having the data structured in different formats. 
 
 A simple example to illustrate this latter point is the analysis of liking data.
-Let C consumers provide their hedonic assessments on P samples. To evaluate if samples have received different liking means at the population level, an ANOVA is performed on a long thin table with (PxC) rows x 3 columns (consumer, sample, and the liking scores). 
-<!-- I think it would be easier to understand if it was written "ANOVA is performed on a long thin table with 3 columns (consumer, sample, and the liking scores), where the combination of CxP will be spread in the rows. --> 
+Let C consumers provide their hedonic assessments on P samples. To evaluate if samples have received different liking means at the population level, an ANOVA is performed on a long thin table with 3 columns (consumer, sample, and the liking scores), where the combination of CxP is spread in rows.
 
 <!-- Insert Figure illustrating the data structure -->
 
 
-However, to assess whether consumers have the same preference patterns at the individual level, internal preference mapping or cluster analysis would be performed, both these analyses requiring as input a short and large table with P rows and C columns. 
+However, to assess whether consumers have the same preference patterns at the individual level, internal preference mapping or cluster analysis is performed, both these analyses requiring as input a short and large table with P rows and C columns. 
 
 
 <!-- Insert Figure illustrating the data structure -->
@@ -30,7 +48,9 @@ Another example of data manipulation consists in summarizing data, by for instan
 <!-- Insert Figure illustrating the data structure -->
 
 
-For these reasons, it is essential to learn to manipulate data and transition from one structure to another. After presenting many different ways to transform your data, we present several simple examples to show these ideas in practice^[Most of the examples presented in this chapter emphasize on the "how to?," not the "why?," and are not necessarily chosen to convey scientific meaning].
+For these reasons, it is essential to learn to manipulate data and transition from one structure to another. 
+
+Different ways to transform your data are illustrated through several simple examples^[Note that some of the examples presented in this chapter emphasize the "how to?," not the "why?," and are not necessarily chosen to convey scientific meaning].
 
 
 ## Tidying Data {#tidy-data}
@@ -42,7 +62,7 @@ Hadley Wickham (@Wickham2014) defined 'tidy data' as "data sets that are arrange
 ### Simple Manipulations
 
 
-The notion of 'simple manipulations' proposed here consists in data transformations that could easily be performed in other software such as Excel (using copy-paste, sorting and filtering, creating a pivot table, etc.). However, we strongly recommend performing any sorts of transformation in R as this will reduce the risk of errors, typically be faster, and will be reusable if you need to perform the same operations on similar data in the future (including updated versions of the current dataset). Moreover, these operations will become easier and more natural for you to use as you familiarize yourself with them.
+The notion of 'simple manipulations' proposed here consists in data transformations that could easily be performed in other software such as Excel (using copy-paste, sorting and filtering, creating a pivot table, etc.). However, we strongly recommend performing any sorts of transformation in R as this will reduce the risk of errors, typically be faster, more reliable, and will be reusable if you need to perform the same operations on similar data in the future (including updated versions of the current data set). Moreover, these operations will become easier and more natural for you to use as you familiarize yourself with them.
 
 
 #### Handling Columns
@@ -51,9 +71,9 @@ The notion of 'simple manipulations' proposed here consists in data transformati
 ##### Renaming Variables
 
 
-The first simple transformation we consider consists of renaming one or multiple variables. This procedure can easily be done using the `rename()` function from the `{dplyr}` package.  In each of the examples below, we use the `names()` function to show just the names of the resulting dataset.
+The first simple transformation we consider consists of renaming one or multiple variables. This procedure can easily be done using the `rename()` function from the `{dplyr}` package.  In each of the examples below, we use the `names()` function to show just the names of the resulting data set.
 
-In our sensory file^[The *sensory* data are imported from the *Sensory Profile.xlsx* file, see Section \@ref(data-import) for more on how to import datasets], let's recode 'Judge' into 'Panellist', and 'Product' into 'Sample' (here we apply transformations without saving the results, so the original dataset remains unchanged).
+In our sensory file^[The *sensory* data are imported from the *Sensory Profile.xlsx* file, see Section \@ref(data-import) for more on how to import data sets], let's rename 'Judge' into 'Panellist', and 'Product' into 'Sample' (here we apply transformations without saving the results, so the original data set remains unchanged).
 
 First, here are the original names:
 
@@ -62,9 +82,7 @@ sensory %>%
   names()
 ```
 
-And here are the recoded names:
-
-<!-- Although by reading the sentence above we can presume how the arguments should be written, I  think it is a good idea to explicit explain it. In this case, maybe it would be a good idea to emphasize that the first name refers to the new name and the second the old name you want to change --> 
+To do so, we indicate in `rename()` that `newname` is replacing `oldname` as following `rename(newname = oldname)`. Additionally, we can apply multiple changes by simply separating them with a `,`:
 
 ```{r}
 sensory %>% 
@@ -72,9 +90,8 @@ sensory %>%
   names()
 ```
 
-If this procedure of renaming variables should be applied on many variables following a structured form (e.g. transforming names into snake_case, CamelCase, etc.), the use of the `{janitor}` package comes handy thanks to its `clean_names()` function and the `case` parameter:
+If this procedure of renaming variables should be applied on many variables following a structured form (e.g. transforming names into snake_case, CamelCase, etc.) (see [https://en.wikipedia.org/wiki/Letter_case#Use_within_programming_languages](https://en.wikipedia.org/wiki/Letter_case#Use_within_programming_languages) for more information), the use of the `{janitor}` package comes handy thanks to its `clean_names()` function and the `case` parameter:
 
-<!-- It may be a good idea to explain what "snake" is. Maybe a argument is not really necessary here? -->
 ```{r}
 library(janitor)
 sensory %>% 
@@ -83,15 +100,15 @@ sensory %>%
 ```
 
 
-Note that the `{janitor}` package offers many options, and although the transformation was performed to all the variables, it is possible to ignore certain variables for the transformation.
+Note that the `{janitor}` package offers many options, and although the transformation is performed here on all the variables, it is possible to apply it on certain variables only.
 
 
 ##### Re-Organizing Columns
 
 
-Another simple transformation consists in re-organizing the dataset, either by re-ordering (including removing) the columns, or by selecting some rows based on a certain criteria. 
+Another simple transformation consists in re-organizing the data set, either by re-ordering (including removing) columns, or by selecting some rows based on a certain criteria. 
 
-For re-ordering columns, `relocate()` is being used. This function allows re-positioning a (set of) variable(s) before or after another variable. By re-using the `sensory` dataset, let's position all the variables starting with 'Qty' between `Product` and `Shiny`. This can be specified into two different ways:
+For re-ordering columns, `relocate()` is being used. This function allows re-positioning a (set of) variable(s) before or after another variable. By re-using the `sensory` data set, let's position all the variables starting with 'Qty' between `Product` and `Shiny`. This can be specified into two different ways:
 
 
 ```{r}
@@ -106,8 +123,7 @@ sensory %>%
 ```
 
 
-Another very important function regarding columns transformation is the `select()` function (from the `{dplyr}` package^[Note that many other packages include a function called `select()`, which could create conflicts. To avoid any risks of errors, we recommend calling the `select()` function using the notation `dplyr::select()` as it formally calls the `select()` function from `{dplyr}`. This avoids any risks of error! Of course, the same procedure applies to any other functions that may suffer from the same issue.]) allows selecting a set of variables, by simply informing the variables that should be kept in the dataset. Let's limit ourselves in selecting `Judge`, `Product`, and `Shiny`:
-
+Another very important function regarding columns transformation is the `select()` function (from the `{dplyr}` package^[Note that many other packages include a function called `select()`, which could create conflicts. To avoid any risks of errors, we recommend calling it as `dplyr::select()` to formally call `select()` from `{dplyr}`. This avoids any risks of error! Of course, the same procedure applies to any other functions that may suffer from the same issue.]) allows selecting a set of variables, by simply informing the variables that should be kept in the data. Let's limit ourselves in selecting `Judge`, `Product`, and `Shiny`:
 
 
 ```{r}
@@ -124,9 +140,14 @@ Let's only keep the variables related to Flavor, hence going from `Cereal flavor
 sensory %>% 
   dplyr::select(Judge, Product, `Cereal flavor`:Warming)
 ```
-<!-- why does 'Cereal flavor' has the '' and not Warming? Is it because of the blank between Cereal and flavor? If so, it might be worth adding a note about that. -->
 
-However, when only one (or few) variable needs to be removed, it is easier to specify which variable to remove rather than informing all the variables to keep. Such solution is then done using the `-` sign. The previous example can then be obtained using the following code:
+
+<!-- why does 'Cereal flavor' has the '' and not Warming? Is it because of the blank between Cereal and flavor? If so, it might be worth adding a note about that. 
+
+TW: to be added in the aperitif
+-->
+
+However, when only one (or few) variable needs to be removed, it is easier to specify which one to remove rather than informing all the ones to keep. Such solution is then done using the `-` sign. The previous example can then be obtained using the following code:
 
 
 ```{r}
@@ -144,7 +165,7 @@ sensory %>%
 ```
 
 
-Rather than selecting variables based on their names, we can also select them based on their position (e.g. `dplyr::select(2:5)` to keep the variables that are at position 2 to 5), or following a certain 'rule' using the `where()` function. In that case, let's consider all the variables that are numerical, which automatically removes the `Judge` and `Product` columns:
+Rather than selecting variables based on their names, we can also select them based on their position (e.g. `dplyr::select(2:5)` to keep the variables that are at position 2 to 5), or following a certain 'rule' using the `where()` function. In that case, let's consider all the variables that are numerical, which automatically removes `Judge` and `Product`:
 
 
 ```{r}
@@ -162,20 +183,21 @@ sensory %>%
 ```
 
 
-More examples illustrating the use of `select()` are provided throughout the book.
+More examples illustrating the use of `dplyr::select()` are provided throughout the book.
 
 
 ##### Creating Columns
 
 
-In some cases, new variables need to be created from existing ones. Examples of such situations include taking the quadratic term of a sensory attribute to test for curvature, or simply considering a new variables as the sum or the subtraction between two (or more). Such creation of a variable is processed through the `mutate()` function from the `{dplyr}` package. This function takes as inputs the name of the variable to create, and the formula to consider.
-Let's create two new variables, one called Shiny2 which corresponds to Shiny squared up, and one StiMelt which corresponds to Sticky + Melting. Since we will only be using these three variables, let's reduce the dataset to these three variables with `select()` first to improve readability:
+In some cases, new variables need to be created from existing ones. Examples of such situations include taking the quadratic term of a sensory attribute to test for curvature, or simply considering a new variables as the sum or the subtraction between two (or more). Such creation of a variable is processed through the `mutate()` function from the `{dplyr}` package. This function takes as inputs the name of the variable to create, and the *formula* to consider.
+Let's create two new variables, one called `Shiny2` which corresponds to `Shiny` squared up, and one `StiMelt` which corresponds to `Sticky` + `Melting.` Since we only use these three variables, let's first reduce the data set to these three variables with `select()` to improve readability:
 
 
 ```{r}
 sensory %>% 
   dplyr::select(Shiny, Sticky, Melting) %>% 
-  mutate(Shiny2 = Shiny^2, StiMelt = Sticky + Melting)
+  mutate(Shiny2 = Shiny^2, 
+         StiMelt = Sticky + Melting)
 ```
 
 
@@ -188,9 +210,10 @@ sensory %>%
 ```
 
 
-`mutate()` being one of the most important function from the `{dplyr}` package, it will be used extensively throughout this book.
+`mutate()` being one of the most important function from the `{dplyr}` package, more examples of its use are presented throughout this book.
 
-Since performing mathematical computations on non-numerical columns is not possible, conditions can easily be added through `mutate()` combined with `across()`. An example could be to round all variables to 0 decimal, which can only be applied to numerical variables:
+Since performing mathematical computations on non-numerical columns is not possible, conditions can easily be added through `mutate()` combined with `across()`. Let's imagine we want to round all variables to 0 decimal, which can only be applied to numerical variables. 
+To do so, we `mutate()` `across()` all variables that are considered `as.numeric` (through `where()`):
 
 
 ```{r}
@@ -200,6 +223,8 @@ sensory %>%
   mutate(across(where(is.numeric), round, 0))
 ```
 
+
+<!-- TW: to continue from here -->
 
 
 ##### Merging and Separating columns
