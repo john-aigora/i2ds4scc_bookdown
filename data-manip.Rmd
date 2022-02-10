@@ -223,19 +223,19 @@ sensory %>%
   mutate(across(where(is.numeric), round, 0))
 ```
 
-
-<!-- TW: to continue from here -->
+In case only a selection of numerical variables should be rounded, we could also replace `where(is.numeric)` by a vector (using `c()`) with the names of the variables to round.
 
 
 ##### Merging and Separating columns
 
 
-It can happen that some columns of a data set contain information (strings) that cover different types of information. For instance, we could imagine coding the name of our panelists as FirstName_LastName or Gender_Name, and we would want to separate them into two columns to make the distinction between the different information, i.e. FirstName and LastName or Gender and Last Name respectively. In other situations, we may want to merge information present in multiple columns in one. 
+It can happen that some columns of a data set contain information (strings) that cover different types of information. For instance, we could imagine coding the name of our panelists as *FirstName_LastName* or *Gender_Name*, and we would want to separate them into two columns to make the distinction between the different information, i.e. *FirstName* and *LastName* or *Gender* and *LastName* respectively. In other situations, we may want to merge information present in multiple columns in one. 
 
-For illustration, let's consider the information stored in the *Product Info* sheet from *Sensory Profile.xlsx*. This table includes information regarding the cookies, and more precisely whether their Protein and Fiber content (Low or High). After importing the data, let's merge these two columns so that both information is stored in one column called `ProtFib`. 
-To do so, we use the `unite()` function from the `{tidyr}` package, which takes as first element the name of the new variables, followed by all the columns to *unite*, and by providing the separation between the elements (here *-*):
+For illustration, let's consider the information stored in the *Product Info* sheet from *Sensory Profile.xlsx*. This table includes information regarding the cookies, and more precisely their Protein and Fiber content (Low or High). 
 
-<!-- What does "here" mean? Maybe it would be better to call file.path? Maybe it is a good idea to mention at the beginning of the chapter the library needed. --> 
+After importing the data, let's merge these two columns so that both information is stored in one column called `ProtFib`. 
+To do so, we use the `unite()` function from the `{tidyr}` package, which takes as first element the name of the new variables, followed by all the columns to *unite*, and by providing the separation between these elements (here *-*):
+
 ```{r}
 file_path <- here("data","Sensory Profile.xlsx") 
 prodinfo <- read_xlsx(file_path, sheet="Product Info") %>%  
@@ -245,9 +245,14 @@ prodinfo
 ```
 
 
-By default, `unite()` removes from the data set the individual variables that have been merged. To keep these original variables, the parameter `remove` should be set to `FALSE`. 
+By default, `unite()` removes from the data set the individual variables that have been merged. To keep these original variables, the parameter `remove = FALSE` can be used. 
 
-To reverse the changes (saved here in `prodinfo`) and to separate a column into different variables, the function `separate()` from the `{tidyr}` package is required. Similarly to `unite()`, `separate()` takes as first parameter the name of the variable to split, followed by the names for the different segments generated, and of course the separated defined by `sep`. In our example, this would be done as following:
+Although it is not relevant for combining columns, it is interesting to mention an additional package that can be used to combine elements together. This package is called `{glue}` and provides interesting alternatives to the usual `paste()` and `paste0()` functions. 
+
+
+To reverse the changes (saved here in `prodinfo`) and to separate a column into different variables, the function `separate()` from the `{tidyr}` package is used. Similarly to `unite()`, `separate()` takes as first parameter the name of the variable to split, followed by the names for the different segments generated, and of course the separator defined by `sep`. 
+
+In our example, this would be done as following:
 
 
 ```{r}
@@ -261,15 +266,15 @@ prodinfo %>%
 
 After manipulating columns, the next logical step is to handle rows. Such operations include three aspects, 
 
-1. by re-arranging the rows in a logical way, 
-2. by filtering entries based on a given variables,
-3. splitting the data in sub-groups based on the entries of a variable.
+1. Re-arranging the rows in a logical way, 
+2. Filtering entries based on given variables,
+3. Splitting the data in sub-groups based on the entries of a variable.
 
 
 ##### Re-arranging Rows
 
 
-The first step of re-arranging rows is done through the `arrange()` function from the `{dplyr}` package. This function allows sorting the data in the ascending order^[For numerical order, this is simply re-arranging the values from the lowest to the highest. For strings, the entries are then sorted alphabetically unless the variable is of type factor in which case the order of the levels for that factors are being used.]. To arrange them in a descending order, the function `desc()` is also required.
+The first step of re-arranging rows is done through the `arrange()` function from the `{dplyr}` package. This function allows sorting the data in the ascending order^[For numerical order, this is simply re-arranging the values from the lowest to the highest. For strings, the entries are then sorted alphabetically unless the variable is a factor in which case the order of the levels for that factors are being used.]. To arrange them in a descending order, the function `desc()` is also required.
 
 Let's re-arrange the data by Judge and Product, the Judge being sorting in an ascending order whereas the product are being sorted in a descending order:
 
@@ -283,7 +288,9 @@ sensory %>%
 ##### Filtering Data
 
 
-To define sub-set of data, the `filter()` function is being used. This function requires providing an argument that is expressed as a *test*, meaning that the outcome should either be TRUE (keep the value) or FALSE (discard the value) when the condition is verified or not respectively. In R, this is expressed by the double '=' sign `==`. Let's filter the data to only keep the data related to sample `P02`:
+To define sub-set of data, the `filter()` function is being used. This function requires providing an argument that is expressed as a *test*, meaning that the outcome should either be TRUE (keep the value) or FALSE (discard the value) when the condition is verified or not respectively. In R, this is expressed by the double '=' sign `==`. 
+
+Let's filter the data to only keep the data related to sample `P02`:
 
 
 ```{r}
@@ -293,49 +300,61 @@ sensory %>%
 
 
 Other relevant test characters are the following:
-<!-- Maybe the topic "for multiple conditions shouldn't be in a bullet point as the others. --> 
  - `!Product == "P02"` or `Product != "P02"` means different from, and will keep all samples except `P02`;
- - `%in% my_vector` keeps any value included within the vector `my_vector` (e.g. `Product %in% c("P01","P02","P03")`);
- - for multiple conditions: 
-  - `&` (read 'and') is multiplicative, meaning that all the conditions need to be true (`Product == "P02" & Shiny > 40`);
-  - `|` (read 'or') is additive, meaning that only one of the conditions needs to be true (`Product == "P03" | Shiny > 40`)
+ - `%in% my_vector` keeps any value included within the vector `my_vector` (e.g. `Product %in% c("P01","P02","P03")`)
+ 
+In some cases, the tests to perform are more complex as they require multiple conditions. 
+There are two forms of conditions:
+
+ - `&` (read *and*) is multiplicative, meaning that all the conditions need to be true (`Product == "P02" & Shiny > 40`);
+ - `|` (read *or*) is additive, meaning that only one of the conditions needs to be true (`Product == "P03" | Shiny > 40`)
   
-As we will see later, this option is particularly useful when you have missing values as you could remove all the rows that contain missing values for a given variable. Since we do not have missing values here, let's create some by replacing all the evaluations for Shiny that are larger than 40 by missing values. In a second step, we can filter out all missing values from Shiny:
+As we will see later, this option is particularly useful when you have missing values as you could remove all the rows that contain missing values for a given variable. Since we do not have missing values here, let's create some by replacing all the evaluations for `Shiny` that are larger than 40 by missing values. This is done here through the `ifelse()`, which takes three arguments (in this order): the test to perform (here `Shiny > 40`), the instruction if the test passes (here replace with `NA`), and the instruction if the test doesn't pass (here keep the value stored in `Shiny`).
 
-<!-- If this function is not explained later, I think it would be a good idea to explain ifelse.-->
-<!-- I noticed that here a space was given between the function and output, which is not the case of the codes above. I think this way is clearer-->
+
 ```{r}
-sensory_na <- sensory %>% 
+(sensory_na <- sensory %>% 
   dplyr::select(Judge, Product, Shiny) %>% 
-  mutate(Shiny = ifelse(Shiny > 40, NA, Shiny))
+  mutate(Shiny = ifelse(Shiny > 40, NA, Shiny)))
 
-sensory_na
+```
 
+
+In a second step, we filter out all missing values from `Shiny`. In practice, this is done by keeping all the values that are not missing:
+
+
+```{r}
 sensory_na %>% 
   filter(!is.na(Shiny))
 
 ```
 
 
-As we can see, this procedure removed 20 rows since the original table had 99 rows and 3 columns, whereas the 'clean' table only has 79 rows and 3 columns.
+As we can see, this procedure removed 20 rows since the original table had 99 rows and 3 columns, whereas the filtered table only has 79 rows and 3 columns.
 
 
 ##### Splitting Data
 
 
-After filtering data, the next logical step is to split data into subsets based on a given variable (e.g. by gender). For such purpose, one could consider using `filter()` by applying it to each subgroup. To some extent, this is what we have done when we only filtered data from sample `P02`. To get sub-groups of data for each sample, we could repeat the same procedure for all the other samples. However, this procedure becomes tedious as the number of samples increases. 
-For such task, we prefer the use of the function `split()`, which takes as argument the column to split from:
+After filtering data, the next logical step is to split data into subsets based on a given variable (e.g. by gender). For such purpose, one could consider using `filter()` by applying it to each subgroup. In a previous example, this is what we have done when we filtered data for sample `P02` only. 
 
-<!-- Maybe is a good idea to quick mention the rest of the argument ".$" -->
+Of course, we could get sub-groups of data for each sample by repeating the same procedure for all the other samples. However, this procedure becomes tedious as the number of samples increases. Instead, we prefer to use `split()` which takes as argument the column to split from:
+
+
 ```{r}
-sensory %>% 
-  split(.$Product)
+split(sensory$Product)
+
+# In a pipe, it would be written as (the '.' calls the data):
+#
+# sensory %>% split(.$Product)
+
 ```
 
 
-This function creates a list of *n* elements (*n* being the number of samples here), each element corresponding to the data related to one sample. 
-From there, automated analyses can be performed to each of the sub-data through the `map()` function, as it will be illustrated later. 
+This function creates a list of *n* elements (*n* being the number of samples), each element corresponding to the data related to one sample. Such list can then be used in automated analyses by performing on each sub-data through the `map()` function, as it will be illustrated later. 
 
+
+<!-- TW to continue from here -->
 
 ### Reshaping the Data
 
