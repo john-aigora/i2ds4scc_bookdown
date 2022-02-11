@@ -20,9 +20,9 @@ In recent years, open-ended comments have gained interest as it is the fastest, 
 
 Traditionally, most SCS questionnaires relied primarily on closed questions, to which open-ended questions were added to uncover the consumers' reasons for liking or disliking products. In practice, these open-ended questions were positioned right after liking questions, and aimed at providing some understanding about why a product may or may not be liked, and to give the participants a chance to reduce their frustration by explaining their responses to certain questions. As a result of such practices, these questions were usually not deeply analyzed.
 
-With the development of the so-called *rapid* methods, the benefits of open-ended questions became more apparent as they provide a new way to uncover sensory perception. In practice, respondents are asked to give any terms that describe their sensory perception in addition to their quantitative evaluation of the products by the means of intensity rating or ranking (e.g. Free Choice Profile, Flash Profile), or similarities and dissimilarities assessment (e.g. Free Sorting Task, and Ultra Flash Profile as an extension of Napping). Since the textual responses are now an integral part of the method, its analysis can no longer be ignored.
+With the development of the so-called *rapid* and consumer-oriented descriptive methods, the benefits of open-ended questions became more apparent as they provide a new way to uncover sensory perception. In practice, respondents are asked to give any terms that describe their sensory perception in addition to their quantitative evaluation of the products by the means of intensity rating or ranking (e.g. Free Choice Profile, Flash Profile), or similarities and dissimilarities assessment (e.g. Free Sorting Task, and Ultra Flash Profile as an extension of Napping). Since the textual responses are now an integral part of the method, its analysis can no longer be ignored.
 
-The importance of open-ended questions increased further as it has been shown that respondents can reliably describe in their own words their full experience (perception, emotion, or any other sort of association) with products. Recently, Mahieu et al. [REF REF REF] showed the benefits of using open-ended questions over CATA^[CATA can be seen as a simplified version of open-comments in the sense that respondents also associate products to words, however they lose the freedom of using their own as they need to select them from a pre-defined list.]. In this study, consumers were asked to describe with their own words both the products and what their ideal product would be like. Similarly, Luc et al. [REF REF REF] proposed an alternative to Just About Right (JAR) scale method - called free-JAR - and in which consumers describe the samples using their own words, by still following a JAR terminology (too little, too much, or JAR, etc.).
+The importance of open-ended questions increased further as it has been shown that respondents can reliably describe in their own words their full experience (perception, emotion, or any other sort of association) with products. Recently, Mahieu et al. [REF REF REF] showed the benefits of using open-ended questions over CATA^[CATA can be seen as a simplified version of open-comments in the sense that respondents also associate products to words, however they lose the freedom of using their own as they need to select them from a pre-defined list.]. In this study, consumers were asked to describe with their own words both the products they evaluated and what their ideal product would be like. Similarly, Luc et al. [REF REF REF] proposed an alternative to Just About Right (JAR) scale method - called free-JAR - and in which consumers describe the samples using their own words, by still following a JAR terminology (too little, too much, or JAR, etc.).
 
 The inclusion of open-ended questions as one of the primary elements of sensory and consumer tasks blurs the line with other fields, including psychology and sociology where these qualitative methods originated. More recently, advances in the technology (web-scraping, social listening, etc.) opened new doors that brought SCS closer to other fields such as marketing for instance. The amount of data that are collected with such techniques can be considerably larger, but the aim of the analysis stays the same: extracting information from text/comments.
 
@@ -30,46 +30,39 @@ The inclusion of open-ended questions as one of the primary elements of sensory 
 ### Objectives of Text Analysis
 
 
-Open-ended comments, and more generally textual responses in questionnaires, are by definition qualitative. This means that the primary analysis should be qualitative, which could consist in reading all these comments, and eventually summarizing the information gathered. 
+Open-ended comments, and more generally textual responses in questionnaires, are by definition qualitative. This means that the primary analysis should be qualitative. It could simply consist in reading all these comments and eventually summarizing the information gathered. But as the number of comments increases, such an approach quickly becomes too time and energy consuming for the analysts. How can we transform such qualitative data into quantitative measures? How can we digest and summarize the information contained in these comments without losing the overall meaning of the messages (context)?
 
-But as the number of comments increases, such approach quickly becomes too time/energy consuming for the analysts. How can we transform such qualitative data into some quantitative measures, that digest and summarize the information contained in these comments, without losing the overall meaning of the messages (context)?
-
-As one can imagine, such solution can easily be done by simply counting how often a certain word is being used in a certain context (e.g. how often the word `sweet` is being associated to each product evaluated.) However, if such solution is a reasonable one to start with, we will show some alternatives that allow going deeper into the understanding of textual inputs.
-This is the objective of the textual analysis and NLP that we are going to tackle in the next sections.
+One easy solution is to simply count how often a certain word is being used in a given context (e.g. how often the word `sweet` is being associated to each product evaluated). However, if such a solution is a reasonable one to start with, we will show some alternatives that allow going deeper into the understanding of textual inputs. This is the objective of the textual analysis and NLP that we are going to tackle in the next sections.
 
 
 ### Warnings
 
 
-Languages are complex, as many aspects can influence the meaning of a message. For instance, in spoken languages, the intonation is as important as the message itself. In written languages, non-word items (e.g. punctuation, emojis) can also change completely the meaning of a sentence (e.g.irony). Worst, some words have different meanings depending on their use (e.g. *like*), and the context of the message provides its meaning. Unfortunately, the full *context* is only available when analyzed manually (e.g. when the analyst reads all the comments), meaning that automating analyses do not always allow capturing it properly. However, reading all the comments is also not a solution, as it quickly becomes too tedious to be done by hand.
-
-This is why we suggest to automate the analysis to extract as much information as possible, before going back to the raw text to ensure that the conclusions drawn actually match the data. 
+Languages are complex, as many aspects can influence the meaning of a message. For instance, in spoken languages, the intonation is as important as the message itself. In written languages, non-word items (e.g. punctuation, emojis) may also completely change the meaning of a sentence (e.g.irony). Worst, some words have different meanings depending on their use (e.g. *like*), and the context of the message provides its meaning. Unfortunately, the full *context* is only available when analyzed manually (e.g. when the analyst reads all the comments), meaning that automating analyses do not always allow capturing it properly. In practice however, reading all the comments is not a realistic solution. This is why we suggest to automate the analysis to extract as much information as possible, before going back to the raw text to ensure that the conclusions drawn actually match the data. 
 
 
 ## Illustration using Sorting Task Data
 
 
-To illustrate this chapter, the data set that we are using was kindly shared by Dr. Jacob Lahne. It is part of a study that aimed in developing a CATA lexicon for Virginia Hard (Alcoholic) Ciders (REF.). The data can be found in *cider_data.xlsx*.
+To illustrate this chapter, the data set that we are using was kindly shared by Dr. Jacob Lahne. It is part of a study that aimed at developing a CATA lexicon for Virginia Hard (Alcoholic) Ciders (REF REF REF.). The data can be found in *cider_data.xlsx*.
 
 
 ### Data Pre-processing
 
 
-Before starting, it is important to mention that there are a large variety of packages in R that handle textual data. Amongst others, we can mention the `{tm}` package for text mining, `{tokenizers}` to transform strings into tokens, `{SnowballC}` for text stemming, `{SpacyR}` for Natural Language Processing, or `{Xplortext}` for deep understanding and analysis of textual data. 
-
+Before starting, it is important to mention that there is a large variety of R packages that handle textual data ^[Readers who are interested in the Reinert textual clustering method (REF REF Reinert 1983) can also have a look at the project IRaMuTeQ (http://www.iramuteq.org/), which is a free software dedicated to text analysis and developed in R and Python.]. Among others, we can mention the `{tm}` package for text mining, `{tokenizers}` to transform strings into tokens, `{SnowballC}` for text stemming, `{SpacyR}` for Natural Language Processing, or `{Xplortext}` for deep understanding and analysis of textual data. 
 <!-- More relevant package to add? -->
+<!-- Would be easier to read if the packages above are listed with bullet points -->
 
-However, to ensure a continuity with the rest of the book, we will emphasize the use of the `{stringr}` package (it is part of the `tidyverse`) for handling strings (here text) combined with the `{tidytext}` package as it applies the `{tidyverse}` philosophy to textual data. 
-
-For the more curious readers, you can also have a look at the project IRaMuTeQ^[See [http://www.iramuteq.org/](http://www.iramuteq.org/), which is a free software dedicated to text analysis and developed in R and Python. 
+However, to ensure a continuity with the rest of the book, we will emphasize the use of the `{stringr}` package for handling strings (here text) combined with the `{tidytext}` package. Note that `{stringr}` is part of the `tidyverse` and thus applies the `{tidyverse}` philosophy to textual data. 
 
 
 ### Introduction to working with strings (`{stringr}`)
 
 
-As mentioned earlier, `{stringr}` is one of the packages included in the `{tidyverse}`. This package brings a large set of tools that allow working with strings. Most functions included in `{stringr}` start with `str_*()`. Amongst the most convenient functions, we can mention:
+As mentioned earlier, `{stringr}` is one of the packages included in the `{tidyverse}`. This package brings a large set of tools that allow working with strings. Most functions included in `{stringr}` start with `str_*()`. Here are some of the most convenient functions:
 
-  - `str_length()` to extract the strength of the string;
+  - `str_length()` to get the length of the string;
   - `str_c()` to combine multiple strings into one;
   - `str_detect()` to search for a pattern in a string, and `str_which()` find the position of a pattern within the string;
   - `str_extract()` and `str_extract_all()` to extract the first (or all) matching pattern from a string;
@@ -84,7 +77,7 @@ It also includes *formatting* options that can be applied to strings, including:
   
 Examples of application of some of these functions will be provided in the next sections.
   
-  
+
 ### Tokenization
 
 
