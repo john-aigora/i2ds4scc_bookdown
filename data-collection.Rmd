@@ -12,7 +12,7 @@ knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 ### Designs of sensory experiments
 #### General approach
 Sensory and consumer science relies on experiments during which subjects usually evaluate several samples one after the other. This type of procedure is called 'monadic sequential' and is common practice for all three main categories of tests (difference testing, descriptive analysis, hedonic testing). The main advantage of proceeding this way is that responses can be analyzed at the individual level so that analysis and interpretation can account for interindividual differences, which is a constant feature of sensory data.
-However, this type of approach also comes with drawbacks^[Market researchers would argue that evaluating several products in a row doesn't usually happen in real life and that proceeding this way may induce response biases. They thus advocate the use of pure monadic designs in which participants are only given one sample to evaluate. This corresponds to a between-group design that is also frequently used in fields where only one treatment per subject is possible (drug testing, nutrition studies, etc.).] as it may imply order effects and carry-over effects. Fortunately, most of these effects can be controlled with a proper design of experiment. A good design ensures that order and carryover effects are not confounded with what you are actually interested to measure (most frequently, the differences between products) by balancing these effects across the panel. However, it is important to note that the design does not eliminate these effects and that each subject in your panel may still experience order and carry-over effect, as well as boredom, sensory fatigue, etc.
+However, this type of approach also comes with drawbacks^[Market researchers would argue that evaluating several products in a row doesn't usually happen in real life and that proceeding this way may induce response biases. They thus advocate the use of pure monadic designs in which participants are only given one sample to evaluate. This corresponds to a between-group design that is also frequently used in fields where only one treatment per subject is possible (drug testing, nutrition studies, etc.).] as it may imply order effects and carry-over effects. Fortunately, most of these effects can be controlled with a proper design of experiment (DoE). A good design ensures that order and carryover effects are not confounded with what you are actually interested to measure (most frequently, the differences between products) by balancing these effects across the panel. However, it is important to note that the design does not eliminate these effects and that each subject in your panel may still experience order and carry-over effect, as well as boredom, sensory fatigue, etc.
 
  
 #### Crossover designs
@@ -91,26 +91,43 @@ To reduce the risks incurred by the use of BIBD, an alternative strategy is to u
 knitr::include_graphics("images/sensory_doe.png")
 ```
 
-### Product-related design
+### Product-related designs
+Because of their contribution to product development, sensory and consumer scientists often deal with DoE other than sensory designs strictly speaking (see for instance REF REF book Gacula, 2008). Sensory-driven product development is indeed very frequent and implies strong interconnection between the measure of sensory responses and the manipulation of product variables (e.g. ingredients) or process variables (e.g. cooking parameters) (for a review, see REF REF Yu et al. 2018). In order to get the most of sensory experiments, it is thus essential to ensure that the products or prototypes to be tested will be conducive to sound and conclusive data. First and foremost, as in any experimental science, one wants to avoid confounding effects. In addition to this and more generally put, the goal of DoE is to define which trials to run in order to be able to draw reliable conclusions without spending time and resources on unnecessary trials. In other words, one seeks maximum efficiency. This is especially critical in sensory science to limit the number of products to be evaluated and to keep panelists' workload under control.
+
 #### Factorial designs
-#### Sensory informed designs & selection of factors
+Full factorial designs are of course commonly used and their application is usually straightforward. However, always in the view of sparing experimental resources, incomplete designs are frequent and require careful preparation. Several strategies can be used to define which experiments to conduct (REF REF book Dean et al. 2018). Ref to Lawson 2015 (Design and analysis of experiments with R).
+=> Optimal designs (ref to AlgDesign / ref to Husson)
+
+#### Mixture designs
+In many product development projects (e.g. in the food industry, in the personal care industry), developers work on products' formula. It means that factors are ingredients and that their proportions are interdependent (the total sum of all components of a mixture must be 100%). Therefore, these factors must be treated as mixture components.
+
+Which package can be used to design mixture DoE
+
+Common representation on ternary diagrams. Easy with the `{Ternary}` package.
+
+
 #### Screening designs
+Factorial and mixture designs are belong to the product developers' essential toolkit. In practice however, they can only include a relatively limited number of factors. For this reason most influential factors of interest must be identified beforehand. Of course, product development is not a monolithic process and in the early stages of project it could be extremely useful to use a screening design in combination to sensory evaluation.
+Plackett-Burman design using `{FrF2}`.
 
 
-<!-- power analysis with the pwr package  -->
+#### Sensory informed designs & selection of factors
+
+
+
 
 
 ## Execute
 <!-- run the experiment / collect the data -->
 <!-- -->
-
+<!-- power analysis with the pwr package  -->
 <!-- randomization by judge, by product -->
 
 
 ## Import {#data-import}
 
 
-To analyze data, we need *data*. If this data is already available in R, then the analysis can be performed directly. However, in much cases, the data is stored outside the R environment, and needs to be imported.
+It certainly is a *Lapalissade*, but to analyze data, we first need *data*. If this data is already available in R, then the analysis can be performed directly. However, in much cases, the data is stored outside the R environment, and needs to be imported.
 
 In practice, the data might be stored in as many format as one can imagine, whether it ends up being a fairly common solution (.txt file, .csv file, or .xls/.xlsx file), or software specific (e.g. Stata, SPSS, etc.).
 Since it is very common to store the data in Excel spreadsheets (.xlsx) due to its simplicity, the emphasis is on this solution. Fortunately, most generalities presented for Excel files also apply to other formats through `base::read.table()` for .txt files,  `base::read.csv()` and `base::read.csv2()` for .csv files, or through the `{read}` package (which is part of the `{tidyverse}`).
