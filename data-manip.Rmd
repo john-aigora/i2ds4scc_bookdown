@@ -20,9 +20,18 @@ In this section, you learn how to manipulate, or transform your data. This goes 
 
 Such transformations are done through simple examples, including the computation of the sensory profiles (mean scores per product and attribute) of products in different ways, following different transformation path.
 
-So the data set that we are using here are *Sensory Profile.xlsx*, 
+So the data set that we are using here are *Sensory Profile.xlsx*. For the last part on data mergeing, the *Consumer Test.xlsx* data set is being used.
 
-Most of the functions we use are accessible from the `{tidyverse}` package.
+Most of the functions we use are accessible from the `{tidyverse}` package. For importing the data, `{here}` and `{readxl}` are also used.
+
+
+```{r}
+library(tidyverse)
+library(here)
+library(readxl)
+```
+
+
 
 Note that in many cases, we are not saving the results of the transformation that we do. If you want to apply these changes to your data set, please visit section (APERITIF).
 
@@ -425,9 +434,8 @@ These procedures are particularly useful in consumer studies, since `pivot_longe
 
 Important remarks: Let's imagine the sensory test was performed following an incomplete design, meaning that each panelist did not evaluate all the samples. Although the long and thin structure would not show missing values (the entire rows being removed), the shorter and larger version would contain missing values for the products that each panelist did not evaluate. If the user wants to automatically replace these missing values with a fixed value, say, it is possible through the parameter `values_fill` (e.g. `values_fill=0` would replace each missing value with a 0). Additionally, after pivoting the data, if multiple entries exist for a combination row-column, `pivot_wider()` will return a list of elements. In the next Section, an example illustrating such situation and its solution will be presented.
 
-In previous versions of `pivot_wider()`, the order of the new columns did not match the original order as it would re-organize them alphabetically (mainly if the variable specified in `names_from` was of type character). If this situation is fixed with later updates (if this should still happen to you, try to update` {tidyr}`), there was a work around which consists in transforming this variable as a factor (use `fct_inorder()` to maintain the order as shown in the data) before pivoting it. Indeed, if the variable is of type factor, the new columns would then be re-ordered based on its level order. Such trick is great to keep in mind as it can help in many other situations (such as ordering elements on a graphic for instance!)
+In previous versions of `pivot_wider()`, the order of the new columns did not match the original order as it would re-organize them alphabetically (mainly if the variable specified in `names_from` was of type character). If this situation is fixed with later updates (if this should still happen to you, try to update` {tidyr}`), there was a work around which consists in transforming this variable as a factor (use `fct_inorder()` to maintain the order as shown in the data) before pivoting it. Indeed, if the variable is of type factor, the new columns are re-ordered based on its levels' order. Such trick is great to keep in mind as it can help in many other situations (such as ordering elements on a graphic for instance!)
 
-<!-- TW to continue from here -->
 
 ### Transformation that Alters the Data
 
@@ -457,7 +465,7 @@ sensory %>%
 ```
 
 
-In this example, each attribute is duplicated with "_min" and "_max" to provide the minimum and maximum value for each attribute. By using a combination of `pivot_longer()` with `names_sep` followed by `pivot_wider()`, we could easily restructure such table by showing for each attribute (presented in rows) the minimum and the maximum in two different columns.
+In this example, each attribute is duplicated with "_min" and "_max" to provide the minimum and maximum value for each attribute. By using a combination of `pivot_longer()` (or `reshape2::melt()`) with `names_sep` followed by `pivot_wider()`, we could easily restructure such table by showing for each attribute (presented in rows) the minimum and the maximum in two different columns.
 
 By following the same principles, many other functions can be performed, whether they are built-in R or created by the user. 
 Here is a recommendation of interesting descriptive functions to consider with `summarise()`:
@@ -467,14 +475,16 @@ Here is a recommendation of interesting descriptive functions to consider with `
  - `min()`, `max()`, `range()` (provides both the min and max) or `diff(range())` (for the difference between min and max); 
  - `n()` and `sum()` for the number of counts and the sum respectively. 
 
+#### Introduction to *grouping*
 
-It can appear that the interest is not in the grand mean, say, but in mean per product, or per product and panelist in case the test has been duplicated. In such cases, the `summary()` should aggregate set of values per product, or per product x panelist respectively. Such information can be passed on through `group_by()`. 
+It can appear that the interest is not in the grand mean, but in the mean per product (say), or per product and panelist in case the test has been duplicated. In such cases, `summarize()` should aggregate set of values per product, or per product by panelist respectively. Such information can be passed on through `group_by()`^[We strongly recommend you to `ungroup()` blocks of code that includes `group_by()` once the computations are done to avoid any unexpected results.]. 
 
 
 ```{r}
 sensory %>% 
   group_by(Product) %>% 
-  summarise(across(where(is.numeric), mean))
+  summarise(across(where(is.numeric), mean)) %>% 
+  ungroup()
 ```
 
 
@@ -484,7 +494,7 @@ This procedure creates a tibble with 11 rows (product) and 33 columns (32 sensor
 #### Illustrations of Data Manipulation
 
 
-Let's review the different transformations presented earlier by generating the sensory profiles of the samples through different approaches^[It is important to realize that each 'data manipulation challenge' can be solved in many different ways, so don't be afraid to think out of the box when solving them...].
+Let's review the different transformations presented earlier by generating the sensory profiles of the samples through different approaches^[It is important to realize that any *data manipulation challenge* can be solved in many different ways, so don't be afraid to think out of the box when solving them...].
 
 In the previous example, we've seen how to obtain the sensory profile using `summarise()` `across()` all numerical variables. In case a selection of the attributes should have been done, we could use the same process by simply informing which attributes to transform:
 
@@ -492,7 +502,8 @@ In the previous example, we've seen how to obtain the sensory profile using `sum
 ```{r}
 sensory %>% 
   group_by(Product) %>% 
-  summarise(across(Shiny:Melting, mean))
+  summarise(across(Shiny:Melting, mean)) %>% 
+  ungroup()
 ```
 
 
@@ -500,15 +511,16 @@ The list of attributes to include can also be stored in an external vector:
 
 
 ```{r}
-sensory_attr <- colnames(sensory)[4:ncol(sensory)]
+sensory_attr <- colnames(sensory)[5:ncol(sensory)]
 sensory %>% 
   group_by(Product) %>% 
-  summarise(across(all_of(sensory_attr), mean))
+  summarise(across(all_of(sensory_attr), mean)) %>% 
+  ungroup()
 
 ```
 
 
-Remark: It is important to notice that when `group_by()` is being called, the software will remember the groups unless stated otherwise. This means that any subsequent transformation performed on the previous table will be done by product. Such property can be causing unexpected results in case transformations should be performed across all samples. To avoid such behavior, we strongly recommend you to apply `ungroup()` as soon as the results per group has been generated.
+Remark: It is important to notice that when `group_by()` is being called, the software will remember the groups unless stated otherwise. This means that any subsequent transformation performed on the previous table will be done by product. Such property can be causing unexpected results in case transformations should be performed across all samples. To avoid such behavior, we strongly recommend you to apply `ungroup()` as soon as the results per group have been generated.
 
 A different approach consists in combining `summarise()` to `pivot_longer()` and `pivot_wider()`. This process requires summarizing only one column by Product and Attribute:
 
@@ -516,6 +528,7 @@ A different approach consists in combining `summarise()` to `pivot_longer()` and
 ```{r}
 sensory %>% 
   pivot_longer(Shiny:Melting, names_to="Attribute", values_to="Scores") %>% 
+  mutate(Attribute = fct_inorder(Attribute)) %>% 
   group_by(Product, Attribute) %>% 
   summarise(Scores = mean(Scores)) %>% 
   pivot_wider(names_from=Attribute, values_from=Scores) %>% 
@@ -523,7 +536,7 @@ sensory %>%
 ```
 
 
-One can notice that through this procedure, the order of the attributes are no longer following the same sequence, and have been ordered in alphabetical order. To maintain the original order, the Attribute column should be transformed into a factor in which the levels are in their original order.
+Note that through this procedure, we transformed `Attribute` into a factor using `fct_inorder()` to ensure that the double pivoting procedure maintains the original attributes' order. Without this line of code, the final table would have the columns reordered alphabetically.
 
 What would happen if we would omit to `summarise()` the data in between the two pivoting functions? In that case, we also remove Judge which were lost in the process...
 
@@ -536,7 +549,7 @@ sensory %>%
 ```
 
 
-As can be seen, each cell contains `dbl [9]` corresponding to the scores provided by the 9 panelists to that product and that attribute. Since we would ultimately want the mean of these 9 values to generate the sensory profiles, a solution comes directly from `pivot_wider()` through the parameter `values_fn` which applies the function provided here on each set of values:
+As can be seen, each variable is of type list in which each cell contains `dbl [9]`: This corresponds to the scores provided by the 9 panelists to that product and that attribute. Since we would ultimately want the mean of these 9 values to generate the sensory profiles, a solution comes directly within `pivot_wider()` through the parameter `values_fn` which applies the function provided here on each set of values:
 
 
 ```{r}
@@ -552,17 +565,19 @@ sensory %>%
 
 It often happens that the data to analyze is stored in different files, and need to be combined or merged. Depending on the situations, different solutions are required.
 
+#### Binding by Rows
+
 Let's start with a simple example where the tables match in terms of variables, and should be combined vertically. 
 To do so, we use the file *excel-scrap.xlsx* which contains a fake example in which 12 assessors evaluated 2 samples on 3 attributes in triplicate, each replication being stored in a different sheet.
 
-To combine the tables vertically, we could use the basic R function `rbind()`. However, we prefer the use of `bind_rows()` from the `{dplyr}` package since it better controls for the columns by ensuring that the order is well respected (in case one table contains a variable that the other tables do not, it will keep the variables and allocate NAs when this information is missing). To keep the distinction between the three tables, the parameter `.id` is used. This will create a column called `Session` in this example that will assign a 1 to the first table, a 2 to the second one, and a 3 to the third one (we do this here since this information was not available within the tables: If it were, the parameter `.id` could have been ignored).
+The goal here is to read the data stored in the different sheets, and to combine them in one unique file.
 
-<!-- This word "here" sounds confusing to me -->
-<!-- I would suggest mentioning the necessary library for the chapter only once, at the beginning Also, for consistence, to codes to open all files should be similar, using the same names. E.g. compare section 3.1.1.1.4 codes and this one.  -->
+To combine the tables vertically, we could use the basic R function `rbind()`. However, we prefer to use `bind_rows()` from `{dplyr}` since it better controls for the columns by ensuring that the order is respected. And in case one table contains a variable that the other tables don't, this variable will be kept and filled in with NAs when the information is missing.
+
+To keep the distinction between the three tables, the parameter `.id` is used. This will create a column called `Session` in this example that will assign a 1 to the first table, a 2 to the second one, and a 3 to the third one (This process is used to avoid losing this information as it was not directly available within the data: If it were, the parameter `.id` could have been ignored).
+
+
 ```{r}
-library(here)
-library(readxl)
-
 path <- file.path("data", "excel_scrap.xlsx")
 
 session1 <- read_xlsx(path, sheet=1)
@@ -576,33 +591,30 @@ all_data <- bind_rows(session1, session2, session3, .id = "Session")
 
 Although this solution works fine, another neater and tidier solution will be presented in \@ref(import-mult-sheet).
 
-Similarly, tables can be combined horizontally using the corresponding function `cbind()` (`{base}`) and/or `bind_cols()` (`{dplyr}`). In this case, it is better to ensure that the rows' order is identical before combining them to avoid mishaps.
+#### Combining Tables by column(s)
 
-Alternatively it is possible to merge tables using `merge()` from `{base}`, or the different `*_join()` functions from 
-the `{dplyr}` package. In that case, the tables do not need to be in the same order, nor from the same size, since the function will handle that.
+Similarly, tables can be combined horizontally using the corresponding function `cbind()` (`{base}`) and/or `bind_cols()` (`{dplyr}`). In this case, it is better to ensure that the rows' order is identical before combining to avoid mishaps, and the tables should be of the same size.
 
-Depending on the *merging degree* to consider between tables X and Y, there are four different `*_join()` versions to consider:
+If that is not the case, mergeing tables should be done using `merge()` (`{base}`), or preferably through the different `*_join()` functions from (`{dplyr}`). Depending on the *merging degree* to consider between tables X and Y, there are four different `*_join()` versions to consider:
 
- - `full_join()` keeps all the cases from X and Y regardless whether they are present in the other table or not (in case they are not present, NAs will be introduced) [corresponds to `merge()` with `all=TRUE`];
- - `inner_join()` only keeps the common cases, i.e. cases that are present in both X and Y [corresponds to `merge()`with `all=FALSE`];
- - `left_join()` keeps all the cases from X [corresponds to `merge()`with `all.x=TRUE` and `all.y=FALSE`];
- - `right_join()` keeps all the cases from Y [corresponds to `merge()`with `all.x=FALSE` and `all.y=TRUE`];
- - `anti_join()` only keeps the elements from X that do are not present in Y (this is particularly useful if you have a tibble Y of elements that you would like to remove from X). 
+ - `full_join()` keeps all the cases from X and Y regardless whether they are present in the other table or not (in case they are not present, NAs will be introduced) [it corresponds to `merge(all=TRUE)`];
+ - `inner_join()` only keeps the common cases, i.e. cases that are present in both X and Y [corresponds to `merge(all=FALSE)`];
+ - `left_join()` keeps all the cases from X [corresponds to `merge(all.x=TRUE, all.y=FALSE)`];
+ - `right_join()` keeps all the cases from Y [corresponds to `merge(all.x=FALSE, all.y=TRUE)`];
+ - `anti_join()` only keeps the elements from X that are not present in Y (this is particularly useful if you have a tibble Y of elements that you would like to remove from X). 
 
 
-<!-- Add examples with X=ABC, Y=ABD and full = ABCD, inner=AB, left=ABC, right=ABD  -->
+<!-- Add examples with X=ABC, Y=ABD and full=ABCD, inner=AB, left=ABC, right=ABD, anti=CD  -->
 
 
 The merging procedure requires the users to provide a *key*, i.e. a (set of) variable(s) used to combine the tables. For each unique element defined by the key, a line is being created. When needed, rows of a table are being duplicated. Within the different `*_join()` functions, the key is informed by the `by` parameter, which may contain one or more variables with the same or different names.
 
-To illustrate, let's use the dataset called *Consumer Test.xlsx*, which contains three tabs:
+To illustrate, let's use the data set called *Consumer Test.xlsx*, which contains three tabs:
 
 
 ```{r}
-library(here)
 file_path <- here("data","Consumer Test.xlsx")
 
-library(readxl)
 excel_sheets(file_path)
 
 ```
@@ -610,9 +622,9 @@ excel_sheets(file_path)
 
 The three sheets contain the following information, which need to be combined:
 
- - Biscuits: The consumers' evaluation of the 10 products and their assessment on liking, hunger, etc. at different moments of the test.
- - Time Consumption: The amount of cookies and the time required to evaluate them in each sitting.
- - Weight: The weight associated to each cookie.
+ - *Biscuits*: The consumers' evaluation of the 10 products and their assessment on liking, hunger, etc. at different moments of the test.
+ - *Time Consumption*: The amount of cookies and the time required to evaluate them in each sitting.
+ - *Weight*: The weight associated to each cookie.
 
 
 Let's start by combining *Time Consumption* and *Weight* so that we can compute the total weight of biscuits eaten by each respondent in each sitting. In this case, the joining procedure is done by `Product` since the weight is only provided for each product. The total weight eaten (`Amount`) is then computed by multiplying the number of cookies eaten (`Nb biscuits`) by `Weight`
@@ -622,20 +634,18 @@ Let's start by combining *Time Consumption* and *Weight* so that we can compute 
 time <- read_xlsx(file_path, sheet="Time Consumption")
 weight <- read_xlsx(file_path, sheet="Weight")
 
-consumption <- time %>% 
+(consumption <- time %>% 
   full_join(weight, by="Product") %>% 
-  mutate(Amount = `Nb biscuits`*Weight)
-
-consumption
+  mutate(Amount = `Nb biscuits`*Weight))
 ```
 
 
 As can be seen, the `Weight` information stored in the *Weight* sheet has been replicated every time each sample has been evaluated by another respondent. 
 
-The next step is then to merge this table to `Biscuits`. In this case, since both dataset contain the full evaluation of the cookies (each consumer evaluating each product), the joining procedure needs to be done by product and by consumer simultaneously. A quick look at the data shows two important things:
+The next step is then to merge this table to `Biscuits`. In this case, since both data set contain the full evaluation of the cookies (each consumer evaluating each product), the joining procedure needs to be done by `Judge` and `Product` simultaneously. A quick look at the data shows two important things:
 
- - In *Biscuits*, the consumer names only contains the numbers whereas in `consumption`, they also contain a `J` in front of the name: This needs to be fixed as the names need to be identical to be merged, else they will be considered separately and NAs will be introduced. In practice, this will be done by mutating Consumer by pasting a J in fron of the number using the function `paste0()`.
- - The names that contain the product (`Samples` and `Product`) and consumers (`Consumer` and `Judge`) information are different in both dataset. We could rename these columns in one dataset to match the other, but instead we will keep the two names and inform it within `full_join()`. This is done through the `by` parameter as following: `"name in dataset 1" = "name in dataset 2"`
+ - In *Biscuits*, the consumer names only contains the numbers whereas in `consumption`, they also contain a `J` in front of the name: This needs to be fixed as the names need to be identical to be merged, else they will be considered separately and NAs will be introduced. In practice, this will be done by mutating `Consumer` and by pasting a `J` in front of the number using the function `paste0()`.
+ - The names that contain the product (`Samples` and `Product`) and consumers (`Consumer` and `Judge`) information are different in both data set. We could rename these columns in one data set to match the other, but instead we will keep the two names and inform it within `full_join()`. This is done through the `by` parameter as following: `"name in dataset 1" = "name in dataset 2"`
  
  
 ```{r}
@@ -647,4 +657,4 @@ biscuits
 ```
 
 
-The three dataset are now joined in one and could be further processed for some analyses!
+The three data sets are now flawlessly joined into one and can be further analysed.
