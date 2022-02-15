@@ -98,9 +98,9 @@ cider_og <- read_xlsx(file_path) %>%
 ```
 
 
-We notice here that for each sample evaluated, respondents are providing a set of descriptions, which can be a single word (e.g. `yeasty`) or a group of words (`like it will taste dry and acidic`). This dataset is fairly well structure since the tokens are separated by a `;` or `,`.
+We notice here that for each sample evaluated, respondents are providing a set of descriptions, which can be a single word (e.g. `yeasty`) or a group of words (`like it will taste dry and acidic`). We can also note that this data set is fairly well structured since the responses are separated by a `;` or `,`.
 
-Let's transform this text into tokens using `unnest_tokens()` from the `{tidytext}` package. The function `unnest_tokens()` already proposes different options for the tokenization, including "words", "ngrams", or "sentences" for instance. However, since we want to use a specific character to separate the tokens (here `;`, `,` etc.), we are using "regex" by specifying the different patterns.
+Let's transform this text into tokens using `unnest_tokens()` from the `{tidytext}` package. The function `unnest_tokens()` proposes different options for the tokenization, including by "words", "ngrams", or "sentences" for instance. However, in our example we can build on the data set structure and use a specific character to separate the tokens (here `;`, `,` etc.). For this, we are using "regex" that allows us to specify the different patterns.
 
 <!-- Maybe is a good idea to add" library(tidytext) at the neginning of the code? --> 
 <!-- It is not a big deal but I guess it is the first time in the book I see the code in (). Maybe you want to keep consistent or add a little explanation for the reader. --> 
@@ -109,8 +109,7 @@ Let's transform this text into tokens using `unnest_tokens()` from the `{tidytex
   unnest_tokens(tokens, comments, token="regex", pattern="[;|,|:|.|/]", to_lower=FALSE))
 ```
 
-
-This procedure already provides some interesting information as we already could count how often the word *apple* for instance is used to describe each samples. However, a deeper look at the data shows some inconsistencies, since some words starts with a space, or have capital letters (remember that R is case-sensitive!).
+This procedure already provides some interesting information as we can readily count word usage, for instance how often the word *apple* is used to describe each samples. However, a deeper look at the data shows some inconsistencies since some words starts with a space, or have capital letters (remember that R is case-sensitive!).
 
 
 ### Simple Transformation (lowercase)
