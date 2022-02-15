@@ -16,14 +16,11 @@ Also, the section "pre-requisite" (or could be called "summary") is something I 
 
 ## Pre-Requisite
 
-In this section, you learn how to manipulate, or transform your data. This goes from very simple transformation (e.g. renaming columns, sorting tables, relocating variables, etc.) to more complex work (transposing parts of the table, combining/merging tables, etc.). 
+In this section, you will learn how to manipulate and transform your data. This goes from very simple transformation (e.g. renaming columns, sorting tables, relocating variables, etc.) to more complex work (transposing parts of the table, combining/merging tables, etc.). 
 
-Such transformations are done through simple examples, including the computation of the sensory profiles (mean scores per product and attribute) of products in different ways, following different transformation path.
+Such transformations are done through simple examples, including the computation of the sensory profiles (mean scores per product and attribute) of products by following different transformations path. The data set used include *Sensory Profile.xlsx* mainly, as well as made up data set (*Consumer Test.xlsx*) to illustrate how to join different data set.
 
-So the data set that we are using here are *Sensory Profile.xlsx*. For the last part on data mergeing, the *Consumer Test.xlsx* data set is being used.
-
-Most of the functions we use are accessible from the `{tidyverse}` package. For importing the data, `{here}` and `{readxl}` are also used.
-
+Most of the functions we use are accessible through the `{tidyverse}`. For importing the data, the usual `{here}` and `{readxl}` are used.
 
 ```{r}
 library(tidyverse)
@@ -31,11 +28,9 @@ library(here)
 library(readxl)
 ```
 
-
-
 Note that in many cases, we are not saving the results of the transformation that we do. If you want to apply these changes to your data set, please visit section (APERITIF).
 
-
+## Why Manipulating Data?
 
 In sensory science, different data collection tools (e.g. different devices, software, methodologies, etc.) may provide the same data in different ways. Also, different statistical analyses may require having the data structured in different formats. 
 
@@ -44,18 +39,13 @@ Let C consumers provide their hedonic assessments on P samples. To evaluate if s
 
 <!-- Insert Figure illustrating the data structure -->
 
-
 However, to assess whether consumers have the same preference patterns at the individual level, internal preference mapping or cluster analysis is performed, both these analyses requiring as input a short and large table with P rows and C columns. 
 
-
 <!-- Insert Figure illustrating the data structure -->
-
 
 Another example of data manipulation consists in summarizing data, by for instance computing the mean by product for each sensory attribute (hence creating the so-called sensory profiles), or to generate frequency tables (e.g. proportions of male/female, distribution of the liking scores by sample, contingency table for CATA data, etc.)
 
-
 <!-- Insert Figure illustrating the data structure -->
-
 
 For these reasons, it is essential to learn to manipulate data and transition from one structure to another. 
 
@@ -153,7 +143,7 @@ sensory %>%
 
 <!-- why does 'Cereal flavor' has the '' and not Warming? Is it because of the blank between Cereal and flavor? If so, it might be worth adding a note about that. 
 
-TW: to be added in the aperitif
+TW: added in the aperitif
 -->
 
 However, when only one (or few) variable needs to be removed, it is easier to specify which one to remove rather than informing all the ones to keep. Such solution is then done using the `-` sign. The previous example can then be obtained using the following code:

@@ -34,7 +34,7 @@ The universe of available packages is vast
 R excels at data manipulation and results reporting
 R has more specialized tools for sensory analysis than other programming language
 
-For sensory and consumer scientists, we recommend the R ecosystem of tools for three main reasons.  The first reason is cultural - R has from its inception been oriented more towards statistics than to computer science, making the feeling of programming in R more natural (in our experience) for sensory and consumer scientists than programming in Python.  This opinion of experience is not to say that a sensory and consumer scientist shouldn't learn Python if they are so inclined, or even that Python tools aren't sometimes superior to R tools (in fact, they sometimes are).  This latter point leads to our second reason, which is that R tools are typically better suited to sensory and consumer science than are Python tools.  Even when Python tools are superior, the R tools are still sufficient for sensory and consumer science purposes, plus there are many custom packages such as SensR, SensoMineR, and FactorMineR that have been specifically developed for sensory and consumer science.  Finally, the recent work by the RStudio company, and especially the exceptional work of Hadley Wickham, has lead to a very low barrier to entry for programming within R together with exceptional tools for data manipulation.
+For sensory and consumer scientists, we recommend the R ecosystem of tools for three main reasons.  The first reason is cultural - R has from its inception been oriented more towards statistics than to computer science, making the feeling of programming in R more natural (in our experience) for sensory and consumer scientists than programming in Python.  This opinion of experience is not to say that a sensory and consumer scientist shouldn't learn Python if they are so inclined, or even that Python tools aren't sometimes superior to R tools (in fact, they sometimes are).  This latter point leads to our second reason, which is that R tools are typically better suited to sensory and consumer science than are Python tools.  Even when Python tools are superior, the R tools are still sufficient for sensory and consumer science purposes, plus there are many custom packages such as `{SensR}`, `{SensoMineR}`, and `{FactoMineR}` that have been specifically developed for sensory and consumer science.  Finally, the recent work by the RStudio company, and especially the exceptional work of Hadley Wickham, has lead to a very low barrier to entry for programming within R together with exceptional tools for data manipulation.
 
 
 ### Steps to Install R
@@ -50,17 +50,18 @@ https://cran.r-project.org/bin/windows/Rtools/
 
 <!-- ADD REFERENCE FOR AN INTRODUCTION TO R -->
 
-In this book, we assume that the readers have already some very basic knowledge in R.
+In this book, we assume that the readers have already some basic knowledge in R.
 If you are completely new to R, we recommend you reading <!-- REF --> or looking at some documentation online to get you started with the basics. 
 
-However, just like with any spoken language, the same message can be said in various ways. The same applies with writing scripts in R, each of us having our own styles, or our own preferences towards certain procedures, packages, functions, etc. In other words, writing scripts is personal. Through this book, we are not trying to impose our way of thinking/proceeding/building scripts, instead we aim in sharing our knowledge built through past experiences to help you find your own style.
+Just like with any spoken language, the same message can be said in various ways. The same applies with writing scripts in R, each of us having our own styles, or our own preferences towards certain procedures, packages, functions, etc. In other words, writing scripts is personal. Through this book, we are not trying to impose our way of thinking/proceeding/building scripts, instead we aim in sharing our knowledge built through past experiences to help you find your own style.
 
 But to fully decode our message, you'll need some reading keys. These keys will be described in the next sections. 
 
 
 ### Introduction to the `{magrittr}` and the notion of *pipes*
 
-R is a living programming language that evolves and expends very rapidly. 
+R is an *evolving* programming language that evolves and expends very rapidly. 
+
 If most additions/improvements have a fairly limited reach, the introduction of the `{tidyverse}` in 2016 by H. Wickham revolutionized the way of scripting in R for many users. At least for us, it had a large impact as we fully embraced its philosophy, as we see its advantage for Data Science and for analyzing our sensory and consumer data. It is hence no surprise that you'll read and learn a lot about it in this book.
 
 As you may know, the `{tidyverse}` is a grouping of packages dedicated to Data Science, which includes (amongst others) `{readr}` for data importation, `{tibble}` for the data structure, `{stringr}` and `{forcats}` for handling strings and factors, `{dplyr}` and `{tidyr}` for manipulating and tidying data, `{ggplot2}` for data visualization, and `{purrr}` for functional programming. But more importantly, it also includes `{magrittr}`, the package that arguably impacted the most our way of scripting by introducing the notion of *pipes* (defined as `%>%`) as it provides code that is much easier to read and understand.
@@ -73,7 +74,6 @@ It is some code that tells a story about a little bunny names Foo Foo:
 *and bopping them on the head*
 
 If we were meant to tell this story though code, we would start by creating an object name `FooFoo` which is a little bunny:
-
 
 ```{r}
 foo_foo <- little_bunny()
@@ -128,52 +128,81 @@ Note however that although pipes are very powerful, they are not always the best
 
 ### Tips on *how to read this book?*
 
+#### Running code and handling errors
+
 For you to get the most out of this book, you need to understand (and eventually adhere to) our philosophy of scripting, and our way of working. This is why we are providing you with some tips to use, if you're comfortable with them:
 
   1. Create a folder for this book on your computer, and create a script for each chapter in which you re-write yourself the code. If you work with the online version, you could copy/paste the code to go faster, but you may miss some subtleties.
   2. Do not be discourage when you get some errors: we all get some regularly. At first, this can be very frustrating, especially when you are not able to fix them quickly. If you get stuck on an error and cannot fix it immediately, take a break and come back later with fresh eyes, you may solve it then. And with time and experience, you'll notice that you can reduce the amount of errors, and will also solve them faster.
   3. The more code, the more difficult it is to find errors. This is true whether you use "regular" R-code or pipes. The best way to solve errors in such circumstances is to run the code line by line until you find the error, and understand why the input/output does not match expectations. 
   4. In the particular case of pipes, debugging errors means that you shouldn't run the entire block of code, but select parts of it and run it by adding in each run a new line. This can either be done by stopping your selection just before the adequate `%>%` sign, or by adding after that `%>%` sign the function `identity()`^[`identity()` is a function that returns as output the input as it is. This function is particularly useful in pipes as you can finish your pipes with it, meaning that you can put any line in comments (starting with '#') without worrying about finishing your pipe with a `%>%`].
-  5. In many examples here, we apply changes to certain elements without actually saving them in an R object. This is quite convenient for us as many changes we do are only done for pedagogic reasons, and are not necessarily relevant for our analysis. This is for instance the case with the following code (REF):
-
+  
+#### Printing vs. Saving results
+  
+In many examples through this book, we apply changes to certain elements without actually saving them in an R object. This is quite convenient for us as many changes we do are only done for pedagogic reasons, and are not necessarily relevant for our analysis. 
+  
+Here is an example of such case (REF):
 
 ```{r}
 sensory %>% 
   rename(Panellist = Judge, Sample = Product)
 ```
 
-
-If you run this code, you'll notice that we rename `Judge` to `Panellist`, and `Product` to `Sample`...at least this is what you see on screen. However, if you look at `sensory`, the dataset still contains the column `Judge` and `Product` (`Panellist` and `Sample` do not exist!). This is simply because we did not save the changes in any R object.
+If you run this code, you'll notice that we rename `Judge` to `Panellist`, and `Product` to `Sample`...at least this is what you see on screen. However, if you look at `sensory`, the data set still contains the column `Judge` and `Product` (`Panellist` and `Sample` do not exist!). This is simply because we did not save the changes in any R object.
 
 If we would want to save the element in a new object, we should save the outcome in an element using `<-`:
-
 
 ```{r}
 newsensory <- sensory %>% 
   rename(Panellist = Judge, Sample = Product)
 ```
 
-
-Here, `newsensory` corresponds to `sensory`, but with the new names. Of course, if you would want to overwrite the previous file with the new names, you simply need to ensure that the name of the output is the same as the name of the input (this saves computer memory and is saves you thinking about new names all the time). Concretely, we replace here `newsensory` by `sensory`, meaning that the new names are saved in `sensory` (so the old names `Judge` and `Product` and definitely lost):
-
+Here, `newsensory` corresponds to `sensory`, but with the new names. Of course, if you would want to overwrite the previous file with the new names, you simply need to ensure that the name of the output is the same as the name of the input. Concretely, we replace here `newsensory` by `sensory`, meaning that the new names are saved in `sensory` (so the old names `Judge` and `Product` and definitely lost). This procedure saves computer memory and does not require you coming up with new names all the time. However, it also means that some changes that you applied may be lost, and if you have a mistake in your code, it is more complicated to find and ultimately solve it (you may need to re-run your entire script). 
 
 ```{r}
 sensory <- sensory %>% 
   rename(Panellist = Judge, Sample = Product)
 ```
 
-
-In the latter cases, this means that to see what `newsensory` or `sensory` contains, you need to type it back in R.
-Another (faster) way to visualize it is to put the entire block of code between brackets (putting codes like this in brackets is equivalent to asking to print the output).
-
+To visualize the changes, you would need to type `newsensory` or `sensory` in R.
+Another (faster) way to visualize it is to put the entire block of code between brackets: Putting code between brackets is equivalent to asking to print the output. 
 
 ```{r}
 (sensory <- sensory %>% 
   rename(Panellist = Judge, Sample = Product))
 ```
 
+Note that if you run all these lines of codes in R, you will get an error stating `Column 'Judge' doesn't exist.` This is a good illustration of a potential error mentioned above: We overwrote the original `sensory` (containing `Judge` and `Product`) with another version in which these columns were already renamed as `Panellist` and `Sample`. So when you re-run this code, you are trying to apply again the same changes to columns that no longer exist, hence the error...
+This is something that you need to take into consideration when overwriting elements (in this case, you should initialize `sensory` to its original version before trying).
 
-Note that if you run all these lines of codes in R, you will get an error stating `Column 'Judge' doesn't exist.` This is due to the fact that previously, we overwrote the original `sensory` (containing `Judge` and `Product`) with another version in which these columns were renamed `Panellist` and `Sample`. So when you re-run this code, you are trying to apply again the same changes to columns that no longer exist, hence the error...This is something that you need to take into consideration when overwriting elements (in this case, you should initialize `sensory` to its original version before trying).
+#### Calling Variables
+
+In R, variables can be called in different ways when programming. If the names of variables should be read from the data (e.g. "Product", "products", "samples", etc.), you will often use strings, meaning that the name used will be defined between quotes (e.g. `"Product"`). 
+
+Within the `{tidyverse}`, the names of variables that are included within a data set are usually called as it is, without quote:
+
+```{r}
+sensory %>% 
+  dplyr::select(Judge, Product, Shiny)
+```
+
+This is true for simple names that do not contain any special characters (e.g. space, `-, etc.`). For names that contain special characters, the use of backticks are required (backticks can also be used with simple names):
+
+```{r}
+sensory %>% 
+  dplyr::select(`Judge`, Product, `Color evenness`).
+```
+
+While going through this book, you'll notice that many functions from the `{tidyverse}` sometimes require quotes, and sometimes doesn't. The simple way to know whether quotes are required or not is based on its existence in the data set or not: If the column exists and should be used, no quotes should be used. On the contrary, if the variable doesn't exist and should be created, then quotes should be used.
+
+Let's illustrate this through a simple example involving `pivot_longer()` and `pivot_wider()` successively. For `pivot_longer()`, we create two new variables,one that contains the column names (informed by `names_to`) and one that contains the values (informed by `values_to`). Since these variables are being created, quotes are required for the new names. For `pivot_wider()`, quotes are not needed since the names of the variables to use (`names_from` and `values_from`) are present in the data:
+
+```{r}
+sensory %>% 
+  pivot_longer(Shiny:Melting, names_to="Variables", values_to="Scores") %>% 
+  pivot_wider(names_from=Variables, values_from=Scores)
+```
+
 
 ## RStudio
 
