@@ -149,13 +149,12 @@ Plackett-Burman design using `{FrF2}`.
 
 ## Execute
 <!-- run the experiment / collect the data -->
-<!-- -->
+
 <!-- power analysis with the pwr package  -->
 <!-- randomization by judge, by product -->
 
 
 ## Import {#data-import}
-
 
 It is a truism but to analyze data we first need *data*. If this data is already available in R, then the analysis can be performed directly. However, in much cases, the data is stored outside the R environment, and needs to be imported.
 
@@ -163,21 +162,19 @@ In practice, the data might be stored in as many format as one can imagine, whet
 
 Since it is very common to store the data in Excel spreadsheets (*.xls(x)*) due to its simplicity, the emphasis is on this solution. Fortunately, most generalities presented for Excel files also apply to other formats through `base::read.table()` for *.txt* files,  `base::read.csv()` and `base::read.csv2()` for *.csv* files, or through the `{read}` package (which is part of the `{tidyverse}`).
 
-For other (less common) formats, you may find alternative packages that would allow importing your files in R. Particular interest can be given to the package `{rio}` (*rio* stands for *R* *I*nput and *O*utput) which provides an easy solution that 
+For other (less common) formats, you may find alternative packages that would allow importing your files in R. Particular interest can be given to the package `{rio}` (*rio* stands for *R* *I*nput and *O*utput) which provides an easy solution that:
 
-1. handles a large variety of files, 
-2. guess the type of file it is, 
-3. provides tools to import, export, and convert almost any type of data format, including *.csv*, *.xls(x)*, or data from other statistical software such as SAS (*.sas7bdat* and *.xpt*), SPSS (*.sav* and *.por*), or Stata (*.dta*).
+1. Handles a large variety of files, 
+2. Guess the type of file it is, 
+3. Provides tools to import, export, and convert almost any type of data format, including *.csv*, *.xls(x)*, or data from other statistical software such as SAS (*.sas7bdat* and *.xpt*), SPSS (*.sav* and *.por*), or Stata (*.dta*).
 
 As an alternative, the package `{foreign}` provides functions that allow importing data stored from other statistical software (incl. Minitab, S, SAS, Stata, SPSS, etc.).
 
 Although Excel is most likely one of the most popular way of storing data, there are no `{base}` functions that allow importing such files easily. Fortunately, many packages have been developed in that purpose, including `{XLConnect}`, `{xlsx}`, `{gdata}`, and `{readxl}`. Due to its convenience and speed of execution, we will be using `{readxl}` here.
 
-
 ### Importing Structured Excel File
 
-
-First, let's import the *Sensory Profile.xlsx* workbook using the `readxl::read_xlsx()` file, by informing as parameter the location of the file (informed in `file_path` using the package `{here}`)^[The package `{here}` is very handy as it provides an easy way to retrieve your file's path (within your working directory) by simply giving the name of the file and folder in which they are stored.] and the `sheet` we want to read from.
+First, let's import the *Sensory Profile.xlsx* workbook using `readxl::read_xlsx()` by informing as parameter the `location` of the file and the `sheet` where it is stored. For convenience, we are using the `{here}`^[The package `{here}` is very handy as it provides an easy way to retrieve your file's path (within your working directory) by simply giving the name of the file and folder in which they are stored.] package to retrieve the path of the file (stored in `file_path`).
 
 This file is called _structured_ as all the relevant information is already stored in the same sheet in a structured way. In other words, no decoding is required here, and there are no 'unexpected' rows or columns (e.g. empty lines, or lines with additional information regarding the data that is not data):
 
@@ -185,7 +182,6 @@ This file is called _structured_ as all the relevant information is already stor
  - From the second row onward, only data is being stored.
  
 Since this data will be used for some analyses, it is assigned data to an R object called `sensory`.
-
 
 ```{r import_sensory, echo=FALSE}
 library(here)
@@ -196,122 +192,97 @@ sensory <- read_xlsx(file_path, sheet="Data")
 
 ```
 
-
-To ensure that the importation went well, we print `sensory` to see how it looks like. Since `{readxl}` has been developed by Hadley Wickham and colleagues, its functions follow the `{tidyverse}` principles and the dataset thus imported is a `tibble`. Let's take advantage of the printing properties of a `tibble` to evaluate `sensory`:
-
+To ensure that the importation went well, we print `sensory` to see how it looks like. Since `{readxl}` has been developed by Hadley Wickham and colleagues, its functions follow the `{tidyverse}` principles and the data thus imported is stored as a `tibble`. Let's take advantage of the printing properties of a `tibble` to evaluate `sensory`:
 
 ```{r}
 sensory
 ```
 
-
 `sensory` is a tibble with 99 rows and 35 columns that includes the `Judge` information (first column, defined as character), the `Product` information (second column, defined as character), and the sensory attributes (third column onward, defined as numerical or `dbl`).
-
 
 ### Importing Unstructured Excel File
 
+In some cases, the data are not so well organized/structured, and may need to be *decoded*. This is the case for the workbook entitled *TFEQ.xlsx*. 
 
-In some cases, the dataset is not so well organized/structured, and may need to be *decoded*. This is the case for the workbook entitled *TFEQ.xlsx*. For this file:
+In this file:
 
  - The variables' name have been coded and their corresponding names (together with some other valuable information we will be using in the next chapter) are stored in a different sheet entitled _Variables_;
  - The different levels of each variable (including their code and corresponding names) are stored in another sheet entitled _Levels_.
 
-To import and decode this dataset, multiple steps are required:
+To import and decode this data set, multiple steps are required:
 
  - Import the variables' name only;
  - Import the information regarding the levels;
- - Import the dataset without the first line of header, but by providing the correct names obtained in the first step;
+ - Import the data without the first line of header, but by providing the correct names obtained in the first step;
  - Decode each question (when needed) by replacing the numerical code by their corresponding labels.
 
 Let's start with importing the variables' names from *TFEQ.xlsx* (sheet *Variables*)
 
-
 ```{r import_TFEQ_labels1, echo=FALSE}
 file_path <- here("data","TFEQ.xlsx") 
 
-var_names <- read_xlsx(file_path, sheet="Variables")
-var_names
-
+(var_names <- read_xlsx(file_path, sheet="Variables"))
 ```
-
 
 In a similar way, let's import the information related to the levels of each variable, stored in the *Levels* sheet. 
 A deeper look at the *Levels* sheet shows that only the coded names of the variables are available. In order to include the final names, `var_names` is joined (using `inner_join`).
 
-
 ```{r import_TFEQ_labels2}
 library(tidyverse)
-var_labels <- read_xlsx(file_path, sheet="Levels") %>% 
-  inner_join(dplyr::select(var_names, Code, Name), by=c(Question="Code"))
-
-var_labels
-
+(var_labels <- read_xlsx(file_path, sheet="Levels") %>% 
+  inner_join(dplyr::select(var_names, Code, Name), by=c(Question="Code")))
 ```
 
+Ultimately, the data (*Data*) is imported by substituting the coded names with their corresponding names. This process can be done by skipping reading the first row of the data that contains the coded header (`skip=1`), and by passing `Var_names` as header or column names (after ensuring that the names' sequence perfectly match across the two tables!).
 
-**Note**: In some cases, the information regarding the levels of a factor is available within the dataset as sub-header: A solution is then to import the first rows of the dataset that contain this information using the parameter `n_max` from `readxl::read_xlsx``. For each variable (when information is available), store that information as a list of tables that contains the code and their corresponding label.
-
-
-<!-- **THIS SECTION BELOW MIGHT NEED TO GET PASSED ON TO THE EXERCISE**
-
-Since most likely this system of coding follow a fixed pattern, we strongly recommend the use of `{tidytext}` and its function `unnest_tokens()`.
-For example, let's imagine that the our information is structured as *code1=label1,code2=label2,...* (e.g. *0=No,1=Yes*). In such case, first use `unnest_tokens()` to split this string by ','. This creates a tibble with as many rows as there are *code=label* and one column. Next, split this column into two columns using `separate()` and `sep="="`.
-
-**(PREVIOUS PART) TO BE GIVEN AS AN EXAMPLE/EXERCISE** -->
-
-
-Finally, the dataset (*Data*) is imported by substituting the coded names with their corresponding names.
-This process can be done by skipping reading the first row of the dataset that contains the coded header (`skip=1`), and by passing `Var_names` as header or column names (after ensuring that the names' sequence perfectly match across the two tables!).
 Alternatively, you can import the data by specifying the range in which the data is being stored (here `range="A2:BJ108"``).
-
 
 ```{r, import_TFEQ_data3, echo=FALSE}
 TFEQ_data <- read_xlsx(file_path, sheet="Data", col_names=var_names$Name, skip=1)
 
 ```
 
-
 The data has now the proper header, however each variable is still coded numerically. The steps to convert the numerical values with their corresponding labels is shown in Section \@ref(data-prep).
 
 
+*Remark*: Other *unstructured* data include the information regarding the levels of a factor as sub-header. In such case, a similar approach is used: 
+
+ - Start with importing the first rows of the data that contain this information using the parameter `n_max` from `readxl::read_xlsx``. 
+ - From this subset, extract the column names.
+ - For each variable (when information is available), store the additional information as a list of tables that contains the code and their corresponding label.
+ - Re-import the data by skipping these rows, and by applying manually the headers to use.
+
 ### Importing Data Stored in Multiple Sheets {#import-mult-sheet}
 
-
-It can happen that the data that needs to be analyzed is stored in different files, or in different sheets within the same file. Such situation could happen if the same test involving the same samples is performed multiple times over time, the same test has been performed simultaneously in two different locations, or simply for convenience, your colleague wanted to simplify your task and already split the data based on a variable of interest. 
+It can happen that the data that needs to be analyzed is stored in different files, or in different sheets within the same file. Such situation could happen if the same test involving the same samples is repeated over time, or has been run simultaneously in different locations, or simply for convenience, your colleague wanted to simplify your task and already split the data based on a variable of interest. 
 
 Since the goal here is to highlight the possibilities in R to handle such situations, we propose to use a small fake example where 12 panelists evaluated 2 samples on 3 attributes in 3 sessions, each session being stored in a different sheet in *excel_scrap.xlsx*.
 
-A first approach to tackle this problem could be to import each file separately, and to combine them together using the `bind_rows()` function from the `{dplyr}` package. However, this solution is not optimal since 1. it is very tedious when a larger number of sheets is involved, and 2. it is not automated since the code will no longer run if (say) the number of session changes.
+A first approach to tackle this problem could be to import each file separately, and to combine them together using the `bind_rows()` function from the `{dplyr}` package. However, this solution is not optimal since it is very tedious when a larger number of sheets is involved, and it is not automated since the code will no longer run if the number of session changes.
 
-To counterbalance, we first introduce the function `excel_sheets()` from `{readxl}` as it provides all the sheet that are available in the file of interest. This allows us reading all the sheets from that file, regardless the number of sessions. Second, the function `map()` from the `{purrr}` package comes handy as it applies a function (here `read_xlsx()`) to each element of a list or vector (here, the one obtained from `excel_sheets()`). 
-
+To counterbalance, we first introduce the function `excel_sheets()` from `{readxl}` as it provides all the sheet that are available in the file of interest. This allows us reading all the sheets from that file, regardless of the number of sessions. Second, the function `map()` from the `{purrr}` package comes handy as it applies a function (here `read_xlsx()`) to each element of a list or vector (here, the one obtained from `excel_sheets()`). 
 
 ```{r}
 path <- file.path("data", "excel_scrap.xlsx") 
-path %>% 
+files <- path %>% 
   excel_sheets() %>% 
   set_names(.) %>% 
   map(~read_xlsx(path, sheet = .))
 ```
 
-
-As can be seen, this procedure creates a list of tables, with as many elements are there are sheets (here session) in the excel file. To convert this list of data tables into one unique data frame, we first extend the previous code and `enframe()` it by informing that the separation was based on `Session`. Once done, the data (stored in `data`) is still nested in a list, and should be *unfolded*. Such operation is done with the `unnest()` function from `{tidyr}`:
-
+As can be seen, this procedure creates a list of tables, with as many elements are there are sheets in the excel file. To convert this list of data tables into one unique data frame, we first extend the previous code and `enframe()` it by informing that the separation was based on `Session`. Once done, the data (stored in `data`) is still nested in a list, and should be *unfolded*. Such operation is done with the `unnest()` function from `{tidyr}`:
 
 ```{r}
-path %>% 
-  excel_sheets() %>% 
-  set_names(.) %>% 
-  map(~read_excel(path, sheet = .)) %>% 
+files %>% 
   enframe(name = "Session", value = "data") %>% 
   unnest(cols = c(data))
 ```
 
-
 This procedure finally returns a tibble with 72 rows and 6 columns, ready to be analyzed!
 
-Remarks: 
+
+To go further: 
 
 1. Instead of `enframe()`, we could have used `reduce()` from `{purrr}`, or `map()` combined with `bind_rows()`, but both these solutions would then lose the information regarding the `Session` since it is not part of the data set itself. 
 2. The functions `enframe()` and `unnest()` have their alter-ego in `deframe()` and `nest()` which aim in transforming a data frame into a list of tables, and in nesting data by creating a list-column of data frames.
-3. In case the different datasets are stored in different excel files (rather than different sheets within a file), we could apply a very similar procedure by using `list.files()` from the `{base}` package, together with `pattern = "xlsx"` to limit the search to Excel files.
+3. In case the different sets of data are stored in different excel files (rather than different sheets within a file), we could apply a similar procedure by using `list.files()` from the `{base}` package, together with `pattern = "xlsx"` to limit the search to Excel files present in a pre-defined folder.
