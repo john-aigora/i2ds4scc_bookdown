@@ -3,24 +3,26 @@ knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 ```
 # Data Analysis {#data-analysis}
 
-In this chapter, the different techniques presented in \@ref(data-manip) will be applied to our biscuit data.
-The analyses presented are non-exhaustive, but tackle some well-known analyses often used in sensory and consumer science.
+## Chapter Overview
 
+In this chapter, the different techniques presented in \@ref(data-collection), \@ref(data-manip) and in \@ref(data-viz) will be applied to our biscuit data, including *Sensory Profile.xlsx*.
+The analyses presented are non-exhaustive, but tackle some well-known analyses often used in sensory and consumer science.
 The following sections are divided based on the type of data to consider and their corresponding analysis.
 
-
-## Sensory Data
-
-<!-- Just a note to check the library "here". As I commented before, I guess it worth a note every time a folder(e.g. "data") is assigned, just to make clear that this name may change according to the reader's folder name.  -->
-Let's start with the analysis of our sensory data. If not done already, import the file *Sensory Profile.xlsx*.
-To do so, we need the `{here}` and `{readxl}` packages. Since most of the analyses we are going to perform require tools from the `{tidyverse}`, we also load this group of packages.
-
+Logically, most of this chapter is build around `{tidyverse}`, but also includes some more specific packages such as `SensoMineR` and `FactoMineR`.
 
 ```{r}
 library(tidyverse)
 library(here)
 library(readxl)
+```
 
+## Sensory Data
+
+Let's start with the analysis of our sensory data. If not done already, import the file *Sensory Profile.xlsx*.
+As usual, we use the `{here}` and `{readxl}` packages for the data importation. Here, we decide to extend a bit the data by also adding some of the products' information:
+
+```{r}
 file_path <- here("data", "Sensory Profile.xlsx") 
 p_info <- read_xlsx(file_path, sheet = "Product Info") %>% 
   dplyr::select(-Type)
@@ -31,33 +33,27 @@ sensory <- read_xlsx(file_path, sheet="Data") %>%
 
 ```
 
-
-<!-- Would be better to use an attribute other than Shiny. First because it is a less common attribute. Second, there might be some confusion with the shiny package. I'd suggest to use Sweet which is pretty standard -->
 Typically, sensory scientists would first seek to determine whether there are differences between samples for the different attributes. This is done through Analysis of Variance (ANOVA) and can be done using the `lm()` or `aov()` functions.
 If we would want to run the ANOVA for `Sweet`, the code would look like this (here we consider the 2-way ANOVA evaluating the Product and Assessor effects):
-
 
 ```{r}
 sweet_aov <- lm(Sweet ~ Product + Judge, data=sensory)
 anova(sweet_aov)
 ```
 
+We could duplicate this code for each single attribute, but this would be quite tedious for large number of attributes. Moreover, this code is sensitive to the way the variables are named, and hence might not be suitable for other data sets. Instead, we propose two solutions, one using `split()` combined with `map()` and one involving `nest_by()` to run this analysis automatically.
 
-We could duplicate this code for each single attribute, but: 1. this would be quite tedious for large number of attributes increase, 2. this code is sensitive to the way the variables are being called, meaning that 3. it would usually not be applicable to other datasets. Instead, we propose two solutions, one using `split()` combined with `map()` and one involving `nest_by()` to run this analysis automatically.
-
-For both these solutions, the dataset should be in the long and short form, which can be obtained using `pivot_longer()`:
-
+For both these solutions, the data should be stored in the long and thin form, which can be obtained using `pivot_longer()`:
 
 ```{r}
 senso_aov_data <- sensory %>% 
   pivot_longer(Shiny:Melting, names_to="Attribute", values_to="Score")
 ```
 
+From this structure, the first approach consists in splitting the data by attribute. Once done, we run the ANOVA for each data subset (the model is then defined as `Score ~ Product + Judge`) automatically using `map()`^[The `map()` function applies the same function to each element of a list automatically: It is hence equivalent to a `for ()` loop, but in a neater and more efficient way.], and we extract the results of interest using the `{broom}` package^[The `{broom}` package is a very useful package that convert statistical objects into tidy tables.] 
 
-From this structure, the first approach consists in splitting the data by attribute. Once done, we run the ANOVA for each data subset (the model is then defined as `Score ~ Product + Judge`), and we extract the results of interest using the `{broom}` package^[The `{broom}` package is a very useful package that convert statistical objects into tidy tables.] 
 Ultimately, the results can be combined again using `enframe()` and `unnest()`.
 
-<!-- I guess it would be helpful to explain a bit about this map () function. --> 
 ```{r}
 senso_aov1 <- senso_aov_data %>% 
   split(.$Attribute) %>% 
@@ -72,10 +68,9 @@ senso_aov1 <- senso_aov_data %>%
 
 ```
 
+The second approach nests the analysis by attribute (meaning the analysis is done for each attribute separately, a bit like `group_by()`). In this case, we store the results of the ANOVA in a new variable called `mod`.
 
-The second approach nests the analysis by attribute (meaning the analysis is done for each attribute separately, a bit like `group_by()`): in this case, we store the results of the ANOVA in a new variable called `mod`.
 Once the analysis is done, we summarize the info stored in `mod` by converting it into a tibble using `{broom}`:
-
 
 ```{r}
 senso_aov2 <- senso_aov_data %>% 
@@ -86,9 +81,9 @@ senso_aov2 <- senso_aov_data %>%
 
 ```
 
+The two approaches return the exact same results. 
 
-The two approaches return the exact same results. Let's dig into the results by checking for which attributes there are no significant differences at 5%. Since the `tidy()` function from `{broom}` tidies the data, all the usual data transformation can be performed. Let's filter only the `Product` effect under `term`, and let's order decreasingly the `p.value`:
-
+Let's dig into the results by extracting the attributes that do not show significant differences at 5%. Since the `tidy()` function from `{broom}` tidies the data, all the usual data transformation can be performed. Let's filter only the `Product` effect under `term`, and let's order the `p.value` decreasingly:
 
 ```{r}
 senso_aov1 %>% 
@@ -98,11 +93,9 @@ senso_aov1 %>%
   mutate(p.value = round(p.value, 3))
 ```
 
-
 As can be seen, the products do not show any significant differences at 5% for 4 attributes: `Cereal flavor` (p=0.294), `Roasted odor` (p=0.193), `Astringent` (p=0.116), and `Sticky` (p=0.101).
 
-Since we ran ANOVAs on multiple attributes, it is useful to visualize the results graphically as a barchart representing the F-value. We recommend to order the attributes based on their decreasing product-wise F-values, and by colour-coding them based on their significance:
-
+Since we ran ANOVAs on multiple attributes, it is useful to visualize the results graphically as a barchart (we use here the F-values). We propose to order the attributes based on their decreasing F-values, and by colour-coding them based on the significance:
 
 ```{r}
 senso_aov1 %>% 
@@ -129,9 +122,8 @@ Note that as an alternative, we could use the `decat()` function from the `{Sens
 
 Once the significant differences have been checked, a follow-up analysis consists in visualizing these differences in a multivariate way. Such visualization is often done through Principal Component Analysis (PCA).
 
-In practice, PCA is performed on the mean table crossing the products in rows, and the sensory attributes in columns. In \@ref(data-manip), many different approaches to generate such table have been proposed:
+In practice, PCA is performed on the sensory profiles, i.e. the mean table crossing the products in rows, and the sensory attributes in columns. Let's start with building such table (see \@ref(data-manip) for more examples):
 
-<!-- Maybe this last sentence above could say that one of the many approaches presented on chap 3 would be: ... In the way it is written I had the impression that the many different approaches would be showed --> 
 ```{r}
 senso_mean <- sensory %>% 
   pivot_longer(Shiny:Melting, names_to="Attribute", values_to="Score") %>% 
@@ -140,10 +132,10 @@ senso_mean <- sensory %>%
 
 ```
 
-<!-- Here, it might be good to briefly mention that several packages or functions can be used to run a PCA (pcrcomp, princomp, PCA). This is important because most students who are not specialized in sensory science would usually go with pcrcomp. They might thus be confused. -->
-Such table can be submitted to PCA. To do so, the `PCA()` function from the `{FactoMineR}` is used. 
-<!-- The sentence below sounds odd: shouldn't you rather say: "the function usually applies to (or uses) numerical data only..."? -->
-Few important remarks: The `PCA()` function usually contains only numerical data, the product names being often set as row names in a data frame. This is something that can easily be taken care of through the `column_to_rownames()` function from the `{tibble}` package. Additionally, one might notice that we still have two qualitative variables: `Protein` and `Fiber`. These 2 variables can either be removed prior to running the analysis, or better, projected as supplementary variables through the `quali.sup` parameter from `PCA()`. Last but not least, since `POpt` is an optimized sample, we are not including it in the analysis: Instead, we project it as supplementary just to illustrate where it would be located on the space if it were.
+Such table is then submitted to PCA. R proposes many solutions to run such analysis, including the `prcomp()` and `princomp()` functions from the `{stats}` package. However, we prefer to use `PCA()` from the `{FactoMineR}` as it is more complete and it proposes many options that are very useful in sensory and consumer research (e.g. it generates the graphics automatically, and allows projecting supplementary individuals and/or variables). 
+
+
+Note that `PCA()` uses numerical data, the individuals' names (here the product names) being set as row names in a data frame or matrix. However, tibble do not have row names, meaning that this should be taken care of. Fortunately, an easy solution exists by converting the tibble into a data frame (`as.data.frame()`) and by passing the `Product` column into row names with `column_to_rownames(var="Product")`. Additionally, the data also contain two qualitative variables in `Protein` and `Fiber`. These 2 variables can either be removed prior to running the analysis, or better be projected as supplementary through the `quali.sup` parameter from `PCA()`. Finally, since `POpt` is an optimized sample, we are not including it in the analysis per se (it is not contributing to the construction of the dimensions). Instead we project it as supplementary (through `ind.sup`) to illustrate where it would be located on the space if it were.
 
 
 ```{r}
@@ -157,11 +149,13 @@ senso_pca <- senso_mean %>%
 
 ```
 
+The `PCA()` function can generate the plots either in `{base}` R language, or in `{ggplot2}`. 
 
-The `PCA()` function can generate the plots either in `{base}` R language, or in `{ggplot2}`. However, we like to use a complementary package called `{factoextra}` which re-creates any plot from `{FactoMineR}` (and more) as a `ggplot()` object. This comes in very handy as you can benefit from the customizable options and flexibility offered by `ggplot()`.
-The score map (the product map) from `PCA()` can be hence replotted with `fviz_pca_ind()`, the representation of variables loadings (attribute correlations) can be managed with `fviz_pca_var()`, and `fviz_pca_biplot()` can be used to trace the biplot combining both.
-To illustrate how convenient this is, let's take advantage of the two qualitative variables in our example, by coloring the products based on their protein and fiber content. This can easily be done through the `habillage` parameter from `fviz_pca_ind()`, which can either take a numerical value (position) of the name of the qualitative variable.
+However, we like to use a complementary package called `{factoextra}` which re-creates most plots from `{FactoMineR}` (and more) as a `ggplot()` object. This comes in very handy as you can benefit from the flexibility offered by `ggplot()`.
 
+The score map (the product map) from `PCA()` is created with `fviz_pca_ind()`, whereas the variables' loadings (attribute correlations) is created with `fviz_pca_var()`. `fviz_pca_biplot()` is used to produce the so-alled biplot.
+
+To illustrate this, let's reproduce the product map by coloring the products using the supplementary variables (`Protein` and `Fiber` content). This can easily be done through the `habillage` parameter from `fviz_pca_ind()`, which can either take a numerical value (position) of the name of the qualitative variable.
 
 ```{r}
 library(factoextra)
@@ -172,10 +166,15 @@ fviz_pca_var(senso_pca)
 fviz_pca_biplot(senso_pca)
 
 ``` 
-<!-- Of course, we will want to see the outcome of the PCA and factoextra plots here. -->
-<!-- A few comments/suggestions about PCA: 1) the argument repel could have a short explanation note 2) It would be nice if an example editing the PCA (e.g color) was shown, 3) It was not clear to me how/where P0pt was included as a supplementary analysis, 4) I guess it would be valuable to show how to plot the Scree plot and how to choose the dimension to plot. One may want to plot dim 1 and dim3 and also the contribution plot -->
+
+Here, `repel = TRUE` uses `geom_text_repel()` from `{ggrepel}` (rather than `geom_text()` from `{ggplot2}`) to avoid having labels overlapping.
+
 On the first dimension, `P10` is opposed to `P09` and `P03` as it is more intense for attributes such as `Sweet`, and `Dairy flavor` for example, and less intense for attributes such as `Dry in mouth` and `External color intensity`. On the second dimension, `P08`, `P06`, and `POpt` are opposed to `P02` and `P07` as they score higher for `Qty of inclusions`, and `Initial hardness`, and score lower for `RawDough flavor` and `Shiny`.
 
+
+To go deeper, many more visualizations can be produced. Amongst others, the scree plot (evolution of the eigenvalues across dimensions), representing other dimensions (by default, dimension 1 and dimension 2 are created as they explain the maximum variability), or filtering products based on their contribution or quality of representation can be mentioned. For more information, refer to the examples provided in `?plot.PCA()`, `?fviz_pca()` etc., or in the book (REF BOOK `{factoextra}`).
+
+<!-- TW TO CONTINUE FROM HERE -->
 
 ## Demographic and Questionnaire Data
 <!-- Previous title was 'Demographic and TFEQ Data'. I changed it to make it sound more general -->

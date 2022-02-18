@@ -12,10 +12,9 @@ sensory <- read_xlsx(file_path, sheet="Data") %>%
   inner_join(p_info, by="Product") %>% 
   relocate(Protein:Fiber, .after=Product)
 
-
 #* ANOVA ------------------------------------------------------------------
 
-shiny_aov <- lm(Shiny ~ Product + Judge, data=sensory)
+shiny_aov <- lm(Sweet ~ Product + Judge, data=sensory)
 anova(shiny_aov)
 
 senso_aov_data <- sensory %>% 
