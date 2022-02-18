@@ -109,13 +109,13 @@ Let's transform this text into tokens using `unnest_tokens()` from the `{tidytex
   unnest_tokens(tokens, comments, token="regex", pattern="[;|,|:|.|/]", to_lower=FALSE))
 ```
 
-This procedure already provides some interesting information as we can readily count word usage, for instance how often the word *apple* is used to describe each samples. However, a deeper look at the data shows some inconsistencies since some words starts with a space, or have capital letters (remember that R is case-sensitive!).
+This procedure already provides some interesting information as we can readily count word usage and answer questions such as "how often the word *apple* is used to describe each samples?" for instance. However, a deeper look at the data shows some inconsistencies since some words starts with a space, or have capital letters (remember that R is case-sensitive!). Further pre-processing is thus needed.
 
 
 ### Simple Transformation (lowercase)
 
 
-To improve the analysis, let's standardize the text by removing all the white spaces (*irrelevant* spaces in the text, e.g. at  the start/end, double spaces, etc.), transforming everything to lower case (we could have done directly through `unnest_tokens()` already), removing some special letters, replacing some misplaced characters etc.^[This process is done in iterations: the more you clean your document, the more you find some small things to fix...until you're set!]
+To improve the analysis, let's standardize the text by removing all the white spaces (*irrelevant* spaces in the text, e.g. at  the start/end, double spaces, etc.), transforming everything to lower case (note that this could have been done earlier through `unnest_tokens()`), removing some special letters, replacing some misplaced characters etc.^[This process is done in iterations: the more you clean your document, the more you find some small things to fix...until you're set!]
 
 
 ```{r}
@@ -140,18 +140,18 @@ cider %>%
 ```
 
 
-At first, it seems that the most used words to describe the ciders are `sweet` (55 occurrences), `fruity` (33 occurrences), and `sour` (32 occurrences). However, a deeper look at this list highlights a few things that still need to get tackled: 
+At first glance, the most used words to describe the ciders are `sweet` (55 occurrences), `fruity` (33 occurrences), and `sour` (32 occurrences). However, a closer look at this list highlights a few things that still need to get tackled: 
 
   - The same concept can be described in different ways: `spicy`, `spices`, and `spiced` may all refer to the same concept, yet they are written differently and hence are considered as different tokens. We will see how we can handle this in a later stage.
   - Multiple concepts are still joined (and hence considered separately: `sour and sweet` is currently neither associated to `sour`, nor to `sweet`, and we may want to merge them.
-  - There could be some typo: Is `sweat` a typo and should read `sweet`? Or did that respondent really perceived the cider as `sweat`?
+  - There could be some typos: Is `sweat` a typo and should read `sweet`? Or did that respondent really perceived the cider as `sweat`?
   - Although most tokens are made of one (or few) words, some others are defined as a whole sentence (e.g. `this has a very lovely floral and fruity smell`)
 
 
 ### Stopwords
 
 
-*Stop words* refer to *common* words that do not carry much (if at all) information. In general, stop words include words (in English) such as *I*, *you*, *or*, *of*, *and*, *is*, *has*, etc. It is hence common practice to remove such stop words before any analysis, as they would *pollute* the results with unnecessary information.
+*Stop words* refer to *common* words that do not carry much (if at all) information. In general, stop words include words (in English) such as *I*, *you*, *or*, *of*, *and*, *is*, *has*, etc. It is thus common practice to remove such stop words before any analysis as they would *pollute* the results with unnecessary information.
 
 Building lists of stop words can be tedious. Fortunately, it is possible to find some pre-defined lists, and to eventually adjust them to our own needs by adding and/or removing words. In particular, the package `{stopwords}` contains a comprehensive collection of stop word lists:
 
@@ -164,14 +164,15 @@ length(stopwords(source="stopwords-iso"))
 
 
 Here, we can see that English Snowball list contains 175 terms, whereas the English list from the Stopwords ISO collection contains 1298 words.
+<!-- terms (1st sentence) vs. words (2nd sentence): this is a bit confusing. Do you mean different things? --> 
 
 A deeper look at these lists (and particularly to the Stopwords ISO list) shows that certain words including *like*, *not* and *don't* (just to name a few) are considered as stop words. If we would use this list blindly, we would remove these words from our comments. 
 
 Although using such list on our current example would have a limited impact on the analysis (most comments are just few descriptive words), it would have a more critical impact on other studies in which consumers give their opinion on samples. Indeed, the analysis of the two following comments *I like Sample A* and *I don't like Sample B* would be lost although they provide some relevant information.
 
-It is hence important to remember that although a lot of stop words are common, there are also a lot of them that are topic specific, and that should be (or should not be) used in certain contexts. Hence inspecting and adapting these lists before use is strongly recommended.
+It is therefore important to remember that although a lot of stop words are common, there are also a lot of them that are topic specific, and that should be (or should not be) used in certain contexts. Hence, inspecting and adapting these lists before use is strongly recommended.
 
-For further cleaning, let's go one step further and split the remaining tokens into words by using the space as separator. To ensure that we can still recover which words belong to the same token (as defined previously, as this information can be relevant later for *bigrams*), we are adding an increasing number next to each token for each assessor using `row_number()`:
+For an even better cleaning, let's go one step further and split the remaining tokens into single words by using the space as separator. Then, we can number each token for each assessor using `row_number()` to ensure that we can still recover which words belong to the same token, as defined previously. This information will be specially relevant later when looking at *bigrams*.
 
 
 ```{r}
@@ -188,10 +189,9 @@ head(cider)
 
 We can see here that for `J1` and `182`, the first token is now separated into three words: `hard`, `cider`, and `smell`.
 
-We can re-count how often each word has been used, using the exact same code as previously. 
 It appears now that `sweet` appears 91 times, and `apple` 80 times. Interestingly, terms such as `a`, `like`, `the`, `of`, `and` etc. also appear fairly frequently.
 
-Since we have a small set of text, let's use the *SnowBall Stopword* list as a start, and look at the terms that are shared in both our list and this stopword list:
+Since we have a relatively small text size, let's use the *SnowBall Stopword* list as a start, and look at the terms that our list and this stopword list share:
 
 
 ```{r}
@@ -203,16 +203,15 @@ word_list <- cider %>%
 intersect(stopword_list, word_list)
 ```
 
-
-As we can see, some words such as *off*, *not*, *no*, *too*, and *very* would be removed. Since we prefer to keep them, we will remove them from the original list. Similarly, we can look at the words from our data that we would not remove. We can then track the words that we would not consider relevant and add them to the list:
+<!-- This is Julien: I made some edits to the following paragraph. I hope I did not change its meaning. Please check --> 
+As we can see, some words such as *off*, *not*, *no*, *too*, and *very* would automatically be removed. However, such qualifiers are useful in the interpretation of sensory perception, so we would prefer to keep them. We can thus remove them from the original stopword list. 
 
 
 ```{r}
 word_list[!word_list %in% stopword_list]
 ```
 
-
-For instance, words such as *like*, *sample*, *just*, *think*, or *though* for instance do not seem to bring any relevant information here. Hence, we propose to remove these as well:
+Conversely, we can look at the words from our data that we would not consider relevant and add them to the list. For instance, words such as *like*, *sample*, *just*, *think*, or *though* do not seem to bring any relevant information here. Hence, we propose to remove these as well:
 <!-- It was a little tricky for me to follow this part, maybe because I was expecting to see the code related to what was said immediately after. Should the first line of thecode above come earlier? Right after you explain that " such as *off*, *not*, *no*, *too*, and *very* would be removed. Since we prefer to keep them, we will remove them from the original list..."-->
 
 ```{r}
