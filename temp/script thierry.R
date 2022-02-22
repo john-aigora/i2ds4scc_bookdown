@@ -122,7 +122,6 @@ demog_reduced %>%
     
   })
 
-
 #* Frequency Table (Ordered) ----------------------------------------------
 
 library(RVerbalExpressions)
@@ -167,6 +166,7 @@ TFEQ_freq %>%
   geom_bar(stat="identity", fill="grey50")+
   geom_text(aes(y = Pct/2), colour="white")+
   theme_bw()+
+  theme(axis.text = element_text(hjust=1, angle=30))+
   facet_wrap(~TFEQ, scales="free")
   
 

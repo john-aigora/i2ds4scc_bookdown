@@ -172,22 +172,18 @@ Here, `repel = TRUE` uses `geom_text_repel()` from `{ggrepel}` (rather than `geo
 On the first dimension, `P10` is opposed to `P09` and `P03` as it is more intense for attributes such as `Sweet`, and `Dairy flavor` for example, and less intense for attributes such as `Dry in mouth` and `External color intensity`. On the second dimension, `P08`, `P06`, and `POpt` are opposed to `P02` and `P07` as they score higher for `Qty of inclusions`, and `Initial hardness`, and score lower for `RawDough flavor` and `Shiny`.
 
 
-To go deeper, many more visualizations can be produced. Amongst others, the scree plot (evolution of the eigenvalues across dimensions), representing other dimensions (by default, dimension 1 and dimension 2 are created as they explain the maximum variability), or filtering products based on their contribution or quality of representation can be mentioned. For more information, refer to the examples provided in `?plot.PCA()`, `?fviz_pca()` etc., or in the book (REF BOOK `{factoextra}`).
-
-<!-- TW TO CONTINUE FROM HERE -->
+To go deeper, many more visualizations can be produced. Amongst others, the scree plot (evolution of the eigenvalues across dimensions) to decide how many dimensions to consider, representation of the space on other dimensions (by default, dimension 1 and dimension 2 are created as they explain the maximum variability), or filtering products based on their contribution or quality of representation can be mentioned. For more information, refer to the examples provided in `?plot.PCA()`, `?fviz_pca()` etc., or in the book (REF BOOK `{factoextra}`).
 
 ## Demographic and Questionnaire Data
-<!-- Previous title was 'Demographic and TFEQ Data'. I changed it to make it sound more general -->
 
-The *TFEQ.xlsx* file contains descriptive (i.e. *demographic*) information regarding the consumers and their food-related personality traits (i.e. *TFEQ*) .This file has three tabs denoted as *Data*, *Variables*, and *Levels*:
+The *TFEQ.xlsx* file contains descriptive (i.e. *demographic*) information regarding the consumers and their food-related personality traits (i.e. *TFEQ*). This file has three tabs denoted as *Data*, *Variables*, and *Levels*:
 
-- *Data* contains the data, coded;
-- *Variables* provides information (e.g. name, information) related to the different variables present in Data;
+- *Data* contains the data, which is coded;
+- *Variables* provides information (e.g. name, information) related to the different variables present in *Data*;
 - *Levels* provides information about the different levels each variable can take.
 
 Let's start with importing this data set. The importation is done in multiple steps as following:
 
-<!-- "here" should be replace by file.path --> 
 ```{r}
 file_path <- here("Data", "TFEQ.xlsx")
 excel_sheets(file_path)
@@ -204,15 +200,16 @@ demographic <- read_xlsx(file_path, sheet="Data", skip=1, col_names=unlist(demo_
 
 ```
 
-
 ### Demographic Data: Frequency and Proportion
 
+For this demographic data file, let's start by having a look at the partition of consumers for each of the descriptive variables. This is done by computing the frequency and proportion (in percentage) attached to each level of `Living area`, `Housing`, `Income range`, and `Occupation`. To obtain such a table, let's start by selecting only the columns corresponding to these variables together with `Judge`. 
 
-For this demographic data file, we are interested to see the partition of consumers for each of the descriptive variables. More precisely, we would like to know the frequency and proportion (in percentage) attached to each level of `Living area`, `Housing`, `Income range`, and `Occupation`. 
+Since data from surveys and questionnaires are often coded (here, answer #6 to question `Q10` means "Student", while answer #7 to the same question means "Qualified worker"), they first need to be decoded. In our case, the key to decode the data is stored in `demo_lev`. 
 
-To obtain such a table, let's start by selecting only the columns corresponding to these variables together with `Judge`. 
-Data from surveys and questionnaires are often coded. For example, in this dataset, answer #6 to question Q10 means "Student", while answer #7 to the same question means "Qualified worker". Thus, to make these data readable by human beings, we need to decode them using the information stored in `demo_lev`. For that, we could automatically recode each variable using `mutate()` and `factor()`. However, we prefer here to use `pivot_longer()` to create a long thin tibble, and then to merge this table with `demo_lev` by `Question` and `Response` using `inner_join()` instead. Once done, we can aggregate the results by `Question` and `Levels` (since we want to use the level information, not their code) and compute the frequency (`n()`) and the proportion (`N/sum(N)`)^[We use the package `{formattable}` to print the results in percentage using one decimal. As an alternative, we could have used `percent()` from the `{scales}` package.].
-<!-- JD: I think it's best to avoid saying "we prefer to use..." without explaining why we prefer that (here, pivot_longer()+inner_join()), because it's disturbing for the reader who has to think why  -->
+Different strategies to decode the data are possible. One straight-forward strategy consists in automatically decoding each variable using `mutate()` and `factor()`. Another approach is considered here: Let's start with building a long thin tibble with `pivot_longer()` that we merge to `demo_lev` by `Question` and `Response` using `inner_join()`. We prefer this solution here as it is simpler, faster, and independent of the number of variables to decode.
+
+Once done, we can aggregate the results by `Question` and `Levels` (since we want to use the level information, not their code) and compute the frequency (`n()`) and the proportion (`N/sum(N)`)^[We use the package `{formattable}` to print the results in percentage using one decimal. As an alternative, we could have used `percent()` from the `{scales}` package.].
+
 
 ```{r}
 library(formattable)
@@ -228,7 +225,7 @@ demog_reduced <- demographic %>%
 ```
 
 
-Histograms are a nice way to visualize proportions and to compare them over several variables. Such histograms can be obtained by splitting `demog_reduced` by `Question` and by creating in each case an histogram using either `N` or `Pct` (we are using `Pct`)^[Here, the histograms are ordered decreasingly (`reorder`) and are represented horizontally (`coord_flip()`).]. Of course, we automate this across all questions using `map()`.
+Histograms are a nice way to visualize proportions and to compare them over several variables. Such histograms can be obtained by splitting `demog_reduced` by `Question` and by creating them using either `N` or `Pct` (we are using `Pct`)^[Here, the histograms are ordered decreasingly (`reorder`) and are represented horizontally (`coord_flip()`).]. Of course, it is automated across all questions using `map()`.
 
 
 ```{r}
@@ -236,7 +233,10 @@ demog_reduced %>%
   split(.$Question) %>% 
   map(function(data){
     
-    var = as.character(unlist(data$Question))
+    var = data %>% 
+      pull(Question) %>% 
+      unique() %>% 
+      as.character()
     
     ggplot(data, aes(x=reorder(Levels, Pct), y=Pct, label=Pct))+
       geom_bar(stat="identity", fill="grey50")+
@@ -257,11 +257,12 @@ demog_reduced %>%
 
 In the same data set, consumers also answered some questions that reflect on their eating behavior and their relation to food (REF REF). These questions can be categorized into three groups relating to three underlying factors, respectively: Disinhibition (variables starting with `D`), Restriction (variables starting with `R`), and sensitivity to Hunger (variables starting with `H`).
 
-In order to analyze these three factors separately, we first need to select the corresponding variables. When variable names are well structured with a recurring pattern (here, they all start with the letters D, R, or H, followed by a number) the use of a *regular expression* is very powerful.  
+In order to analyze these three factors separately, we first need to select the corresponding variables. As we have seen earlier, such selection could be done by combining `dplyr::select()` to `starts_with("D")`, `starts_with("R")`, and/or `starts_with("H")`. However, this solution is not satisfactory as it also selects other variables that would start with any of these letters (e.g. Housing).
 
-Note that, instead we could think of using `select()` combined with `starts_with("D")`, `starts_with("R")`, and `starts_with("H")`, but this solution is not satisfactory because it can also select other variables that would start with any of these letters (e.g. Housing).
+Instead, let's take advantage of the fact that variable names have a recurring pattern (they all start with the letters D, R, or H, followed by a number) to introduce the notion of *regular expression*.  
 
-In practice, generating a regular expression can be quite complex as it is an abstract concept which follows very specific rules. Fortunately, the package `{RVerbalExpression}` is a great assistant as it generates the regular expression for you thanks to understandable functions. First, we initiate the regular expression by calling the function `rx()` to which we add that we first want any variables that start with any of the letter R, D, or H, followed by a number (or more, as values go from 1 to 21). This can be done using the following code:
+Regular expressions are coded expression that allows finding patterns in names. In practice, generating a regular expression can be quite complex as it is an abstract concept which follows very specific rules. Fortunately, the package `{RVerbalExpression}` is a great assistant as it generates the regular expression for you thanks to understandable functions. 
+To create a regular expression using `{RVerbalExpression}`, we should first initiate it by calling the function `rx()` to which any relevant rules can be added. In our case, the variables must start with any of the letter R, D, or H, followed by a number (or more, as values go from 1 to 21). This can be done using the following code:
 
 
 ```{r}
@@ -276,18 +277,14 @@ rdh
 
 ```
 
-
-`rdh` contains the regular expression that we need. We can then `dplyr::select()` any variable that fits our regular expression by using the function `matches()`.
-
+`rdh` contains the regular expression we were looking for. We can then `dplyr::select()` any variable that fits our regular expression by using the function `matches()`.
 
 ```{r}
 demographic %>% 
   dplyr::select(matches(rdh))
 ```
 
-
 In order to build a separate frequency table for each of these variables, we create a function called `myfreq()` which will automatically compute the frequency for each level, and the corresponding percentage.
-
 
 ```{r}
 myfreq <- function(data, info){
@@ -309,9 +306,7 @@ myfreq <- function(data, info){
 
 ```
 
-
 We then apply this function to each variable separately using `map()` after pivoting all these variables of interest (`pivot_longer()`) and splitting the data by `TFEQ` question:
-
 
 ```{r}
 TFEQ_freq <- demographic %>% 
@@ -325,9 +320,7 @@ TFEQ_freq <- demographic %>%
   arrange(TFEQ)
 ```
 
-
 Accordingly, we can create histograms that represent the frequency distribution for each variable. But let's suppose that we only want to display variables related to Disinhibition. To do so, we first need to generate the corresponding regular expression (only selecting variables starting with "D") to filter the results before creating the plots:
-
 
 ```{r}
 d <- rx() %>% 
@@ -341,9 +334,12 @@ TFEQ_freq %>%
   geom_bar(stat="identity" , fill="grey50")+
   geom_text(aes(y = Pct/2), colour="white")+
   theme_bw()+
+  theme(axis.text = element_text(hjust=1, angle=30))+
   facet_wrap(~TFEQ, scales="free")
 ```
-<!-- Maybe it is a good idea to mention or add a function to avoid the x-labels overlap. --> 
+
+
+<!-- TW to continue from here... -->
 
 Structured questionnaires such as the TFEQ are very frequent in sensory and consumer science. They are used to measure individual patterns as diverse as personality traits, attitudes, food choice motives, engagement, social desirability bias, etc. Ultimately, the TFEQ questionnaire consists in a set of structured questions whose respective answers combine to provide a TFEQ score (actually, three scores, one for Disinhibition, one for Restriction and one for sensitivity to Hunger). This TFEQ scores translate into certain food behavior tendencies.  
 
