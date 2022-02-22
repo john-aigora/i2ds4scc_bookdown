@@ -254,9 +254,10 @@ cider %>%
 ```
 
 <!-- I see 308 words - tibble: 308 x 2 --> 
-The stemming reduced further the list to 309 words. In particular, `apple` and `apples` have been combined into `appl` (104 occurrences). However, due to the way the algorithm works, the final tokens are no longer English^[Different algorithms for different languages exist, so we are not limited to stemming English words.] words.
+The stemming reduced further the list to 309 words. Now, `apple` and `apples` have been combined into `appl` (104 occurrences). However, due to the way the algorithm works, the final tokens are no longer English^[Different algorithms for different languages exist, so we are not limited to stemming English words.] words.
+ 
 
-Alternatively, we can *lemmatize* words. Lemmatization is similar to stemming except that it does not cut words to their stems: Instead it uses knowledge about the language's structure to reduce words down to their dictionary form (also called *lemma*). Such approach is implemented in the `{spacyr}` package^[spaCy is a library written in Python: for the `{spacyr}` package to work, you'll need to go through a series of steps that are described here: (https://cran.r-project.org/web/packages/spacyr/readme/README.html)[https://cran.r-project.org/web/packages/spacyr/readme/README.html]] and the `spacy_parse()` function:
+Alternatively, we can *lemmatize* words. Lemmatization is similar to stemming except that it does not cut words to their stems: Instead it uses knowledge about the language's structure to reduce words down to their dictionary form (also called *lemma*). This approach is implemented in the `{spacyr}` package^[spaCy is a library written in Python: for the `{spacyr}` package to work, you'll need to go through a series of steps that are described here: (https://cran.r-project.org/web/packages/spacyr/readme/README.html)[https://cran.r-project.org/web/packages/spacyr/readme/README.html]] and the `spacy_parse()` function:
 
 
 ```{r}
@@ -281,9 +282,9 @@ cider %>% count(lemma)
 ```
 
 
-In the case of lemmatization, `acid`, `acidity`, and `acidic` are still considered as separate words whereas they are all grouped under `acid` with the stemming procedure. This particular example shows the advantage and disadvantage of each method, as it may (resp. may not) group words that are not (resp. that are) meant to be grouped. Hence, the use of lemmatization/stemming procedures should be thought carefully.
+In the case of lemmatization, `acid`, `acidity`, and `acidic` are still considered as separate words whereas they are all grouped under `acid` with the stemming procedure. This particular example shows the advantage and disadvantage of each method, as it may (or may not) group words that are (or are not) meant to be grouped. Hence, the use of lemmatization/stemming procedures should be thought carefully. Depending on their objective, researchers may be interested in the different meanings conveyed by such words as `acid`, `acidity`, and `acidic` and decide to keep them separated, or decide to group them for a more holistic view of the main sensory attributes that could be derived from this text.
 
-It should also be said that neither the lemmatization nor the stemming procedure will combine words that are different, yet with similar meanings. For instance, the words `moldy` and `rotten` have been used, and some researchers may decide to group them if they consider them equivalent (same could apply to `acid`, `acidity`, and `acidic` from the lemmatization procedure). Such third step of grouping can be done using `str_replace()`:
+It should also be said that neither the lemmatization nor the stemming procedure will combine words that are different but bear similar meanings. For instance, the words `moldy` and `rotten` have been used, and some researchers may decide to group them if they consider them equivalent. This type of grouping can be done case-by-case using `str_replace()`:
 
 
 ```{r}
@@ -320,11 +321,11 @@ This last *cleaning* approach reduces further the number of words to 279.
 
 ## Text Analysis
 
-Now the text has been sufficiently cleaned, we can run some analysis and actually compare the samples in the way they have been described by the respondents. To do so, let's start with simple analyses. 
+Now that the text has been sufficiently cleaned, we can run some analyses and actually compare the samples in the way they have been described by the respondents. To do so, let's start with simple analyses. 
 
 ### Raw Frequencies and Visualization
 
-In the previous sections, we have already shown how to count the number of occurrences of each word. We can reproduce this and show the top 10 words the most used to describe our ciders:
+In the previous sections, we have already shown how to count the number of occurrences of each word. We can reproduce this and show the top 10 most used words to describe our ciders:
 
 
 ```{r}
@@ -359,9 +360,9 @@ cider %>%
 ```
 
 
-A first look at the contingency table shows that `apple` has been used 24 times to characterize sample `365` while it has only be used 9 times to characterize sample `401`.
+A first look at the contingency table shows that `apple` has been used 24 times to characterize sample `365` while it has only been used 9 times to characterize sample `401`.
 
-Since the list of terms is quite large, we can visualize these frequencies in different ways: First, we could re-adapt the histogram produced previously overall but per product. This could give a good overview on which words characterize each sample:
+Since the list of terms is quite large, we can visualize these frequencies in different ways: First, we could re-adapt the histogram produced previously overall but per product. This could give a good overview of which words characterize each sample:
 
 
 ```{r}
@@ -391,7 +392,7 @@ prod_term <- cider %>%
 ```
 
 
-Another approach consists in visualizing the association between the samples and the words in a multiple way using Correspondence Analysis (CA). Since the CA can be sensitive to low frequencies (Add REF), we reduce the frequency table by only keeping terms that were at least mentioned 5 times across all samples. We then use the `CA()` function from `{FactoMineR}` to build the CA map:
+Another approach consists in visualizing the association between the samples and the words in a multiple way using Correspondence Analysis (CA). Since the CA can be sensitive to low frequencies (Add REF), we suggest to only keep terms that were at least mentioned 5 times across all samples, resulting in a shorter frequency table. We then use the `CA()` function from `{FactoMineR}` to build the CA map:
 
 
 ```{r}
@@ -411,10 +412,10 @@ cider_CA <- CA(cider_ct)
 ```
 
 
-As can be seen, sample `731` is more associated to alcoholic terms such as `alcohol` or `wine`, and colors (`red`, `green`). Samples `239` and `401` are more associated to `sour` and `bitter` (and `pear` for `239`), whereas samples `519` and `182` are more described by terms such as `fruity`, and `sweet` (`floral` is also used to characterize `182`).
+As can be seen, sample `731` is more strongly associated to alcoholic terms such as `alcohol` or `wine`, and colors (`red`, `green`). Samples `239` and `401` are more associated to `sour` and `bitter` (and `pear` for `239`), whereas samples `519` and `182` are more frequently described by terms such as `fruity`, and `sweet` (`floral` is also used to characterize `182`).
 
 
-These frequencies can also be visualized using wordclouds, which can easily be done using the `{ggwordcloud}` package which has the advantage to build such representation in a `{ggplot2}` format. Such wordcloud (here one per product) can be obtained using the following code:
+These frequencies can also be visualized using wordclouds, which can easily be done using the `{ggwordcloud}` package that has the advantage to build such representation in a `{ggplot2}` format. Such wordclouds (here one per product) can be obtained using the following code:
 
 ```{r}
 cider_wc <- cider %>% 
@@ -433,8 +434,8 @@ ggplot(cider_wc, aes(x=sample, colour=sample, label=lemma, size=n))+
 ```
 
 
-In these wordclouds, we notice that `apple` and `sweet` appear big for (almost) all the samples, which can make the comparison quite difficult between samples. Fortunately, the `geom_text_wordcloud()` function provides an interesting parameter in its aesthetics called `angle_group` which allows controlling the position of the words. To illustrate this, let's apply the following rule: for a given sample, if the proportion of association of a word is larger than 1/6 (as we have 6 samples), the word will be printed in the upper part of its wordcloud, and in the lower part otherwise. To facilitate the readability, the color code used follow the same rule.
-
+In these wordclouds, we notice that `apple` and `sweet` appear in larger fonts for (almost) all the samples, which can make the comparison quite difficult between samples. Fortunately, the `geom_text_wordcloud()` function provides an interesting parameter in its aesthetics called `angle_group` which allows controlling the position of the words. To illustrate this, let's apply the following rule: for a given sample, if the proportion of association of a word is larger than 1/6 (as we have 6 samples), the word will be printed in the upper part of its wordcloud, and in the lower part otherwise. To facilitate the readability, the color code used follow the same rule.
+<!-- Very useful trick! I love it --> 
 
 ```{r}
 cider_wc %>% 
@@ -455,14 +456,14 @@ As can be seen, the term `apple` is more frequently (i.e. more than 1/6) used to
 ### Bigrams, *n*-grams
 
 
-In the previous set of analyses, we defined each word as a token. This procedure disconnects words from each others, hence discarding the context of the word. Although this approach is common, it can lead to misinterpretation since a product that would often be associated to (say) *not sweet* would in the end be characterized as *not* and *sweet*. A comparison of samples based on the sole word *sweet* could suggest that the previous product is often characterized by it although it should be the opposite.
+In the previous set of analyses, we defined each word as a token. This procedure disconnects words from each others, hence discarding the context of the word. Although this approach is common, it can lead to misinterpretation since a product that would often be associated to (say) *not sweet* would in the end be characterized as *not* and *sweet*. A comparison of samples based on the sole word *sweet* could suggest that the previous product is often characterized as sweet whereas it should be the opposite.
 
 To avoid this misinterpretation, two solutions exist:
 
 1. Replace *not sweet* by *not_sweet*, so that it is considered as one token rather than two;
 2. Look at groups of words, i.e. at words within their surroundings.
 
-The latter option requires us introducing the notion of bi-grams (groups of 2 following words), tri-grams (groups of 3 following words), or more generally *n*-grams (groups of *n* following words). More precisely, we are applying the same frequency count as before except that we are no longer considering one word as a token, but a sequence of 2, 3, or more generally *n* words as a token. Such grouping can be obtained by the `unnest_tokens()` from `{tidytext}` in which `token='ngrams'`, with `n` defining the number of words to consider.
+The latter option leads us to introduce the notion of bi-grams (groups of 2 following words), tri-grams (groups of 3 following words), or more generally *n*-grams (groups of *n* following words). More precisely, we are applying the same frequency count as before except that we are no longer considering one word as a token, but as a sequence of 2, 3, or more generally *n* words as a token. Such grouping can be obtained by the `unnest_tokens()` from `{tidytext}` in which `token='ngrams'`, with `n` defining the number of words to consider.
 
 For simplicity, let's apply this to the original data, although it could be applied to the cleaned version (here we consider bi-grams).
 
@@ -476,7 +477,7 @@ cider_2grams %>%
 ```
 
 
-In overall, the stronger 2-words association is between `sweet fruity`. Other relevant associations are `green apple`, `sweet apple`, or `very sweet`.
+In our example, `sweet fruity` is the strongest 2-words association. Other relevant associations are `green apple`, `sweet apple`, or `very sweet`.
 Of course, such bi-grams can also be obtained per product:
 
 ```{r}
@@ -490,12 +491,12 @@ cider_2grams %>%
 ```
 
 For sample `182`, `not sweet` appears 3 times which can be surprising since it was one of the sample the most associated to `sweet` with 22 occurrences.
-
+<!-- Would perhaps be good to comment on possible interindividual differences in perception, which is one added value of NLP --> 
 
 ### Word Embedding
 
 
-The previous section introduces the concept of context, as words are associated to their direct neighbors. Another approach called *word embedding* goes one step further by looking at connections between words present within a certain window: for instance, how often are *not* and *sweet* connected within a window of 3, 5, or 7 words? Such approach is not presented here as it is only relevant for longer text documents. 
+The previous section introduces the concept of context, as words are associated to their direct neighbors. Another approach called *word embedding* goes one step further by looking at connections between words within a certain window: for instance, how often are *not* and *sweet* present together within a window of 3, 5, or 7 words? Such an approach is not presented here as it is only relevant for longer text documents. 
 
 In the previous sections, we already introduced the notion of *term frequency* (*tf*), which corresponds to the number of times a word is being used in a document. When a collection of documents are analyzed and compared, it is also interesting to look at the *inverse document frequency* (*idf*), which consists in highlighting words that discriminate between documents by reducing the weight of common words and by increasing the weight of words that are specific to certain documents only. In practice, both concepts are associated (by multiplication) to compute a term's *tf-idf*, which measures the frequency of a term adjusted for its rarity in use.
 
@@ -503,7 +504,7 @@ In the previous sections, we already introduced the notion of *term frequency* (
 ### Sentiment Analysis
 
 
-In our current example, the textual data we analyze is descriptive. In other words, the items that we analyze have no particular valence (i.e. they are neither negative, nor positive). When text data are more spontaneous (e.g. social media such as tweets, or consumers' responses to open-ended questions), they can be the charged with positive or negative connotations. A good way to measure the overall valence of a message is through *Sentiment Analysis*. 
+In our example, the textual data we analyze is descriptive. In other words, the items that we analyze have no particular valence (i.e. they are neither negative, nor positive). When text data are more spontaneous (e.g. social media such as tweets, or consumers' responses to open-ended questions), they can be the charged with positive or negative connotations. A good way to measure the overall valence of a message is through *Sentiment Analysis*. 
 
 To perform *Sentiment Analysis*, we start by deconstructing the message into words (tokenization approach considered previously). Then, in a similar approach to the stop words, we can combine our list of words with a pre-defined list that defines which words should be considered as positive or negative (the rest being neutral). Ultimately, all the scores associated to each message can be summed, hence providing the overall valence score of a message. 
 
