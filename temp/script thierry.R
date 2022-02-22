@@ -179,13 +179,17 @@ var_rdh <- read_xlsx(file_path, sheet="Variables") %>%
 TFEQ <- demographic %>% 
   dplyr::select(Judge, matches(rdh)) %>% 
   pivot_longer(-Judge, names_to="DHR", values_to="Score") %>% 
-  inner_join(var_rdh, by=c("DHR"="Name")) %>% 
+  inner_join(var_rdh, by=c("DHR"="Name"))
+
+TFEQ_coded <- TFEQ %>% 
   mutate(TFEQValue = ifelse(Direction == "Equal" & Score == Value, 1, 
                         ifelse (Direction == "Superior" & Score > Value, 1,
                                 ifelse(Direction == "Inferior" & Score < Value, 1, 0)))) %>% 
   mutate(Factor = ifelse(str_starts(.$DHR, "D"), "Disinhibitor",
                          ifelse(str_starts(.$DHR, "H"), "Hunger", "Restriction"))) %>% 
-  mutate(Factor = factor(Factor, levels=c("Restriction","Disinhibitor","Hunger"))) %>%
+  mutate(Factor = factor(Factor, levels=c("Restriction","Disinhibitor","Hunger"))) 
+
+TFEQ_score <- TFEQ_coded %>%
   group_by(Judge, Factor) %>% 
   summarize(TFEQ = sum(TFEQValue)) %>% 
   mutate(Judge = factor(Judge, levels=unique(str_sort(.$Judge, numeric=TRUE)))) %>% 
@@ -193,7 +197,7 @@ TFEQ <- demographic %>%
   pivot_wider(names_from=Factor, values_from=TFEQ) %>% 
   mutate(Total = sum(across(where(is.numeric))))
 
-TFEQ %>% 
+TFEQ_score %>% 
   dplyr::select(-Total) %>% 
   pivot_longer(-Judge, names_to="Factor", values_to="Scores") %>% 
   ggplot(aes(x=Scores, colour=Factor))+
