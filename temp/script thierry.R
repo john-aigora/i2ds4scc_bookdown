@@ -265,6 +265,18 @@ consumer %>%
   facet_wrap(~Judge)
 
 consumer %>% 
+  dplyr::select(Judge, Product, Start=`after_liking`, End=`end_liking 9pt`) %>% 
+  mutate(End = 10-End) %>% 
+  # filter(Judge %in% str_c("J",1:12)) %>% 
+  mutate(Judge = factor(Judge, levels=unique(str_sort(.$Judge, numeric=TRUE)))) %>% 
+  ggplot(aes(x=Start, y=End))+
+  geom_point(pch=20, cex=2)+
+  geom_smooth(method="lm", formula="y~x", se=FALSE)+
+  theme_bw()+
+  ggtitle("Overall Liking", "(Assessment after first bite vs. end of the tasting)")+
+  facet_wrap(~Judge)
+
+consumer %>% 
   dplyr::select(Judge, Product,  End=`after_liking`, Liking=`end_liking 9pt`) %>% 
   mutate(Judge = factor(Judge, levels=unique(str_sort(.$Judge, numeric=TRUE)))) %>% 
   mutate(Liking = 10-Liking) %>% 

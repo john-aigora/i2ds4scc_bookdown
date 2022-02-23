@@ -584,17 +584,15 @@ fviz_pca_var(res_mdpref, label="quanti.sup", select.var=list(cos2=0.5), repel=TR
 As can be seen, the consumers are fairly in agreement as all the consumers (black arrows) are pointed in a similar direction.
 In overall, they seem to like biscuits that are sweet, with cereal flavor, and fatty/dairy flavor and odor, and dislike biscuits defined as astringent, dry in mouth, uneven and with dark external color.
 
-<!-- TW to continue from here... -->
-
 ### Consumers Clustering
 
 Although the data show a fairly good agreement between consumers, let's cluster them in more homogeneous groups based on liking.
-Various solutions for clustering exist, depending on the type of distance (similarity or dissimilarity), the linkage (single, average, Ward, etc.), and of course the algorithm itself (e.g. AHC, k-means, etc.).
-Here, we opt for the Agglomerative Hierarchical Clustering (AHC) approach with Euclidean distance (dissimilarity) and Ward criterion.
-<!-- Is there a reason why this approach was chose here? -->
-Such analysis can be done using `stats::hclust()` or `cluster::agnes()`. 
 
-Note that before computing the distance between consumers, it is advised to at least center their liking scores (subtracting their mean liking scores to each of their individual scores) as it allows grouping consumers based on similar preferences, rather than on their scale usage (otherwise, consumers who scored high on all samples are be grouped together, and separated from consumers who scored low on all samples, which isn't so much informative). 
+Various solutions for clustering exist, depending on the type of distance (similarity or dissimilarity), the linkage (single, average, Ward, etc.), and of course the algorithm itself (e.g. AHC, k-means, etc.).
+
+Here, we opt for the Agglomerative Hierarchical Clustering (AHC) with Euclidean distance (dissimilarity) and Ward criterion, as it is fairly common approach in Sensory and Consumer research. Such analysis can be done using `stats::hclust()` or `cluster::agnes()`. 
+
+Note that before computing the distance between consumers, it is advised to at least center their liking scores (subtracting their mean liking scores to each of their individual scores) as it allows grouping consumers based on their respective preferences, rather than on their scale usage (otherwise, consumers who scored high on all samples are grouped together, and separated from consumers who scored low on all samples, which isn't so much informative). 
 
 Let's start with computing the euclidean distance between each pair of consumers by using the `dist()` function.
 
@@ -603,13 +601,12 @@ Let's start with computing the euclidean distance between each pair of consumers
 consumer_dist <- consumer_wide %>% 
   as.data.frame() %>% 
   column_to_rownames(var="Product") %>% 
-  scale(., center=TRUE, scale=FALSE) %>% 
-  t(.) %>% 
+  scale(., center=TRUE, scale=FALSE) %>% # scale is a function that center (if TRUE) and standardize (if scale=TRUE) the data in column
+  t(.) %>% # the function t() transpose the table: here we want the consumers in rows and the products in columns, so we need to transpose the table.
   dist(., method="euclidean")
 ```
-<!-- Same comment before. Some commands may not be very familiar to the reader and it worth a note or comment, like t(.)-->
 
-We then run the AHC using the `hclust()` function and the `method = "ward.D2"` parameter, which is the equivalent to the `method = "ward"` for `agnes()`. To visualize the dendrogram, we use the `factoextra::fviz_dend()` function:
+We then run the AHC using the `hclust()` function and the `method = "ward.D2"` parameter, which is the equivalent to the `method = "ward"` for `agnes()`. To visualize the dendrogram, the `factoextra::fviz_dend()` function is used (here we propose to keep visualize the 2-clusters solution by setting `k=2`):
 
 
 ```{r}
@@ -619,9 +616,8 @@ fviz_dend(res_hclust, k=2)
 fviz_dend(res_hclust, k=2, type="phylogenic")
 
 ```
-<!-- What does the argument k mean? How we define that? --> 
 
-Since we are satisfied with the 2 clusters solution, we cut the tree at this level using, hence generating a group of 74 and a group of 33 consumers.
+Since we are satisfied with the 2 clusters solution, we cut the tree (`cutree()` function) at this level using, hence generating a group of 74 and a group of 33 consumers.
 
 
 ```{r}
@@ -631,15 +627,11 @@ res_clust <- cutree(res_hclust, k=2) %>%
   mutate(Cluster = as.character(Cluster))
 
 res_clust %>% 
-  group_by(Cluster) %>% 
-  count() %>% 
-  ungroup()
+  count(Cluster)
 
 ```
 
-
 Lastly, we compare visually the preference patterns between clusters by representing in a line chart the average liking score for each product provided by each cluster.
-
 
 ```{r}
 mean_cluster <- consumer %>% 
@@ -665,20 +657,21 @@ ggplot(mean_cluster, aes(x=Product, y=Liking, colour=Cluster, group=Cluster))+
 ```
 
 
-It appears that cluster 1 (74 consumers) particularly likes P10, P01, and eventually P05, and has a fairly flat liking pattern otherwise. On the other hand, the cluster 2 (33 consumers) expressed strong rejection towards P04 and P08, and like P10 and P01 the most.
-The fact that both clusters agree on the best samples (P10 and P01) goes with our original assumption from the Internal Preference Mapping that the panel of conusmers is fairly homogeneous.
+It appears that cluster 1 (74 consumers) particularly likes P10, P01, and eventually P05, and has a fairly flat liking pattern otherwise. On the other hand, the cluster 2 (33 consumers) expressed strong rejections towards P04 and P08, and like P10 and P01 the most.
+
+The fact that both clusters agree on the best samples (P10 and P01) goes with our original assumption from the Internal Preference Mapping that the panel of consumers is fairly homogeneous in terms of preferences.
 
 
-*Remark*: In the `{FactoMineR}` package, the `HCPC()` function also performs AHC but takes as starting point the results of a multivariate analysis (HCPC stands for Hierarchical Clustering on Principal Components). Although results should be identical in most cases, it can happen that results slightly diverge from `agnes()` and `hclust()` as it also depends on the number of dimensions kept in the multivariate analysis and on the treatment of in-between clusters consumers. But more interestingly, `HCPC()` offers the possibility to *consolidate* the clusters by performing k-mean on the solution obtained from the AHC (`consol=TRUE`).
+*Remark*: In the `{FactoMineR}` package, the `HCPC()` function also performs AHC but takes as starting point the results of a multivariate analysis (HCPC stands for Hierarchical Clustering on Principal Components). Although results should be identical in most cases, it can happen that results slightly diverge from `agnes()` and `hclust()` as it also depends on the number of dimensions kept in the multivariate analysis and on the treatment of in-between clusters consumers. But more interestingly, `HCPC()` offers the possibility to *consolidate* the clusters by performing k-means on the solution obtained from the AHC (`consol=TRUE`).
 
 
 ### Drivers of Liking
 
-It is then relevant to understand which sensory properties of the products drivers consumer's liking and disliking. Such evaluation can be done at the panel level, at any group level (e.g. clusters, users vs. non-users, gender, etc.), or even at the consumer level. 
+When combining sensory and consumer data collected on the same data, it is also relevant to understand which sensory properties of the products drive consumer's liking and disliking. Such evaluation can be done at the panel level, at a group level (e.g. clusters, users vs. non-users, gender, etc.), or even at the individual consumer level. Unless stated otherwise, the computations will be done at the panel level, but could be easily adapted to other levels if needed.
 
 #### Correlation
 
-Let's start by evaluating the simplest relationship between the sensory attributes and overall liking by looking at the correlation. Here, we are combining the average liking score at the panel level that we link to the sensory profile of the products. The correlations are the computed using the `cor()` function:
+Let's start by evaluating the simplest relationship between the sensory attributes and overall liking by looking at the correlation. Here, we are combining the average liking score per cluster to the sensory profile of the products. The correlations are the computed using the `cor()` function:
 
 
 ```{r}
@@ -694,9 +687,9 @@ res_cor <- cor(data_cor)
 ```
 
 
-Various packages can be used to visualize these correlations. We opt here for the function `ggcorrplot()` from the package `{ggcorrplot}` as it provides many possibilities and generate the graphic as a ggplot object.
+Various packages can be used to visualize these correlations. We opt here for the function `ggcorrplot()` from the `{ggcorrplot}` package as it provides many interesting visualization in `{ggplot2}`.
 
-Note that this package also comes with the function `cor_pmat()` which return the matrix of p-value associated to the correlations. This matrix of p-value can be used to hide correlations that are not significant at the level defined by the parameter `sig.level`
+Note that this package also comes with the function `cor_pmat()` which return the matrix of p-value associated to the correlations. This matrix of p-value can be used to hide correlations that are not significant at the level defined by the parameter `sig.level`.
 
 
 ```{r}
@@ -712,6 +705,7 @@ ggcorrplot(res_cor, type="full", p.mat=res_cor_pmat, sig.level=0.05, insig="blan
 By looking at the correlations, the liking scores for cluster 1 (defined as `1 (74)`) are positively correlated with `Overall odor intensity`, `Fatty odor`, `Cereal flavor`, `Fatty flavor`, `Dairy flavor`, `Overall flavor persistence`, `Salty`, `Sweet`, `Warming`, `Fatty in mouth`, and `Melting`. They are also negatively correlated to `External color intensity`, `Astringent`, and `Dry in mouth`. 
 Finally, it can be noted that the correlation between clusters is high with a value of 0.72.
 
+<!-- TW to continue from here... -->
 
 #### Linear and Quadratic Regression
 
