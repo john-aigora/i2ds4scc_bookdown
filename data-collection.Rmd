@@ -29,6 +29,7 @@ Williams's Latin-Square designs offer a perfect solution to balance carry-over e
 Alternately, the `WilliamsDesign()` function in `{SensoMineR}` allows you to create a matrix of samples (as numbers) with numbered `Judges` as row names and numbered `Ranks` as column names. You only have to specify the number of samples to be evaluated, as in the example below for 5 samples. 
 
 <!-- While reviewing my chapter (starting with data manipulation) I added a section at the start that explains the learning, the data we are using, and the main packages. Would it be an idea to add this here as well (and remove library(...) when no longer needed) for this chapter too? -->
+<!-- Good idea! I will add that -->
 
 ```{r}
 library(SensoMineR)
@@ -47,6 +48,7 @@ The downside of Williams's Latin square designs is that the number of samples (*
 As the total number of judges in your study may not always be exactly known in advance (e.g. participants not showing up to your test, extra participants recruited at the last minute), it can be useful to add some flexibility to the design. Of course, additional rows would depart from the perfectly balanced design, but it is possible to optimize them using Federov's algorithm thanks to the `optFederov()` function of the `{AlgDesign}` package, by specifying `augment = TRUE`. For example we can add three more judges to the Williams Latin square design that we just built for 5 products and 10 judges, hence leading to a total number of 13 judges.
 
 <!-- Should we justify what nbR is, and why we define it as nbR = nbP? -->
+<!-- OK -->
 
 ```{r}
 library(SensoMineR)
@@ -100,9 +102,7 @@ You can also use the `{crossdes}` package to generate a BIBD with this simple sy
 
 <!-- Can we add a small example that illustrates this? -->
 
-Incomplete balanced designs also have drawbacks. First, from a purely statistical perspective, they are conducive to fewer observations and thus to a lower statistical power. Product and Judge effects are also partially confounded even though the confusion is usually considered as acceptable. Besides, the estimation of the *ProductxJudge* interaction in analysis of variance is impossible.
-
-<!-- Do we want to keep the last sentence? Because technically, it could be possible to check for interactions except that some effects might be confounded. Moreover, checking for interaction requires duplicating the test, but then is it better to use the additional sessions to get a complete design, or a replicated BIB? -->
+Incomplete balanced designs also have drawbacks. First, from a purely statistical perspective, they are conducive to fewer observations and thus to a lower statistical power. Product and Judge effects are also partially confounded even though the confusion is usually considered as acceptable.
 
 #### Incomplete designs for hedonic tests: Sensory informed designs
 
@@ -121,7 +121,7 @@ knitr::include_graphics("images/sensory_doe.png")
 
 Because of their contribution to product development, sensory and consumer scientists often deal with DoE other than sensory designs strictly speaking (see for instance REF REF book Gacula, 2008). Sensory-driven product development is indeed very frequent and implies strong interconnection between the measure of sensory responses and the manipulation of product variables (e.g. ingredients) or process variables (e.g. cooking parameters) (for a review, see REF REF Yu et al. 2018). 
 
-In order to get the most of sensory experiments, it is thus essential to ensure that the products or prototypes to be tested will be conducive to sound and conclusive data. First and foremost, as in any experimental science, one wants to avoid confounding effects. In addition to this and more generally put, the goal of DoE is to define which trials to run in order to be able to draw reliable conclusions without spending time and resources on unnecessary trials. In other words, one seeks maximum efficiency. This is especially critical in sensory science to limit the number of products to be evaluated and to keep panelists' workload under control.
+In order to get the most of sensory experiments, it is thus essential to ensure that the products or prototypes to be tested will be conducive to sound and conclusive data. First and foremost, as in any experimental science, one wants to avoid confounding effects. In addition to this and to put it more generally, the goal of DoE is to define which trials to run in order to be able to draw reliable conclusions without spending time and resources on unnecessary trials. In other words, one seeks maximum efficiency. This is especially critical in sensory science to limit the number of products to be evaluated and to keep panelists' workload under control.
 
 #### Factorial designs
 
@@ -130,11 +130,38 @@ Full factorial designs are of course commonly used and their application is usua
 
 #### Mixture designs
 
-In many product development projects (e.g. in the food industry, in the personal care industry), developers work on products' formula. It means that factors are ingredients and that their proportions are interdependent (the total sum of all components of a mixture must be 100%). Therefore, these factors must be treated as mixture components.
+In many projects, developers work on products' formula (e.g. in the food industry, in the personal care industry). In such cases, it means that factors are ingredients and that their proportions are interdependent (the total sum of all components of a mixture must be 100%). Therefore, these factors must be treated as mixture components. Mixture designs are usually represented using ternary diagrams.
 
-Which package can be used to design mixture DoE
+The `{mixexp}` package offers a very convenient way to do this. In addition to creating the design, `DesignPoints()` allows to display the corresponding ternary diagram. Below is the example of a simplex-lattice design for 3 components and 3 levels obtained thanks to function `SLD`:
 
-Common representation on ternary diagrams. Easy with the `{Ternary}` package.
+```{r}
+library(mixexp)
+des<-SLD(3,3)
+DesignPoints(des)
+```
+
+Suppose that we want to adjust a biscuit recipe to optimize its sensory properties, we can design an experiment in which the proportion of ingredients vary. Let's play with butter, sugar, and flour. All three combined would account for 75% of the recipe and the remaining 25% would consist of other ingredients (eggs, milk, chocolate, etc.) that we won't modify here. Besides, not any amount of these three ingredients would make sense, so we need to add constraints (ex: butter varies between 15 and 30%, sugar varies between 25 and 40%, and flour varies between 30 and 50%). Given this set of constraints, we can use `mixexp::Xvert` to find the extreme vertices of our design.
+
+However, this design would imply 11 mixtures, which is more than needed to apply a Scheffé quadratic model. To reduce the number of mixtures and still allow fitting a quadratic model, we can thus use the `optFederov()` function from `{AlgDesign}` to select a D-optimal subset. Here, let's limit to 8 products.
+
+```{r}
+library(mixexp)
+library(AlgDesign)
+
+des <- Xvert(nfac=3, uc=c(.30, .40, .50), lc=c(.15, .25, .30), ndm = 1, plot = FALSE) %>% 
+      mutate_if(is.numeric, round, digits = 3)
+
+MixBiscuits <- optFederov(~ -1 +x1 +x2+ x2 +x1:x2 +x1:x3 +x2:x3 +x1:x2:x3, des, nTrials=8)
+DesignPoints(MixBiscuits$design, axislabs = c("Butter","Sugar","Flour"), pseudo = TRUE)
+
+```
+
+
+<!-- Once the biscuits are evaluated, we can use the mixexp::MixModel() function to fit a linear model and get a correct R2 estimate. Then use mixexp::MixturePlot() for contour plot with the mod = 2 option that specifies a quadratic model -->
+
+Regardless of the construction of the mixture design, ternary diagrams are easy to plot with packages such as `{ggtern}` or `{Ternary}`. `{ggtern}` is particularly interesting because it builds on `{ggplot2}` and uses the same syntax.
+
+
 
 
 #### Screening designs
