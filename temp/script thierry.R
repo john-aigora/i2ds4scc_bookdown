@@ -468,7 +468,8 @@ data_reg <- mean_cluster %>%
 
 res_reg <- data_reg %>% 
   nest_by(Attribute) %>% 
-  mutate(lin_mod = list(lm(`1 (74)`~Score, data=data)), quad_mod = list(lm(`1 (74)`~Score + Score2, data=data)))
+  mutate(lin_mod = list(lm(`1 (74)`~Score, data=data)), 
+         quad_mod = list(lm(`1 (74)`~Score + Score2, data=data)))
 
 lin <- res_reg %>% 
   summarise(broom::tidy(lin_mod)) %>% 
@@ -480,7 +481,7 @@ lin <- res_reg %>%
 quad <- res_reg %>% 
   summarise(broom::tidy(quad_mod)) %>% 
   ungroup() %>% 
-  filter(term == "Score2", p.value <= 0.06) %>%
+  filter(term == "Score2", p.value <= 0.05) %>%
   pull(Attribute) %>% 
   as.character()
 
@@ -491,9 +492,6 @@ df <- data_reg %>%
 
 p <- ggplot(df, aes(x=Score, y=`1 (74)`, label=Product))+
   geom_point(pch=20, cex=2)+
-  # geom_smooth(method="lm", se=FALSE, formula=.data[["Model"]])+
-  # geom_smooth(method="lm", formula="y~x", se=FALSE)+
-  # geom_smooth(method="lm", formula="y~x+I(x^2)", se=FALSE, colour="red", lty=2)+
   geom_text_repel()+
   theme_bw()+
   facet_wrap(~Attribute, scales="free_x")
@@ -503,7 +501,7 @@ lm.mod <- function(df, quad){
 }
 
 p_smooth <- by(df, df$Attribute, 
-               function(x) geom_smooth(data=x, method=lm, formula=lm.mod(x, quad=quad)))
+               function(x) geom_smooth(data=x, method=lm, formula=lm.mod(x, quad=quad), se=FALSE))
 
 p + p_smooth
 
@@ -511,18 +509,19 @@ p + p_smooth
 
 senso <- senso_pca$ind$coord[,1:2] %>% 
   as_tibble(rownames="Product") %>% 
+  arrange(Product) %>% 
   as.data.frame() %>% 
   column_to_rownames(var="Product")
 
 consu <- consumer_wide %>% 
+  arrange(Product) %>% 
   as.data.frame() %>% 
   column_to_rownames(var="Product")
 
 library(SensoMineR)
 PrefMap <- carto(Mat=senso, MatH=consu, regmod=1, graph.tree=FALSE, graph.corr=FALSE, graph.carto=TRUE)
-abline(v=0, lty=2)
-abline(h=0, lty=2)
 
+  ## Rebuild of the PrefMap
 senso <- senso %>% 
   as_tibble(rownames="Product")
 
@@ -548,5 +547,5 @@ ggplot()+
   scale_color_gradient2(low="blue", mid="white", high="red", midpoint=50)+
   xlab(str_c("Dimension 1(",round(senso_pca$eig[1,2],1),"%)"))+
   ylab(str_c("Dimension 2(",round(senso_pca$eig[2,2],1),"%)"))+
-  ggtitle("External Preference Mapping applied on the biscuits data","(The PrefMap is based on the quadratic model)")+
+  ggtitle("External Preference Mapping applied to the biscuits data","(The PrefMap is based on the quadratic model)")+
   theme_bw()

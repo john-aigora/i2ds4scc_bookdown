@@ -705,15 +705,11 @@ ggcorrplot(res_cor, type="full", p.mat=res_cor_pmat, sig.level=0.05, insig="blan
 By looking at the correlations, the liking scores for cluster 1 (defined as `1 (74)`) are positively correlated with `Overall odor intensity`, `Fatty odor`, `Cereal flavor`, `Fatty flavor`, `Dairy flavor`, `Overall flavor persistence`, `Salty`, `Sweet`, `Warming`, `Fatty in mouth`, and `Melting`. They are also negatively correlated to `External color intensity`, `Astringent`, and `Dry in mouth`. 
 Finally, it can be noted that the correlation between clusters is high with a value of 0.72.
 
-<!-- TW to continue from here... -->
-
 #### Linear and Quadratic Regression
 
+Although the correlation provides a first good idea of which attributes are linked to liking, it only measures linear relationships and it does not allow for inference. To overcome this particular limitations, linear and quadratic regressions can be used.
 
-Although the correlation provides a first good idea of which attributes are linked to liking, it has two major drawbacks: 1. it only measures linear relationships, and 2. it does not allow for inference. 
-To overcome this particular limitations, linear and quadratic regressions can be used.
-
-Let's start by combining the sensory data to the average liking score per product. To simplify the analysis, all the sensory attributes will be structured in the long format alike previous ANOVAs that we have been performed. Also, since the quadratic term can be evaluated by adding into the model an effect in which the sensory scores have been squared up, we create a second variable called `Score2` that corresponds to `Score^2`.
+Let's start by combining the sensory data to the average liking score per product. To simplify the analysis, all the sensory attributes will be structured in the long format alike previous ANOVAs that we have performed. Also, in a quadratic model the quadratic term is evaluated by adding to the model an effect in which the sensory scores have been squared up, a second variable called `Score2 = Score^2` needs to be created.
 
 
 ```{r}
@@ -734,13 +730,31 @@ We then run both the linear and quadratic regression simultaneously by attribute
 ```{r}
 res_reg <- data_reg %>% 
   nest_by(Attribute) %>% 
-  mutate(lin_mod = list(lm(`1 (74)` ~ Score, data=data)), quad_mod = list(lm(`1 (74)` ~ Score + Score2, data=data)))
+  mutate(lin_mod = list(lm(`1 (74)` ~ Score, data = data)), 
+         quad_mod = list(lm(`1 (74)` ~ Score + Score2, data = data)))
 
 ```
 
 
-We can then visualize which attributes are linked to liking by unfolding the results (using `broom::tidy()`). However, in this example, we propose to extract the attributes that are associated to a significant model at 5%, to then represent them graphically against the liking score.
+We extract the attributes that are significantly (at 5%) linked to liking. To do so, the results stored in `lin_mod` and `quad_mod` need unfolding (`summarize()`) and restructuring (`broom::tidy()`). 
 
+```{r}
+lin <- res_reg %>% 
+  summarise(broom::tidy(lin_mod)) %>% 
+  ungroup() %>% 
+  filter(term == "Score", p.value <= 0.05) %>% 
+  pull(Attribute) %>% 
+  as.character()
+
+quad <- res_reg %>% 
+  summarise(broom::tidy(quad_mod)) %>% 
+  ungroup() %>% 
+  filter(term == "Score2", p.value <= 0.05) %>%
+  pull(Attribute) %>% 
+  as.character()
+```
+
+These attributes are then represented graphically against the liking Scores.
 
 ```{r}
 library(ggrepel)
@@ -755,14 +769,8 @@ p <- ggplot(df, aes(x=Score, y=`1 (74)`, label=Product))+
   facet_wrap(~Attribute, scales="free_x")
 
 ```
-<!-- I got this error: error: Problem with `filter()` input `..1`.
-i Input `..1` is `Attribute %in% unique(c(lin, quad))`.
-x object 'lin' not found -->
 
-Let's now add a regression line to the model. To do so, `geom_smooth()` is being used, in which `method = lm` as we are adding a regression line based on a linear model, and `formula = 'y ~ x'` for a linear relationship, and `formula = 'y ~ x + I(x^2)'` for a quadratic relationship.
-
-Based on the attribute, let's decide which of the regression line to add.
-
+Let's now add a regression line to the model. To do so, `geom_smooth()` is being used with as `method = lm` combined to `formula = 'y ~ x'` for linear relationships, and `formula = 'y ~ x + I(x^2)'` for quadratic relationships. Note that for a given attribute, when both the linear and quadratic models are significant, the quadratic model is being kept.
 
 ```{r}
 lm.mod <- function(df, quad){
@@ -771,32 +779,28 @@ lm.mod <- function(df, quad){
 
 ```
 
-
-We apply this function to our data by applying to each attribute:
-
+We apply this function to our data by applying to each attribute (here we set `se=FALSE` to remove the confidence intervals around the regression line):
 
 ```{r}
 p_smooth <- by(df, df$Attribute, 
-               function(x) geom_smooth(data=x, method=lm, formula=lm.mod(x, quad=quad)))
+               function(x) geom_smooth(data=x, method=lm, formula=lm.mod(x, quad=quad), se=FALSE))
 
 p + p_smooth
 
 ```
 
-
-All attributes except for `Astringent` are linearly linked to liking. 
-For `Astringent`, the curvature is U-shaped: this does not show an effect of saturation as it would have been represented as an inverted U-shape. Instead, we can notice that although the quadratic effect shows a better fit than the linear effect, having a linear effect would have been a good predictor as well.
-
+All attributes except `Astringent` are linearly linked to liking. 
+For `Astringent`, the curvature is U-shaped: this does not show an effect of saturation as it would have been represented as an inverted U-shape. Although the quadratic effect shows a better fit than the linear effect, having a linear effect would have been a good predictor as well.
 
 ### External Preference Mapping
 
-
-Ultimately, one of the goals of combining sensory and consumer data is to find within the sensory space the area that are liked/accepted by consumers. Since this approach is based on modeling and prediction, it may also suggest area of the space with high acceptance potential which are not filled in by products yet. This would open doors to new product development. 
+Ultimately, one of the goals of combining sensory and consumer data is to find within the sensory space the area that are liked/accepted by consumers. Since this approach is based on modeling and prediction, it may suggest area of the space with high acceptance potential which are not filled in by products yet. This would open doors to new product development. 
 
 To perform such analysis, the External Preference Mapping (PrefMap) could be used amongst other techniques. For more information on the principles of PrefMap, please refer to (ANALYZING SENSORY DATA WITH R or OTHER REFERENCES...).
 
-To run the PrefMap analysis, the `carto()` function from the `{SensoMineR}` package is being used. This function mainly takes as parameter the sensory space to consider (stored in `senso_pca$ind$coord`, here we will consider dimension 1 and dimension 2), the table of hedonic score (`consumer_wider`), and the model to consider (here we consider the quadratic model, so we use `regmod=1`). Since `carto()` uses rownames for the analysis, the data needs to be slightly adapted.
+To run the PrefMap analysis, the `carto()` function from `{SensoMineR}` is being used. This function takes as parameter the sensory space to consider (stored in `senso_pca$ind$coord`, here we will consider dimension 1 and dimension 2), the table of hedonic score (as stored in `consumer_wider`), and the model to consider (here we consider the quadratic model, so we use `regmod=1`). 
 
+Since `carto()` requires matrix or data frame with rownames for the analysis, the data needs to be slightly adapted (we also need to ensure that the products are in the same order in both files).
 
 ```{r}
 senso <- senso_pca$ind$coord[,1:2] %>% 
@@ -806,6 +810,7 @@ senso <- senso_pca$ind$coord[,1:2] %>%
   column_to_rownames(var="Product")
 
 consu <- consumer_wide %>% 
+  arrange(Product) %>% 
   as.data.frame() %>% 
   column_to_rownames(var="Product")
 
@@ -814,21 +819,19 @@ PrefMap <- carto(Mat=senso, MatH=consu, regmod=1, graph.tree=FALSE, graph.corr=F
 
 ```
 
-
-From this map, we can see that the optimal area (dark red) would be located on the positive side of dimension 1, between P01, P05, and P10 (as expected by the liking score).
-
+From this map, we can see that the optimal area (dark red) is located on the positive side of dimension 1, between P01, P05, and P10 (as expected by the liking score).
 
 Let's now re-build this plot using `{ggplot2}`.
-The sensory space is store in `senso`, whereas the surface response plot is stored in:
-- `PrefMap$f1`: contains the coordinates on dimension 1 in which predictions have be made;
-- `PrefMap$f2`: contains the coordinates on dimension 1 in which predictions have be made;
-- `PrefMap$depasse`: contains the percentage of consumers that accept a product at each point of the space. This matrix is defined in such a way that `PrefMap$f1` links to the rows of the matrix, and `PrefMap$f2` links to the columns.
+
+The sensory space is stored in `senso`, whereas the surface response plot information is split between:
+
+ - `PrefMap$f1`: contains the coordinates on dimension 1 in which predictions have be made;
+ - `PrefMap$f2`: contains the coordinates on dimension 2 in which predictions have be made;
+ - `PrefMap$depasse`: contains the percentage of consumers that accept a product at each point of the space. This matrix is defined in such a way that `PrefMap$f1` links to the rows of the matrix, and `PrefMap$f2` links to the columns.
 
 Last but not least, `POpt` (which coordinates are stored in `senso_pca$ind.sup$coord`) can be projected on that space in order to see if such sample was well optimized in terms of consumers' liking/preference.
 
-
-Let's start with preparing the data:
-
+Let's start with preparing the data by transforming everything back into a tibble:
 
 ```{r}
 senso <- senso %>% 
@@ -845,9 +848,7 @@ PrefMap_plot <- PrefMap$nb.depasse %>%
 
 ```
 
-
-To build the plot, we need many layers that will use different source of data (`senso`, `senso_sup`, and `PrefMap_plot` that is). Hence, the initiation of the plot through the `ggplot()` function will not specify any data. Instead, the data to use at each step are included within the `geom_*()` functions of interest. In particular, `geom_tile()` and `geom_contour()` are used to build the surface plot.
-
+To build the plot, different layers involving different source of data (`senso`, `senso_sup`, and `PrefMap_plot` that is) are required. Hence, the initiation of the plot through `ggplot()` does not specify any data. Instead, the data used in each step are included within the `geom_*()` of interest. In particular, `geom_tile()` (coloring) and `geom_contour()` (contour lines) are used to build the surface plot.
 
 ```{r}
 ggplot()+
@@ -863,10 +864,9 @@ ggplot()+
   scale_color_gradient2(low="blue", mid="white", high="red", midpoint=50)+
   xlab(str_c("Dimension 1(",round(senso_pca$eig[1,2],1),"%)"))+
   ylab(str_c("Dimension 2(",round(senso_pca$eig[2,2],1),"%)"))+
-  ggtitle("External Preference Mapping applied on the biscuits data","(The PrefMap is based on the quadratic model)")+
+  ggtitle("External Preference Mapping applied to the biscuits data","(The PrefMap is based on the quadratic model)")+
   theme_bw()
 
 ```
 
-
-As can be seen, `POpt` is not so close from the optimal area suggested by the PrefMap, hence suggesting that other prototypes that are closer to P10 should be generated.
+As can be seen, `POpt` is quite far from the optimal area suggested by the PrefMap. This suggests that prototypes with higher success chances could be developed.
