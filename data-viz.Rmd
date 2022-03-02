@@ -18,16 +18,16 @@ In practice, there are various ways to build graphics in R. In fact, R itself co
 ### Philosophy of `{ggplot2}`
 
 
-`{ggplot2}` belongs to the `{tidyverse}`, and was developed by H. Wickham and colleagues at RStudio. It is hence no surprise that a lot of the procedures that we're learning throughout this book also applies to `{ggplot2}`. More generally, building graphics with `{ggplot2}` fits very well within the pipes (`%>%`) system from `{magrittr}`. As we will see, `{ggplot2}` also works with a piping system, except that the symbol used is `+` instead of `%>%`.
+`{ggplot2}` belongs to the `{tidyverse}`, and was developed by H. Wickham and colleagues at RStudio. It is hence no surprise that a lot of the procedures that we are learning throughout this book also applies to `{ggplot2}`. More generally, building graphics with `{ggplot2}` fits very well within the pipes (`%>%`) system from `{magrittr}`. As we will see, `{ggplot2}` also works with a piping system, except that the symbol used is `+` instead of `%>%`.
 
-`{ggplot2}` is a multi-layer graphical tools, meaning that the graphics are build by adding layers one at a time to finally build your graphics. This means that `ggplot` objects can be printed at any time, and yet still be improved by adding other layers if needed. To read more about `{gglot2}` and its philosophy, please refer to <http://vita.had.co.nz/papers/layered-grammar.pdf>[link](http://vita.had.co.nz/papers/layered-grammar.pdf).
+In practice, `{ggplot2}` is a multi-layer graphical tools, and graphics are built by adding layers to existing graphs. The advantage of such procedure is that `ggplot` objects are not fixed: They can be printed at any time, and can still be improved by adding other layers if needed. To read more about `{gglot2}` and its philosophy, please refer to <http://vita.had.co.nz/papers/layered-grammar.pdf>[link](http://vita.had.co.nz/papers/layered-grammar.pdf).
 
-Note that since building graphics is limited to one imagination, it is not possible to tackle each and every possibilities offered by `{ggplot2}` (and its extensions). For that reason, we limit ourselves to describing the principles of how `{ggplot2}`works. Additionnally, we will provide in this section and throughout the book example of graphics that are useful in Sensory and Consumer research. This should be more than sufficient to get you started, and should cover 90% of the graphics that you would needin your daily work. Still, if that should not be sufficient, we invite you to look into the online documentation or to references such as [REFS].
+Note that since building graphics is limited to one's imagination, it is not possible to tackle each and every possibilities offered by `{ggplot2}` (and its extensions). For that reason, we limit ourselves to describing the principles of how `{ggplot2}`works. Additionally, we provide in this section and throughout the book examples of graphics that are useful in Sensory and Consumer research. This should be more than sufficient to get you started, and should cover 90% of your daily needs. Still, if that should not be sufficient, we invite you to look into the online documentation or to references such as [REFS].
 
 
 ### Getting started with `{ggplot2}`
 
-To use `{ggplot2}`, we need to load this package: this can either be done directly using:
+To use `{ggplot2}`, it needs to be loaded. This can either be done directly using:
 
 
 ```{r}
@@ -43,10 +43,9 @@ library(tidyverse)
 ```
 
 
-To illustrate the use of `{ggplot2}`, we will use both the sensory dataset stored in *Sensory Profile.xlsx* and the number of biscuit eaten by each respondents and stored in *Consumer Test.xlsx*.
+To illustrate the use of `{ggplot2}`, both the sensory data (*Sensory Profile.xlsx*) and the number of biscuit eaten by each respondents (*Consumer Test.xlsx*) are used.
 
-<!-- What does "here" mean in 'library (here)' and 'here("data","Sensory Profile.xlsx")'? -->
-<!-- I guess the file path "data" can be confusing. It depends on the name of the folder of each user. Maybe instead of calling "data" it could be "name of the folder" or something like that? -->
+
 ```{r}
 library(here)
 library(readxl)
@@ -70,8 +69,8 @@ Nbiscuit <- read_xlsx(file_path, sheet="Time Consumption") %>%
 ```
 
 
-To initiate a graph, we start by calling the function `ggplot()`.
-Since the data we want to use is stored in `sensory`, we apply `ggplot()` to `sensory`:
+To initiate a graph, the function `ggplot()` is called.
+Since the data to be used are stored in `sensory`, `ggplot()` is applied on `sensory`:
 
 
 ```{r}
@@ -79,12 +78,12 @@ p <- ggplot(sensory)
 ```
 
 
-If you run this line of code, you'll notice that p contains an empty graphic. This is because we haven't added any layer that is relevant for us yet.
-So let's imagine we want to look at the overall relationship between `Sticky` and `Melting`. To do so, we want to create a scatter plot with `Sticky` in the x-axis, and `Melting` in the y-axis. 
+Running this line of code generates an empty graphic stored in `p`. This is logical since no layers have been added yet.
+So let's imagine we want to look at the overall relationship between `Sticky` and `Melting`. To evaluate this relationship, a scatter plot with `Sticky` in the x-axis and `Melting` in the y-axis can be created. 
 To do so, two types of information are required:
 
- - the type of visual layer we want to add (here a scatter point);
- - the information regarding the data to plot (what should be in represented).
+ - the type of visual (here a scatter point);
+ - the information regarding the data to plot (what should be represented).
 
 Such information can be provided as such:
 
@@ -94,14 +93,14 @@ p + geom_point(aes(x=Sticky, y=Melting))
 ```
 
 
-As can be seen, we are adding to the already existing graph `p` a layer that consists of points (defined by `geom_point()`) in which we specified that the x-axis is `Sticky` and the y-axis is `Melting` through aesthetics (or `aes()`).
+As can be seen, a layer that consists of points (defined by `geom_point()`) in which the x-axis coordinates is defined by `Sticky` and the y-axis coordinates by `Melting` defined through aesthetics (or `aes()`) is added to the already existing graph `p` .
 
 
 #### Introduction to Aesthetics
 
-In the previous example, one can notice that many points are being printed: this can easily be explained by the fact that the raw sensory data are being used, meaning that there are as many points as there are assessors evaluating products.
+In the previous example, one can notice that many points are being printed. This surprising result is logical since `sensory` contains the raw sensory data, meaning that there are as many points as there are assessors evaluating products.
 
-Let's imagine we want to color the points per products to see if we can see any patterns. Since the color code is specific to the data (more precisely to the products), it should be informed within the aesthetics. In this case, we add to the previous code `colour=Product` with `aes()`:
+Let's color the points per products to see if we can see any patterns. Since the color code is specific to the data (more precisely to `Product`), it should be informed within the aesthetics by adding `colour=Product` within `aes()`:
 
 
 ```{r}
@@ -124,20 +123,21 @@ Depending on the `geom_*()` considered, different parameters should be informed 
 
  - `x`, `y`, `z`, provides the coordinates on the X, Y, Z dimensions respectively;
  - `colour`/`color`, `fill` controls for the color code^[You can also use `alpha` to control for the transparency of the elements by defining values between 0 (completely transparent) to 1 (no transparency)] that is being applied to the different elements of a graph;
- - `group` makes the distinction between points that belong to different groups: in fact `colour` and `fill` are specific cases of groups as they additionally provide a visual cue on the groups through the color code;
+ - `group` makes the distinction between points that belong to different groups^[Note that `colour` and `fill` are specific cases of groups as they additionally provide a visual cue on the groups through the color code];
  - `text`, `label` prints text on the graph;
- - `size` controls the size of the element (this should preferably be used with numerical variable).
+ - `size` controls the size of the element (this should preferably be used with numerical variables).
  
-Examples highlighting various types of aesthetics will be presented throughout the book.
+Examples highlighting various types of aesthetics are presented throughout the book.
 
 
 #### Introduction to `geom_*()` functions
 
 
-Since `{ggplot2}` is a multi-layer graph, let's add another layer. Here we propose to add the name of the panelists that is associated to each point. 
+Since `{ggplot2}` is a multi-layer graph, let's add another layer. For example, the name/code of the panelists associated to each point can be printed. 
 
-To do so, we need to consider another `geom_*()` function: `geom_text()`^[Try using `geom_label()` instead of `geom_text()` to see the difference between these two] which requires in `aes()` the position of the labels (`x` and `y`) as well as the `label` itself. 
-To avoid having the label overlapping with the point, we propose to shift slightly all the text vertically using `nudge_y`:
+Such procedure is done thorugh the use of another `geom_*()` function in `geom_text()`^[Try using `geom_label()` instead of `geom_text()` to see the difference between these two] which requires in `aes()` the position of the labels (`x` and `y`) as well as the `label` itself.
+
+To avoid having the label overlapping with the point, the text is slightly shifted vertically using `nudge_y`:
 
 
 ```{r}
@@ -147,7 +147,7 @@ ggplot(sensory)+
 ```
 
 
-One interesting remark is that some information required in `aes()` is being repeated across the different `geom_*()` used. Such writing can be simplified by providing the `aes()` information that applies to all `geom_*()` to the original `ggplot()` call. The previous code hence can be simplified into:
+One interesting remark is that some information required in `aes()` is being repeated across the different `geom_*()` used. Such writing can be simplified by providing the `aes()` information that applies to all `geom_*()` to the original `ggplot()` call. The previous code hence can be simplified to:
 
 
 ```{r}
@@ -159,12 +159,12 @@ p <- ggplot(sensory, aes(x=Sticky, y=Melting, label=Judge))+
 
 With this new code, you'll notice that:
 
- - although `label` is only relevant for `geom_text()`, it can still be provided at the beginning, as it will be ignored by `geom_point()` which does not require it;
+ - although `label` is only relevant for `geom_text()`, it can still be provided at the beginning as it will be ignored by `geom_point()` which does not require it;
  - `colour` should only be provided within `geom_point()` else the text would also be colored according to `Product` (which we do not want here);
  - `nudge_y` is defined outside `aes()` as it applies to all the text.
 
 
-To the previous graph, let's add another layer as following:
+Since the graphics look at the relationship between two quantitative variables, let's add another layer to the previous graph that shows the regression line between:
 
 
 ```{r}
@@ -173,12 +173,12 @@ line_p <- p + geom_smooth(method="lm", formula="y~x", se=FALSE)
 ```
 
 
-This code adds a regression line to the graphic (here, we specified that the regression line should be defined using `lm` and by considering the simple linear regression `y~x`). This result is somewhat surprising since we have not run any regression yet, meaning that `geom_smooth()` is actually performing the required analysis in the background. 
+This code adds a regression line to the graphic. It is built using the `lm()` engine in which the simple linear regression model `y~x` is fitted. This result is somewhat surprising since we have not run any regression yet, meaning that `geom_smooth()` is actually performing the required analysis on the data in the background. 
 
-In fact, most `geom_*()` function comes with a statistical process to it. This means that we can provide raw data, and the `geom_*()` function calls its `stat_*()` function that runs the corresponding analysis. In the previous example, `geom_smooth()` calls `stat_smooth()`.
+In fact, most `geom_*()` function comes with a statistical process attached to it. This means that on the raw data, the `geom_*()` function calls its `stat_*()` function that runs the corresponding analysis. In the previous example, `geom_smooth()` calls `stat_smooth()`.
 
-Let's illustrate this concept again using another example: bar-charts that we apply on the data stored in `Nbiscuit`. 
-Here, we want to see the distribution (through bar-charts) of number of biscuits eaten per consumer. A quick look at the data shows that some respondents ate portions of the cookies. To simplify the analysis, let's consider the total number of entire cookies eaten: if a respondent has eaten 3.5 biscuits, we will consider that they ate 3 full cookies. 
+Let's illustrate this concept again using another example: bar-charts that is applied on the data stored in `Nbiscuit`. 
+Here, we want to see the distribution (through bar-charts) of number of biscuits eaten per consumer. A quick look at the data shows that some respondents ate portions of the cookies. To simplify the analysis, let's consider the total number of entire cookies eaten: if a respondent has eaten say 3.5 biscuits, it will be rounded down to 3 full cookies. 
 
 
 ```{r}
@@ -187,7 +187,7 @@ Nbiscuit <- Nbiscuit %>%
 ```
 
 
-To create such distribution, a first solution consists in counting for each product how many respondents ate 0 biscuit, 1 biscuit, 2 biscuits, etc. This is automatically done using `geom_bar` and `stat="count"`. Here, we set the parameter `position="dodge"` to get the results per biscuit side by side rather than stacked up (value by default):
+To create such distribution, a first solution consists in counting for each product how many respondents ate 0 biscuit, 1 biscuit, 2 biscuits, etc. This is automatically done using `geom_bar` and `stat="count"`. The parameter `position="dodge"` is used to get the results per biscuit side by side rather than stacked up (value by default):
 
 
 ```{r}
@@ -209,6 +209,7 @@ Nbiscuit %>%
 
 As can be seen, the two graphics are identical. 
 
+<!-- TW to continue from here -->
 
 #### Making graphs pretty
 
