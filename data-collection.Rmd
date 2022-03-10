@@ -20,6 +20,9 @@ However, this type of approach also comes with drawbacks^[Market researchers wou
 
 <!-- Should we define what (first)-order and carry-over effects are? Or are we considering that readers would know? -->
 
+<!-- power analysis with the pwr package  -->
+
+
 #### Crossover designs
 
 For any sensory experiment that implies the evaluation of more than one sample, first-order and/or carry-over effects should be expected. That is to say, the evaluation of a sample may affect the evaluation of the next sample even though sensory scientists try to lower such effects by asking panelists to pause between samples and use of appropriate mouth-cleansing techniques (drinking water, eating unsalted crackers, or a piece of apple, etc.). The use of crossover designs is thus highly recommended (@Macfie1989). 
@@ -130,34 +133,62 @@ Full factorial designs are of course commonly used and their application is usua
 
 #### Mixture designs
 
-In many projects, developers work on products' formula (e.g. in the food industry, in the personal care industry). In such cases, it means that factors are ingredients and that their proportions are interdependent (the total sum of all components of a mixture must be 100%). Therefore, these factors must be treated as mixture components. Mixture designs are usually represented using ternary diagrams.
+In many projects  (e.g. in the food industry, in the personal care industry), optimizing a product's formula implies adjusting the proportions of its ingredients. In such cases, the proportions are interdependent (the total sum of all components of a mixture must be 100%). Therefore, these factors (the proportions) must be treated as mixture components. Mixture designs are usually represented using ternary diagrams.
 
 The `{mixexp}` package offers a very convenient way to do this. In addition to creating the design, `DesignPoints()` allows to display the corresponding ternary diagram. Below is the example of a simplex-lattice design for 3 components and 3 levels obtained thanks to function `SLD`:
 
 ```{r}
 library(mixexp)
-des<-SLD(3,3)
-DesignPoints(des)
+mdes<-SLD(3,3)
+DesignPoints(mdes)
 ```
 
-Suppose that we want to adjust a biscuit recipe to optimize its sensory properties, we can design an experiment in which the proportion of ingredients vary. Let's play with butter, sugar, and flour. All three combined would account for 75% of the recipe and the remaining 25% would consist of other ingredients (eggs, milk, chocolate, etc.) that we won't modify here. Besides, not any amount of these three ingredients would make sense, so we need to add constraints (ex: butter varies between 15 and 30%, sugar varies between 25 and 40%, and flour varies between 30 and 50%). Given this set of constraints, we can use `mixexp::Xvert` to find the extreme vertices of our design.
+Suppose that we want to adjust a biscuit recipe to optimize its sensory properties, we can design an experiment in which the proportion of ingredients vary. Let's play with butter, sugar, and flour. All three combined would account for 75% of the dough recipe and the remaining 25% would consist of other ingredients that we won't modify here (eggs, milk, chocolate, etc.). Besides, not any amount of these three ingredients would make sense (a biscuit with 75% of butter is not a biscuit, even in Brittany). We thus need to add constraints (ex: butter varies between 15 and 30% of this blend, sugar varies between 25 and 40%, and flour varies between 30 and 50%). Given this set of constraints, we can use `mixexp::Xvert` to find the extreme vertices of our design.
 
-However, this design would imply 11 mixtures, which is more than needed to apply a Scheffé quadratic model. To reduce the number of mixtures and still allow fitting a quadratic model, we can thus use the `optFederov()` function from `{AlgDesign}` to select a D-optimal subset. Here, let's limit to 8 products.
+However, this design would imply 11 mixtures, which is more than needed to apply a Scheffé quadratic model (REF REF REF). To reduce the number of mixtures and still allow fitting a quadratic model, we can use the `optFederov()` function from `{AlgDesign}` to select a D-optimal subset. Here, let's limit to 9 products.
 
 ```{r}
 library(mixexp)
 library(AlgDesign)
 
-des <- Xvert(nfac=3, uc=c(.30, .40, .50), lc=c(.15, .25, .30), ndm = 1, plot = FALSE) %>% 
+mdes2 <- Xvert(nfac=3, uc=c(.30, .40, .50), lc=c(.15, .25, .30), ndm = 2, plot = FALSE) %>% 
       mutate_if(is.numeric, round, digits = 3)
 
-MixBiscuits <- optFederov(~ -1 +x1 +x2+ x2 +x1:x2 +x1:x3 +x2:x3 +x1:x2:x3, des, nTrials=8)
-DesignPoints(MixBiscuits$design, axislabs = c("Butter","Sugar","Flour"), pseudo = TRUE)
+MixtBisc <- optFederov(~ -1 +x1 +x2+ x2 +x1:x2 +x1:x3 +x2:x3 +x1:x2:x3, mdes2, nTrials=9)
+DesignPoints(MixtBisc$design, axislabs = c("Butter","Sugar","Flour"), pseudo = TRUE)
 
 ```
 
 
-<!-- Once the biscuits are evaluated, we can use the mixexp::MixModel() function to fit a linear model and get a correct R2 estimate. Then use mixexp::MixturePlot() for contour plot with the mod = 2 option that specifies a quadratic model -->
+Once the data are collected we can use the `mixexp::MixModel()` function to fit a linear model and `mixexp::MixturePlot()` to draw a contour plot. Suppose that we obtain average liking scores for our 9 biscuits as given in Table \@ref(tab:biscuit-mixt), this simple code would allow to get a contour plot.
+
+```{r, tab.cap="Average liking scores obtained for the biscuits from the mixture design", label="biscuit-mixt", echo = FALSE, eval=TRUE}
+
+Bmixt <- MixtBisc$design
+scores <- c(x, x, x, x, x, x, x, x, x)
+biscuit_names <- c("P01", "P02", "P03", "P04", "P05", "P06", "P07", "P08", "P09", "P10", "POpt")
+protein <- c("Low", "Low", "High", "High", "High", "High", "Low",  "High", "High", "Low", "High")
+fiber <- c("Low", "High", "High", "High", "Low", "Low", "High", "Low", "High", "Low", "Low")
+type_prod <- c("Trial", "Trial", "Trial", "Trial", "Trial", "Trial", "Trial", "Trial", "Trial", "Commercial product", "Optimized trial")
+
+Bmixt <- data.frame(biscuit_names, protein, fiber, type_prod)
+colnames(Bmixt) <- c("Product", "Protein", "Fiber", "Type")
+ft <- flextable::qflextable(Bmixt)
+ft
+
+```
+
+```{r}
+library(mixexp)
+data("Bmixt")
+invisible(capture.output(res <- MixModel(Bmixt, "erate",
+            mixcomps = c("x1", "x2", "x3"), model = 4)) )
+# plot cubic mixture model as ternary contour plot
+ModelPlot(model = res,
+          dimensions = list(x1 = "x1", x2 = "x2", x3 = "x3"),
+          contour = TRUE, cuts = 6, fill = TRUE)
+```
+
 
 Regardless of the construction of the mixture design, ternary diagrams are easy to plot with packages such as `{ggtern}` or `{Ternary}`. `{ggtern}` is particularly interesting because it builds on `{ggplot2}` and uses the same syntax.
 
@@ -166,18 +197,31 @@ Regardless of the construction of the mixture design, ternary diagrams are easy 
 
 #### Screening designs
 
-Factorial and mixture designs belong to the product developers' essential toolkit. In practice however, they can only include a relatively limited number of factors. For this reason most influential factors of interest must be identified beforehand. Of course, product development is not a monolithic process and in the early stages of project it could be extremely useful to use a screening design in combination to sensory evaluation.
-Plackett-Burman design using `{FrF2}`.
+Product development is not a monolithic process and in the early stages of a project it could be extremely useful to use a screening design in combination to sensory evaluation to identify most influential factors of interest (REF REF REF). Factorial and mixture designs belong to the product developers' essential toolkit and could serve this purpose. In practice however, they can only include a relatively limited number of factors. By contrast, screening designs are extremely efficient at dealing with many factors, pending some sacrifices on the evaluation of interactions and quadratic effects.
+Although screening designs are only scarcely used, studies have shown that they could greatly contribute to sensory-led product development, including in nonfood applications of sensory science (REF REF REF).
 
+Plackett-Burman designs are the most commonly used screening designs. They can be easily obtained with `{FrF2}`.
+<!-- Add a small example that illustrates this? -->
 
-#### Sensory informed designs & selection of factors
+#### Sensory informed designs
+Eventually, it is worth mentioning that in some cases sensory properties themselves can be used as factors and implemented in a DoE. Naturally, this implies that product developers have (1) access to the measure of these properties and (2) can control the level of these properties and their interactions. These requirements are rarely met in food development but can be more easily implemented in some non-food applications.
+A specific case, is the use of sensory information to make a selection of a subset of products, as described above.
 
+(Include ref to Naes et al REF REF)
 
 
 ## Execute
 <!-- run the experiment / collect the data -->
 
-<!-- power analysis with the pwr package  -->
+
+
+<!-- Time to recruit subjects / privacy (comply with privacy rules EU's General Data Protection Regulation (GDPR) and the California Consumer Privacy Act (CCPA)) -->
+<!-- Independent data (sensory booths) -->
+<!-- Anonymous -->
+<!-- Use of acquisition software -->
+<!-- Basics of the sensory measures (if not covered in the intro), cf. book nonfood -->
+<!-- Scaling / Quantification  -->
+
 <!-- randomization by judge, by product -->
 
 
