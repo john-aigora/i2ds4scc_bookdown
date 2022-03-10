@@ -462,24 +462,24 @@ p + plot_annotation(title = "Example of 'ggplots' I've learned today", tag_level
 ### Few Tips and Tricks
 
 #### Combining data transformation and `{ggplot2}` grammar
-<!-- Is there anything missing in this sentence: 'It is however to combine'? Maybe would that be: It is however possible to combine... --> 
+
 Both the `{tidyverse}` and `{ggplot2}` are using pipes to combine lines of code or layers. 
 However, the pipes themselves are defined differently since `{maggritr}` uses `%>%` whereas `{ggplot2}` uses `+`.
-It is however to combine both systems one after each other, just remember to switch from `%>%` to `+` as you transition from data transformation/tidying to building your graph (see example...).
+It is however possible to combine both systems one after each other, just remember to switch from `%>%` to `+` as you transition from data transformation/tidying to building your graph (see example...).
 
 #### Ordering elements in a plot
 
 When building a graph using a categorical variables, `{ggplot2}` tends to represent the different levels in alphabetical order, especially if the variable is defined as character. Such situation can make the graph more difficult to read, as the categories may not be presented in a logical order (e.g. fall, spring, summer, winter instead of spring, summer, fall, winter).
 
-To ensure that the elements are in the order that are relevant for you, either consider transforming the variables into factor (using `factor()` and by indicating the levels order of your choice, or using `fct_inorder()` if you want to keep the order as is in the file, see example...) or by using a position variable as in the `spiderplot` example. The former option also works for ordering elements in the legend.
+To ensure that the elements are in the right order, either consider transforming the variables into factor (using `factor()` by indicating the levels order of your choice, or through `fct_inorder()` to keep the order from the file, see example...) or by using a position variable as in the `spiderplot` example. The former option also works for ordering elements in the legend.
 
-If the order of the elements to change are *within the charts*, they may be reverted within the `geom_*()` function directly. This is for instance the case with stacked bar chart, in which the order may be reverted using the parameter `position = position_fill(reverse = TRUE)` for instance (suggesting here that the split was defined through `fill` in `aes()`).
+If the order of the elements should be changed *within the charts* (simple changes such as reverting the order), it can be done directly within the `geom_*()` function. This is for instance the case with stacked bar chart, in which the order may be reverted using the parameter `position = position_fill(reverse = TRUE)` for instance (suggesting here that the split was defined through `fill` in `aes()`).
 
 #### Fixing overlapping axis text
 
-When `ggplot()` are being built using categorical variables, the labels used on the x-axis are often overlapping making some (or all) of them unreadable. If it is possible to reduce the size of the label, and/or to shorten them without losing clarity, then this can be first good step. However, this might not always possible or sufficient. In these latter instances, we need to adjust them. Let's use `spider_line` as illustration to show three possible solutions.
+When `ggplot()` are being built using categorical variables, the labels used on the x-axis are often overlapping (some of the labels being then unreadable). A first good/easy solution consists in reducing the size of the label, and/or to shortening them as long as it does not affect its readability/clarity. However, this might not always be possible or sufficient, and other adjustment are required. Let's use `spider_line` as illustration to show three possible solutions.
 
-The first option consists in using `theme()` and rotating the labels (here at 45 degrees, but use 90 degrees to get the names vertically). Note that by default, `ggplot()` center the labels: to avoid having them crossing the x-axis line, we need to left-center them using `hadj=1`:
+The first option consists in using `theme()` and rotating the labels (here at 45 degrees, but use 90 degrees to get the names vertically). Note that by default, `ggplot()` center the labels: to avoid having them crossing the x-axis line, they are being left-centered using `hjust=1`:
 
 
 ```{r}
@@ -488,22 +488,20 @@ spider_line +
 ```
 
 
-A second option consists in dodging one every two labels along the x-axis. This option works if the labels are not too long, as can be seen in the example below. Note that this option is accessible within `scale_x_discrete()`, not within `theme()` as we would expect:
+A second option consists in dodging one every two labels along the x-axis. This option works fine, especially when the labels are not too long. In our example unfortunately, some overlap can still be seen. Note that this option is accessible within `scale_x_discrete()`, not within `theme()` as we would expect:
 
-<!-- When reading the sentence above I would expect to have an example where the labels are not loo long, but when we run the code, this is not the case. The labels are long and overlap between them --> 
 ```{r}
 spider_line + 
   scale_x_discrete(guide = guide_axis(n.dodge = 2))
 ```
 
-
-Last option consists in transposing the graph using `coord_flip()`. This solution works well since labels on the y-axis are written horizontally. However, this option is not always suitable due to conventions: we would definitely recommend it for bar charts, but not for line charts for instance. 
+Last option consists in transposing the graph using `coord_flip()`. This solution works well since labels on the y-axis are written horizontally. However, this option is not always suitable due to conventions: if it is recommended for bar charts, it may not be for line charts for instance. 
 
 #### Exporting graphs
 
-There are various ways to save or export `ggplot()` charts. To save these plots to your computer in various formats (e.g. png, pdf, etc.), we recommend the use of `ggsave()`. By default, `ggsave()` exports the last plot build and saves it in the location defined by `filename`, in the format defined by `device` (additional information regarding the width, height, dpi etc. can also be configured).
+There are various ways to save or export `ggplot()` charts. To save these plots to your computer in various formats (e.g. png, pdf, etc.), `ggsave()` can be used. By default, `ggsave()` exports the last plot built and saves it in the location defined by `filename`, in the format defined by `device` (additional information regarding the width, height, dpi etc. can also be configured).
 
-For instance, we can save `spiderplot`^[Since `spiderplot` is not the last plot generated, we need to define it in `plot`.] as following:
+For instance, the `spiderplot` generated earlier^[Since `spiderplot` is not the last plot generated, it needs to be defined in `plot`.] can be saved as following:
 
 
 ```{r}
@@ -516,15 +514,17 @@ As an alternative, `ggplot()` graphs can also be exported in PowerPoint or Word 
 
 #### Additional libraries
 
-`{ggplot2}` is a very powerful tool for data visualization. By default, it offers a very large variety of possibilities, which should cover most situations that you would encounter. If not, please search as you will most likely find ggplot extensions in alternative packages. Here is a non-exhaustive list of specific packages that we find relevant: 
+`{ggplot2}` is a very powerful tool for data visualization. By default, it offers a very large variety of possibilities, which should cover most situations that you would encounter. If not, please search as you will most likely find ggplot extensions in alternative packages. 
+
+To help you further, here is a non-exhaustive list of relevant packages: 
 
  - `ggcharts`: This package provides nice and clear alternatives to some `{ggplot2}` options through simple functions in one line of code, including `bar_chart()`, `line_chart()`, `lollipop_chart()` and `dumbbell_chart()` just to name a few.
- - `{factoextra}`: Although the latest version of `{FactoMineR}` also proposes generating graphs in `{ggplot2}`, `{factoextra}` is a great extension as it is easy to use and provides a wide variety of options to customize your plots.
+ - `{factoextra}`: Although the latest version of `{FactoMineR}` also generates its graphs in `{ggplot2}` by default, `{factoextra}` is a great extension as it is easy to use and provides a wide variety of options to customize your plots.
  - `{ggcorrplot}`: There are many packages that propose to visualize graphically tables of correlations, however we particularly like this one for its simplicity and its flexibility.
- - `{ggwordcloud}`: It is a great package for building word-clouds as it provides a large degree of control. With this package, the words can either be positioned totally randomly, but can also be positioned in a given shape, or words can be positioned semi-randomly, hence giving more interpretation power to the final results (for more information, please visit <https://lepennec.github.io/ggwordcloud/>[link](https://lepennec.github.io/ggwordcloud/)).
+ - `{ggwordcloud}`: It is a great package for building word-clouds as it provides a large degree of control. With this package, the words can either be positioned randomly, by matching a pre-defined shape, etc. But more interestingly, words can also be positioned semi-randomly, hence giving more interpretation power to the final results (for more information, please visit <https://lepennec.github.io/ggwordcloud/>[link](https://lepennec.github.io/ggwordcloud/)).
  - `{ggraph}`: This package provides neat solutions to build network visualization in `{ggplot2}`.
 
 To learn more about `{ggplot2}` basics, we recommend two additional source of information:
 
- - `{esquisse}`: After loading the package, run the function `esquisser()`. This command opens a window in which you can select your data set (the data set should be available within you R environment), the type of plot to build, which variable to be used as x-axis, y-axis, etc. Not only this tool provides with an easy way to build your graph, it is also educational as the code thus generated is visible (so you can re-use it and/or try to understand to apply it in other situations).
- - <https://www.data-to-viz.com/>[link](https://www.data-to-viz.com/) provides a wide gallery of graphics sorted by the type of data that you have. Each graphic proposed is illustrated with an example provided in R (`{ggplot2}`) and in Python. This website is hence inspirational and educational both at the same time!
+ - `{esquisse}`: After loading the package, run the function `esquisser()`. This command opens a window in which you can select your data set (the data set should be available within you R environment), the type of plot to build, and all the relevant information to build your plot (which variable to be used as x-axis, y-axis, etc.) through an easy-to-use interface. Ultimately, the graph is being generated, but more importantly, the code used to generate the plot is provided. This is hence an educational tool to learn build graphs with ggplot.
+ - <https://www.data-to-viz.com/>[link](https://www.data-to-viz.com/) provides a wide gallery of graphics sorted by the type of data that you have. Each graphic proposed is illustrated with an example provided in R (often in `{ggplot2}`) and in Python. This website is hence inspirational and educational both at the same time!
