@@ -164,17 +164,14 @@ Once the data are collected we can use the `mixexp::MixModel()` function to fit 
 
 ```{r, tab.cap="Average liking scores obtained for the biscuits from the mixture design", label="biscuit-mixt", echo = FALSE, eval=TRUE}
 
-Bmixt <- MixtBisc$design
-scores <- c(x, x, x, x, x, x, x, x, x)
-biscuit_names <- c("P01", "P02", "P03", "P04", "P05", "P06", "P07", "P08", "P09", "P10", "POpt")
-protein <- c("Low", "Low", "High", "High", "High", "High", "Low",  "High", "High", "Low", "High")
-fiber <- c("Low", "High", "High", "High", "Low", "Low", "High", "Low", "High", "Low", "Low")
-type_prod <- c("Trial", "Trial", "Trial", "Trial", "Trial", "Trial", "Trial", "Trial", "Trial", "Commercial product", "Optimized trial")
+Bmixt <- MixtBisc$design %>%
+  as_tibble() %>%
+  select(-4) %>%
+  mutate(Product = c("A", "B", "C", "D", "E", "F", "G", "H", "I"), .before=x1) %>%
+  mutate(scores = c(7.5, 5.4, 5.5, 7.0, 6.0, 8.0, 5.8, 6.8, 7.9)) %>%
+  rename("Butter"=x1, "Sugar"=x2, "Flour"=x3, "Score"=scores)
 
-Bmixt <- data.frame(biscuit_names, protein, fiber, type_prod)
-colnames(Bmixt) <- c("Product", "Protein", "Fiber", "Type")
-ft <- flextable::qflextable(Bmixt)
-ft
+flextable::qflextable(Bmixt)
 
 ```
 
