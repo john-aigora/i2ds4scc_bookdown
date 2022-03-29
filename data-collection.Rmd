@@ -16,7 +16,7 @@ knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 
 Sensory and consumer science relies on experiments during which subjects usually evaluate several samples one after the other. This type of procedure is called 'monadic sequential' and is common practice for all three main categories of tests (difference testing, descriptive analysis, hedonic testing). The main advantage of proceeding this way is that responses can be analyzed at the individual level so that analysis and interpretation can account for inter-individual differences, which is a constant feature of sensory data.
 
-However, this type of approach also comes with drawbacks^[Market researchers would argue that evaluating several products in a row doesn't usually happen in real life and that proceeding this way may induce response biases. They thus advocate the use of pure monadic designs in which participants are only given one sample to evaluate. This corresponds to a between-group design that is also frequently used in fields where only one treatment per subject is possible (drug testing, nutrition studies, etc.).] as it may imply order effects and carry-over effects. Fortunately, most of these effects can be controlled with a proper design of experiment (DoE). A good design ensures that order and carry-over effects are not confounded with what you are actually interested to measure (most frequently, the differences between products) by balancing these effects across the panel. However, it is important to note that the design does not eliminate these effects and that each subject in your panel may still experience order and carry-over effect, as well as boredom, sensory fatigue, etc.
+However, this type of approach also comes with drawbacks^[Market researchers would argue that evaluating several products in a row doesn't usually happen in real life and that proceeding this way may induce response biases. They thus advocate the use of pure monadic designs in which participants are only given one sample to evaluate. This corresponds to a between-group design that is also frequently used in fields where only one treatment per subject is possible (drug testing, nutrition studies, etc.).] as it may imply order effects and carry-over effects. Fortunately, most of these effects can be controlled with a proper design of experiment (DoE). A good design ensures that order and carry-over effects are not confounded with what you are actually interested to measure (most frequently, the differences between products) by balancing these effects across the panel. However, it is important to note that the design does not eliminate these effects and that each subject in your panel may still experience an order and a carry-over effect, as well as boredom, sensory fatigue, etc.
 
 <!-- Should we define what (first)-order and carry-over effects are? Or are we considering that readers would know? -->
 
@@ -48,10 +48,8 @@ rownames(wdes_5P20J) <- paste("judge", 1:20, sep="")
 
 The downside of Williams's Latin square designs is that the number of samples (*k*) to be evaluated dictates the number of judges. For an even number of samples you must have a multiple of *k* judges, and a multiple of *2k* judges for an odd number of samples.
 
-As the total number of judges in your study may not always be exactly known in advance (e.g. participants not showing up to your test, extra participants recruited at the last minute), it can be useful to add some flexibility to the design. Of course, additional rows would depart from the perfectly balanced design, but it is possible to optimize them using Federov's algorithm thanks to the `optFederov()` function of the `{AlgDesign}` package, by specifying `augment = TRUE`. For example we can add three more judges to the Williams Latin square design that we just built for 5 products and 10 judges, hence leading to a total number of 13 judges.
+As the total number of judges in your study may not always be exactly known in advance (e.g. participants not showing up to your test, extra participants recruited at the last minute), it can be useful to add some flexibility to the design. Of course, additional rows would depart from the perfectly balanced design, but it is possible to optimize them using Federov's algorithm thanks to the `optFederov()` function of the `{AlgDesign}` package, by specifying `augment = TRUE`. For example we can add three more judges to the Williams Latin square design that we just built for *nbP=*5 products and 10 judges, hence leading to a total number of *nbP=*13 judges. Note that each judge will evaluate all the products, therefore the number of samples per judge (*nbR*) equals the number of products (*nbP*).
 
-<!-- Should we justify what nbR is, and why we define it as nbR = nbP? -->
-<!-- OK -->
 
 ```{r}
 library(SensoMineR)
@@ -154,48 +152,42 @@ library(mixexp)
 library(AlgDesign)
 library(tidyverse)
 
-# mdes2 <- Xvert(nfac=3, uc=c(.30, .40, .50), lc=c(.15, .25, .30), ndm = 2, plot = FALSE) %>% 
-#       mutate(across(where(is.numeric), round, digits = 3))
-# 
-# MixtBisc <- optFederov(~ -1 +x1 +x2+ x2 +x1:x2 +x1:x3 +x2:x3 +x1:x2:x3, mdes2, nTrials=9)
-# DesignPoints(MixtBisc$design, axislabs = c("Butter","Sugar","Flour"), pseudo = TRUE)
+mdes2 <- Xvert(nfac=3, uc=c(.30, .40, .50), lc=c(.15, .25, .30), ndm = 1, plot = FALSE) %>% 
+      mutate_if(is.numeric, round, digits = 3)
 
 ```
 
 
-Once the data are collected we can use the `mixexp::MixModel()` function to fit a linear model and `mixexp::MixturePlot()` to draw a contour plot. Suppose that we obtain average liking scores for our 9 biscuits as given in Table \@ref(tab:biscuit-mixt), this simple code would allow to get a contour plot.
+Once the data are collected we can use the `mixexp::MixModel()` function to fit a linear model and `mixexp::MixturePlot()` to draw a contour plot. Suppose that we obtain average liking scores for our 9 biscuits as given in Table \@ref(tab:biscuit-mixt), this simple code would allow to get a contour plot that shows where would be the optimal area for the biscuit formulation.
 
 ```{r, tab.cap="Average liking scores obtained for the biscuits from the mixture design", label="biscuit-mixt", echo = FALSE, eval=TRUE}
 
-#Bmixt <- MixtBisc$design
-#scores <- c(x, x, x, x, x, x, x, x, x)
-biscuit_names <- c("P01", "P02", "P03", "P04", "P05", "P06", "P07", "P08", "P09", "P10", "POpt")
-protein <- c("Low", "Low", "High", "High", "High", "High", "Low",  "High", "High", "Low", "High")
-fiber <- c("Low", "High", "High", "High", "Low", "Low", "High", "Low", "High", "Low", "Low")
-type_prod <- c("Trial", "Trial", "Trial", "Trial", "Trial", "Trial", "Trial", "Trial", "Trial", "Commercial product", "Optimized trial")
+Bmixt <- MixtBisc$design %>%
+  as_tibble() %>%
+  select(-4) %>%
+  mutate(Product = c("A", "B", "C", "D", "E", "F", "G", "H", "I"), .before=x1) %>%
+  mutate(scores = c(7.5, 5.4, 5.5, 7.0, 6.0, 8.0, 5.8, 6.8, 7.9)) %>%
+  rename("Butter"=x1, "Sugar"=x2, "Flour"=x3, "Liking"=scores)
 
-Bmixt <- data.frame(biscuit_names, protein, fiber, type_prod)
-colnames(Bmixt) <- c("Product", "Protein", "Fiber", "Type")
-ft <- flextable::qflextable(Bmixt)
-ft
+flextable::qflextable(Bmixt)
 
 ```
 
 ```{r}
 library(mixexp)
-#data("Bmixt")
-# invisible(capture.output(res <- MixModel(Bmixt, "erate",
-#             mixcomps = c("x1", "x2", "x3"), model = 4)) )
-# # plot cubic mixture model as ternary contour plot
-# ModelPlot(model = res,
-#           dimensions = list(x1 = "x1", x2 = "x2", x3 = "x3"),
-#           contour = TRUE, cuts = 6, fill = TRUE)
+# calculate the cubic mixture model 
+invisible(capture.output(res <- MixModel(Bmixt, "Liking",
+                                         mixcomps = c("Butter", "Sugar", "Flour"), model = 4)) )
+# plot the model as ternary contour plot
+ModelPlot(model = res,
+          dimensions = list(x1="Butter", x2="Sugar", x3="Flour"),
+          lims = c(0.15, 0.30, 0.25, 0.40, 0.30, 0.50), constraints = TRUE,
+          contour = TRUE, cuts = 12, fill = TRUE, pseudo = TRUE,
+          axislabs = c("Butter", "Sugar", "Flour"))
 ```
 
 
 Regardless of the construction of the mixture design, ternary diagrams are easy to plot with packages such as `{ggtern}` or `{Ternary}`. `{ggtern}` is particularly interesting because it builds on `{ggplot2}` and uses the same syntax.
-
-
 
 
 #### Screening designs
