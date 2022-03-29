@@ -3174,7 +3174,7 @@ List of the variables in each data sets (or just the size of each data set?).
 
 Sensory and consumer science relies on experiments during which subjects usually evaluate several samples one after the other. This type of procedure is called `monadic sequential' and is common practice for all three main categories of tests (difference testing, descriptive analysis, hedonic testing). The main advantage of proceeding this way is that responses can be analyzed at the individual level so that analysis and interpretation can account for inter-individual differences, which is a constant feature of sensory data.
 
-However, this type of approach also comes with drawbacks\footnote{Market researchers would argue that evaluating several products in a row doesn't usually happen in real life and that proceeding this way may induce response biases. They thus advocate the use of pure monadic designs in which participants are only given one sample to evaluate. This corresponds to a between-group design that is also frequently used in fields where only one treatment per subject is possible (drug testing, nutrition studies, etc.).} as it may imply order effects and carry-over effects. Fortunately, most of these effects can be controlled with a proper design of experiment (DoE). A good design ensures that order and carry-over effects are not confounded with what you are actually interested to measure (most frequently, the differences between products) by balancing these effects across the panel. However, it is important to note that the design does not eliminate these effects and that each subject in your panel may still experience order and carry-over effect, as well as boredom, sensory fatigue, etc.
+However, this type of approach also comes with drawbacks\footnote{Market researchers would argue that evaluating several products in a row doesn't usually happen in real life and that proceeding this way may induce response biases. They thus advocate the use of pure monadic designs in which participants are only given one sample to evaluate. This corresponds to a between-group design that is also frequently used in fields where only one treatment per subject is possible (drug testing, nutrition studies, etc.).} as it may imply order effects and carry-over effects. Fortunately, most of these effects can be controlled with a proper design of experiment (DoE). A good design ensures that order and carry-over effects are not confounded with what you are actually interested to measure (most frequently, the differences between products) by balancing these effects across the panel. However, it is important to note that the design does not eliminate these effects and that each subject in your panel may still experience an order and a carry-over effect, as well as boredom, sensory fatigue, etc.
 
 \hypertarget{crossover-designs}{%
 \subsubsection{Crossover designs}\label{crossover-designs}}
@@ -3203,7 +3203,7 @@ Suppose you want to include 20 judges in the experiment, you would then need to 
 
 The downside of Williams's Latin square designs is that the number of samples (\emph{k}) to be evaluated dictates the number of judges. For an even number of samples you must have a multiple of \emph{k} judges, and a multiple of \emph{2k} judges for an odd number of samples.
 
-As the total number of judges in your study may not always be exactly known in advance (e.g.~participants not showing up to your test, extra participants recruited at the last minute), it can be useful to add some flexibility to the design. Of course, additional rows would depart from the perfectly balanced design, but it is possible to optimize them using Federov's algorithm thanks to the \texttt{optFederov()} function of the \texttt{\{AlgDesign\}} package, by specifying \texttt{augment\ =\ TRUE}. For example we can add three more judges to the Williams Latin square design that we just built for 5 products and 10 judges, hence leading to a total number of 13 judges.
+As the total number of judges in your study may not always be exactly known in advance (e.g.~participants not showing up to your test, extra participants recruited at the last minute), it can be useful to add some flexibility to the design. Of course, additional rows would depart from the perfectly balanced design, but it is possible to optimize them using Federov's algorithm thanks to the \texttt{optFederov()} function of the \texttt{\{AlgDesign\}} package, by specifying \texttt{augment\ =\ TRUE}. For example we can add three more judges to the Williams Latin square design that we just built for \emph{nbP=}5 products and 10 judges, hence leading to a total number of \emph{nbP=}13 judges. Note that each judge will evaluate all the products, therefore the number of samples per judge (\emph{nbR}) equals the number of products (\emph{nbP}).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3313,124 +3313,25 @@ However, this design would imply 11 mixtures, which is more than needed to apply
 \FunctionTok{library}\NormalTok{(AlgDesign)}
 \FunctionTok{library}\NormalTok{(tidyverse)}
 
-\CommentTok{\# mdes2 \textless{}{-} Xvert(nfac=3, uc=c(.30, .40, .50), lc=c(.15, .25, .30), ndm = 2, plot = FALSE) \%\textgreater{}\% }
-\CommentTok{\#       mutate(across(where(is.numeric), round, digits = 3))}
-\CommentTok{\# }
-\CommentTok{\# MixtBisc \textless{}{-} optFederov(\textasciitilde{} {-}1 +x1 +x2+ x2 +x1:x2 +x1:x3 +x2:x3 +x1:x2:x3, mdes2, nTrials=9)}
-\CommentTok{\# DesignPoints(MixtBisc$design, axislabs = c("Butter","Sugar","Flour"), pseudo = TRUE)}
+\NormalTok{mdes2 }\OtherTok{\textless{}{-}} \FunctionTok{Xvert}\NormalTok{(}\AttributeTok{nfac=}\DecValTok{3}\NormalTok{, }\AttributeTok{uc=}\FunctionTok{c}\NormalTok{(.}\DecValTok{30}\NormalTok{, .}\DecValTok{40}\NormalTok{, .}\DecValTok{50}\NormalTok{), }\AttributeTok{lc=}\FunctionTok{c}\NormalTok{(.}\DecValTok{15}\NormalTok{, .}\DecValTok{25}\NormalTok{, .}\DecValTok{30}\NormalTok{), }\AttributeTok{ndm =} \DecValTok{1}\NormalTok{, }\AttributeTok{plot =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+      \FunctionTok{mutate\_if}\NormalTok{(is.numeric, round, }\AttributeTok{digits =} \DecValTok{3}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-Once the data are collected we can use the \texttt{mixexp::MixModel()} function to fit a linear model and \texttt{mixexp::MixturePlot()} to draw a contour plot. Suppose that we obtain average liking scores for our 9 biscuits as given in Table \ref{tab:biscuit-mixt}, this simple code would allow to get a contour plot.
-
-\providecommand{\docline}[3]{\noalign{\global\setlength{\arrayrulewidth}{#1}}\arrayrulecolor[HTML]{#2}\cline{#3}}
-
-\setlength{\tabcolsep}{8pt}
-
-\renewcommand*{\arraystretch}{1.5}
-
-\begin{table}
-
-\centering
-
-\begin{longtable}{|p{0.74in}|p{0.70in}|p{0.56in}|p{1.58in}}
-
-\caption{Average liking scores obtained for the biscuits from the mixture design}\label{tab:biscuit-mixt}\\
-
-\hhline{>{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=2pt}-}
-
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.74in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}Product}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.7in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}Protein}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.56in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}Fiber}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 1.58in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}Type}}} \\
-
-\noalign{\global\setlength{\arrayrulewidth}{2pt}}\arrayrulecolor[HTML]{000000}\cline{1-4}
-
-\endfirsthead
-
-\hhline{>{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=2pt}-}
-
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.74in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}Product}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.7in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}Protein}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.56in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}Fiber}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 1.58in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}Type}}} \\
-
-\noalign{\global\setlength{\arrayrulewidth}{2pt}}\arrayrulecolor[HTML]{000000}\cline{1-4}\endhead
-
-
-
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.74in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}P01}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.7in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}Low}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.56in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}Low}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 1.58in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}Trial}}} \\
-
-
-
-
-
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.74in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}P02}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.7in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}Low}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.56in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}High}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 1.58in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}Trial}}} \\
-
-
-
-
-
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.74in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}P03}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.7in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}High}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.56in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}High}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 1.58in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}Trial}}} \\
-
-
-
-
-
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.74in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}P04}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.7in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}High}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.56in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}High}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 1.58in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}Trial}}} \\
-
-
-
-
-
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.74in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}P05}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.7in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}High}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.56in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}Low}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 1.58in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}Trial}}} \\
-
-
-
-
-
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.74in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}P06}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.7in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}High}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.56in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}Low}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 1.58in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}Trial}}} \\
-
-
-
-
-
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.74in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}P07}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.7in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}Low}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.56in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}High}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 1.58in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}Trial}}} \\
-
-
-
-
-
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.74in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}P08}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.7in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}High}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.56in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}Low}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 1.58in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}Trial}}} \\
-
-
-
-
-
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.74in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}P09}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.7in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}High}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.56in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}High}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 1.58in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}Trial}}} \\
-
-
-
-
-
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.74in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}P10}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.7in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}Low}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.56in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}Low}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 1.58in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}Commercial product}}} \\
-
-
-
-
-
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.74in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}POpt}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.7in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}High}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.56in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}Low}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 1.58in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}Optimized trial}}} \\
-
-\noalign{\global\setlength{\arrayrulewidth}{2pt}}\arrayrulecolor[HTML]{000000}\cline{1-4}
-
-\end{longtable}
-
-\end{table}
+Once the data are collected we can use the \texttt{mixexp::MixModel()} function to fit a linear model and \texttt{mixexp::MixturePlot()} to draw a contour plot. Suppose that we obtain average liking scores for our 9 biscuits as given in Table \ref{tab:biscuit-mixt}, this simple code would allow to get a contour plot that shows where would be the optimal area for the biscuit formulation.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(mixexp)}
-\CommentTok{\#data("Bmixt")}
-\CommentTok{\# invisible(capture.output(res \textless{}{-} MixModel(Bmixt, "erate",}
-\CommentTok{\#             mixcomps = c("x1", "x2", "x3"), model = 4)) )}
-\CommentTok{\# \# plot cubic mixture model as ternary contour plot}
+\CommentTok{\# \# calculate the cubic mixture model }
+\CommentTok{\# invisible(capture.output(res \textless{}{-} MixModel(Bmixt, "Liking",}
+\CommentTok{\#                                          mixcomps = c("Butter", "Sugar", "Flour"), model = 4)) )}
+\CommentTok{\# \# plot the model as ternary contour plot}
 \CommentTok{\# ModelPlot(model = res,}
-\CommentTok{\#           dimensions = list(x1 = "x1", x2 = "x2", x3 = "x3"),}
-\CommentTok{\#           contour = TRUE, cuts = 6, fill = TRUE)}
+\CommentTok{\#           dimensions = list(x1="Butter", x2="Sugar", x3="Flour"),}
+\CommentTok{\#           lims = c(0.15, 0.30, 0.25, 0.40, 0.30, 0.50), constraints = TRUE,}
+\CommentTok{\#           contour = TRUE, cuts = 12, fill = TRUE, pseudo = TRUE,}
+\CommentTok{\#           axislabs = c("Butter", "Sugar", "Flour"))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3619,7 +3520,27 @@ To go further:
 \hypertarget{data-prep}{%
 \chapter{Data Preparation}\label{data-prep}}
 
-The data we will be using in this chapter is the one that you imported in Section \ref{data-collection}.
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\end{Highlighting}
+\end{Shaded}
+
+\emph{Data Preparation}, which consists of \emph{data inspection} and \emph{data cleaning}, is a critical step before any further \emph{Data Manipulation} or \emph{Data Analysis}. Having a good data preparation procedure ensures a good understanding of the data, and avoids what could be very critical mistakes.
+
+To illustrate the importance of the later point, let's imagine a study in which the samples are defined by their 3-digits code.
+During importation, R would recognize them as number, and hence defines the \emph{Product} column as numerical. Without inspection and correction, any ANOVA that include the product effect would be replaced by a linear regression (or analysis of covariance) which of course does not provide the results required (although the analysis would run without error). Worst, if this procedure is automated and the \emph{p-value} associated to the product effect is extracted, the conclusions would rely on the wrong analysis! A good data preparation procedure is hence important to avoid such unexpected results.
+
+So what consists of data preparation, and how does that differ from data manipulation?
+There is clearly a very line between data preparation (and particularly \emph{data cleaning}) and data manipulation, many procedures being used in both (same applies to data manipulation and data analysis for instance). For this book, we decided to follow this rule:
+
+\emph{Data Preparation} includes all the required steps to ensure that the data is matching its intrinsic nature. These steps include inspecting the data at hand (usually through simple descriptive statistics of the data as a whole, with no \emph{interpretation mindset}) and cleaning the data by eventually correcting importation errors (imputation of missing data is also included here). Although some descriptive statistics are being produced for data inspection, these analyses have no interpretation value besides ensuring that the data are in the right range, or following the right distribution. For instance, with our sensory data, we would ensure that all our sensory scores are included between 0 and 100 (negative scores would not be permitted), but we would not look at the mean or the distribution of the score per product which would belong to data analyses and would require interpretation (e.g.~P01 is sweeter than P02).
+
+The \emph{Data Manipulation} is an optional step that adjust or convert the data into a structure that is usable for further analysis. This of course may lead to \emph{interpretation} of the results as it may involve some analyses.
+
+The \emph{Data Analysis} step ultimately converts the data into results (through values, graphics, tables, etc.) that provide more insights (through interpretation) about the data at hand.
+
+The data used in this chapter includes the \emph{Sensory Profile.xlsx} that you imported in Section \ref{data-collection}. Another version of the sensory profiles that includes missing values is also being used (\emph{Sensory Profile (NA).xlsx}).
 
 \hypertarget{inspect}{%
 \section{Inspect}\label{inspect}}
@@ -3628,28 +3549,124 @@ The data we will be using in this chapter is the one that you imported in Sectio
 \subsection{Data Inspection}\label{data-inspection}}
 
 To inspect the data, different steps can be used.
-First, since \texttt{read\_xlsx()} returns a tibble, we can take advantage of its printing properties to get a fill of the data at hand,
+First, since \texttt{read\_xlsx()} returns a tibble, let's take advantage of its printing properties to get a fill of the data at hand:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{TFEQ\_data}
+\NormalTok{sensory}
 \end{Highlighting}
 \end{Shaded}
 
-Other informative solutions consists in printing a summary of the data through the \texttt{summary()} function, or looking at its type and first values using \texttt{str()}. However, due to its richness of the outputs, we prefer to use the \texttt{skim()} function from the \texttt{\{skimr\}} package.
+Other informative solutions consists in printing a summary of the data through the \texttt{summary()} function, or looking at its type and first values using \texttt{str()}. However, due to its richness of the outputs, the \texttt{skim()} function from the \texttt{\{skimr\}} package is preferred.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(skimr)}
-\FunctionTok{skim}\NormalTok{(TFEQ\_data)}
+\FunctionTok{skim}\NormalTok{(sensory)}
 \end{Highlighting}
 \end{Shaded}
 
 \hypertarget{design-inspection}{%
 \subsection{Design Inspection}\label{design-inspection}}
 
-Evaluate if the design is complete/incomplete
-Frequencies and cross-frequencies (simple statistics and simple graphs)
+As part of the data inspection, it is relevant to check that all the data are in line with their intrinsic nature, look for outliers, etc.
+Another point of interest - quite specific to sensory and consumer data - is to ensure that the design is well balanced, and handles the first-order and carry-over effects. This step is particularly important for those who analyze the data but were not involved from the start in that study (and hence were not involved when the test was set-up).
+
+Let's show a simple procedure that would check part of the quality of a design.
+Since neither in \emph{Sensory Profile.xlsx}, nor in \emph{TFEQ.xlsx} the design is not available, the \texttt{sensochoc} data stored in the \texttt{\{SensoMineR\}} is used.
+
+To load (and clean) the data, let's run these lines of code:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(SensoMineR)}
+
+\FunctionTok{data}\NormalTok{(chocolates)}
+
+\NormalTok{dataset }\OtherTok{\textless{}{-}}\NormalTok{ sensochoc }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{as\_tibble}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{c}\NormalTok{(Panelist, Session, Rank, Product), as.character))}
+\end{Highlighting}
+\end{Shaded}
+
+The data consist in 6 products (\texttt{Product}) evaluated by 29 panelists (\texttt{Panelist}) in duplicates (\texttt{Session}). The presentation order is stored in \texttt{Rank}.
+
+To evaluate whether the products have been equally presented at each position, a simple cross-count between \texttt{Product} and \texttt{Rank} is done. This can easily be done using the \texttt{xtabs()} function:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{xtabs}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{Product }\SpecialCharTok{+}\NormalTok{ Rank, }\AttributeTok{data=}\NormalTok{dataset)}
+\end{Highlighting}
+\end{Shaded}
+
+Such table can also be obtained using \texttt{group\_by()} and \texttt{count()} to get the results in a tibble:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dataset }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(Product) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{count}\NormalTok{(Rank) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ungroup}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_wider}\NormalTok{(}\AttributeTok{names\_from=}\NormalTok{Rank, }\AttributeTok{values\_from=}\NormalTok{n)}
+\end{Highlighting}
+\end{Shaded}
+
+As we can see, the design is not perfectly balanced, as \texttt{choc2} is evaluated 11 times in the 1st, 4th, and 6th position, but only 7 times in the 5th position.
+
+The next step then consists in evaluating how often each product is assessed before the other products (carry-over effect). Since this information is not directly available in the data, it needs to be added.
+
+Let's start with extracting the information available, i.e.~the order of each product for each panelist and session:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{current }\OtherTok{\textless{}{-}}\NormalTok{ dataset }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Panelist, Product, Session, Rank) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Rank =} \FunctionTok{as.numeric}\NormalTok{(Rank))}
+\end{Highlighting}
+\end{Shaded}
+
+An easy way to add the \texttt{Previous} product information as a new column in the data is by replacing \texttt{Rank} by \texttt{Rank\ +\ 1} in \texttt{current} (all new positions larger than the number of products is filtered).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{previous }\OtherTok{\textless{}{-}}\NormalTok{ current }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{Previous =}\NormalTok{ Product) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Rank =}\NormalTok{ Rank }\SpecialCharTok{+} \DecValTok{1}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(Rank }\SpecialCharTok{\textless{}=} \FunctionTok{length}\NormalTok{(}\FunctionTok{unique}\NormalTok{(dataset}\SpecialCharTok{$}\NormalTok{Product)))}
+\end{Highlighting}
+\end{Shaded}
+
+This new data is merged to \texttt{current} by \texttt{Panelist}, \texttt{Session}, and \texttt{Rank}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(cur\_prev }\OtherTok{\textless{}{-}}\NormalTok{ current }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{left\_join}\NormalTok{(previous, }\AttributeTok{by=}\FunctionTok{c}\NormalTok{(}\StringTok{"Panelist"}\NormalTok{, }\StringTok{"Session"}\NormalTok{, }\StringTok{"Rank"}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+
+As can be seen, the products that are evaluated first get \texttt{NA} in \texttt{Previous}, and for each rank r (r \textgreater{} 1), \texttt{Previous} gets the product that was evaluated at rank r-1.
+
+To evaluate the carry-over effect, the only thing to do is to cross-count \texttt{Product} and \texttt{Previous} (here, the results are split per \texttt{Session}):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cur\_prev }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(Session, Product, Previous) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{count}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ungroup}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Product =} \FunctionTok{factor}\NormalTok{(Product, }\AttributeTok{levels=}\FunctionTok{paste0}\NormalTok{(}\StringTok{"choc"}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{6}\NormalTok{)),}
+         \AttributeTok{Previous =} \FunctionTok{factor}\NormalTok{(Previous, }\AttributeTok{levels=}\FunctionTok{c}\NormalTok{(}\StringTok{"NA"}\NormalTok{,}\FunctionTok{paste0}\NormalTok{(}\StringTok{"choc"}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{6}\NormalTok{)))) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{arrange}\NormalTok{(Previous) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_wider}\NormalTok{(}\AttributeTok{names\_from=}\NormalTok{Previous, }\AttributeTok{values\_from=}\NormalTok{n, }\AttributeTok{values\_fill=}\DecValTok{0}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{arrange}\NormalTok{(Product) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{split}\NormalTok{(.}\SpecialCharTok{$}\NormalTok{Session)}
+\end{Highlighting}
+\end{Shaded}
+
+As expected, the table shows that a product is never evaluated twice in a row (the diagonal contains 0). Here again, the design is not optimal since \texttt{choc1} has been evaluated 3 times before \texttt{choc2} and 6 times before \texttt{choc5} in the first session.
+
+Finally, the \texttt{NA} column refers to the time that products did not have a product tested before, meaning that they were evaluated first.
 
 \hypertarget{missing-data-inspection}{%
 \subsection{Missing Data Inspection}\label{missing-data-inspection}}
@@ -3673,7 +3690,7 @@ Any preliminary summary tables and charts should be created that might help the 
 \hypertarget{renaming-variables-1}{%
 \subsection{Renaming Variables}\label{renaming-variables-1}}
 
-renaming columns using \texttt{rename()} or \texttt{select()}
+renaming columns using \texttt{rename()} or \texttt{select()}, tackled in data manipulation
 
 \hypertarget{handling-data-type}{%
 \subsection{Handling Data Type}\label{handling-data-type}}

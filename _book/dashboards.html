@@ -480,73 +480,73 @@ In our example, the UI is separated into two parts:</p>
 <p>The server side of the application is where all the computations are being performed, including the construction of tables, figures, etc.</p>
 <p>Since the options defined on the UI side should affect the computations performed (e.g. our decision on the type of plot to design should affect the plot generated), we need to communicate these decisions to the server, and use them.
 On the server side, any information (or option) passed to the server side is done through <code>input$name_option</code>. In our previous example regarding the type of graph to generate, this is shown as <code>input$plottype</code>, as defined by:</p>
-<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="dashboards.html#cb210-1" aria-hidden="true" tabindex="-1"></a><span class="fu">radioButtons</span>(<span class="st">&quot;plottype&quot;</span>, <span class="st">&quot;Type of Plot to Draw:&quot;</span>, </span>
-<span id="cb210-2"><a href="dashboards.html#cb210-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">choices=</span><span class="fu">c</span>(<span class="st">&quot;Spider Plot&quot;</span><span class="ot">=</span><span class="st">&quot;line&quot;</span>, <span class="st">&quot;Circular Barplot&quot;</span><span class="ot">=</span><span class="st">&quot;bar&quot;</span>), </span>
-<span id="cb210-3"><a href="dashboards.html#cb210-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">selected=</span><span class="st">&quot;line&quot;</span>, <span class="at">inline=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="dashboards.html#cb218-1" aria-hidden="true" tabindex="-1"></a><span class="fu">radioButtons</span>(<span class="st">&quot;plottype&quot;</span>, <span class="st">&quot;Type of Plot to Draw:&quot;</span>, </span>
+<span id="cb218-2"><a href="dashboards.html#cb218-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">choices=</span><span class="fu">c</span>(<span class="st">&quot;Spider Plot&quot;</span><span class="ot">=</span><span class="st">&quot;line&quot;</span>, <span class="st">&quot;Circular Barplot&quot;</span><span class="ot">=</span><span class="st">&quot;bar&quot;</span>), </span>
+<span id="cb218-3"><a href="dashboards.html#cb218-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">selected=</span><span class="st">&quot;line&quot;</span>, <span class="at">inline=</span><span class="cn">TRUE</span>)</span></code></pre></div>
 <p>In this case, if the user select <em>Spider Plot</em> (resp. <em>Circular Barplot</em>), <code>input$plottype</code> will take the value <em>line</em> (resp. <em>bar</em>).</p>
 <p>Reversely, any information that is being build on the server side and that should be passed on the UI part of the application can either be done via the <code>xxxOutput()</code>/<code>renderXxx()</code> combination presented before (useful for showing results), or by using the <code>renderUI()</code>/<code>uiOutput()</code> combination (useful for options that are <em>server-dependent</em>).</p>
 <p>Following a similar communication system than the one from UI to server, the part generated on the server side is stored as <code>output$name_option</code> (defined as <code>renderUI()</code>) and is captured on the UI side using <code>uiOutput("name_option")</code>.</p>
 <p>In our example, the latter combination is used for the two options that require reading the data set first, namely the selection of attributes and the selection of products.</p>
-<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="dashboards.html#cb211-1" aria-hidden="true" tabindex="-1"></a><span class="co"># server side:</span></span>
-<span id="cb211-2"><a href="dashboards.html#cb211-2" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>attribute <span class="ot">&lt;-</span> <span class="fu">renderUI</span>({</span>
-<span id="cb211-3"><a href="dashboards.html#cb211-3" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb211-4"><a href="dashboards.html#cb211-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">req</span>(<span class="fu">mydata</span>())</span>
-<span id="cb211-5"><a href="dashboards.html#cb211-5" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb211-6"><a href="dashboards.html#cb211-6" aria-hidden="true" tabindex="-1"></a>    items <span class="ot">&lt;-</span> <span class="fu">mydata</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb211-7"><a href="dashboards.html#cb211-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">pull</span>(Attribute) <span class="sc">%&gt;%</span> </span>
-<span id="cb211-8"><a href="dashboards.html#cb211-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as.character</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb211-9"><a href="dashboards.html#cb211-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">unique</span>()</span>
-<span id="cb211-10"><a href="dashboards.html#cb211-10" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb211-11"><a href="dashboards.html#cb211-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">selectInput</span>(<span class="st">&quot;attribute&quot;</span>, <span class="st">&quot;Select the Attributes (in order) &quot;</span>, <span class="at">choices=</span>items, <span class="at">selected=</span>items, <span class="at">multiple=</span><span class="cn">TRUE</span>)</span>
-<span id="cb211-12"><a href="dashboards.html#cb211-12" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb211-13"><a href="dashboards.html#cb211-13" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="cb211-14"><a href="dashboards.html#cb211-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb211-15"><a href="dashboards.html#cb211-15" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>product <span class="ot">&lt;-</span> <span class="fu">renderUI</span>({</span>
-<span id="cb211-16"><a href="dashboards.html#cb211-16" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb211-17"><a href="dashboards.html#cb211-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">req</span>(<span class="fu">mydata</span>())</span>
-<span id="cb211-18"><a href="dashboards.html#cb211-18" aria-hidden="true" tabindex="-1"></a>    items <span class="ot">&lt;-</span> <span class="fu">mydata</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb211-19"><a href="dashboards.html#cb211-19" aria-hidden="true" tabindex="-1"></a>      <span class="fu">pull</span>(Product) <span class="sc">%&gt;%</span> </span>
-<span id="cb211-20"><a href="dashboards.html#cb211-20" aria-hidden="true" tabindex="-1"></a>      <span class="fu">unique</span>()</span>
-<span id="cb211-21"><a href="dashboards.html#cb211-21" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb211-22"><a href="dashboards.html#cb211-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">checkboxGroupInput</span>(<span class="st">&quot;product&quot;</span>, <span class="st">&quot;Select the Products to Display:&quot;</span>, <span class="at">choices=</span>items, <span class="at">selected=</span>items)</span>
-<span id="cb211-23"><a href="dashboards.html#cb211-23" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb211-24"><a href="dashboards.html#cb211-24" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="cb211-25"><a href="dashboards.html#cb211-25" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb211-26"><a href="dashboards.html#cb211-26" aria-hidden="true" tabindex="-1"></a><span class="co"># UI side:</span></span>
-<span id="cb211-27"><a href="dashboards.html#cb211-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">uiOutput</span>(<span class="st">&quot;attribute&quot;</span>)</span>
-<span id="cb211-28"><a href="dashboards.html#cb211-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">uiOutput</span>(<span class="st">&quot;product&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="dashboards.html#cb219-1" aria-hidden="true" tabindex="-1"></a><span class="co"># server side:</span></span>
+<span id="cb219-2"><a href="dashboards.html#cb219-2" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>attribute <span class="ot">&lt;-</span> <span class="fu">renderUI</span>({</span>
+<span id="cb219-3"><a href="dashboards.html#cb219-3" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb219-4"><a href="dashboards.html#cb219-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">req</span>(<span class="fu">mydata</span>())</span>
+<span id="cb219-5"><a href="dashboards.html#cb219-5" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb219-6"><a href="dashboards.html#cb219-6" aria-hidden="true" tabindex="-1"></a>    items <span class="ot">&lt;-</span> <span class="fu">mydata</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb219-7"><a href="dashboards.html#cb219-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">pull</span>(Attribute) <span class="sc">%&gt;%</span> </span>
+<span id="cb219-8"><a href="dashboards.html#cb219-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as.character</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb219-9"><a href="dashboards.html#cb219-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">unique</span>()</span>
+<span id="cb219-10"><a href="dashboards.html#cb219-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb219-11"><a href="dashboards.html#cb219-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">selectInput</span>(<span class="st">&quot;attribute&quot;</span>, <span class="st">&quot;Select the Attributes (in order) &quot;</span>, <span class="at">choices=</span>items, <span class="at">selected=</span>items, <span class="at">multiple=</span><span class="cn">TRUE</span>)</span>
+<span id="cb219-12"><a href="dashboards.html#cb219-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb219-13"><a href="dashboards.html#cb219-13" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb219-14"><a href="dashboards.html#cb219-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb219-15"><a href="dashboards.html#cb219-15" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>product <span class="ot">&lt;-</span> <span class="fu">renderUI</span>({</span>
+<span id="cb219-16"><a href="dashboards.html#cb219-16" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb219-17"><a href="dashboards.html#cb219-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">req</span>(<span class="fu">mydata</span>())</span>
+<span id="cb219-18"><a href="dashboards.html#cb219-18" aria-hidden="true" tabindex="-1"></a>    items <span class="ot">&lt;-</span> <span class="fu">mydata</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb219-19"><a href="dashboards.html#cb219-19" aria-hidden="true" tabindex="-1"></a>      <span class="fu">pull</span>(Product) <span class="sc">%&gt;%</span> </span>
+<span id="cb219-20"><a href="dashboards.html#cb219-20" aria-hidden="true" tabindex="-1"></a>      <span class="fu">unique</span>()</span>
+<span id="cb219-21"><a href="dashboards.html#cb219-21" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb219-22"><a href="dashboards.html#cb219-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">checkboxGroupInput</span>(<span class="st">&quot;product&quot;</span>, <span class="st">&quot;Select the Products to Display:&quot;</span>, <span class="at">choices=</span>items, <span class="at">selected=</span>items)</span>
+<span id="cb219-23"><a href="dashboards.html#cb219-23" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb219-24"><a href="dashboards.html#cb219-24" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb219-25"><a href="dashboards.html#cb219-25" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb219-26"><a href="dashboards.html#cb219-26" aria-hidden="true" tabindex="-1"></a><span class="co"># UI side:</span></span>
+<span id="cb219-27"><a href="dashboards.html#cb219-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">uiOutput</span>(<span class="st">&quot;attribute&quot;</span>)</span>
+<span id="cb219-28"><a href="dashboards.html#cb219-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">uiOutput</span>(<span class="st">&quot;product&quot;</span>)</span></code></pre></div>
 <p>Lastly, we have elements that are only relevant on the server side, namely the computation themselves. In our example, these are results of a function called <code>reactive()</code>.</p>
 <p>Reactivity (and its corresponding <code>reactive()</code> function) is a great <em>lazy</em> feature of <code>{shiny}</code> that was designed so that the computations are only performed when necessary, i.e. when the changes applied in the options affect the computations. This laziness is of great power since only computations that are strictly needed are being performed, hence increasing speed by limiting the computation power required to its minimum.</p>
 <p>Let’s break this down in a simple example:</p>
-<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="dashboards.html#cb212-1" aria-hidden="true" tabindex="-1"></a>  mydata <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
-<span id="cb212-2"><a href="dashboards.html#cb212-2" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb212-3"><a href="dashboards.html#cb212-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">req</span>(input<span class="sc">$</span>datafile)</span>
-<span id="cb212-4"><a href="dashboards.html#cb212-4" aria-hidden="true" tabindex="-1"></a>    data <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(input<span class="sc">$</span>datafile<span class="sc">$</span>datapath, <span class="at">sheet=</span><span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb212-5"><a href="dashboards.html#cb212-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">pivot_longer</span>(<span class="sc">-</span><span class="fu">c</span>(Judge, Product), <span class="at">names_to=</span><span class="st">&quot;Attribute&quot;</span>, <span class="at">values_to=</span><span class="st">&quot;Score&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb212-6"><a href="dashboards.html#cb212-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">Attribute =</span> <span class="fu">fct_inorder</span>(Attribute), <span class="at">Score =</span> <span class="fu">as.numeric</span>(Score)) <span class="sc">%&gt;%</span> </span>
-<span id="cb212-7"><a href="dashboards.html#cb212-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">group_by</span>(Product, Attribute) <span class="sc">%&gt;%</span> </span>
-<span id="cb212-8"><a href="dashboards.html#cb212-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">summarize</span>(<span class="at">Score =</span> <span class="fu">mean</span>(Score)) <span class="sc">%&gt;%</span> </span>
-<span id="cb212-9"><a href="dashboards.html#cb212-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">ungroup</span>()</span>
-<span id="cb212-10"><a href="dashboards.html#cb212-10" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb212-11"><a href="dashboards.html#cb212-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(data)</span>
-<span id="cb212-12"><a href="dashboards.html#cb212-12" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb212-13"><a href="dashboards.html#cb212-13" aria-hidden="true" tabindex="-1"></a>  })</span></code></pre></div>
+<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="dashboards.html#cb220-1" aria-hidden="true" tabindex="-1"></a>  mydata <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
+<span id="cb220-2"><a href="dashboards.html#cb220-2" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb220-3"><a href="dashboards.html#cb220-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">req</span>(input<span class="sc">$</span>datafile)</span>
+<span id="cb220-4"><a href="dashboards.html#cb220-4" aria-hidden="true" tabindex="-1"></a>    data <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(input<span class="sc">$</span>datafile<span class="sc">$</span>datapath, <span class="at">sheet=</span><span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb220-5"><a href="dashboards.html#cb220-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">pivot_longer</span>(<span class="sc">-</span><span class="fu">c</span>(Judge, Product), <span class="at">names_to=</span><span class="st">&quot;Attribute&quot;</span>, <span class="at">values_to=</span><span class="st">&quot;Score&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb220-6"><a href="dashboards.html#cb220-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">Attribute =</span> <span class="fu">fct_inorder</span>(Attribute), <span class="at">Score =</span> <span class="fu">as.numeric</span>(Score)) <span class="sc">%&gt;%</span> </span>
+<span id="cb220-7"><a href="dashboards.html#cb220-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">group_by</span>(Product, Attribute) <span class="sc">%&gt;%</span> </span>
+<span id="cb220-8"><a href="dashboards.html#cb220-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">summarize</span>(<span class="at">Score =</span> <span class="fu">mean</span>(Score)) <span class="sc">%&gt;%</span> </span>
+<span id="cb220-9"><a href="dashboards.html#cb220-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">ungroup</span>()</span>
+<span id="cb220-10"><a href="dashboards.html#cb220-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb220-11"><a href="dashboards.html#cb220-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(data)</span>
+<span id="cb220-12"><a href="dashboards.html#cb220-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb220-13"><a href="dashboards.html#cb220-13" aria-hidden="true" tabindex="-1"></a>  })</span></code></pre></div>
 <p>In this section, we read the file that was selected through the <code>fileInput()</code> option called <code>datafile</code> from the UI side. Note that in this case, the path of the file is stored in the object called <code>datapath</code>, meaning that to access this file, we need to read <code>input$datafile$datapath</code>.</p>
 <p>Once read (here using <code>{readxl}</code>), we do some small transformations to the data before saving its final version in an object called <code>mydata</code>. Since this block of code only depends on <code>input$datafile</code> (UI side), this part will no longer be in use unless <code>datafile</code> is being updated or changed.</p>
 <p>For the mean computation, the same procedure applies as well:</p>
-<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="dashboards.html#cb213-1" aria-hidden="true" tabindex="-1"></a>  mymean <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
-<span id="cb213-2"><a href="dashboards.html#cb213-2" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb213-3"><a href="dashboards.html#cb213-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">req</span>(<span class="fu">mydata</span>(), input<span class="sc">$</span>attribute, input<span class="sc">$</span>product)</span>
-<span id="cb213-4"><a href="dashboards.html#cb213-4" aria-hidden="true" tabindex="-1"></a>    mymean <span class="ot">&lt;-</span> <span class="fu">mydata</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb213-5"><a href="dashboards.html#cb213-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">c</span>(<span class="st">&quot;Product&quot;</span>, <span class="st">&quot;Attribute&quot;</span>), as.character)) <span class="sc">%&gt;%</span></span>
-<span id="cb213-6"><a href="dashboards.html#cb213-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">filter</span>(Attribute <span class="sc">%in%</span> input<span class="sc">$</span>attribute) <span class="sc">%&gt;%</span> </span>
-<span id="cb213-7"><a href="dashboards.html#cb213-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">Product =</span> <span class="fu">factor</span>(Product, input<span class="sc">$</span>product),</span>
-<span id="cb213-8"><a href="dashboards.html#cb213-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">Attribute =</span> <span class="fu">factor</span>(Attribute, input<span class="sc">$</span>attribute),</span>
-<span id="cb213-9"><a href="dashboards.html#cb213-9" aria-hidden="true" tabindex="-1"></a>             <span class="at">Score =</span> <span class="fu">format</span>(<span class="fu">round</span>(Score, <span class="dv">2</span>), <span class="at">nsmall=</span><span class="dv">2</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb213-10"><a href="dashboards.html#cb213-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">pivot_wider</span>(<span class="at">names_from=</span>Product, <span class="at">values_from=</span>Score)</span>
-<span id="cb213-11"><a href="dashboards.html#cb213-11" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb213-12"><a href="dashboards.html#cb213-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(mymean)</span>
-<span id="cb213-13"><a href="dashboards.html#cb213-13" aria-hidden="true" tabindex="-1"></a>  })</span></code></pre></div>
+<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="dashboards.html#cb221-1" aria-hidden="true" tabindex="-1"></a>  mymean <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
+<span id="cb221-2"><a href="dashboards.html#cb221-2" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb221-3"><a href="dashboards.html#cb221-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">req</span>(<span class="fu">mydata</span>(), input<span class="sc">$</span>attribute, input<span class="sc">$</span>product)</span>
+<span id="cb221-4"><a href="dashboards.html#cb221-4" aria-hidden="true" tabindex="-1"></a>    mymean <span class="ot">&lt;-</span> <span class="fu">mydata</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb221-5"><a href="dashboards.html#cb221-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">c</span>(<span class="st">&quot;Product&quot;</span>, <span class="st">&quot;Attribute&quot;</span>), as.character)) <span class="sc">%&gt;%</span></span>
+<span id="cb221-6"><a href="dashboards.html#cb221-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">filter</span>(Attribute <span class="sc">%in%</span> input<span class="sc">$</span>attribute) <span class="sc">%&gt;%</span> </span>
+<span id="cb221-7"><a href="dashboards.html#cb221-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">Product =</span> <span class="fu">factor</span>(Product, input<span class="sc">$</span>product),</span>
+<span id="cb221-8"><a href="dashboards.html#cb221-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">Attribute =</span> <span class="fu">factor</span>(Attribute, input<span class="sc">$</span>attribute),</span>
+<span id="cb221-9"><a href="dashboards.html#cb221-9" aria-hidden="true" tabindex="-1"></a>             <span class="at">Score =</span> <span class="fu">format</span>(<span class="fu">round</span>(Score, <span class="dv">2</span>), <span class="at">nsmall=</span><span class="dv">2</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb221-10"><a href="dashboards.html#cb221-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">pivot_wider</span>(<span class="at">names_from=</span>Product, <span class="at">values_from=</span>Score)</span>
+<span id="cb221-11"><a href="dashboards.html#cb221-11" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb221-12"><a href="dashboards.html#cb221-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(mymean)</span>
+<span id="cb221-13"><a href="dashboards.html#cb221-13" aria-hidden="true" tabindex="-1"></a>  })</span></code></pre></div>
 <p>For this <code>reactive()</code> block, <code>mymean</code> depends on <code>mydata</code>, <code>input$attribute</code>, and <code>input$product</code>. This means that if <code>datafile</code> (read <code>mydata</code>), <code>input$attribute</code> and/or <code>input$product</code> change, the computations re-run and <code>mymean</code> is getting updated.</p>
 <p>For small and simple examples like ours, this domain of reactivity may be sufficient, and would be sufficient in many cases. There are however some few points that require a bit more explanations.</p>
 <p>First, we advise that you use <code>reactive()</code> as much as possible: In our example, we could have created the code to build the graph within <code>renderPlot()</code>. However, this way of coding is not efficient since it would always updated, even when it is not necessary. For small examples such as the one proposed here, this may not make much difference, but for larger applications it would have a larger impact. This is why we prefer to create the graphs in a <code>reactive()</code> instance, and simply retrieve it for display.</p>
@@ -568,17 +568,17 @@ On the server side, any information (or option) passed to the server side is don
 <h3><span class="header-section-number">14.3.1</span> Personalizing and Tuning your application</h3>
 <p>If you start building many applications in <code>{shiny}</code>, you might get tired of its default layout. Fortunately, the overall appearance of applications can be modified easily, especially if you have notion in other programming language such as CSS and HTML. If not, no worries, there are alternative solutions for you, including the <code>{bslib}</code> package.
 To change the layout, simply load the library, and add the following piece of code at the start of your application (here for using the theme <em>darkly</em>):</p>
-<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="dashboards.html#cb214-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fluidPage</span>(</span>
-<span id="cb214-2"><a href="dashboards.html#cb214-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">theme =</span> bslib<span class="sc">::</span><span class="fu">bs_theme</span>(<span class="at">bootswatch =</span> <span class="st">&quot;darkly&quot;</span>)</span>
-<span id="cb214-3"><a href="dashboards.html#cb214-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="dashboards.html#cb222-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fluidPage</span>(</span>
+<span id="cb222-2"><a href="dashboards.html#cb222-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">theme =</span> bslib<span class="sc">::</span><span class="fu">bs_theme</span>(<span class="at">bootswatch =</span> <span class="st">&quot;darkly&quot;</span>)</span>
+<span id="cb222-3"><a href="dashboards.html#cb222-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p><code>{bslib}</code> also allows you creating your own theme that match your company style. So do not hesitate to take some time to build it once, and to apply then to all your applications.</p>
 <p>Besides changing the overall theme of your applications, there are certain details that can make your overall application more appealing and easier to use. In our short example, you may have noticed that each option and each output is a separate line. This is sufficient here since the number of options and outputs are very limited. However, as the application grows is in size, this solution is no longer sustainable as you do not want the users to scroll down a long way to run adjust all the options.</p>
 <p>Instead, you can combine different options (or outputs) on one line. To do so, <code>{shiny}</code> works by defining each panel as a table with as many rows as needed and 12 columns. When not specified, the whole width (i.e. the 12 columns) of the screen is used, but this could be controlled through the <code>column()</code> function.</p>
 <p>In our example, we could have position the product selection and the attribute selection on the same line using:</p>
-<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="dashboards.html#cb215-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fixedRow</span>(</span>
-<span id="cb215-2"><a href="dashboards.html#cb215-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">column</span>(<span class="dv">6</span>, <span class="fu">uiOutput</span>(<span class="st">&quot;product&quot;</span>)),</span>
-<span id="cb215-3"><a href="dashboards.html#cb215-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">column</span>(<span class="dv">6</span>, <span class="fu">uiOutput</span>(<span class="st">&quot;attribute&quot;</span>))</span>
-<span id="cb215-4"><a href="dashboards.html#cb215-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb223-1"><a href="dashboards.html#cb223-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fixedRow</span>(</span>
+<span id="cb223-2"><a href="dashboards.html#cb223-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">column</span>(<span class="dv">6</span>, <span class="fu">uiOutput</span>(<span class="st">&quot;product&quot;</span>)),</span>
+<span id="cb223-3"><a href="dashboards.html#cb223-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">column</span>(<span class="dv">6</span>, <span class="fu">uiOutput</span>(<span class="st">&quot;attribute&quot;</span>))</span>
+<span id="cb223-4"><a href="dashboards.html#cb223-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 </div>
 <div id="upgrading-tables" class="section level3" number="14.3.2">
 <h3><span class="header-section-number">14.3.2</span> Upgrading Tables</h3>
@@ -601,18 +601,18 @@ To change the layout, simply load the library, and add the following piece of co
 <p>The example used here illustrates the power of <code>{shiny}</code>. However, it is here limited to our own data set, meaning that it is study specific. What if we would want to create a dashboard, that is connected to a database for instance and that updates its results as soon as new data is being collected?</p>
 <p>This is of course the next step, and <code>{shiny}</code> can handle this thanks to the <code>{shinydashboard}</code> package.</p>
 <p>In its principle, <code>{shinydashboard}</code> works in a similar way to <code>{shiny}</code> itself, except for the structure of the UI. For <code>{shinydashboard}</code>, the UI contains three sections as shown below (the example below generates an empty dashboard.):</p>
-<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="dashboards.html#cb216-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
-<span id="cb216-2"><a href="dashboards.html#cb216-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shinydashboard)</span>
-<span id="cb216-3"><a href="dashboards.html#cb216-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb216-4"><a href="dashboards.html#cb216-4" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">dashboardPage</span>(</span>
-<span id="cb216-5"><a href="dashboards.html#cb216-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dashboardHeader</span>(),</span>
-<span id="cb216-6"><a href="dashboards.html#cb216-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dashboardSidebar</span>(),</span>
-<span id="cb216-7"><a href="dashboards.html#cb216-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dashboardBody</span>()</span>
-<span id="cb216-8"><a href="dashboards.html#cb216-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb216-9"><a href="dashboards.html#cb216-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb216-10"><a href="dashboards.html#cb216-10" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output) { }</span>
-<span id="cb216-11"><a href="dashboards.html#cb216-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb216-12"><a href="dashboards.html#cb216-12" aria-hidden="true" tabindex="-1"></a><span class="fu">shinyApp</span>(ui, server)</span></code></pre></div>
+<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="dashboards.html#cb224-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
+<span id="cb224-2"><a href="dashboards.html#cb224-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shinydashboard)</span>
+<span id="cb224-3"><a href="dashboards.html#cb224-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb224-4"><a href="dashboards.html#cb224-4" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">dashboardPage</span>(</span>
+<span id="cb224-5"><a href="dashboards.html#cb224-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dashboardHeader</span>(),</span>
+<span id="cb224-6"><a href="dashboards.html#cb224-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dashboardSidebar</span>(),</span>
+<span id="cb224-7"><a href="dashboards.html#cb224-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dashboardBody</span>()</span>
+<span id="cb224-8"><a href="dashboards.html#cb224-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb224-9"><a href="dashboards.html#cb224-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb224-10"><a href="dashboards.html#cb224-10" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output) { }</span>
+<span id="cb224-11"><a href="dashboards.html#cb224-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb224-12"><a href="dashboards.html#cb224-12" aria-hidden="true" tabindex="-1"></a><span class="fu">shinyApp</span>(ui, server)</span></code></pre></div>
 <p>It is then your task to fill in the dashboard by for instance connecting to your data source (e.g. a simple data set, a database, etc.) and to fill in your different tabs with the interactivity and outputs of interest.</p>
 <p>For more information, including a comprehensive <em>Get started</em> section, we recommend you to visit <a href="https://rstudio.github.io/shinydashboard/">https://rstudio.github.io/shinydashboard/</a></p>
 </div>
