@@ -7,7 +7,6 @@ knitr::opts_chunk$set(echo=FALSE, eval=FALSE)
 library(tidyverse)
 ```
 
-
 *Data Preparation*, which consists of *data inspection* and *data cleaning*, is a critical step before any further *Data Manipulation* or *Data Analysis*. Having a good data preparation procedure ensures a good understanding of the data, and avoids what could be very critical mistakes.
 
 To illustrate the importance of the later point, let's imagine a study in which the samples are defined by their 3-digits code. 
@@ -41,6 +40,9 @@ Other informative solutions consists in printing a summary of the data through t
 library(skimr)
 skim(sensory)
 ```
+
+
+
 
 ### Design Inspection
 
@@ -405,33 +407,4 @@ example %>%
 
 
 Ignoring, removing, imputing
-
-
-
-### Restructuring Data
-
-Presentation of the different shapes of the tables based on objectives
-
-#### Variables Selection and Repositioning
-
-`dplyr::select()` and `dplyr::arrange()`
-
-#### Data Filtering
-
-`dplyr::filter()`
-
-#### Data (Re)Shaping
-
-`pivot_wider()` and `pivot_longer()`
-`_join()`
-
-#### Preparing Data for FactoMineR and SensoMineR
-
-matrix, data frame, and tibble. 
-
-how to check the type? `class()`
-how to test it? `is.data.frame()`, `is.matrix()`, `is_tibble()`
-how to convert it to another format? (see below)
-
-Note on `{FactoMineR}` and `{SensoMineR}` which require data frames or matrix (not tibble) so introduction to `column_to_rownames()` and `rownames_to_columns()` as well as `as.data.frame()` and `as_tibble()`.
 

@@ -18,6 +18,9 @@ sensory <- read_xlsx(file_path, sheet="Data") %>%
 sensory
 skim_without_charts(sensory)
 
+library("report")
+
+
 # Design Evaluation -------------------------------------------------------
 
 library(tidyverse)

@@ -29,22 +29,17 @@ Note that since building graphics is limited to one's imagination, it is not pos
 
 To use `{ggplot2}`, it needs to be loaded. This can either be done directly using:
 
-
 ```{r}
 library(ggplot2)
 ```
 
-
 However, if you load the `{tidyverse}` package, this step can be ignored as `{ggplot2}` is included within the list of packages it contains:
-
 
 ```{r}
 library(tidyverse)
 ```
 
-
 To illustrate the use of `{ggplot2}`, both the sensory data (*Sensory Profile.xlsx*) and the number of biscuit eaten by each respondents (*Consumer Test.xlsx*) are used.
-
 
 ```{r}
 library(here)
@@ -68,15 +63,12 @@ Nbiscuit <- read_xlsx(file_path, sheet="Time Consumption") %>%
 
 ```
 
-
 To initiate a graph, the function `ggplot()` is called.
 Since the data to be used are stored in `sensory`, `ggplot()` is applied on `sensory`:
-
 
 ```{r}
 p <- ggplot(sensory)
 ```
-
 
 Running this line of code generates an empty graphic stored in `p`. This is logical since no layers have been added yet.
 So let's imagine we want to look at the overall relationship between `Sticky` and `Melting`. To evaluate this relationship, a scatter plot with `Sticky` in the x-axis and `Melting` in the y-axis can be created. 
@@ -87,14 +79,11 @@ To do so, two types of information are required:
 
 Such information can be provided as such:
 
-
 ```{r}
 p + geom_point(aes(x=Sticky, y=Melting))
 ```
 
-
 As can be seen, a layer that consists of points (defined by `geom_point()`) in which the x-axis coordinates is defined by `Sticky` and the y-axis coordinates by `Melting` defined through aesthetics (or `aes()`) is added to the already existing graph `p` .
-
 
 #### Introduction to Aesthetics
 
@@ -102,22 +91,18 @@ In the previous example, one can notice that many points are being printed. This
 
 Let's color the points per products to see if we can see any patterns. Since the color code is specific to the data (more precisely to `Product`), it should be informed within the aesthetics by adding `colour=Product` within `aes()`:
 
-
 ```{r}
 p + geom_point(aes(x=Sticky, y=Melting, colour=Product))
 ```
-
 
 As you can see, any parameters provided within `aes()` may depend on a variable (e.g. `colour` in the previous example). 
 If for any reasons, a specific setting should uniformly be applied to all the elements of the graph, then it should be stated outside `aes()`. 
 
 Let's illustrate this by providing a simple example in which we change the type of the dots from circle to square using `pch`, and by increasing their size using `cex`:
 
-
 ```{r}
 p + geom_point(aes(x=Sticky, y=Melting, colour=Product), pch=15, cex=5)
 ```
-
 
 Depending on the `geom_*()` considered, different parameters should be informed within `aes()`. Here is a list of the most common `aes()` you would use:
 
@@ -129,9 +114,7 @@ Depending on the `geom_*()` considered, different parameters should be informed 
  
 Examples highlighting various types of aesthetics are presented throughout the book.
 
-
 #### Introduction to `geom_*()` functions
-
 
 Since `{ggplot2}` is a multi-layer graph, let's add another layer. For example, the name/code of the panelists associated to each point can be printed. 
 
@@ -139,16 +122,13 @@ Such procedure is done thorugh the use of another `geom_*()` function in `geom_t
 
 To avoid having the label overlapping with the point, the text is slightly shifted vertically using `nudge_y`:
 
-
 ```{r}
 ggplot(sensory)+
   geom_point(aes(x=Sticky, y=Melting, colour=Product))+
   geom_text(aes(x=Sticky, y=Melting, label=Judge), nudge_y=1)
 ```
 
-
 One interesting remark is that some information required in `aes()` is being repeated across the different `geom_*()` used. Such writing can be simplified by providing the `aes()` information that applies to all `geom_*()` to the original `ggplot()` call. The previous code hence can be simplified to:
-
 
 ```{r}
 p <- ggplot(sensory, aes(x=Sticky, y=Melting, label=Judge))+
@@ -156,22 +136,18 @@ p <- ggplot(sensory, aes(x=Sticky, y=Melting, label=Judge))+
   geom_text(nudge_y=1)
 ```
  
-
 With this new code, you'll notice that:
 
  - although `label` is only relevant for `geom_text()`, it can still be provided at the beginning as it will be ignored by `geom_point()` which does not require it;
  - `colour` should only be provided within `geom_point()` else the text would also be colored according to `Product` (which we do not want here);
  - `nudge_y` is defined outside `aes()` as it applies to all the text.
 
-
 Since the graphics look at the relationship between two quantitative variables, let's add another layer to the previous graph that shows the regression line between:
-
 
 ```{r}
 line_p <- p + geom_smooth(method="lm", formula="y~x", se=FALSE)
   
 ```
-
 
 This code adds a regression line to the graphic. It is built using the `lm()` engine in which the simple linear regression model `y~x` is fitted. This result is somewhat surprising since we have not run any regression yet, meaning that `geom_smooth()` is actually performing the required analysis on the data in the background. 
 
@@ -180,24 +156,19 @@ In fact, most `geom_*()` function comes with a statistical process attached to i
 Let's illustrate this concept again using another example: bar-charts that is applied on the data stored in `Nbiscuit`. 
 Here, we want to see the distribution (through bar-charts) of number of biscuits eaten per consumer. A quick look at the data shows that some respondents ate portions of the cookies. To simplify the analysis, let's consider the total number of entire cookies eaten: if a respondent has eaten say 3.5 biscuits, it will be rounded down to 3 full cookies. 
 
-
 ```{r}
 Nbiscuit <- Nbiscuit %>% 
   mutate(N = floor(N))
 ```
 
-
 To create such distribution, a first solution consists in counting for each product how many respondents ate 0 biscuit, 1 biscuit, 2 biscuits, etc. This is automatically done using `geom_bar` and `stat="count"`. The parameter `position="dodge"` is used to get the results per biscuit side by side rather than stacked up (value by default):
-
 
 ```{r}
 bar_p <- ggplot(Nbiscuit, aes(x=N, fill=Product))+
   geom_bar(stat="count", position="dodge")
 ```
 
-
 In the background, this corresponds to grouping the data by `Product`, summarizing the results by counting `N`, and then performing `geom_bar()` in which no transformation is required (we set `stat="identity"`)^[This code could even be simplified by using `geom_col()` since `geom_col()` corresponds to `geom_bar()` with `stat="identity"` as default.]:
-
 
 ```{r}
 Nbiscuit %>% 
@@ -206,11 +177,9 @@ Nbiscuit %>%
   geom_bar(stat="identity", position="dodge")
 ```
 
-
 As can be seen, the two graphics are identical. 
 
 #### Making graphs pretty
-
 
 In the two previous graphs generated (stored in `line_p` and `bar_p`), some features can be changed to produce clearer visualizations. Currently, the background is grey with vertical and horizontal white lines, the legend is positioned on the right side, the axis is defined based on the data itself (and so are the axis titles), there is no title, etc. and all these points (amongst many more) that are being improved in this section.
 
@@ -225,7 +194,6 @@ bar_p = bar_p + theme_minimal()
 Rather than using pre-defined themes (or to complement pre-defined themes), the different parameters of the graph can be controlled through `theme()`.
 
 Next, let's modify the axes by changing their names and by applying more logical breaks. For instance, the limits of the x-axis can be extended to -1 and 11 to ensure that all the histograms are visible, else R removes some and returns a warning: `Removed 10 rows containing missing values`.
-
 
 ```{r}
 bar_p = bar_p +
@@ -243,9 +211,7 @@ bar_p = bar_p +
   ggtitle("Distribution of the number of biscuits eaten","(Results are split per biscuit type)")
 ```
 
-
 Let's apply a similar transformation to `line_p`. Here, we are aiming in having a more *realistic* plot using cartesian coordinates, a nice theme, no legend, and a title to the graph.
-
 
 ```{r}
 line_p = line_p +
@@ -256,7 +222,6 @@ line_p = line_p +
   ggtitle("Relationship between Melting and Sticky", "Biscuits perceived as more sticky tend to be less melting.")+
   guides(colour="none")
 ```
-
 
 ### Common Charts
 
@@ -285,9 +250,7 @@ Since making an exhaustive list of plots that are relevant in sensory and consum
   * `geom_tile()`, `geom_rect`: create area either using its center point (`geom_tile()`) or its four corner (`geom_rect()`) defined by `xmin`, `xmax`, `ymin`, and `ymax` (see example...); 
   * `geom_raster()`: high performance alternative to `geom_tile()`/`geom_rect` where all the tiles have the same size. 
 
-
 Besides `geom*()`, a lot of graphical parameters can further be controlled. This includes of course the `theme()` and the `aes()`:
-
 
 * For pre-defined themes, see example;
 * `axis` parameters including its title (`axis.title`), text (`axis.text`), ticks (`axis.ticks`), line (`axis.line`), and all their sub-levels.
@@ -307,7 +270,6 @@ Note that if some elements should be left blank, `element_blank()` can be used r
 
 Let's illustrate these concepts using our previous graph stored in `line_p`. Here, the goal is to remove the grid line, to replace the x and y axis lines by arrows, and to re-position the axis titles to the far end of the axis so that it is next to the arrow head. 
 
-
 ```{r}
 line_p +
   theme(panel.grid=element_blank(), 
@@ -316,17 +278,14 @@ line_p +
         axis.title=element_text(hjust=1))
 ```
 
-
 Similarly to the theme, aesthetics can also be adjusted. In previous examples, the x-axis in `bar_p` as adjusted by setting limits, providing breaks and replacing the values by certain labels using `scale_x_continuous()`. 
 Most aesthetics parameters can be controlled by equivalent functions for which the name is using the following structure  `scale_*nameaes*_*typescale*`, and where: 
 
 * *nameaes* corresponds to any aesthetics including `x`, `y`, `colour` or `fill`, `alpha`, etc.
 * *typescale* corresponds to the type of scale, where it is `continuous`, `discrete`, or `manual` amongst others.
 
-
 Such functions fully control how the corresponding aesthetic should behave, by providing the correspondence between a variable level and its color for instance. In the graph saved in `bar_p`, remember that we filled in the bar chart using the product information. Let's imagine that we are particularly interested in biscuit P3, and want to compare it to the rest of the biscuits. We propose to make P3 stand out by filling it in orange, and by setting all the other biscuits in the same gray tone.
 Such procedure can be done using `scale_fill_manual()`.
-
 
 ```{r}
 bar_p + 
@@ -334,29 +293,23 @@ bar_p +
                              "P6"="gray50", "P7"="gray50", "P8"="gray50", "P9"="gray50", "P10"="gray50"))
 ```
 
-
 When multiple aesthetics are being used, the legend might become overwhelming or redundant. It is possible to turn off some of these visuals within the `scale_*()` functions, or by using `guides()` and by setting `nameaes='none'` as shown in the `line_p` example.
-
 
 ### Miscealleneous
 
 #### Structuring the axis
 
-
 By default, `ggplot()` generates plot that fits the data and that fits within the output screen. This means that some graphics might not be perfectly representing the data due to some distortion. In a previous example (`line_p`), the dimensions were made comparable through `coord_fixed()`. 
 
 Other transformation can be performed. For instance, the graphic can be transposed using `coord_flip()` as in the following example:
-
 
 ```{r}
 bar_p + coord_flip()
 ```
 
-
 To conclude this section, and summarize most concepts presented in this chapter, let's introduce the well-known spider plots. The use of such plots are quite polarizing amongst analysts and the reason of this choice here is purely educational, as 1. there are no pre-defined options in `{ggplot2}` that provides such charts, and 2. they present some interesting challenges.
 
 Let's start with deconstructing a spider-plot: a spider plot is a line chart presented in a circular way. So let's start with building a line chart of our sensory profiles (the means are considered here). For more clarity, only two of the samples (`P03` and `POpt`) are represented.
-
 
 ```{r}
 
@@ -380,14 +333,11 @@ spider_line <- ggplot(sensory_mean, aes(x=Variables, y=Mean, colour=Product, lin
   scale_linetype_manual(values=c("P03"="solid", "POpt"="dashed"))
 ```
 
-
 Next step is to represent this line chart in a circular way. This can be done using `coord_polar()`:
-
 
 ```{r}
 spider_line + coord_polar()
 ```
-
 
 This already looks like a spider plot! However, a closer look at it highlights a point that needs improvement: There is no connection between the last attribute (`Melting`) and the first one (`Shiny`). 
 
@@ -395,7 +345,6 @@ To counter this, the following twofold solution is proposed:
 
   1. Associate each attribute to its position (e.g. `Shiny` is 1, `External color intensity` is 2, until `Melting` which would be 32);
   2. Duplicate the last attribute (`Melting`) and associate it to position 0.
-
 
 ```{r}
 var <- levels(sensory_mean$Variables)
@@ -405,9 +354,7 @@ sensory_mean_pos <- tibble(Variables = c(var[length(var)], var),
 
 ```
 
-
 The previous graph is then rebuilt by forcing the position of the attributes on the x-axis using `Position` (`Variables` is used for the labels). Here position 0 is voluntarily omitted (`breaks = 1:length(var)` and `labels = var`), meaning that only the labels going from 1 to the last variable are being showed. However, the x-axis is forced to go from 0 to the number of attributes (`limits = c(0, length(var))`).
-
 
 ```{r}
 spiderplot <- ggplot(sensory_mean_pos, aes(x=Position, y=Mean, colour=Product, linetype=Product))+
@@ -421,7 +368,6 @@ spiderplot <- ggplot(sensory_mean_pos, aes(x=Position, y=Mean, colour=Product, l
   coord_polar()
 ```
 
-
 By using this trick, the connection between the first and last attributes is established.
 
 #### Combining plots
@@ -433,11 +379,14 @@ An example of `facet_wrap()` is provided in (ref data analysis).
 
 For these two functions, the parameter `scales` is particularly interesting as it allows each separate graph to use its own axis scales (`free` or individually using `free_x`/`free_y`) or not (`fixed`).
 
+To go further, consider also the function `facet_trelliscope()` from the `{trelliscopejs}`.
+This function generates the same type of graphs as `facet_wrap()` or `facet_grid()` with some powerful twists. After generating the plots, they are still editable thanks to an interactive menu that controls for the *Grid*, *Labels*, *Filter*, and *Sort*. For example, the number of plots to show per row/column can be adjusted, tables with descriptive statistics (e.g. mean, minimum, maximum) can be added under each graph, etc. Moreover, readers that are familiar with the interactivity of `{plotly}` can make great use of it through the `as_plotly = TRUE` parameter, which is then applied to each individual graph!
+
 
 Such procedure is very handy to produce multiple graphs all at once...when the data allow it. 
 When multiple plot are being generated separately (using different data set, or producing different types of plots), it can still be relevant to combine them all in one. To perform such collage, the package `{patchwork}` becomes handy thanks to its simplicity and flexibility.
 
-Indeed, `{patchwork}` is a package that allows combining `ggplot()` graphs using *mathematical* operations.
+`{patchwork}` is a package that allows combining `ggplot()` graphs using *mathematical* operations.
 To add two elements next to each others, the `+` sign is used. To add two elements on top of each others, they should be separated using `/`. This operation can be combined with `()` to generate fancier collage.
 
 Let's illustrate this by creating a plot with on the left side `spiderplot`, and on the right side `bar_p` on top of `line_p`.
@@ -451,7 +400,6 @@ p
 ```
 
 A general title can be added, as well as tag levels (handy for publications!) using `plot_annotation()`.
-
 
 ```{r}
 p + plot_annotation(title = "Example of 'ggplots' I've learned today", tag_levels='a')
@@ -501,14 +449,11 @@ There are various ways to save or export `ggplot()` charts. To save these plots 
 
 For instance, the `spiderplot` generated earlier^[Since `spiderplot` is not the last plot generated, it needs to be defined in `plot`.] can be saved as following:
 
-
 ```{r}
 ggsave(filename="spiderplot.png", plot=spiderplot, device="png")
 ```
 
-
 As an alternative, `ggplot()` graphs can also be exported in PowerPoint or Word through the `{rvg}` package (see example).
-
 
 #### Additional libraries
 
