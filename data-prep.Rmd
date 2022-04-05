@@ -3,33 +3,138 @@ knitr::opts_chunk$set(echo=FALSE, eval=FALSE)
 ```
 # Data Preparation {#data-prep}
 
-The data we will be using in this chapter is the one that you imported in Section \@ref(data-collection).
+```{r}
+library(tidyverse)
+```
+
+*Data Preparation*, which consists of *data inspection* and *data cleaning*, is a critical step before any further *Data Manipulation* or *Data Analysis*. Having a good data preparation procedure ensures a good understanding of the data, and avoids what could be very critical mistakes.
+
+To illustrate the importance of the later point, let's imagine a study in which the samples are defined by their 3-digits code. 
+During importation, R would recognize them as number, and hence defines the *Product* column as numerical. Without inspection and correction, any ANOVA that include the product effect would be replaced by a linear regression (or analysis of covariance) which of course does not provide the results required (although the analysis would run without error). Worst, if this procedure is automated and the *p-value* associated to the product effect is extracted, the conclusions would rely on the wrong analysis! A good data preparation procedure is hence important to avoid such unexpected results. 
+
+So what consists of data preparation, and how does that differ from data manipulation? 
+There is clearly a very line between data preparation (and particularly *data cleaning*) and data manipulation, many procedures being used in both (same applies to data manipulation and data analysis for instance). For this book, we decided to follow this rule:
+
+*Data Preparation* includes all the required steps to ensure that the data is matching its intrinsic nature. These steps include inspecting the data at hand (usually through simple descriptive statistics of the data as a whole, with no *interpretation mindset*) and cleaning the data by eventually correcting importation errors (imputation of missing data is also included here). Although some descriptive statistics are being produced for data inspection, these analyses have no interpretation value besides ensuring that the data are in the right range, or following the right distribution. For instance, with our sensory data, we would ensure that all our sensory scores are included between 0 and 100 (negative scores would not be permitted), but we would not look at the mean or the distribution of the score per product which would belong to data analyses and would require interpretation (e.g. P01 is sweeter than P02).
+
+The *Data Manipulation* is an optional step that adjust or convert the data into a structure that is usable for further analysis. This of course may lead to *interpretation* of the results as it may involve some analyses.
+
+The *Data Analysis* step ultimately converts the data into results (through values, graphics, tables, etc.) that provide more insights (through interpretation) about the data at hand.
+
+The data used in this chapter includes the *Sensory Profile.xlsx* that you imported in Section \@ref(data-collection). Another version of the sensory profiles that includes missing values is also being used (*Sensory Profile (NA).xlsx*).
 
 ## Inspect {#inspect}
 
 ### Data Inspection
 
 To inspect the data, different steps can be used. 
-First, since `read_xlsx()` returns a tibble, we can take advantage of its printing properties to get a fill of the data at hand,
+First, since `read_xlsx()` returns a tibble, let's take advantage of its printing properties to get a fill of the data at hand:
 
 ```{r TFEQ_data}
-TFEQ_data
+sensory
 ```
 
-
-Other informative solutions consists in printing a summary of the data through the `summary()` function, or looking at its type and first values using `str()`. However, due to its richness of the outputs, we prefer to use the `skim()` function from the `{skimr}` package.
+Other informative solutions consists in printing a summary of the data through the `summary()` function, or looking at its type and first values using `str()`. However, due to its richness of the outputs, the `skim()` function from the `{skimr}` package is preferred.
 
 ```{r TFEQ_data_skim}
 library(skimr)
-skim(TFEQ_data)
+skim(sensory)
 ```
+
+
 
 
 ### Design Inspection
 
+As part of the data inspection, it is relevant to check that all the data are in line with their intrinsic nature, look for outliers, etc. 
+Another point of interest - quite specific to sensory and consumer data - is to ensure that the design is well balanced, and handles the first-order and carry-over effects. This step is particularly important for those who analyze the data but were not involved from the start in that study (and hence were not involved when the test was set-up).
 
-Evaluate if the design is complete/incomplete
-Frequencies and cross-frequencies (simple statistics and simple graphs)
+Let's show a simple procedure that would check part of the quality of a design.
+Since neither in *Sensory Profile.xlsx*, nor in *TFEQ.xlsx* the design is not available, the `sensochoc` data stored in the `{SensoMineR}` is used. 
+
+To load (and clean) the data, let's run these lines of code:
+
+```{r}
+library(SensoMineR)
+
+data(chocolates)
+
+dataset <- sensochoc %>% 
+  as_tibble() %>% 
+  mutate(across(c(Panelist, Session, Rank, Product), as.character))
+
+```
+
+The data consist in 6 products (`Product`) evaluated by 29 panelists (`Panelist`) in duplicates (`Session`). The presentation order is stored in `Rank`. 
+
+To evaluate whether the products have been equally presented at each position, a simple cross-count between `Product` and `Rank` is done. This can easily be done using the `xtabs()` function:
+
+```{r}
+xtabs(~Product + Rank, data=dataset)
+```
+
+Such table can also be obtained using `group_by()` and `count()` to get the results in a tibble:
+
+```{r}
+dataset %>% 
+  group_by(Product) %>% 
+  count(Rank) %>% 
+  ungroup() %>% 
+  pivot_wider(names_from=Rank, values_from=n)
+```
+
+As we can see, the design is not perfectly balanced, as `choc2` is evaluated 11 times in the 1st, 4th, and 6th position, but only 7 times in the 5th position.
+
+The next step then consists in evaluating how often each product is assessed before the other products (carry-over effect). Since this information is not directly available in the data, it needs to be added. 
+
+Let's start with extracting the information available, i.e. the order of each product for each panelist and session:
+
+```{r}
+current <- dataset %>% 
+  dplyr::select(Panelist, Product, Session, Rank) %>% 
+  mutate(Rank = as.numeric(Rank))
+
+```
+
+An easy way to add the `Previous` product information as a new column in the data is by replacing `Rank` by `Rank + 1` in `current` (all new positions larger than the number of products is filtered). 
+
+```{r}
+previous <- current %>% 
+  rename(Previous = Product) %>% 
+  mutate(Rank = Rank + 1) %>% 
+  filter(Rank <= length(unique(dataset$Product)))
+
+```
+
+
+This new data is merged to `current` by `Panelist`, `Session`, and `Rank`:
+
+```{r}
+(cur_prev <- current %>% 
+  left_join(previous, by=c("Panelist", "Session", "Rank")))
+```
+
+As can be seen, the products that are evaluated first get `NA` in `Previous`, and for each rank r (r > 1), `Previous` gets the product that was evaluated at rank r-1.
+
+To evaluate the carry-over effect, the only thing to do is to cross-count `Product` and `Previous` (here, the results are split per `Session`):
+
+```{r}
+cur_prev %>% 
+  group_by(Session, Product, Previous) %>% 
+  count() %>% 
+  ungroup() %>% 
+  mutate(Product = factor(Product, levels=paste0("choc",1:6)),
+         Previous = factor(Previous, levels=c("NA",paste0("choc",1:6)))) %>%
+  arrange(Previous) %>% 
+  pivot_wider(names_from=Previous, values_from=n, values_fill=0) %>% 
+  arrange(Product) %>% 
+  split(.$Session)
+
+```
+
+As expected, the table shows that a product is never evaluated twice in a row (the diagonal contains 0). Here again, the design is not optimal since `choc1` has been evaluated 3 times before `choc2` and 6 times before `choc5` in the first session.
+
+Finally, the `NA` column refers to the time that products did not have a product tested before, meaning that they were evaluated first.
 
 ### Missing Data Inspection
 
@@ -48,8 +153,7 @@ Any preliminary summary tables and charts should be created that might help the 
 
 ### Renaming Variables
 
-renaming columns using `rename()` or `select()`
-
+renaming columns using `rename()` or `select()`, tackled in data manipulation
 
 ### Handling Data Type
 
@@ -303,33 +407,4 @@ example %>%
 
 
 Ignoring, removing, imputing
-
-
-
-### Restructuring Data
-
-Presentation of the different shapes of the tables based on objectives
-
-#### Variables Selection and Repositioning
-
-`dplyr::select()` and `dplyr::arrange()`
-
-#### Data Filtering
-
-`dplyr::filter()`
-
-#### Data (Re)Shaping
-
-`pivot_wider()` and `pivot_longer()`
-`_join()`
-
-#### Preparing Data for FactoMineR and SensoMineR
-
-matrix, data frame, and tibble. 
-
-how to check the type? `class()`
-how to test it? `is.data.frame()`, `is.matrix()`, `is_tibble()`
-how to convert it to another format? (see below)
-
-Note on `{FactoMineR}` and `{SensoMineR}` which require data frames or matrix (not tibble) so introduction to `column_to_rownames()` and `rownames_to_columns()` as well as `as.data.frame()` and `as_tibble()`.
 
