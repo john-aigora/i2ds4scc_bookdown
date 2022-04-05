@@ -1,5 +1,30 @@
-```{r include=FALSE}
+```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
+```
+
+```{r load_utilities, message=FALSE, warning=FALSE}
+
+# Install and load libraries ----------------------------------------------
+
+library(tidyverse)
+library(rattle) # wine dataset
+require(factoextra)
+library(tidymodels)
+library(ranger)
+library(ggfortify) # PCA visualization
+library(cluster)
+
+# load data
+
+wine.fl <- "http://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data"
+wine <- read.csv(wine.fl,header = F)
+# Names of the variables
+wine.names=c("Alcohol", "Malic acid", "Ash", "Alcalinity of ash", "Magnesium",
+             "Total phenols", "Flavanoids", "Nonflavanoid phenols", "Proanthocyanins",
+             "Color intensity", "Hue", "OD280/OD315 of diluted wines", "Proline")
+colnames(wine)[2:14]=wine.names
+colnames(wine)[1]="Type"
+
 ```
 
 # Machine Learning {#machine-learning}
@@ -7,18 +32,124 @@ knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 
 ## Methods Overview
 
-<!-- ### Unsupervised learning -->
+### Unsupervised learning
 
-<!-- #### Cluster analysis --> 
+```{r prepare_data}
 
-<!-- Aim of cluster analysis is to discover in high-dimensional data groups of  -->
-<!-- observations that are similar to each other in the group and significantly -->
-<!-- different from the rest of observations. Common application in consumer science  -->
-<!-- is to cluster consumers based on their taste preference to understand and target -->
-<!-- specific segments. -->
+# We drop type, to present possibility of generating the target using unsupervised methods
+
+set.seed(123)
+wine_dataset <- tibble(wine) %>% 
+  select(-Type) 
+
+```
+#### Cluster analysis
+
+<!-- what's the role of cluster analysis in ML -->
+<!-- cluster analysis in consumer analysis as semisupervised learning -->
+
+Aim of cluster analysis is to discover in high-dimensional data groups of
+observations that are similar to each other in the group and significantly
+different from the rest of observations. Common application in consumer science
+is to cluster consumers based on their taste preference to understand and target
+specific segments.
+
 
 <!-- #### Factor analysis -->
 <!-- #### Principle components analysis -->
+
+<!-- Tian comments: Why do we need PCA before cluster analysis? Or in what situation -->
+<!-- a PCA is beneficial before clustering? -->
+
+
+comparing PCA with and without scaling
+
+```{r pca_without_scaling}
+pca_results_ws <- wine_dataset %>%
+  prcomp()
+
+summary(pca_results_ws)
+autoplot(pca_results_ws)
+
+pca_ws_plot <- autoplot(pca_results_ws, data = wine_dataset,
+                   loadings = TRUE, loadings.colour = 'red',
+                   loadings.label = TRUE, loadings.label.size = 3) +
+  theme_minimal()
+
+pca_ws_plot
+
+```
+
+```{r pca_with_scaling}
+# scaling data + PCA -----------------------------------------------------------
+
+pca_results <- wine_dataset %>%
+  prcomp(scale. = TRUE)
+
+summary(pca_results)
+plot(pca_results)
+
+pca_plot <- autoplot(pca_results, data = wine_dataset,
+               loadings = TRUE, loadings.colour = 'red',
+               loadings.label = TRUE, loadings.label.size = 3) +
+  theme_minimal()
+
+pca_plot
+
+reduced_dataset <- data.frame(pca_results$x[, 1:2]) %>%
+  tibble()
+# we can see that clustering should be easy
+
+```
+
+<!-- Clustering  -->
+<!-- Using Elbow method to find the optimum number of cluster numbers -->
+
+<!-- kmeans vs hierarchical clustering, is nbclust only valid for kmeans? -->
+
+```{r find_opt_cluster_number}
+
+wcss <- tibble()
+for (i in 1:10) {
+  
+  wcss <- wcss %>% 
+    bind_rows(tibble(n_clusters = i,
+                     wcss = kmeans(reduced_dataset, i)$tot.withinss))
+  
+}
+
+ggplot(data=wcss, aes(x=n_clusters, y=wcss, group=1)) +
+  geom_line(size = 1.5)+
+  geom_point(shape=21, fill="blue", color="darkred", size=5) +
+  theme_minimal() +
+  xlab("Number of clusters") +
+  ylab("Total within-cluster sum of squares")
+
+# Finding number of clusters - silhouette method
+fviz_nbclust(reduced_dataset, kmeans, method = "silhouette")
+
+# 3 clusters seems to be good fit
+
+```
+
+<!-- Tian comments:from sensory consumer data analysis point of view, when to  -->
+<!-- use kmeans, when to use hierarchical? etc. -->
+```{r kmeans_cluster_analysis}
+
+km_dw <- kmeans(reduced_dataset, 3, nstart = 20)
+
+km_dw
+
+fviz_cluster(
+  list(data = reduced_dataset, cluster = km_dw$cluster),
+  ellipse.type = "norm",
+  geom = "point",
+  stand = FALSE
+)
+
+```
+
+
 <!-- #### t-SNE -->
 <!-- ### Semisupervised learning -->
 <!-- #### PLS regression -->
@@ -129,6 +260,10 @@ A random forest is a set of decision trees, each one trained on random subset
 of observations and/or predictors. The final prediction is an average of individual
 trees' predictions. This way 
 
+
+
+
+
 ##### SVMs
 ##### Neural networks
 ##### Computer vision
@@ -148,104 +283,12 @@ trees' predictions. This way
 ### Characterizing consumer clusters
 
 ## Code
+
+
+<!-- introduce tidymodel -->
+
 ```{r classification_Aigora_ml_training}
 
-# Install and load libraries ----------------------------------------------
-
-# install.packages(c("tidyverse", "tidymodels", "rattle",
-#                    "ggplot2", " factoextra", "ranger",
-#                    "ggfortify", "cluster"))
-library(tidyverse)
-library(rattle) # wine dataset
-library(ggplot2)
-require(factoextra)
-library(tidymodels)
-library(ranger)
-library(ggfortify) # PCA visualization
-library(cluster)
-
-# Data ----------------------------------------------
-
-set.seed(123)
-wine_dataset <- tibble(wine) %>% 
-  select(-Type) # We drop type, to present possibility of generating the target using unsupervised methods
-
-
-# PCA without scaling -----------------------------------------------------
-
-pca_results_ws <- wine_dataset %>%
-  prcomp()
-
-summary(pca_results_ws)
-autoplot(pca_results_ws)
-
-pca_ws_plot <- autoplot(pca_results_ws, data = wine_dataset,,
-                   loadings = TRUE, loadings.colour = 'red',
-                   loadings.label = TRUE, loadings.label.size = 3) +
-  theme_minimal()
-
-pca_ws_plot
-# ggsave("output/pca_without_scaling.jpg", pca_ws_plot)
-
-# scaling data + PCA -----------------------------------------------------------
-
-pca_results <- wine_dataset %>%
-  prcomp(scale. = TRUE)
-
-summary(pca_results)
-plot(pca_results)
-
-pca_plot <- autoplot(pca_results, data = wine_dataset,,
-               loadings = TRUE, loadings.colour = 'red',
-               loadings.label = TRUE, loadings.label.size = 3) +
-  theme_minimal()
-
-pca_plot
-# ggsave("output/pca.jpg", pca_plot)
-
-reduced_dataset <- data.frame(pca_results$x[, 1:2]) %>%
-  tibble()
-# we can see that clustering should be easy
-
-# Clustering  -------------------------------------------------------------
-
-# Finding number of clusters - Elbow method
-wcss <- tibble()
-for (i in 1:10) {
-  
-  wcss <- wcss %>% 
-    bind_rows(tibble(n_clusters = i,
-                     wcss = kmeans(reduced_dataset, i)$tot.withinss))
-  
-}
-
-ggplot(data=wcss, aes(x=n_clusters, y=wcss, group=1)) +
-  geom_line(size = 1.5)+
-  geom_point(shape=21, fill="blue", color="darkred", size=5) +
-  theme_minimal() +
-  xlab("Number of clusters") +
-  ylab("Total within-cluster sum of squares")
-
-# ggsave("output/n_clusters_decision_Elbow.jpg")
-
-# Finding number of clusters - silhouette method
-fviz_nbclust(reduced_dataset, kmeans, method = "silhouette")
-# ggsave("output/n_clusters_decision_silhouette.jpg")
-
-# 3 clusters seems to be good fit
-
-km_dw <- kmeans(reduced_dataset, 3, nstart = 20)
-
-km_dw
-
-fviz_cluster(
-  list(data = reduced_dataset, cluster = km_dw$cluster),
-  ellipse.type = "norm",
-  geom = "point",
-  stand = FALSE
-)
-
-# ggsave("output/clustered_data.jpg")
 
 # Classification ----------------------------------------------------------
 
