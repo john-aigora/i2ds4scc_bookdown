@@ -23,7 +23,7 @@ wine.names=c("Alcohol", "Malic acid", "Ash", "Alcalinity of ash", "Magnesium",
              "Total phenols", "Flavanoids", "Nonflavanoid phenols", "Proanthocyanins",
              "Color intensity", "Hue", "OD280/OD315 of diluted wines", "Proline")
 colnames(wine)[2:14]=wine.names
-colnames(wine)[1]="Type"
+colnames(wine)[1]="Wine_type"
 
 ```
 
@@ -39,8 +39,9 @@ colnames(wine)[1]="Type"
 # We drop type, to present possibility of generating the target using unsupervised methods
 
 set.seed(123)
-wine_dataset <- tibble(wine) %>% 
-  select(-Type) 
+wine_dataset <- tibble(wine)
+  # select(-Type) # !!! WE DECIDED NOT TO REMOVE ORIGINAL WINE TYPE !!!
+
 
 ```
 #### Cluster analysis
@@ -293,20 +294,33 @@ trees' predictions. This way
 # Classification ----------------------------------------------------------
 
 # Dataset preparation
-wine_classification_dataset <- reduced_dataset %>% 
-  bind_cols(tibble(Wine_type = km_dw$cluster)) %>% # Our classification label is the clustering output
+wine_classification_dataset <- wine_dataset %>% 
+  # bind_cols(tibble(Wine_type = km_dw$cluster)) %>% # Our classification label is the clustering output
   mutate(Wine_type = as.factor(Wine_type))
+```
 
+The function rsample::initial_split() takes the original data and saves the information on how to make the partitions.
+Here we used the strata argument, which conducts a stratified split. This ensures that, despite the imbalance we noticed in our class variable, our training and test data sets will keep roughly the same proportions of all Wine types as in the original data. After the initial_split, the training() and testing() functions return the actual data sets. (!!!copied from tidymodels documentation)
+```{r prep_train_test_data}
 initial_split <- initial_split(data = wine_classification_dataset, strata = "Wine_type", prop = 0.7)
 
 wine_train <- training(initial_split)
 wine_testing <- testing(initial_split)
 
-wine_cv <- wine_train %>% vfold_cv(5,strata = Wine_type)
+```
 
+There is https://www.tidymodels.org/start/resampling/#resampling cool graph and explanation of cross-validation
+```{r cv}
+wine_cv <- wine_train %>% vfold_cv(5,strata = Wine_type)
+```
+
+```{r model_definition}
 # Random forest model definition
 model_recipe <- wine_train %>% 
   recipe(Wine_type ~ .)
+```
+
+```{r def_of_hyperparams}
 
 rf_spec <- rand_forest(
   mtry = tune(),
@@ -315,18 +329,25 @@ rf_spec <- rand_forest(
   set_mode("classification") %>% 
   set_engine(engine = "ranger")
 
+```
+
+```{r workflow_def}
 rf_wf <- workflow() %>%
   add_recipe(model_recipe) %>% 
   add_model(rf_spec)
+```
 
-
-# Best parameters searching
-
+```{r grid_def}
 params_grid <- rf_spec %>%
   parameters() %>%
   update(mtry = mtry(range = c(1, 2)),
          trees = trees(range = c(10, 200))) %>% 
   grid_regular(levels = 5)
+
+```
+
+```{r tuning_hyperparams}
+# Best parameters searching
 
 tuning <- tune_grid(
   rf_wf,
@@ -335,18 +356,25 @@ tuning <- tune_grid(
 )
 
 autoplot(tuning)
-
 params_best <- select_best(tuning, "roc_auc")
+```
 
+```{r fit_best_model}
 # Finalize model 
 
 final_model <- rf_wf %>%
   finalize_workflow(params_best) %>%
   fit(wine_train)
 
+```
+
+```{r prediction}
 validation_data_pred <- wine_testing %>%
   bind_cols(predict(final_model, .))
 
+```
+
+```{r cm}
 cm <- conf_mat(validation_data_pred, Wine_type, .pred_class)
 
 autoplot(cm, type = "heatmap")
