@@ -313,15 +313,14 @@ There is https://www.tidymodels.org/start/resampling/#resampling cool graph and 
 ```{r cv}
 wine_cv <- wine_train %>% vfold_cv(5,strata = Wine_type)
 ```
-
-```{r model_definition}
+The recipe package is part of tidymodels. It contains rich set of data manipulation tools which can be used to preprocess data and to define role of each variables (e.g. outcome and predictor)
+```{r recipe}
 # Random forest model definition
 model_recipe <- wine_train %>% 
   recipe(Wine_type ~ .)
 ```
-
-```{r def_of_hyperparams}
-
+We decided to use random forest classifier. This method has 3 hyperparameters which can be tuned to achieve best results (mtry, trees, min_n). "Most often you would like to change a parameters from its default but you are not sure what the final value will be. This is the basis for model tuning where we use the tune package. Since the model is not executing when created, these types of parameters can be changed using the tune() function. This provides a simple placeholder for the value" (https://parsnip.tidymodels.org/articles/parsnip.html?q=tune#placeholders-for-parameters).
+```{r method_selection_and_placeholder_for_parameters}
 rf_spec <- rand_forest(
   mtry = tune(),
   trees = tune(),
@@ -330,13 +329,13 @@ rf_spec <- rand_forest(
   set_engine(engine = "ranger")
 
 ```
-
+Let's combine the model and recipe into a single workflow () object to help manage R objects
 ```{r workflow_def}
 rf_wf <- workflow() %>%
   add_recipe(model_recipe) %>% 
   add_model(rf_spec)
 ```
-
+We created placeholders for hyperparameters 2 steps earlier. Now it's time to define the scope of the search and to choose the method of searching the parameter space (in this example it is grid_regular)
 ```{r grid_def}
 params_grid <- rf_spec %>%
   parameters() %>%
@@ -345,7 +344,7 @@ params_grid <- rf_spec %>%
   grid_regular(levels = 5)
 
 ```
-
+We already have the hyperparameter search range defined. Now let's look for the best combination using tune_grid() function. We will use a cross-validation set for this purpose. We leave the test set aside, so that the model during training certainly does not see the data on which we will be making predictions. Proceeding in this way, we will obtain a reliable estimate of the quality of the model. Finally we select the best combination using select_best() function. The quality of the model can be estimated with a number of metrics. Here we decided to use roc_auc (Area Under the Receiver Operating Characteristic Curve)
 ```{r tuning_hyperparams}
 # Best parameters searching
 
@@ -358,7 +357,7 @@ tuning <- tune_grid(
 autoplot(tuning)
 params_best <- select_best(tuning, "roc_auc")
 ```
-
+The time has come to train the final model on the entire training set. 
 ```{r fit_best_model}
 # Finalize model 
 
@@ -367,13 +366,13 @@ final_model <- rf_wf %>%
   fit(wine_train)
 
 ```
-
+A very important step in solving the problem with machine learning methods is the assessment of the quality of the model. The first step in this process is to make a prediction on the out of sample set (one that the model has not seen while training). 
 ```{r prediction}
 validation_data_pred <- wine_testing %>%
   bind_cols(predict(final_model, .))
 
 ```
-
+Having predicted wine classes and actual labels, we can finally judge the quality of the model by comparing them. A very pleasant method for classification problems is the confusion matrix and the associated statistics (accuracy, sensitivity specificity, precision, F1 score and a lot more: https://en.wikipedia.org/wiki/Confusion_matrix). 
 ```{r cm}
 cm <- conf_mat(validation_data_pred, Wine_type, .pred_class)
 
