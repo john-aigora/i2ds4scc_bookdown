@@ -2,6 +2,24 @@
 knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 ```
 
+# Machine Learning {#machine-learning}
+
+machine learning in sensory and consumer science. 
+why it is appropriate
+sensory consumer data size is enough for machine learning 
+ 
+## Methods Overview
+
+explain unsupervised learning and supervised learning: differences
+
+the scenario for each method
+
+### Unsupervised learning
+
+cluster analysis as unsupervised learning
+
+Here we prepare a dataset for clustering analysis
+
 ```{r load_utilities, message=FALSE, warning=FALSE}
 
 # Install and load libraries ----------------------------------------------
@@ -9,10 +27,14 @@ knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 library(tidyverse)
 library(rattle) # wine dataset
 require(factoextra)
-library(tidymodels)
 library(ranger)
 library(ggfortify) # PCA visualization
 library(cluster)
+
+```
+
+
+```{r prepare_data}
 
 # load data
 
@@ -25,16 +47,6 @@ wine.names=c("Alcohol", "Malic acid", "Ash", "Alcalinity of ash", "Magnesium",
 colnames(wine)[2:14]=wine.names
 colnames(wine)[1]="Wine_type"
 
-```
-
-# Machine Learning {#machine-learning}
- 
-
-## Methods Overview
-
-### Unsupervised learning
-
-```{r prepare_data}
 
 # We drop type, to present possibility of generating the target using unsupervised methods
 
@@ -285,11 +297,25 @@ trees' predictions. This way
 
 ## Code
 
-
 <!-- introduce tidymodel -->
 
-```{r classification_Aigora_ml_training}
+tidyverse and tidymodel
 
+The tidymodels framework is a collection of packages for modeling and machine learning using tidyverse principles.
+
+``` {r install_load_tidymodels}
+
+install.packages("tidymodels")
+library(tidymodels)
+
+```
+
+here we use the wine dataset to build our model. 
+
+
+First we prepare our 
+
+```{r classification_Aigora_ml_training}
 
 # Classification ----------------------------------------------------------
 
