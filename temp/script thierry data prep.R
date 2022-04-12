@@ -1,11 +1,10 @@
 library(tidyverse)
-library(skimr)
 library(readxl)
 library(here)
 
 # Sensory Data ------------------------------------------------------------
 
-file_path <- here("data","Sensory Profile.xlsx") 
+file_path <- here("data","Sensory Profile (NA).xlsx") 
 p_info <- read_xlsx(file_path, sheet="Product Info") %>% 
   dplyr::select(-Type)
 
@@ -13,13 +12,79 @@ sensory <- read_xlsx(file_path, sheet="Data") %>%
   inner_join(p_info, by="Product") %>% 
   relocate(Protein:Fiber, .after=Product)
 
-# Data Preparation --------------------------------------------------------
+# Data Exploration --------------------------------------------------------
 
 sensory
-skim_without_charts(sensory)
+summary(sensory)
+glimpse(sensory)
 
-library("report")
+library(skimr)
+skim(sensory)
 
+library(DataExplorer)
+create_report(sensory)
+
+# Missing Values ----------------------------------------------------------
+
+  # Visualize and Detect
+library(visdat)
+sensory %>% 
+  vis_miss()
+
+sensory %>% 
+  split(.$Product) %>% 
+  map(function(data){
+    vis_miss(data)
+  })
+
+library(naniar)
+sensory %>%
+  gg_miss_upset()
+
+ggplot(sensory, aes(x=Product, y=Sour))+
+  geom_miss_point()
+
+  # Imputation
+senso_long <- sensory %>%
+  pivot_longer(-c("Judge","Product","Protein","Fiber"), names_to="Attribute", values_to="Score")
+
+prod_mean <- senso_long %>% 
+  group_by(Product, Attribute) %>% 
+  summarize(ProdMean = mean(Score, na.rm=TRUE)) %>% 
+  ungroup()
+
+senso_long %>% 
+  full_join(prod_mean, by=c("Product","Attribute")) %>% 
+  mutate(Score2 = ifelse(is.na(Score), ProdMean, Score)) %>% 
+  dplyr::select(-c("Score","ProdMean")) %>% 
+  pivot_wider(names_from=Attribute, values_from=Score2) %>% 
+  summary(.)
+
+library(simputation)
+
+senso_long %>% 
+  split(.$Attribute) %>% 
+  map(function(data){
+    
+    if (any(is.na(data$Score))){
+      data %>% 
+        dplyr::select(-Attribute) %>% 
+        impute_lm(Score ~ Product + Judge)
+    } else {
+      data %>% 
+        dplyr::select(-Attribute)
+    }
+    
+  }) %>% 
+  enframe(name = "Attribute", value = "res") %>% 
+  unnest(res) %>% 
+  pivot_wider(names_from=Attribute, values_from=Score) %>% 
+  summary(.)
+
+library(missMDA)
+
+imputePCA(sensory, quali.sup=1:4)$completeObs %>% 
+  summary(.)
 
 # Design Evaluation -------------------------------------------------------
 
@@ -64,4 +129,3 @@ cur_prev %>%
   pivot_wider(names_from=Previous, values_from=n) %>% 
   arrange(Product) %>% 
   split(.$Session)
-
