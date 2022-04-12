@@ -153,37 +153,39 @@ library(tidyverse)
 mdes2 <- Xvert(nfac=3, uc=c(.30, .40, .50), lc=c(.15, .25, .30), ndm = 1, plot = FALSE) %>% 
       mutate_if(is.numeric, round, digits = 3)
 
+MixBiscuits <- optFederov(~ -1 +x1 +x2+ x2 +x1:x2 +x1:x3 +x2:x3 +x1:x2:x3, mdes2, nTrials=9)
+DesignPoints(MixBiscuits$design, axislabs = c("Butter","Sugar","Flour"), pseudo = TRUE)
+
+```
+
+
+```{r, tab.cap="Average liking scores obtained for the biscuits from the mixture design", label="biscuit-mixt", echo = FALSE, eval=TRUE}
+
+Bmixt <- MixBiscuits$design %>%
+  as_tibble() %>%
+  select(-4) %>%
+  mutate(Product = c("A", "B", "C", "D", "E", "F", "G", "H", "I"), .before=x1) %>%
+  mutate(scores = c(7.5, 5.4, 5.5, 7.0, 6.0, 8.0, 5.8, 6.8, 7.9)) %>%
+  rename("Butter"=x1, "Sugar"=x2, "Flour"=x3, "Liking"=scores)
+ 
+flextable::qflextable(Bmixt)
+
 ```
 
 
 Once the data are collected we can use the `mixexp::MixModel()` function to fit a linear model and `mixexp::MixturePlot()` to draw a contour plot. Suppose that we obtain average liking scores for our 9 biscuits as given in Table \@ref(tab:biscuit-mixt), this simple code would allow to get a contour plot that shows where would be the optimal area for the biscuit formulation.
 
-<!-- This code doesn't run as MixtBisc is not defined -->
-
-```{r, tab.cap="Average liking scores obtained for the biscuits from the mixture design", label="biscuit-mixt", echo = FALSE, eval=TRUE}
-
-# Bmixt <- MixtBisc$design %>%
-#   as_tibble() %>%
-#   select(-4) %>%
-#   mutate(Product = c("A", "B", "C", "D", "E", "F", "G", "H", "I"), .before=x1) %>%
-#   mutate(scores = c(7.5, 5.4, 5.5, 7.0, 6.0, 8.0, 5.8, 6.8, 7.9)) %>%
-#   rename("Butter"=x1, "Sugar"=x2, "Flour"=x3, "Liking"=scores)
-# 
-# flextable::qflextable(Bmixt)
-
-```
-
 ```{r}
 library(mixexp)
-# # calculate the cubic mixture model 
-# invisible(capture.output(res <- MixModel(Bmixt, "Liking",
-#                                          mixcomps = c("Butter", "Sugar", "Flour"), model = 4)) )
-# # plot the model as ternary contour plot
-# ModelPlot(model = res,
-#           dimensions = list(x1="Butter", x2="Sugar", x3="Flour"),
-#           lims = c(0.15, 0.30, 0.25, 0.40, 0.30, 0.50), constraints = TRUE,
-#           contour = TRUE, cuts = 12, fill = TRUE, pseudo = TRUE,
-#           axislabs = c("Butter", "Sugar", "Flour"))
+# calculate the cubic mixture model 
+invisible(capture.output(res <- MixModel(Bmixt, "Liking",
+                                        mixcomps = c("Butter", "Sugar", "Flour"), model = 4)) )
+# plot the model as ternary contour plot
+ModelPlot(model = res,
+          dimensions = list(x1="Butter", x2="Sugar", x3="Flour"),
+          lims = c(0.15, 0.30, 0.25, 0.40, 0.30, 0.50), constraints = TRUE,
+          contour = TRUE, cuts = 12, fill = TRUE, pseudo = TRUE,
+          axislabs = c("Butter", "Sugar", "Flour"))
 ```
 
 
@@ -196,7 +198,11 @@ Product development is not a monolithic process and in the early stages of a pro
 Although screening designs are only scarcely used, studies have shown that they could greatly contribute to sensory-led product development, including in nonfood applications of sensory science (REF REF REF).
 
 Plackett-Burman designs are the most commonly used screening designs. They can be easily obtained with `{FrF2}`.
-<!-- Add a small example that illustrates this? -->
+<!-- Small example to be added -->
+<!-- Small example to be added -->
+<!-- Small example to be added -->
+<!-- Small example to be added -->
+
 
 #### Sensory informed designs
 Eventually, it is worth mentioning that in some cases sensory properties themselves can be used as factors and implemented in a DoE. Naturally, this implies that product developers have (1) access to the measure of these properties and (2) can control the level of these properties and their interactions. These requirements are rarely met in food development but can be more easily implemented in some non-food applications.
