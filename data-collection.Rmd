@@ -1,7 +1,7 @@
 ---
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 ```{r include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
@@ -48,7 +48,7 @@ rownames(wdes_5P20J) <- paste("judge", 1:20, sep="")
 
 The downside of Williams's Latin square designs is that the number of samples (*k*) to be evaluated dictates the number of judges. For an even number of samples you must have a multiple of *k* judges, and a multiple of *2k* judges for an odd number of samples.
 
-As the total number of judges in your study may not always be exactly known in advance (e.g. participants not showing up to your test, extra participants recruited at the last minute), it can be useful to add some flexibility to the design. Of course, additional rows would depart from the perfectly balanced design, but it is possible to optimize them using Federov's algorithm thanks to the `optFederov()` function of the `{AlgDesign}` package, by specifying `augment = TRUE`. For example we can add three more judges to the Williams Latin square design that we just built for *nbP=*5 products and 10 judges, hence leading to a total number of *nbP=*13 judges. Note that each judge will evaluate all the products, therefore the number of samples per judge (*nbR*) equals the number of products (*nbP*).
+As the total number of judges in your study may not always be exactly known in advance (e.g. participants not showing up to your test, extra participants recruited at the last minute), it can be useful to add some flexibility to the design. Of course, additional rows would depart from the perfectly balanced design, but it is possible to optimize them using Federov's algorithm thanks to the `optFederov()` function of the `{AlgDesign}` package, by specifying `augment = TRUE`. For example we can add three more judges to the Williams Latin square design that we just built for *nbP=*5 products and 10 judges, hence leading to a total number of *nbP=*13 judges. Note that this experiment is designed so that each judge will evaluate all the products, therefore the number of samples per judge (*nbR*) equals the number of products (*nbP*).
 
 
 ```{r}
@@ -107,7 +107,7 @@ Incomplete balanced designs also have drawbacks. First, from a purely statistica
 
 #### Incomplete designs for hedonic tests: Sensory informed designs
 
-One may also be tempted to use incomplete balanced block designs for hedonic tests. However, proceeding this way is likely to induce framing bias. Indeed, each participant to the consumer tests will only see part of the product set which would affect their frame of reference if the subset of product they evaluate only covers a limited area of the sensory space. 
+One may also be tempted to use incomplete balanced block designs for hedonic tests. However, proceeding this way is likely to induce framing bias. Indeed, each participant will only see part of the product set which would affect their frame of reference if the subset of product they evaluate only covers a limited area of the sensory space. 
 
 Suppose you are designing a consumer test of chocolate chip cookies in which a majority of cookies are made with milk chocolate while a few cookies are made with dark chocolate chips. If a participant only evaluates samples that have milk chocolate chips, this participant will not know about the existence of dark chocolate and will potentially give very different scores compared to what they would have if they had a full view of the product category.
 
@@ -126,7 +126,7 @@ In order to get the most of sensory experiments, it is thus essential to ensure 
 
 #### Factorial designs
 
-Full factorial designs are of course commonly used and their application is usually straightforward. However, always in the view of sparing experimental resources, incomplete designs are frequent and require careful preparation. Several strategies can be used to define which experiments to conduct (REF REF book Dean et al. 2018). Ref to Lawson 2015 (Design and analysis of experiments with R).
+Full factorial designs are of course commonly used and their application is usually straightforward. They won't be detailed here. However, always in the view of sparing experimental resources, incomplete designs are frequent and require careful preparation. Several strategies can be used to define which experiments to conduct (REF REF book Dean et al. 2018). Ref to Lawson 2015 (Design and analysis of experiments with R).
 => Optimal designs (ref to AlgDesign / ref to Husson)
 
 #### Mixture designs
@@ -159,8 +159,17 @@ DesignPoints(MixBiscuits$design, axislabs = c("Butter","Sugar","Flour"), pseudo 
 ```
 
 
-```{r, tab.cap="Average liking scores obtained for the biscuits from the mixture design", label="biscuit-mixt", echo = FALSE, eval=TRUE}
+```{r eval=TRUE, echo=FALSE, message=FALSE, label="biscuit-mixt", tab.cap="Average liking scores obtained for the biscuits from the mixture design"}
+library(mixexp)
+library(AlgDesign)
+library(tidyverse)
 
+#Builds the design
+mdes2 <- Xvert(nfac=3, uc=c(.30, .40, .50), lc=c(.15, .25, .30), ndm = 1, plot = FALSE) %>% 
+      mutate_if(is.numeric, round, digits = 3)
+MixBiscuits <- optFederov(~ -1 +x1 +x2+ x2 +x1:x2 +x1:x3 +x2:x3 +x1:x2:x3, mdes2, nTrials=9)
+
+#Builds the corresponding table to be displayed in the book
 Bmixt <- MixBiscuits$design %>%
   as_tibble() %>%
   select(-4) %>%
@@ -175,7 +184,7 @@ flextable::qflextable(Bmixt)
 
 Once the data are collected we can use the `mixexp::MixModel()` function to fit a linear model and `mixexp::MixturePlot()` to draw a contour plot. Suppose that we obtain average liking scores for our 9 biscuits as given in Table \@ref(tab:biscuit-mixt), this simple code would allow to get a contour plot that shows where would be the optimal area for the biscuit formulation.
 
-```{r}
+```{r, echo=TRUE, eval=TRUE}
 library(mixexp)
 # calculate the cubic mixture model 
 invisible(capture.output(res <- MixModel(Bmixt, "Liking",
@@ -212,9 +221,33 @@ A specific case, is the use of sensory information to make a selection of a subs
 
 
 ## Execute
-<!-- run the experiment / collect the data -->
+
+Sir Ronald Fisher famously said in his presidential address to the first Indian statistical congress (1938): *"To consult the statistician after an experiment is finished is often merely to ask him to conduct a post mortem examination. He can perhaps say what the experiment died of."*
+
+Hopefully, the sections above would have helped the sensory and consumer scientist designing their experiment in a way that would warrant them relevant and meaningful data that are obtained with maximum efficiency.
+
+Fisher continues: *"To utilise this kind of experience the statistician must be induced to use his imagination, and to foresee in advance the difficulties and uncertainties with which, if they are not foreseen, his investigations will be beset."*
+Fortunately, we can spare the reader some of these imagination efforts and reiterate the fundamental principles of sensory evaluation that should help avoiding major pitfalls^[For a more detailed description of these principles, we refer the reader to comprehensive sensory evaluation textbooks. See for instance (Lawless and Heymann, 2010), (Civille and Carr, 2016) or (Stone, Bleibaum and Thomas, 2022)].
+
+* **Individual evaluation**  
+Probably the most important validity requirement for sensory evaluation is to perform individual evaluation. Sensory responses are very easily biased when judges can communicate. When this happens, observations cannot be considered independent which would rule out most statistical tests. Although this principle is generally accepted and correctly applied, some situations (such as project team meetings, b2b sample demonstration, tasting events, etc.) that may be more challenging in this regard. Individual evaluation is usually ensured by the use of partitioned sensory booths, but it can also be achieve by other means (table-top partitions, curtains, separate tables, separate rooms). There are some cases, in consumer research, where interactions between subjects are allowed or even encouraged because they correspond to real-life situations. But these are exceptions to the rule, and in such cases, observations are to be considered at the group level.
 
 
+Controlled order effects and balanced treatments
+We already discussed this point extensively (#LinkAppropriateSection).
+
+
+
+Separate affective from analytical tasks
+
+Controlled evaluation conditions
+
+
+Final words: quantification, scaling, sensory acquisition softwares
+
+
+
+<!-- but ain't no perfect experiment, especially when consumer-oriented -->
 
 <!-- Time to recruit subjects / privacy (comply with privacy rules EU's General Data Protection Regulation (GDPR) and the California Consumer Privacy Act (CCPA)) -->
 <!-- Independent data (sensory booths) -->
@@ -224,6 +257,9 @@ A specific case, is the use of sensory information to make a selection of a subs
 <!-- Scaling / Quantification  -->
 
 <!-- randomization by judge, by product -->
+```{r}
+Bmixt_shuffled <- Bmixt[sample(nrow(Bmixt)), ]
+```
 
 
 ## Import {#data-import}
