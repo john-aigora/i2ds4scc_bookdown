@@ -25,7 +25,7 @@ The data used in this chapter includes the *Sensory Profile.xlsx* that you impor
 
 ## Inspect {#inspect}
 
-### Data Inspection
+### Data Inspection {#data-inspection}
 
 To inspect the data, different steps can be used. 
 First, since `read_xlsx()` returns a tibble, let's take advantage of its printing properties to get a fill of the data at hand:
@@ -66,7 +66,54 @@ Note that the analyses performed to build this report can be called directly wit
 
 ### Missing Data
 
-<!-- TW to continue from here -->
+In the previous section on \@ref(data-inspection), it can be seen that the data set contain missing values. It concerns for instance the attribute `Light`, for which one missing value has been detected.
+So how to handle missing values?
+
+#### Ignore missing values
+
+A first solution is to simply *ignore* the presence of missing values, as many analyses handle them well. For instance, an ANOVA could be run for such attributes, and results are being produced:
+
+```{r}
+broom::tidy(aov(Light ~ Product + Judge, data=sensory))
+```
+
+This solution may work fine when the number of missing values is small, but be aware that it can also provide erroneous results in case they are not handled the way the analyst is expecting them to be handled.
+
+For some other analyses, *ignoring* the presence of missing values may simply provide results. To illustrate this, let's compute the simple mean per product for `Light` 
+
+```{r}
+sensory %>% 
+  group_by(Product) %>% 
+  summarise(Light = mean(Light)) %>% 
+  ungroup()
+```
+
+As can be seen, since `P04` contains the missing value detected, its corresponding mean is defined as `NA`. To enforce the mean to be computed, we need to inform R to remove missing values when computing the mean. This is done by adding within the `mean()` function the parameter `na.rm=TRUE`:
+
+```{r}
+sensory %>% 
+  group_by(Product) %>% 
+  summarise(Light = mean(Light, na.rm=TRUE)) %>% 
+  ungroup()
+```
+
+Using `na.rm=TRUE` is equivalent to removing rows containing missing values from the data before performing the analysis.
+
+#### Remove missing values
+
+Removing rows with missing values can be done in different ways.
+
+ - removing rows: watch out because you can remove data as well
+ - removing rows in a long format means not removing anything...since the wider format will re-introduce missing values (example of incomplete design: non-visible NAs are also NAs)
+ - strategies on removing the judge/product/attribute that contains missing values
+
+#### Impute missing values
+
+solution to impute by:
+ - a fixed value
+ - manually the mean by attribute/product/judge & replica
+ - impute using a model (linear or more advanced)
+ - EM algorithm (`{missMDA}`)
 
 ### Design Inspection
 
