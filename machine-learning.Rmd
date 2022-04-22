@@ -50,7 +50,7 @@ Dimensionality reduction is a technique used to transform a high dimensional spa
 
 Let's start installing/loading the necessary packages and by preparing the dataset for the cluster analysis, with PCA being used as a pre processing method. We will be using the wine dataset (rattle package) that consists of the results of a chemical analysis of wines grown in a specific area of Italy. Three types of wine are represented in the 178 samples, with the results of 13 chemical analyses recorded for each sample. 
 
-```{r prepare_data}
+```{r}
 library(tidyverse)
 library(rattle) # wine dataset
 require(factoextra)
@@ -76,15 +76,11 @@ wine_dataset <- tibble(wine)
 
 ```
 
+Dimensionality reduction technique via PCA will be applied before clustering to allow coherent patterns to be detected more clearly. As well known, PCA retains most of the information/variance of the data set and by removing features with low variance, a more robust clustering can be generated. In other words, this technique reveals distinct groups if data exhibits clustering and by retaining the components with the highest variance, the clusters tends to be more visible.
 
-<!-- cluster analysis in consumer analysis as semisupervised learning -->
+The data can be scaled or not before applying PCA. As a general recommendation, scaling should be applied if the variables are in different units or scales, as in the case of the examples being used. In case the variables are all in the same unit/scale, as in a situation where there are only sensory variables using a 10 cm scale, PCA without scaling would be more appropriate. Just as illustration, we will be running PCA without and with scaling with the wine set example.
 
-
-
-
-
-comparing PCA with and without scaling
-
+PCA without scaling:
 ```{r pca_without_scaling}
 pca_results_ws <- wine_dataset %>%
   prcomp()
@@ -101,6 +97,7 @@ pca_ws_plot
 
 ```
 
+PCA with scaling:
 ```{r pca_with_scaling}
 # scaling data + PCA -----------------------------------------------------------
 
@@ -170,6 +167,9 @@ fviz_cluster(
 
 ```
 
+
+
+<!-- cluster analysis in consumer analysis as semisupervised learning -->
 
 <!-- #### t-SNE -->
 <!-- ### Semisupervised learning -->
