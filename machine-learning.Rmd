@@ -30,16 +30,25 @@ https://www.ibm.com/cloud/learn/supervised-learning
 
 https://www.javatpoint.com/supervised-machine-learning
 
+https://towardsdatascience.com/11-dimensionality-reduction-techniques-you-should-know-in-2021-dcb9500d388b
+
+https://towardsdatascience.com/dimensionality-reduction-for-machine-learning-80a46c2ebb7e
+
 
 ### Unsupervised learning
 
-In the sensory and consumer science field, unsupervised learning models are usually used for Clustering and Dimensionality Reduction. As the latest technique is commonly used for data preprocessing, to reduce to number of features in a dataset, it will be embedded in the Clustering example.
+In the sensory and consumer science field, unsupervised learning models are usually used for Clustering and Dimensionality Reduction.
 
-#### Clustering
+Clustering is a technique used to discover in a high-dimensional data, groups of observations that are similar to each other and significantly different from the rest. In other words, it is a method that groups unlabeled data based on their similarities and differences in the way that objects with most similarities remains into a group and has less or no similarities with the objects of another group.As previously mentioned, a very common application is to cluster consumers and classify groups of products based on their similarities/dissimilarities. Clustering algorithms can be categorized into a few types, which are Exclusive (E.g. k-means), Hierarchical (agglomerative or divisive), Agglomerative and Probabilistic clustering (E.g. Gaussian Misture Model). The first two are the ones most used and well know in the sensory field. 
 
-The aim of cluster analysis is to discover in high-dimensional data groups of observations that are similar to each other in the group and significantly different from the rest of observations. As previously mentioned, a very common application in sensory and consumer science is to cluster consumers and classify groups of products based on their similarities/dissimilarities.
+Dimensionality reduction is a technique used to transform a high dimensional space into a low-dimensional space that retains some meaningful properties of the original data. It refers to the process of reducing the number of features/attributes in a data set while maintaining as much of the variation as possible. This method is a important pre processing step that is used to reduce training time and computational resources, improve ML algorithms performance/accuracy due to less misleading data, avoid problems of overfitting, improve data visualization, find latent variables, remove redundant features and noise, among others. There are numerous dimensionality reduction methods that can be used according to the data type and different requirements. The most common and well known dimensionality reduction methods used in the sensory and consumer science field are the ones that apply linear transformations, including Principal Components Analysis (PCA) and Factor Analysis (FA).
 
-Let's start installing/loading the necessary packages and by preparing the dataset for the cluster analysis. We will be using the wine dataset (rattle package) that consists of the results of a chemical analysis of wines grown in a specific area of Italy. Three types of wine are represented in the 178 samples, with the results of 13 chemical analyses recorded for each sample. 
+<!-- #### Factor analysis -->
+<!-- #### Principle components analysis -->
+
+#### Clustering and Dimensionality Reduction
+
+Let's start installing/loading the necessary packages and by preparing the dataset for the cluster analysis, with PCA being used as a pre processing method. We will be using the wine dataset (rattle package) that consists of the results of a chemical analysis of wines grown in a specific area of Italy. Three types of wine are represented in the 178 samples, with the results of 13 chemical analyses recorded for each sample. 
 
 ```{r prepare_data}
 library(tidyverse)
@@ -70,11 +79,8 @@ wine_dataset <- tibble(wine)
 
 <!-- cluster analysis in consumer analysis as semisupervised learning -->
 
-<!-- #### Factor analysis -->
-<!-- #### Principle components analysis -->
 
-<!-- Tian comments: Why do we need PCA before cluster analysis? Or in what situation -->
-<!-- a PCA is beneficial before clustering? -->
+
 
 
 comparing PCA with and without scaling
