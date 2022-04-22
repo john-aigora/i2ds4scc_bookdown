@@ -43,9 +43,7 @@ Clustering is a technique used to discover in a high-dimensional data, groups of
 
 Dimensionality reduction is a technique used to transform a high dimensional space into a low-dimensional space that retains some meaningful properties of the original data. It refers to the process of reducing the number of features/attributes in a data set while maintaining as much of the variation as possible. This method is a important pre processing step that is used to reduce training time and computational resources, improve ML algorithms performance/accuracy due to less misleading data, avoid problems of overfitting, improve data visualization, find latent variables, remove redundant features and noise, among others. There are numerous dimensionality reduction methods that can be used according to the data type and different requirements. The most common and well known dimensionality reduction methods used in the sensory and consumer science field are the ones that apply linear transformations, including Principal Components Analysis (PCA) and Factor Analysis (FA).
 
-<!-- #### Factor analysis -->
-<!-- #### Principle components analysis -->
-
+<!-- Vanessa: should we keep this section above? Seems repetitive with chapter 10 --> 
 #### Clustering and Dimensionality Reduction
 
 Let's start installing/loading the necessary packages and by preparing the dataset for the cluster analysis, with PCA being used as a pre processing method. We will be using the wine dataset (rattle package) that consists of the results of a chemical analysis of wines grown in a specific area of Italy. Three types of wine are represented in the 178 samples, with the results of 13 chemical analyses recorded for each sample. 
@@ -71,33 +69,16 @@ wine.names=c("Alcohol", "Malic acid", "Ash", "Alcalinity of ash", "Magnesium",
 colnames(wine)[2:14]=wine.names
 colnames(wine)[1]="Wine_type"
 
-set.seed(123)
 wine_dataset <- tibble(wine)
 
 ```
 
-Dimensionality reduction technique via PCA will be applied before clustering to allow coherent patterns to be detected more clearly. As well known, PCA retains most of the information/variance of the data set and by removing features with low variance, a more robust clustering can be generated. In other words, this technique reveals distinct groups if data exhibits clustering and by retaining the components with the highest variance, the clusters tends to be more visible.
+Dimensionality reduction technique via PCA will be applied before clustering to allow coherent patterns to be detected more clearly. As well known, PCA retains most of the information/variance of the data set and by removing features with low variance, a more robust clustering can be generated. In other words, this technique reveals distinct groups if data exhibits clustering and by retaining the components with the highest variance, the clusters tends to be more visible.The use of PCA before clustering is not a common approach, particularly for consumers clustering, but in our situation where we are clustering products, it can be useful.
 
-The data can be scaled or not before applying PCA. As a general recommendation, scaling should be applied if the variables are in different units or scales, as in the case of the examples being used. In case the variables are all in the same unit/scale, as in a situation where there are only sensory variables using a 10 cm scale, PCA without scaling would be more appropriate. Just as illustration, we will be running PCA without and with scaling with the wine set example.
+As the data set being used contain variables with different units/scales, PCA with scaling will be applied.
 
-PCA without scaling:
-```{r pca_without_scaling}
-pca_results_ws <- wine_dataset %>%
-  prcomp()
+ <!--  Use the PCA function PCA from FactoMinerR -->
 
-summary(pca_results_ws)
-autoplot(pca_results_ws)
-
-pca_ws_plot <- autoplot(pca_results_ws, data = wine_dataset,
-                   loadings = TRUE, loadings.colour = 'red',
-                   loadings.label = TRUE, loadings.label.size = 3) +
-  theme_minimal()
-
-pca_ws_plot
-
-```
-
-PCA with scaling:
 ```{r pca_with_scaling}
 # scaling data + PCA -----------------------------------------------------------
 
@@ -116,43 +97,27 @@ pca_plot
 
 reduced_dataset <- data.frame(pca_results$x[, 1:2]) %>%
   tibble()
-# we can see that clustering should be easy
-
 ```
 
-<!-- Clustering  -->
-<!-- Using Elbow method to find the optimum number of cluster numbers -->
+The PCA shows that there are apparently 3 distinct groups of wine. Let's now use its results for the clustering analysis. Although agglomerative hierarchical clustering is fairly more common in the sensory and consumer research, it was already shown in chapter 10, so for this example we decided to use a different solution - k-means clustering. K-means clustering is a very known unsupervised machine learning algorithm for partitioning a given data set in a way that the total intra-cluster variation is minimized. Detailed information about clustering methods and analysis can be found in the Practical Guide to Cluster Analysis in R (REF).
 
-<!-- kmeans vs hierarchical clustering, is nbclust only valid for kmeans? -->
+The first step of k-means clustering is to estimate the optimal number of cluster (k), and this can be conveniently done using the function fviz_nbclust (). The plot represents the variance within the clusters, 
+
 
 ```{r find_opt_cluster_number}
 
-wcss <- tibble()
-for (i in 1:10) {
-  
-  wcss <- wcss %>% 
-    bind_rows(tibble(n_clusters = i,
-                     wcss = kmeans(reduced_dataset, i)$tot.withinss))
-  
-}
-
-ggplot(data=wcss, aes(x=n_clusters, y=wcss, group=1)) +
-  geom_line(size = 1.5)+
-  geom_point(shape=21, fill="blue", color="darkred", size=5) +
-  theme_minimal() +
-  xlab("Number of clusters") +
-  ylab("Total within-cluster sum of squares")
-
 # Finding number of clusters - silhouette method
-fviz_nbclust(reduced_dataset, kmeans, method = "silhouette")
-
-# 3 clusters seems to be good fit
-
+fviz_nbclust(reduced_dataset, kmeans, method = "wss")
 ```
 
+
+As the k-means algorithm starts with k randomly selected centroids, it's recommend to initially set a seed, thorugh the use of the function set.seed (), to make reproducible results.
 <!-- Tian comments:from sensory consumer data analysis point of view, when to  -->
 <!-- use kmeans, when to use hierarchical? etc. -->
+
 ```{r kmeans_cluster_analysis}
+
+set.seed(123)
 
 km_dw <- kmeans(reduced_dataset, 3, nstart = 20)
 
@@ -167,6 +132,7 @@ fviz_cluster(
 
 ```
 
+<!-- hierarchical - number context/business (release 2/3 products)... !!!! -->
 
 
 <!-- cluster analysis in consumer analysis as semisupervised learning -->
