@@ -88,7 +88,7 @@ sensory %>%
   ungroup()
 ```
 
-As can be seen, since `P04` contains the missing value detected, its corresponding mean is defined as `NA`. To enforce the mean to be computed, we need to inform R to remove missing values when computing the mean. This is done by adding within the `mean()` function the parameter `na.rm=TRUE`:
+As can be seen, since `P04` contains missing values, its corresponding mean is defined as `NA`. To enforce the mean to be computed, we need to inform R to remove missing values when computing the mean. This is done by adding within the `mean()` function the parameter `na.rm=TRUE`:
 
 ```{r}
 sensory %>% 
@@ -101,19 +101,135 @@ Using `na.rm=TRUE` is equivalent to removing rows containing missing values from
 
 #### Remove missing values
 
-Removing rows with missing values can be done in different ways.
+The solution using `na.rm=TRUE` is a first way to handle missing values by removing or ignoring them. However, it is not the only strategy, and we can consider other approaches that are more *sensory and consumer studies* driven.
 
- - removing rows: watch out because you can remove data as well
- - removing rows in a long format means not removing anything...since the wider format will re-introduce missing values (example of incomplete design: non-visible NAs are also NAs)
- - strategies on removing the judge/product/attribute that contains missing values
+For instance, missing values can be removed systematically by deleting the entire row of data. Let's take the example of `Sour` which contains 10 missing values: 
+
+```{r}
+sensory %>% 
+  filter(!is.na(Sour))
+```
+
+Unfortunately, this solution is not satisfactory as it also deletes real data since the dataset went from 99 to 89 rows. This means that for variables that did not have missing values for instance, existing data have been removed. 
+
+Another approach suggests to first rotate using `pivot_longer()` the data before removing missing values:
+
+```{r}
+sensory %>% 
+  pivot_longer(Shiny:Melting, names_to="Variables", values_to="Scores") %>% 
+  filter(!is.na(Scores)) %>% 
+  group_by(Product, Variables) %>% 
+  summarize(Means = mean(Scores)) %>% 
+  ungroup() %>% 
+  pivot_wider(names_from = Variables, values_from = Means) %>% 
+  dplyr::select(Product, Sour, Light)
+```
+
+If this solution seems satisfactory as the means were computed without using `na.rm=TRUE` for both `Sour` and `Light` (who contained missing values), its use is limited since converting the data to its original format (i.e. performing `pivot_wider()` after `pivot_longer()` without computing the mean in between) will reintroduce the missing values^[Missing values do not need to be visible to exist: Incomplete designs are a good example showing that although the data do not have empty cells, it does contain a lot of missing data (the samples that were not evaluated by each panelist).].  
+
+Also removing missing values has the impact of unbalancing the data. By taking the example of `Light` and `Sour`, let's print the number of panelist evaluating each product:
+
+```{r}
+sensory %>% 
+  pivot_longer(Shiny:Melting, names_to="Variables", values_to="Scores") %>% 
+  filter(!is.na(Scores),
+         Variables %in% c("Light","Sour")) %>%
+  group_by(Product, Variables) %>% 
+  count() %>% 
+  ungroup() %>% 
+  pivot_wider(names_from=Variables, values_from=n)
+```
+
+Here for example, the only missing value detected for `Light` is related to `P04`. For `Sour`, `P02`, `P07`, and `P09` only have 7 observations out of 9. 
+
+Another strategy consists in removing attributes, products, or panelists that have missing data. The procedure presented below show the procedure on how to remove attributes with missing data, but could easily be adapted to panelists or products:
+
+```{r}
+sensory_long <- sensory %>% 
+  pivot_longer(Shiny:Melting, names_to="Variables", values_to="Scores")
+
+(attr_rmv <- sensory_long %>% 
+  filter(is.na(Scores)) %>% 
+  pull(Variables) %>% 
+  unique())
+
+sensory_clean <- sensory_long %>% 
+  filter(!(Variables %in% attr_rmv)) %>% 
+  pivot_wider(names_from=Variables, values_from=Scores)
+
+```
+
+This procedure removed the 7 attributes that contained missing values, leading to a table with 99 rows and 29 columns (instead of 36).
 
 #### Impute missing values
 
-solution to impute by:
- - a fixed value
- - manually the mean by attribute/product/judge & replica
- - impute using a model (linear or more advanced)
- - EM algorithm (`{missMDA}`)
+Rather than removing missing data, another (better?) strategy is to impute missing values. Here again, many strategies can be considered, starting with replacing them with a fixed value. Such approach is usually not the most suitable one, yet it can be relevant in certain cases. For instance, in a CATA task, missing values would often be replaced by 0 (not ticked).
+
+To replace missing values with a fixed value, the `replace_na()` can be used. When applied to a tibble, this function requires you defining using `list()` the columns to apply it to, and which values to use (each column being treated separately). 
+
+For convenience, let's apply it to `sensory` by replacing missing values for `Sour` by the value `888` and for `Light` with `999` (we use these extreme values to track changes more easily):
+
+```{r}
+sensory %>% 
+  replace_na(list(Sour = 888, Light = 999)) %>% 
+  dplyr::select(Judge, Product, Sour, Light)
+```
+
+When dealing with intensity scale, it is more frequent to replace missing values by the mean score for that product and attribute. When the test is duplicated, the mean provided by this *panelist x product x attribute* across the different repetitions available is even preferred as it maintains individual variability (e.g. scale usage) within the scores. 
+
+Such approach is then can be done in two steps:
+  1. Compute the mean (since we do not have duplicates, we use the mean per product);
+  2. Combine it to the data
+
+For simplicity, `sensory_long` is used as starting point:
+
+```{r}
+prod_mean <- sensory_long %>% 
+  group_by(Product, Variables) %>% 
+  summarize(Mean = mean(Scores, na.rm=TRUE)) %>% 
+  ungroup()
+
+sensory_long %>% 
+  full_join(prod_mean, by=c("Product","Variables")) %>% 
+  mutate(Scores = ifelse(is.na(Scores), Mean, Scores)) %>% 
+  dplyr::select(-"Mean") %>% 
+  pivot_wider(names_from=Variables, values_from=Scores) %>% 
+  dplyr::select(Judge, Product, Sour, Light)
+```
+
+As can be seen, the missing value associated to `J01` for `Light` and `P04` has been replaced by `40.7`. In fact, any missing values related to `P04` and `Light` would automatically be replaced by `40.7` here. For other products (and other attributes), their respective means would be used.
+
+When the model used to impute missing values is fairly simple (here, replacing by the mean correspond to a simple 1-way ANOVA), the imputation can be done directly through the `impute_lm()` function from the `{simputation}` package. To mimic the previous approach, the one-way ANOVA is being used^[It is worth noticing that the individual differences could also be included by simple adding the Judge effect in the model.]. Here, missing data for both `Sour` and `Light` are being imputed independently using the same model:
+
+```{r}
+library(simputation)
+
+sensory %>% 
+  impute_lm(Sour + Light ~ Product) %>% 
+  dplyr::select(Judge, Product, Sour, Light)
+```
+
+As can be seen, this procedure provides the same results as before, but in less steps!
+
+It can be noted that in some situations, implementing missing values using such ANOVA (or regression) model can lead to aberrations. It is for instance the case when the imputed values falls outside the scale boundaries. To avoid such situations, `{simputation}` also provides other more advanced alternatives including (amongst others) `impute_rf()` which uses random forest to impute the missing values.
+
+Last but not least, imputation of missing values could also be done in a multivariate way, by using the structure of the data (e.g. correlation) to predict the missing values. This is the approach proposed in the `{missMDA}` package. Since our data are numeric, the imputation is done through PCA with the `imputePCA()` function. Note that here, the imputed values are stored in the object `.$completeObs` (here, `sensory` is used):
+
+```{r}
+library(missMDA)
+imputePCA(sensory, quali.sup=1:4, method="EM")$completeObs %>% 
+  dplyr::select(Judge, Product, Sour, Light)
+```
+
+In this case, it can be seen that the missing value for `J01`-`P04`-`Light` has been replaced by the value `31.8`.
+
+#### Limitations
+
+Different strategies for handling missing values exist, and the one used should be adapted to the data.
+
+Since most imputation methods are based on modeling, using such technique on variables with high missing values rate can lead to introducing bias in data. For example, in a situation in which half the data is missing (e.g. incomplete design in which assessors evaluated 1/2 the product set), each prediction is proportionally based on one value only. This means that further analyses would be based on 1/2 measured - 1/2 *fictive* data. 
+
+It is hence important to understand the structure of missing values before handling them.
 
 ### Design Inspection
 

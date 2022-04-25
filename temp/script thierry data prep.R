@@ -44,45 +44,64 @@ sensory %>%
 ggplot(sensory, aes(x=Product, y=Sour))+
   geom_miss_point()
 
-  # Imputation
-senso_long <- sensory %>%
-  pivot_longer(-c("Judge","Product","Protein","Fiber"), names_to="Attribute", values_to="Score")
+  # Remove
+sensory %>% 
+  filter(!is.na(Sour))
 
-prod_mean <- senso_long %>% 
-  group_by(Product, Attribute) %>% 
-  summarize(ProdMean = mean(Score, na.rm=TRUE)) %>% 
+sensory %>% 
+  pivot_longer(Shiny:Melting, names_to="Variables", values_to="Scores") %>% 
+  filter(!is.na(Scores)) %>% 
+  group_by(Product, Variables) %>% 
+  summarize(Means = mean(Scores)) %>% 
+  ungroup() %>% 
+  pivot_wider(names_from = Variables, values_from = Means) %>% 
+  dplyr::select(Product, Sour, Light)
+
+sensory %>% 
+  pivot_longer(Shiny:Melting, names_to="Variables", values_to="Scores") %>% 
+  filter(!is.na(Scores),
+         Variables %in% c("Light","Sour")) %>%
+  group_by(Product, Variables) %>% 
+  count() %>% 
+  ungroup() %>% 
+  pivot_wider(names_from=Variables, values_from=n)
+
+sensory_long <- sensory %>% 
+  pivot_longer(Shiny:Melting, names_to="Variables", values_to="Scores")
+
+(attr_rmv <- sensory_long %>% 
+    filter(is.na(Scores)) %>% 
+    pull(Variables) %>% 
+    unique())
+
+sensory_clean <- sensory_long %>% 
+  filter(!(Variables %in% attr_rmv)) %>% 
+  pivot_wider(names_from=Variables, values_from=Scores)
+
+  # Imputation
+sensory %>% 
+  replace_na(list(Sour = 888, Light = 999)) %>% 
+  dplyr::select(Judge, Product, Sour, Light)
+
+prod_mean <- sensory_long %>% 
+  group_by(Product, Variables) %>% 
+  summarize(Mean = mean(Scores, na.rm=TRUE)) %>% 
   ungroup()
 
-senso_long %>% 
-  full_join(prod_mean, by=c("Product","Attribute")) %>% 
-  mutate(Score2 = ifelse(is.na(Score), ProdMean, Score)) %>% 
-  dplyr::select(-c("Score","ProdMean")) %>% 
-  pivot_wider(names_from=Attribute, values_from=Score2) %>% 
-  summary(.)
+sensory_long %>% 
+  full_join(prod_mean, by=c("Product","Variables")) %>% 
+  mutate(Scores = ifelse(is.na(Scores), Mean, Scores)) %>% 
+  dplyr::select(-"Mean") %>% 
+  pivot_wider(names_from=Variables, values_from=Scores) %>% 
+  dplyr::select(Judge, Product, Sour, Light)
 
 library(simputation)
+sensory %>% 
+  impute_lm(Sour + Light ~ Product) %>% 
+  dplyr::select(Judge, Product, Sour, Light)
 
-senso_long %>% 
-  split(.$Attribute) %>% 
-  map(function(data){
-    
-    if (any(is.na(data$Score))){
-      data %>% 
-        dplyr::select(-Attribute) %>% 
-        impute_lm(Score ~ Product + Judge)
-    } else {
-      data %>% 
-        dplyr::select(-Attribute)
-    }
-    
-  }) %>% 
-  enframe(name = "Attribute", value = "res") %>% 
-  unnest(res) %>% 
-  pivot_wider(names_from=Attribute, values_from=Score) %>% 
-  summary(.)
 
 library(missMDA)
-
 imputePCA(sensory, quali.sup=1:4)$completeObs %>% 
   summary(.)
 
