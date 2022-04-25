@@ -102,6 +102,7 @@ The first step of k-means clustering is to estimate the optimal number of cluste
 ```{r find_opt_cluster_number}
 
 fviz_nbclust(reduced_dataset, kmeans, method = "wss")
+
 ```
 
 As the k-means algorithm starts with k randomly selected centroids, it's recommend to initially set a seed, through the use of the function `set.seed ()`, to make reproducible results. We will then perform k-means clustering with k = 3. In the k-means function, we can also choose the number of random sets, which means the number of times R will try different random starting assignments. The default is 1, but to get more stable results we will specify nstart = 20. The function `fviz_cluster`, from `{factoextra}` package, will be used for the visualization. 
@@ -123,7 +124,7 @@ fviz_cluster(
 
 ```
 
-In the resulting plot, we can easily see the observation represented by points, and the color and ellipse identifing each of the 3 clusters. We suggest you to re-run the codes to define the optimal number of clustering and the cluster analysis without dimensionality reduction. You will see how patterns were detected much more clear when this technique was applied.
+In the resulting plot, we can easily see the observation represented by points, and the color and ellipse identifying each of the 3 clusters. We suggest you to re-run the codes to define the optimal number of clustering and the cluster analysis without dimensionality reduction. You will see how patterns were detected much more clear when this technique was applied.
 
 
 <!-- Tian comments:from sensory consumer data analysis point of view, when to use kmeans, when to use hierarchical? etc. -->
