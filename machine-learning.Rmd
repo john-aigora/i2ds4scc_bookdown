@@ -22,7 +22,7 @@ A very common situation where supervised learning is widely used is to predict c
 
 Unlike supervised learning, unsupervised learning uses unlabeled or untagged data, which means inputs where the output values are not known. In this case, users do not need to supervise the model, instead, the algorithm operates independently to finds patterns and trends, trying to learn from the data distribution the distinguishing features and associations through similarity and dissimilarity measurements. Its ability to discover hidden patterns and get similarities/differences information is what make it the ideal solution for exploratory analysis and consumer segmentation, extracting insights from the data sets. 
 
-Unsupervised machine learning is commonly used to segment consumers into groups based on their similarities related to a variety of factors such as behavior, preferences or habits, so that companies can understand and target specific segments effectively. Similarly, unsupervised models are also very used to classify group of products in homogeneous analytical, sensory and/or consumer attribute in order to identify different segments in the market.
+Unsupervised machine learning is commonly used to segment consumers into groups based on their similarities related to a variety of factors such as shopping or usage behavior, attitudes, interests, liking or preferences. As consumers in the same market segment tend to respond similarly, the segmentation process is a key strategy for companies to understand and tailor effectively their products or marketing approaches for different target groups. Similarly, unsupervised models are also very used to classify group of products in homogeneous analytical, sensory and/or consumer attributes in order to identify different segments in the market.
 
 <!--Change order: First Supervised and then Unsupervised? -->
 
@@ -43,10 +43,9 @@ Clustering is a technique used to discover in a high-dimensional data, groups of
 
 Dimensionality reduction is a technique used to transform a high dimensional space into a low-dimensional space that retains some meaningful properties of the original data. It refers to the process of reducing the number of features/attributes in a data set while maintaining as much of the variation as possible. This method is a important not only as a technique for data visualization, but also as a pre processing step to reduce training time and computational resources, improve ML algorithms performance/accuracy due to less misleading data, avoid problems of overfitting, find latent variables, remove redundant features and noise, among others. There are numerous dimensionality reduction methods that can be used according to the data type and different requirements. The most common and well known dimensionality reduction methods used in the sensory and consumer science field are the ones that apply linear transformations, including Principal Components Analysis (PCA) and Factor Analysis (FA).
 
-<!-- Vanessa: should we keep this section above? Seems repetitive with chapter 10 --> 
 #### Clustering and Dimensionality Reduction
 
-Let's start installing/loading the necessary packages and by preparing the dataset for the cluster analysis, with PCA being used as a pre processing method. We will be using the wine dataset (rattle package) that consists of the results of a chemical analysis of wines grown in a specific area of Italy. Three types of wine are represented in the 178 samples, with the results of 13 chemical analyses recorded for each sample. 
+Let's start installing/loading the necessary packages and by preparing the dataset for the cluster analysis, with PCA being used as a pre processing method. We will be using a wine dataset, from `rattle` package, that consists of the results of a chemical analysis of wines grown in a specific area of Italy. Three types of wine are represented in the 178 samples, with the results of 13 chemical analyses recorded for each sample. 
 
 ```{r}
 library(tidyverse)
@@ -69,10 +68,9 @@ wine_dataset <- tibble(wine)
 
 ```
 
-Dimensionality reduction technique via PCA will be applied before clustering to allow coherent patterns to be detected more clearly. As well known, PCA retains most of the information/variance of the data set and by removing features with low variance, a more robust clustering can be generated. In other words, this technique reveals distinct groups if data exhibits clustering and by retaining the components with the highest variance, the clusters tends to be more visible.The use of PCA before clustering can be useful in our situation, where products are being clustered, but is not that common for consumers clustering.
-<!--Improve this explanation -->
+Dimensionality reduction technique via PCA will be applied before clustering to allow coherent patterns to be detected more clearly. As well known, PCA retains most of the information/variance of the data set and by removing features with low variance, a more robust clustering can be generated. In other words, this technique reveals distinct groups if data exhibits clustering and by retaining the components with the highest variance, the clusters tends to be more visible.
 
-As the data set being used contain variables with different units/scales, PCA with scaling will be applied. We will be using the FactoMineR package to perform the PCA analysis and factoextra to easily extract and visualize the results.
+As the data set being used contain variables with different units/scales, PCA with scaling will be applied. We will be using the `{FactoMineR}` package to perform the PCA analysis and `{factoextra}` to easily extract and visualize the results.
 
 ```{r pca_with_scaling}
 
@@ -95,17 +93,18 @@ reduced_dataset <- data.frame(pca_results$ind$coord[, 1:2]) %>%
 
 ```
 
-The PCA shows that there are apparently 3 distinct groups of wine. Let's now use its results for the clustering analysis. Although agglomerative hierarchical clustering is fairly more common in the sensory and consumer research, it was already shown in chapter 10, so for this example we decided to use a different solution - k-means clustering. K-means clustering is a very known unsupervised machine learning algorithm for partitioning a given data set in a way that the total intra-cluster variation is minimized. Detailed information about clustering methods and analysis can be found in the book Practical Guide to Cluster Analysis in R (REF).
+The PCA shows that there are apparently 3 distinct groups of wines. 
 
-The first step of k-means clustering is to estimate the optimal number of clusters (k), and this can be conveniently done using the function fviz_nbclust () from the factoextra package. The plot represents the variance within the clusters and the bend, also called "elbow", indicates that additional clusters beyond the third have little value. In our situation, er eill then classify the observations into 3 clusters.
+Let's now use its results for the clustering analysis. Although agglomerative hierarchical clustering is more common in the sensory and consumer research, it was already shown in chapter 10, so for this example we decided to use a different solution - k-means clustering. K-means clustering is also a very known unsupervised machine learning algorithm for partitioning a given data set in a way that the total intra-cluster variation is minimized. Both approaches (hierarchical clustering and k-means) are fairly used, being the main different the rule of forming clustering and the requirement to pre-specify the number of cluster to be produced the main different between them. Detailed information about clustering methods and analysis can be found in the book Practical Guide to Cluster Analysis in R (REF).
+
+The first step of k-means clustering is to estimate the optimal number of clusters (k), and this can be conveniently done using the function `fviz_nbclust ()` from `{factoextra}` package. The plot represents the variance within the clusters and the bend, also called "elbow", indicates that additional clusters beyond the third have little value. In our situation, we will then classify the observations into 3 clusters.
 
 ```{r find_opt_cluster_number}
 
-# Finding number of clusters - silhouette method
 fviz_nbclust(reduced_dataset, kmeans, method = "wss")
 ```
 
-As the k-means algorithm starts with k randomly selected centroids, it's recommend to initially set a seed, through the use of the function set.seed (), to make reproducible results. We will then perform k-means clustering with k = 3. In the k-means function, we can also choose the number of random sets, which means the number of times R will try different random starting assignments. The default is 1, but to get more stable results we will specify nstart = 20. The function fviz_cluster, from factoextra package, will ne used for the visualization. 
+As the k-means algorithm starts with k randomly selected centroids, it's recommend to initially set a seed, through the use of the function `set.seed ()`, to make reproducible results. We will then perform k-means clustering with k = 3. In the k-means function, we can also choose the number of random sets, which means the number of times R will try different random starting assignments. The default is 1, but to get more stable results we will specify nstart = 20. The function `fviz_cluster`, from `{factoextra}` package, will be used for the visualization. 
 
 ```{r kmeans_cluster_analysis}
 
@@ -124,7 +123,7 @@ fviz_cluster(
 
 ```
 
-In the resulting plot, we can easily see the observation represented by points, and the color and ellipse identify each of the 3 clusters. We suggest you to re-run the codes to define the optimal number of clustering and the cluster analysis without Dimensionality reduction. You will see how how patterns were detected much more clear when this technique was applied.
+In the resulting plot, we can easily see the observation represented by points, and the color and ellipse identifing each of the 3 clusters. We suggest you to re-run the codes to define the optimal number of clustering and the cluster analysis without dimensionality reduction. You will see how patterns were detected much more clear when this technique was applied.
 
 
 <!-- Tian comments:from sensory consumer data analysis point of view, when to use kmeans, when to use hierarchical? etc. -->
