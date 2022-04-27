@@ -24,7 +24,7 @@
 <meta name="author" content="John Ennis, Julien Delarue, and Thierry Worch" />
 
 
-<meta name="date" content="2022-03-29" />
+<meta name="date" content="2022-04-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -276,10 +276,8 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9.1" data-path="data-prep.html"><a href="data-prep.html#inspect"><i class="fa fa-check"></i><b>9.1</b> Inspect</a>
 <ul>
 <li class="chapter" data-level="9.1.1" data-path="data-prep.html"><a href="data-prep.html#data-inspection"><i class="fa fa-check"></i><b>9.1.1</b> Data Inspection</a></li>
-<li class="chapter" data-level="9.1.2" data-path="data-prep.html"><a href="data-prep.html#design-inspection"><i class="fa fa-check"></i><b>9.1.2</b> Design Inspection</a></li>
-<li class="chapter" data-level="9.1.3" data-path="data-prep.html"><a href="data-prep.html#missing-data-inspection"><i class="fa fa-check"></i><b>9.1.3</b> Missing Data Inspection</a></li>
-<li class="chapter" data-level="9.1.4" data-path="data-prep.html"><a href="data-prep.html#checks-for-consistency-and-reliability"><i class="fa fa-check"></i><b>9.1.4</b> Checks for Consistency and Reliability</a></li>
-<li class="chapter" data-level="9.1.5" data-path="data-prep.html"><a href="data-prep.html#preliminary-tables-and-charts"><i class="fa fa-check"></i><b>9.1.5</b> Preliminary Tables and Charts</a></li>
+<li class="chapter" data-level="9.1.2" data-path="data-prep.html"><a href="data-prep.html#missing-data"><i class="fa fa-check"></i><b>9.1.2</b> Missing Data</a></li>
+<li class="chapter" data-level="9.1.3" data-path="data-prep.html"><a href="data-prep.html#design-inspection"><i class="fa fa-check"></i><b>9.1.3</b> Design Inspection</a></li>
 </ul></li>
 <li class="chapter" data-level="9.2" data-path="data-prep.html"><a href="data-prep.html#clean"><i class="fa fa-check"></i><b>9.2</b> Clean</a>
 <ul>
@@ -287,7 +285,6 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9.2.2" data-path="data-prep.html"><a href="data-prep.html#handling-data-type"><i class="fa fa-check"></i><b>9.2.2</b> Handling Data Type</a></li>
 <li class="chapter" data-level="9.2.3" data-path="data-prep.html"><a href="data-prep.html#converting-between-types"><i class="fa fa-check"></i><b>9.2.3</b> Converting between Types</a></li>
 <li class="chapter" data-level="9.2.4" data-path="data-prep.html"><a href="data-prep.html#handling-missing-values"><i class="fa fa-check"></i><b>9.2.4</b> Handling Missing Values</a></li>
-<li class="chapter" data-level="9.2.5" data-path="data-prep.html"><a href="data-prep.html#restructuring-data"><i class="fa fa-check"></i><b>9.2.5</b> Restructuring Data</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="data-analysis.html"><a href="data-analysis.html"><i class="fa fa-check"></i><b>10</b> Data Analysis</a>
@@ -325,7 +322,8 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="12.1" data-path="machine-learning.html"><a href="machine-learning.html#methods-overview"><i class="fa fa-check"></i><b>12.1</b> Methods Overview</a>
 <ul>
-<li class="chapter" data-level="12.1.1" data-path="machine-learning.html"><a href="machine-learning.html#supervised-learning"><i class="fa fa-check"></i><b>12.1.1</b> Supervised learning</a></li>
+<li class="chapter" data-level="12.1.1" data-path="machine-learning.html"><a href="machine-learning.html#unsupervised-learning"><i class="fa fa-check"></i><b>12.1.1</b> Unsupervised learning</a></li>
+<li class="chapter" data-level="12.1.2" data-path="machine-learning.html"><a href="machine-learning.html#supervised-learning"><i class="fa fa-check"></i><b>12.1.2</b> Supervised learning</a></li>
 </ul></li>
 <li class="chapter" data-level="12.2" data-path="machine-learning.html"><a href="machine-learning.html#key-topics"><i class="fa fa-check"></i><b>12.2</b> Key Topics</a>
 <ul>
@@ -690,9 +688,11 @@ Such procedure can be done using <code>scale_fill_manual()</code>.</p>
 The difference between these two functions rely in the number of variables to use for the split: In <code>facet_wrap()</code>, the graphics are <em>vectorized</em>, meaning that each element of the split is represented independently. For <code>facet_grid()</code> however, the graphics is represented in a matrix, meaning that two blocks of split variables are required, one defining the columns and one the rows.</p>
 <p>An example of <code>facet_wrap()</code> is provided in (ref data analysis).</p>
 <p>For these two functions, the parameter <code>scales</code> is particularly interesting as it allows each separate graph to use its own axis scales (<code>free</code> or individually using <code>free_x</code>/<code>free_y</code>) or not (<code>fixed</code>).</p>
+<p>To go further, consider also the function <code>facet_trelliscope()</code> from the <code>{trelliscopejs}</code>.
+This function generates the same type of graphs as <code>facet_wrap()</code> or <code>facet_grid()</code> with some powerful twists. After generating the plots, they are still editable thanks to an interactive menu that controls for the <em>Grid</em>, <em>Labels</em>, <em>Filter</em>, and <em>Sort</em>. For example, the number of plots to show per row/column can be adjusted, tables with descriptive statistics (e.g. mean, minimum, maximum) can be added under each graph, etc. Moreover, readers that are familiar with the interactivity of <code>{plotly}</code> can make great use of it through the <code>as_plotly = TRUE</code> parameter, which is then applied to each individual graph!</p>
 <p>Such procedure is very handy to produce multiple graphs all at once…when the data allow it.
 When multiple plot are being generated separately (using different data set, or producing different types of plots), it can still be relevant to combine them all in one. To perform such collage, the package <code>{patchwork}</code> becomes handy thanks to its simplicity and flexibility.</p>
-<p>Indeed, <code>{patchwork}</code> is a package that allows combining <code>ggplot()</code> graphs using <em>mathematical</em> operations.
+<p><code>{patchwork}</code> is a package that allows combining <code>ggplot()</code> graphs using <em>mathematical</em> operations.
 To add two elements next to each others, the <code>+</code> sign is used. To add two elements on top of each others, they should be separated using <code>/</code>. This operation can be combined with <code>()</code> to generate fancier collage.</p>
 <p>Let’s illustrate this by creating a plot with on the left side <code>spiderplot</code>, and on the right side <code>bar_p</code> on top of <code>line_p</code>.</p>
 <div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="data-viz.html#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
