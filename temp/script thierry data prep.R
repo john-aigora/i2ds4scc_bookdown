@@ -100,10 +100,9 @@ sensory %>%
   impute_lm(Sour + Light ~ Product) %>% 
   dplyr::select(Judge, Product, Sour, Light)
 
-
 library(missMDA)
-imputePCA(sensory, quali.sup=1:4)$completeObs %>% 
-  summary(.)
+imputePCA(sensory, quali.sup=1:4, method="EM")$completeObs %>% 
+  dplyr::select(Judge, Product, Sour, Light)
 
 # Design Evaluation -------------------------------------------------------
 
@@ -148,3 +147,85 @@ cur_prev %>%
   pivot_wider(names_from=Previous, values_from=n) %>% 
   arrange(Product) %>% 
   split(.$Session)
+
+# Variable Type -----------------------------------------------------------
+
+library(readxl)
+library(here)
+
+  # Importation
+file_path <- here("Data", "TFEQ.xlsx")
+
+demo_var <- read_xlsx(file_path, sheet="Variables") %>% 
+  dplyr::select(Code, Name)
+
+demo_lev <- read_xlsx(file_path, sheet="Levels") %>% 
+  dplyr::select(Question, Code, Levels) %>% 
+  inner_join(demo_var, by=c("Question"="Code")) %>% 
+  dplyr::select(-Question)
+
+demographic <- read_xlsx(file_path, sheet="Data", skip=1, col_names=unlist(demo_var$Name))
+
+  # Data Types
+demographic
+str(demographic)
+
+  # Character vs. Factor
+(example <- demographic %>% 
+  dplyr::select(Judge) %>% 
+  mutate(Judge_fct = as.factor(Judge)))
+summary(example)
+
+unique(example$Judge)
+length(unique(example$Judge))
+
+levels(example$Judge_fct)
+nlevels(example$Judge_fct)
+
+  # Re-ordering factor levels
+example <- demographic %>% 
+  dplyr::select(Judge) %>% 
+  mutate(Judge_fct = factor(Judge, str_sort(Judge, numeric=TRUE)))
+levels(example$Judge_fct)
+
+  # Filtering
+(example_reduced <- example %>%  
+    filter(Judge %in% paste0("J",1:20)))
+
+unique(example_reduced$Judge)
+length(unique(example_reduced$Judge))
+
+levels(example_reduced$Judge_fct)
+nlevels(example_reduced$Judge_fct)
+
+example_reduced %>% 
+  count(Judge, .drop=FALSE)
+
+example_reduced %>% 
+  count(Judge_fct, .drop=FALSE)
+
+  # Renaming Levels
+example = demographic %>% 
+  mutate(Area = factor(`Living area`, levels=c(1,2,3), labels=c("Urban", "Rurban", "Rural")))
+
+levels(example$Area)
+nlevels(example$Area)
+
+table(example$`Living area`, example$Area)
+
+  # Conversion
+example <- tibble(Numbers = c("2","4","9","6","8","12","10"),
+                  Text = c("Data","Science","4","Sensory","and","Consumer","Research"))
+
+example %>% 
+  mutate(NumbersN = as.numeric(Numbers), TextN = as.numeric(Text))
+
+example <- example %>% 
+  mutate(Numbers = as.factor(Numbers)) %>% 
+  mutate(Text = factor(Text, levels=c("Data","Science","4","Sensory","and","Consumer","Research")))
+
+example %>% 
+  mutate(NumbersN = as.numeric(Numbers), TextN = as.numeric(Text))
+
+example %>%
+  mutate(Numbers = as.numeric(as.character(Numbers)))
