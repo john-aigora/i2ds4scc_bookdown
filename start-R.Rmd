@@ -3,16 +3,6 @@ knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 ```
 # Getting Started {#start-R}
 
-## Getting Started in R
-### R Scripts
-### Installing and loading packages  
-###
-
-## Version Control / Git / GitHub
-
-## Tips on how to read this book?
-
-
 ## Introduction to R
 
 ### What is R?
@@ -69,16 +59,71 @@ x + y
 
 ## Getting Started in R
 
-In this book, we assume that the readers have already some basic knowledge in R.
-If you are completely new to R, we recommend you reading "R for Data Science" (REF) or looking at some documentation online to get you started with the basics. 
+### Create a Local Project
 
-Just like with any spoken language, the same message can be said in various ways. The same applies with writing scripts in R, each of us having our own styles, or our own preferences towards certain procedures, packages, functions, etc. In other words, writing scripts is personal. Through this book, we are not trying to impose our way of thinking/proceeding/building scripts, instead we aim in sharing our knowledge built through past experiences to help you find your own style.
+We strongly recommend to always work in an RStudio project. RStudio projects make it straightforward to divide your work into multiple contexts, each with their own working directory, workspace, history, and source documents. It keeps all of your R scripts, R markdown documents, R functions and data together in one place The projects keep your files (and activity) organized, help manage your file path (so your computer can find things) and allow for more advanced capabilities. RStudo project allow independence between project, which means that you can open more than one project at the same time and switch very easily between them without fear of them interfering with each other.
 
-But to fully decode our message, you'll need some reading keys. These keys will be described in the next sections. 
+To create a new project locally in RStudio, select 'File' --> 'New Project...' from the menu. Typically, a new project is created in a new directory. You can also create a new project by clicking on the ‘Project’ button in the top right of RStudio and selecting ‘New Project…’. Once your new project has been created you will now have a new folder on your computer that contains the basic file structure. You probably want to add folders to better organize all the files and documents, such as a folder for input, output and scripts.
+
+### Install and Load Packages
+
+The base installation of R comes with many useful packages that contains many of the functions you will use on a daily basis, however, you will very quickly feel the urge to extend R's capabilities and this is possible by using R packages that can easily be downloaded and install in R. An R package is a collection of functions, data sets, help files and documentation, developed by the community, that extends the capabilities of base R, by improving existing base R functionalities or by adding new ones. 
+
+There several packages out there, but we listed above some of the packages we will be consistently be using throughout this book.
+
+  - Essential packages (or collections): `tidyverse`, `readxl`
+
+  - Custom Microsoft office document creation: `officer`, `flextable`, `rvg`, `openxlsx`, `extrafont`, `extrafontdb`
+
+  - Sensory specific packages: `sensR` , `SensoMineR`, `FactoMineR`, `factoextra`
+
+There are many more, for statistical tests of all varieties, to multivariate analysis, to machine learning, to text analysis, etc.
+
+You only need to install each package once per R version. To install a package, you can type `install.packages("[package name]")`. R will download the packages from CRAN and install the onto your computer.
+
+```{r}
+install.packages("tidyverse")
+
+```
+
+If a script loads package that are not installed, RStudio will prompt you to install the package
+Also, note that if you do not have write access on your computer, you might need IT help to install packages. Additionally, you might need to safelist various R related tools and sites.
+
+Once you have installed a package onto your computer it is not immediately available for you to use until you load it with `library()`. 
+
+```{r}
+library(tidyverse)
+
+```
 
 ### R Scripts
 
-### Installing and loading packages 
+You can enter and run your code at the R command. However, you will quickly noticed that although effective and simple, each time you want to execute a set of commands, you will have to re-enter them the the commend line. Additionally, once you close your project or restart the R session, you will loose all the code stream. R scripts are the solution to those issues.
+
+
+
+### Run Sample Code
+
+Like any language, R is best learned first through example then through study
+We start with a series of examples to illustrate basic principles
+For this example, we analyze a series of Tetrad tests
+
+Suppose you have 15 out of 44 correct in a Tetrad test
+Using sensR, it’s easy to analyze these data:
+
+```{r first-example}
+
+library(sensR)
+
+num_correct <- 15  
+num_total <- 44  
+  
+discrim_res <- discrim(num_correct, num_total, method = "tetrad")  
+  
+print(discrim_res)  
+
+
+```
 
 ### Introduction to the `{magrittr}` and the notion of *pipes*
 
@@ -148,7 +193,31 @@ Note however that although pipes are very powerful, they are not always the best
   - If some steps require multiple inputs, or provides multiple outputs, pipes should not be used as they usually require a primary object to transform.
   - The system of pipes works linearly: if your code requires a complex dependency structure, the pipes should be avoided.
 
+## Version Contrl / Git and GitHub {#git-and-github}
+
+Git is a version control system that allows you to revert to earlier versions of your code, if necessary.  GitHub is service that allows for online backups of your code and which facilitates collaboration between team members.  We highly recommend that you integrate both Git and GitHub into your data scientific workflow.  For a full review of Git and GitHub from an R programming perspective, we recommend [Happy Git with R](https://happygitwithr.com/) by Jenny Bryant.  In what follows, we simply provide the minimum information needed to get you up and running with Git and GitHub.  Also, for an insightful discussion of the need for version control, please see [Cite bryan2018excuse].
+
+### Git
+  
+  - Install Git
+    * Windows
+    * macOS
+  - Register with RStudio
+
+  
+### GitHub
+
+  - Create a GitHub account
+  - Register with RStudio
+
 ### Tips on *how to read this book?*
+
+In this book, we assume that the readers have already some basic knowledge in R.
+If you are completely new to R, we recommend you reading "R for Data Science" (REF) or looking at some documentation online to get you started with the basics. 
+
+Just like with any spoken language, the same message can be said in various ways. The same applies with writing scripts in R, each of us having our own styles, or our own preferences towards certain procedures, packages, functions, etc. In other words, writing scripts is personal. Through this book, we are not trying to impose our way of thinking/proceeding/building scripts, instead we aim in sharing our knowledge built through past experiences to help you find your own style.
+
+But to fully decode our message, you'll need some reading keys. These keys will be described in the next sections. 
 
 #### Running code and handling errors
 
@@ -224,121 +293,3 @@ sensory %>%
   pivot_longer(Shiny:Melting, names_to="Variables", values_to="Scores") %>% 
   pivot_wider(names_from=Variables, values_from=Scores)
 ```
-
-
-## RStudio
-
-### Steps to Install RStudio
-
-Next you need to install RStudio, which is our recommended integrated development environment (IDE) for developing R code.  To do so, visit the [RStudio desktop download page](https://rstudio.com/products/rstudio/download/) and follow the installation instructions.
-
-Once you have installed R and RStudio, you should be able to open RStudio and enter the following into the Console to receive the number "3" as your output:
-
-```{r}
-
-x <- 1
-y <- 2
-
-x + y
-
-```
-
-Some recommendations upon installing RStudio:
-
-  - Change the color scheme to dark.
-  - Put the console on the right.
-  
-
-https://www.rstudio.com/products/rstudio/download/#download
-Download and install the latest (almost certainly 64-bit) version of RStudio with default options
-Adjustments:
-Uncheck “Restore .RData into workspace at startup
-Select “Never” for “Save workspace to .RData on exit”
-Change color scheme to dark (e.g. “Idle Fingers”)
-Put console on right
-
-### Create a Local Project
-
-Always work in an RStudio project
-Projects keep your files (and activity) organized
-Projects help manage your file path (so your computer can find things)
-Projects allow for more advanced capabilities later (like GitHub or renv)
-We cover the use of GitHub in a future webinar
-For now we create projects locally
-
-### Install and Load Packages
-
-As you use R, you will want to make use of the many packages others (and perhaps you) have written
-Essential packages (or collections):
-tidyverse, readxl
-Custom Microsoft office document creation
-officer, flextable, rvg, openxlsx, extrafont, extrafontdb
-Sensory specific packages
-sensR , SensoMineR, FactoMineR, factoextra
-There are many more, for statistical tests of all varieties, to multivariate analysis, to machine learning, to text analysis, etc.
-
-You only need to install each package once per R version
-To install a package, you can:
-Type install.packages("[package name]")
-Use the RStudio dropdown
-In addition, if a script loads package that are not installed, RStudio will prompt you to install the package
-Notes: 
-If you do not have write access on your computer, you might need IT help to install packages
-You might need to safelist various R related tools and sites 
-
-### Run Sample Code
-
-Like any language, R is best learned first through example then through study
-We start with a series of examples to illustrate basic principles
-For this example, we analyze a series of Tetrad tests
-
-Suppose you have 15 out of 44 correct in a Tetrad test
-Using sensR, it’s easy to analyze these data:
-
-```{r first-example}
-
-library(sensR)
-
-num_correct <- 15  
-num_total <- 44  
-  
-discrim_res <- discrim(num_correct, num_total, method = "tetrad")  
-  
-print(discrim_res)  
-
-
-```
-
-## Git and GitHub {#git-and-github}
-
-Git is a version control system that allows you to revert to earlier versions of your code, if necessary.  GitHub is service that allows for online backups of your code and which facilitates collaboration between team members.  We highly recommend that you integrate both Git and GitHub into your data scientific workflow.  For a full review of Git and GitHub from an R programming perspective, we recommend [Happy Git with R](https://happygitwithr.com/) by Jenny Bryant.  In what follows, we simply provide the minimum information needed to get you up and running with Git and GitHub.  Also, for an insightful discussion of the need for version control, please see [Cite bryan2018excuse].
-
-### Git
-  
-  - Install Git
-    * Windows
-    * macOS
-  - Register with RStudio
-
-  
-### GitHub
-
-  - Create a GitHub account
-  - Register with RStudio
-
-## RAW MATERIAL
-  
-### Principles
-### Tools
-#### GitHub
-#### R scripts
-#### RMarkdown
-#### Shiny
-### Documentation
-### Version control
-### Online repositories for team collaboration
-### Building a code base
-#### Internal functions
-#### Packages
-
-  
