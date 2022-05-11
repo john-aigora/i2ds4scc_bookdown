@@ -126,7 +126,7 @@
 
 \title{Data Science for Sensory and Consumer Scientists}
 \author{John Ennis, Julien Delarue, and Thierry Worch}
-\date{2022-05-05}
+\date{2022-05-11}
 
 \begin{document}
 \maketitle
@@ -228,60 +228,139 @@ As regards hedonic tests (liking, acceptance, preference\ldots), the measurement
 \hypertarget{start-R}{%
 \chapter{Getting Started}\label{start-R}}
 
-\hypertarget{r}{%
-\section{R}\label{r}}
+\hypertarget{introduction-to-r}{%
+\section{Introduction to R}\label{introduction-to-r}}
 
-R is an open-source programming language and software environment
-First released in 1995, R is an open-source implementation of S
-R was developed by Ross Ihaka and Robert Gentleman
-The name ``R'' is partly a play on Ihaka's and Gentleman's first names
-R is a scripting language (not a compiled language)
-Lines of R code run (mostly) in order
-R is currently the 7th most popular programming language in the world
+\hypertarget{what-is-r}{%
+\subsection{What is R?}\label{what-is-r}}
+
+First released in 1995, R is an open-source programming language and software environment. It is a free and powerful statistical software widely used for statistical analysis, graphics representation and reporting. R was created by Ross Ihaka and Robert Gentleman at the University of Auckland, New Zealand and is currently developed by the R Development Core Team. The name ``R'' was based on Ihaka's and Gentleman's first names and partly a play on the name of the Bell Labs Language S.
+
+R is a scripting language (not a compiled language) that runs the codes or commands in order.
+It is one of the most popular languages used by statisticians, data analysts, researchers and marketers to retrieve, clean, analyze, visualize and present data. It is currently the 7th most popular programming language in the world and one of the most known in the sensory and consumer field.
 
 \hypertarget{why-learn-a-programming-language}{%
 \subsection{Why Learn a Programming Language?}\label{why-learn-a-programming-language}}
 
-Control
-Speed
-Reduced errors
-Increased capability
-Continuous improvement
-Improved collaboration
-Reproducible results
+There are several reasons why you should learn a programming language. One of the top reasons is the CONTROL it gives you. Differently from statistical software to analyze/visualize data, you clearly see what is happening, what is behind the scenes, step by step. You are fully under control, and so it ends up teaching you abstract thinking and problem-solving. It allows you an INCREASED CAPABILITY and CONTINUOUS IMPROVEMENT, in the way you play with your data, extract the best you can and continuously improve it. The flexibility it gives you is just incredible!
+
+Allied to this control, the SPEED is also something that stands out. In a few seconds, we run a long and complex script to make some plots, and if you decide to change something like removing a specific attribute or some panelists, for instance, you re-run everything in no time.
+
+Learning a programming language also play an important role in REDUCING ERRORS, and this is in part because you are under control. You can run the script line by line and see what's happening and check if things are working properly in every and each step. It also allows you REPRODUCIBLE RESULTS by embedding script, data sets and results in a single file.
+
+Last, but not least, it IMPROVES COLLABORATION. When user uses a version control, which will be discussed shortly, it makes possible to track changes to source over time and collaboration with multiple developers.
 
 \hypertarget{why-r}{%
 \subsection{Why R?}\label{why-r}}
 
-R originated as a statistical computing language
-It has a culture germane to sensory science
-R is well-supported with an active community
-Extensive online help is available
-Many books, courses, and other educational material exist
-The universe of available packages is vast
-R excels at data manipulation and results reporting
-R has more specialized tools for sensory analysis than other programming language
-
 For sensory and consumer scientists, we recommend the R ecosystem of tools for three main reasons. The first reason is cultural - R has from its inception been oriented more towards statistics than to computer science, making the feeling of programming in R more natural (in our experience) for sensory and consumer scientists than programming in Python. This opinion of experience is not to say that a sensory and consumer scientist shouldn't learn Python if they are so inclined, or even that Python tools aren't sometimes superior to R tools (in fact, they sometimes are). This latter point leads to our second reason, which is that R tools are typically better suited to sensory and consumer science than are Python tools. Even when Python tools are superior, the R tools are still sufficient for sensory and consumer science purposes, plus there are many custom packages such as \texttt{\{SensR\}}, \texttt{\{SensoMineR\}}, and \texttt{\{FactoMineR\}} that have been specifically developed for sensory and consumer science. Finally, the recent work by the RStudio company, and especially the exceptional work of Hadley Wickham, has lead to a very low barrier to entry for programming within R together with exceptional tools for data manipulation.
 
-\hypertarget{steps-to-install-r}{%
-\subsection{Steps to Install R}\label{steps-to-install-r}}
+On top of the main reasons described above, R is well-supported with an active community in the way the extensive online help throughout the numerous forums or websites is readily available. Besides, there are several books, courses and other educational materials to support the user. As mentioned, the universe of available packages is vast, being the programming language with the more specialized tools for sensory analysis. Lastly, R excels at data manipulation and results reporting.
 
-The first step in this journey is to install R. For this, visit \href{https://www.r-project.org/}{The R Project for Statistical Computing}. From there, follow the download instructions to install R for your particular platform.
+\hypertarget{what-is-rstudio}{%
+\subsection{What is RStudio?}\label{what-is-rstudio}}
 
-\url{https://cran.r-project.org/bin/windows/base/}
-Download the latest version of R
-Install R with default options
-You will almost certainly be running 64-bit R
-Note: If you are running R 4.0 or higher, you might need to install Rtools:
+RStudio is a powerful and easy way to interact with R programming. It is an Integrated Development Environment (IDE) for R (also Python) that comes with a multi-panel window setup that provides access to all primary things on a single screen, which means that that all information you need to write code is available in a single window that includes a console, syntax-highlighting editor that supports direct code execution, as well as tools for plotting, history, debugging and workplace management (\url{https://www.rstudio.com/}).
+
+Besides the convenience of having all panels in a single screen, we strongly recommend you to go for RStudio instead of R software due to other important reasons such as having a text-editor that is full-proof and full featured, autp completion while writing scripts, many shortcuts and access to all objected created in the Environment tab. Also, the highlighting tool for editor makes coding easier and less error-prone.
+
+\hypertarget{installing-r-and-rstudio}{%
+\subsection{Installing R and RStudio}\label{installing-r-and-rstudio}}
+
+The first step in this journey is to install R. For this, visit \href{https://www.r-project.org/}{The R Project for Statistical Computing}. From there, follow the download instructions to install R for your particular platform. We suggest you to download the latest version of R and install it with default options. Note that if you are running R 4.0 or higher, you might need to install Rtools:
 \url{https://cran.r-project.org/bin/windows/Rtools/}
 
-In this book, we assume that the readers have already some basic knowledge in R.
-If you are completely new to R, we recommend you reading or looking at some documentation online to get you started with the basics.
+Next you need to install RStudio. To do so, visit the \href{https://rstudio.com/products/rstudio/download/}{RStudio desktop download page} and follow the installation instructions. Download and install the latest version of RStudio with default options and for adjustments:
+- Uncheck ``Restore .RData into workspace at startup
+- Select ``Never'' for ``Save workspace to .RData on exit''
+- Change color scheme to dark (e.g.~``Idle Fingers'')
+- Put console on right
 
-Just like with any spoken language, the same message can be said in various ways. The same applies with writing scripts in R, each of us having our own styles, or our own preferences towards certain procedures, packages, functions, etc. In other words, writing scripts is personal. Through this book, we are not trying to impose our way of thinking/proceeding/building scripts, instead we aim in sharing our knowledge built through past experiences to help you find your own style.
+Once you have installed R and RStudio, you should be able to open RStudio and enter the following into the Console to receive the number ``3'' as your output:
 
-But to fully decode our message, you'll need some reading keys. These keys will be described in the next sections.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OtherTok{\textless{}{-}} \DecValTok{1}
+\NormalTok{y }\OtherTok{\textless{}{-}} \DecValTok{2}
+
+\NormalTok{x }\SpecialCharTok{+}\NormalTok{ y}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{getting-started-in-r}{%
+\section{Getting Started in R}\label{getting-started-in-r}}
+
+\hypertarget{create-a-local-project}{%
+\subsection{Create a Local Project}\label{create-a-local-project}}
+
+We strongly recommend to always work in an RStudio project. RStudio projects make it straightforward to divide your work into multiple contexts, each with their own working directory, workspace, history, and source documents. It keeps all of your R scripts, R markdown documents, R functions and data together in one place The projects keep your files (and activity) organized, help manage your file path (so your computer can find things) and allow for more advanced capabilities. RStudo project allow independence between project, which means that you can open more than one project at the same time and switch very easily between them without fear of them interfering with each other.
+
+To create a new project locally in RStudio, select `File' --\textgreater{} `New Project\ldots{}' from the menu. Typically, a new project is created in a new directory. You can also create a new project by clicking on the `Project' button in the top right of RStudio and selecting `New Project\ldots{}'. Once your new project has been created you will now have a new folder on your computer that contains the basic file structure. You probably want to add folders to better organize all the files and documents, such as a folder for input, output and scripts.
+
+\hypertarget{install-and-load-packages}{%
+\subsection{Install and Load Packages}\label{install-and-load-packages}}
+
+The base installation of R comes with many useful packages that contains many of the functions you will use on a daily basis, however, you will very quickly feel the urge to extend R's capabilities and this is possible by using R packages that can easily be downloaded and install in R. An R package is a collection of functions, data sets, help files and documentation, developed by the community, that extends the capabilities of base R, by improving existing base R functionalities or by adding new ones.
+
+There several packages out there, but we listed above some of the packages we will be consistently be using throughout this book.
+
+\begin{itemize}
+\item
+  Essential packages (or collections): \texttt{tidyverse}, \texttt{readxl}
+\item
+  Custom Microsoft office document creation: \texttt{officer}, \texttt{flextable}, \texttt{rvg}, \texttt{openxlsx}, \texttt{extrafont}, \texttt{extrafontdb}
+\item
+  Sensory specific packages: \texttt{sensR} , \texttt{SensoMineR}, \texttt{FactoMineR}, \texttt{factoextra}
+\end{itemize}
+
+There are many more, for statistical tests of all varieties, to multivariate analysis, to machine learning, to text analysis, etc.
+
+You only need to install each package once per R version. To install a package, you can type \texttt{install.packages("{[}package\ name{]}")}. R will download the packages from CRAN and install the onto your computer.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{install.packages}\NormalTok{(}\StringTok{"tidyverse"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+If a script loads package that are not installed, RStudio will prompt you to install the package
+Also, note that if you do not have write access on your computer, you might need IT help to install packages. Additionally, you might need to safelist various R related tools and sites.
+
+Once you have installed a package onto your computer it is not immediately available for you to use until you load it with \texttt{library()}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{r-scripts}{%
+\subsection{R Scripts}\label{r-scripts}}
+
+You can enter and run your code at the R command. However, you will quickly noticed that although effective and simple, each time you want to execute a set of commands, you will have to re-enter them the the commend line. Additionally, once you close your project or restart the R session, you will loose all the code stream. R scripts are the solution to those issues.
+
+\hypertarget{run-sample-code}{%
+\subsection{Run Sample Code}\label{run-sample-code}}
+
+Like any language, R is best learned first through example then through study
+We start with a series of examples to illustrate basic principles
+For this example, we analyze a series of Tetrad tests
+
+Suppose you have 15 out of 44 correct in a Tetrad test
+Using sensR, it's easy to analyze these data:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(sensR)}
+
+\NormalTok{num\_correct }\OtherTok{\textless{}{-}} \DecValTok{15}  
+\NormalTok{num\_total }\OtherTok{\textless{}{-}} \DecValTok{44}  
+  
+\NormalTok{discrim\_res }\OtherTok{\textless{}{-}} \FunctionTok{discrim}\NormalTok{(num\_correct, num\_total, }\AttributeTok{method =} \StringTok{"tetrad"}\NormalTok{)  }
+  
+\FunctionTok{print}\NormalTok{(discrim\_res)  }
+\end{Highlighting}
+\end{Shaded}
 
 \hypertarget{introduction-to-the-magrittr-and-the-notion-of-pipes}{%
 \subsection{\texorpdfstring{Introduction to the \texttt{\{magrittr\}} and the notion of \emph{pipes}}{Introduction to the \{magrittr\} and the notion of pipes}}\label{introduction-to-the-magrittr-and-the-notion-of-pipes}}
@@ -365,8 +444,50 @@ Note however that although pipes are very powerful, they are not always the best
   The system of pipes works linearly: if your code requires a complex dependency structure, the pipes should be avoided.
 \end{itemize}
 
+\hypertarget{git-and-github}{%
+\section{Version Contrl / Git and GitHub}\label{git-and-github}}
+
+Git is a version control system that allows you to revert to earlier versions of your code, if necessary. GitHub is service that allows for online backups of your code and which facilitates collaboration between team members. We highly recommend that you integrate both Git and GitHub into your data scientific workflow. For a full review of Git and GitHub from an R programming perspective, we recommend \href{https://happygitwithr.com/}{Happy Git with R} by Jenny Bryant. In what follows, we simply provide the minimum information needed to get you up and running with Git and GitHub. Also, for an insightful discussion of the need for version control, please see {[}Cite bryan2018excuse{]}.
+
+\hypertarget{git}{%
+\subsection{Git}\label{git}}
+
+\begin{itemize}
+\tightlist
+\item
+  Install Git
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Windows
+  \item
+    macOS
+  \end{itemize}
+\item
+  Register with RStudio
+\end{itemize}
+
+\hypertarget{github}{%
+\subsection{GitHub}\label{github}}
+
+\begin{itemize}
+\tightlist
+\item
+  Create a GitHub account
+\item
+  Register with RStudio
+\end{itemize}
+
 \hypertarget{tips-on-how-to-read-this-book}{%
 \subsection{\texorpdfstring{Tips on \emph{how to read this book?}}{Tips on how to read this book?}}\label{tips-on-how-to-read-this-book}}
+
+In this book, we assume that the readers have already some basic knowledge in R.
+If you are completely new to R, we recommend you reading ``R for Data Science'' (REF) or looking at some documentation online to get you started with the basics.
+
+Just like with any spoken language, the same message can be said in various ways. The same applies with writing scripts in R, each of us having our own styles, or our own preferences towards certain procedures, packages, functions, etc. In other words, writing scripts is personal. Through this book, we are not trying to impose our way of thinking/proceeding/building scripts, instead we aim in sharing our knowledge built through past experiences to help you find your own style.
+
+But to fully decode our message, you'll need some reading keys. These keys will be described in the next sections.
 
 \hypertarget{running-code-and-handling-errors}{%
 \subsubsection{Running code and handling errors}\label{running-code-and-handling-errors}}
@@ -467,171 +588,6 @@ Let's illustrate this through a simple example involving \texttt{pivot\_longer()
   \FunctionTok{pivot\_wider}\NormalTok{(}\AttributeTok{names\_from=}\NormalTok{Variables, }\AttributeTok{values\_from=}\NormalTok{Scores)}
 \end{Highlighting}
 \end{Shaded}
-
-\hypertarget{rstudio}{%
-\section{RStudio}\label{rstudio}}
-
-\hypertarget{steps-to-install-rstudio}{%
-\subsection{Steps to Install RStudio}\label{steps-to-install-rstudio}}
-
-Next you need to install RStudio, which is our recommended integrated development environment (IDE) for developing R code. To do so, visit the \href{https://rstudio.com/products/rstudio/download/}{RStudio desktop download page} and follow the installation instructions.
-
-Once you have installed R and RStudio, you should be able to open RStudio and enter the following into the Console to receive the number ``3'' as your output:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{x }\OtherTok{\textless{}{-}} \DecValTok{1}
-\NormalTok{y }\OtherTok{\textless{}{-}} \DecValTok{2}
-
-\NormalTok{x }\SpecialCharTok{+}\NormalTok{ y}
-\end{Highlighting}
-\end{Shaded}
-
-Some recommendations upon installing RStudio:
-
-\begin{itemize}
-\tightlist
-\item
-  Change the color scheme to dark.
-\item
-  Put the console on the right.
-\end{itemize}
-
-\url{https://www.rstudio.com/products/rstudio/download/\#download}
-Download and install the latest (almost certainly 64-bit) version of RStudio with default options
-Adjustments:
-Uncheck ``Restore .RData into workspace at startup
-Select ``Never'' for ``Save workspace to .RData on exit''
-Change color scheme to dark (e.g.~``Idle Fingers'')
-Put console on right
-
-\hypertarget{create-a-local-project}{%
-\subsection{Create a Local Project}\label{create-a-local-project}}
-
-Always work in an RStudio project
-Projects keep your files (and activity) organized
-Projects help manage your file path (so your computer can find things)
-Projects allow for more advanced capabilities later (like GitHub or renv)
-We cover the use of GitHub in a future webinar
-For now we create projects locally
-
-\hypertarget{install-and-load-packages}{%
-\subsection{Install and Load Packages}\label{install-and-load-packages}}
-
-As you use R, you will want to make use of the many packages others (and perhaps you) have written
-Essential packages (or collections):
-tidyverse, readxl
-Custom Microsoft office document creation
-officer, flextable, rvg, openxlsx, extrafont, extrafontdb
-Sensory specific packages
-sensR , SensoMineR, FactoMineR, factoextra
-There are many more, for statistical tests of all varieties, to multivariate analysis, to machine learning, to text analysis, etc.
-
-You only need to install each package once per R version
-To install a package, you can:
-Type install.packages(``{[}package name{]}'')
-Use the RStudio dropdown
-In addition, if a script loads package that are not installed, RStudio will prompt you to install the package
-Notes:
-If you do not have write access on your computer, you might need IT help to install packages
-You might need to safelist various R related tools and sites
-
-\hypertarget{run-sample-code}{%
-\subsection{Run Sample Code}\label{run-sample-code}}
-
-Like any language, R is best learned first through example then through study
-We start with a series of examples to illustrate basic principles
-For this example, we analyze a series of Tetrad tests
-
-Suppose you have 15 out of 44 correct in a Tetrad test
-Using sensR, it's easy to analyze these data:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(sensR)}
-
-\NormalTok{num\_correct }\OtherTok{\textless{}{-}} \DecValTok{15}  
-\NormalTok{num\_total }\OtherTok{\textless{}{-}} \DecValTok{44}  
-  
-\NormalTok{discrim\_res }\OtherTok{\textless{}{-}} \FunctionTok{discrim}\NormalTok{(num\_correct, num\_total, }\AttributeTok{method =} \StringTok{"tetrad"}\NormalTok{)  }
-  
-\FunctionTok{print}\NormalTok{(discrim\_res)  }
-\end{Highlighting}
-\end{Shaded}
-
-\hypertarget{git-and-github}{%
-\section{Git and GitHub}\label{git-and-github}}
-
-Git is a version control system that allows you to revert to earlier versions of your code, if necessary. GitHub is service that allows for online backups of your code and which facilitates collaboration between team members. We highly recommend that you integrate both Git and GitHub into your data scientific workflow. For a full review of Git and GitHub from an R programming perspective, we recommend \href{https://happygitwithr.com/}{Happy Git with R} by Jenny Bryant. In what follows, we simply provide the minimum information needed to get you up and running with Git and GitHub. Also, for an insightful discussion of the need for version control, please see {[}Cite bryan2018excuse{]}.
-
-\hypertarget{git}{%
-\subsection{Git}\label{git}}
-
-\begin{itemize}
-\tightlist
-\item
-  Install Git
-
-  \begin{itemize}
-  \tightlist
-  \item
-    Windows
-  \item
-    macOS
-  \end{itemize}
-\item
-  Register with RStudio
-\end{itemize}
-
-\hypertarget{github}{%
-\subsection{GitHub}\label{github}}
-
-\begin{itemize}
-\tightlist
-\item
-  Create a GitHub account
-\item
-  Register with RStudio
-\end{itemize}
-
-\hypertarget{raw-material}{%
-\section{RAW MATERIAL}\label{raw-material}}
-
-\hypertarget{principles}{%
-\subsection{Principles}\label{principles}}
-
-\hypertarget{tools}{%
-\subsection{Tools}\label{tools}}
-
-\hypertarget{github-1}{%
-\subsubsection{GitHub}\label{github-1}}
-
-\hypertarget{r-scripts}{%
-\subsubsection{R scripts}\label{r-scripts}}
-
-\hypertarget{rmarkdown}{%
-\subsubsection{RMarkdown}\label{rmarkdown}}
-
-\hypertarget{shiny}{%
-\subsubsection{Shiny}\label{shiny}}
-
-\hypertarget{documentation}{%
-\subsection{Documentation}\label{documentation}}
-
-\hypertarget{version-control}{%
-\subsection{Version control}\label{version-control}}
-
-\hypertarget{online-repositories-for-team-collaboration}{%
-\subsection{Online repositories for team collaboration}\label{online-repositories-for-team-collaboration}}
-
-\hypertarget{building-a-code-base}{%
-\subsection{Building a code base}\label{building-a-code-base}}
-
-\hypertarget{internal-functions}{%
-\subsubsection{Internal functions}\label{internal-functions}}
-
-\hypertarget{packages}{%
-\subsubsection{Packages}\label{packages}}
 
 \hypertarget{part-hors-doeuvres}{%
 \part*{Hors d'Oeuvres}\label{part-hors-doeuvres}}
@@ -3289,7 +3245,6 @@ In order to get the most of sensory experiments, it is thus essential to ensure 
 \subsubsection{Factorial designs}\label{factorial-designs}}
 
 Full factorial designs are of course commonly used and their application is usually straightforward. They won't be detailed here. However, always in the view of sparing experimental resources, incomplete designs are frequent and require careful preparation. Several strategies can be used to define which experiments to conduct (REF REF book Dean et al.~2018). Ref to Lawson 2015 (Design and analysis of experiments with R).
-=\textgreater{} Optimal designs (ref to AlgDesign / ref to Husson)
 
 \hypertarget{mixture-designs}{%
 \subsubsection{Mixture designs}\label{mixture-designs}}
@@ -3449,7 +3404,7 @@ Once the data are collected we can use the \texttt{mixexp::MixModel()} function 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{i2ds4scc_bookdown_files/figure-latex/unnamed-chunk-117-1.pdf}
+\includegraphics{i2ds4scc_bookdown_files/figure-latex/unnamed-chunk-119-1.pdf}
 
 Regardless of the construction of the mixture design, ternary diagrams are easy to plot with packages such as \texttt{\{ggtern\}} or \texttt{\{Ternary\}}. \texttt{\{ggtern\}} is particularly interesting because it builds on \texttt{\{ggplot2\}} and uses the same syntax.
 
@@ -3480,20 +3435,23 @@ Fisher continues: \emph{``To utilise this kind of experience the statistician mu
 Fortunately, we can spare the reader some of these imagination efforts and reiterate the fundamental principles of sensory evaluation that should help avoiding major pitfalls\footnote{For a more detailed description of these principles, we refer the reader to comprehensive sensory evaluation textbooks. See for instance (Lawless and Heymann, 2010), (Civille and Carr, 2016) or (Stone, Bleibaum and Thomas, 2022)}.
 
 \begin{itemize}
-\tightlist
 \item
   \textbf{Individual evaluation}\\
-  Probably the most important validity requirement for sensory evaluation is to perform individual evaluation. Sensory responses are very easily biased when judges can communicate. When this happens, observations cannot be considered independent which would rule out most statistical tests. Although this principle is generally accepted and correctly applied, some situations (such as project team meetings, b2b sample demonstration, tasting events, etc.) that may be more challenging in this regard. Individual evaluation is usually ensured by the use of partitioned sensory booths, but it can also be achieve by other means (table-top partitions, curtains, separate tables, separate rooms). There are some cases, in consumer research, where interactions between subjects are allowed or even encouraged because they correspond to real-life situations. But these are exceptions to the rule, and in such cases, observations are to be considered at the group level.
+  Probably the most important requirement for measurement validity is to perform individual evaluation. Sensory responses are very easily biased when judges can communicate. When this happens, observations cannot be considered independent which would rule out most statistical tests. Although this principle is generally accepted and correctly applied, some situations (such as project team meetings, b2b sample demonstration, tasting events, etc.) may be more challenging in this regard. Individual evaluation is usually ensured by the use of partitioned sensory booths, but it can also be achieved by other means (table-top partitions, curtains, separate tables, separate rooms). There are some cases, in consumer research, where interactions between subjects are allowed or even encouraged because they correspond to real-life situations. But these are exceptions to the rule, and in such cases, observations are to be considered at the group level.
+\item
+  \textbf{Balanced order effects and treatments}\\
+  We already discussed the importance of balancing the evaluation order for first-order and carry-over effects (\#LinkAppropriateSection). We cannot overstate how necessary this precaution is to get valid data. On top of having to deal with such effects, sensory scientists sometimes want to test how products are perceived (or liked) under different conditions (e.g.~blind vs.~branded, with/without nutritional information, in the lab vs.~at home, etc.). Choice must then be made between a within-group design (in which participants evaluate the products under the different conditions) and a between-group design (in which participants evaluate the product under one condition only). As often in consumer science, there is no perfect experiment and these two options have pros and cons. For instance, the within-group design would be more powerful and would allow data analysis at the individual level, but it would be more likely to induce response biases. Note that in both cases, participants must be randomly assigned to one group (corresponding either to a given condition, or to the order in which each condition is being experienced, for within-group designs).
+\item
+  \textbf{Separate affective from analytical tasks}\\
+  In sensory evaluation, a clear distinction is usually made between analytical measurements (whereby emphasis is placed on description of sample characteristics or on differences and similarities between samples) and affective measurements (whereby focus is placed on liking, preferences, and emotions that may derive from the consumption of a product). Because the tasks involved in these two types of measurements are very different, the general recommendation is to conduct them separately (and most often, with different people). Proceeding otherwise would risk inducing cognitive biases and collecting skewed - or even meaningless - data.
+  For example, if the goal of a study it to measure how much consumers like a given set of food products, it wouldn't make sense to ask trained panelists rate their liking for the products they have been trained to describe. They can certainly do it, but their judgement of the products is likely to be changed by that training and their extensive exposure to the product. Therefore, they can no longer be considered \emph{normal} consumers. This is relatively commonsense, however the risk of biases can sometimes be more subtle. Indeed, it might be tempting to ask consumers to give their liking for samples and, within the same session, to describe the same samples for a number of attributes. By doing so, you risk changing participants mindset (e.g.~by over-focusing on specific attributes) and thus alter liking scores (REF REF) although there is much debate on which type of descriptive tasks would actually lead to biased responses.
+  With this in mind, experimenters might still consider conducting combined measurements for product optimization, especially to get rough estimates of product specifications to target in the first stage of product development. In this objective, Just-about-right (JAR) scales are very popular. They provide a very direct way to optimize products' sensory characteristics.
+  Alternately, one might expect that `untrained' consumers cannot be used for descriptive analysis. However in the past few decades, the development of descriptive methods that do not require training and that can be achieved in a single session has made consumer-based descriptive analysis possible and reliable.
+\item
+  \textbf{Controlled evaluation conditions an blind evaluation}
 \end{itemize}
 
-Controlled order effects and balanced treatments
-We already discussed this point extensively (\#LinkAppropriateSection).
-
-Separate affective from analytical tasks
-
-Controlled evaluation conditions
-
-Final words: quantification, scaling, sensory acquisition softwares
+Final word: quantification, scaling, sensory acquisition softwares
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3504,7 +3462,7 @@ Final words: quantification, scaling, sensory acquisition softwares
 \hypertarget{data-import}{%
 \section{Import}\label{data-import}}
 
-It is a truism but to analyze data we first need \emph{data}. If this data is already available in R, then the analysis can be performed directly. However, in much cases, the data is stored outside the R environment, and needs to be imported.
+It is a truism, but to analyze data we first need \emph{data}. If this data is already available in R, then the analysis can be performed directly. However, in much cases, the data is stored outside the R environment, and needs to be imported.
 
 In practice, the data might be stored in as many format as one can imagine, whether it ends up being a fairly common solution (\emph{.txt} file, \emph{.csv} file, or \emph{.xls(x)} file), or software specific (e.g.~Stata, SPSS, etc.).
 
@@ -3925,11 +3883,9 @@ In this case, it can be seen that the missing value for \texttt{J01}-\texttt{P04
 \hypertarget{limitations}{%
 \subsubsection{Limitations}\label{limitations}}
 
-Different strategies for handling missing values exist, and the one used should be adapted to the data.
+As we have seen, there are different ways to implement missing values, and the different algorithms will likely impute them with different values. Hence, the overall results can be affected, and there is no way to know which solution is the most suitable for our study. Still, it is recommended to treat the missing values, and to chose the right strategy that is the most adapted to the data.
 
-Since most imputation methods are based on modeling, using such technique on variables with high missing values rate can lead to introducing bias in data. For example, in a situation in which half the data is missing (e.g.~incomplete design in which assessors evaluated 1/2 the product set), each prediction is proportionally based on one value only. This means that further analyses would be based on 1/2 measured - 1/2 \emph{fictive} data.
-
-It is hence important to understand the structure of missing values before handling them.
+However, since most imputation methods involve modeling, applying them to variables with a high missing values rate can introduce bias in the data. Let's consider a situation in which assessors are evaluating half the product set using a BIB. The data hence collected contained 1/2 missing values. By imputing the missing values, each prediction is proportionally based on one unique value. And ultimately, any further analyses on this data would be based on half measured and half \emph{fictive} data.
 
 \hypertarget{design-inspection}{%
 \subsection{Design Inspection}\label{design-inspection}}
@@ -4036,19 +3992,49 @@ Finally, the \texttt{NA} column refers to the time that products did not have a 
 \hypertarget{clean}{%
 \section{Clean}\label{clean}}
 
-\hypertarget{renaming-variables-1}{%
-\subsection{Renaming Variables}\label{renaming-variables-1}}
-
-renaming columns using \texttt{rename()} or \texttt{select()}, tackled in data manipulation
+As mentioned in the introduction of this chapter, there is a thin line between \emph{Data Inspection} and \emph{Data Manipulation}, as both steps share many common practices. Here, we are limiting ourselves on handling variables and their type. For a full overview, we encourage the readers to look at (REF DATA MANIPULATION) to see other practices on how to handle data.
 
 \hypertarget{handling-data-type}{%
 \subsection{Handling Data Type}\label{handling-data-type}}
 
+The data used in this section is stored in \emph{TFEQ.xlsx}. Let's import this file as suggested in (REFERENCE).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(readxl)}
+\FunctionTok{library}\NormalTok{(here)}
+
+\NormalTok{file\_path }\OtherTok{\textless{}{-}} \FunctionTok{here}\NormalTok{(}\StringTok{"Data"}\NormalTok{, }\StringTok{"TFEQ.xlsx"}\NormalTok{)}
+
+\NormalTok{demo\_var }\OtherTok{\textless{}{-}} \FunctionTok{read\_xlsx}\NormalTok{(file\_path, }\AttributeTok{sheet=}\StringTok{"Variables"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Code, Name)}
+
+\NormalTok{demo\_lev }\OtherTok{\textless{}{-}} \FunctionTok{read\_xlsx}\NormalTok{(file\_path, }\AttributeTok{sheet=}\StringTok{"Levels"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Question, Code, Levels) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{inner\_join}\NormalTok{(demo\_var, }\AttributeTok{by=}\FunctionTok{c}\NormalTok{(}\StringTok{"Question"}\OtherTok{=}\StringTok{"Code"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Question)}
+
+\NormalTok{demographic }\OtherTok{\textless{}{-}} \FunctionTok{read\_xlsx}\NormalTok{(file\_path, }\AttributeTok{sheet=}\StringTok{"Data"}\NormalTok{, }\AttributeTok{skip=}\DecValTok{1}\NormalTok{, }\AttributeTok{col\_names=}\FunctionTok{unlist}\NormalTok{(demo\_var}\SpecialCharTok{$}\NormalTok{Name))}
+\end{Highlighting}
+\end{Shaded}
+
 In R, the variables can be of different types, going from numerical to nominal to binary etc. This section aims in presenting the most common types (and their properties) used in sensory and consumer studies, and in showing how to transform a variable from one type to another.
 
-Remember that when your dataset is a tibble (as is the case here), the type of each variable is provided as sub-header when printed on screen. This eases the work of the analyst as the variables' type can be assessed at any moment.
+Remember that when your data set is stored in a tibble (as is the case here), the type of each variable is provided as sub-header when printed on screen. This eases the work of the analyst as the variables' type can be assessed at any moment.
 
-In case the dataset is not in a tibble, the use of the \texttt{str()} function used previously becomes handy as it provides this information.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{demographic}
+\end{Highlighting}
+\end{Shaded}
+
+In case the data is not in a tibble, the use of the \texttt{str()} function becomes handy as it provides this information.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{str}\NormalTok{(demographic)}
+\end{Highlighting}
+\end{Shaded}
 
 In sensory and consumer research, the four most common types are:
 
@@ -4069,15 +4055,13 @@ R still has plenty of other types, for more information please visit: \url{https
 \hypertarget{numerical-data}{%
 \subsubsection{Numerical Data}\label{numerical-data}}
 
-Since a large proportion of the research done is quantitative, it is no surprise that our dataset are often dominated with numerical variables. In practice, numerical data includes integer (non-fractional number, e.g.~1, 2, -16, etc.), or decimal value (or double, e.g.~1.6, 2.333333, -3.2 etc.).
+Since a large proportion of the research done is quantitative, it is no surprise that our data are often dominated with numerical variables. In practice, numerical data includes integer (non-fractional number, e.g.~1, 2, -16, etc.), or decimal value (or double, e.g.~1.6, 2.333333, -3.2 etc.).
 By default, when reading data from an external file, R converts any numerical variables to integer unless decimal points are detected, in which case it is converted into double.
-
-\textbf{Do we want to show how to format R wrt the number of decimals? (e.g.~options(digits=2))}
 
 \hypertarget{binary-data}{%
 \subsubsection{Binary Data}\label{binary-data}}
 
-Another common type that seem to be numerical in appearance, but that has additional properties is the binary type.
+Another common type that seems to be numerical in appearance, but that has additional properties is the binary type.
 Binary data is data that takes two possible values (\texttt{TRUE} or \texttt{FALSE}), and are often the results of a \emph{test} (e.g.~is \texttt{x\textgreater{}3}? Or is \texttt{MyVar} numerical?). A typical example of binary data in sensory and consumer research is data collected through Check-All-That-Apply (CATA) questionnaires.
 
 Note: Intrinsically, binary data is \emph{numerical}, TRUE being assimilated to 1, FALSE to 0. If multiple tests are being performed, it is possible to sum the number of tests that pass using the \texttt{sum()} function, as shown in the simple example below:
@@ -4101,7 +4085,7 @@ Note: Intrinsically, binary data is \emph{numerical}, TRUE being assimilated to 
 \hypertarget{nominal-data}{%
 \subsubsection{Nominal Data}\label{nominal-data}}
 
-Nominal data is any data that is not numerical. In most cases, nominal data are defined through text, or strings. It can appear in some situations that nominal variables are still defined with numbers although they do not have a numerical meaning. This is for instance the case when the respondents or samples are identified through numerical codes: In that case, it is clear that respondent 2 is not twice larger than respondent 1 for instance. But since the software cannot guess that those numbers are \emph{identifiers} rather than \emph{numbers}, the variables should be declared as nominal. The procedure explaining how to convert the type of the variables will be explained in the next section.
+Nominal data is any data that is not numerical nor binary. In most cases, nominal data are defined through text, or strings. It can appear in some situations that nominal variables are still defined with numbers although they do not have a numerical meaning. This is for instance the case when the respondents or samples are identified through numerical codes. But since the software cannot guess that those numbers are \emph{identifiers} rather than \emph{numbers}, the variables should be declared as nominal. The procedure explaining how to convert the type of the variables is explained in the next section.
 
 For nominal data, two particular types of data are of interest:
 
@@ -4123,23 +4107,24 @@ Variables defined as character or factor take strings as input. However, these t
   For \texttt{factor}, the inputs of the variables are structured into \texttt{levels}.
 \end{itemize}
 
-To evaluate the number of levels, different procedure are required:
+To evaluate the number of levels, different procedures are required:
 
 \begin{itemize}
 \tightlist
 \item
   For \texttt{character}, one should count the number of unique element using \texttt{length()} and \texttt{unique()};
 \item
-  For \texttt{factor}, the levels and the number of levels are direcly provided by \texttt{levels()} and \texttt{nlevels()}.
+  For \texttt{factor}, the levels and the number of levels are directly provided by \texttt{levels()} and \texttt{nlevels()}.
 \end{itemize}
 
-Let's compare a variable set as \texttt{factor} and \texttt{character} by using the \texttt{Judge} column from \texttt{TFEQ\_data}:
+Let's compare a variable set as \texttt{factor} and \texttt{character} by using a simple hand-made example:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{example }\OtherTok{\textless{}{-}}\NormalTok{ TFEQ\_data }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{(example }\OtherTok{\textless{}{-}}\NormalTok{ demographic }\SpecialCharTok{\%\textgreater{}\%} 
 \NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Judge) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Judge\_fct =} \FunctionTok{as.factor}\NormalTok{(Judge))}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Judge\_fct =} \FunctionTok{as.factor}\NormalTok{(Judge)))}
+
 \FunctionTok{summary}\NormalTok{(example)}
 
 \FunctionTok{unique}\NormalTok{(example}\SpecialCharTok{$}\NormalTok{Judge)}
@@ -4152,57 +4137,66 @@ Let's compare a variable set as \texttt{factor} and \texttt{character} by using 
 
 Although \texttt{Judge} and \texttt{Judge\_fct} look the same, they are structurally different, and those differences play an important role that one should consider when running certain analyses, or building tables and graphs.
 
-When set as \texttt{character}, the number of levels of a variable is directly read from the data, and its levels' order would either match the way they appear in the data, or are ordered alphabetically. This means that any data collected using a structured scale will lose its natural order.
+When set as \texttt{character}, the number of levels of a variable is directly read from the data, and its levels' order matches the way they appear in the data. This means that any data collected using a structured scale will often lose its natural order.
 
-When set as \texttt{factor}, the number and order of the factor levels are informed, and does not depend on the data itself: If a level has never been selected, or if certain groups have been filtered, this information is still present in the data.
+When set as \texttt{factor}, the factor levels (including their order) are informed, and does not depend necessarily on the data itself: If a level has never been selected, or if certain groups have been filtered, this information is still present in the data. In our case, the levels are read from the data an are automatically being reordered alphabetically (note that \texttt{J10} and \texttt{J100} appear before \texttt{J2} for instance.)
 
 To illustrate this, let's re-arrange the levels from \texttt{Judge\_fct} by ordering them numerically in such a way \texttt{J2} follows \texttt{J1} rather than \texttt{J10}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{judge }\OtherTok{\textless{}{-}} \FunctionTok{str\_sort}\NormalTok{(}\FunctionTok{levels}\NormalTok{(example}\SpecialCharTok{$}\NormalTok{Judge\_fct),}\AttributeTok{numeric=}\ConstantTok{TRUE}\NormalTok{)}
-\NormalTok{judge}
-\FunctionTok{levels}\NormalTok{(example}\SpecialCharTok{$}\NormalTok{Judge\_fct) }\OtherTok{\textless{}{-}}\NormalTok{ judge}
+\NormalTok{example }\OtherTok{\textless{}{-}}\NormalTok{ demographic }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Judge) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Judge\_fct =} \FunctionTok{factor}\NormalTok{(Judge, }\FunctionTok{str\_sort}\NormalTok{(Judge, }\AttributeTok{numeric=}\ConstantTok{TRUE}\NormalTok{)))}
+\FunctionTok{levels}\NormalTok{(example}\SpecialCharTok{$}\NormalTok{Judge\_fct)}
 \end{Highlighting}
 \end{Shaded}
 
-Now the levels are sorted, let's `remove' some respondents by only keeping the 20 first ones (J1 to J20, as J18 does not exist), and re-run the previous code:
+Now the levels are sorted, let's `remove' some respondents by only keeping the 20 first ones (J1 to J20), and re-run the previous code:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{example }\OtherTok{\textless{}{-}}\NormalTok{ TFEQ\_data }\SpecialCharTok{\%\textgreater{}\%} 
-\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Judge) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Judge\_fct =} \FunctionTok{as.factor}\NormalTok{(Judge)) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{filter}\NormalTok{(Judge }\SpecialCharTok{\%in\%} \FunctionTok{paste0}\NormalTok{(}\StringTok{"J"}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{20}\NormalTok{))}
-\FunctionTok{dim}\NormalTok{(example)}
+\NormalTok{(example\_reduced }\OtherTok{\textless{}{-}}\NormalTok{ example }\SpecialCharTok{\%\textgreater{}\%}  
+  \FunctionTok{filter}\NormalTok{(Judge }\SpecialCharTok{\%in\%} \FunctionTok{paste0}\NormalTok{(}\StringTok{"J"}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{20}\NormalTok{)))}
 
-\FunctionTok{unique}\NormalTok{(example}\SpecialCharTok{$}\NormalTok{Judge)}
-\FunctionTok{length}\NormalTok{(}\FunctionTok{unique}\NormalTok{(example}\SpecialCharTok{$}\NormalTok{Judge))}
+\FunctionTok{unique}\NormalTok{(example\_reduced}\SpecialCharTok{$}\NormalTok{Judge)}
+\FunctionTok{length}\NormalTok{(}\FunctionTok{unique}\NormalTok{(example\_reduced}\SpecialCharTok{$}\NormalTok{Judge))}
 
-\FunctionTok{levels}\NormalTok{(example}\SpecialCharTok{$}\NormalTok{Judge\_fct)}
-\FunctionTok{nlevels}\NormalTok{(example}\SpecialCharTok{$}\NormalTok{Judge\_fct)}
+\FunctionTok{levels}\NormalTok{(example\_reduced}\SpecialCharTok{$}\NormalTok{Judge\_fct)}
+\FunctionTok{nlevels}\NormalTok{(example\_reduced}\SpecialCharTok{$}\NormalTok{Judge\_fct)}
 \end{Highlighting}
 \end{Shaded}
 
-After filtering some respondents, it can be noticed that the variable set as character only contains 19 elements, whereas the column set as factor still contains the 107 respondents (most of them not having any recordings). This property can be seen as an advantage or a disadvantage depending on the situation:
+After filtering some respondents, it can be noticed that the variable set as character only contains 19 elements (\texttt{J18} doesn't exist in the data), whereas the column set as factor still contains the 107 entries (most of them not having any recordings).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{example\_reduced }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{count}\NormalTok{(Judge, }\AttributeTok{.drop=}\ConstantTok{FALSE}\NormalTok{)}
+
+\NormalTok{example\_reduced }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{count}\NormalTok{(Judge\_fct, }\AttributeTok{.drop=}\ConstantTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+This property can be seen as an advantage or a disadvantage depending on the situation:
 
 \begin{itemize}
 \tightlist
 \item
   For frequencies, it may be relevant to remember all the options, including the ones that may never be selected, and to order the results logically (use of \texttt{factor}).
 \item
-  For hypothesis testing (e.g.~ANOVA) on subset of data (e.g.~the data being split by gender), the \texttt{Judge} variable set as \texttt{character} would have the correct number of degrees of freedom (18 in our example) whereas the variable set as factor would use 106 degrees of freedom in all cases!
+  For hypothesis testing (e.g.~ANOVA) on subset of data (e.g.~the data being split by gender), the \texttt{Judge} variable set as \texttt{character} would have the correct number of degrees of freedom (18 in our example) whereas the variable set as factor would still use the original count (so 106 here)!
 \end{itemize}
 
-The latter point is particularly critical since the analysis is incorrect and will either return an error or worse return erroneous results!
+The latter point is particularly critical since the analysis is incorrect and will either return an error or (worse!) return erroneous results!
 
 Last but not least, variables defined as factor allow having their levels being renamed (and eventually combined) very easily.
-Let's consider the \texttt{Living\ area} variable from \texttt{TFEQ\_data} as example. From the original excel file, it can be seen that it has three levels, \texttt{1} corresponding to \emph{urban area}, \texttt{2} to \emph{rurban area}, and \texttt{3} to \emph{rural area}.
-Let's start by renaming this variable accordingly:
+Let's consider the \texttt{Living\ area} variable from \texttt{demographic} as example. From the original excel file, it can be seen that it has three levels, \texttt{1} corresponding to \emph{urban area}, \texttt{2} to \emph{rurban area}, and \texttt{3} to \emph{rural area}. Let's start by renaming its levels:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{example }\OtherTok{=}\NormalTok{ TFEQ\_data }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{example }\OtherTok{=}\NormalTok{ demographic }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Area =} \FunctionTok{factor}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Living area}\StringTok{\textasciigrave{}}\NormalTok{, }\AttributeTok{levels=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{), }\AttributeTok{labels=}\FunctionTok{c}\NormalTok{(}\StringTok{"Urban"}\NormalTok{, }\StringTok{"Rurban"}\NormalTok{, }\StringTok{"Rural"}\NormalTok{)))}
 
 \FunctionTok{levels}\NormalTok{(example}\SpecialCharTok{$}\NormalTok{Area)}
@@ -4213,11 +4207,11 @@ Let's start by renaming this variable accordingly:
 \end{Shaded}
 
 As can be seen, the variable \texttt{Area} is the factor version (including its labels) of \texttt{Living\ area}.
-If we would also consider that \texttt{Rurban} should be combined with \texttt{Rural}, and that \texttt{Rural} should appear before \texttt{Urban}, we can simply modify the code as such:
+Let's now regroup \texttt{Rurban} and \texttt{Rural} together under \texttt{Rural}, and change the order by ensure that \texttt{Rural} appears before \texttt{Urban}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{example }\OtherTok{=}\NormalTok{ TFEQ\_data }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{example }\OtherTok{=}\NormalTok{ demographic }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Area =} \FunctionTok{factor}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Living area}\StringTok{\textasciigrave{}}\NormalTok{, }\AttributeTok{levels=}\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{1}\NormalTok{), }\AttributeTok{labels=}\FunctionTok{c}\NormalTok{(}\StringTok{"Rural"}\NormalTok{, }\StringTok{"Rural"}\NormalTok{, }\StringTok{"Urban"}\NormalTok{)))}
 
 \FunctionTok{levels}\NormalTok{(example}\SpecialCharTok{$}\NormalTok{Area)}
@@ -4233,11 +4227,15 @@ Some other transformations can be applied to factors thanks to the \texttt{\{for
 \begin{itemize}
 \tightlist
 \item
-  \texttt{fct\_reorder}/\texttt{fct\_reorder2} and \texttt{fct\_relevel} reorder the levels of a factor;
+  \texttt{fct\_reorder()}/\texttt{fct\_reorder2()} and \texttt{fct\_relevel()} reorder the levels of a factor;
 \item
-  \texttt{fct\_recode} renames the factor levels (as an alternative to \texttt{factor} used in the previous example);
+  \texttt{fct\_recode()} renames the factor levels (as an alternative to \texttt{factor()} used in the previous example);
 \item
-  \texttt{fct\_collapse} and \texttt{fct\_lump} aggregate different levels together (\texttt{fct\_lump} regroups automatically all the rare levels).
+  \texttt{fct\_collapse()} and \texttt{fct\_lump()} aggregate different levels together (\texttt{fct\_lump()} regroups automatically all the rare levels);
+\item
+  \texttt{fct\_inorder()} takes uses the same order as read in the data (particularly useful with \texttt{pivot\_longer()} for instance);
+\item
+  \texttt{fct\_rev()} reverses the order of the levels (particularly useful in graphs).
 \end{itemize}
 
 Although it hasn't been done here, manipulating strings is also possible through the \texttt{\{stringr\}} package, which provides interesting functions such as:
@@ -4245,21 +4243,23 @@ Although it hasn't been done here, manipulating strings is also possible through
 \begin{itemize}
 \tightlist
 \item
-  \texttt{str\_to\_upper}/\texttt{str\_to\_lower} to convert strings to uppercase or lowercase;
+  \texttt{str\_to\_upper()}/\texttt{str\_to\_lower()} to convert strings to uppercase or lowercase;
 \item
-  \texttt{str\_c}, \texttt{str\_sub} combine or subset strings;
+  \texttt{str\_c()}, \texttt{str\_sub()} combine or subset strings;
 \item
-  \texttt{str\_trim} and \texttt{str\_squish} remove white spaces;
+  \texttt{str\_trim()} and \texttt{str\_squish()} remove white spaces;
 \item
-  \texttt{str\_extract}, \texttt{str\_replace}, \texttt{str\_split} extract, replace, or split strings or part of the strings.
+  \texttt{str\_extract()}, \texttt{str\_replace()}, \texttt{str\_split()} extract, replace, or split strings or part of the strings;
+\item
+  \texttt{str\_sort()} to order alphabetically (or by respecting numbers, as shown previously) its elements.
 \end{itemize}
 
 \hypertarget{converting-between-types}{%
 \subsection{Converting between Types}\label{converting-between-types}}
 
-When importing data, variables may not always be associated to the right type. For instance, when respondents or products are numerically coded, they will be defined as integers rather than strings. Additionally, each variable type has its own property. To take full advantage of the different variable types, and to avoid wrong analyses (e.g considering a variable that is numerically coded as numeric when it is not), we need to convert them to other types.
+When importing data, variables may not always be associated to the right type (remember, each type has its own properties). For example, respondents or products coded numerically would be defined as integers rather than strings after importation. Without manual correction, this would lead to the wrong analyses! Hence, they need to be converted to the right type.
 
-In the following sections, we will \texttt{mutate()} a variable to create a new variable that corresponds to the original one after being converted to its new type (as in the previous example with \texttt{Area}). In case we want to overwrite a variable by only changing the type, the same name is used within \texttt{mutate()}.
+In the following sections, the function \texttt{mutate()} is used to to create a new variable that corresponds to the original one after being converted to its new type (as in the previous example with \texttt{Area}). By renaming the new variable with the same name as the original one, we overwrite it by simply changing its type, here.
 
 Based on our variable types of interest, there are two main conversions to run:
 - From numerical to character/factor;
@@ -4306,7 +4306,7 @@ Let's apply as.numeric() to these variables:
 \end{Highlighting}
 \end{Shaded}
 
-We can notice here that the outcome is not really as expected as the numbers 2-4-9-6-8-12-10 becomes 3-4-7-5-6-2-1, and Data-Science-4-Sensory-and-Consumer-Research becomes 1-2-3-4-5-6-7. The rationale behind this conversion is that the numbers do not reflects the string itself, but the position of that level within the factor level structure.
+We can notice here that the outcome is not really as expected as the numbers 2-4-9-6-8-12-10 becomes 3-4-7-5-6-2-1, and Data-Science-4-Sensory-and-Consumer-Research becomes 1-2-3-4-5-6-7. The rationale behind this conversion is that the numbers do not reflects the string itself, but the position of that level in the factor level order.
 
 To convert properly numerical factor levels to number, the variable should first be converted as character:
 
@@ -4317,15 +4317,19 @@ To convert properly numerical factor levels to number, the variable should first
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{conditional-renaming}{%
-\subsubsection{Conditional Renaming?}\label{conditional-renaming}}
+\hypertarget{conclusions}{%
+\subsection{Conclusions}\label{conclusions}}
 
-\texttt{mutate()} and \texttt{ifelse()}
+As can be seen, it is very important to verify (and correct!) the type of each variable as it can lead to running the wrong analysis otherwise. When using tibbles, such inspection is quite straightforward since printing the table on screen automatically shows the type of each variable. However, when presented as a matrix or as a data frame, such information is not directly visible:
 
-\hypertarget{handling-missing-values}{%
-\subsection{Handling Missing Values}\label{handling-missing-values}}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{demographic }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{as.data.frame}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
 
-Ignoring, removing, imputing
+Since each type has its advantages and drawbacks, it is convenient to regularly transit from one to another. This procedure will occur very often in the next sections, which will give you the chance to get accustomed to the procedure.
 
 \hypertarget{data-analysis}{%
 \chapter{Data Analysis}\label{data-analysis}}
@@ -5295,8 +5299,6 @@ Some examples in the field to exemplify the two extremes (too complicated or too
   Spider Plots -- This is the other extreme when consultants can fail but not because they present a very complex and extensive analysis, but because they decide to show the data in such an easy way that puts at risk important information that should be captured. The use of spider plots is still a common practice that many people can easily understand, but the problem is that this analysis is so simple that can mask sensory complexity.
 \end{itemize}
 
-Let's look at a real example in the field to illustrate a plot made during the exploratory analysis stage to understand the data and a plot, prepared during the explanatory analysis, that conveys the message to the audience in a much easier way.
-
 It is worth noticing that there is a third type of analysis in the data science field, predictive analysis. This is a hot topic in the area that involves techniques such as data modeling, machine learning, AI, and deep learning. Instead of being focused on exploring or explaining the data, predictive analysis is concerned with making successful predictions, in being sure the predictions are accurate. Examples of this approach include face recognition and text-speech. Eventually, some models can be studied to provide insights, but this is not always the case.
 
 \hypertarget{audience-awareness}{%
@@ -5317,7 +5319,7 @@ Background. Do they have a sensory science background? Statistical background? D
   Role. What is the role your audience plays in the project? Are they the decisions makers? Are they the final users of a dashboard, for instance?
 \end{itemize}
 
-In general, according to the profile, the audience will likely fall into one of the three categories: Technical Audience, Management (Decisions Makers), and General Interest. There is no magical formula on how to deal exactly with each of these types of audience, but in general, based on our experience, we must highlight that one of the key differences are in the focus, language, level of technical and detailed information you will provide for each of those target public. In general, it tends to be necessary a higher level of details and technical information and a lower level of the big picture once you move from your general interest audience to the management, and further down to the technical audience (Figure 1). We will further discuss the main differences between each audience above.
+In general, according to the profile, the audience will likely fall into one of the three categories: Technical Audience, Management (Decisions Makers), and General Interest. There is no magical formula on how to deal exactly with each of these types of audience, but in general, based on our experience, we must highlight that one of the key differences are in the focus, language, level of technical and detailed information you will provide for each of those target public. In general, it tends to be necessary a higher level of details and technical information and a lower level of the big picture once you move from your general interest audience to the management, and further down to the technical audience (Figure 11.1). We will further discuss the main differences between each audience above.
 
 \begin{figure}
 
@@ -5355,7 +5357,7 @@ A valuable tip shared by Cole Nussbaumer, in her book Storytelling with data, is
 
 We will use the PCA biplot from the biscuit sensory study shown in the previous chapter and point out the main differences in the approach according to the audience. As a quick reminder, 11 breakfast biscuits with varying contents of proteins and fibers were evaluated in this study. Products P01 to P09 are prototypes, product P10 is a standard commercial biscuit without enrichment and the eleventh product (Popt) is an additionally optimized biscuit.
 
-Let's picture the situation is that the R\&D team has been developing multiple trials for the biscuit formulation, changing the concentration/ratio of protein and fiber, with the objective to have a product with a sensory profile as close as possible to the commercial biscuit. For this exercise, your role as a consultant was to support the R\&D team designing the study and conducting the analysis and ultimately analyzing ad interpreting the results to make the final conclusion.
+Let's picture the situation is that the R\&D team has been developing multiple trials for the biscuit formulation, changing the concentration/ratio of protein and fiber, with the objective to have a product with a sensory profile as close as possible to the commercial biscuit. For this exercise, your role as a consultant was to support the R\&D team designing the study and conducting the analysis and ultimately analyzing ad interpreting the results to make the final conclusion (Figure 11.2).
 
 \begin{figure}
 
@@ -5368,16 +5370,7 @@ Let's picture the situation is that the R\&D team has been developing multiple t
 
 We won't go deep into the interpretation since it's not the focus of this example, but rather point out the approach we would recommend for each type of audience as shown in the table below.
 
-\begin{figure}
-
-{\centering \includegraphics[width=63.53in]{images/table_value_delivery} 
-
-}
-
-\caption{Exemplification of the approach for each type of audience.}\label{fig:table}
-\end{figure}
-
-Following those recommendations, your PCA for the management or general audience may look like the picture below. Note that the PCA was cleaned and simplified for a more straightforward understanding. Specifically, the PC variance explanation and grid line were removed, attributes were slightly moved to avoid overlap, the samples, and attributes that we want less emphasize were given a lighter color and as the opposite, the attributes and samples that we may want to highlight and focus our audience attention were given a different and stronger color, pictures and a more appealing description were used instead of the samples codes and some strategies as to circle the important area/group of samples and attributes helps the audience to focus on what we deem most important to extract from this analysis. In this example, the idea may be to highlight to the audience that the optimized formulation is in fact closer to the commercial one, and to increase even more this similarity, some attributes, like sour, salty, overall flavor persistence, fatty flavor, and fatty in mouth, has to be increased.
+Following those recommendations, your PCA for the management or general audience may look like the Figure 11.4. Note that the PCA was cleaned and simplified for a more straightforward understanding. Specifically, the PC variance explanation and grid line were removed, attributes were slightly moved to avoid overlap, the samples, and attributes that we want less emphasize were given a lighter color and as the opposite, the attributes and samples that we may want to highlight and focus our audience attention were given a different and stronger color, pictures and a more appealing description were used instead of the samples codes and some strategies as to circle the important area/group of samples and attributes helps the audience to focus on what we deem most important to extract from this analysis. In this example, the idea may be to highlight to the audience that the optimized formulation is in fact closer to the commercial one, and to increase even more this similarity, some attributes, like sour, salty, overall flavor persistence, fatty flavor, and fatty in mouth, has to be increased.
 
 \begin{figure}
 
@@ -5458,21 +5451,7 @@ Something important to keep in mind is the follow-up process after a report is s
 
 Sometimes the client feedback is something very minor, to adjust the scale of a plot, match the color with the company's palette or change the type of plot. In other cases, the feedback will demand a bit more time. It is common that the way you deemed best to present the outcomes is not that clear from your client's view or the set of data or plots you selected did not convey the message you were expecting or in an extreme situation, your client does not agree or ask you to redo an experiment or procedure. In this case, you will need to dedicate more time to address your client's request.
 
-Regardless of the situation, you should motivate and be open mind to your client's feedback and afterward carefully work on that to tackle it all at once. You definitely want to avoid a situation where your report or presentation be back and forth with your client. It is recommended that you make all possible changes and prepare a convincing explanation for the things that you strongly do not agree with or have a solid reason not to do so. Ideally, you should get back to your client as soon as possible highlighting the changes that were made and explanting the ones not addressed.
-
-\hypertarget{to-go-further-1}{%
-\section{To go further\ldots{}}\label{to-go-further-1}}
-
-In case you want to go further on this topic, we strongly recommend the following books:
-
-\begin{itemize}
-\item
-  Storytelling with data -- a data visualization guide for business professionals
-\item
-  Beyond bullet Points
-\item
-  Once Upon an Innovation: A Business Storytelling Techniques for Creative Problem Solving
-\end{itemize}
+Regardless of the situation, you should motivate and be open mind to your client's feedback and afterward carefully work on that to tackle it all at once. You definitely want to avoid a situation where your report or presentation be back and forth with your client. It is recommended that you make all possible changes and prepare a convincing explanation for the things that you strongly do not agree with or have a solid reason not to do so. Ideally, you should get back to your client as soon as possible highlighting the changes that were made and explaining the ones not addressed.
 
 \hypertarget{part-haute-cuisine}{%
 \part*{Haute Cuisine}\label{part-haute-cuisine}}
@@ -5774,7 +5753,7 @@ The tidymodels framework is a collection of packages for modeling and machine le
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{install.packages}\NormalTok{(}\StringTok{"tidymodels"}\NormalTok{)}
+\CommentTok{\# install.packages("tidymodels")}
 \FunctionTok{library}\NormalTok{(tidymodels)}
 \end{Highlighting}
 \end{Shaded}
@@ -5832,6 +5811,7 @@ The recipe package is part of tidymodels. It contains a rich set of data manipul
 We decided to use random forest classifier for the wine data.
 
 \texttt{rand\_forest} has 3 hyper-parameters (\texttt{mtry,\ trees,\ min\_n}) which can be tuned to achieve the best results.
+
 We set all of them as \texttt{tune()} right now. Model tuning is the process to find the best values for the parameters. Most often you start with the default values, and change them along the way. Since the model is not executing when created, these parameters can be changed using the tune() function. This provides a simple placeholder for the value.
 
 \begin{Shaded}
@@ -5869,6 +5849,8 @@ We created placeholders for tuning hyper-parameters earlier. Now it's time to de
 
 Now that We have defined the hyper-parameter search range, let's look for the best combination using \texttt{tune\_grid()} function. We will leave the test set aside, and use a cross-validation set for this purpose, so that the model during training certainly will not see the data on which we will be making predictions.
 
+We can use \texttt{autoplot()} function to take a quick look at the \texttt{tuning} object.
+
 Next, we will obtain a reliable estimate of the quality of the model. We first select the best combination of parameters using \texttt{select\_best()} function. The quality of the model can be estimated with a number of metrics. Here we decided to use roc\_auc (Area Under the Receiver Operating Characteristic Curve)
 
 \begin{Shaded}
@@ -5899,7 +5881,9 @@ Now that we have found the best parameters for the model, we can train the final
 \end{Highlighting}
 \end{Shaded}
 
-A very important part in building machine learning models is to assess the quality of the models. To do so, first we can use the model to predict on the testing data set (\texttt{wind\_testing}), which the model has not seen yet after training.
+A very important part in building machine learning models is to assess the quality of the models. To do so, first we can use the model to predict on the testing data set (\texttt{wind\_testing}), which the model has not seen yet.
+
+\texttt{predict} is a generic function for putting the prediction results from models to convenient tables for further analysis. We combine the \texttt{wine\_testing} data with the column of predicted Wine\_type from the model by adding the \texttt{predict(final\_model,\ wine\_testing)}in the pipe.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5908,7 +5892,9 @@ A very important part in building machine learning models is to assess the quali
 \end{Highlighting}
 \end{Shaded}
 
-Having predicted wine classes and actual labels, we can finally judge the quality of the model by comparing them. A very pleasant method for classification problems is the confusion matrix and the associated statistics (accuracy, sensitivity specificity, precision, F1 score and a lot more: \url{https://en.wikipedia.org/wiki/Confusion_matrix}).
+The \texttt{validation\_data\_pred} is a data frame with testing data with \texttt{Wine\_type} as the actual wine type, and a \texttt{.pred\_class} column as the predicted Wind\_type at the end. Now we can finally judge the quality of the model by comparing them.
+
+A very pleasant method for visualize the classification results is to use a confusion matrix. Confusion matrix is a table where each row represents instances in the actual class, while each column represents the instances in a predicted class. We can see that in our wine type prediction, it's a 100\% match!
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6633,8 +6619,8 @@ To perform \emph{Sentiment Analysis}, we start by deconstructing the message int
 
 To get examples of \emph{sentiment} list, the \texttt{get\_sentiments()} function from the \texttt{\{tidytext\}} package can be used. This function proposes 4 potential lists: \texttt{"bing"}, \texttt{"afinn"}, \texttt{"loughran"}, and \texttt{"nrc"} (REFERENCES). Of course, such lists can be modified and adapted to your own needs in case they do not fit perfectly.
 
-\hypertarget{to-go-further-2}{%
-\section{To go further\ldots{}}\label{to-go-further-2}}
+\hypertarget{to-go-further-1}{%
+\section{To go further\ldots{}}\label{to-go-further-1}}
 
 Text Mining and Natural Language Processing is a topic that has been (and is still being) studied for a very long time. Recently, it has made a lot of progress thanks to the advances in technology, and has gain even more interest with the abundance of text through social media, websites, blogs, etc. It is hence no surprise that a lot of machine learning models use text data (topic modelling, classification of emails to spam, etc.). Even current handy additions to simplify our life are based on text analysis (e.g.~suggestions in emails, translation, etc.)
 
@@ -6732,7 +6718,7 @@ In the \emph{app.R} file, this information is stored in the \texttt{ui()} functi
 
 In \texttt{sidebarPanel()}, all the options are set up. These options include \texttt{fileInput()} for importing the data set, or \texttt{radioButtons()} to control the type of plot to generate. A large list of options exist including \texttt{numericInput()}, \texttt{sliderInput()}, \texttt{textInput()}, \texttt{passwordInput()}, \texttt{dateInput()}, \texttt{selectInput()}, \texttt{checkboxInput()} etc. Note that we also extended our library of options by adding \texttt{checkboxGroupInput()} from the \texttt{\{shinyjs\}} package\footnote{To use \texttt{\{shinyjs\}}, you need to load the library and add \texttt{useShinyjs(),} at the start of your \texttt{ui()} code.}.
 
-In some cases, the option of interest cannot be defined on the UI side since they depend on the data itself. It is the case for the product or attribute selection, which are then defined using \texttt{uiOutput()}. As we will seen in the next section, these options are created on the server side.
+In some cases, the option of interest cannot be defined on the UI side since they depend on the data itself. It is the case for the product or attribute selection, which are then defined using \texttt{uiOutput()}. As we will see in the next section, these options are created on the server side.
 
 On \texttt{mainPanel()}, \texttt{tabsetPanel()} and \texttt{tabPanel()} control for the design of the output section. In our example, we create two tabs, one for the table and one for the graph, but we could have opted out to print everything on one page.
 
@@ -6847,7 +6833,7 @@ For this \texttt{reactive()} block, \texttt{mymean} depends on \texttt{mydata}, 
 
 For small and simple examples like ours, this domain of reactivity may be sufficient, and would be sufficient in many cases. There are however some few points that require a bit more explanations.
 
-First, we advise that you use \texttt{reactive()} as much as possible: In our example, we could have created the code to build the graph within \texttt{renderPlot()}. However, this way of coding is not efficient since it would always updated, even when it is not necessary. For small examples such as the one proposed here, this may not make much difference, but for larger applications it would have a larger impact. This is why we prefer to create the graphs in a \texttt{reactive()} instance, and simply retrieve it for display.
+First, we advise that you use \texttt{reactive()} as much as possible: In our example, we could have created the code to build the graph within \texttt{renderPlot()}. However, this way of coding is not efficient since it would always be updated, even when it is not necessary. For small examples such as the one proposed here, this may not make much difference, but for larger applications it would have a larger impact. This is why we prefer to create the graphs in a \texttt{reactive()} instance, and simply retrieve it for display.
 
 Second, and as you may have seen already, the output of a \texttt{reactive()} section can be re-used in other sections. This means that just like in \emph{regular coding}, you can save elements in R object that you can re-use later (e.g.~\texttt{mydata}, \texttt{mymean}, or \texttt{myplot}). However, these elements act like functions, meaning that if you want to call them, you should do it as \texttt{mydata()} for instance. More generally, let's imagine that \texttt{mydata} is a list with two elements (say \texttt{mydata\$element1} and \texttt{mydata\$element2}), we would retrieve \texttt{element1} as \texttt{mydata()\$element1}.
 
@@ -6862,8 +6848,8 @@ To run your application, you can simply do it in two different ways from RStudio
 
 Unfortunately, this solution is not sufficient in case you really want to share it with colleagues. In such case, you need to publish your app by installing it on a server. Ideally, you have access to a server that can host such application (check with your IT). If not, you can always create an account on \url{https://www.shinyapps.io/admin/} and install it there. Note that there is a free registration option, which comes with limitations (number of applications to install). Also, before using their services, make sure that their conditions (privacy, protection of the data, etc.) suit you and your company policy.
 
-\hypertarget{to-go-further-3}{%
-\section{To go further\ldots{}}\label{to-go-further-3}}
+\hypertarget{to-go-further-2}{%
+\section{To go further\ldots{}}\label{to-go-further-2}}
 
 Quickly, \texttt{\{shiny\}} became popular and many researchers developed additional packages and tools to further enhance it. Without being exhaustive, here are a few tools, widgets, and packages that we often use as they provide interesting additional features. But don't hesitate to look online for features that answer your needs!
 
@@ -6883,7 +6869,7 @@ To change the layout, simply load the library, and add the following piece of co
 
 \texttt{\{bslib\}} also allows you creating your own theme that match your company style. So do not hesitate to take some time to build it once, and to apply then to all your applications.
 
-Besides changing the overall theme of your applications, there are certain details that can make your overall application more appealing and easier to use. In our short example, you may have noticed that each option and each output is a separate line. This is sufficient here since the number of options and outputs are very limited. However, as the application grows is in size, this solution is no longer sustainable as you do not want the users to scroll down a long way to run adjust all the options.
+Besides changing the overall theme of your applications, there are certain details that can make your overall application more appealing and easier to use. In our short example, you may have noticed that each option and each output is a separate line. This is sufficient here since the number of options and outputs are very limited. However, as the application grows in size, this solution is no longer sustainable as you do not want the users to scroll down a long way to run adjust all the options.
 
 Instead, you can combine different options (or outputs) on one line. To do so, \texttt{\{shiny\}} works by defining each panel as a table with as many rows as needed and 12 columns. When not specified, the whole width (i.e.~the 12 columns) of the screen is used, but this could be controlled through the \texttt{column()} function.
 
@@ -6930,7 +6916,7 @@ For more information and examples, please look at \url{https://rstudio.github.io
 \hypertarget{building-dashboard}{%
 \subsection{Building Dashboard}\label{building-dashboard}}
 
-The example used here illustrates the power of \texttt{\{shiny\}}. However, it is here limited to our own data set, meaning that it is study specific. What if we would want to create a dashboard, that is connected to a database for instance and that updates its results as soon as new data is being collected?
+The example used here illustrates the power of \texttt{\{shiny\}}. However, it is limited to our own data set, meaning that it is study specific. What if we would want to create a dashboard, that is connected to a database for instance and that updates its results as soon as new data is being collected?
 
 This is of course the next step, and \texttt{\{shiny\}} can handle this thanks to the \texttt{\{shinydashboard\}} package.
 
