@@ -62,7 +62,7 @@ In the *app.R* file, this information is stored in the `ui()` function, and the 
 
 In `sidebarPanel()`, all the options are set up. These options include `fileInput()` for importing the data set, or `radioButtons()` to control the type of plot to generate. A large list of options exist including `numericInput()`, `sliderInput()`, `textInput()`, `passwordInput()`, `dateInput()`, `selectInput()`, `checkboxInput()` etc. Note that we also extended our library of options by adding `checkboxGroupInput()` from the `{shinyjs}` package^[To use `{shinyjs}`, you need to load the library and add `useShinyjs(),` at the start of your `ui()` code.].
 
-In some cases, the option of interest cannot be defined on the UI side since they depend on the data itself. It is the case for the product or attribute selection, which are then defined using `uiOutput()`. As we will seen in the next section, these options are created on the server side.
+In some cases, the option of interest cannot be defined on the UI side since they depend on the data itself. It is the case for the product or attribute selection, which are then defined using `uiOutput()`. As we will see in the next section, these options are created on the server side.
 
 On `mainPanel()`, `tabsetPanel()` and `tabPanel()` control for the design of the output section. In our example, we create two tabs, one for the table and one for the graph, but we could have opted out to print everything on one page. 
 
@@ -173,7 +173,7 @@ For this `reactive()` block, `mymean` depends on `mydata`, `input$attribute`, an
 
 For small and simple examples like ours, this domain of reactivity may be sufficient, and would be sufficient in many cases. There are however some few points that require a bit more explanations.
 
-First, we advise that you use `reactive()` as much as possible: In our example, we could have created the code to build the graph within `renderPlot()`. However, this way of coding is not efficient since it would always updated, even when it is not necessary. For small examples such as the one proposed here, this may not make much difference, but for larger applications it would have a larger impact. This is why we prefer to create the graphs in a `reactive()` instance, and simply retrieve it for display.
+First, we advise that you use `reactive()` as much as possible: In our example, we could have created the code to build the graph within `renderPlot()`. However, this way of coding is not efficient since it would always be updated, even when it is not necessary. For small examples such as the one proposed here, this may not make much difference, but for larger applications it would have a larger impact. This is why we prefer to create the graphs in a `reactive()` instance, and simply retrieve it for display.
 
 Second, and as you may have seen already, the output of a `reactive()` section can be re-used in other sections. This means that just like in *regular coding*, you can save elements in R object that you can re-use later (e.g. `mydata`, `mymean`, or `myplot`). However, these elements act like functions, meaning that if you want to call them, you should do it as `mydata()` for instance. More generally, let's imagine that `mydata` is a list with two elements (say `mydata$element1` and `mydata$element2`), we would retrieve `element1` as `mydata()$element1`.
 
@@ -204,7 +204,7 @@ fluidPage(
 
 `{bslib}` also allows you creating your own theme that match your company style. So do not hesitate to take some time to build it once, and to apply then to all your applications.
 
-Besides changing the overall theme of your applications, there are certain details that can make your overall application more appealing and easier to use. In our short example, you may have noticed that each option and each output is a separate line. This is sufficient here since the number of options and outputs are very limited. However, as the application grows is in size, this solution is no longer sustainable as you do not want the users to scroll down a long way to run adjust all the options. 
+Besides changing the overall theme of your applications, there are certain details that can make your overall application more appealing and easier to use. In our short example, you may have noticed that each option and each output is a separate line. This is sufficient here since the number of options and outputs are very limited. However, as the application grows in size, this solution is no longer sustainable as you do not want the users to scroll down a long way to run adjust all the options. 
 
 Instead, you can combine different options (or outputs) on one line. To do so, `{shiny}` works by defining each panel as a table with as many rows as needed and 12 columns. When not specified, the whole width (i.e. the 12 columns) of the screen is used, but this could be controlled through the `column()` function. 
 
@@ -239,7 +239,7 @@ For more information and examples, please look at [https://rstudio.github.io/DT/
 
 ### Building Dashboard
 
-The example used here illustrates the power of `{shiny}`. However, it is here limited to our own data set, meaning that it is study specific. What if we would want to create a dashboard, that is connected to a database for instance and that updates its results as soon as new data is being collected?
+The example used here illustrates the power of `{shiny}`. However, it is limited to our own data set, meaning that it is study specific. What if we would want to create a dashboard, that is connected to a database for instance and that updates its results as soon as new data is being collected?
 
 This is of course the next step, and `{shiny}` can handle this thanks to the `{shinydashboard}` package.
 

@@ -273,7 +273,7 @@ The tidymodels framework is a collection of packages for modeling and machine le
 
 ``` {r install_load_tidymodels}
 
-install.packages("tidymodels")
+# install.packages("tidymodels")
 library(tidymodels)
 
 ```
@@ -334,6 +334,7 @@ model_recipe <- wine_train %>%
 We decided to use random forest classifier for the wine data.
 
 `rand_forest` has 3 hyper-parameters (`mtry, trees, min_n`) which can be tuned to achieve the best results.
+
 We set all of them as `tune()` right now. Model tuning is the process to find the best values for the parameters. Most often you start with the default values, and change them along the way. Since the model is not executing when created, these parameters can be changed using the tune() function. This provides a simple placeholder for the value. 
 
 <!-- (https://parsnip.tidymodels.org/articles/parsnip.html?q=tune#placeholders-for-parameters). -->
@@ -358,6 +359,8 @@ rf_wf <- workflow() %>%
 
 We created placeholders for tuning hyper-parameters earlier. Now it's time to define the scope of the search and choose the method for searching the parameter space, in this case it is `grid_regular`.
 
+<!-- there is a warning message about grid_regular, it's deprecated in tune now. -->
+
 ```{r grid_def}
 params_grid <- rf_spec %>%
   parameters() %>%
@@ -368,6 +371,8 @@ params_grid <- rf_spec %>%
 ```
 
 Now that We have defined the hyper-parameter search range, let's look for the best combination using `tune_grid()` function. We will leave the test set aside, and use a cross-validation set for this purpose, so that the model during training certainly will not see the data on which we will be making predictions. 
+
+We can use `autoplot()` function to take a quick look at the `tuning` object.<!-- explain the graph here? --> 
 
 Next, we will obtain a reliable estimate of the quality of the model. We first select the best combination of parameters using `select_best()` function. The quality of the model can be estimated with a number of metrics. Here we decided to use roc_auc (Area Under the Receiver Operating Characteristic Curve) <!--I'm confused here. we are choosing the best paras, but where can we see the quality of the model? -->
 
@@ -397,9 +402,9 @@ final_model <- rf_wf %>%
 
 ```
 
-A very important part in building machine learning models is to assess the quality of the models. To do so, first we can use the model to predict on the testing data set (`wind_testing`), which the model has not seen yet after training. 
+A very important part in building machine learning models is to assess the quality of the models. To do so, first we can use the model to predict on the testing data set (`wind_testing`), which the model has not seen yet. 
 
-<!-- do we need to explain predict()? -->
+`predict` is a generic function for putting the prediction results from models to convenient tables for further analysis. We combine the `wine_testing` data with the column of predicted Wine_type from the model by adding the `predict(final_model, wine_testing)`in the pipe. 
 
 ```{r prediction}
 
@@ -408,13 +413,22 @@ validation_data_pred <- wine_testing %>%
 
 ```
 
-Having predicted wine classes and actual labels, we can finally judge the quality of the model by comparing them. A very pleasant method for classification problems is the confusion matrix and the associated statistics (accuracy, sensitivity specificity, precision, F1 score and a lot more: https://en.wikipedia.org/wiki/Confusion_matrix). 
+The `validation_data_pred` is a data frame with testing data with `Wine_type` as the actual wine type, and a `.pred_class` column as the predicted Wind_type at the end. Now we can finally judge the quality of the model by comparing them. 
+
+A very pleasant method for visualize the classification results is to use a confusion matrix. Confusion matrix is a table where each row represents instances in the actual class, while each column represents the instances in a predicted class. We can see that in our wine type prediction, it's a 100% match!
+
+<!--and the associated statistics (accuracy, sensitivity specificity, precision, F1 score and a lot more: https://en.wikipedia.org/wiki/Confusion_matrix). -->
 
 ```{r cm}
 cm <- conf_mat(validation_data_pred, Wine_type, .pred_class)
 
 autoplot(cm, type = "heatmap")
+
 ```
+
+
+<!-- Do we want to include another regression example? it's more common in the sensory consumer science context -->
+
 
 ```{r regression_data_generation_Aigora_ml_training}
 library(tidyverse)

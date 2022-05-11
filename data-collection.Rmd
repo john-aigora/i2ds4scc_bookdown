@@ -18,7 +18,8 @@ Sensory and consumer science relies on experiments during which subjects usually
 
 However, this type of approach also comes with drawbacks^[Market researchers would argue that evaluating several products in a row doesn't usually happen in real life and that proceeding this way may induce response biases. They thus advocate the use of pure monadic designs in which participants are only given one sample to evaluate. This corresponds to a between-group design that is also frequently used in fields where only one treatment per subject is possible (drug testing, nutrition studies, etc.).] as it may imply order effects and carry-over effects. Fortunately, most of these effects can be controlled with a proper design of experiment (DoE). A good design ensures that order and carry-over effects are not confounded with what you are actually interested to measure (most frequently, the differences between products) by balancing these effects across the panel. However, it is important to note that the design does not eliminate these effects and that each subject in your panel may still experience an order and a carry-over effect, as well as boredom, sensory fatigue, etc.
 
-<!-- Should we define what (first)-order and carry-over effects are? Or are we considering that readers would know? -->
+<!-- While reviewing my chapter (starting with data manipulation) I added a section at the start that explains the learning, the data we are using, and the main packages. Would it be an idea to add this here as well (and remove library(...) when no longer needed) for this chapter too? -->
+<!-- Good idea! I will add that -->
 
 <!-- power analysis with the pwr package  -->
 
@@ -30,9 +31,6 @@ For any sensory experiment that implies the evaluation of more than one sample, 
 Williams's Latin-Square designs offer a perfect solution to balance carry-over effects. They are very simple to create using the `williams()` function from the `{crossdes}` package. For instance, if you have five samples to test, `williams(5)` would create a 10x5 matrix containing the position at which each of three samples should be evaluated by 10 judges (the required number of judges per design block).
 
 Alternately, the `WilliamsDesign()` function in `{SensoMineR}` allows you to create a matrix of samples (as numbers) with numbered `Judges` as row names and numbered `Ranks` as column names. You only have to specify the number of samples to be evaluated, as in the example below for 5 samples. 
-
-<!-- While reviewing my chapter (starting with data manipulation) I added a section at the start that explains the learning, the data we are using, and the main packages. Would it be an idea to add this here as well (and remove library(...) when no longer needed) for this chapter too? -->
-<!-- Good idea! I will add that -->
 
 ```{r}
 library(SensoMineR)
@@ -127,7 +125,7 @@ In order to get the most of sensory experiments, it is thus essential to ensure 
 #### Factorial designs
 
 Full factorial designs are of course commonly used and their application is usually straightforward. They won't be detailed here. However, always in the view of sparing experimental resources, incomplete designs are frequent and require careful preparation. Several strategies can be used to define which experiments to conduct (REF REF book Dean et al. 2018). Ref to Lawson 2015 (Design and analysis of experiments with R).
-=> Optimal designs (ref to AlgDesign / ref to Husson)
+<!--- => Optimal designs (ref to AlgDesign / ref to Husson) -->
 
 #### Mixture designs
 
@@ -230,31 +228,31 @@ Fisher continues: *"To utilise this kind of experience the statistician must be 
 Fortunately, we can spare the reader some of these imagination efforts and reiterate the fundamental principles of sensory evaluation that should help avoiding major pitfalls^[For a more detailed description of these principles, we refer the reader to comprehensive sensory evaluation textbooks. See for instance (Lawless and Heymann, 2010), (Civille and Carr, 2016) or (Stone, Bleibaum and Thomas, 2022)].
 
 * **Individual evaluation**  
-Probably the most important validity requirement for sensory evaluation is to perform individual evaluation. Sensory responses are very easily biased when judges can communicate. When this happens, observations cannot be considered independent which would rule out most statistical tests. Although this principle is generally accepted and correctly applied, some situations (such as project team meetings, b2b sample demonstration, tasting events, etc.) that may be more challenging in this regard. Individual evaluation is usually ensured by the use of partitioned sensory booths, but it can also be achieve by other means (table-top partitions, curtains, separate tables, separate rooms). There are some cases, in consumer research, where interactions between subjects are allowed or even encouraged because they correspond to real-life situations. But these are exceptions to the rule, and in such cases, observations are to be considered at the group level.
+Probably the most important requirement for measurement validity is to perform individual evaluation. Sensory responses are very easily biased when judges can communicate. When this happens, observations cannot be considered independent which would rule out most statistical tests. Although this principle is generally accepted and correctly applied, some situations (such as project team meetings, b2b sample demonstration, tasting events, etc.) may be more challenging in this regard. Individual evaluation is usually ensured by the use of partitioned sensory booths, but it can also be achieved by other means (table-top partitions, curtains, separate tables, separate rooms). There are some cases, in consumer research, where interactions between subjects are allowed or even encouraged because they correspond to real-life situations. But these are exceptions to the rule, and in such cases, observations are to be considered at the group level.
 
+* **Balanced order effects and treatments**  
+We already discussed the importance of balancing the evaluation order for first-order and carry-over effects (#LinkAppropriateSection). We cannot overstate how necessary this precaution is to get valid data. On top of having to deal with such effects, sensory scientists sometimes want to test how products are perceived (or liked) under different conditions (e.g. blind vs. branded, with/without nutritional information, in the lab vs. at home, etc.). Choice must then be made between a within-group design (in which participants evaluate the products under the different conditions) and a between-group design (in which participants evaluate the product under one condition only). As often in consumer science, there is no perfect experiment and these two options have pros and cons. For instance, the within-group design would be more powerful and would allow data analysis at the individual level, but it would be more likely to induce response biases. Note that in both cases, participants must be randomly assigned to one group (corresponding either to a given condition, or to the order in which each condition is being experienced, for within-group designs).
 
-Controlled order effects and balanced treatments
-We already discussed this point extensively (#LinkAppropriateSection).
+* **Separate affective from analytical tasks**  
+In sensory evaluation, a clear distinction is usually made between analytical measurements (whereby emphasis is placed on description of sample characteristics or on differences and similarities between samples) and affective measurements (whereby focus is placed on liking, preferences, and emotions that may derive from the consumption of a product). Because the tasks involved in these two types of measurements are very different, the general recommendation is to conduct them separately (and most often, with different people). Proceeding otherwise would risk inducing cognitive biases and collecting skewed - or even meaningless - data.
+For example, if the goal of a study it to measure how much consumers like a given set of food products, it wouldn't make sense to ask trained panelists rate their liking for the products they have been trained to describe. They can certainly do it, but their judgement of the products is likely to be changed by that training and their extensive exposure to the product. Therefore, they can no longer be considered *normal* consumers. This is relatively commonsense, however the risk of biases can sometimes be more subtle. Indeed, it might be tempting to ask consumers to give their liking for samples and, within the same session, to describe the same samples for a number of attributes. By doing so, you risk changing participants mindset (e.g. by over-focusing on specific attributes) and thus alter liking scores (REF REF) although there is much debate on which type of descriptive tasks would actually lead to biased responses.
+With this in mind, experimenters might still consider conducting combined measurements for product optimization, especially to get rough estimates of product specifications to target in the first stage of product development. In this objective, Just-about-right (JAR) scales are very popular. They provide a very direct way to optimize products' sensory characteristics.
+Alternately, one might expect that 'untrained' consumers cannot be used for descriptive analysis. However in the past few decades, the development of descriptive methods that do not require training and that can be achieved in a single session has made consumer-based descriptive analysis possible and reliable. 
 
-
-
-Separate affective from analytical tasks
-
-Controlled evaluation conditions
-
-
-Final words: quantification, scaling, sensory acquisition softwares
+* **Controlled evaluation conditions an blind evaluation**  
 
 
 
-<!-- but ain't no perfect experiment, especially when consumer-oriented -->
+Final word: quantification, scaling, sensory acquisition softwares
+<!-- Scaling / Quantification  -->
+<!-- power analysis with the pwr package  -->
+
+
 
 <!-- Time to recruit subjects / privacy (comply with privacy rules EU's General Data Protection Regulation (GDPR) and the California Consumer Privacy Act (CCPA)) -->
-<!-- Independent data (sensory booths) -->
-<!-- Anonymous -->
+
 <!-- Use of acquisition software -->
-<!-- Basics of the sensory measures (if not covered in the intro), cf. book nonfood -->
-<!-- Scaling / Quantification  -->
+
 
 <!-- randomization by judge, by product -->
 ```{r}
@@ -262,9 +260,10 @@ Bmixt_shuffled <- Bmixt[sample(nrow(Bmixt)), ]
 ```
 
 
+
 ## Import {#data-import}
 
-It is a truism but to analyze data we first need *data*. If this data is already available in R, then the analysis can be performed directly. However, in much cases, the data is stored outside the R environment, and needs to be imported.
+It is a truism, but to analyze data we first need *data*. If this data is already available in R, then the analysis can be performed directly. However, in much cases, the data is stored outside the R environment, and needs to be imported.
 
 In practice, the data might be stored in as many format as one can imagine, whether it ends up being a fairly common solution (*.txt* file, *.csv* file, or *.xls(x)* file), or software specific (e.g. Stata, SPSS, etc.).
 

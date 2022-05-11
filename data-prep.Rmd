@@ -225,11 +225,9 @@ In this case, it can be seen that the missing value for `J01`-`P04`-`Light` has 
 
 #### Limitations
 
-Different strategies for handling missing values exist, and the one used should be adapted to the data.
+As we have seen, there are different ways to implement missing values, and the different algorithms will likely impute them with different values. Hence, the overall results can be affected, and there is no way to know which solution is the most suitable for our study. Still, it is recommended to treat the missing values, and to chose the right strategy that is the most adapted to the data. 
 
-Since most imputation methods are based on modeling, using such technique on variables with high missing values rate can lead to introducing bias in data. For example, in a situation in which half the data is missing (e.g. incomplete design in which assessors evaluated 1/2 the product set), each prediction is proportionally based on one value only. This means that further analyses would be based on 1/2 measured - 1/2 *fictive* data. 
-
-It is hence important to understand the structure of missing values before handling them.
+However, since most imputation methods involve modeling, applying them to variables with a high missing values rate can introduce bias in the data. Let's consider a situation in which assessors are evaluating half the product set using a BIB. The data hence collected contained 1/2 missing values. By imputing the missing values, each prediction is proportionally based on one unique value. And ultimately, any further analyses on this data would be based on half measured and half *fictive* data.
 
 ### Design Inspection
 
@@ -325,17 +323,43 @@ Finally, the `NA` column refers to the time that products did not have a product
 
 ## Clean {#clean}
 
-### Renaming Variables
-
-renaming columns using `rename()` or `select()`, tackled in data manipulation
+As mentioned in the introduction of this chapter, there is a thin line between *Data Inspection* and *Data Manipulation*, as both steps share many common practices. Here, we are limiting ourselves on handling variables and their type. For a full overview, we encourage the readers to look at (REF DATA MANIPULATION) to see other practices on how to handle data.
 
 ### Handling Data Type
 
+The data used in this section is stored in *TFEQ.xlsx*. Let's import this file as suggested in (REFERENCE).
+
+```{r}
+library(readxl)
+library(here)
+
+file_path <- here("Data", "TFEQ.xlsx")
+
+demo_var <- read_xlsx(file_path, sheet="Variables") %>% 
+  dplyr::select(Code, Name)
+
+demo_lev <- read_xlsx(file_path, sheet="Levels") %>% 
+  dplyr::select(Question, Code, Levels) %>% 
+  inner_join(demo_var, by=c("Question"="Code")) %>% 
+  dplyr::select(-Question)
+
+demographic <- read_xlsx(file_path, sheet="Data", skip=1, col_names=unlist(demo_var$Name))
+
+```
+
 In R, the variables can be of different types, going from numerical to nominal to binary etc. This section aims in presenting the most common types (and their properties) used in sensory and consumer studies, and in showing how to transform a variable from one type to another.
 
-Remember that when your dataset is a tibble (as is the case here), the type of each variable is provided as sub-header when printed on screen. This eases the work of the analyst as the variables' type can be assessed at any moment. 
+Remember that when your data set is stored in a tibble (as is the case here), the type of each variable is provided as sub-header when printed on screen. This eases the work of the analyst as the variables' type can be assessed at any moment. 
 
-In case the dataset is not in a tibble, the use of the `str()` function used previously becomes handy as it provides this information.
+```{r}
+demographic
+```
+
+In case the data is not in a tibble, the use of the `str()` function becomes handy as it provides this information.
+
+```{r}
+str(demographic)
+```
 
 In sensory and consumer research, the four most common types are:
 
@@ -348,18 +372,15 @@ R still has plenty of other types, for more information please visit: https://ti
 
 #### Numerical Data
 
-Since a large proportion of the research done is quantitative, it is no surprise that our dataset are often dominated with numerical variables. In practice, numerical data includes integer (non-fractional number, e.g. 1, 2, -16, etc.), or decimal value (or double, e.g. 1.6, 2.333333, -3.2 etc.).
+Since a large proportion of the research done is quantitative, it is no surprise that our data are often dominated with numerical variables. In practice, numerical data includes integer (non-fractional number, e.g. 1, 2, -16, etc.), or decimal value (or double, e.g. 1.6, 2.333333, -3.2 etc.).
 By default, when reading data from an external file, R converts any numerical variables to integer unless decimal points are detected, in which case it is converted into double.
-
-**Do we want to show how to format R wrt the number of decimals? (e.g. options(digits=2))**
 
 #### Binary Data
 
-Another common type that seem to be numerical in appearance, but that has additional properties is the binary type. 
+Another common type that seems to be numerical in appearance, but that has additional properties is the binary type. 
 Binary data is data that takes two possible values (`TRUE` or `FALSE`), and are often the results of a *test* (e.g. is `x>3`? Or is `MyVar` numerical?). A typical example of binary data in sensory and consumer research is data collected through Check-All-That-Apply (CATA) questionnaires.
 
 Note: Intrinsically, binary data is *numerical*, TRUE being assimilated to 1, FALSE to 0. If multiple tests are being performed, it is possible to sum the number of tests that pass using the `sum()` function, as shown in the simple example below:
-
 
 ```{r example_logical}
 set.seed(123456)
@@ -376,10 +397,9 @@ sum(test)
 
 ```
 
-
 #### Nominal Data
 
-Nominal data is any data that is not numerical. In most cases, nominal data are defined through text, or strings. It can appear in some situations that nominal variables are still defined with numbers although they do not have a numerical meaning. This is for instance the case when the respondents or samples are identified through numerical codes: In that case, it is clear that respondent 2 is not twice larger than respondent 1 for instance. But since the software cannot guess that those numbers are *identifiers* rather than *numbers*, the variables should be declared as nominal. The procedure explaining how to convert the type of the variables will be explained in the next section. 
+Nominal data is any data that is not numerical nor binary. In most cases, nominal data are defined through text, or strings. It can appear in some situations that nominal variables are still defined with numbers although they do not have a numerical meaning. This is for instance the case when the respondents or samples are identified through numerical codes. But since the software cannot guess that those numbers are *identifiers* rather than *numbers*, the variables should be declared as nominal. The procedure explaining how to convert the type of the variables is explained in the next section. 
 
 For nominal data, two particular types of data are of interest: 
 
@@ -391,18 +411,19 @@ Variables defined as character or factor take strings as input. However, these t
  - For `character`, there are no particular structure, and the variables can take any values (e.g. open-ended question);
  - For `factor`, the inputs of the variables are structured into `levels`.
  
-To evaluate the number of levels, different procedure are required:
+To evaluate the number of levels, different procedures are required:
 
  - For `character`, one should count the number of unique element using `length()` and `unique()`;
- - For `factor`, the levels and the number of levels are direcly provided by `levels()` and `nlevels()`.
+ - For `factor`, the levels and the number of levels are directly provided by `levels()` and `nlevels()`.
  
-Let's compare a variable set as `factor` and `character` by using the `Judge` column from `TFEQ_data`:
-
+Let's compare a variable set as `factor` and `character` by using a simple hand-made example:
 
 ```{r char_vs_fctr1}
-example <- TFEQ_data %>% 
+
+(example <- demographic %>% 
   dplyr::select(Judge) %>% 
-  mutate(Judge_fct = as.factor(Judge))
+  mutate(Judge_fct = as.factor(Judge)))
+
 summary(example)
 
 unique(example$Judge)
@@ -413,60 +434,58 @@ nlevels(example$Judge_fct)
 
 ```
 
-
 Although `Judge` and `Judge_fct` look the same, they are structurally different, and those differences play an important role that one should consider when running certain analyses, or building tables and graphs.
 
-When set as `character`, the number of levels of a variable is directly read from the data, and its levels' order would either match the way they appear in the data, or are ordered alphabetically. This means that any data collected using a structured scale will lose its natural order. 
+When set as `character`, the number of levels of a variable is directly read from the data, and its levels' order matches the way they appear in the data. This means that any data collected using a structured scale will often lose its natural order. 
 
-When set as `factor`, the number and order of the factor levels are informed, and does not depend on the data itself: If a level has never been selected, or if certain groups have been filtered, this information is still present in the data. 
+When set as `factor`, the factor levels (including their order) are informed, and does not depend necessarily on the data itself: If a level has never been selected, or if certain groups have been filtered, this information is still present in the data. In our case, the levels are read from the data an are automatically being reordered alphabetically (note that `J10` and `J100` appear before `J2` for instance.)
 
 To illustrate this, let's re-arrange the levels from `Judge_fct` by ordering them numerically in such a way `J2` follows `J1` rather than `J10`.
 
-
-
 ```{r sorting_judge}
-judge <- str_sort(levels(example$Judge_fct),numeric=TRUE)
-judge
-levels(example$Judge_fct) <- judge
+example <- demographic %>% 
+  dplyr::select(Judge) %>% 
+  mutate(Judge_fct = factor(Judge, str_sort(Judge, numeric=TRUE)))
+levels(example$Judge_fct)
 
 ```
 
-
-
-Now the levels are sorted, let's 'remove' some respondents by only keeping the 20 first ones (J1 to J20, as J18 does not exist), and re-run the previous code:
-
+Now the levels are sorted, let's 'remove' some respondents by only keeping the 20 first ones (J1 to J20), and re-run the previous code:
 
 ```{r char_vs_fctr2}
-example <- TFEQ_data %>% 
-  dplyr::select(Judge) %>% 
-  mutate(Judge_fct = as.factor(Judge)) %>% 
-  filter(Judge %in% paste0("J",1:20))
-dim(example)
+(example_reduced <- example %>%  
+  filter(Judge %in% paste0("J",1:20)))
 
-unique(example$Judge)
-length(unique(example$Judge))
+unique(example_reduced$Judge)
+length(unique(example_reduced$Judge))
 
-levels(example$Judge_fct)
-nlevels(example$Judge_fct)
+levels(example_reduced$Judge_fct)
+nlevels(example_reduced$Judge_fct)
 
 ```
 
+After filtering some respondents, it can be noticed that the variable set as character only contains 19 elements (`J18` doesn't exist in the data), whereas the column set as factor still contains the 107 entries (most of them not having any recordings). 
 
+```{r}
+example_reduced %>% 
+  count(Judge, .drop=FALSE)
 
-After filtering some respondents, it can be noticed that the variable set as character only contains 19 elements, whereas the column set as factor still contains the 107 respondents (most of them not having any recordings). This property can be seen as an advantage or a disadvantage depending on the situation:
+example_reduced %>% 
+  count(Judge_fct, .drop=FALSE)
+```
+
+This property can be seen as an advantage or a disadvantage depending on the situation:
 
  - For frequencies, it may be relevant to remember all the options, including the ones that may never be selected, and to order the results logically (use of `factor`).
- - For hypothesis testing (e.g. ANOVA) on subset of data (e.g. the data being split by gender), the `Judge` variable set as `character` would have the correct number of degrees of freedom (18 in our example) whereas the variable set as factor would use 106 degrees of freedom in all cases!
+ - For hypothesis testing (e.g. ANOVA) on subset of data (e.g. the data being split by gender), the `Judge` variable set as `character` would have the correct number of degrees of freedom (18 in our example) whereas the variable set as factor would still use the original count (so 106 here)!
 
-The latter point is particularly critical since the analysis is incorrect and will either return an error or worse return erroneous results!
+The latter point is particularly critical since the analysis is incorrect and will either return an error or (worse!) return erroneous results!
 
 Last but not least, variables defined as factor allow having their levels being renamed (and eventually combined) very easily. 
-Let's consider the `Living area` variable from `TFEQ_data` as example. From the original excel file, it can be seen that it has three levels, `1` corresponding to *urban area*, `2` to *rurban area*, and `3` to *rural area*.
-Let's start by renaming this variable accordingly:
-
+Let's consider the `Living area` variable from `demographic` as example. From the original excel file, it can be seen that it has three levels, `1` corresponding to *urban area*, `2` to *rurban area*, and `3` to *rural area*. Let's start by renaming its levels:
 
 ```{r area_recode1}
-example = TFEQ_data %>% 
+example = demographic %>% 
   mutate(Area = factor(`Living area`, levels=c(1,2,3), labels=c("Urban", "Rurban", "Rural")))
 
 levels(example$Area)
@@ -475,13 +494,11 @@ nlevels(example$Area)
 table(example$`Living area`, example$Area)
 ```
 
-
 As can be seen, the variable `Area` is the factor version (including its labels) of `Living area`.
-If we would also consider that `Rurban` should be combined with `Rural`, and that `Rural` should appear before `Urban`, we can simply modify the code as such:
-
+Let's now regroup `Rurban` and `Rural` together under `Rural`, and change the order by ensure that `Rural` appears before `Urban`:
 
 ```{r area_recode2}
-example = TFEQ_data %>% 
+example = demographic %>% 
   mutate(Area = factor(`Living area`, levels=c(2,3,1), labels=c("Rural", "Rural", "Urban")))
 
 levels(example$Area)
@@ -490,27 +507,28 @@ nlevels(example$Area)
 table(example$`Living area`, example$Area)
 ```
 
-
 This approach of renaming and re-ordering factor levels is very important as it simplifies the readability of tables and figures.
 Some other transformations can be applied to factors thanks to the `{forcats}` package. Particular attention can be given to the following functions:
 
- - `fct_reorder`/`fct_reorder2` and `fct_relevel` reorder the levels of a factor;
- - `fct_recode` renames the factor levels (as an alternative to `factor` used in the previous example);
- - `fct_collapse` and `fct_lump` aggregate different levels together (`fct_lump` regroups automatically all the rare levels).
+ - `fct_reorder()`/`fct_reorder2()` and `fct_relevel()` reorder the levels of a factor;
+ - `fct_recode()` renames the factor levels (as an alternative to `factor()` used in the previous example);
+ - `fct_collapse()` and `fct_lump()` aggregate different levels together (`fct_lump()` regroups automatically all the rare levels);
+ - `fct_inorder()` takes uses the same order as read in the data (particularly useful with `pivot_longer()` for instance);
+ - `fct_rev()` reverses the order of the levels (particularly useful in graphs).
 
 Although it hasn't been done here, manipulating strings is also possible through the `{stringr}` package, which provides interesting functions such as:
 
- - `str_to_upper`/`str_to_lower` to convert strings to uppercase or lowercase;
- - `str_c`, `str_sub` combine or subset strings;
- - `str_trim` and `str_squish` remove white spaces;
- - `str_extract`, `str_replace`, `str_split` extract, replace, or split strings or part of the strings.
-  
+ - `str_to_upper()`/`str_to_lower()` to convert strings to uppercase or lowercase;
+ - `str_c()`, `str_sub()` combine or subset strings;
+ - `str_trim()` and `str_squish()` remove white spaces;
+ - `str_extract()`, `str_replace()`, `str_split()` extract, replace, or split strings or part of the strings;
+ - `str_sort()` to order alphabetically (or by respecting numbers, as shown previously) its elements.
  
 ### Converting between Types
 
-When importing data, variables may not always be associated to the right type. For instance, when respondents or products are numerically coded, they will be defined as integers rather than strings. Additionally, each variable type has its own property. To take full advantage of the different variable types, and to avoid wrong analyses (e.g considering a variable that is numerically coded as numeric when it is not), we need to convert them to other types.  
+When importing data, variables may not always be associated to the right type (remember, each type has its own properties). For example, respondents or products coded numerically would be defined as integers rather than strings after importation. Without manual correction, this would lead to the wrong analyses! Hence, they need to be converted to the right type.  
 
-In the following sections, we will `mutate()` a variable to create a new variable that corresponds to the original one after being converted to its new type (as in the previous example with `Area`). In case we want to overwrite a variable by only changing the type, the same name is used within `mutate()`.  
+In the following sections, the function `mutate()` is used to to create a new variable that corresponds to the original one after being converted to its new type (as in the previous example with `Area`). By renaming the new variable with the same name as the original one, we overwrite it by simply changing its type, here.  
 
 Based on our variable types of interest, there are two main conversions to run:
  - From numerical to character/factor;
@@ -520,23 +538,17 @@ The conversion from numerical to character or factor is simply done using `as.ch
 
 To illustrate the following points, let's start with creating a tibble with two variables, one containing strings made of numbers, and one containing strings made of text.
 
-
 ```{r simple_example}
 example <- tibble(Numbers = c("2","4","9","6","8","12","10"),
                   Text = c("Data","Science","4","Sensory","and","Consumer","Research"))
 ```
 
-
-
 The conversion from character to numerical is straight forward and requires the use of the function `as.numeric()`:
-
 
 ```{r char_2_num}
 example %>% 
   mutate(NumbersN = as.numeric(Numbers), TextN = as.numeric(Text))
 ```
-
-
 
 As can be seen, when strings are made of numbers, the conversion works fine. However, the text are not converted properly and returns NAs.
 
@@ -549,36 +561,29 @@ example <- example %>%
   mutate(Text = factor(Text, levels=c("Data","Science","4","Sensory","and","Consumer","Research")))
 ```
 
-
-
 Let's apply as.numeric() to these variables:
-
-
 
 ```{r fctr_2_num}
 example %>% 
   mutate(NumbersN = as.numeric(Numbers), TextN = as.numeric(Text))
 ```
 
-
-
-We can notice here that the outcome is not really as expected as the numbers 2-4-9-6-8-12-10 becomes 3-4-7-5-6-2-1, and Data-Science-4-Sensory-and-Consumer-Research becomes 1-2-3-4-5-6-7. The rationale behind this conversion is that the numbers do not reflects the string itself, but the position of that level within the factor level structure.
+We can notice here that the outcome is not really as expected as the numbers 2-4-9-6-8-12-10 becomes 3-4-7-5-6-2-1, and Data-Science-4-Sensory-and-Consumer-Research becomes 1-2-3-4-5-6-7. The rationale behind this conversion is that the numbers do not reflects the string itself, but the position of that level in the factor level order.
 
 To convert properly numerical factor levels to number, the variable should first be converted as character:
-
 
 ```{r fctr_2_char_2_num}
 example %>%
   mutate(Numbers = as.numeric(as.character(Numbers)))
 ```
 
+### Conclusions
 
-#### Conditional Renaming?
+As can be seen, it is very important to verify (and correct!) the type of each variable as it can lead to running the wrong analysis otherwise. When using tibbles, such inspection is quite straightforward since printing the table on screen automatically shows the type of each variable. However, when presented as a matrix or as a data frame, such information is not directly visible:
 
-`mutate()` and `ifelse()`
+```{r}
+demographic %>% 
+  as.data.frame()
+```
 
-### Handling Missing Values
-
-
-Ignoring, removing, imputing
-
+Since each type has its advantages and drawbacks, it is convenient to regularly transit from one to another. This procedure will occur very often in the next sections, which will give you the chance to get accustomed to the procedure.
