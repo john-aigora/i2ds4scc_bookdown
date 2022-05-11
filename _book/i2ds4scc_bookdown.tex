@@ -126,7 +126,7 @@
 
 \title{Data Science for Sensory and Consumer Scientists}
 \author{John Ennis, Julien Delarue, and Thierry Worch}
-\date{2022-03-29}
+\date{2022-05-05}
 
 \begin{document}
 \maketitle
@@ -2006,10 +2006,13 @@ An example of \texttt{facet\_wrap()} is provided in (ref data analysis).
 
 For these two functions, the parameter \texttt{scales} is particularly interesting as it allows each separate graph to use its own axis scales (\texttt{free} or individually using \texttt{free\_x}/\texttt{free\_y}) or not (\texttt{fixed}).
 
+To go further, consider also the function \texttt{facet\_trelliscope()} from the \texttt{\{trelliscopejs\}}.
+This function generates the same type of graphs as \texttt{facet\_wrap()} or \texttt{facet\_grid()} with some powerful twists. After generating the plots, they are still editable thanks to an interactive menu that controls for the \emph{Grid}, \emph{Labels}, \emph{Filter}, and \emph{Sort}. For example, the number of plots to show per row/column can be adjusted, tables with descriptive statistics (e.g.~mean, minimum, maximum) can be added under each graph, etc. Moreover, readers that are familiar with the interactivity of \texttt{\{plotly\}} can make great use of it through the \texttt{as\_plotly\ =\ TRUE} parameter, which is then applied to each individual graph!
+
 Such procedure is very handy to produce multiple graphs all at once\ldots when the data allow it.
 When multiple plot are being generated separately (using different data set, or producing different types of plots), it can still be relevant to combine them all in one. To perform such collage, the package \texttt{\{patchwork\}} becomes handy thanks to its simplicity and flexibility.
 
-Indeed, \texttt{\{patchwork\}} is a package that allows combining \texttt{ggplot()} graphs using \emph{mathematical} operations.
+\texttt{\{patchwork\}} is a package that allows combining \texttt{ggplot()} graphs using \emph{mathematical} operations.
 To add two elements next to each others, the \texttt{+} sign is used. To add two elements on top of each others, they should be separated using \texttt{/}. This operation can be combined with \texttt{()} to generate fancier collage.
 
 Let's illustrate this by creating a plot with on the left side \texttt{spiderplot}, and on the right side \texttt{bar\_p} on top of \texttt{line\_p}.
@@ -3203,7 +3206,7 @@ Suppose you want to include 20 judges in the experiment, you would then need to 
 
 The downside of Williams's Latin square designs is that the number of samples (\emph{k}) to be evaluated dictates the number of judges. For an even number of samples you must have a multiple of \emph{k} judges, and a multiple of \emph{2k} judges for an odd number of samples.
 
-As the total number of judges in your study may not always be exactly known in advance (e.g.~participants not showing up to your test, extra participants recruited at the last minute), it can be useful to add some flexibility to the design. Of course, additional rows would depart from the perfectly balanced design, but it is possible to optimize them using Federov's algorithm thanks to the \texttt{optFederov()} function of the \texttt{\{AlgDesign\}} package, by specifying \texttt{augment\ =\ TRUE}. For example we can add three more judges to the Williams Latin square design that we just built for \emph{nbP=}5 products and 10 judges, hence leading to a total number of \emph{nbP=}13 judges. Note that each judge will evaluate all the products, therefore the number of samples per judge (\emph{nbR}) equals the number of products (\emph{nbP}).
+As the total number of judges in your study may not always be exactly known in advance (e.g.~participants not showing up to your test, extra participants recruited at the last minute), it can be useful to add some flexibility to the design. Of course, additional rows would depart from the perfectly balanced design, but it is possible to optimize them using Federov's algorithm thanks to the \texttt{optFederov()} function of the \texttt{\{AlgDesign\}} package, by specifying \texttt{augment\ =\ TRUE}. For example we can add three more judges to the Williams Latin square design that we just built for \emph{nbP=}5 products and 10 judges, hence leading to a total number of \emph{nbP=}13 judges. Note that this experiment is designed so that each judge will evaluate all the products, therefore the number of samples per judge (\emph{nbR}) equals the number of products (\emph{nbP}).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3267,7 +3270,7 @@ Incomplete balanced designs also have drawbacks. First, from a purely statistica
 \hypertarget{incomplete-designs-for-hedonic-tests-sensory-informed-designs}{%
 \subsubsection{Incomplete designs for hedonic tests: Sensory informed designs}\label{incomplete-designs-for-hedonic-tests-sensory-informed-designs}}
 
-One may also be tempted to use incomplete balanced block designs for hedonic tests. However, proceeding this way is likely to induce framing bias. Indeed, each participant to the consumer tests will only see part of the product set which would affect their frame of reference if the subset of product they evaluate only covers a limited area of the sensory space.
+One may also be tempted to use incomplete balanced block designs for hedonic tests. However, proceeding this way is likely to induce framing bias. Indeed, each participant will only see part of the product set which would affect their frame of reference if the subset of product they evaluate only covers a limited area of the sensory space.
 
 Suppose you are designing a consumer test of chocolate chip cookies in which a majority of cookies are made with milk chocolate while a few cookies are made with dark chocolate chips. If a participant only evaluates samples that have milk chocolate chips, this participant will not know about the existence of dark chocolate and will potentially give very different scores compared to what they would have if they had a full view of the product category.
 
@@ -3285,7 +3288,7 @@ In order to get the most of sensory experiments, it is thus essential to ensure 
 \hypertarget{factorial-designs}{%
 \subsubsection{Factorial designs}\label{factorial-designs}}
 
-Full factorial designs are of course commonly used and their application is usually straightforward. However, always in the view of sparing experimental resources, incomplete designs are frequent and require careful preparation. Several strategies can be used to define which experiments to conduct (REF REF book Dean et al.~2018). Ref to Lawson 2015 (Design and analysis of experiments with R).
+Full factorial designs are of course commonly used and their application is usually straightforward. They won't be detailed here. However, always in the view of sparing experimental resources, incomplete designs are frequent and require careful preparation. Several strategies can be used to define which experiments to conduct (REF REF book Dean et al.~2018). Ref to Lawson 2015 (Design and analysis of experiments with R).
 =\textgreater{} Optimal designs (ref to AlgDesign / ref to Husson)
 
 \hypertarget{mixture-designs}{%
@@ -3315,25 +3318,138 @@ However, this design would imply 11 mixtures, which is more than needed to apply
 
 \NormalTok{mdes2 }\OtherTok{\textless{}{-}} \FunctionTok{Xvert}\NormalTok{(}\AttributeTok{nfac=}\DecValTok{3}\NormalTok{, }\AttributeTok{uc=}\FunctionTok{c}\NormalTok{(.}\DecValTok{30}\NormalTok{, .}\DecValTok{40}\NormalTok{, .}\DecValTok{50}\NormalTok{), }\AttributeTok{lc=}\FunctionTok{c}\NormalTok{(.}\DecValTok{15}\NormalTok{, .}\DecValTok{25}\NormalTok{, .}\DecValTok{30}\NormalTok{), }\AttributeTok{ndm =} \DecValTok{1}\NormalTok{, }\AttributeTok{plot =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
       \FunctionTok{mutate\_if}\NormalTok{(is.numeric, round, }\AttributeTok{digits =} \DecValTok{3}\NormalTok{)}
+
+\NormalTok{MixBiscuits }\OtherTok{\textless{}{-}} \FunctionTok{optFederov}\NormalTok{(}\SpecialCharTok{\textasciitilde{}} \SpecialCharTok{{-}}\DecValTok{1} \SpecialCharTok{+}\NormalTok{x1 }\SpecialCharTok{+}\NormalTok{x2}\SpecialCharTok{+}\NormalTok{ x2 }\SpecialCharTok{+}\NormalTok{x1}\SpecialCharTok{:}\NormalTok{x2 }\SpecialCharTok{+}\NormalTok{x1}\SpecialCharTok{:}\NormalTok{x3 }\SpecialCharTok{+}\NormalTok{x2}\SpecialCharTok{:}\NormalTok{x3 }\SpecialCharTok{+}\NormalTok{x1}\SpecialCharTok{:}\NormalTok{x2}\SpecialCharTok{:}\NormalTok{x3, mdes2, }\AttributeTok{nTrials=}\DecValTok{9}\NormalTok{)}
+\FunctionTok{DesignPoints}\NormalTok{(MixBiscuits}\SpecialCharTok{$}\NormalTok{design, }\AttributeTok{axislabs =} \FunctionTok{c}\NormalTok{(}\StringTok{"Butter"}\NormalTok{,}\StringTok{"Sugar"}\NormalTok{,}\StringTok{"Flour"}\NormalTok{), }\AttributeTok{pseudo =} \ConstantTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+## Warning: package 'mixexp' was built under R version 4.0.5
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in system(cmd, intern = intern, wait = wait | intern,
+## show.output.on.console = wait, : running command 'C:\WINDOWS\system32\cmd.exe /c
+## ftype perl' had status 2
+
+## Warning in system(cmd, intern = intern, wait = wait | intern,
+## show.output.on.console = wait, : running command 'C:\WINDOWS\system32\cmd.exe /c
+## ftype perl' had status 2
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: package 'daewr' was built under R version 4.0.5
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: package 'ggplot2' was built under R version 4.0.5
+\end{verbatim}
+
+\providecommand{\docline}[3]{\noalign{\global\setlength{\arrayrulewidth}{#1}}\arrayrulecolor[HTML]{#2}\cline{#3}}
+
+\setlength{\tabcolsep}{8pt}
+
+\renewcommand*{\arraystretch}{1.5}
+
+\begin{table}
+
+\centering
+
+\begin{longtable}{|p{0.74in}|p{0.62in}|p{0.62in}|p{0.56in}|p{0.61in}}
+
+\caption{Average liking scores obtained for the biscuits from the mixture design}\label{tab:biscuit-mixt}\\
+
+\hhline{>{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=2pt}-}
+
+\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.74in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}Product}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.62in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}Butter}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.62in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}Sugar}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.56in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}Flour}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.61in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}Liking}}} \\
+
+\noalign{\global\setlength{\arrayrulewidth}{2pt}}\arrayrulecolor[HTML]{000000}\cline{1-5}
+
+\endfirsthead
+
+\hhline{>{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=2pt}-}
+
+\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.74in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}Product}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.62in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}Butter}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.62in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}Sugar}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.56in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}Flour}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.61in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}Liking}}} \\
+
+\noalign{\global\setlength{\arrayrulewidth}{2pt}}\arrayrulecolor[HTML]{000000}\cline{1-5}\endhead
+
+
+
+\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.74in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}A}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.62in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}0.30}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.62in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}0.25}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.56in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}0.45}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.61in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}7.5}}} \\
+
+
+
+
+
+\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.74in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}B}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.62in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}0.15}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.62in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}0.40}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.56in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}0.45}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.61in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}5.4}}} \\
+
+
+
+
+
+\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.74in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}C}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.62in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}0.30}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.62in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}0.40}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.56in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}0.30}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.61in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}5.5}}} \\
+
+
+
+
+
+\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.74in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}D}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.62in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}0.25}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.62in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}0.25}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.56in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}0.50}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.61in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}7.0}}} \\
+
+
+
+
+
+\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.74in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}E}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.62in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}0.15}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.62in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}0.35}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.56in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}0.50}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.61in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}6.0}}} \\
+
+
+
+
+
+\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.74in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}F}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.62in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}0.30}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.62in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}0.32}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.56in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}0.38}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.61in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}8.0}}} \\
+
+
+
+
+
+\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.74in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}G}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.62in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}0.22}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.62in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}0.40}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.56in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}0.38}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.61in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}5.8}}} \\
+
+
+
+
+
+\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.74in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}H}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.62in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}0.20}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.62in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}0.30}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.56in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}0.50}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.61in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}6.8}}} \\
+
+
+
+
+
+\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.74in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}I}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.62in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}0.23}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.62in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}0.33}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.56in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}0.44}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.61in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\fontsize{11}{13}\selectfont{\textcolor[HTML]{000000}{\global\setmainfont{Arial}7.9}}} \\
+
+\noalign{\global\setlength{\arrayrulewidth}{2pt}}\arrayrulecolor[HTML]{000000}\cline{1-5}
+
+\end{longtable}
+
+\end{table}
 
 Once the data are collected we can use the \texttt{mixexp::MixModel()} function to fit a linear model and \texttt{mixexp::MixturePlot()} to draw a contour plot. Suppose that we obtain average liking scores for our 9 biscuits as given in Table \ref{tab:biscuit-mixt}, this simple code would allow to get a contour plot that shows where would be the optimal area for the biscuit formulation.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(mixexp)}
-\CommentTok{\# \# calculate the cubic mixture model }
-\CommentTok{\# invisible(capture.output(res \textless{}{-} MixModel(Bmixt, "Liking",}
-\CommentTok{\#                                          mixcomps = c("Butter", "Sugar", "Flour"), model = 4)) )}
-\CommentTok{\# \# plot the model as ternary contour plot}
-\CommentTok{\# ModelPlot(model = res,}
-\CommentTok{\#           dimensions = list(x1="Butter", x2="Sugar", x3="Flour"),}
-\CommentTok{\#           lims = c(0.15, 0.30, 0.25, 0.40, 0.30, 0.50), constraints = TRUE,}
-\CommentTok{\#           contour = TRUE, cuts = 12, fill = TRUE, pseudo = TRUE,}
-\CommentTok{\#           axislabs = c("Butter", "Sugar", "Flour"))}
+\CommentTok{\# calculate the cubic mixture model }
+\FunctionTok{invisible}\NormalTok{(}\FunctionTok{capture.output}\NormalTok{(res }\OtherTok{\textless{}{-}} \FunctionTok{MixModel}\NormalTok{(Bmixt, }\StringTok{"Liking"}\NormalTok{,}
+                                        \AttributeTok{mixcomps =} \FunctionTok{c}\NormalTok{(}\StringTok{"Butter"}\NormalTok{, }\StringTok{"Sugar"}\NormalTok{, }\StringTok{"Flour"}\NormalTok{), }\AttributeTok{model =} \DecValTok{4}\NormalTok{)) )}
+\CommentTok{\# plot the model as ternary contour plot}
+\FunctionTok{ModelPlot}\NormalTok{(}\AttributeTok{model =}\NormalTok{ res,}
+          \AttributeTok{dimensions =} \FunctionTok{list}\NormalTok{(}\AttributeTok{x1=}\StringTok{"Butter"}\NormalTok{, }\AttributeTok{x2=}\StringTok{"Sugar"}\NormalTok{, }\AttributeTok{x3=}\StringTok{"Flour"}\NormalTok{),}
+          \AttributeTok{lims =} \FunctionTok{c}\NormalTok{(}\FloatTok{0.15}\NormalTok{, }\FloatTok{0.30}\NormalTok{, }\FloatTok{0.25}\NormalTok{, }\FloatTok{0.40}\NormalTok{, }\FloatTok{0.30}\NormalTok{, }\FloatTok{0.50}\NormalTok{), }\AttributeTok{constraints =} \ConstantTok{TRUE}\NormalTok{,}
+          \AttributeTok{contour =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{cuts =} \DecValTok{12}\NormalTok{, }\AttributeTok{fill =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{pseudo =} \ConstantTok{TRUE}\NormalTok{,}
+          \AttributeTok{axislabs =} \FunctionTok{c}\NormalTok{(}\StringTok{"Butter"}\NormalTok{, }\StringTok{"Sugar"}\NormalTok{, }\StringTok{"Flour"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
+
+\includegraphics{i2ds4scc_bookdown_files/figure-latex/unnamed-chunk-117-1.pdf}
 
 Regardless of the construction of the mixture design, ternary diagrams are easy to plot with packages such as \texttt{\{ggtern\}} or \texttt{\{Ternary\}}. \texttt{\{ggtern\}} is particularly interesting because it builds on \texttt{\{ggplot2\}} and uses the same syntax.
 
@@ -3355,6 +3471,35 @@ A specific case, is the use of sensory information to make a selection of a subs
 
 \hypertarget{execute-1}{%
 \section{Execute}\label{execute-1}}
+
+Sir Ronald Fisher famously said in his presidential address to the first Indian statistical congress (1938): \emph{``To consult the statistician after an experiment is finished is often merely to ask him to conduct a post mortem examination. He can perhaps say what the experiment died of.''}
+
+Hopefully, the sections above would have helped the sensory and consumer scientist designing their experiment in a way that would warrant them relevant and meaningful data that are obtained with maximum efficiency.
+
+Fisher continues: \emph{``To utilise this kind of experience the statistician must be induced to use his imagination, and to foresee in advance the difficulties and uncertainties with which, if they are not foreseen, his investigations will be beset.''}
+Fortunately, we can spare the reader some of these imagination efforts and reiterate the fundamental principles of sensory evaluation that should help avoiding major pitfalls\footnote{For a more detailed description of these principles, we refer the reader to comprehensive sensory evaluation textbooks. See for instance (Lawless and Heymann, 2010), (Civille and Carr, 2016) or (Stone, Bleibaum and Thomas, 2022)}.
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Individual evaluation}\\
+  Probably the most important validity requirement for sensory evaluation is to perform individual evaluation. Sensory responses are very easily biased when judges can communicate. When this happens, observations cannot be considered independent which would rule out most statistical tests. Although this principle is generally accepted and correctly applied, some situations (such as project team meetings, b2b sample demonstration, tasting events, etc.) that may be more challenging in this regard. Individual evaluation is usually ensured by the use of partitioned sensory booths, but it can also be achieve by other means (table-top partitions, curtains, separate tables, separate rooms). There are some cases, in consumer research, where interactions between subjects are allowed or even encouraged because they correspond to real-life situations. But these are exceptions to the rule, and in such cases, observations are to be considered at the group level.
+\end{itemize}
+
+Controlled order effects and balanced treatments
+We already discussed this point extensively (\#LinkAppropriateSection).
+
+Separate affective from analytical tasks
+
+Controlled evaluation conditions
+
+Final words: quantification, scaling, sensory acquisition softwares
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Bmixt\_shuffled }\OtherTok{\textless{}{-}}\NormalTok{ Bmixt[}\FunctionTok{sample}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(Bmixt)), ]}
+\end{Highlighting}
+\end{Shaded}
 
 \hypertarget{data-import}{%
 \section{Import}\label{data-import}}
@@ -3557,7 +3702,21 @@ First, since \texttt{read\_xlsx()} returns a tibble, let's take advantage of its
 \end{Highlighting}
 \end{Shaded}
 
-Other informative solutions consists in printing a summary of the data through the \texttt{summary()} function, or looking at its type and first values using \texttt{str()}. However, due to its richness of the outputs, the \texttt{skim()} function from the \texttt{\{skimr\}} package is preferred.
+Other informative solutions consists in printing a summary of the data through the \texttt{summary()} or \texttt{glimpse()} function:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(sensory)}
+
+\FunctionTok{glimpse}\NormalTok{(sensory)}
+\end{Highlighting}
+\end{Shaded}
+
+These functions provide relevant yet basic views of each variable present in the data including the type of variable, the range, mean, and median, as well as the first values of each variables.
+
+Such view might be sufficient for some first conclusions (e.g.~Are my panelists considered as numerical or nominal data? Do I have missing values?), yet it is not sufficient to fully ensure that the data is ready for analysis. For the latter, more extensive analyses can be performed automatically in different ways. These analyses include looking at the distribution of some variables, or the frequencies of character levels.
+
+A first solution comes from the \texttt{\{skimr\}} package and its \texttt{skim()} function. By applying it to data, an automated extended summary is directly printed on screen by separating \texttt{character} type variables from \texttt{numeric} type variables:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3565,6 +3724,212 @@ Other informative solutions consists in printing a summary of the data through t
 \FunctionTok{skim}\NormalTok{(sensory)}
 \end{Highlighting}
 \end{Shaded}
+
+Another approach consists in generating automatically an html report with some pre-defined analyses using \texttt{create\_report()} from the \texttt{\{DataExplorer\}} package.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(DataExplorer)}
+\FunctionTok{create\_report}\NormalTok{(sensory)}
+\end{Highlighting}
+\end{Shaded}
+
+Unless specified otherwise through \texttt{output\_file}, \texttt{output\_dir}, and \texttt{output\_format}, the report will be saved as an html file on your active directory as \emph{report.html}. This report provides many statistics on your data, including some simple statistics (e.g.~raw counts, percentages), informs you on the structure of your data, as well as on eventual missing data. It also generates graphics to describe your variables (e.g.~univariate distribution, correlation and PCA).
+
+Note that the analyses performed to build this report can be called directly within R: \texttt{introduce()} and \texttt{plot\_intro()} generates the first part of the report, whereas \texttt{plot\_missing()} and \texttt{profile\_missing()} provide information regarding missing data for instance.
+
+\hypertarget{missing-data}{%
+\subsection{Missing Data}\label{missing-data}}
+
+In the previous section on \ref{data-inspection}, it can be seen that the data set contain missing values. It concerns for instance the attribute \texttt{Light}, for which one missing value has been detected.
+So how to handle missing values?
+
+\hypertarget{ignore-missing-values}{%
+\subsubsection{Ignore missing values}\label{ignore-missing-values}}
+
+A first solution is to simply \emph{ignore} the presence of missing values, as many analyses handle them well. For instance, an ANOVA could be run for such attributes, and results are being produced:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{broom}\SpecialCharTok{::}\FunctionTok{tidy}\NormalTok{(}\FunctionTok{aov}\NormalTok{(Light }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Product }\SpecialCharTok{+}\NormalTok{ Judge, }\AttributeTok{data=}\NormalTok{sensory))}
+\end{Highlighting}
+\end{Shaded}
+
+This solution may work fine when the number of missing values is small, but be aware that it can also provide erroneous results in case they are not handled the way the analyst is expecting them to be handled.
+
+For some other analyses, \emph{ignoring} the presence of missing values may simply provide results. To illustrate this, let's compute the simple mean per product for \texttt{Light}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sensory }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(Product) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{Light =} \FunctionTok{mean}\NormalTok{(Light)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ungroup}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+As can be seen, since \texttt{P04} contains missing values, its corresponding mean is defined as \texttt{NA}. To enforce the mean to be computed, we need to inform R to remove missing values when computing the mean. This is done by adding within the \texttt{mean()} function the parameter \texttt{na.rm=TRUE}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sensory }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(Product) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{Light =} \FunctionTok{mean}\NormalTok{(Light, }\AttributeTok{na.rm=}\ConstantTok{TRUE}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ungroup}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+Using \texttt{na.rm=TRUE} is equivalent to removing rows containing missing values from the data before performing the analysis.
+
+\hypertarget{remove-missing-values}{%
+\subsubsection{Remove missing values}\label{remove-missing-values}}
+
+The solution using \texttt{na.rm=TRUE} is a first way to handle missing values by removing or ignoring them. However, it is not the only strategy, and we can consider other approaches that are more \emph{sensory and consumer studies} driven.
+
+For instance, missing values can be removed systematically by deleting the entire row of data. Let's take the example of \texttt{Sour} which contains 10 missing values:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sensory }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(Sour))}
+\end{Highlighting}
+\end{Shaded}
+
+Unfortunately, this solution is not satisfactory as it also deletes real data since the dataset went from 99 to 89 rows. This means that for variables that did not have missing values for instance, existing data have been removed.
+
+Another approach suggests to first rotate using \texttt{pivot\_longer()} the data before removing missing values:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sensory }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_longer}\NormalTok{(Shiny}\SpecialCharTok{:}\NormalTok{Melting, }\AttributeTok{names\_to=}\StringTok{"Variables"}\NormalTok{, }\AttributeTok{values\_to=}\StringTok{"Scores"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(Scores)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(Product, Variables) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{Means =} \FunctionTok{mean}\NormalTok{(Scores)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ungroup}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_wider}\NormalTok{(}\AttributeTok{names\_from =}\NormalTok{ Variables, }\AttributeTok{values\_from =}\NormalTok{ Means) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Product, Sour, Light)}
+\end{Highlighting}
+\end{Shaded}
+
+If this solution seems satisfactory as the means were computed without using \texttt{na.rm=TRUE} for both \texttt{Sour} and \texttt{Light} (who contained missing values), its use is limited since converting the data to its original format (i.e.~performing \texttt{pivot\_wider()} after \texttt{pivot\_longer()} without computing the mean in between) will reintroduce the missing values\footnote{Missing values do not need to be visible to exist: Incomplete designs are a good example showing that although the data do not have empty cells, it does contain a lot of missing data (the samples that were not evaluated by each panelist).}.
+
+Also removing missing values has the impact of unbalancing the data. By taking the example of \texttt{Light} and \texttt{Sour}, let's print the number of panelist evaluating each product:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sensory }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_longer}\NormalTok{(Shiny}\SpecialCharTok{:}\NormalTok{Melting, }\AttributeTok{names\_to=}\StringTok{"Variables"}\NormalTok{, }\AttributeTok{values\_to=}\StringTok{"Scores"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(Scores),}
+\NormalTok{         Variables }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"Light"}\NormalTok{,}\StringTok{"Sour"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(Product, Variables) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{count}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ungroup}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_wider}\NormalTok{(}\AttributeTok{names\_from=}\NormalTok{Variables, }\AttributeTok{values\_from=}\NormalTok{n)}
+\end{Highlighting}
+\end{Shaded}
+
+Here for example, the only missing value detected for \texttt{Light} is related to \texttt{P04}. For \texttt{Sour}, \texttt{P02}, \texttt{P07}, and \texttt{P09} only have 7 observations out of 9.
+
+Another strategy consists in removing attributes, products, or panelists that have missing data. The procedure presented below show the procedure on how to remove attributes with missing data, but could easily be adapted to panelists or products:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sensory\_long }\OtherTok{\textless{}{-}}\NormalTok{ sensory }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_longer}\NormalTok{(Shiny}\SpecialCharTok{:}\NormalTok{Melting, }\AttributeTok{names\_to=}\StringTok{"Variables"}\NormalTok{, }\AttributeTok{values\_to=}\StringTok{"Scores"}\NormalTok{)}
+
+\NormalTok{(attr\_rmv }\OtherTok{\textless{}{-}}\NormalTok{ sensory\_long }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(Scores)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pull}\NormalTok{(Variables) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{unique}\NormalTok{())}
+
+\NormalTok{sensory\_clean }\OtherTok{\textless{}{-}}\NormalTok{ sensory\_long }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\NormalTok{(Variables }\SpecialCharTok{\%in\%}\NormalTok{ attr\_rmv)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_wider}\NormalTok{(}\AttributeTok{names\_from=}\NormalTok{Variables, }\AttributeTok{values\_from=}\NormalTok{Scores)}
+\end{Highlighting}
+\end{Shaded}
+
+This procedure removed the 7 attributes that contained missing values, leading to a table with 99 rows and 29 columns (instead of 36).
+
+\hypertarget{impute-missing-values}{%
+\subsubsection{Impute missing values}\label{impute-missing-values}}
+
+Rather than removing missing data, another (better?) strategy is to impute missing values. Here again, many strategies can be considered, starting with replacing them with a fixed value. Such approach is usually not the most suitable one, yet it can be relevant in certain cases. For instance, in a CATA task, missing values would often be replaced by 0 (not ticked).
+
+To replace missing values with a fixed value, the \texttt{replace\_na()} can be used. When applied to a tibble, this function requires you defining using \texttt{list()} the columns to apply it to, and which values to use (each column being treated separately).
+
+For convenience, let's apply it to \texttt{sensory} by replacing missing values for \texttt{Sour} by the value \texttt{888} and for \texttt{Light} with \texttt{999} (we use these extreme values to track changes more easily):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sensory }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{replace\_na}\NormalTok{(}\FunctionTok{list}\NormalTok{(}\AttributeTok{Sour =} \DecValTok{888}\NormalTok{, }\AttributeTok{Light =} \DecValTok{999}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Judge, Product, Sour, Light)}
+\end{Highlighting}
+\end{Shaded}
+
+When dealing with intensity scale, it is more frequent to replace missing values by the mean score for that product and attribute. When the test is duplicated, the mean provided by this \emph{panelist x product x attribute} across the different repetitions available is even preferred as it maintains individual variability (e.g.~scale usage) within the scores.
+
+Such approach is then can be done in two steps:
+1. Compute the mean (since we do not have duplicates, we use the mean per product);
+2. Combine it to the data
+
+For simplicity, \texttt{sensory\_long} is used as starting point:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{prod\_mean }\OtherTok{\textless{}{-}}\NormalTok{ sensory\_long }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(Product, Variables) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{Mean =} \FunctionTok{mean}\NormalTok{(Scores, }\AttributeTok{na.rm=}\ConstantTok{TRUE}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ungroup}\NormalTok{()}
+
+\NormalTok{sensory\_long }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{full\_join}\NormalTok{(prod\_mean, }\AttributeTok{by=}\FunctionTok{c}\NormalTok{(}\StringTok{"Product"}\NormalTok{,}\StringTok{"Variables"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Scores =} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(Scores), Mean, Scores)) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\StringTok{"Mean"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_wider}\NormalTok{(}\AttributeTok{names\_from=}\NormalTok{Variables, }\AttributeTok{values\_from=}\NormalTok{Scores) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Judge, Product, Sour, Light)}
+\end{Highlighting}
+\end{Shaded}
+
+As can be seen, the missing value associated to \texttt{J01} for \texttt{Light} and \texttt{P04} has been replaced by \texttt{40.7}. In fact, any missing values related to \texttt{P04} and \texttt{Light} would automatically be replaced by \texttt{40.7} here. For other products (and other attributes), their respective means would be used.
+
+When the model used to impute missing values is fairly simple (here, replacing by the mean correspond to a simple 1-way ANOVA), the imputation can be done directly through the \texttt{impute\_lm()} function from the \texttt{\{simputation\}} package. To mimic the previous approach, the one-way ANOVA is being used\footnote{It is worth noticing that the individual differences could also be included by simple adding the Judge effect in the model.}. Here, missing data for both \texttt{Sour} and \texttt{Light} are being imputed independently using the same model:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(simputation)}
+
+\NormalTok{sensory }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{impute\_lm}\NormalTok{(Sour }\SpecialCharTok{+}\NormalTok{ Light }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Product) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Judge, Product, Sour, Light)}
+\end{Highlighting}
+\end{Shaded}
+
+As can be seen, this procedure provides the same results as before, but in less steps!
+
+It can be noted that in some situations, implementing missing values using such ANOVA (or regression) model can lead to aberrations. It is for instance the case when the imputed values falls outside the scale boundaries. To avoid such situations, \texttt{\{simputation\}} also provides other more advanced alternatives including (amongst others) \texttt{impute\_rf()} which uses random forest to impute the missing values.
+
+Last but not least, imputation of missing values could also be done in a multivariate way, by using the structure of the data (e.g.~correlation) to predict the missing values. This is the approach proposed in the \texttt{\{missMDA\}} package. Since our data are numeric, the imputation is done through PCA with the \texttt{imputePCA()} function. Note that here, the imputed values are stored in the object \texttt{.\$completeObs} (here, \texttt{sensory} is used):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(missMDA)}
+\FunctionTok{imputePCA}\NormalTok{(sensory, }\AttributeTok{quali.sup=}\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{, }\AttributeTok{method=}\StringTok{"EM"}\NormalTok{)}\SpecialCharTok{$}\NormalTok{completeObs }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Judge, Product, Sour, Light)}
+\end{Highlighting}
+\end{Shaded}
+
+In this case, it can be seen that the missing value for \texttt{J01}-\texttt{P04}-\texttt{Light} has been replaced by the value \texttt{31.8}.
+
+\hypertarget{limitations}{%
+\subsubsection{Limitations}\label{limitations}}
+
+Different strategies for handling missing values exist, and the one used should be adapted to the data.
+
+Since most imputation methods are based on modeling, using such technique on variables with high missing values rate can lead to introducing bias in data. For example, in a situation in which half the data is missing (e.g.~incomplete design in which assessors evaluated 1/2 the product set), each prediction is proportionally based on one value only. This means that further analyses would be based on 1/2 measured - 1/2 \emph{fictive} data.
+
+It is hence important to understand the structure of missing values before handling them.
 
 \hypertarget{design-inspection}{%
 \subsection{Design Inspection}\label{design-inspection}}
@@ -3667,22 +4032,6 @@ To evaluate the carry-over effect, the only thing to do is to cross-count \textt
 As expected, the table shows that a product is never evaluated twice in a row (the diagonal contains 0). Here again, the design is not optimal since \texttt{choc1} has been evaluated 3 times before \texttt{choc2} and 6 times before \texttt{choc5} in the first session.
 
 Finally, the \texttt{NA} column refers to the time that products did not have a product tested before, meaning that they were evaluated first.
-
-\hypertarget{missing-data-inspection}{%
-\subsection{Missing Data Inspection}\label{missing-data-inspection}}
-
-Are there NAs?
-If yes, are they structured of random?
-
-\hypertarget{checks-for-consistency-and-reliability}{%
-\subsection{Checks for Consistency and Reliability}\label{checks-for-consistency-and-reliability}}
-
-Any relevant checks should be performed.
-
-\hypertarget{preliminary-tables-and-charts}{%
-\subsection{Preliminary Tables and Charts}\label{preliminary-tables-and-charts}}
-
-Any preliminary summary tables and charts should be created that might help the scientist gain familiarity with the data.
 
 \hypertarget{clean}{%
 \section{Clean}\label{clean}}
@@ -3977,38 +4326,6 @@ To convert properly numerical factor levels to number, the variable should first
 \subsection{Handling Missing Values}\label{handling-missing-values}}
 
 Ignoring, removing, imputing
-
-\hypertarget{restructuring-data}{%
-\subsection{Restructuring Data}\label{restructuring-data}}
-
-Presentation of the different shapes of the tables based on objectives
-
-\hypertarget{variables-selection-and-repositioning}{%
-\subsubsection{Variables Selection and Repositioning}\label{variables-selection-and-repositioning}}
-
-\texttt{dplyr::select()} and \texttt{dplyr::arrange()}
-
-\hypertarget{data-filtering}{%
-\subsubsection{Data Filtering}\label{data-filtering}}
-
-\texttt{dplyr::filter()}
-
-\hypertarget{data-reshaping}{%
-\subsubsection{Data (Re)Shaping}\label{data-reshaping}}
-
-\texttt{pivot\_wider()} and \texttt{pivot\_longer()}
-\texttt{\_join()}
-
-\hypertarget{preparing-data-for-factominer-and-sensominer}{%
-\subsubsection{Preparing Data for FactoMineR and SensoMineR}\label{preparing-data-for-factominer-and-sensominer}}
-
-matrix, data frame, and tibble.
-
-how to check the type? \texttt{class()}
-how to test it? \texttt{is.data.frame()}, \texttt{is.matrix()}, \texttt{is\_tibble()}
-how to convert it to another format? (see below)
-
-Note on \texttt{\{FactoMineR\}} and \texttt{\{SensoMineR\}} which require data frames or matrix (not tibble) so introduction to \texttt{column\_to\_rownames()} and \texttt{rownames\_to\_columns()} as well as \texttt{as.data.frame()} and \texttt{as\_tibble()}.
 
 \hypertarget{data-analysis}{%
 \chapter{Data Analysis}\label{data-analysis}}
@@ -5164,8 +5481,128 @@ In case you want to go further on this topic, we strongly recommend the followin
 \hypertarget{machine-learning}{%
 \chapter{Machine Learning}\label{machine-learning}}
 
+Machine Learning is recently a hot topic in the sensory and consumer science field, proven to be one of the most game-changing technological advancements to support CPG companies in the development of new products, making a considerable role in speeding up and at the same time, reducing the cost or steps involved in the R\&D process. In today's fast-moving and increasingly competitive corporate world, companies that are embracing, adopting and opening their minds to digital transformation and artificial intelligence, moving towards the age of automation, are not one but many steps ahead of their competitors.
+
+Machine Learning (ML) is a branch of artificial intelligence based on the idea that systems can learn from data, that has the capability to evolve. Generally speaking, ML refers to various programming techniques that are able to process large amounts of data and extract useful information from it. It refers to a method of data analysis that build intelligent algorithms that can automatically improve through the experience gained from the data and identify patterns or make decisions with minimal human intervention, without being explicitly programmed. ML focuses on using data and algorithms to mimic the way humans learn, gradually improving their accuracy.
+
+The definition of the objectives or the situation where ML would bring value refers to the very first step of the process. Once that is clear, the next step is to collect data or dig into the historical data sets to understand what information is available and/or has to be obtained. The data varies according to the situation, but it may refers to product composition or formulation, analytical measurements (E.g., pH, color, rheology, instrumental texture, GCMS, etc), sensory attributes (E.g., creaminess, sweetness, bitterness, texture, consistency, etc), or consumer behavior (E.g., frequency of consumption/use, consumption/use situation, etc.), demographics (E.g., age, gender, skin type, etc) and responses (E.g. liking, CATA questions, JAR questions, etc).
+
+The data set size and quality are very important and will directly impact the model's robustness. There will be specific recommendations on that according to the situation, data type, and objectives. In general, the higher the number of objects, which is usually the number of products or samples, the better, with being 10-14 the minimum recommended. The number of measurements (analytical, sensory and/or consumer measurements) and the number of consumers evaluating the products are also very relevant to the model's quality. In the Sensory and consumer science field, the number of measurements is usually very high, so not something likely to worry about. Regarding the number of consumers, the minimum number recommended would be 100, but the more the better. Regarding data quality, one of the most important aspects, besides the standardization of data collection, refers to the variability of the products/samples. The higher the variability between samples, the broader the space the model will be covering. Additionally, it is strongly recommended the capture the consumers individual differences, not only demographic information, but also JAR questions and conducting the study in a sequential monadic design.
+
+According to the purposes and goals, there are some variations on how to group or classify ML algorithms which can be divided into three prominent methods: supervised learning, unsupervised learning, and reinforcement learning. In this chapter, we will be focusing on the first two approaches.
+
 \hypertarget{methods-overview}{%
 \section{Methods Overview}\label{methods-overview}}
+
+Supervised learning is the most popular type of machine learning that uses labeled data, it is a process that involves providing input data as well as correct output data to the machine learning model. The ultimate goal of the algorithm is to find a mapping function to map input variables with output variables. In supervised learning, models are initially trained using a subset of the data (training data set) and afterwards, the model is tested and validated using the other part of the data (test data set and validation data set). Once this process is done, the model can continuously improve, discovering new patterns and relationships as it trains itself on new data sets.
+
+A very common situation where supervised learning is widely used is to predict consumer responses (E.g., Liking, Perception, Benefit) based on analytical measurements and/or sensory data. In this situation, ML models can provide insights and directions on how to improve product performance and has also the ability to predict consumer response based on analytical and/or sensory data, working as a powerful screening tool where only prototypes or products with the highest potential are moved to the next level, which may be the consumer testing. Another common situation is the use of supervised machine learning to predict product sensory profile or consumer response, based on the formulation or ingredients of a product. In this situation, the ML would be of great support for the developers, who can much easier understand and get clear directions on what has to be changed in the formulation to improve the product sensory profile or consumer performance.
+
+Unlike supervised learning, unsupervised learning uses unlabeled or untagged data, which means inputs where the output values are not known. In this case, users do not need to supervise the model, instead, the algorithm operates independently to finds patterns and trends, trying to learn from the data distribution the distinguishing features and associations through similarity and dissimilarity measurements. Its ability to discover hidden patterns and get similarities/differences information is what make it the ideal solution for exploratory analysis and consumer segmentation, extracting insights from the data sets.
+
+Unsupervised machine learning is commonly used to segment consumers into groups based on their similarities related to a variety of factors such as shopping or usage behavior, attitudes, interests, liking or preferences. As consumers in the same market segment tend to respond similarly, the segmentation process is a key strategy for companies to understand and tailor effectively their products or marketing approaches for different target groups. Similarly, unsupervised models are also very used to classify group of products in homogeneous analytical, sensory and/or consumer attributes in order to identify different segments in the market.
+
+\url{https://www.ibm.com/cloud/learn/supervised-learning}
+
+\url{https://www.javatpoint.com/supervised-machine-learning}
+
+\url{https://towardsdatascience.com/11-dimensionality-reduction-techniques-you-should-know-in-2021-dcb9500d388b}
+
+\url{https://towardsdatascience.com/dimensionality-reduction-for-machine-learning-80a46c2ebb7e}
+
+\hypertarget{unsupervised-learning}{%
+\subsection{Unsupervised learning}\label{unsupervised-learning}}
+
+In the sensory and consumer science field, unsupervised learning models are usually used for Clustering and Dimensionality Reduction.
+
+Clustering is a technique used to discover in a high-dimensional data, groups of observations that are similar to each other and significantly different from the rest. In other words, it is a method that groups unlabeled data based on their similarities and differences in the way that objects with most similarities remains into a group and has less or no similarities with the objects of another group.As previously mentioned, a very common application is to cluster consumers and classify groups of products based on their similarities/dissimilarities. Clustering algorithms can be categorized into a few types, which are Exclusive (E.g. k-means), Hierarchical and Probabilistic clustering (E.g. Gaussian Mixture Model). The first two are the ones most used and well known in the sensory field.
+
+Dimensionality reduction is a technique used to transform a high dimensional space into a low-dimensional space that retains some meaningful properties of the original data. It refers to the process of reducing the number of features/attributes in a data set while maintaining as much of the variation as possible. This method is a important not only as a technique for data visualization, but also as a pre processing step to reduce training time and computational resources, improve ML algorithms performance/accuracy due to less misleading data, avoid problems of overfitting, find latent variables, remove redundant features and noise, among others. There are numerous dimensionality reduction methods that can be used according to the data type and different requirements. The most common and well known dimensionality reduction methods used in the sensory and consumer science field are the ones that apply linear transformations, including Principal Components Analysis (PCA) and Factor Analysis (FA).
+
+\hypertarget{clustering-and-dimensionality-reduction}{%
+\subsubsection{Clustering and Dimensionality Reduction}\label{clustering-and-dimensionality-reduction}}
+
+Let's start installing/loading the necessary packages and by preparing the dataset for the cluster analysis, with PCA being used as a pre processing method. We will be using a wine dataset, from \texttt{rattle} package, that consists of the results of a chemical analysis of wines grown in a specific area of Italy. Three types of wine are represented in the 178 samples, with the results of 13 chemical analyses recorded for each sample.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{library}\NormalTok{(rattle)}
+
+\CommentTok{\# load data}
+
+\NormalTok{wine.fl }\OtherTok{\textless{}{-}} \StringTok{"http://archive.ics.uci.edu/ml/machine{-}learning{-}databases/wine/wine.data"}
+\NormalTok{wine }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(wine.fl,}\AttributeTok{header =}\NormalTok{ F)}
+
+\CommentTok{\# Names of the variables}
+
+\NormalTok{wine.names}\OtherTok{=}\FunctionTok{c}\NormalTok{(}\StringTok{"Alcohol"}\NormalTok{, }\StringTok{"Malic acid"}\NormalTok{, }\StringTok{"Ash"}\NormalTok{, }\StringTok{"Alcalinity of ash"}\NormalTok{, }\StringTok{"Magnesium"}\NormalTok{,}
+             \StringTok{"Total phenols"}\NormalTok{, }\StringTok{"Flavanoids"}\NormalTok{, }\StringTok{"Nonflavanoid phenols"}\NormalTok{, }\StringTok{"Proanthocyanins"}\NormalTok{,}
+             \StringTok{"Color intensity"}\NormalTok{, }\StringTok{"Hue"}\NormalTok{, }\StringTok{"OD280/OD315 of diluted wines"}\NormalTok{, }\StringTok{"Proline"}\NormalTok{)}
+\FunctionTok{colnames}\NormalTok{(wine)[}\DecValTok{2}\SpecialCharTok{:}\DecValTok{14}\NormalTok{]}\OtherTok{=}\NormalTok{wine.names}
+\FunctionTok{colnames}\NormalTok{(wine)[}\DecValTok{1}\NormalTok{]}\OtherTok{=}\StringTok{"Wine\_type"}
+
+\NormalTok{wine\_dataset }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(wine)}
+\end{Highlighting}
+\end{Shaded}
+
+Dimensionality reduction technique via PCA will be applied before clustering to allow coherent patterns to be detected more clearly. As well known, PCA retains most of the information/variance of the data set and by removing features with low variance, a more robust clustering can be generated. In other words, this technique reveals distinct groups if data exhibits clustering and by retaining the components with the highest variance, the clusters tends to be more visible.
+
+As the data set being used contain variables with different units/scales, PCA with scaling will be applied. We will be using the \texttt{\{FactoMineR\}} package to perform the PCA analysis and \texttt{\{factoextra\}} to easily extract and visualize the results.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{ (FactoMineR)}
+\FunctionTok{require}\NormalTok{(factoextra)}
+
+\NormalTok{pca\_results }\OtherTok{\textless{}{-}} \FunctionTok{PCA}\NormalTok{(wine\_dataset, }\AttributeTok{scale.unit =} \ConstantTok{TRUE}\NormalTok{)}
+
+\NormalTok{pca\_eig }\OtherTok{\textless{}{-}} \FunctionTok{fviz\_eig}\NormalTok{(pca\_results, }\AttributeTok{addlabels =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{50}\NormalTok{))}
+
+\NormalTok{pca\_plot }\OtherTok{\textless{}{-}} \FunctionTok{fviz\_pca\_biplot}\NormalTok{(pca\_results, }\AttributeTok{repel =} \ConstantTok{TRUE}\NormalTok{,}
+                            \AttributeTok{label =} \StringTok{"var"}\NormalTok{,}
+                            \AttributeTok{col.var =} \StringTok{"red"}\NormalTok{,}
+                            \AttributeTok{col.ind =} \StringTok{"black"}\NormalTok{)}
+
+\NormalTok{pca\_plot}
+
+\NormalTok{reduced\_dataset }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(pca\_results}\SpecialCharTok{$}\NormalTok{ind}\SpecialCharTok{$}\NormalTok{coord[, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{]) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{tibble}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+The PCA shows that there are apparently 3 distinct groups of wines.
+
+Let's now use its results for the clustering analysis. Although agglomerative hierarchical clustering is more common in the sensory and consumer research, it was already shown in chapter 10, so for this example we decided to use a different solution - k-means clustering. K-means clustering is also a very known unsupervised machine learning algorithm for partitioning a given data set in a way that the total intra-cluster variation is minimized. Both approaches (hierarchical clustering and k-means) are fairly used, being the main different the rule of forming clustering and the requirement to pre-specify the number of cluster to be produced the main different between them. Detailed information about clustering methods and analysis can be found in the book Practical Guide to Cluster Analysis in R (REF).
+
+The first step of k-means clustering is to estimate the optimal number of clusters (k), and this can be conveniently done using the function \texttt{fviz\_nbclust\ ()} from \texttt{\{factoextra\}} package. The plot represents the variance within the clusters and the bend, also called ``elbow'', indicates that additional clusters beyond the third have little value. In our situation, we will then classify the observations into 3 clusters.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{fviz\_nbclust}\NormalTok{(reduced\_dataset, kmeans, }\AttributeTok{method =} \StringTok{"wss"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+As the k-means algorithm starts with k randomly selected centroids, it's recommend to initially set a seed, through the use of the function \texttt{set.seed\ ()}, to make reproducible results. We will then perform k-means clustering with k = 3. In the k-means function, we can also choose the number of random sets, which means the number of times R will try different random starting assignments. The default is 1, but to get more stable results we will specify nstart = 20. The function \texttt{fviz\_cluster}, from \texttt{\{factoextra\}} package, will be used for the visualization.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
+
+\NormalTok{km\_dw }\OtherTok{\textless{}{-}} \FunctionTok{kmeans}\NormalTok{(reduced\_dataset, }\DecValTok{3}\NormalTok{, }\AttributeTok{nstart =} \DecValTok{20}\NormalTok{)}
+
+\NormalTok{km\_dw}
+
+\FunctionTok{fviz\_cluster}\NormalTok{(}
+  \FunctionTok{list}\NormalTok{(}\AttributeTok{data =}\NormalTok{ reduced\_dataset, }\AttributeTok{cluster =}\NormalTok{ km\_dw}\SpecialCharTok{$}\NormalTok{cluster),}
+  \AttributeTok{ellipse.type =} \StringTok{"norm"}\NormalTok{,}
+  \AttributeTok{geom =} \StringTok{"point"}\NormalTok{,}
+  \AttributeTok{stand =} \ConstantTok{FALSE}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+In the resulting plot, we can easily see the observation represented by points, and the color and ellipse identifying each of the 3 clusters. We suggest you to re-run the codes to define the optimal number of clustering and the cluster analysis without dimensionality reduction. You will see how patterns were detected much more clear when this technique was applied.
 
 \hypertarget{supervised-learning}{%
 \subsection{Supervised learning}\label{supervised-learning}}
@@ -5230,7 +5667,7 @@ via function \texttt{glmnet::glmnet()} (\(\beta\) is set of regression coefficie
   \(SSE + \lambda_1 \sum|\beta| + \lambda_2 \sum|\beta|^2\).
 \end{itemize}
 
-Penalized regression can be also runned in \texttt{tidymodels} workflow with
+Penalized regression can be also ran in \texttt{tidymodels} workflow with
 or \texttt{parsnip::linear\_reg()\ \%\textgreater{}\%\ parsnip::set\_engine("glmnet")}.
 
 \hypertarget{mars}{%
@@ -5238,10 +5675,10 @@ or \texttt{parsnip::linear\_reg()\ \%\textgreater{}\%\ parsnip::set\_engine("glm
 
 One limitation of all mentioned so far methods is that they assume linear relationship
 between predictor and target variables. Multivariate adaptive regression spline (MARS)
-addresses this by modeling nonlinearities with piecewise linear function. This
+addresses this by modeling non-linearities with piece wise linear function. This
 gives a nice balance between simplicity and ability to fit complex data, for example
 \(\Lambda\)-shaped once where there is a maximal point from which function decreases
-in both directions. In R this model can be accesed via \texttt{earth::earth()} function.
+in both directions. In R this model can be accessed via \texttt{earth::earth()} function.
 
 \hypertarget{pls}{%
 \paragraph{PLS}\label{pls}}
@@ -5258,8 +5695,7 @@ with \texttt{plsmod::pls()\ \%\textgreater{}\%\ parsnip::set\_engine("mixOmics")
 A very simple, yet useful and robust algorithm that works for both numeric and nominal
 target variables is K-nearest neighbors. The idea is that for every new observation
 we want to predict the algorithms finds K closest points in training set and use
-either their mean value (for numeric targets) or most frequent value (for nominal targets)
-as prediction. This algorithm can be used with \texttt{kknn::kknn()} function or in \texttt{tidymodels} workflow
+either their mean value (for numeric targets) or most frequent value (for nominal targets) as prediction. This algorithm can be used with \texttt{kknn::kknn()} function or in \texttt{tidymodels} workflow
 with \texttt{parsnip::nearest\_neighbor()\ \%\textgreater{}\%\ parsnip::set\_engine("kknn")}.
 
 \hypertarget{decision-trees}{%
@@ -5332,142 +5768,112 @@ trees' predictions. This way
 \hypertarget{code}{%
 \section{Code}\label{code}}
 
+tidyverse and tidymodel
+
+The tidymodels framework is a collection of packages for modeling and machine learning using tidyverse principles.(\url{https://www.tidymodels.org/}) It contains several core packages, including ``rsample'', ``parsnip'', ``recipes'', ``workflows'', ``tune'', ``yardstick'', ``broom'' and ``dials'', along with some other specialized packages. These packages will help you build a variety of models in R and check their performances.
+
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# Install and load libraries {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
-
-\CommentTok{\# install.packages(c("tidyverse", "tidymodels", "rattle",}
-\CommentTok{\#                    "ggplot2", " factoextra", "ranger",}
-\CommentTok{\#                    "ggfortify", "cluster"))}
-\FunctionTok{library}\NormalTok{(tidyverse)}
-\FunctionTok{library}\NormalTok{(rattle) }\CommentTok{\# wine dataset}
-\FunctionTok{library}\NormalTok{(ggplot2)}
-\FunctionTok{require}\NormalTok{(factoextra)}
+\FunctionTok{install.packages}\NormalTok{(}\StringTok{"tidymodels"}\NormalTok{)}
 \FunctionTok{library}\NormalTok{(tidymodels)}
-\FunctionTok{library}\NormalTok{(ranger)}
-\FunctionTok{library}\NormalTok{(ggfortify) }\CommentTok{\# PCA visualization}
-\FunctionTok{library}\NormalTok{(cluster)}
+\end{Highlighting}
+\end{Shaded}
 
-\CommentTok{\# Data {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+We will still use the wine data set to build our supervised model using the Tidymodel packages. Let's prepare the data before we go to details for modeling.
 
-\FunctionTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
-\NormalTok{wine\_dataset }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(wine) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Type) }\CommentTok{\# We drop type, to present possibility of generating the target using unsupervised methods}
+We need to mutate the column ``Wine\_type'' to be factors, as this column would be the target later.
 
-
-\CommentTok{\# PCA without scaling {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
-
-\NormalTok{pca\_results\_ws }\OtherTok{\textless{}{-}}\NormalTok{ wine\_dataset }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{prcomp}\NormalTok{()}
-
-\FunctionTok{summary}\NormalTok{(pca\_results\_ws)}
-\FunctionTok{autoplot}\NormalTok{(pca\_results\_ws)}
-
-\NormalTok{pca\_ws\_plot }\OtherTok{\textless{}{-}} \FunctionTok{autoplot}\NormalTok{(pca\_results\_ws, }\AttributeTok{data =}\NormalTok{ wine\_dataset,,}
-                   \AttributeTok{loadings =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{loadings.colour =} \StringTok{\textquotesingle{}red\textquotesingle{}}\NormalTok{,}
-                   \AttributeTok{loadings.label =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{loadings.label.size =} \DecValTok{3}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{theme\_minimal}\NormalTok{()}
-
-\NormalTok{pca\_ws\_plot}
-\CommentTok{\# ggsave("output/pca\_without\_scaling.jpg", pca\_ws\_plot)}
-
-\CommentTok{\# scaling data + PCA {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
-
-\NormalTok{pca\_results }\OtherTok{\textless{}{-}}\NormalTok{ wine\_dataset }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{prcomp}\NormalTok{(}\AttributeTok{scale. =} \ConstantTok{TRUE}\NormalTok{)}
-
-\FunctionTok{summary}\NormalTok{(pca\_results)}
-\FunctionTok{plot}\NormalTok{(pca\_results)}
-
-\NormalTok{pca\_plot }\OtherTok{\textless{}{-}} \FunctionTok{autoplot}\NormalTok{(pca\_results, }\AttributeTok{data =}\NormalTok{ wine\_dataset,,}
-               \AttributeTok{loadings =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{loadings.colour =} \StringTok{\textquotesingle{}red\textquotesingle{}}\NormalTok{,}
-               \AttributeTok{loadings.label =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{loadings.label.size =} \DecValTok{3}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{theme\_minimal}\NormalTok{()}
-
-\NormalTok{pca\_plot}
-\CommentTok{\# ggsave("output/pca.jpg", pca\_plot)}
-
-\NormalTok{reduced\_dataset }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(pca\_results}\SpecialCharTok{$}\NormalTok{x[, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{]) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{tibble}\NormalTok{()}
-\CommentTok{\# we can see that clustering should be easy}
-
-\CommentTok{\# Clustering  {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
-
-\CommentTok{\# Finding number of clusters {-} Elbow method}
-\NormalTok{wcss }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{()}
-\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{) \{}
-  
-\NormalTok{  wcss }\OtherTok{\textless{}{-}}\NormalTok{ wcss }\SpecialCharTok{\%\textgreater{}\%} 
-    \FunctionTok{bind\_rows}\NormalTok{(}\FunctionTok{tibble}\NormalTok{(}\AttributeTok{n\_clusters =}\NormalTok{ i,}
-                     \AttributeTok{wcss =} \FunctionTok{kmeans}\NormalTok{(reduced\_dataset, i)}\SpecialCharTok{$}\NormalTok{tot.withinss))}
-  
-\NormalTok{\}}
-
-\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{wcss, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{n\_clusters, }\AttributeTok{y=}\NormalTok{wcss, }\AttributeTok{group=}\DecValTok{1}\NormalTok{)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{size =} \FloatTok{1.5}\NormalTok{)}\SpecialCharTok{+}
-  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{shape=}\DecValTok{21}\NormalTok{, }\AttributeTok{fill=}\StringTok{"blue"}\NormalTok{, }\AttributeTok{color=}\StringTok{"darkred"}\NormalTok{, }\AttributeTok{size=}\DecValTok{5}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{xlab}\NormalTok{(}\StringTok{"Number of clusters"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{ylab}\NormalTok{(}\StringTok{"Total within{-}cluster sum of squares"}\NormalTok{)}
-
-\CommentTok{\# ggsave("output/n\_clusters\_decision\_Elbow.jpg")}
-
-\CommentTok{\# Finding number of clusters {-} silhouette method}
-\FunctionTok{fviz\_nbclust}\NormalTok{(reduced\_dataset, kmeans, }\AttributeTok{method =} \StringTok{"silhouette"}\NormalTok{)}
-\CommentTok{\# ggsave("output/n\_clusters\_decision\_silhouette.jpg")}
-
-\CommentTok{\# 3 clusters seems to be good fit}
-
-\NormalTok{km\_dw }\OtherTok{\textless{}{-}} \FunctionTok{kmeans}\NormalTok{(reduced\_dataset, }\DecValTok{3}\NormalTok{, }\AttributeTok{nstart =} \DecValTok{20}\NormalTok{)}
-
-\NormalTok{km\_dw}
-
-\FunctionTok{fviz\_cluster}\NormalTok{(}
-  \FunctionTok{list}\NormalTok{(}\AttributeTok{data =}\NormalTok{ reduced\_dataset, }\AttributeTok{cluster =}\NormalTok{ km\_dw}\SpecialCharTok{$}\NormalTok{cluster),}
-  \AttributeTok{ellipse.type =} \StringTok{"norm"}\NormalTok{,}
-  \AttributeTok{geom =} \StringTok{"point"}\NormalTok{,}
-  \AttributeTok{stand =} \ConstantTok{FALSE}
-\NormalTok{)}
-
-\CommentTok{\# ggsave("output/clustered\_data.jpg")}
-
+\begin{Shaded}
+\begin{Highlighting}[]
 \CommentTok{\# Classification {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
 
-\CommentTok{\# Dataset preparation}
-\NormalTok{wine\_classification\_dataset }\OtherTok{\textless{}{-}}\NormalTok{ reduced\_dataset }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{bind\_cols}\NormalTok{(}\FunctionTok{tibble}\NormalTok{(}\AttributeTok{Wine\_type =}\NormalTok{ km\_dw}\SpecialCharTok{$}\NormalTok{cluster)) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# Our classification label is the clustering output}
+\CommentTok{\# Data set preparation}
+\NormalTok{wine\_classification\_dataset }\OtherTok{\textless{}{-}}\NormalTok{ wine\_dataset }\SpecialCharTok{\%\textgreater{}\%} 
+  \CommentTok{\# bind\_cols(tibble(Wine\_type = km\_dw$cluster)) \%\textgreater{}\% \# Our classification label is the clustering output}
   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Wine\_type =} \FunctionTok{as.factor}\NormalTok{(Wine\_type))}
+\end{Highlighting}
+\end{Shaded}
 
+The function \texttt{rsample::initial\_split()} takes the original data and saves the information on how to make the partitions. We set the \texttt{strata} argument as \texttt{"Wine\_type"} to conduct a stratified split. This ensures our training and test data sets would keep roughly the same proportions of all Wine types as in the original data, despite the imbalance we noticed in our class variable. \texttt{prop} is set to 0.7 as we are splitting data to be 70\% for training and 30\% for testing.
+
+After the initial\_split, we can use the training() and testing() functions to obtain the two data frames for training and testing.
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \NormalTok{initial\_split }\OtherTok{\textless{}{-}} \FunctionTok{initial\_split}\NormalTok{(}\AttributeTok{data =}\NormalTok{ wine\_classification\_dataset, }\AttributeTok{strata =} \StringTok{"Wine\_type"}\NormalTok{, }\AttributeTok{prop =} \FloatTok{0.7}\NormalTok{)}
 
 \NormalTok{wine\_train }\OtherTok{\textless{}{-}} \FunctionTok{training}\NormalTok{(initial\_split)}
 \NormalTok{wine\_testing }\OtherTok{\textless{}{-}} \FunctionTok{testing}\NormalTok{(initial\_split)}
+\end{Highlighting}
+\end{Shaded}
 
-\NormalTok{wine\_cv }\OtherTok{\textless{}{-}}\NormalTok{ wine\_train }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{vfold\_cv}\NormalTok{(}\DecValTok{5}\NormalTok{,}\AttributeTok{strata =}\NormalTok{ Wine\_type)}
+Cross-validation is an important step for checking the model quality later. To do that, we need to use the resampling method to create a series of data sets similar to the training/testing split before building the model. For each data set, a subset is used for creating the model, and the other subset is used to measure the performance. Also noted that resampling is always used with the training set of the data defined earlier.
 
+We use \texttt{vfold\_cv} to resample the data. Here we begin with a 5-fold cross-validation first. \texttt{strata} is set to \texttt{wind\_type} to conduct stratified sampling, so that each resample is created within the stratification variable.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{wine\_cv }\OtherTok{\textless{}{-}}\NormalTok{ wine\_train }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{vfold\_cv}\NormalTok{(}\AttributeTok{v =} \DecValTok{5}\NormalTok{,}\AttributeTok{strata =}\NormalTok{ Wine\_type)}
+\end{Highlighting}
+\end{Shaded}
+
+Now we have a resampled \texttt{wine\_cv} for further building the model.
+
+The recipe package is part of tidymodels. It contains a rich set of data manipulation tools which can be used to preprocess data and to define roles for each variable (e.g.~outcome and predictor). To add a recipe, we simply use the function \texttt{recipe}. \texttt{recipe} has two arguments: a formula and the data. Any variable on the left-hand side of the tilde (\textasciitilde) is considered the model outcome. In our example, we want to use machine learning model to predict the type of the wine, therefore \texttt{Wine\_type} would be the target on the left hand side of the \texttt{\textasciitilde{}}. On the right-hand side of the tilde are the predictors. One can write out all the variables, but an easier option is to use the dot (.) to indicate all other variables as predictors.
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \CommentTok{\# Random forest model definition}
 \NormalTok{model\_recipe }\OtherTok{\textless{}{-}}\NormalTok{ wine\_train }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{recipe}\NormalTok{(Wine\_type }\SpecialCharTok{\textasciitilde{}}\NormalTok{ .)}
+\end{Highlighting}
+\end{Shaded}
 
+We decided to use random forest classifier for the wine data.
+
+\texttt{rand\_forest} has 3 hyper-parameters (\texttt{mtry,\ trees,\ min\_n}) which can be tuned to achieve the best results.
+We set all of them as \texttt{tune()} right now. Model tuning is the process to find the best values for the parameters. Most often you start with the default values, and change them along the way. Since the model is not executing when created, these parameters can be changed using the tune() function. This provides a simple placeholder for the value.
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \NormalTok{rf\_spec }\OtherTok{\textless{}{-}} \FunctionTok{rand\_forest}\NormalTok{(}
   \AttributeTok{mtry =} \FunctionTok{tune}\NormalTok{(),}
   \AttributeTok{trees =} \FunctionTok{tune}\NormalTok{(),}
   \AttributeTok{min\_n =} \FunctionTok{tune}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{set\_mode}\NormalTok{(}\StringTok{"classification"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{set\_engine}\NormalTok{(}\AttributeTok{engine =} \StringTok{"ranger"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
+Let's combine the model and recipe into a single \texttt{workflow\ ()} object to better manage the two R objects.
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \NormalTok{rf\_wf }\OtherTok{\textless{}{-}} \FunctionTok{workflow}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{add\_recipe}\NormalTok{(model\_recipe) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{add\_model}\NormalTok{(rf\_spec)}
+\end{Highlighting}
+\end{Shaded}
 
+We created placeholders for tuning hyper-parameters earlier. Now it's time to define the scope of the search and choose the method for searching the parameter space, in this case it is \texttt{grid\_regular}.
 
-\CommentTok{\# Best parameters searching}
-
+\begin{Shaded}
+\begin{Highlighting}[]
 \NormalTok{params\_grid }\OtherTok{\textless{}{-}}\NormalTok{ rf\_spec }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{parameters}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{update}\NormalTok{(}\AttributeTok{mtry =} \FunctionTok{mtry}\NormalTok{(}\AttributeTok{range =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{)),}
          \AttributeTok{trees =} \FunctionTok{trees}\NormalTok{(}\AttributeTok{range =} \FunctionTok{c}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{200}\NormalTok{))) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{grid\_regular}\NormalTok{(}\AttributeTok{levels =} \DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Now that We have defined the hyper-parameter search range, let's look for the best combination using \texttt{tune\_grid()} function. We will leave the test set aside, and use a cross-validation set for this purpose, so that the model during training certainly will not see the data on which we will be making predictions.
+
+Next, we will obtain a reliable estimate of the quality of the model. We first select the best combination of parameters using \texttt{select\_best()} function. The quality of the model can be estimated with a number of metrics. Here we decided to use roc\_auc (Area Under the Receiver Operating Characteristic Curve)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Best parameters searching}
 
 \NormalTok{tuning }\OtherTok{\textless{}{-}} \FunctionTok{tune\_grid}\NormalTok{(}
 \NormalTok{  rf\_wf,}
@@ -5478,16 +5884,34 @@ trees' predictions. This way
 \FunctionTok{autoplot}\NormalTok{(tuning)}
 
 \NormalTok{params\_best }\OtherTok{\textless{}{-}} \FunctionTok{select\_best}\NormalTok{(tuning, }\StringTok{"roc\_auc"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
+Now that we have found the best parameters for the model, we can train the final model on the entire training set.
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \CommentTok{\# Finalize model }
 
 \NormalTok{final\_model }\OtherTok{\textless{}{-}}\NormalTok{ rf\_wf }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{finalize\_workflow}\NormalTok{(params\_best) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{fit}\NormalTok{(wine\_train)}
+\end{Highlighting}
+\end{Shaded}
 
+A very important part in building machine learning models is to assess the quality of the models. To do so, first we can use the model to predict on the testing data set (\texttt{wind\_testing}), which the model has not seen yet after training.
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \NormalTok{validation\_data\_pred }\OtherTok{\textless{}{-}}\NormalTok{ wine\_testing }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{bind\_cols}\NormalTok{(}\FunctionTok{predict}\NormalTok{(final\_model, .))}
+\end{Highlighting}
+\end{Shaded}
 
+Having predicted wine classes and actual labels, we can finally judge the quality of the model by comparing them. A very pleasant method for classification problems is the confusion matrix and the associated statistics (accuracy, sensitivity specificity, precision, F1 score and a lot more: \url{https://en.wikipedia.org/wiki/Confusion_matrix}).
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \NormalTok{cm }\OtherTok{\textless{}{-}} \FunctionTok{conf\_mat}\NormalTok{(validation\_data\_pred, Wine\_type, .pred\_class)}
 
 \FunctionTok{autoplot}\NormalTok{(cm, }\AttributeTok{type =} \StringTok{"heatmap"}\NormalTok{)}
