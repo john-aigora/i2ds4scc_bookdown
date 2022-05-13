@@ -74,9 +74,28 @@ prodinfo
 prodinfo %>% 
   separate(ProtFib, c("Protein","Fiber"), sep="-")
 
+sensory %>% 
+  dplyr::select(Shiny) %>% 
+  mutate(ShinyGroup = ifelse(Shiny < 30, "Low", "High"))
+
+sensory %>% 
+  dplyr::select(Shiny) %>% 
+  mutate(ShinyGroup = ifelse(Shiny < 20, "Low", 
+                             ifelse(Shiny < 40, "Medium", "High")))
+
+
+sensory %>% 
+  dplyr::select(Shiny) %>% 
+  mutate(ShinyGroup = case_when(Shiny < 20 ~ "Low",
+                                between(Shiny, 20, 40) ~ "Medium",
+                                Shiny > 40 ~ "High"))
+
   ## Handling Rows
 sensory %>% 
   arrange(Judge, desc(Product))
+
+sensory %>% 
+  slice(seq(1,89,11))
 
 sensory %>% 
   filter(Product == "P02")
