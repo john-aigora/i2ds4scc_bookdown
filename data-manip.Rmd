@@ -51,24 +51,17 @@ For these reasons, it is essential to learn to manipulate data and transition fr
 
 Different ways to transform your data are illustrated through several simple examples^[Note that some of the examples presented in this chapter emphasize the "how to?," not the "why?," and are not necessarily chosen to convey scientific meaning].
 
-
 ## Tidying Data {#tidy-data}
-
 
 Hadley Wickham (@Wickham2014) defined 'tidy data' as "data sets that are arranged such that each variable is a column and each observation (or case) is a row." Depending on the statistical unit to consider and the analyses to perform, data may need to be manipulated to be presented in a tidy form. 
 
-
 ### Simple Manipulations
-
 
 The notion of 'simple manipulations' proposed here consists in data transformations that could easily be performed in other software such as Excel (using copy-paste, sorting and filtering, creating a pivot table, etc.). However, we strongly recommend performing any sorts of transformation in R as this will reduce the risk of errors, typically be faster, more reliable, and will be reusable if you need to perform the same operations on similar data in the future (including updated versions of the current data set). Moreover, these operations will become easier and more natural for you to use as you familiarize yourself with them.
 
-
 #### Handling Columns
 
-
 ##### Renaming Variables
-
 
 The first simple transformation we consider consists of renaming one or multiple variables. This procedure can easily be done using the `rename()` function from the `{dplyr}` package.  In each of the examples below, we use the `names()` function to show just the names of the resulting data set.
 
@@ -98,17 +91,13 @@ sensory %>%
   names()
 ```
 
-
 Note that the `{janitor}` package offers many options, and although the transformation is performed here on all the variables, it is possible to apply it on certain variables only.
 
-
 ##### Re-Organizing Columns
-
 
 Another simple transformation consists in re-organizing the data set, either by re-ordering (including removing) columns, or by selecting some rows based on a certain criteria. 
 
 For re-ordering columns, `relocate()` is being used. This function allows re-positioning a (set of) variable(s) before or after another variable. By re-using the `sensory` data set, let's position all the variables starting with 'Qty' between `Product` and `Shiny`. This can be specified into two different ways:
-
 
 ```{r}
 sensory %>% 
@@ -118,28 +107,22 @@ sensory %>%
 sensory %>% 
   relocate(starts_with("Qty"), .before=Shiny) %>% 
   names()
-
 ```
 
-
 Another very important function regarding columns transformation is the `select()` function (from the `{dplyr}` package^[Note that many other packages include a function called `select()`, which could create conflicts. To avoid any risks of errors, we recommend calling it as `dplyr::select()` to formally call `select()` from `{dplyr}`. This avoids any risks of error! Of course, the same procedure applies to any other functions that may suffer from the same issue.]) allows selecting a set of variables, by simply informing the variables that should be kept in the data. Let's limit ourselves in selecting `Judge`, `Product`, and `Shiny`:
-
 
 ```{r}
 sensory %>% 
   dplyr::select(Judge, Product, Shiny)
 ```
 
-
 When a long series of variables should be kept in the same order, the use of the `:` is used.
 Let's only keep the variables related to Flavor, hence going from `Cereal flavor` to `Warming`:
-
 
 ```{r}
 sensory %>% 
   dplyr::select(Judge, Product, `Cereal flavor`:Warming)
 ```
-
 
 <!-- why does 'Cereal flavor' has the '' and not Warming? Is it because of the blank between Cereal and flavor? If so, it might be worth adding a note about that. 
 
@@ -148,49 +131,38 @@ TW: added in the aperitif
 
 However, when only one (or few) variable needs to be removed, it is easier to specify which one to remove rather than informing all the ones to keep. Such solution is then done using the `-` sign. The previous example can then be obtained using the following code:
 
-
 ```{r}
 sensory %>% 
   dplyr::select(-c(Shiny, Melting))
 ```
 
-
 The selection process of variables can be further informed through functions such as `starts_with()`, `ends_with()`, and `contains()`, which all select variables that either starts, ends, or contains a certain character or sequence of character. To illustrate this, let's only keep the variables that starts with 'Qty':
-
 
 ```{r}
 sensory %>% 
   dplyr::select(starts_with("Qty"))
 ```
 
-
 Rather than selecting variables based on their names, we can also select them based on their position (e.g. `dplyr::select(2:5)` to keep the variables that are at position 2 to 5), or following a certain 'rule' using the `where()` function. In that case, let's consider all the variables that are numerical, which automatically removes `Judge` and `Product`:
-
 
 ```{r}
 sensory %>% 
   dplyr::select(where(is.numeric))
 ```
 
-
 **Remark**: `dplyr::select()` is a very powerful function that facilitates selection of complex variables through very intuitive functions. Ultimately, it can also be used to `relocate()` and even `rename()` variables, as shown in the example below:
-
 
 ```{r}
 sensory %>% 
   dplyr::select(Panellist = Judge, Sample = Product, Shiny:Sticky, -starts_with("Qty"))
 ```
 
-
 More examples illustrating the use of `dplyr::select()` are provided throughout the book.
-
 
 ##### Creating Columns
 
-
 In some cases, new variables need to be created from existing ones. Examples of such situations include taking the quadratic term of a sensory attribute to test for curvature, or simply considering a new variables as the sum or the subtraction between two (or more). Such creation of a variable is processed through the `mutate()` function from the `{dplyr}` package. This function takes as inputs the name of the variable to create, and the *formula* to consider.
 Let's create two new variables, one called `Shiny2` which corresponds to `Shiny` squared up, and one `StiMelt` which corresponds to `Sticky` + `Melting.` Since we only use these three variables, let's first reduce the data set to these three variables with `select()` to improve readability:
-
 
 ```{r}
 sensory %>% 
@@ -199,21 +171,17 @@ sensory %>%
          StiMelt = Sticky + Melting)
 ```
 
-
 Tip: If you want to transform a variable, say by changing its type, or re-writing its content, you can use `mutate()` and assign to the new variable the same name as the original one. This will overwrite the existing column with the new one. To illustrate this, let's transform `Product` from upper case to lower case only. This can be done by mutating `Product` into the lowercase version of `Product` (`tolower(Product)`):
-
 
 ```{r}
 sensory %>% 
   mutate(Product = tolower(Product))
 ```
 
-
 `mutate()` being one of the most important function from the `{dplyr}` package, more examples of its use are presented throughout this book.
 
 Since performing mathematical computations on non-numerical columns is not possible, conditions can easily be added through `mutate()` combined with `across()`. Let's imagine we want to round all variables to 0 decimal, which can only be applied to numerical variables. 
 To do so, we `mutate()` `across()` all variables that are considered `as.numeric` (through `where()`):
-
 
 ```{r}
 # round(sensory, 0) returns an error because Judge and Product are characters
@@ -224,9 +192,7 @@ sensory %>%
 
 In case only a selection of numerical variables should be rounded, we could also replace `where(is.numeric)` by a vector (using `c()`) with the names of the variables to round.
 
-
 ##### Merging and Separating columns
-
 
 It can happen that some columns of a data set contain information (strings) that cover different types of information. For instance, we could imagine coding the name of our panelists as *FirstName_LastName* or *Gender_Name*, and we would want to separate them into two columns to make the distinction between the different information, i.e. *FirstName* and *LastName* or *Gender* and *LastName* respectively. In other situations, we may want to merge information present in multiple columns in one. 
 
@@ -240,52 +206,90 @@ file_path <- here("data","Sensory Profile.xlsx")
 prodinfo <- read_xlsx(file_path, sheet="Product Info") %>%  
   unite(ProtFib, Protein, Fiber, sep="-")
 prodinfo
-
 ```
-
 
 By default, `unite()` removes from the data set the individual variables that have been merged. To keep these original variables, the parameter `remove = FALSE` can be used. 
 
 Although it is not relevant for combining columns, it is interesting to mention an additional package that can be used to combine elements together. This package is called `{glue}` and provides interesting alternatives to the usual `paste()` and `paste0()` functions. 
 
-
 To reverse the changes (saved here in `prodinfo`) and to separate a column into different variables, the function `separate()` from the `{tidyr}` package is used. Similarly to `unite()`, `separate()` takes as first parameter the name of the variable to split, followed by the names for the different segments generated, and of course the separator defined by `sep`. 
 
 In our example, this would be done as following:
-
 
 ```{r}
 prodinfo %>% 
   separate(ProtFib, c("Protein","Fiber"), sep="-")
 ```
 
+##### Conditions
+
+In some cases, the new column to create depend directly on the value(s) of one or more columns present in the data. 
+An examples of such situations consists in categorizing a continuous variable into groups by converting the age (in year) of the participants into age range. For such simple examples, some pre-existing functions (e.g. `cut()` in this situation) can be used.
+However, in other situations, pre-defined functions do not exist and the transformation should be done *manually* using conditions.
+
+Let's illustrate this by converting the `Shiny` variable (from `sensory`) from numeric to classes.
+Since the scale used is a 60pt scale, let's start by creating a class called *Low* if the score is lower than 30, and *High* otherwise. 
+To do so, pre-defined functions such as `cut()` are not being used intentionally as a manual transformation is preferred. Instead, `mutate()` is associated to `ifelse()`, which works as following: `ifelse(condition, results if condition is TRUE , results if condition is not TRUE)`
+
+```{r}
+sensory %>% 
+  dplyr::select(Shiny) %>% 
+  mutate(ShinyGroup = ifelse(Shiny < 30, "Low", "High"))
+```
+
+Let's imagine the same variable should now be split into three levels: *Low*, *Medium*, and *High*. Such additional group could be obtained by adding an `ifelse()` condition within the existing `ifelse()` condition:
+
+```{r}
+sensory %>% 
+  dplyr::select(Shiny) %>% 
+  mutate(ShinyGroup = ifelse(Shiny < 20, "Low", 
+                             ifelse(Shiny < 40, "Medium", "High")))
+```
+
+Since there are only 3 conditions in total here, only two entangled `ifelse()` are required. This makes the code still manageable. But let's imagine more complex situations in which say 10 different conditions are required. Such solution would quickly become tedious to read, to track, and to debug if errors are being made. So instead, for more complex solutions, the use of an alternative function called `case_when()` is preferred. In the previous case, the same conditions would be written as follow:
+
+```{r}
+sensory %>% 
+  dplyr::select(Shiny) %>% 
+  mutate(ShinyGroup = case_when(Shiny < 20 ~ "Low",
+                                between(Shiny, 20, 40) ~ "Medium",
+                                Shiny > 40 ~ "High"))
+```
+
+This provides the same results as previous, except for the exact value 40 which was assigned as *High* in the `ifelse()` example and to *Medium* in the `case_when()` example. This is due to the fact that the `between()`^[By default, `between(x, value1, value2)` considers value1 <= x <= value2.] function was introduced, although it was not necessary here.
 
 #### Handling Rows
-
 
 After manipulating columns, the next logical step is to handle rows. Such operations include three aspects, 
 
 1. Re-arranging the rows in a logical way, 
-2. Filtering entries based on given variables,
-3. Splitting the data in sub-groups based on the entries of a variable.
-
+2. Selecting certain rows,
+3. Filtering entries based on given variables,
+4. Splitting the data in sub-groups based on the entries of a variable.
 
 ##### Re-arranging Rows
-
 
 The first step of re-arranging rows is done through the `arrange()` function from the `{dplyr}` package. This function allows sorting the data in the ascending order^[For numerical order, this is simply re-arranging the values from the lowest to the highest. For strings, the entries are then sorted alphabetically unless the variable is a factor in which case the order of the levels for that factors are being used.]. To arrange them in a descending order, the function `desc()` is also required.
 
 Let's re-arrange the data by Judge and Product, the Judge being sorting in an ascending order whereas the product are being sorted in a descending order:
-
 
 ```{r}
 sensory %>% 
   arrange(Judge, desc(Product))
 ```
 
+##### Selecting Rows
+
+The next step is to select a subset of the data by keeping certain rows only. If the position of the rows to keep is know, this information can be used directly using the `slice()` function. Let's select from `sensory` all the data that is related to `P01`. A quick look at the data informs us that it corresponds to rows 1 to 89, with a step of 11:
+
+```{r}
+sensory %>% 
+  slice(seq(1,89,11))
+```
+
+This is a manual way to select data. However, this procedure may generate an erroneous subset in the case that the row order in the data changes. To avoid mistakes, a more *stable* procedure of filtering data is proposed in the next section. 
 
 ##### Filtering Data
-
 
 To define sub-set of data, the `filter()` function is being used. This function requires providing an argument that is expressed as a *test*, meaning that the outcome should either be TRUE (keep the value) or FALSE (discard the value) when the condition is verified or not respectively. In R, this is expressed by the double '=' sign `==`. 
 
@@ -526,10 +530,15 @@ sensory %>%
 ```
 
 
-Note that through this procedure, we transformed `Attribute` into a factor using `fct_inorder()` to ensure that the double pivoting procedure maintains the original attributes' order. Without this line of code, the final table would have the columns reordered alphabetically.
+Note that through this procedure, `Attribute` was transformed into a factor using `fct_inorder()` to ensure that the double pivoting procedure maintains the original attributes' order. Without this line of code, the final table would have the columns reordered alphabetically.
+
+Another comment concerns the message that R provides here: *`summarise()` has grouped output by 'Product'. You can override using the `.groups` argument.* This message is just informative, and can be hidden by adding the following code at the start of your script:
+
+```{r}
+options(dplyr.summarise.inform = FALSE)
+```
 
 What would happen if we would omit to `summarise()` the data in between the two pivoting functions? In that case, we also remove Judge which were lost in the process...
-
 
 ```{r}
 sensory %>% 
