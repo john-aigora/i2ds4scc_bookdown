@@ -24,16 +24,7 @@ Unlike supervised learning, unsupervised learning uses unlabeled or untagged dat
 
 Unsupervised machine learning is commonly used to segment consumers into groups based on their similarities related to a variety of factors such as shopping or usage behavior, attitudes, interests, liking or preferences. As consumers in the same market segment tend to respond similarly, the segmentation process is a key strategy for companies to understand and tailor effectively their products or marketing approaches for different target groups. Similarly, unsupervised models are also very used to classify group of products in homogeneous analytical, sensory and/or consumer attributes in order to identify different segments in the market.
 
-<!--Change order: First Supervised and then Unsupervised? -->
-
-https://www.ibm.com/cloud/learn/supervised-learning
-
-https://www.javatpoint.com/supervised-machine-learning
-
-https://towardsdatascience.com/11-dimensionality-reduction-techniques-you-should-know-in-2021-dcb9500d388b
-
-https://towardsdatascience.com/dimensionality-reduction-for-machine-learning-80a46c2ebb7e
-
+<!-- Change order: First Supervised and then Unsupervised? (Vanessa) -->
 
 ### Unsupervised learning
 
@@ -126,17 +117,9 @@ fviz_cluster(
 
 In the resulting plot, we can easily see the observation represented by points, and the color and ellipse identifying each of the 3 clusters. We suggest you to re-run the codes to define the optimal number of clustering and the cluster analysis without dimensionality reduction. You will see how patterns were detected much more clear when this technique was applied.
 
-
-<!-- Tian comments:from sensory consumer data analysis point of view, when to use kmeans, when to use hierarchical? etc. -->
-
-
-<!-- #### t-SNE -->
-<!-- ### Semisupervised learning -->
-<!-- #### PLS regression -->
-<!-- #### Cluster Characterization -->
-
-
 ### Supervised learning
+
+Types of Supervised Learning <!-- add a sentence of two (Vanessa) --> 
 
 #### Regression
 
@@ -239,35 +222,11 @@ explanation algorithms that will be discussed in later part of this chapter.
 
 A random forest is a set of decision trees, each one trained on random subset 
 of observations and/or predictors. The final prediction is an average of individual
-trees' predictions. This way 
+trees' predictions. This way ... <!-- Finish this part -->
 
 
 
-
-
-##### SVMs
-##### Neural networks
-##### Computer vision
-
-## Key Topics
-
-### Model Validation
-
-### Interpretability 
-#### LIME
-#### DALEX
-#### IML
-
-## Common Applications
-### Predicting sensory profiles from instrumental data
-### Predicting consumer response from sensory profiles
-### Characterizing consumer clusters
-
-## Code
-
-<!-- introduce tidymodel -->
-
-tidyverse and tidymodel
+### Code <!--Rename this section -->
 
 The tidymodels framework is a collection of packages for modeling and machine learning using tidyverse principles.(https://www.tidymodels.org/) It contains several core packages, including "rsample", "parsnip", "recipes", "workflows", "tune", "yardstick", "broom" and "dials", along with some other specialized packages. These packages will help you build a variety of models in R and check their performances. 
 
@@ -279,6 +238,8 @@ library(tidymodels)
 ```
 
 We will still use the wine data set to build our supervised model using the Tidymodel packages. Let's prepare the data before we go to details for modeling.
+
+<!-- Maybe add some little section before each part of the code -->
 
 We need to mutate the column "Wine_type" to be factors, as this column would be the target later.
 
@@ -428,196 +389,4 @@ autoplot(cm, type = "heatmap")
 
 
 <!-- Do we want to include another regression example? it's more common in the sensory consumer science context -->
-
-
-```{r regression_data_generation_Aigora_ml_training}
-library(tidyverse)
-
-n_rows <- 100
-
-with(set.seed(1),
-     data <- tibble(
-       id = sprintf("product_%d", 1:n_rows)
-     ) %>%
-       mutate(
-         sensory_1 = runif(n(), 0, 6),
-         sensory_2 = runif(n(), 4, 8),
-         sensory_3 = pmax(0, pmin(10, rnorm(n(), 6, 1.5))),
-         sensory_4 = runif(n(), 0, 2),
-         sensory_5 = runif(n(), 0, 2),
-         sensory_6 = pmax(0, pmin(10, rnorm(n(), 3, 1))),
-         sensory_7 = runif(n(), 3, 10)
-       ) %>%
-       mutate(
-         liking = 
-           - 0.2 * abs(sensory_1-2.5)
-         + 0.6 * sensory_2
-         + 0.4 * sensory_3
-         + 0.2 * abs(sensory_4-1)
-         - 0.3 * sensory_5
-         + 0.1 * sensory_6
-         + 0.2 * sensory_7
-       ) %>%
-       mutate(liking = pmin(9.74, rnorm(n(), 1, 0.1) * liking))
-)
-
-summary(data)
-
-# write_rds(data, "data/regression_data.rds")
-
-```
-
-```{r regression_Aigora_ml_training}
-# Tutorial content:
-#   1. Split data
-#   2. Define model
-#   3. Tune hyperparameters
-#   4. Visualize results
-#   5. Explore model with DALEX and modelStudio
-
-
-# Install and load libraries ----------------------------------------------
-
-# install.packages(c("tidyverse", "tidymodels", "remotes",
-#                    "DALEXtra", " modelStudio", "r2d3"))
-# remotes::install_github("aigorahub/aigoraOpen")
-library(tidyverse)
-library(tidymodels)
-library(aigoraOpen)
-
-
-# Load data ---------------------------------------------------------------
-
-# data <- read_rds("data/regression_data.rds")
-
-set.seed(123)
-
-data_split <- initial_split(data)
-
-training_data <- training(data_split)
-validation_data <- testing(data_split)
-
-resampling <- vfold_cv(training_data, v = 10)
-
-# Define model ------------------------------------------------------------
-
-model_recipe <- training_data %>%
-  select(-id) %>% # id shouldn't be used by the model
-  recipe(liking ~ .) %>%
-  step_earth(all_predictors(), outcome = "liking")
-
-model_spec <- linear_reg(
-  penalty = tune(),
-  mixture = tune()
-) %>%
-  set_mode("regression") %>%
-  set_engine("glmnet")
-
-model_workflow <- workflow() %>%
-  add_recipe(model_recipe) %>%
-  add_model(model_spec)
-
-
-# Tune model hyperparameters (grid search) ---------------------------------
-
-set.seed(124)
-
-params_grid <- model_spec %>%
-  parameters() %>%
-  grid_regular(levels = 10)
-
-tuning <- tune_grid(
-  model_workflow,
-  resamples = resampling,
-  grid = params_grid
-)
-
-autoplot(tuning)
-
-params_best <- select_best(tuning, "rmse")
-
-
-# Zoom in grid search -----------------------------------------------------
-
-set.seed(125)
-
-penalty_levels <- sort(unique(params_grid$penalty))
-mixture_levels <- sort(unique(params_grid$mixture))
-
-penalty_new_range <- c(
-  penalty_levels[lead(penalty_levels, default = 0) == params_best$penalty],
-  penalty_levels[lag(penalty_levels, default = 0) == params_best$penalty]
-)
-mixture_new_range <- c(
-  mixture_levels[lead(mixture_levels, default = 0) == params_best$mixture],
-  mixture_levels[lag(mixture_levels, default = 0) == params_best$mixture]
-)
-
-params_grid_2 <- model_spec %>%
-  parameters() %>%
-  update(
-    penalty = penalty(log10(penalty_new_range)),
-    mixture = mixture(mixture_new_range)
-  ) %>%
-  grid_regular(levels = 10)
-
-tuning_2 <- tune_grid(
-  model_workflow,
-  resamples = resampling,
-  grid = params_grid_2
-)
-
-autoplot(tuning_2)
-
-params_best_2 <- select_best(tuning_2, "rmse")
-
-
-# Finalize model ----------------------------------------------------------
-
-final_model <- model_workflow %>%
-  finalize_workflow(params_best_2) %>%
-  fit(training_data)
-
-validation_data_pred <- validation_data %>%
-  bind_cols(predict(final_model, .))
-
-metric_set(rmse, rsq)(validation_data_pred, liking, .pred)
-
-validation_data_pred %>%
-  ggplot(aes(liking, .pred)) +
-  geom_point() +
-  geom_abline(slope = 1, intercept = 0, linetype = 2)
-
-
-# Model Studio ------------------------------------------------------------
-
-library(DALEXtra)
-library(modelStudio)
-
-explainer <- explain_tidymodels(
-  final_model, 
-  data = training_data %>% 
-    column_to_rownames("id") %>%
-    select(-liking),
-  y = training_data$liking
-)
-
-resid <- model_performance(explainer)
-resid
-plot(resid)
-
-var_imp <- variable_importance(explainer)
-plot(var_imp)
-
-ms <- modelStudio(
-  explainer,
-  new_observation = validation_data %>%
-    column_to_rownames("id") %>%
-    select(-liking),
-  new_observation_y = round(validation_data$liking, 3)
-)
-
-# r2d3::save_d3_html(ms, "output/modelstudio.html")
-
-```
-
+<!-- Do we want to add modelStudio? -->
