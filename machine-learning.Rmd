@@ -2,19 +2,19 @@
 knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 ```
 
-# Machine Learning {#machine-learning}
+# Brief Introduction of Machine Learning {#machine-learning}
 
-Machine Learning is recently a hot topic in the sensory and consumer science field, proven to be one of the most game-changing technological advancements to support CPG companies in the development of new products, making a considerable role in speeding up and at the same time, reducing the cost or steps involved in the R&D process. In today's fast-moving and increasingly competitive corporate world, companies that are embracing, adopting and opening their minds to digital transformation and artificial intelligence, moving towards the age of automation, are not one but many steps ahead of their competitors.
+Machine Learning is recently a hot topic in the sensory and consumer science field, proven to be one of the most game-changing technological advancements to support CPG companies in the development of new products, making a considerable role in speeding up and reducing the cost or steps involved in the R&D process at the same time. In today's fast-moving and increasingly competitive corporate world, companies that are embracing, adopting and opening their minds to digital transformation and artificial intelligence, moving towards the age of automation, are not one but many steps ahead of their competitors.
 
 Machine Learning (ML) is a branch of artificial intelligence based on the idea that systems can learn from data, that has the capability to evolve. Generally speaking, ML refers to various programming techniques that are able to process large amounts of data and extract useful information from it. It refers to a method of data analysis that build intelligent algorithms that can automatically improve through the experience gained from the data and identify patterns or make decisions with minimal human intervention, without being explicitly programmed. ML focuses on using data and algorithms to mimic the way humans learn, gradually improving their accuracy.
 
-The definition of the objectives or the situation where ML would bring value refers to the very first step of the process. Once that is clear, the next step is to collect data or dig into the historical data sets to understand what information is available and/or has to be obtained. The data varies according to the situation, but it may refers to product composition or formulation, analytical measurements (E.g., pH, color, rheology, instrumental texture, GCMS, etc), sensory attributes (E.g., creaminess, sweetness, bitterness, texture, consistency, etc), or consumer behavior (E.g., frequency of consumption/use, consumption/use situation, etc.), demographics (E.g., age, gender, skin type, etc) and responses (E.g. liking, CATA questions, JAR questions, etc). 
+The definition of the objectives or the situation where ML would bring value refers to the very first step of the process. Once that is clear, the next step is to collect data or dig into the historical data sets to understand what information is available and/or has to be obtained. The data varies according to the situation, but it may refers to product composition or formulation, analytical measurements (E.g., pH, color, rheology, instrumental texture, GCMS, etc), sensory attributes (E.g., creaminess, sweetness, bitterness, texture, consistency, etc), or consumer behavior (E.g., frequency of consumption/use, consumption/use situation, etc.), demographics (E.g., age, gender, skin type, etc) and responses (E.g. liking, CATA questions, JAR questions, etc). <!-- the cluster analysis on consumers doesn't fall into this description -->
 
-The data set size and quality are very important and will directly impact the model's robustness. There will be specific recommendations on that according to the situation, data type, and objectives. In general, the higher the number of objects, which is usually the number of products or samples, the better, with being 10-14 the minimum recommended. The number of measurements (analytical,  sensory and/or consumer measurements) and the number of consumers evaluating the products are also very relevant to the model's quality. In the Sensory and consumer science field, the number of measurements is usually very high, so not something likely to worry about. Regarding the number of consumers, the minimum number recommended would be 100, but the more the better. Regarding data quality, one of the most important aspects, besides the standardization of data collection, refers to the variability of the products/samples. The higher the variability between samples, the broader the space the model will be covering. Additionally, it is strongly recommended the capture the consumers individual differences, not only demographic information, but also JAR questions and conducting the study in a sequential monadic design.
+The data set size and quality are very important and will directly impact the model's robustness. There will be specific recommendations on that according to the situation, data type, and objectives. In general, the higher the number of objects, which is usually the number of products or samples, the better, with being 10-14 the minimum recommended. The number of measurements (analytical,  sensory and/or consumer measurements) and the number of consumers evaluating the products are also very relevant to the model's quality. In the Sensory and consumer science field, the number of measurements is usually very high, so not something likely to worry about. Regarding the number of consumers, the minimum number recommended would be 100, but the more the better. Regarding data quality, one of the most important aspects, besides the standardization of data collection, refers to the variability of the products/samples. The higher the variability between samples, the broader the space the model will be covering. Additionally, it is strongly recommended the capture the consumers individual differences, not only demographic information, but also JAR or IPM questions and conducting the study in a sequential monadic design.
 
 According to the purposes and goals, there are some variations on how to group or classify ML algorithms which can be divided into three prominent methods: supervised learning, unsupervised learning, and reinforcement learning. In this chapter, we will be focusing on the first two approaches.
  
-## Methods Overview
+## Machine Learning Methods
 
 Supervised learning is the most popular type of machine learning that uses labeled data, it is a process that involves providing input data as well as correct output data to the machine learning model. The ultimate goal of the algorithm is to find a mapping function to map input variables with output variables. In supervised learning, models are initially trained using a subset of the data (training data set) and afterwards, the model is tested and validated using the other part of the data (test data set and validation data set). Once this process is done, the model can continuously improve, discovering new patterns and relationships as it trains itself on new data sets.
 
@@ -88,7 +88,7 @@ The PCA shows that there are apparently 3 distinct groups of wines.
 
 Let's now use its results for the clustering analysis. Although agglomerative hierarchical clustering is more common in the sensory and consumer research, it was already shown in chapter 10, so for this example we decided to use a different solution - k-means clustering. K-means clustering is also a very known unsupervised machine learning algorithm for partitioning a given data set in a way that the total intra-cluster variation is minimized. Both approaches (hierarchical clustering and k-means) are fairly used, being the main different the rule of forming clustering and the requirement to pre-specify the number of cluster to be produced the main different between them. Detailed information about clustering methods and analysis can be found in the book Practical Guide to Cluster Analysis in R (REF).
 
-The first step of k-means clustering is to estimate the optimal number of clusters (k), and this can be conveniently done using the function `fviz_nbclust ()` from `{factoextra}` package. The plot represents the variance within the clusters and the bend, also called "elbow", indicates that additional clusters beyond the third have little value. In our situation, we will then classify the observations into 3 clusters.
+Here we use k-means clustering as an example. The first step of k-means clustering is to estimate the optimal number of clusters (k), and this can be conveniently done using the function `fviz_nbclust ()` from `{factoextra}` package. The plot represents the variance within the clusters and the bend, also called "elbow", indicates that additional clusters beyond the third have little value. In our situation, we will then classify the observations into 3 clusters.
 
 ```{r find_opt_cluster_number}
 
@@ -119,7 +119,7 @@ In the resulting plot, we can easily see the observation represented by points, 
 
 ### Supervised learning
 
-Types of Supervised Learning <!-- add a sentence of two (Vanessa) --> 
+There are many ways to carry out supervised machine learning, and it's by itself a big topic. We recommend reading (xxx) for more in-depth information. In sensory and consumer science, supervised learning is commonly carried out using a type of regression, using consumer ratings as output (target), and other information of products (i.e. sensory profiles) as input.    
 
 #### Regression
 
@@ -191,6 +191,10 @@ the predictors, but at the same time also maximizes their correlation to target 
 PLS can be applied with `lm()` specifying multiple targets or in `tidymodels` workflow
 with `plsmod::pls() %>% parsnip::set_engine("mixOmics")`.
 
+
+There are many other ways to perform machine learning as well. Below is some brief introduction of them.
+
+
 #### K-nearest neighbors
 
 A very simple, yet useful and robust algorithm that works for both numeric and nominal
@@ -225,11 +229,16 @@ of observations and/or predictors. The final prediction is an average of individ
 trees' predictions. This way ... <!-- Finish this part -->
 
 
+### Practical Guide to Machine Learning
 
-### Code <!--Rename this section -->
+Now that we have general ideas of machine learning, we can try to build a simple machine learning model in the sensory and consumer context. 
 
-The tidymodels framework is a collection of packages for modeling and machine learning using tidyverse principles.(https://www.tidymodels.org/) It contains several core packages, including "rsample", "parsnip", "recipes", "workflows", "tune", "yardstick", "broom" and "dials", along with some other specialized packages. These packages will help you build a variety of models in R and check their performances. 
+R contains fantastic systems for building machine learning models. The tidymodels framework (https://www.tidymodels.org/) is a collection of packages for modeling and machine learning using tidyverse principles, and among one of the most popular framework in R for machine learning. 
 
+Tidymodels contains several core packages, including "rsample", "parsnip", "recipes", "workflows", "tune", "yardstick", "broom" and "dials", along with some other specialized packages. These packages will help you build a variety of models in R and check their performances. 
+
+Just like tidyverse, you don't need to install/load all the packages separately, installing/loading "tidymodel" will load all the packages you will need for building machine learning models. 
+ 
 ``` {r install_load_tidymodels}
 
 # install.packages("tidymodels")
@@ -239,9 +248,11 @@ library(tidymodels)
 
 We will still use the wine data set to build our supervised model using the Tidymodel packages. Let's prepare the data before we go to details for modeling.
 
-<!-- Maybe add some little section before each part of the code -->
+<!-- Vanessa: Maybe add some little section before each part of the code -->
 
-We need to mutate the column "Wine_type" to be factors, as this column would be the target later.
+#### Preparing data for ML
+
+First we need to mutate the column "Wine_type" to be factors, as this column would be the target later.
 
 ```{r classification_Aigora_ml_training}
 
@@ -253,6 +264,8 @@ wine_classification_dataset <- wine_dataset %>%
   mutate(Wine_type = as.factor(Wine_type))
 
 ```
+
+#### Sampling the data
 
 The function `rsample::initial_split()` takes the original data and saves the information on how to make the partitions. We set the `strata` argument as `"Wine_type"` to conduct a stratified split. This ensures our training and test data sets would keep roughly the same proportions of all Wine types as in the original data, despite the imbalance we noticed in our class variable. `prop` is set to 0.7 as we are splitting data to be 70% for training and 30% for testing.
 
@@ -266,21 +279,25 @@ wine_testing <- testing(initial_split)
 
 ```
 
-<!-- do we need to explain cross validated by product and by consumer here? -->
+#### Cross Validation
+
+<!-- tian: do we need to explain cross validated by product and by consumer here? -->
 
 Cross-validation is an important step for checking the model quality later. To do that, we need to use the resampling method to create a series of data sets similar to the training/testing split before building the model. For each data set, a subset is used for creating the model, and the other subset is used to measure the performance. Also noted that resampling is always used with the training set of the data defined earlier. 
 
-<!-- a diagram could help here: https://www.tidymodels.org/start/resampling/#resampling -->
+<!-- tian: a diagram could help here: https://www.tidymodels.org/start/resampling/#resampling -->
 
 We use `vfold_cv` to resample the data. Here we begin with a 5-fold cross-validation first. `strata` is set to `wind_type` to conduct stratified sampling, so that each resample is created within the stratification variable. 
 
-<!-- maybe we need to explain stratify here more, does it mean that in each of those 5 fold, the ratio of wine_type will be similar to the original wine_type? -->
+<!-- tian: maybe we need to explain stratify here more, does it mean that in each of those 5 fold, the ratio of wine_type will be similar to the original wine_type? -->
 
 ```{r cv}
 wine_cv <- wine_train %>% vfold_cv(v = 5,strata = Wine_type)
 ```
 
 Now we have a resampled `wine_cv` for further building the model. 
+
+#### Choose ML method using "recipe"
 
 The recipe package is part of tidymodels. It contains a rich set of data manipulation tools which can be used to preprocess data and to define roles for each variable (e.g. outcome and predictor). To add a recipe, we simply use the function `recipe`. `recipe` has two arguments: a formula and the data. Any variable on the left-hand side of the tilde (~) is considered the model outcome. In our example, we want to use machine learning model to predict the type of the wine, therefore `Wine_type` would be the target on the left hand side of the `~`. On the right-hand side of the tilde are the predictors. One can write out all the variables, but an easier option is to use the dot (.) to indicate all other variables as predictors.
 
@@ -290,7 +307,7 @@ model_recipe <- wine_train %>%
   recipe(Wine_type ~ .)
 ```
 
-<!-- why we choose random forest here? -->
+<!-- tian: why we choose random forest here? -->
 
 We decided to use random forest classifier for the wine data.
 
@@ -310,6 +327,8 @@ rf_spec <- rand_forest(
 
 ```
 
+#### Set the whole Process into a workflow
+
 Let's combine the model and recipe into a single `workflow ()` object to better manage the two R objects.
 
 ```{r workflow_def}
@@ -317,6 +336,8 @@ rf_wf <- workflow() %>%
   add_recipe(model_recipe) %>% 
   add_model(rf_spec)
 ```
+
+#### Tuning the parameters
 
 We created placeholders for tuning hyper-parameters earlier. Now it's time to define the scope of the search and choose the method for searching the parameter space, in this case it is `grid_regular`.
 
@@ -333,9 +354,9 @@ params_grid <- rf_spec %>%
 
 Now that We have defined the hyper-parameter search range, let's look for the best combination using `tune_grid()` function. We will leave the test set aside, and use a cross-validation set for this purpose, so that the model during training certainly will not see the data on which we will be making predictions. 
 
-We can use `autoplot()` function to take a quick look at the `tuning` object.<!-- explain the graph here? --> 
+We can use `autoplot()` function to take a quick look at the `tuning` object.<!-- tian: explain the graph here? --> 
 
-Next, we will obtain a reliable estimate of the quality of the model. We first select the best combination of parameters using `select_best()` function. The quality of the model can be estimated with a number of metrics. Here we decided to use roc_auc (Area Under the Receiver Operating Characteristic Curve) <!--I'm confused here. we are choosing the best paras, but where can we see the quality of the model? -->
+Next, we will obtain a reliable estimate of the quality of the model. We first select the best combination of parameters using `select_best()` function. The quality of the model can be estimated with a number of metrics. Here we decided to use roc_auc (Area Under the Receiver Operating Characteristic Curve) <!-- tian: I'm confused here. we are choosing the best paras, but where can we see the quality of the model? -->
 
 ```{r tuning_hyperparams}
 # Best parameters searching
@@ -352,6 +373,8 @@ params_best <- select_best(tuning, "roc_auc")
 
 ```
 
+#### Train the final model
+
 Now that we have found the best parameters for the model, we can train the final model on the entire training set. 
 
 ```{r fit_best_model}
@@ -362,6 +385,8 @@ final_model <- rf_wf %>%
   fit(wine_train)
 
 ```
+
+#### Assess the model quality
 
 A very important part in building machine learning models is to assess the quality of the models. To do so, first we can use the model to predict on the testing data set (`wind_testing`), which the model has not seen yet. 
 
@@ -376,7 +401,7 @@ validation_data_pred <- wine_testing %>%
 
 The `validation_data_pred` is a data frame with testing data with `Wine_type` as the actual wine type, and a `.pred_class` column as the predicted Wind_type at the end. Now we can finally judge the quality of the model by comparing them. 
 
-A very pleasant method for visualize the classification results is to use a confusion matrix. Confusion matrix is a table where each row represents instances in the actual class, while each column represents the instances in a predicted class. We can see that in our wine type prediction, it's a 100% match!
+A very pleasant method for visualize the classification results is to use a confusion matrix. Confusion matrix is a table where each row represents instances in the actual class, while each column represents the instances in a predicted class. Using the `autoplot()` function, We can see that in our wine type prediction, it's a 100% match!
 
 <!--and the associated statistics (accuracy, sensitivity specificity, precision, F1 score and a lot more: https://en.wikipedia.org/wiki/Confusion_matrix). -->
 
@@ -387,6 +412,44 @@ autoplot(cm, type = "heatmap")
 
 ```
 
+#### Using modelStudio to dive into the model
 
-<!-- Do we want to include another regression example? it's more common in the sensory consumer science context -->
-<!-- Do we want to add modelStudio? -->
+`modelStudio` is an R package that provides an interactive studio for explanatory model analysis. It generate advanced interactive model explanations in the form of a serverless HTML site with only one line of code. Now we can use this tool to dive into the model and check which features are important for the model.
+
+<!-- tian: this code for model studio is not for the above model. Need to adjust -->
+
+``` {r model_studio}
+
+# Model Studio ------------------------------------------------------------
+
+library(DALEXtra)
+library(modelStudio)
+
+explainer <- explain_tidymodels(
+  final_model, 
+  data = training_data %>% 
+    column_to_rownames("id") %>%
+    select(-liking),
+  y = training_data$liking
+)
+
+resid <- model_performance(explainer)
+resid
+plot(resid)
+
+var_imp <- variable_importance(explainer)
+plot(var_imp)
+
+ms <- modelStudio(
+  explainer,
+  new_observation = validation_data %>%
+    column_to_rownames("id") %>%
+    select(-liking),
+  new_observation_y = round(validation_data$liking, 3)
+)
+
+# r2d3::save_d3_html(ms, "output/modelstudio.html")
+
+```
+
+<!-- tian: Do we want to include another regression example? it's more common in the sensory consumer science context -->
