@@ -11,6 +11,8 @@ knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 ## Design
 
 ### Designs of sensory experiments
+<!-- While reviewing my chapter (starting with data manipulation) I added a section at the start that explains the learning, the data we are using, and the main packages. Would it be an idea to add this here as well (and remove library(...) when no longer needed) for this chapter too? -->
+<!-- Good idea! I will add that -->
 
 #### General approach
 
@@ -18,11 +20,18 @@ Sensory and consumer science relies on experiments during which subjects usually
 
 However, this type of approach also comes with drawbacks^[Market researchers would argue that evaluating several products in a row doesn't usually happen in real life and that proceeding this way may induce response biases. They thus advocate the use of pure monadic designs in which participants are only given one sample to evaluate. This corresponds to a between-group design that is also frequently used in fields where only one treatment per subject is possible (drug testing, nutrition studies, etc.).] as it may imply order effects and carry-over effects. Fortunately, most of these effects can be controlled with a proper design of experiment (DoE). A good design ensures that order and carry-over effects are not confounded with what you are actually interested to measure (most frequently, the differences between products) by balancing these effects across the panel. However, it is important to note that the design does not eliminate these effects and that each subject in your panel may still experience an order and a carry-over effect, as well as boredom, sensory fatigue, etc.
 
-<!-- While reviewing my chapter (starting with data manipulation) I added a section at the start that explains the learning, the data we are using, and the main packages. Would it be an idea to add this here as well (and remove library(...) when no longer needed) for this chapter too? -->
-<!-- Good idea! I will add that -->
+Before going any further and designing the experiments, it is important to estimate the number of panelists needed for your study. For that, you may rely on common practices. For instance, most descriptive analysis studies with trained panelists are typically conducted with 10-20 judges, whereas 100 participants is usually considered as a minimum for hedonic tests. Of course, these are only ballpark numbers and they must be adjusted depending on the characteristics of the population you are interested in and on the specifics of your study objectives. In all cases, a power analysis would be wise to make sure that you have a good rationale for your proposed sample size, especially for studies involving consumers. The {pwr} package provides a very easy way to do that, as shown in the example code below. Note that you need to provide an effect size (expressed here by Cohen’s d, which is the difference you aim to detect divided by the estimated standard deviation of your population).
 
-<!-- power analysis with the pwr package  -->
-<!-- power analysis with the pwr package  -->
+```{r}
+library(pwr)
+pwr.t.test(n = NULL,
+                sig.level = 0.05, 
+                type = "one.sample", 
+                alternative = "two.sided", 
+                power = 0.8, 
+                d = 0.3)
+```
+
 
 #### Crossover designs
 
