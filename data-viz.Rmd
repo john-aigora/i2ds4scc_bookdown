@@ -537,6 +537,7 @@ mean_sensory <- read_xlsx(file_path, sheet="Data") %>%
 Now that we are satisfied with the data we want to display, we can create the table from it. 
 
 ```{r}
+
 install.packages("flextable")
 library(flextable)  
 
@@ -591,9 +592,55 @@ knitr::include_graphics("images/flextable_2.jpeg")
 
 The table now looks much nicer and can be further improved with other preattentive attributes according to the main objective of your message. 
 
-<!-- Add table -->
+Another interesting package to create tables is the `{gt}` package. This package make it simple to produce nice-looking tables for a report or presentation. Let's first install and load the `{gt}` package.
 
-<!--  packages gt, gtextras, flextable, kable, kableExtra -->
+```{r}
+
+install.packages("gt")
+library(gt)
+
+```
+
+Focusing on the consumer study (Consumer Test.xlsx), suppose we want to display a table with the average the consumer spent in the booth and the number of biscuits eaten for each product. We need to transform the time columns (expressed as min and s) to a double format and express as minutes unit, and then group by product and get the average for the time spent and number of biscuits eaten.
+
+```{r}
+
+# Consumer Data
+file_path <- here("data","Consumer Test.xlsx") 
+
+# Consumption Time and Number of Biscuits
+
+mean_consumer <- read_xlsx(file_path, sheet="Time Consumption") %>%
+  select(Product, `Time (min)`, `Nb biscuits`) %>%
+  separate(`Time (min)`, c("Time (min)", "time_sec"), sep = "min") %>%
+  mutate(time_sec = as.numeric(time_sec)) %>%
+  mutate(time_min_2 = time_sec/60) %>%
+  mutate(`Time (min)` = as.numeric(`Time (min)`)) %>%
+  mutate(`Time (min)` = `Time (min)` + time_min_2) %>%
+  select(-c("time_sec", "time_min_2")) %>%
+  group_by(Product) %>%
+  summarise_if(is.numeric, mean, na.rm = TRUE)
+
+```
+
+Now that the data is ready, we can display it as table and make basics adjustments to make it look nicer.
+
+```{r}
+
+consumer_gt_tablel <- mean_consumer %>%
+  gt () %>%
+  cols_align(align = "center", columns = everything()) %>%
+  fmt_number(columns = c( "Time (min)", "Nb biscuits") , decimals = 2) %>%
+  tab_header(title = md ("**Consumption time and number of biscuits eaten**"), 
+             subtitle = md ("*Average taken from 99 consumers*"))
+
+```
+
+Note that we used Markdown to style the title and subtitle by wrapping the values passed to title or subtitle with the md() function. For Markdown ** makes the text bold and * makes the test italic.
+
+The `{gt}` package offers several resources to make beautiful tables using preattentive attributes. As an example, lets a
+
+<!--  packages gt, gtextras, kable, kableExtra -->
 
 
 
