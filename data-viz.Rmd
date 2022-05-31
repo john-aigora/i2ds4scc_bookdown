@@ -51,7 +51,7 @@ library(tidyverse)
 
 ```
 
-In a situation where we are interested to display the mean for the appearance attributes evaluated in the 11 biscuits, we would need first to prepare the data frame, which means, selecting the wanted attributes and calculating the mean scored by panelists.
+In a situation where we are interested to display the mean for the appearance attributes evaluated in the 11 biscuits, we would need first to prepare the data, which means, selecting the wanted attributes and calculating the mean scored by panelists.
 
 ```{r}
 
@@ -103,7 +103,7 @@ flex_table_design
 
 ```
 
-After the basic aesthetic changes in the table, we can add additional elements such as the table title and also, depending on our purpose and where we want to call the audience's attention, use other strategies. Let's here highlight the optimized formulation.
+After the basic aesthetic changes in the table, we can add additional elements such as the table title and also, depending on our purpose and where we want to call the audience's attention, use other strategies such as set background color. Let's here just highlight the optimized formulation.
 
 ```{r}
 
@@ -134,7 +134,7 @@ library(gt)
 
 ```
 
-Focusing on the consumer study (Consumer Test.xlsx), suppose we want to display a table with the average the consumers spent in the booth and the number of biscuits eaten for each product. We need to transform the time columns (expressed as min and s) to a double format and express them as minutes units, and then group them by product and get the average for the time spent and the number of biscuits eaten.
+Focusing now on the consumer study (Consumer Test.xlsx), suppose we want to display a table with the average the consumers spent in the booth and the number of biscuits eaten for each product. We need to transform the time columns (expressed as min and s) to a double format and express them as minutes units, and then group them by product to get the average for the time spent and the number of biscuits eaten.
 
 ```{r}
 
@@ -168,6 +168,8 @@ consumer_gt_table <- mean_consumer %>%
   tab_header(title = md ("**Consumption time and number of biscuits eaten**"), 
              subtitle = md ("*Average taken from 99 consumers*"))
 
+consumer_gt_table
+
 ```
 
 ```{r gt_table, fig.cap='Consumption time and number of biscuits eaten', fig.align='center', echo=FALSE, out.width="85%", eval=TRUE}
@@ -178,7 +180,7 @@ knitr::include_graphics("images/gt_table.jpeg")
 
 Note that we used Markdown to style the title and subtitle by wrapping the values passed to the title or subtitle with the md() function. For Markdown ** makes the text bold and * makes the text italic.
 
-The `{gt}` package offers several resources to make beautiful tables using preattentive attributes. As an example, let's now focus on the average number of biscuits eaten only, since we saw that the consumption time was very similar among products. The idea is to use pre-attentive attributes for the audience to clearly see the formulation ta got the most to the least biscuits eaten. Let's first prepare the data and calculate the overall time consumption considering all products.
+The `{gt}` package offers several resources to make beautiful tables using preattentive attributes. As an example, let's now focus on the average number of biscuits eaten only, since we saw that the consumption time was very similar among products. The idea is to use pre-attentive attributes for the audience to clearly see the formulation that got the most to the least biscuits eaten. Let's first prepare the data and calculate the overall time consumption considering all products.
 
 ```{r}
 
@@ -206,6 +208,8 @@ consumer_gt_table_2 <-  mean_consumer_2 %>%
              subtitle = md ("*Average taken from 99 consumers*")) %>%
   tab_source_note(source_note = table_source)
 
+consumer_gt_table_2
+
 ```
 
 Now, we will use a nice tool to explicitly color across the range number of biscuits eaten range, so the most and least eaten products can be easily identified.
@@ -220,8 +224,9 @@ max_nb_biscuits <- max(mean_consumer_2$`Nb biscuits`)
 biscuits_palette <- col_numeric(c("#FEF0D9", "#990000"), domain = c(min_nb_biscuits, max_nb_biscuits), alpha = 0.75)
 
 consumer_table_final <- consumer_gt_table_2 %>% 
-    data_color(columns = c(`Nb biscuits`),
-               colors = biscuits_palette)
+    data_color(columns = c(`Nb biscuits`), colors = biscuits_palette)
+
+consumer_table_final
 
 ```
 
@@ -233,7 +238,7 @@ knitr::include_graphics("images/gt_table_2.jpeg")
 
 Applying this strategy of coloring the number of biscuits eaten according to their range makes the table much nicer and easy to get insights. In our case, we can quickly see that product 10 was the most eaten and product 4 the least eaten by the consumers.
 
-The package `{gtExtras}` provides some additional features that are currently not yet built in `{gt}`. The `{gtExtras}` package includes three different themes, additional formatting capabilities, opinionated diverging color palette, extra tools for highlight, possibility of embed bar plots in the table, among several other functions.
+The package `{gtExtras}` provides some additional features that are currently not yet built in `{gt}`. The `{gtExtras}` package includes three different themes, additional formatting capabilities, opinionated diverging color palette, extra tools for highlight, possibility of embed bar plots in the table, among several other resources
 
 Some other packages to build tables include `{huxtabke}`, `{kable}` and `{kableExtra}`.
 
