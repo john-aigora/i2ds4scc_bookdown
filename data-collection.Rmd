@@ -189,8 +189,9 @@ flextable::qflextable(Bmixt)
 
 ```
 
-<!-- randomization by judge, by product -->
-```{r}
+Finally, when the design is built, it could be desirable to randomize the order in which each sample is being made, to avoid further biases:
+
+```{r, echo=TRUE, eval=TRUE}
 Bmixt_shuffled <- Bmixt[sample(nrow(Bmixt)), ]
 ```
 
@@ -221,7 +222,7 @@ To reduce the number of trials even further, we can go as in the example below w
 
 ```{r echo=TRUE, eval=TRUE, message=FALSE}
 library(FrF2)
-FrF2(nfactors = 8, nruns = 5, randomize = FALSE)
+FrF2(nruns = 8, nfactors = 5, randomize = FALSE)
 ```
 
 Although fractional designs are only scarcely used, studies have shown that they could greatly contribute to sensory-led development of food [@Baardseth2005; @Modi2008; @Rytz2017; @Pineau2019] as well as non-food product [@Dairou2003].
