@@ -134,7 +134,7 @@ In order to get the most of sensory experiments, it is thus essential to ensure 
 
 #### Factorial designs
 
-Full factorial designs are of course commonly used and their application is usually straightforward. They won't be detailed here. However, it is worth noting that when the number of factors increases, the corresponding number of trials can quickly become daunting (e.g., *2^k^* trials for a two-level design with *k* factors). Thus, always in the view of sparing experimental resources, incomplete designs are frequently used. Several strategies can be used to define which experiments to conduct (REF REF book Dean et al. 2018). Ref to Lawson 2015 (Design and analysis of experiments with R) and REf to Rasch et al 2011 (Optimal experimental design with R). One option would be to build an optimal design thanks to the `{AlgDesign}` or the `{OptimalDesign}` packages that calculate experimental designs for D, A and I criteria. An example is given below in the case of a mixture design but would apply to regular factorial designs as well.
+Full factorial designs are of course commonly used and their application is usually straightforward. They won't be detailed here. However, it is worth noting that when the number of factors increases, the corresponding number of trials can quickly become daunting (e.g., *2^k^* trials for a two-level design with *k* factors). Thus, always in the view of sparing experimental resources, incomplete and fractional designs are frequently used. Several strategies can be used to define which experiments to conduct (REF REF book Dean et al. 2018). Ref to @Lawson2014 (Design and analysis of experiments with R) and REf to Rasch et al 2011 (Optimal experimental design with R). One option would be to build an optimal design thanks to the `{AlgDesign}` or the `{OptimalDesign}` packages that calculate experimental designs for D, A and I criteria. An example is given below in the case of a mixture design but would apply to regular factorial designs as well.
 
 
 #### Mixture designs
@@ -143,7 +143,7 @@ In many projects  (e.g. in the food industry, in the personal care industry), op
 
 The `{mixexp}` package offers a very convenient way to do this. In addition to creating the design, `DesignPoints()` allows to display the corresponding ternary diagram. Below is the example of a simplex-lattice design for 3 components and 3 levels obtained thanks to function `SLD`:
 
-```{r echo=TRUE, eval=TRUE, message=FALSE}
+```{r echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
 library(mixexp)
 mdes<-SLD(3,3)
 DesignPoints(mdes)
@@ -153,7 +153,7 @@ Suppose that we want to adjust a biscuit recipe to optimize its sensory properti
 
 However, this design would imply 11 mixtures, which is more than needed to apply a Scheffé quadratic model (REF REF REF). To reduce the number of mixtures and still allow fitting a quadratic model, we can use the `optFederov()` function from `{AlgDesign}` to select a D-optimal subset. Here, let's limit to 9 products.
 
-```{r echo=TRUE, eval=TRUE, message=FALSE}
+```{r echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
 library(mixexp)
 library(AlgDesign)
 library(tidyverse)
@@ -167,7 +167,7 @@ DesignPoints(MixBiscuits$design, axislabs = c("Butter","Sugar","Flour"), pseudo 
 ```
 
 
-```{r eval=TRUE, echo=FALSE, message=FALSE, label="biscuit-mixt", tab.cap="Average liking scores obtained for the biscuits from the mixture design"}
+```{r eval=TRUE, echo=FALSE, message=FALSE, warning=FALSE, label="biscuit-mixt", tab.cap="Average liking scores obtained for the biscuits from the mixture design"}
 library(mixexp)
 library(AlgDesign)
 library(tidyverse)
@@ -216,22 +216,22 @@ Regardless of the construction of the mixture design, ternary diagrams are easy 
 
 #### Screening designs
 
-Product development is not a monolithic process and in the early stages of a project it could be extremely useful to use a screening design in combination to sensory evaluation to identify most influential factors of interest (REF REF REF). Factorial and mixture designs belong to the product developers' essential toolkit and could serve this purpose. In practice however, they can only include a relatively limited number of factors. By contrast, screening designs are extremely efficient at dealing with many factors, pending some sacrifices on the evaluation of interactions and quadratic effects.
-Although screening designs are only scarcely used, studies have shown that they could greatly contribute to sensory-led product development, including in nonfood applications of sensory science (REF REF REF).
+Product development is not a monolithic process and in the early stages of a project it could be extremely useful to use a design of experiment in combination with sensory evaluation to identify most influential factors of interest [@Mao2007; @Pineau2019]. Factorial and mixture designs belong to the product developers' essential toolkit and could serve this purpose. In practice however, they can only include a relatively limited number of factors. By contrast, fractional factorial designs (aka screening designs) are extremely efficient at dealing with many factors, pending some sacrifices on the estimation of interactions and quadratic effects. If, for example, we want to estimate the effect of 5 factors and assume that three and four-factor interactions are negligible, we can then build a *2^5-1^* design (of, thus, 16 trials instead of 32) in which main effects are confounded with four-way interactions, and two-factor interactions are confounded with three-factor interactions. This design can be easily obtained with the `{FrF2}` package, with this simple command: `FrF2(16, 5, randomize = FALSE)`.
+To reduce the number of trials even further, we can go as in the example below with a quarter fraction *2^k-2^* design, in which each effect that can be estimated is confounded with three other interactions.
 
-Plackett-Burman designs are the most commonly used screening designs. They can be easily obtained with `{FrF2}`.
-<!-- Small example to be added -->
-<!-- Small example to be added -->
-<!-- Small example to be added -->
-<!-- Small example to be added -->
+```{r echo=TRUE, eval=TRUE, message=FALSE}
+library(FrF2)
+FrF2(nfactors = 8, nruns = 5, randomize = FALSE)
+```
 
+Although fractional designs are only scarcely used, studies have shown that they could greatly contribute to sensory-led development of food [@Baardseth2005; @Modi2008; @Rytz2017; @Pineau2019] as well as non-food product [@Dairou2003].
+For higher number of factors, Plackett-Burman designs are the most commonly used fractional factorial designs. They can be easily obtained with the `pb` function of the `{FrF2}` package. For example, `FrF2::pb(12)` yields a 12 trials design that allows to test the effects of 11 factors.
 
 
 #### Sensory informed designs
-Eventually, it is worth mentioning that in some cases sensory properties themselves can be used as factors and implemented in a DoE. Naturally, this implies that product developers have (1) access to the measure of these properties and (2) can control the level of these properties and their interactions. These requirements are rarely met in food development but can be more easily implemented in some non-food applications.
+Eventually, it is worth mentioning that, in some cases, sensory properties themselves can be used as factors and implemented in a DoE. In this line of thinking, Naes and Nyvold have suggested that working this way would leave more scope for creativity (@Naes2004). Naturally, this implies that product developers have (1) access to the measure of these properties and (2) can control the level of these properties and their interactions. These requirements are rarely met in food development but can be more easily implemented in some non-food applications (REF REF / Petiot).
 A specific case, is the use of sensory information to make a selection of a subset of products, as described above.
 
-(Include ref to Naes et al REF REF)
 
 
 ## Execute
