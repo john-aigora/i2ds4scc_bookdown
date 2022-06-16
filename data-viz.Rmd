@@ -1,6 +1,7 @@
 ```{r include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
+knitr::opts_chunk$set(echo = FALSE, eval = TRUE)
 ```
+
 # Data Visualization {#data-viz}
 
 Tables and graphs are the two fundamental vehicles to communicate information clearly and effectively. They are useful visual elements to summarize and organize information to show patterns and relationships. Tables and graphs allow the audience/reader to easily and quickly get a clear idea of the data findings, make comparisons, get insights from it and ultimately, draft conclusions without much effort.
@@ -71,8 +72,6 @@ mean_sensory <- read_xlsx(file_path, sheet="Data") %>%
 Now that we are satisfied with the data we want to display, we can create the table from it. 
 
 ```{r}
-
-install.packages("flextable")
 library(flextable)  
 
 flex_table <- mean_sensory %>% 
@@ -128,8 +127,6 @@ The table now looks much nicer and can be further improved with other preattenti
 Another interesting package to create tables is the `{gt}` package. This package make it simple to produce nice-looking tables for a report or presentation. Let's first install and load the `{gt}` package.
 
 ```{r}
-
-install.packages("gt")
 library(gt)
 
 ```
@@ -215,8 +212,6 @@ consumer_gt_table_2
 Now, we will use a nice tool to explicitly color across the range number of biscuits eaten range, so the most and least eaten products can be easily identified.
 
 ```{r}
-
-install.packages("scales")
 library (scales)
 
 min_nb_biscuits <- min(mean_consumer_2$`Nb biscuits`)
@@ -241,6 +236,7 @@ Applying this strategy of coloring the number of biscuits eaten according to the
 The package `{gtExtras}` provides some additional features that are currently not yet built in `{gt}`. The `{gtExtras}` package includes three different themes, additional formatting capabilities, opinionated diverging color palette, extra tools for highlight, possibility of embed bar plots in the table, among several other resources
 
 Some other packages to build tables include `{huxtable}`, `{kable}` and `{kableExtra}`.
+
 
 ## Chart Making
 
@@ -314,8 +310,8 @@ To do so, two types of information are required:
 
 Such information can be provided as such:
 
-```{r, eval=TRUE}
-p + geom_point(aes(x=Sticky, y=Melting))
+```{r}
+# p + geom_point(aes(x=Sticky, y=Melting))
 ```
 
 As can be seen, a layer that consists of points (defined by `geom_point()`) in which the x-axis coordinates is defined by `Sticky` and the y-axis coordinates by `Melting` defined through aesthetics (or `aes()`) is added to the already existing graph `p` .
@@ -326,8 +322,8 @@ In the previous example, one can notice that many points are being printed. This
 
 Let's color the points per products to see if we can see any patterns. Since the color code is specific to the data (more precisely to `Product`), it should be informed within the aesthetics by adding `colour=Product` within `aes()`:
 
-```{r, eval=TRUE}
-p + geom_point(aes(x=Sticky, y=Melting, colour=Product))
+```{r}
+# p + geom_point(aes(x=Sticky, y=Melting, colour=Product))
 ```
 
 As you can see, any parameters provided within `aes()` may depend on a variable (e.g. `colour` in the previous example). 
@@ -335,7 +331,7 @@ If for any reasons, a specific setting should uniformly be applied to all the el
 
 Let's illustrate this by providing a simple example in which we change the type of the dots from circle to square using `pch`, and by increasing their size using `cex`:
 
-```{r, eval=TRUE}
+```{r}
 p + geom_point(aes(x=Sticky, y=Melting, colour=Product), pch=15, cex=5)
 ```
 
@@ -357,7 +353,7 @@ Such procedure is done thorugh the use of another `geom_*()` function in `geom_t
 
 To avoid having the label overlapping with the point, the text is slightly shifted vertically using `nudge_y`:
 
-```{r, eval=TRUE}
+```{r}
 ggplot(sensory)+
   geom_point(aes(x=Sticky, y=Melting, colour=Product))+
   geom_text(aes(x=Sticky, y=Melting, label=Judge), nudge_y=1)
@@ -365,7 +361,7 @@ ggplot(sensory)+
 
 One interesting remark is that some information required in `aes()` is being repeated across the different `geom_*()` used. Such writing can be simplified by providing the `aes()` information that applies to all `geom_*()` to the original `ggplot()` call. The previous code hence can be simplified to:
 
-```{r, eval=TRUE}
+```{r}
 p <- ggplot(sensory, aes(x=Sticky, y=Melting, label=Judge))+
   geom_point(aes(colour=Product))+
   geom_text(nudge_y=1)
@@ -379,7 +375,7 @@ With this new code, you'll notice that:
 
 Since the graphics look at the relationship between two quantitative variables, let's add another layer to the previous graph that shows the regression line between:
 
-```{r, eval=TRUE}
+```{r}
 line_p <- p + geom_smooth(method="lm", formula="y~x", se=FALSE)
   
 ```
@@ -398,7 +394,7 @@ Nbiscuit <- Nbiscuit %>%
 
 To create such distribution, a first solution consists in counting for each product how many respondents ate 0 biscuit, 1 biscuit, 2 biscuits, etc. This is automatically done using `geom_bar` and `stat="count"`. The parameter `position="dodge"` is used to get the results per biscuit side by side rather than stacked up (value by default):
 
-```{r, eval=TRUE}
+```{r}
 bar_p <- ggplot(Nbiscuit, aes(x=N, fill=Product))+
   geom_bar(stat="count", position="dodge")
 ```
@@ -422,7 +418,7 @@ Let's start with a quick win by completely changing the overall appearance of th
 
 Let's start with improving `bar_p` using `theme_minimal()`:
 
-```{r, eval=TRUE}
+```{r}
 bar_p = bar_p + theme_minimal()
 ```
 
@@ -430,7 +426,7 @@ Rather than using pre-defined themes (or to complement pre-defined themes), the 
 
 Next, let's modify the axes by changing their names and by applying more logical breaks. For instance, the limits of the x-axis can be extended to -1 and 11 to ensure that all the histograms are visible, else R removes some and returns a warning: `Removed 10 rows containing missing values`.
 
-```{r, eval=TRUE}
+```{r}
 bar_p = bar_p +
   scale_x_continuous(name="Number of Biscuits eaten", 
                      breaks=seq(0,10,1), 
@@ -441,14 +437,14 @@ bar_p = bar_p +
 
 Last but not least, a title is being added to the graph using `ggtitle()`:
 
-```{r, eval=TRUE}
+```{r}
 bar_p = bar_p +
   ggtitle("Distribution of the number of biscuits eaten","(Results are split per biscuit type)")
 ```
 
 Let's apply a similar transformation to `line_p`. Here, we are aiming in having a more *realistic* plot using cartesian coordinates, a nice theme, no legend, and a title to the graph.
 
-```{r, eval=TRUE}
+```{r}
 line_p = line_p +
   theme_bw()+
   scale_x_continuous(breaks=seq(0,50,10), limits=c(0,60))+
@@ -522,7 +518,7 @@ Most aesthetics parameters can be controlled by equivalent functions for which t
 Such functions fully control how the corresponding aesthetic should behave, by providing the correspondence between a variable level and its color for instance. In the graph saved in `bar_p`, remember that we filled in the bar chart using the product information. Let's imagine that we are particularly interested in biscuit P3, and want to compare it to the rest of the biscuits. We propose to make P3 stand out by filling it in orange, and by setting all the other biscuits in the same gray tone.
 Such procedure can be done using `scale_fill_manual()`.
 
-```{r, eval=TRUE}
+```{r}
 bar_p + 
   scale_fill_manual(values=c("P1"="gray50", "P2"="gray50", "P3"="darkorange", "P4"="gray50", "P5"="gray50",
                              "P6"="gray50", "P7"="gray50", "P8"="gray50", "P9"="gray50", "P10"="gray50"))
@@ -546,7 +542,7 @@ To conclude this section, and summarize most concepts presented in this chapter,
 
 Let's start with deconstructing a spider-plot: a spider plot is a line chart presented in a circular way. So let's start with building a line chart of our sensory profiles (the means are considered here). For more clarity, only two of the samples (`P03` and `POpt`) are represented.
 
-```{r, eval=TRUE}
+```{r}
 
 # Constructing the Mean Table
 sensory_mean <- sensory %>% 
@@ -570,7 +566,7 @@ spider_line <- ggplot(sensory_mean, aes(x=Variables, y=Mean, colour=Product, lin
 
 Next step is to represent this line chart in a circular way. This can be done using `coord_polar()`:
 
-```{r, eval=TRUE}
+```{r}
 spider_line + coord_polar()
 ```
 
@@ -581,7 +577,7 @@ To counter this, the following twofold solution is proposed:
   1. Associate each attribute to its position (e.g. `Shiny` is 1, `External color intensity` is 2, until `Melting` which would be 32);
   2. Duplicate the last attribute (`Melting`) and associate it to position 0.
 
-```{r, eval=TRUE}
+```{r}
 var <- levels(sensory_mean$Variables)
 sensory_mean_pos <- tibble(Variables = c(var[length(var)], var),
                   Position = 0:length(var)) %>%
@@ -591,7 +587,7 @@ sensory_mean_pos <- tibble(Variables = c(var[length(var)], var),
 
 The previous graph is then rebuilt by forcing the position of the attributes on the x-axis using `Position` (`Variables` is used for the labels). Here position 0 is voluntarily omitted (`breaks = 1:length(var)` and `labels = var`), meaning that only the labels going from 1 to the last variable are being showed. However, the x-axis is forced to go from 0 to the number of attributes (`limits = c(0, length(var))`).
 
-```{r, eval=TRUE}
+```{r}
 spiderplot <- ggplot(sensory_mean_pos, aes(x=Position, y=Mean, colour=Product, linetype=Product))+
   geom_point(pch=20, cex=2)+
   geom_line(aes(group=Product), lwd=1)+
@@ -626,7 +622,7 @@ To add two elements next to each others, the `+` sign is used. To add two elemen
 
 Let's illustrate this by creating a plot with on the left side `spiderplot`, and on the right side `bar_p` on top of `line_p`.
 
-```{r, eval=TRUE}
+```{r}
 library(patchwork)
 
 p = spiderplot + (bar_p / line_p)
@@ -663,7 +659,7 @@ When `ggplot()` are being built using categorical variables, the labels used on 
 The first option consists in using `theme()` and rotating the labels (here at 45 degrees, but use 90 degrees to get the names vertically). Note that by default, `ggplot()` center the labels: to avoid having them crossing the x-axis line, they are being left-centered using `hjust=1`:
 
 
-```{r, eval=TRUE}
+```{r}
 spider_line + 
   theme(axis.text.x = element_text(angle=45, hjust=1))
 ```
@@ -671,7 +667,7 @@ spider_line +
 
 A second option consists in dodging one every two labels along the x-axis. This option works fine, especially when the labels are not too long. In our example unfortunately, some overlap can still be seen. Note that this option is accessible within `scale_x_discrete()`, not within `theme()` as we would expect:
 
-```{r, eval=TRUE}
+```{r}
 spider_line + 
   scale_x_discrete(guide = guide_axis(n.dodge = 2))
 ```
