@@ -1,5 +1,5 @@
 ```{r include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
+knitr::opts_chunk$set(echo = FALSE, eval = TRUE)
 ```
 # Value Delivery {#value-delivery}
 
@@ -100,11 +100,31 @@ knitr::include_graphics("images/PCA.jpeg")
 
 We won’t go deep into the interpretation since it’s not the focus of this example, but rather point out the approach we would recommend for each type of audience as shown in the table below.
 
-```{r table, fig.cap='Exemplification of the approach for each type of audience.', fig.align='center', echo=FALSE, eval=TRUE}
+<!-- Why table doesn't show --> 
+```{r,message=FALSE, warning=FALSE, tab.cap="Exemplification of the approach for each type of audience."}
 
-knitr::include_graphics("images/table_value_delivery_3.jpeg")
+library(readxl)
+library(tidyverse)
+library(flextable)
+
+file_path <- file.path("data/table value delivery.xlsx")
+
+table <- read_xlsx(file_path) %>%
+  flextable() %>%
+  fontsize(part = "all", size = 10) %>% 
+  bold(bold = TRUE, part = "header") %>%
+  bold(i = NULL, j = 1, bold = TRUE, part = "body") %>%
+  autofit() %>%
+  align(align = "center", part = "all") %>%
+  hline(i = 5) %>%
+  hline(i = 8) %>%
+  hline(i = 16)
+
+table
+
 
 ```
+
 
 Following those recommendations, your PCA for the management or general audience may look like the Figure 11.4. Note that the PCA was cleaned and simplified for a more straightforward understanding. Specifically, the PCA variance explanation and grid line were removed, attributes were slightly moved to avoid overlap, the samples, and attributes that we want less emphasize were given a lighter color and as the opposite, the attributes and samples that we may want to highlight and focus our audience attention were given a different and stronger color, pictures and a more appealing description were used instead of the samples codes and some strategies as to circle the important area/group of samples and attributes helps the audience to focus on what we deem most important to extract from this analysis. In this example, the idea may be to highlight to the audience that the optimized formulation is in fact closer to the commercial one, and to increase even more this similarity, some attributes, like sour, salty, overall flavor persistence, fatty flavor, and fatty in mouth, has to be increased.
 
