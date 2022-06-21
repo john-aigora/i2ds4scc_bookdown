@@ -1,5 +1,5 @@
 ```{r include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, eval = TRUE)
+knitr::opts_chunk$set(echo = TRUE, eval = TRUE)
 ```
 
 # Data Visualization {#data-viz}
@@ -44,7 +44,7 @@ Let's now focus on how to make nice tables and plots in R.
  
 Let's start using the package `{flextable}` to build tables using as an example the sensory data (Sensory Profile.xlsx). Let's first load the necessary libraries.
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 
 library(here)
 library(readxl)
@@ -311,7 +311,7 @@ To do so, two types of information are required:
 Such information can be provided as such:
 
 ```{r}
-# p + geom_point(aes(x=Sticky, y=Melting))
+p + geom_point(aes(x=Sticky, y=Melting))
 ```
 
 As can be seen, a layer that consists of points (defined by `geom_point()`) in which the x-axis coordinates is defined by `Sticky` and the y-axis coordinates by `Melting` defined through aesthetics (or `aes()`) is added to the already existing graph `p` .
@@ -323,7 +323,7 @@ In the previous example, one can notice that many points are being printed. This
 Let's color the points per products to see if we can see any patterns. Since the color code is specific to the data (more precisely to `Product`), it should be informed within the aesthetics by adding `colour=Product` within `aes()`:
 
 ```{r}
-# p + geom_point(aes(x=Sticky, y=Melting, colour=Product))
+p + geom_point(aes(x=Sticky, y=Melting, colour=Product))
 ```
 
 As you can see, any parameters provided within `aes()` may depend on a variable (e.g. `colour` in the previous example). 
