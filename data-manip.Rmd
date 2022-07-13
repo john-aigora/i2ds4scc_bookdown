@@ -72,7 +72,7 @@ The first simple transformation we consider consists of renaming one or multiple
 
 In our sensory file^[The *sensory* data are imported from the *Sensory Profile.xlsx* file, see Section \@ref(data-import) for more on how to import data sets], let's rename 'Judge' into 'Panellist', and 'Product' into 'Sample' (here we apply transformations without saving the results, so the original data set remains unchanged).
 
-<!-- Vanessa: Maybe we can read and define sensory data in here and only mention chapter 8 for further details on data import? This will avoid the user to have to stop and go check in another chapter how sensory was imported/defined -->
+<!-- Vanessa: Maybe we can import and define sensory data in here and only mention chapter 8 for further details on data import? This will avoid the user to have to stop and go check in another chapter how sensory was imported/defined / Also for sensory we import the data in thsi chapter.-->
 
 First, here are the original names:
 
@@ -130,11 +130,6 @@ Let's only keep the variables related to Flavor, hence going from `Cereal flavor
 sensory %>% 
   dplyr::select(Judge, Product, `Cereal flavor`:Warming)
 ```
-
-<!-- why does 'Cereal flavor' has the '' and not Warming? Is it because of the blank between Cereal and flavor? If so, it might be worth adding a note about that. 
-
-TW: added in the aperitif
--->
 
 However, when only one (or few) variable needs to be removed, it is easier to specify which one to remove rather than informing all the ones to keep. Such solution is then done using the `-` sign. The previous example can then be obtained using the following code:
 
@@ -201,7 +196,7 @@ In case only a selection of numerical variables should be rounded, we could also
 
 ##### Merging and Separating columns
 
-It can happen that some columns of a data set contain information (strings) that cover different types of information. For instance, we could imagine coding the name of our panelists as *FirstName_LastName* or *Gender_Name*, and we would want to separate them into two columns to make the distinction between the different information, i.e. *FirstName* and *LastName* or *Gender* and *LastName* respectively. In other situations, we may want to merge information present in multiple columns in one. 
+It can happen that some columns of a data set contain information (strings) that cover different types of information. For instance, we could imagine coding the name of our panelists as *FirstName_LastName* or *Gender_Name*, and we would want to separate them into two columns to make the distinction between the different information, i.e. *FirstName* and *LastName* or *Gender* and *Name* respectively. In other situations, we may want to merge information present in multiple columns in one. 
 
 For illustration, let's consider the information stored in the *Product Info* sheet from *Sensory Profile.xlsx*. This table includes information regarding the cookies, and more precisely their Protein and Fiber content (Low or High). 
 
@@ -413,6 +408,7 @@ Note that the `{reshape2}` package provides a similar function called `melt()`, 
 melt(sensory)
 ```
 
+<!-- vanessa: maybe it should install the `reshape2` library before the code --> 
 
 #### Pivotting Wider
 
