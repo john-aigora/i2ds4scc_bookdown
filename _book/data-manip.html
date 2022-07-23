@@ -24,7 +24,7 @@
 <meta name="author" content="Thierry Worch, Julien Delarue, Vanessa Rios de Souza, and John Ennis" />
 
 
-<meta name="date" content="2022-05-23" />
+<meta name="date" content="2022-07-22" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -413,7 +413,8 @@ Also, the section "pre-requisite" (or could be called "summary") is something I 
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="data-manip.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb17-2"><a href="data-manip.html#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
 <span id="cb17-3"><a href="data-manip.html#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span></code></pre></div>
-<p>Note that in many cases, we are not saving the results of the transformation that we do. If you want to apply these changes to your data set, please visit section (APERITIF).</p>
+<p>Note that in many cases, we are not saving the results of the transformation that we do. If you want to apply these changes to your data set, please visit section (APERITIF).
+<!-- Vanessa: Would the section be "Getting Started"? Is there a way to write as hyperlink? --></p>
 </div>
 <div id="why-manipulating-data" class="section level2" number="4.2">
 <h2><span class="header-section-number">4.2</span> Why Manipulating Data?</h2>
@@ -440,6 +441,7 @@ Let C consumers provide their hedonic assessments on P samples. To evaluate if s
 <h5><span class="header-section-number">4.3.1.1.1</span> Renaming Variables</h5>
 <p>The first simple transformation we consider consists of renaming one or multiple variables. This procedure can easily be done using the <code>rename()</code> function from the <code>{dplyr}</code> package. In each of the examples below, we use the <code>names()</code> function to show just the names of the resulting data set.</p>
 <p>In our sensory file<a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a>, let’s rename ‘Judge’ into ‘Panellist,’ and ‘Product’ into ‘Sample’ (here we apply transformations without saving the results, so the original data set remains unchanged).</p>
+<!-- Vanessa: Maybe we can import and define sensory data in here and only mention chapter 8 for further details on data import? This will avoid the user to have to stop and go check in another chapter how sensory was imported/defined / Also for sensory we import the data in thsi chapter.-->
 <p>First, here are the original names:</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="data-manip.html#cb18-1" aria-hidden="true" tabindex="-1"></a>sensory <span class="sc">%&gt;%</span> </span>
 <span id="cb18-2"><a href="data-manip.html#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>()</span></code></pre></div>
@@ -472,10 +474,6 @@ Let C consumers provide their hedonic assessments on P samples. To evaluate if s
 Let’s only keep the variables related to Flavor, hence going from <code>Cereal flavor</code> to <code>Warming</code>:</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="data-manip.html#cb23-1" aria-hidden="true" tabindex="-1"></a>sensory <span class="sc">%&gt;%</span> </span>
 <span id="cb23-2"><a href="data-manip.html#cb23-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Judge, Product, <span class="st">`</span><span class="at">Cereal flavor</span><span class="st">`</span><span class="sc">:</span>Warming)</span></code></pre></div>
-<!-- why does 'Cereal flavor' has the '' and not Warming? Is it because of the blank between Cereal and flavor? If so, it might be worth adding a note about that. 
-
-TW: added in the aperitif
--->
 <p>However, when only one (or few) variable needs to be removed, it is easier to specify which one to remove rather than informing all the ones to keep. Such solution is then done using the <code>-</code> sign. The previous example can then be obtained using the following code:</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="data-manip.html#cb24-1" aria-hidden="true" tabindex="-1"></a>sensory <span class="sc">%&gt;%</span> </span>
 <span id="cb24-2"><a href="data-manip.html#cb24-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(Shiny, Melting))</span></code></pre></div>
@@ -512,7 +510,7 @@ To do so, we <code>mutate()</code> <code>across()</code> all variables that are 
 </div>
 <div id="merging-and-separating-columns" class="section level5" number="4.3.1.1.4">
 <h5><span class="header-section-number">4.3.1.1.4</span> Merging and Separating columns</h5>
-<p>It can happen that some columns of a data set contain information (strings) that cover different types of information. For instance, we could imagine coding the name of our panelists as <em>FirstName_LastName</em> or <em>Gender_Name</em>, and we would want to separate them into two columns to make the distinction between the different information, i.e. <em>FirstName</em> and <em>LastName</em> or <em>Gender</em> and <em>LastName</em> respectively. In other situations, we may want to merge information present in multiple columns in one.</p>
+<p>It can happen that some columns of a data set contain information (strings) that cover different types of information. For instance, we could imagine coding the name of our panelists as <em>FirstName_LastName</em> or <em>Gender_Name</em>, and we would want to separate them into two columns to make the distinction between the different information, i.e. <em>FirstName</em> and <em>LastName</em> or <em>Gender</em> and <em>Name</em> respectively. In other situations, we may want to merge information present in multiple columns in one.</p>
 <p>For illustration, let’s consider the information stored in the <em>Product Info</em> sheet from <em>Sensory Profile.xlsx</em>. This table includes information regarding the cookies, and more precisely their Protein and Fiber content (Low or High).</p>
 <p>After importing the data, let’s merge these two columns so that both information is stored in one column called <code>ProtFib</code>.
 To do so, we use the <code>unite()</code> function from the <code>{tidyr}</code> package, which takes as first element the name of the new variables, followed by all the columns to <em>unite</em>, and by providing the separation between these elements (here <em>-</em>):</p>
@@ -635,6 +633,7 @@ In the pivoted table, the names of the variables (stored here in </em>Attribute*
 Note that more complex transformations through the use of regular expressions (and the <code>names_pattern</code> option) can be considered. More information on this topic is provided in REF CHAPTER TEXTUAL (TO CHECK IF IT IS THE CASE!).</p>
 <p>Note that the <code>{reshape2}</code> package provides a similar function called <code>melt()</code>, which comes particularly handy if the entire set of numerical variables should be pivoted. In case qualitative variables are present in the data set, they will be kept as <em>id variables</em>. If performed on a matrix with row names, then the new table will have two columns containing the row and column names.</p>
 <div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="data-manip.html#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">melt</span>(sensory)</span></code></pre></div>
+<!-- vanessa: maybe it should install the `reshape2` library before the code -->
 </div>
 <div id="pivotting-wider" class="section level4" number="4.3.2.2">
 <h4><span class="header-section-number">4.3.2.2</span> Pivotting Wider</h4>
@@ -767,6 +766,7 @@ To do so, we use the file <em>excel-scrap.xlsx</em> which contains a fake exampl
 <span id="cb57-4"><a href="data-manip.html#cb57-4" aria-hidden="true" tabindex="-1"></a>(consumption <span class="ot">&lt;-</span> time <span class="sc">%&gt;%</span> </span>
 <span id="cb57-5"><a href="data-manip.html#cb57-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">full_join</span>(weight, <span class="at">by=</span><span class="st">&quot;Product&quot;</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb57-6"><a href="data-manip.html#cb57-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Amount =</span> <span class="st">`</span><span class="at">Nb biscuits</span><span class="st">`</span><span class="sc">*</span>Weight))</span></code></pre></div>
+<!-- Vanessa: Make the first and last ( ) can be removed and consumption called after the function, as in the next code -->
 <p>As can be seen, the <code>Weight</code> information stored in the <em>Weight</em> sheet has been replicated every time each sample has been evaluated by another respondent.</p>
 <p>The next step is then to merge this table to <code>Biscuits</code>. In this case, since both data set contain the full evaluation of the cookies (each consumer evaluating each product), the joining procedure needs to be done by <code>Judge</code> and <code>Product</code> simultaneously. A quick look at the data shows two important things:</p>
 <ul>

@@ -24,7 +24,7 @@
 <meta name="author" content="Thierry Worch, Julien Delarue, Vanessa Rios de Souza, and John Ennis" />
 
 
-<meta name="date" content="2022-05-23" />
+<meta name="date" content="2022-07-22" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -417,58 +417,58 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <div id="clustering-and-dimensionality-reduction" class="section level4" number="12.1.1.1">
 <h4><span class="header-section-number">12.1.1.1</span> Clustering and Dimensionality Reduction</h4>
 <p>Let’s start installing/loading the necessary packages and by preparing the dataset for the cluster analysis, with PCA being used as a pre processing method. We will be using a wine dataset, from <code>rattle</code> package, that consists of the results of a chemical analysis of wines grown in a specific area of Italy. Three types of wine are represented in the 178 samples, with the results of 13 chemical analyses recorded for each sample.</p>
-<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="machine-learning.html#cb227-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb227-2"><a href="machine-learning.html#cb227-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rattle)</span>
-<span id="cb227-3"><a href="machine-learning.html#cb227-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb227-4"><a href="machine-learning.html#cb227-4" aria-hidden="true" tabindex="-1"></a><span class="co"># load data</span></span>
-<span id="cb227-5"><a href="machine-learning.html#cb227-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb227-6"><a href="machine-learning.html#cb227-6" aria-hidden="true" tabindex="-1"></a>wine.fl <span class="ot">&lt;-</span> <span class="st">&quot;http://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data&quot;</span></span>
-<span id="cb227-7"><a href="machine-learning.html#cb227-7" aria-hidden="true" tabindex="-1"></a>wine <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(wine.fl,<span class="at">header =</span> F)</span>
-<span id="cb227-8"><a href="machine-learning.html#cb227-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb227-9"><a href="machine-learning.html#cb227-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Names of the variables</span></span>
-<span id="cb227-10"><a href="machine-learning.html#cb227-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb227-11"><a href="machine-learning.html#cb227-11" aria-hidden="true" tabindex="-1"></a>wine.names<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;Alcohol&quot;</span>, <span class="st">&quot;Malic acid&quot;</span>, <span class="st">&quot;Ash&quot;</span>, <span class="st">&quot;Alcalinity of ash&quot;</span>, <span class="st">&quot;Magnesium&quot;</span>,</span>
-<span id="cb227-12"><a href="machine-learning.html#cb227-12" aria-hidden="true" tabindex="-1"></a>             <span class="st">&quot;Total phenols&quot;</span>, <span class="st">&quot;Flavanoids&quot;</span>, <span class="st">&quot;Nonflavanoid phenols&quot;</span>, <span class="st">&quot;Proanthocyanins&quot;</span>,</span>
-<span id="cb227-13"><a href="machine-learning.html#cb227-13" aria-hidden="true" tabindex="-1"></a>             <span class="st">&quot;Color intensity&quot;</span>, <span class="st">&quot;Hue&quot;</span>, <span class="st">&quot;OD280/OD315 of diluted wines&quot;</span>, <span class="st">&quot;Proline&quot;</span>)</span>
-<span id="cb227-14"><a href="machine-learning.html#cb227-14" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(wine)[<span class="dv">2</span><span class="sc">:</span><span class="dv">14</span>]<span class="ot">=</span>wine.names</span>
-<span id="cb227-15"><a href="machine-learning.html#cb227-15" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(wine)[<span class="dv">1</span>]<span class="ot">=</span><span class="st">&quot;Wine_type&quot;</span></span>
-<span id="cb227-16"><a href="machine-learning.html#cb227-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb227-17"><a href="machine-learning.html#cb227-17" aria-hidden="true" tabindex="-1"></a>wine_dataset <span class="ot">&lt;-</span> <span class="fu">tibble</span>(wine)</span></code></pre></div>
+<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="machine-learning.html#cb238-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb238-2"><a href="machine-learning.html#cb238-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rattle)</span>
+<span id="cb238-3"><a href="machine-learning.html#cb238-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb238-4"><a href="machine-learning.html#cb238-4" aria-hidden="true" tabindex="-1"></a><span class="co"># load data</span></span>
+<span id="cb238-5"><a href="machine-learning.html#cb238-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb238-6"><a href="machine-learning.html#cb238-6" aria-hidden="true" tabindex="-1"></a>wine.fl <span class="ot">&lt;-</span> <span class="st">&quot;http://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data&quot;</span></span>
+<span id="cb238-7"><a href="machine-learning.html#cb238-7" aria-hidden="true" tabindex="-1"></a>wine <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(wine.fl,<span class="at">header =</span> F)</span>
+<span id="cb238-8"><a href="machine-learning.html#cb238-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb238-9"><a href="machine-learning.html#cb238-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Names of the variables</span></span>
+<span id="cb238-10"><a href="machine-learning.html#cb238-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb238-11"><a href="machine-learning.html#cb238-11" aria-hidden="true" tabindex="-1"></a>wine.names<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;Alcohol&quot;</span>, <span class="st">&quot;Malic acid&quot;</span>, <span class="st">&quot;Ash&quot;</span>, <span class="st">&quot;Alcalinity of ash&quot;</span>, <span class="st">&quot;Magnesium&quot;</span>,</span>
+<span id="cb238-12"><a href="machine-learning.html#cb238-12" aria-hidden="true" tabindex="-1"></a>             <span class="st">&quot;Total phenols&quot;</span>, <span class="st">&quot;Flavanoids&quot;</span>, <span class="st">&quot;Nonflavanoid phenols&quot;</span>, <span class="st">&quot;Proanthocyanins&quot;</span>,</span>
+<span id="cb238-13"><a href="machine-learning.html#cb238-13" aria-hidden="true" tabindex="-1"></a>             <span class="st">&quot;Color intensity&quot;</span>, <span class="st">&quot;Hue&quot;</span>, <span class="st">&quot;OD280/OD315 of diluted wines&quot;</span>, <span class="st">&quot;Proline&quot;</span>)</span>
+<span id="cb238-14"><a href="machine-learning.html#cb238-14" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(wine)[<span class="dv">2</span><span class="sc">:</span><span class="dv">14</span>]<span class="ot">=</span>wine.names</span>
+<span id="cb238-15"><a href="machine-learning.html#cb238-15" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(wine)[<span class="dv">1</span>]<span class="ot">=</span><span class="st">&quot;Wine_type&quot;</span></span>
+<span id="cb238-16"><a href="machine-learning.html#cb238-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb238-17"><a href="machine-learning.html#cb238-17" aria-hidden="true" tabindex="-1"></a>wine_dataset <span class="ot">&lt;-</span> <span class="fu">tibble</span>(wine)</span></code></pre></div>
 <p>Dimensionality reduction technique via PCA will be applied before clustering to allow coherent patterns to be detected more clearly. As well known, PCA retains most of the information/variance of the data set and by removing features with low variance, a more robust clustering can be generated. In other words, this technique reveals distinct groups if data exhibits clustering and by retaining the components with the highest variance, the clusters tends to be more visible.</p>
 <p>As the data set being used contain variables with different units/scales, PCA with scaling will be applied. We will be using the <code>{FactoMineR}</code> package to perform the PCA analysis and <code>{factoextra}</code> to easily extract and visualize the results.</p>
-<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="machine-learning.html#cb228-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span> (FactoMineR)</span>
-<span id="cb228-2"><a href="machine-learning.html#cb228-2" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(factoextra)</span>
-<span id="cb228-3"><a href="machine-learning.html#cb228-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb228-4"><a href="machine-learning.html#cb228-4" aria-hidden="true" tabindex="-1"></a>pca_results <span class="ot">&lt;-</span> <span class="fu">PCA</span>(wine_dataset, <span class="at">scale.unit =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb228-5"><a href="machine-learning.html#cb228-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb228-6"><a href="machine-learning.html#cb228-6" aria-hidden="true" tabindex="-1"></a>pca_eig <span class="ot">&lt;-</span> <span class="fu">fviz_eig</span>(pca_results, <span class="at">addlabels =</span> <span class="cn">TRUE</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">50</span>))</span>
-<span id="cb228-7"><a href="machine-learning.html#cb228-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb228-8"><a href="machine-learning.html#cb228-8" aria-hidden="true" tabindex="-1"></a>pca_plot <span class="ot">&lt;-</span> <span class="fu">fviz_pca_biplot</span>(pca_results, <span class="at">repel =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb228-9"><a href="machine-learning.html#cb228-9" aria-hidden="true" tabindex="-1"></a>                            <span class="at">label =</span> <span class="st">&quot;var&quot;</span>,</span>
-<span id="cb228-10"><a href="machine-learning.html#cb228-10" aria-hidden="true" tabindex="-1"></a>                            <span class="at">col.var =</span> <span class="st">&quot;red&quot;</span>,</span>
-<span id="cb228-11"><a href="machine-learning.html#cb228-11" aria-hidden="true" tabindex="-1"></a>                            <span class="at">col.ind =</span> <span class="st">&quot;black&quot;</span>)</span>
-<span id="cb228-12"><a href="machine-learning.html#cb228-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb228-13"><a href="machine-learning.html#cb228-13" aria-hidden="true" tabindex="-1"></a>pca_plot</span>
-<span id="cb228-14"><a href="machine-learning.html#cb228-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb228-15"><a href="machine-learning.html#cb228-15" aria-hidden="true" tabindex="-1"></a>reduced_dataset <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(pca_results<span class="sc">$</span>ind<span class="sc">$</span>coord[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]) <span class="sc">%&gt;%</span></span>
-<span id="cb228-16"><a href="machine-learning.html#cb228-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="machine-learning.html#cb239-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span> (FactoMineR)</span>
+<span id="cb239-2"><a href="machine-learning.html#cb239-2" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(factoextra)</span>
+<span id="cb239-3"><a href="machine-learning.html#cb239-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb239-4"><a href="machine-learning.html#cb239-4" aria-hidden="true" tabindex="-1"></a>pca_results <span class="ot">&lt;-</span> <span class="fu">PCA</span>(wine_dataset, <span class="at">scale.unit =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb239-5"><a href="machine-learning.html#cb239-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb239-6"><a href="machine-learning.html#cb239-6" aria-hidden="true" tabindex="-1"></a>pca_eig <span class="ot">&lt;-</span> <span class="fu">fviz_eig</span>(pca_results, <span class="at">addlabels =</span> <span class="cn">TRUE</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">50</span>))</span>
+<span id="cb239-7"><a href="machine-learning.html#cb239-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb239-8"><a href="machine-learning.html#cb239-8" aria-hidden="true" tabindex="-1"></a>pca_plot <span class="ot">&lt;-</span> <span class="fu">fviz_pca_biplot</span>(pca_results, <span class="at">repel =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb239-9"><a href="machine-learning.html#cb239-9" aria-hidden="true" tabindex="-1"></a>                            <span class="at">label =</span> <span class="st">&quot;var&quot;</span>,</span>
+<span id="cb239-10"><a href="machine-learning.html#cb239-10" aria-hidden="true" tabindex="-1"></a>                            <span class="at">col.var =</span> <span class="st">&quot;red&quot;</span>,</span>
+<span id="cb239-11"><a href="machine-learning.html#cb239-11" aria-hidden="true" tabindex="-1"></a>                            <span class="at">col.ind =</span> <span class="st">&quot;black&quot;</span>)</span>
+<span id="cb239-12"><a href="machine-learning.html#cb239-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb239-13"><a href="machine-learning.html#cb239-13" aria-hidden="true" tabindex="-1"></a>pca_plot</span>
+<span id="cb239-14"><a href="machine-learning.html#cb239-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb239-15"><a href="machine-learning.html#cb239-15" aria-hidden="true" tabindex="-1"></a>reduced_dataset <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(pca_results<span class="sc">$</span>ind<span class="sc">$</span>coord[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]) <span class="sc">%&gt;%</span></span>
+<span id="cb239-16"><a href="machine-learning.html#cb239-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>()</span></code></pre></div>
 <p>The PCA shows that there are apparently 3 distinct groups of wines.</p>
 <p>Let’s now use its results for the clustering analysis. Although agglomerative hierarchical clustering is more common in the sensory and consumer research, it was already shown in chapter 10, so for this example we decided to use a different solution - k-means clustering. K-means clustering is also a very known unsupervised machine learning algorithm for partitioning a given data set in a way that the total intra-cluster variation is minimized. Both approaches (hierarchical clustering and k-means) are fairly used, being the main different the rule of forming clustering and the requirement to pre-specify the number of cluster to be produced the main different between them. Detailed information about clustering methods and analysis can be found in the book Practical Guide to Cluster Analysis in R (REF).</p>
 <p>Here we use k-means clustering as an example. The first step of k-means clustering is to estimate the optimal number of clusters (k), and this can be conveniently done using the function <code>fviz_nbclust ()</code> from <code>{factoextra}</code> package. The plot represents the variance within the clusters and the bend, also called “elbow,” indicates that additional clusters beyond the third have little value. In our situation, we will then classify the observations into 3 clusters.</p>
-<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="machine-learning.html#cb229-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_nbclust</span>(reduced_dataset, kmeans, <span class="at">method =</span> <span class="st">&quot;wss&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="machine-learning.html#cb240-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_nbclust</span>(reduced_dataset, kmeans, <span class="at">method =</span> <span class="st">&quot;wss&quot;</span>)</span></code></pre></div>
 <p>As the k-means algorithm starts with k randomly selected centroids, it’s recommend to initially set a seed, through the use of the function <code>set.seed ()</code>, to make reproducible results. We will then perform k-means clustering with k = 3. In the k-means function, we can also choose the number of random sets, which means the number of times R will try different random starting assignments. The default is 1, but to get more stable results we will specify nstart = 20. The function <code>fviz_cluster</code>, from <code>{factoextra}</code> package, will be used for the visualization.</p>
-<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="machine-learning.html#cb230-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb230-2"><a href="machine-learning.html#cb230-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb230-3"><a href="machine-learning.html#cb230-3" aria-hidden="true" tabindex="-1"></a>km_dw <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(reduced_dataset, <span class="dv">3</span>, <span class="at">nstart =</span> <span class="dv">20</span>)</span>
-<span id="cb230-4"><a href="machine-learning.html#cb230-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb230-5"><a href="machine-learning.html#cb230-5" aria-hidden="true" tabindex="-1"></a>km_dw</span>
-<span id="cb230-6"><a href="machine-learning.html#cb230-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb230-7"><a href="machine-learning.html#cb230-7" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_cluster</span>(</span>
-<span id="cb230-8"><a href="machine-learning.html#cb230-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">data =</span> reduced_dataset, <span class="at">cluster =</span> km_dw<span class="sc">$</span>cluster),</span>
-<span id="cb230-9"><a href="machine-learning.html#cb230-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">ellipse.type =</span> <span class="st">&quot;norm&quot;</span>,</span>
-<span id="cb230-10"><a href="machine-learning.html#cb230-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">geom =</span> <span class="st">&quot;point&quot;</span>,</span>
-<span id="cb230-11"><a href="machine-learning.html#cb230-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">stand =</span> <span class="cn">FALSE</span></span>
-<span id="cb230-12"><a href="machine-learning.html#cb230-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="machine-learning.html#cb241-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb241-2"><a href="machine-learning.html#cb241-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb241-3"><a href="machine-learning.html#cb241-3" aria-hidden="true" tabindex="-1"></a>km_dw <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(reduced_dataset, <span class="dv">3</span>, <span class="at">nstart =</span> <span class="dv">20</span>)</span>
+<span id="cb241-4"><a href="machine-learning.html#cb241-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb241-5"><a href="machine-learning.html#cb241-5" aria-hidden="true" tabindex="-1"></a>km_dw</span>
+<span id="cb241-6"><a href="machine-learning.html#cb241-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb241-7"><a href="machine-learning.html#cb241-7" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_cluster</span>(</span>
+<span id="cb241-8"><a href="machine-learning.html#cb241-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">data =</span> reduced_dataset, <span class="at">cluster =</span> km_dw<span class="sc">$</span>cluster),</span>
+<span id="cb241-9"><a href="machine-learning.html#cb241-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">ellipse.type =</span> <span class="st">&quot;norm&quot;</span>,</span>
+<span id="cb241-10"><a href="machine-learning.html#cb241-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">geom =</span> <span class="st">&quot;point&quot;</span>,</span>
+<span id="cb241-11"><a href="machine-learning.html#cb241-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">stand =</span> <span class="cn">FALSE</span></span>
+<span id="cb241-12"><a href="machine-learning.html#cb241-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p>In the resulting plot, we can easily see the observation represented by points, and the color and ellipse identifying each of the 3 clusters. We suggest you to re-run the codes to define the optimal number of clustering and the cluster analysis without dimensionality reduction. You will see how patterns were detected much more clear when this technique was applied.</p>
 </div>
 </div>
@@ -584,24 +584,24 @@ reducing the overfitting of datasets and increasing precision.</p>
 <p>R contains fantastic systems for building machine learning models. The tidymodels framework (<a href="https://www.tidymodels.org/" class="uri">https://www.tidymodels.org/</a>) is a collection of packages for modeling and machine learning using tidyverse principles, and among one of the most popular framework in R for machine learning.</p>
 <p>Tidymodels contains several core packages, including <code>rsample</code>, <code>parsnip</code>, <code>recipes</code>, <code>workflows</code>, <code>tune</code>, <code>yardstick</code>, <code>broom</code> and <code>dials</code>, along with some other specialized packages. These packages will help you build a variety of models in R and check their performances.</p>
 <p>Just like tidyverse, you don’t need to install/load all the packages separately, installing/loading <code>tidymodel</code> will load all the packages you will need for building machine learning models.</p>
-<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="machine-learning.html#cb231-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&quot;tidymodels&quot;)</span></span>
-<span id="cb231-2"><a href="machine-learning.html#cb231-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span></code></pre></div>
+<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="machine-learning.html#cb242-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&quot;tidymodels&quot;)</span></span>
+<span id="cb242-2"><a href="machine-learning.html#cb242-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span></code></pre></div>
 <p>We will still use the wine data set to build our supervised model using the <code>tidymodel</code> packages. Let’s prepare the data before we go to details for modeling.</p>
 <div id="preparing-data-for-ml" class="section level4" number="12.1.3.1">
 <h4><span class="header-section-number">12.1.3.1</span> Preparing data for ML</h4>
 <p>First we need to mutate the column “Wine_type” to be factors, as this column would be the target later.</p>
-<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="machine-learning.html#cb232-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Data set preparation</span></span>
-<span id="cb232-2"><a href="machine-learning.html#cb232-2" aria-hidden="true" tabindex="-1"></a>wine_classification_dataset <span class="ot">&lt;-</span> wine_dataset <span class="sc">%&gt;%</span> </span>
-<span id="cb232-3"><a href="machine-learning.html#cb232-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Wine_type =</span> <span class="fu">as.factor</span>(Wine_type))</span></code></pre></div>
+<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="machine-learning.html#cb243-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Data set preparation</span></span>
+<span id="cb243-2"><a href="machine-learning.html#cb243-2" aria-hidden="true" tabindex="-1"></a>wine_classification_dataset <span class="ot">&lt;-</span> wine_dataset <span class="sc">%&gt;%</span> </span>
+<span id="cb243-3"><a href="machine-learning.html#cb243-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Wine_type =</span> <span class="fu">as.factor</span>(Wine_type))</span></code></pre></div>
 </div>
 <div id="sampling-the-data" class="section level4" number="12.1.3.2">
 <h4><span class="header-section-number">12.1.3.2</span> Sampling the data</h4>
 <p>The function <code>rsample::initial_split()</code> takes the original data and saves the information on how to make the partitions. We set the <code>strata</code> argument as <code>"Wine_type"</code> to conduct a stratified split. This ensures our training and test data sets would keep roughly the same proportions of all Wine types as in the original data, despite the imbalance we noticed in our class variable. <code>prop</code> is set to 0.7 as we are splitting data to be 70% for training and 30% for testing.</p>
 <p>After the initial_split, we can use the training() and testing() functions to obtain the two data frames for training and testing.</p>
-<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="machine-learning.html#cb233-1" aria-hidden="true" tabindex="-1"></a>initial_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(<span class="at">data =</span> wine_classification_dataset, <span class="at">strata =</span> <span class="st">&quot;Wine_type&quot;</span>, <span class="at">prop =</span> <span class="fl">0.7</span>)</span>
-<span id="cb233-2"><a href="machine-learning.html#cb233-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb233-3"><a href="machine-learning.html#cb233-3" aria-hidden="true" tabindex="-1"></a>wine_train <span class="ot">&lt;-</span> <span class="fu">training</span>(initial_split)</span>
-<span id="cb233-4"><a href="machine-learning.html#cb233-4" aria-hidden="true" tabindex="-1"></a>wine_testing <span class="ot">&lt;-</span> <span class="fu">testing</span>(initial_split)</span></code></pre></div>
+<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="machine-learning.html#cb244-1" aria-hidden="true" tabindex="-1"></a>initial_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(<span class="at">data =</span> wine_classification_dataset, <span class="at">strata =</span> <span class="st">&quot;Wine_type&quot;</span>, <span class="at">prop =</span> <span class="fl">0.7</span>)</span>
+<span id="cb244-2"><a href="machine-learning.html#cb244-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb244-3"><a href="machine-learning.html#cb244-3" aria-hidden="true" tabindex="-1"></a>wine_train <span class="ot">&lt;-</span> <span class="fu">training</span>(initial_split)</span>
+<span id="cb244-4"><a href="machine-learning.html#cb244-4" aria-hidden="true" tabindex="-1"></a>wine_testing <span class="ot">&lt;-</span> <span class="fu">testing</span>(initial_split)</span></code></pre></div>
 </div>
 <div id="cross-validation" class="section level4" number="12.1.3.3">
 <h4><span class="header-section-number">12.1.3.3</span> Cross Validation</h4>
@@ -610,116 +610,116 @@ reducing the overfitting of datasets and increasing precision.</p>
 <!-- tian: a diagram could help here: https://www.tidymodels.org/start/resampling/#resampling -->
 <p>We use <code>vfold_cv</code> to resample the data. Here we begin with a 5-fold cross-validation first. <code>strata</code> is set to <code>wind_type</code> to conduct stratified sampling, so that each resample is created within the stratification variable.
 <!-- tian: maybe we need to explain stratify here more, does it mean that in each of those 5 fold, the ratio of wine_type will be similar to the original wine_type? --></p>
-<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="machine-learning.html#cb234-1" aria-hidden="true" tabindex="-1"></a>wine_cv <span class="ot">&lt;-</span> wine_train <span class="sc">%&gt;%</span> <span class="fu">vfold_cv</span>(<span class="at">v =</span> <span class="dv">5</span>,<span class="at">strata =</span> Wine_type)</span></code></pre></div>
+<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="machine-learning.html#cb245-1" aria-hidden="true" tabindex="-1"></a>wine_cv <span class="ot">&lt;-</span> wine_train <span class="sc">%&gt;%</span> <span class="fu">vfold_cv</span>(<span class="at">v =</span> <span class="dv">5</span>,<span class="at">strata =</span> Wine_type)</span></code></pre></div>
 <p>Now we have a resampled <code>wine_cv</code> for further building the model.</p>
 </div>
 <div id="choose-ml-method-using-recipe" class="section level4" number="12.1.3.4">
 <h4><span class="header-section-number">12.1.3.4</span> Choose ML method using “recipe”</h4>
 <p>The recipe package is part of <code>tidymodels</code>. It contains a rich set of data manipulation tools which can be used to preprocess data and to define roles for each variable (e.g. outcome and predictor). To add a recipe, we simply use the function <code>recipe</code>. <code>recipe</code> has two arguments: a formula and the data. Any variable on the left-hand side of the tilde (~) is considered the model outcome. In our example, we want to use machine learning model to predict the type of the wine, therefore <code>Wine_type</code> would be the target on the left hand side of the <code>~</code>. On the right-hand side of the tilde are the predictors. One can write out all the variables, but an easier option is to use the dot (.) to indicate all other variables as predictors.</p>
-<div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="machine-learning.html#cb235-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Random forest model definition</span></span>
-<span id="cb235-2"><a href="machine-learning.html#cb235-2" aria-hidden="true" tabindex="-1"></a>model_recipe <span class="ot">&lt;-</span> wine_train <span class="sc">%&gt;%</span> </span>
-<span id="cb235-3"><a href="machine-learning.html#cb235-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">recipe</span>(Wine_type <span class="sc">~</span> .)</span></code></pre></div>
+<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="machine-learning.html#cb246-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Random forest model definition</span></span>
+<span id="cb246-2"><a href="machine-learning.html#cb246-2" aria-hidden="true" tabindex="-1"></a>model_recipe <span class="ot">&lt;-</span> wine_train <span class="sc">%&gt;%</span> </span>
+<span id="cb246-3"><a href="machine-learning.html#cb246-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">recipe</span>(Wine_type <span class="sc">~</span> .)</span></code></pre></div>
 <!-- tian: why we choose random forest here? -->
 <p>We decided to use random forest classifier for the wine data.</p>
 <p><code>rand_forest</code> has 3 hyper-parameters (<code>mtry, trees, min_n</code>) which can be tuned to achieve the best results.</p>
 <p>We set all of them as <code>tune()</code> right now. Model tuning is the process to find the best values for the parameters. Most often you start with the default values, and change them along the way. Since the model is not executing when created, these parameters can be changed using the tune() function. This provides a simple placeholder for the value.</p>
 <!-- (https://parsnip.tidymodels.org/articles/parsnip.html?q=tune#placeholders-for-parameters). -->
-<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="machine-learning.html#cb236-1" aria-hidden="true" tabindex="-1"></a>rf_spec <span class="ot">&lt;-</span> <span class="fu">rand_forest</span>(</span>
-<span id="cb236-2"><a href="machine-learning.html#cb236-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">mtry =</span> <span class="fu">tune</span>(),</span>
-<span id="cb236-3"><a href="machine-learning.html#cb236-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">trees =</span> <span class="fu">tune</span>(),</span>
-<span id="cb236-4"><a href="machine-learning.html#cb236-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">min_n =</span> <span class="fu">tune</span>()) <span class="sc">%&gt;%</span></span>
-<span id="cb236-5"><a href="machine-learning.html#cb236-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">&quot;classification&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb236-6"><a href="machine-learning.html#cb236-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="at">engine =</span> <span class="st">&quot;ranger&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="machine-learning.html#cb247-1" aria-hidden="true" tabindex="-1"></a>rf_spec <span class="ot">&lt;-</span> <span class="fu">rand_forest</span>(</span>
+<span id="cb247-2"><a href="machine-learning.html#cb247-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">mtry =</span> <span class="fu">tune</span>(),</span>
+<span id="cb247-3"><a href="machine-learning.html#cb247-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">trees =</span> <span class="fu">tune</span>(),</span>
+<span id="cb247-4"><a href="machine-learning.html#cb247-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">min_n =</span> <span class="fu">tune</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb247-5"><a href="machine-learning.html#cb247-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">&quot;classification&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb247-6"><a href="machine-learning.html#cb247-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="at">engine =</span> <span class="st">&quot;ranger&quot;</span>)</span></code></pre></div>
 </div>
 <div id="set-the-whole-process-into-a-workflow" class="section level4" number="12.1.3.5">
 <h4><span class="header-section-number">12.1.3.5</span> Set the whole Process into a workflow</h4>
 <p>Let’s combine the model and recipe into a single <code>workflow ()</code> object to better manage the two R objects.</p>
-<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="machine-learning.html#cb237-1" aria-hidden="true" tabindex="-1"></a>rf_wf <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb237-2"><a href="machine-learning.html#cb237-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(model_recipe) <span class="sc">%&gt;%</span> </span>
-<span id="cb237-3"><a href="machine-learning.html#cb237-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(rf_spec)</span></code></pre></div>
+<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="machine-learning.html#cb248-1" aria-hidden="true" tabindex="-1"></a>rf_wf <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb248-2"><a href="machine-learning.html#cb248-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(model_recipe) <span class="sc">%&gt;%</span> </span>
+<span id="cb248-3"><a href="machine-learning.html#cb248-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(rf_spec)</span></code></pre></div>
 </div>
 <div id="tuning-the-parameters" class="section level4" number="12.1.3.6">
 <h4><span class="header-section-number">12.1.3.6</span> Tuning the parameters</h4>
 <p>We created placeholders for tuning hyper-parameters earlier. Now it’s time to define the scope of the search and choose the method for searching the parameter space, in this case it is <code>grid_regular</code>.</p>
 <!-- there is a warning message about grid_regular, it's deprecated in tune now. -->
 <!-- for me is working fine (Vanessa) -->
-<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="machine-learning.html#cb238-1" aria-hidden="true" tabindex="-1"></a>params_grid <span class="ot">&lt;-</span> rf_spec <span class="sc">%&gt;%</span></span>
-<span id="cb238-2"><a href="machine-learning.html#cb238-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">parameters</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb238-3"><a href="machine-learning.html#cb238-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">update</span>(<span class="at">mtry =</span> <span class="fu">mtry</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)),</span>
-<span id="cb238-4"><a href="machine-learning.html#cb238-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">trees =</span> <span class="fu">trees</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">200</span>))) <span class="sc">%&gt;%</span> </span>
-<span id="cb238-5"><a href="machine-learning.html#cb238-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">grid_regular</span>(<span class="at">levels =</span> <span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="machine-learning.html#cb249-1" aria-hidden="true" tabindex="-1"></a>params_grid <span class="ot">&lt;-</span> rf_spec <span class="sc">%&gt;%</span></span>
+<span id="cb249-2"><a href="machine-learning.html#cb249-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">parameters</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb249-3"><a href="machine-learning.html#cb249-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">update</span>(<span class="at">mtry =</span> <span class="fu">mtry</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)),</span>
+<span id="cb249-4"><a href="machine-learning.html#cb249-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">trees =</span> <span class="fu">trees</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">200</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb249-5"><a href="machine-learning.html#cb249-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">grid_regular</span>(<span class="at">levels =</span> <span class="dv">5</span>)</span></code></pre></div>
 <p>Now that We have defined the hyper-parameter search range, let’s look for the best combination using <code>tune_grid()</code> function. We will leave the test set aside, and use a cross-validation set for this purpose, so that the model during training certainly will not see the data on which we will be making predictions.</p>
 <p>We can use <code>autoplot()</code> function to take a quick look at the <code>tuning</code> object.
 <!-- tian: explain the graph here? --></p>
 <p>Next, we will obtain a reliable estimate of the quality of the model. We first select the best combination of parameters using <code>select_best()</code> function. The quality of the model can be estimated with a number of metrics. Here we decided to use roc_auc (Area Under the Receiver Operating Characteristic Curve).
 <!-- tian: I'm confused here. we are choosing the best paras, but where can we see the quality of the model? --></p>
-<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="machine-learning.html#cb239-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Best parameters searching</span></span>
-<span id="cb239-2"><a href="machine-learning.html#cb239-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb239-3"><a href="machine-learning.html#cb239-3" aria-hidden="true" tabindex="-1"></a>tuning <span class="ot">&lt;-</span> <span class="fu">tune_grid</span>(</span>
-<span id="cb239-4"><a href="machine-learning.html#cb239-4" aria-hidden="true" tabindex="-1"></a>  rf_wf,</span>
-<span id="cb239-5"><a href="machine-learning.html#cb239-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">resamples =</span> wine_cv,</span>
-<span id="cb239-6"><a href="machine-learning.html#cb239-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">grid =</span> params_grid</span>
-<span id="cb239-7"><a href="machine-learning.html#cb239-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb239-8"><a href="machine-learning.html#cb239-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb239-9"><a href="machine-learning.html#cb239-9" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(tuning)</span>
-<span id="cb239-10"><a href="machine-learning.html#cb239-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb239-11"><a href="machine-learning.html#cb239-11" aria-hidden="true" tabindex="-1"></a>params_best <span class="ot">&lt;-</span> <span class="fu">select_best</span>(tuning, <span class="st">&quot;roc_auc&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="machine-learning.html#cb250-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Best parameters searching</span></span>
+<span id="cb250-2"><a href="machine-learning.html#cb250-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb250-3"><a href="machine-learning.html#cb250-3" aria-hidden="true" tabindex="-1"></a>tuning <span class="ot">&lt;-</span> <span class="fu">tune_grid</span>(</span>
+<span id="cb250-4"><a href="machine-learning.html#cb250-4" aria-hidden="true" tabindex="-1"></a>  rf_wf,</span>
+<span id="cb250-5"><a href="machine-learning.html#cb250-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">resamples =</span> wine_cv,</span>
+<span id="cb250-6"><a href="machine-learning.html#cb250-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">grid =</span> params_grid</span>
+<span id="cb250-7"><a href="machine-learning.html#cb250-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb250-8"><a href="machine-learning.html#cb250-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb250-9"><a href="machine-learning.html#cb250-9" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(tuning)</span>
+<span id="cb250-10"><a href="machine-learning.html#cb250-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb250-11"><a href="machine-learning.html#cb250-11" aria-hidden="true" tabindex="-1"></a>params_best <span class="ot">&lt;-</span> <span class="fu">select_best</span>(tuning, <span class="st">&quot;roc_auc&quot;</span>)</span></code></pre></div>
 </div>
 <div id="train-the-final-model" class="section level4" number="12.1.3.7">
 <h4><span class="header-section-number">12.1.3.7</span> Train the final model</h4>
 <p>Now that we have found the best parameters for the model, we can train the final model on the entire training set.</p>
-<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="machine-learning.html#cb240-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Finalize model </span></span>
-<span id="cb240-2"><a href="machine-learning.html#cb240-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb240-3"><a href="machine-learning.html#cb240-3" aria-hidden="true" tabindex="-1"></a>final_model <span class="ot">&lt;-</span> rf_wf <span class="sc">%&gt;%</span></span>
-<span id="cb240-4"><a href="machine-learning.html#cb240-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">finalize_workflow</span>(params_best) <span class="sc">%&gt;%</span></span>
-<span id="cb240-5"><a href="machine-learning.html#cb240-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(wine_train)</span></code></pre></div>
+<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="machine-learning.html#cb251-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Finalize model </span></span>
+<span id="cb251-2"><a href="machine-learning.html#cb251-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb251-3"><a href="machine-learning.html#cb251-3" aria-hidden="true" tabindex="-1"></a>final_model <span class="ot">&lt;-</span> rf_wf <span class="sc">%&gt;%</span></span>
+<span id="cb251-4"><a href="machine-learning.html#cb251-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">finalize_workflow</span>(params_best) <span class="sc">%&gt;%</span></span>
+<span id="cb251-5"><a href="machine-learning.html#cb251-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(wine_train)</span></code></pre></div>
 </div>
 <div id="assess-the-model-quality" class="section level4" number="12.1.3.8">
 <h4><span class="header-section-number">12.1.3.8</span> Assess the model quality</h4>
 <p>A very important part in building machine learning models is to assess the quality of the models. To do so, first we can use the model to predict on the testing data set (<code>wind_testing</code>), which the model has not seen yet.</p>
 <p><code>predict</code> is a generic function for putting the prediction results from models to convenient tables for further analysis. We combine the <code>wine_testing</code> data with the column of predicted Wine_type from the model by adding the <code>predict(final_model, wine_testing)</code>in the pipe.</p>
-<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="machine-learning.html#cb241-1" aria-hidden="true" tabindex="-1"></a>validation_data_pred <span class="ot">&lt;-</span> wine_testing <span class="sc">%&gt;%</span></span>
-<span id="cb241-2"><a href="machine-learning.html#cb241-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(<span class="fu">predict</span>(final_model, .))</span></code></pre></div>
+<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="machine-learning.html#cb252-1" aria-hidden="true" tabindex="-1"></a>validation_data_pred <span class="ot">&lt;-</span> wine_testing <span class="sc">%&gt;%</span></span>
+<span id="cb252-2"><a href="machine-learning.html#cb252-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(<span class="fu">predict</span>(final_model, .))</span></code></pre></div>
 <p>The <code>validation_data_pred</code> is a data frame with testing data with <code>Wine_type</code> as the actual wine type, and a <code>.pred_class</code> column as the predicted Wind_type at the end. Now we can finally judge the quality of the model by comparing them.</p>
 <p>A very pleasant method for visualize the classification results is to use a confusion matrix. Confusion matrix is a table where each row represents instances in the actual class, while each column represents the instances in a predicted class. Using the <code>autoplot()</code> function, We can see that in our wine type prediction, it’s a 100% match!</p>
 <!--and the associated statistics (accuracy, sensitivity specificity, precision, F1 score and a lot more: https://en.wikipedia.org/wiki/Confusion_matrix). -->
-<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="machine-learning.html#cb242-1" aria-hidden="true" tabindex="-1"></a>cm <span class="ot">&lt;-</span> <span class="fu">conf_mat</span>(validation_data_pred, Wine_type, .pred_class)</span>
-<span id="cb242-2"><a href="machine-learning.html#cb242-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb242-3"><a href="machine-learning.html#cb242-3" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(cm, <span class="at">type =</span> <span class="st">&quot;heatmap&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="machine-learning.html#cb253-1" aria-hidden="true" tabindex="-1"></a>cm <span class="ot">&lt;-</span> <span class="fu">conf_mat</span>(validation_data_pred, Wine_type, .pred_class)</span>
+<span id="cb253-2"><a href="machine-learning.html#cb253-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb253-3"><a href="machine-learning.html#cb253-3" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(cm, <span class="at">type =</span> <span class="st">&quot;heatmap&quot;</span>)</span></code></pre></div>
 </div>
 <div id="using-modelstudio-to-dive-into-the-model" class="section level4" number="12.1.3.9">
 <h4><span class="header-section-number">12.1.3.9</span> Using modelStudio to dive into the model</h4>
 <p><code>modelStudio</code> is an R package that provides an interactive studio for explanatory model analysis. It generate advanced interactive model explanations in the form of a serverless HTML site with only one line of code. Now we can use this tool to dive into the model and check which features are important for the model.</p>
 <!-- tian: this code for model studio is not for the above model. Need to adjust -->
-<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="machine-learning.html#cb243-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Model Studio ------------------------------------------------------------</span></span>
-<span id="cb243-2"><a href="machine-learning.html#cb243-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb243-3"><a href="machine-learning.html#cb243-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DALEXtra)</span>
-<span id="cb243-4"><a href="machine-learning.html#cb243-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelStudio)</span>
-<span id="cb243-5"><a href="machine-learning.html#cb243-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb243-6"><a href="machine-learning.html#cb243-6" aria-hidden="true" tabindex="-1"></a>explainer <span class="ot">&lt;-</span> <span class="fu">explain_tidymodels</span>(</span>
-<span id="cb243-7"><a href="machine-learning.html#cb243-7" aria-hidden="true" tabindex="-1"></a>  final_model, </span>
-<span id="cb243-8"><a href="machine-learning.html#cb243-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> training_data <span class="sc">%&gt;%</span> </span>
-<span id="cb243-9"><a href="machine-learning.html#cb243-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">column_to_rownames</span>(<span class="st">&quot;id&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb243-10"><a href="machine-learning.html#cb243-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>liking),</span>
-<span id="cb243-11"><a href="machine-learning.html#cb243-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> training_data<span class="sc">$</span>liking</span>
-<span id="cb243-12"><a href="machine-learning.html#cb243-12" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb243-13"><a href="machine-learning.html#cb243-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb243-14"><a href="machine-learning.html#cb243-14" aria-hidden="true" tabindex="-1"></a>resid <span class="ot">&lt;-</span> <span class="fu">model_performance</span>(explainer)</span>
-<span id="cb243-15"><a href="machine-learning.html#cb243-15" aria-hidden="true" tabindex="-1"></a>resid</span>
-<span id="cb243-16"><a href="machine-learning.html#cb243-16" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(resid)</span>
-<span id="cb243-17"><a href="machine-learning.html#cb243-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb243-18"><a href="machine-learning.html#cb243-18" aria-hidden="true" tabindex="-1"></a>var_imp <span class="ot">&lt;-</span> <span class="fu">variable_importance</span>(explainer)</span>
-<span id="cb243-19"><a href="machine-learning.html#cb243-19" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(var_imp)</span>
-<span id="cb243-20"><a href="machine-learning.html#cb243-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb243-21"><a href="machine-learning.html#cb243-21" aria-hidden="true" tabindex="-1"></a>ms <span class="ot">&lt;-</span> <span class="fu">modelStudio</span>(</span>
-<span id="cb243-22"><a href="machine-learning.html#cb243-22" aria-hidden="true" tabindex="-1"></a>  explainer,</span>
-<span id="cb243-23"><a href="machine-learning.html#cb243-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">new_observation =</span> validation_data <span class="sc">%&gt;%</span></span>
-<span id="cb243-24"><a href="machine-learning.html#cb243-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">column_to_rownames</span>(<span class="st">&quot;id&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb243-25"><a href="machine-learning.html#cb243-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>liking),</span>
-<span id="cb243-26"><a href="machine-learning.html#cb243-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">new_observation_y =</span> <span class="fu">round</span>(validation_data<span class="sc">$</span>liking, <span class="dv">3</span>)</span>
-<span id="cb243-27"><a href="machine-learning.html#cb243-27" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb243-28"><a href="machine-learning.html#cb243-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb243-29"><a href="machine-learning.html#cb243-29" aria-hidden="true" tabindex="-1"></a><span class="co"># r2d3::save_d3_html(ms, &quot;output/modelstudio.html&quot;)</span></span></code></pre></div>
+<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="machine-learning.html#cb254-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Model Studio ------------------------------------------------------------</span></span>
+<span id="cb254-2"><a href="machine-learning.html#cb254-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb254-3"><a href="machine-learning.html#cb254-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DALEXtra)</span>
+<span id="cb254-4"><a href="machine-learning.html#cb254-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelStudio)</span>
+<span id="cb254-5"><a href="machine-learning.html#cb254-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb254-6"><a href="machine-learning.html#cb254-6" aria-hidden="true" tabindex="-1"></a>explainer <span class="ot">&lt;-</span> <span class="fu">explain_tidymodels</span>(</span>
+<span id="cb254-7"><a href="machine-learning.html#cb254-7" aria-hidden="true" tabindex="-1"></a>  final_model, </span>
+<span id="cb254-8"><a href="machine-learning.html#cb254-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> training_data <span class="sc">%&gt;%</span> </span>
+<span id="cb254-9"><a href="machine-learning.html#cb254-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">column_to_rownames</span>(<span class="st">&quot;id&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb254-10"><a href="machine-learning.html#cb254-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>liking),</span>
+<span id="cb254-11"><a href="machine-learning.html#cb254-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> training_data<span class="sc">$</span>liking</span>
+<span id="cb254-12"><a href="machine-learning.html#cb254-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb254-13"><a href="machine-learning.html#cb254-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb254-14"><a href="machine-learning.html#cb254-14" aria-hidden="true" tabindex="-1"></a>resid <span class="ot">&lt;-</span> <span class="fu">model_performance</span>(explainer)</span>
+<span id="cb254-15"><a href="machine-learning.html#cb254-15" aria-hidden="true" tabindex="-1"></a>resid</span>
+<span id="cb254-16"><a href="machine-learning.html#cb254-16" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(resid)</span>
+<span id="cb254-17"><a href="machine-learning.html#cb254-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb254-18"><a href="machine-learning.html#cb254-18" aria-hidden="true" tabindex="-1"></a>var_imp <span class="ot">&lt;-</span> <span class="fu">variable_importance</span>(explainer)</span>
+<span id="cb254-19"><a href="machine-learning.html#cb254-19" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(var_imp)</span>
+<span id="cb254-20"><a href="machine-learning.html#cb254-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb254-21"><a href="machine-learning.html#cb254-21" aria-hidden="true" tabindex="-1"></a>ms <span class="ot">&lt;-</span> <span class="fu">modelStudio</span>(</span>
+<span id="cb254-22"><a href="machine-learning.html#cb254-22" aria-hidden="true" tabindex="-1"></a>  explainer,</span>
+<span id="cb254-23"><a href="machine-learning.html#cb254-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">new_observation =</span> validation_data <span class="sc">%&gt;%</span></span>
+<span id="cb254-24"><a href="machine-learning.html#cb254-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">column_to_rownames</span>(<span class="st">&quot;id&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb254-25"><a href="machine-learning.html#cb254-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>liking),</span>
+<span id="cb254-26"><a href="machine-learning.html#cb254-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">new_observation_y =</span> <span class="fu">round</span>(validation_data<span class="sc">$</span>liking, <span class="dv">3</span>)</span>
+<span id="cb254-27"><a href="machine-learning.html#cb254-27" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb254-28"><a href="machine-learning.html#cb254-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb254-29"><a href="machine-learning.html#cb254-29" aria-hidden="true" tabindex="-1"></a><span class="co"># r2d3::save_d3_html(ms, &quot;output/modelstudio.html&quot;)</span></span></code></pre></div>
 <!-- tian: Do we want to include another regression example? it's more common in the sensory consumer science context -->
 
 </div>

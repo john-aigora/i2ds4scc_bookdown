@@ -24,7 +24,7 @@
 <meta name="author" content="Thierry Worch, Julien Delarue, Vanessa Rios de Souza, and John Ennis" />
 
 
-<meta name="date" content="2022-05-23" />
+<meta name="date" content="2022-07-22" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -469,17 +469,29 @@ Figure 11.2: PCA Biplot Biscuit Study.
 </p>
 </div>
 <p>We won’t go deep into the interpretation since it’s not the focus of this example, but rather point out the approach we would recommend for each type of audience as shown in the table below.</p>
-<div class="figure" style="text-align: center"><span id="fig:table"></span>
-<img src="images/table_value_delivery_2.png" alt="Exemplification of the approach for each type of audience." width="2212" />
-<p class="caption">
-Figure 11.3: Exemplification of the approach for each type of audience.
-</p>
-</div>
-<p>Following those recommendations, your PCA for the management or general audience may look like the Figure 11.4. Note that the PCA was cleaned and simplified for a more straightforward understanding. Specifically, the PC variance explanation and grid line were removed, attributes were slightly moved to avoid overlap, the samples, and attributes that we want less emphasize were given a lighter color and as the opposite, the attributes and samples that we may want to highlight and focus our audience attention were given a different and stronger color, pictures and a more appealing description were used instead of the samples codes and some strategies as to circle the important area/group of samples and attributes helps the audience to focus on what we deem most important to extract from this analysis. In this example, the idea may be to highlight to the audience that the optimized formulation is in fact closer to the commercial one, and to increase even more this similarity, some attributes, like sour, salty, overall flavor persistence, fatty flavor, and fatty in mouth, has to be increased.</p>
+<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="value-delivery.html#cb237-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb237-2"><a href="value-delivery.html#cb237-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb237-3"><a href="value-delivery.html#cb237-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(flextable)</span>
+<span id="cb237-4"><a href="value-delivery.html#cb237-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb237-5"><a href="value-delivery.html#cb237-5" aria-hidden="true" tabindex="-1"></a>file_path <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">&quot;data/table value delivery.xlsx&quot;</span>)</span>
+<span id="cb237-6"><a href="value-delivery.html#cb237-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb237-7"><a href="value-delivery.html#cb237-7" aria-hidden="true" tabindex="-1"></a>table <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(file_path) <span class="sc">%&gt;%</span></span>
+<span id="cb237-8"><a href="value-delivery.html#cb237-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">flextable</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb237-9"><a href="value-delivery.html#cb237-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fontsize</span>(<span class="at">part =</span> <span class="st">&quot;all&quot;</span>, <span class="at">size =</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb237-10"><a href="value-delivery.html#cb237-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bold</span>(<span class="at">bold =</span> <span class="cn">TRUE</span>, <span class="at">part =</span> <span class="st">&quot;header&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb237-11"><a href="value-delivery.html#cb237-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bold</span>(<span class="at">i =</span> <span class="cn">NULL</span>, <span class="at">j =</span> <span class="dv">1</span>, <span class="at">bold =</span> <span class="cn">TRUE</span>, <span class="at">part =</span> <span class="st">&quot;body&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb237-12"><a href="value-delivery.html#cb237-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autofit</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb237-13"><a href="value-delivery.html#cb237-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">align</span>(<span class="at">align =</span> <span class="st">&quot;center&quot;</span>, <span class="at">part =</span> <span class="st">&quot;all&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb237-14"><a href="value-delivery.html#cb237-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hline</span>(<span class="at">i =</span> <span class="dv">5</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb237-15"><a href="value-delivery.html#cb237-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hline</span>(<span class="at">i =</span> <span class="dv">8</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb237-16"><a href="value-delivery.html#cb237-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hline</span>(<span class="at">i =</span> <span class="dv">16</span>)</span>
+<span id="cb237-17"><a href="value-delivery.html#cb237-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb237-18"><a href="value-delivery.html#cb237-18" aria-hidden="true" tabindex="-1"></a>table</span></code></pre></div>
+<p>Following those recommendations, your PCA for the management or general audience may look like the Figure 11.4. Note that the PCA was cleaned and simplified for a more straightforward understanding. Specifically, the PCA variance explanation and grid line were removed, attributes were slightly moved to avoid overlap, the samples, and attributes that we want less emphasize were given a lighter color and as the opposite, the attributes and samples that we may want to highlight and focus our audience attention were given a different and stronger color, pictures and a more appealing description were used instead of the samples codes and some strategies as to circle the important area/group of samples and attributes helps the audience to focus on what we deem most important to extract from this analysis. In this example, the idea may be to highlight to the audience that the optimized formulation is in fact closer to the commercial one, and to increase even more this similarity, some attributes, like sour, salty, overall flavor persistence, fatty flavor, and fatty in mouth, has to be increased.</p>
 <div class="figure" style="text-align: center"><span id="fig:pcamanagement"></span>
 <img src="images/PCA_management.png" alt="PCA Biplot Biscuit Study Modified." width="85%" />
 <p class="caption">
-Figure 11.4: PCA Biplot Biscuit Study Modified.
+Figure 11.3: PCA Biplot Biscuit Study Modified.
 </p>
 </div>
 </div>
