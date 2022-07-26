@@ -44,7 +44,7 @@ Let's now focus on how to make nice tables and plots in R.
  
 Let's start using the package `{flextable}` to build tables using as an example the sensory data (Sensory Profile.xlsx). Let's first load the necessary libraries.
 
-```{r, message=FALSE, warning=FALSE}
+```{r, message=FALSE, warning=FALSE, echo = TRUE, eval = TRUE}
 
 library(here)
 library(readxl)
@@ -54,7 +54,7 @@ library(tidyverse)
 
 In a situation where we are interested to display the mean for the appearance attributes evaluated in the 11 biscuits, we would need first to prepare the data, which means, selecting the wanted attributes and calculating the mean scored by panelists.
 
-```{r, message=FALSE, warning=FALSE, results='hide'}
+```{r, message=FALSE, warning=FALSE, results='hide', echo = TRUE, eval = TRUE}
 
 # Sensory Profile Data
 
@@ -65,13 +65,13 @@ file_path <- here("data","Sensory Profile.xlsx")
 mean_sensory <- read_xlsx(file_path, sheet="Data") %>% 
   select(Product, "Shiny":"Color contrast") %>%
   group_by(Product) %>%
-  summarise_if(is.numeric, mean, na.rm = TRUE)
+  summarize(across(.cols = where(is.numeric),.fns = mean))
 
 ```
 
 Now that we are satisfied with the data we want to display, we can create the table from it. 
 
-```{r, message=FALSE, warning=FALSE, tab.cap="Appearance Attributes Mean (Basic Flextable)"}
+```{r, message=FALSE, warning=FALSE, echo = TRUE, eval = TRUE, tab.cap="Appearance Attributes Mean (Basic Flextable)"}
 library(flextable)  
 
 flex_table <- mean_sensory %>% 
