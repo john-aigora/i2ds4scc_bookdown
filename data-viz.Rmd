@@ -71,7 +71,7 @@ mean_sensory <- read_xlsx(file_path, sheet="Data") %>%
 
 Now that we are satisfied with the data we want to display, we can create the table from it. 
 
-```{r, message=FALSE, warning=FALSE, echo = TRUE, eval = TRUE, tab.cap="Appearance Attributes Mean (Basic Flextable)"}
+```{r flextablebasic, message=FALSE, warning=FALSE, echo = TRUE, eval = TRUE, tab.cap="Appearance Attributes Mean (Basic Flextable)"}
 library(flextable)  
 
 flex_table <- mean_sensory %>% 
@@ -84,7 +84,7 @@ flex_table
 
 As you can see, we have a very simple and overcrowded table that clearly needs some design work to make it nicer. We can start improving it with some basic elements such as standardizing the number of decimals, changing the font size, adjusting the cell widths and heights, highlighting the header, and aligning the text.
 
-```{r, message=FALSE, warning=FALSE,  tab.cap="Appearance Attributes Mean (Basic Flextable 2)"}
+```{r flextablebasic2, message=FALSE, warning=FALSE, echo = TRUE, eval = TRUE, tab.cap="Appearance Attributes Mean (Basic Flextable 2)"}
 
 flex_table_design <- flex_table %>%
   colformat_double(digits = 2) %>%
@@ -100,7 +100,7 @@ flex_table_design
 
 After the basic aesthetic changes in the table, we can add additional elements such as the table title and also, depending on our purpose and where we want to call the audience's attention, use other strategies such as set background color. Let's here just highlight the optimized formulation.
 
-```{r, message=FALSE, warning=FALSE, tab.cap="Appearance Attributes Mean (Improved Flextable)"}
+```{r, flextabledesigned, message=FALSE, warning=FALSE, echo = TRUE, eval = TRUE, tab.cap="Appearance Attributes Mean (Improved Flextable)"}
 
 flex_table_design_2 <- flex_table_design %>%
   bg (i=11, j = NULL, bg = "orange") %>%
@@ -117,14 +117,14 @@ The table now looks much nicer and can be further improved with other preattenti
 
 Another interesting package to create tables is the `{gt}` package. This package make it simple to produce nice-looking tables for a report or presentation. Let's first install and load the `{gt}` package.
 
-```{r, message=FALSE, warning=FALSE}
+```{r, message=FALSE, warning=FALSE, echo = TRUE, eval = TRUE}
 library(gt)
 
 ```
 
 Focusing now on the consumer study (Consumer Test.xlsx), suppose we want to display a table with the average the consumers spent in the booth and the number of biscuits eaten for each product. We need to transform the time columns (expressed as min and s) to a double format and express them as minutes units, and then group them by product to get the average for the time spent and the number of biscuits eaten.
 
-```{r, message=FALSE, warning=FALSE, results='hide'}
+```{r, message=FALSE, warning=FALSE, results='hide', echo = TRUE, eval = TRUE}
 
 # Consumer Data
 
@@ -148,7 +148,7 @@ mean_consumer <- read_xlsx(file_path, sheet="Time Consumption") %>%
 Now that the data is ready, we can display it as table and make basics adjustments to make it look nicer.
 
 <!-- Table cap doesn't appear --> 
-```{r, message=FALSE, warning=FALSE, tab.cap="Consumption time and number of biscuits eaten"}
+```{r gttablebasic, message=FALSE, warning=FALSE, echo = TRUE, eval = TRUE, tab.cap="Consumption time and number of biscuits eaten"}
 
 consumer_gt_table <- mean_consumer %>%
   gt () %>%
@@ -166,7 +166,7 @@ Note that we used Markdown to style the title and subtitle by wrapping the value
 
 The `{gt}` package offers several resources to make beautiful tables using preattentive attributes. As an example, let's now focus on the average number of biscuits eaten only, since we saw that the consumption time was very similar among products. The idea is to use pre-attentive attributes for the audience to clearly see the formulation that got the most to the least biscuits eaten. Let's first prepare the data and calculate the overall time consumption considering all products.
 
-```{r,message=FALSE, warning=FALSE, results='hide'}
+```{r,message=FALSE, warning=FALSE, results='hide', echo = TRUE, eval = TRUE}
 
 # Average of Number of Biscuits
 
@@ -181,7 +181,7 @@ mean_time_consumption <- mean(mean_consumer$`Time (min)`) %>%
 
 Now that the data is ready, we will make the basic table following the same style as before, but now displaying only the number of biscuits eaten. We will also add a source note expressing the average time for the biscuit consumption.
 
-```{r, message=FALSE, warning=FALSE, results='hide'}
+```{r gttabledesigned, message=FALSE, warning=FALSE, results='hide', echo = TRUE, eval = TRUE}
 
 table_source <- str_c("Mean consumption time was ", mean_time_consumption, " min")
 
@@ -200,13 +200,13 @@ consumer_gt_table_2
 Now, we will use a nice tool to explicitly color across the range number of biscuits eaten range, so the most and least eaten products can be easily identified.
 
 <!-- Table cap doesn't appear --> 
-```{r, message=FALSE, warning=FALSE, tab.cap="Number of biscuits eaten"}
-install.packages("scales")
+```{r gttablefinal, message=FALSE, warning=FALSE, echo = TRUE, eval = TRUE, tab.cap="Number of biscuits eaten"}
+
 library (scales)
 
 min_nb_biscuits <- min(mean_consumer_2$`Nb biscuits`)
 max_nb_biscuits <- max(mean_consumer_2$`Nb biscuits`)
-biscuits_palette <- col_numeric(c("#FEF0D9", "#990000"), domain = c(min_nb_biscuits, max_nb_biscuits), alpha = 0.75)
+biscuits_palette <- scales::col_numeric(c("#FEF0D9", "#990000"), domain = c(min_nb_biscuits, max_nb_biscuits), alpha = 0.75)
 
 consumer_table_final <- consumer_gt_table_2 %>% 
     data_color(columns = c(`Nb biscuits`), colors = biscuits_palette)
