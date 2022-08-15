@@ -1,127 +1,146 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
 ```{r include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
+knitr::opts_chunk$set(echo=TRUE, eval=TRUE)
 ```
+
 # Getting Started {#start-R}
 
 ## Introduction to R
 
 ### What is R?
 
-First released in 1995, R is an open-source programming language and software environment. It is a free and powerful statistical software widely used for statistical analysis, graphics representation, and reporting. R was created by Ross Ihaka and Robert Gentleman at the University of Auckland, New Zealand, and is currently developed by the R Development Core Team. The name “R” was based on Ihaka’s and Gentleman’s first names and partly a play on the name of the Bell Labs Language S.
+First released in 1995, R is an open-source programming language and software environment, that is widely used for statistical analyses, graphical representations, and reporting. R was created by Ross Ihaka and Robert Gentleman at the University of Auckland, New Zealand, and is currently developed by the R Development Core Team. 
 
-R is a scripting language (not a compiled language) that runs the codes or commands in order. It is one of the most popular languages used by statisticians, data analysts, researchers, and marketers to retrieve, clean, analyze, visualize and present data. It is currently the 7th most popular programming language in the world and one of the most known in the sensory and consumer science field.
+The name *R* is based on both Ihaka’s and Gentleman’s first names, but also as a play on the name of the equivalent commercial software from Bell Labs Language called S (a lot of code that is running in S would run in R and vis versa).
 
-### Why Learn a Programming Language?
+R is a scripting language (not a compiled language) that runs the lines of code or commands one by one, in order. It is one of the most popular languages used by statisticians, data analysts, researchers, marketers etc. to retrieve, clean, analyze, visualize and present data. By the time this book is being written, it is amongst the most popular programming languages in the world, including the sensory and consumer science field.
 
-There are several reasons why you should learn a programming language. One of the top reasons is the CONTROL it gives you. Differently from statistical software to analyze/visualize data for instance, you clearly see what is happening, what is behind the scenes, step by step. You are fully under control, and so it ends up teaching you abstract thinking and problem-solving. It allows you an INCREASED CAPABILITY and CONTINUOUS IMPROVEMENT, in the way you play with your data, extract the best you can and continuously improve it. The flexibility it gives you is just incredible!
+### Why Learning R (or any Programming Language)?
 
-Allied to this control, the SPEED is also something that stands out. In a few seconds, we run a long and complex script to make some plots, and if you decide to change something like removing a specific attribute or some panelists, for instance, you re-run everything in no time.
+There are several reasons why you should learn R, or any programming language for that matter. 
 
-Learning a programming language also play an important role in REDUCING ERRORS, and this is in part because you are under control. You can run the script line by line and see what’s happening and check if things are working properly in every and each step. It also allows you REPRODUCIBLE RESULTS by embedding script, data sets, and results in a single file.
+First, it gives the user a lot of **control**. Compared to other statistical software which can be seen as a 1. a *black box* (you do not have necessarily access to the code that runs behind the scene), and 2. are restricted to the features their developers made available, R allows you to see what is happening at each step of your analysis (you can print the code that runs behind each function to ensure that it does what you are expecting...), and allows exploring any type of analysis. This means that users are fully in control, and are only limited by their imagination (and maybe their program skills?). 
+A direct advantage of this way of working helps **reducing errors**, since you you can run the script line by line and see what’s happening in each step to ensure that things are working properly the way it is meant to.
 
-Last, but not least, it IMPROVES COLLABORATION. When the user uses version control, which will be discussed shortly, it makes it possible to track changes to the source over time and make collaboration with multiple developers. 
+Such solution brings us to the next reason, which is related to **abstract thinking** and **problem-solving**. These two components are the main requirements to acquire good programming skills (no worries if you're not yet confident in having that in you at the start, the more you program, the more you'll develop these skills!) hence **increasing your capability** through **continuous improvement**. In other words, the more you play with your data, try new things etc., the more you'll improve as a programmer, and most importantly the more diverse and flexible you'll become!
+
+Allied to this control, knowing a programming language allows you gaining in *efficiency* and **speed**. It may take some time at first to build the required skills to write efficient scripts, but once acquired, it will pay you back exponentially. A simple example showcasing this could be situations in which you have analyzed data, and either realized that data should be slightly modified, or simply you should run similar analyses on similar data from another project. In both scenario, you would traditionally need to re-run the full set of analyses manually, which can be time-consuming. However, with a programming language, you can update all your tables, figures, and reports by simply applying your previous complex scripts to the new data.
+
+Last but not least, it **improves collaboration** and allows for **reproducible research** as your analyses are made transparent to colleagues if you decide to share your scripts with them. By embedding script, data sets, and results in a single file (we also recommend adding explanations regarding eventual decisions that were made for clarity) you and your colleagues can always track down why you obtain certain results by simply re-reading your script or re-running the analyses. In situations in which multiple users are collaborating on the same project, **version control** (which will be discussed shortly) also allows tracking changes done by the multiple developers. 
 
 ### Why R?
 
-For sensory and consumer scientists, we recommend the R ecosystem of tools for three main reasons. The first reason is cultural - R has from its inception been oriented more towards statistics than to computer science, making the feeling of programming in R more natural (in our experience) for sensory and consumer scientists than programming in Python.  This opinion of experience is not to say that a sensory and consumer scientist shouldn't learn Python if they are so inclined, or even that Python tools aren't sometimes superior to R tools (in fact, they sometimes are). This latter point leads to our second reason, which is that R tools are typically better suited to sensory and consumer science than are Python tools. Even when Python tools are superior, the R tools are still sufficient for sensory and consumer science purposes, plus there are many custom packages such as `{SensR}`, `{SensoMineR}`, and `{FactoMineR}` that have been specifically developed for sensory and consumer science.  Finally, the recent work by the RStudio company, and especially the exceptional work of Hadley Wickham, has lead to a very low barrier to entry for programming within R together with exceptional tools for data manipulation.
+For sensory and consumer scientists, we recommend the R ecosystem for three main reasons. 
 
-On top of the main reasons described above, R is well-supported by an active community in the way the extensive online help throughout the numerous forums or websites is readily available. Besides, there are several books, courses, and other educational materials to support the user. As mentioned, the universe of available packages is vast, being the programming language with the more specialized tools for sensory analysis. Lastly, R excels at data manipulation and results reporting.
+The first reason is cultural - R has from its inception been oriented more towards statistics than to computer science, making the feeling of programming in R more natural (in our experience) for sensory and consumer scientists than Python for instance. This opinion of experience is not to say that a sensory and consumer scientist shouldn't learn other languages (such as Python) if they are inclined to, or even that other tools aren't sometimes better than their R equivalent. Yet, to our experience, R tools are typically better suited to sensory and consumer science than any other solution we are aware of (especially in programming language). 
 
-### What is RStudio?
+This leads to our second reason, namely **availability**. R provides many tools that are suitable and relevant for sensory and consumer science purposes, while also providing many packages (e.g. `{SensoMineR}` and `{FactoMineR}`, `{SensR}`, `{FreeSortR}`, `{cata}` just to name a few...) that have been specifically developed for the analysis of sensory and consumer data. 
 
-RStudio is a powerful and easy way to interact with R programming. It is an Integrated Development Environment (IDE) for R (also Python) that comes with a multi-panel window setup that provides access to all primary things on a single screen, which means that all information you need to write code is available in a single window that includes a console, syntax-highlighting editor that supports direct code execution, as well as tools for plotting, history, debugging and workplace management (https://www.rstudio.com/). 
+Finally, the recent work done by the RStudio company, and especially the exceptional work of Hadley Wickham, has lead to a very low barrier to entry for programming within R together with exceptional tools for data manipulation, data analyses, and reporting. This is largely due to the very strong support provided by a very active community that provides an extensive online help throughout numerous forums and websites, and by the several books, courses, and other educational materials available to support the users, many of them being referenced in the present book.
 
-Besides the convenience of having all panels on a single screen, we strongly recommend you to go for RStudio instead of R software due to other important reasons such as having a text editor that is full-proof and full-featured, auto-completion while writing scripts, many shortcuts, and access to all objects created in the Environment tab. Also, the highlighting tool for the editor makes coding easier and less error-prone.
+### Why RStudio/Posit?
+
+RStudio (or **Posit**, as its name is currently being changed as we are writing this book!) is a powerful and easy way to interact with R programming. It is an Integrated Development Environment (IDE) for R^[Originally, RStudio was mainly developed for R. More recently, it extended its usage to other programming languages such as Python for instance, hence the change of name to Posit to accentuate its reach to other programming languages than R.] that comes with a multi-panel window setup that provides access to all primary things on a single screen. Such approach facilitates writing code since all information is available in a single window that includes a console, a script editor that supports direct code execution, as well as tools for plotting, history, debugging and workplace management (see [https://www.rstudio.com/](https://www.rstudio.com/)). 
+
+Besides the convenience of having all panels on a single screen, we strongly recommend you to use RStudio rather than the tools (editor, graphical window, etc.) built in R directly as RStudio offers many important features that facilitates scripting. For instance, the script editor provides many features including auto-completion of functions/R elements, hover menus that provides information regarding the arguments of the functions, but also a lot of handy shortcuts etc. The Environment section provides an easy access (from simple description to being able to view it) to all objects available in the console. Additionally, RStudio works with a system of *projects* which will be detailed in \@ref("rprojects")
 
 ### Installing R and RStudio
 
-The first step in this journey is to install R.  For this, visit [The R Project for Statistical Computing](https://www.r-project.org/).  From there, follow the download instructions to install R for your particular platform. We suggest you download the latest version of R and install it with default options. Note that if you are running R 4.0 or higher, you might need to install Rtools:
-https://cran.r-project.org/bin/windows/Rtools/
+The first step in this journey is to install R.  For this, visit [The R Project for Statistical Computing](https://www.r-project.org/).  From there, follow the download instructions to install R for your particular platform. We suggest you download the latest version of R and install it with default options. Note that if you are running R 4.0 or higher, you will need to install Rtools:
+[https://cran.r-project.org/bin/windows/Rtools/](https://cran.r-project.org/bin/windows/Rtools/)
 
 
-Next, you need to install RStudio. To do so, visit the [RStudio desktop download page](https://rstudio.com/products/rstudio/download/) and follow the installation instructions. Download and install the latest version of RStudio with default options and for adjustments:
-- Uncheck 'Restore .RData' into the workspace at the startup
-- Select 'Never' for 'Save workspace to.RData on exit'
-- Change the color scheme to dark (e.g. “Idle Fingers”)
-- Put the console on the right
+Next, you need to install RStudio. To do so, visit the [RStudio desktop download page](https://rstudio.com/products/rstudio/download/) and follow the installation instructions. Download and install the latest version of RStudio with default options. 
 
-Once you have installed R and RStudio, you should be able to open RStudio and enter the following into the Console to receive the number "3" as your output:
+We then advise you to apply the following adjustments:
 
-```{r}
+  - Uncheck 'Restore .RData' into the workspace at the startup (Tools > Global Options...> General)
+  - Select 'Never' for 'Save workspace to.RData on exit' (Tools > Global Options...> General)
+  - Change the color scheme to dark (e.g. “Idle Fingers”) (Tools > Global Options...> Appearance)
+  - Put the console on the right (View > Panes > Console on Right)
 
-x <- 1
-y <- 2
+Many other options are available, and we let you explore them yourself to customize Rstudio to your own preferences.
 
-x + y
-
-```
 
 ## Getting Started in R
 
-### Create a Local Project
+### Conventions
 
-We strongly recommend you always work on an RStudio project. RStudio projects make it straightforward to divide your work into multiple contexts, each with its working directory, workspace, history, and source documents. It keeps all of your files such as R scripts, R markdown documents, R functions and data, and also activity, organized, together in one place. Additionally, it helps you manage your file path (so your computer can find things) and allow for more advanced capabilities. RStudio projects allow independence between projects, which means that you can open more than one project at the same time and switch very easily between them without fear of them interfering with each other.
+Before starting with R, it is important to talk about a few writing conventions that will be used in this book. These conventions are the one that are adopted in most book about R. 
 
-To create a new project locally in RStudio, select 'File' --> 'New Project...' from the main menu. Typically, a new project is created in a new directory. You can also create a new project by clicking on the ‘Project’ button in the top right of RStudio and selecting ‘New Project…’. Once your new project has been created you will now have a new folder on your computer that contains the basic file structure. You probably want to add folders to better organize all the files and documents, such as a folder for input, output and scripts.
+Throughout this book, since the goal is to teach you to read and write your own code in R, we need to refer to some R functions and R packages. In most cases, the raw R-code that we will be writing and that we advise you to reproduce is introduced in some *special sections* such as:
+
+```{r}
+1 + 1
+```
+
+This section shows the code to type on top, and the results (as shown by the R console) in the bottom. To save some space, we may not always show the outputs of the code (incl. values, tables, figures, but maybe sometimes warnings). Hence it is important for you to run the code to learn it, and to better understand it. 
+
+Since in most situations, providing code alone is not sufficient, we will also provide explanation. When doing so, we need to refer to R functions and packages throughout the text. In that case, we will clearly make the distinctions between R objects, R functions, and R packages by applying the following rules:
+
+ - An R object will be written simply as such: `name_object`
+ - An R function will always be written by ending with *()*: `name_function()`
+ - An R package will always be written between *{}*: `{name_package}`
+ 
+In some cases, we may want to specify from which package a function belongs to. Rather than calling `name_function()` from the `{name_package}` package, we adopt the R terminology `name_package::name_function()`. This terminology is very important to know and (sometimes) to use in your script to avoid surprises and error. 
+
+For instance, many packages have a function called `select()`. In particular, we very often want to use the `select()` function from the `{dplyr}` package. And to call it, we use the terminology `dplyr::select()`. The reason behind this particular writing is as following: simply calling `select()` may call the wrong function as, in practice, it will call the `select()` function from the last package loaded that contains a function named `select()`. By specifying the package it belongs to (here `{dplyr}`) we ensure that the right `select()` function (read from `{dplyr}`) is called.
 
 ### Install and Load Packages
 
-The base installation of R comes with many useful packages that contain many of the functions you will use on a daily basis, however, you will very quickly feel the urge to extend R's capabilities and this is possible by using R packages that can easily be downloaded and installed in R. An R package is a collection of functions, data sets, help files, and documentation, developed by the community, that extends the capabilities of base R, by improving existing base R functionalities or by adding new ones.
+The base installation of R comes with many useful packages that contain many of the functions you will use on a daily basis, however, you will very quickly feel the urge to extend R's capabilities. This is possible by using R packages that can easily be downloaded and installed in R. An R package is a collection of functions, data sets, help files, and documentation, developed by the community, that extends the capabilities of base R, by improving existing base R functions or by adding new ones.
 
 There several packages out there, but we listed above some of the packages we will be consistently be using throughout this book.
 
   - Essential packages (or collections): `tidyverse`, `readxl`
-
   - Custom Microsoft office document creation: `officer`, `flextable`, `rvg`, `openxlsx`, `extrafont`, `extrafontdb`
-
   - Sensory specific packages: `sensR` , `SensoMineR`, `FactoMineR`, `factoextra`
 
 There are many more, for statistical tests of all varieties, to multivariate analysis, to machine learning, to text analysis, etc.
 
-You only need to install each package once per R version. To install a package, you can type `install.packages("[package name]")`. R will download the packages from CRAN and install the onto your computer.
+You only need to install each package once per R version. To install a package, you can type `install.packages("package_name")`. R will download the packages from CRAN and install it into your computer.
 
-```{r}
+```{r, eval=FALSE}
 install.packages("tidyverse")
 
 ```
 
-If a script loads package that are not installed, RStudio will prompt you to install the package
-Also, note that if you do not have write access on your computer, you might need IT help to install packages. 
+Note that if a script loads a package that is not yet installed, RStudio will prompt a message on top so that you can install them directly. Also, note that if you do not have write access on your computer, you might need IT help to install your packages. 
 
-Once you have installed a package onto your computer it is not immediately available for you to use until you load it with `library()`. 
+Once you have installed a package onto your computer it is only available for use once it's loaded through `library()`. 
 
-```{r}
+```{r, eval=FALSE}
 library(tidyverse)
 
 ```
 
-### R Scripts
+A package should only be installed once, however it should be loaded for each new session of R. To simplify your scripting, we recommend to start your scripts with all the packages that you would need (you can always add new packages that your script require). So as soon as you open your script, you can run the first lines of code and ensure that all your functions are made available to you.
 
-You can enter and run your code at the R Console and there are certainly many cases where it makes sense, such as opening a help menu, taking a quick look at your dataset, debugging a function, or maybe a simple calculation or testing. However, nothing you write will be saved, which means that once you close your project or restart the R session, you will lose all the code stream. And if you make an error, or want to make a change in your code, you will have to re-enter the set of commands, typing it all over again. Because of this and many other reasons, you should write any important code as an R script.
+If you forget to load a package of interest, and yet run your code, you will get an error of the sort: `Error in ...: could not function "..."`
 
-An R script is simply a text file containing a bunch of R code or set of commands (that you would enter on the command line in R) and comments that can be conveniently saved and used later to re-execute the commands. The R script can be edited so you can execute a modified version of the commands. 
+Note that certain packages may no longer be maintained meaning that R the procedure presented above no longer works for thoses packages. This is for instance the case for `{sensR}`, an excellent package dedicated to the analysis of discrimination tests. 
 
-You can create a new script in RStudio by clicking the 'New File' icon in the upper left of the main toolbar and then selecting 'RScript' or by clicking 'File' in the main menu and then selecting 'New File' --> 'R Script'. The script will open in the Script Editor panel and is ready for text entry. Once you are done you can save your script by clicking the 'Save' icon at the top of the Script Editor and can open it later to re-run your code and/or continue your work where you have stopped.
+```{r, eval=FALSE}
+install.packages("sensR")
+```
 
-Unlike typing in the console, when you type your code in the R script, nothing is going to happen. You need to send it to the console by running it. There are a few ways to do this. If you want to run your code line by line, you just highlight the code you want to run (or place cursor on the single line of the code) and use the shortcut Ctrl-Enter (Windows) or Command-Return (Mac). To run the entire script (all lines of the code) you can click 'Run' in the upper right of the main toolbar or use the shortcut Ctrl-Shift-Enter (Windows) or Command-Shift-Return (Mac). 
+As you can see, running this code provide the following message: `Warning in install.packages : package ‘sensR’ is not available for this version of R`
 
-A few other useful shortcuts that are absolutely useful include:
-- Interrupt current command - Esc 
-- Navigate command history - up and lower arrows
-- Attempt completion - Tab
-- Call help for a function - F1
-- Restart R Session: Ctrl-Shift-F10 (Windows) and Cmd-Shift-F10 (Mac)
+No worries, there is an alternative way to get it installed by using the `install_version()` function from `{remotes}`. In this case, we need to provide the version of the package to install. Since the latest version of `{sensR}` is 1.5.2, we can install it as following:
 
-### Run Sample Code
+```{r, eval=FALSE}
+remotes::install_version("sensR", version = "1.5.2")
+```
 
-Like any language, R is best learned first through example then through study. Lets start with a simple example where we analyze a Tetrad test to illustrate the basic principles. 
+### First Analysis in R
 
-Suppose you have 15 out of 44 correct in a Tetrad test. Using the package `sensR`, it’s very easy to analyze these data:
+Like any language, R is best learned first through example then through study. Let's start with a simple example where we analyze a Tetrad test to illustrate the basic principles. Suppose you have 15 out of 44 correct answers in a Tetrad test. Using the package `sensR`^[In the previous section, we show you how to install this particular package!], it’s very easy to analyze these data:
 
 ```{r first-example}
-
-install.packages("sensR")
-
 library(sensR)
 
 num_correct <- 15  
@@ -130,19 +149,69 @@ num_total <- 44
 discrim_res <- discrim(num_correct, num_total, method = "tetrad")  
   
 print(discrim_res)  
-
-
 ```
 
-## Introduction to the `{magrittr}` and the notion of *pipes*
+In a few lines of code, you've just analysed your Tetrad test data.
 
-R is an *evolving* programming language that evolves and expends very rapidly. 
+### R Scripts
+
+In the previous section, you may have entered your code directly into the R Console. Although this is possible, and there are many situations where it makes sense (e.g. opening a help menu, taking a quick look at your data, debugging a function, or maybe a simple calculation or testing), it is not the most efficient way of working and we would recommend **NOT** to do so. Indeed, the code directly writing within R cannot be easily modified, retrieved, nor saved, which means that once you close your project or restart the R session, you will lose it all. And if you make an error, or want to make a change in your code, you will have to re-enter the set of commands, typing it all over again. Because of this and many other reasons, you should write any important code into a script.
+
+An R script is simply a text file (with the extension *.R*) containing R code, set of commands (that you would enter on the command line in R) and comments that can easily be edited, executed, and saved later later (re)use.
+
+You can create a new script in RStudio by clicking the 'New File' icon in the upper left of the main toolbar and then selecting 'RScript' or by clicking 'File' in the main menu and then selecting 'New File' > 'R Script'. The script will open in the Script Editor panel and is ready for text entry. Once you are done you can save your script by clicking the 'Save' icon at the top of the Script Editor and can open it later to re-run your code and/or continue your work where you left it.
+
+Unlike typing in the console, when you type your code in the R script, nothing is going to happen. You need to send it to the console by running it. There are a few ways to do this. If you want to run your code line by line, you just highlight the code you want to run (or place cursor on the single line of the code) and use the shortcut *Ctrl + Enter* (Windows)^[In most example, the shortcuts will be given for Windows users. For Mac users, replace *CTRL* by *Cmd*.]. To run the entire script (all lines of the code) you can click 'Run' in the upper right of the main toolbar or use the shortcut *Ctrl + Shift + Enter*. 
+
+A few other life-saving shortcuts are:
+
+- Interrupt current command - *Esc*
+- Navigate command history - *up and lower arrows*
+- Attempt completion - *Tab*
+- Call help for a function - *F1*
+- Restart R Session: *Ctrl + Shift + F10*
+- Search in File - *CTRL + F*
+- Search in All Files (within a project or folder) - *CTRL + SHIFT + F*
+- Commenting a line of code - *CTRL + SHIFT + C*
+- Insertion of a section in the code - *CTRL + SHIFT + R*
+- Insertion of a pipe (` %>% `) - *CTRL + SHIFT + M*
+
+There are many more shortcut options. A complete list is available within R Studio under 'Tools' > 'Keyboard Shortcut Help' (or directly using *ALT + SHIFT + K*). So have a look at them, and don't hesitate to learn by heart the one that you use regularly as it will simplify your scripting procedure. 
+
+### Create a Local Project {#rprojects}
+
+Next to script, we recommend you working with RStudio project. RStudio projects make it straightforward to divide your work into multiple contexts, each with its own working directory, workspace, history, and source documents. It keeps all of your files such as R scripts, R markdown documents, R functions, data etc. all in one place. Additionally, it helps you manage your file path (so your computer can find things) and allow for more advanced capabilities. RStudio projects allow independence between projects, which means that you can open more than one project at the same time and switch very easily between them without fear of them interfering with each other.
+
+To create a new project locally in RStudio, select 'File' > 'New Project...' from the main menu. Typically, a new project is created in a new directory. You can also create a new project by clicking on the ‘Project’ button in the top right of RStudio and selecting ‘New Project…’. Once your new project has been created you will now have a new folder on your computer that contains the basic file structure. You probably want to add folders to better organize all the files and documents, such as a folder for input, output and scripts.
+
+For consistency, we suggest that you keep the same folder structure across projects. This means you may create a folder that contains your scripts, one for the data, and where you export any results from R (excel files, figures, report, etc.). If you adopt this strategy, you may see an interest in the code below, which will automatically create all your folder automatically when it runs. To run this code, the `{fs}` package is required. Here, 5 folders are being automatically created:
+
+```{r, eval=FALSE}
+library(fs)
+
+fs::dir_create(path=c("code", "data", "docs", "output", "template"))
+```
+
+## Further tips on *how to read this book?*
+
+In this book, we assume that the readers have already some basic knowledge in R.
+If you are completely new to R, we recommend you reading "R for Data Science" by [Garrett Grolemund and Hadley Wickham](https://r4ds.had.co.nz/) or looking at some documentation online to get you started with the basics. 
+
+Just like with any spoken language, the same message can be said in various ways. The same applies with writing scripts in R, each of us having our own styles, or our own preferences towards certain procedures, packages, functions, etc. In other words, writing scripts is personal. Through this book, we are not trying to impose our way of thinking/proceeding/building scripts, instead we aim in sharing our knowledge built through past experiences to help you find your own style.
+
+But to fully decode our message, you'll need some reading keys. These keys will be described in the next sections. 
+
+Note that the lines of code presented in this section do not run and are simply presented for illustration.
+
+### Introduction to the `{magrittr}` and the notion of *pipes*
+
+R is an *evolving* programming language that expends very rapidly. 
 
 If most additions/improvements have a fairly limited reach, the introduction of the `{tidyverse}` in 2016 by H. Wickham revolutionized the way of scripting in R for many users. At least for us, it had a large impact as we fully embraced its philosophy, as we see its advantage for Data Science and for analyzing our sensory and consumer data. It is hence no surprise that you'll read and learn a lot about it in this book.
 
-As you may know, the `{tidyverse}` is a grouping of packages dedicated to Data Science, which includes (among others) `{readr}` for data importation, `{tibble}` for the data structure, `{stringr}` and `{forcats}` for handling strings and factors, `{dplyr}` and `{tidyr}` for manipulating and tidying data, `{ggplot2}` for data visualization, and `{purrr}` for functional programming. But more importantly, it also includes `{magrittr}`, the package that arguably impacted the most our way of scripting by introducing the notion of *pipes* (defined as `%>%`) as it provides code that is much easier to read and understand.
+As you may know, the `{tidyverse}` is a grouping of packages dedicated to Data Science, which includes (amongst others) `{readr}` for data importation, `{tibble}` for the data structure, `{stringr}` and `{forcats}` for handling strings and factors, `{dplyr}` and `{tidyr}` for manipulating and tidying data, `{ggplot2}` for data visualization, and `{purrr}` for functional programming. But more importantly, it also includes `{magrittr}`, the package that arguably impacted the most our way of scripting by introducing the notion of *pipes* (defined as `%>%`) as it provides code that is much easier to read and understand.
 
-To illustrate the advantage of the use of pipes, let's use the example provided by H. Wickham in his book *R for Data Science*.
+To illustrate the advantage of coding with pipes, let's use the example provided by H. Wickham in his book *R for Data Science*.
 It is some code that tells a story about a little bunny names Foo Foo:
 *Little bunny Foo Foo*
 *Went hopping through the forest*
@@ -151,50 +220,48 @@ It is some code that tells a story about a little bunny names Foo Foo:
 
 If we were meant to tell this story though code, we would start by creating an object name `FooFoo` which is a little bunny:
 
-```{r}
+```{r, eval=FALSE}
 foo_foo <- little_bunny()
 ```
  
 To this object, we then apply different functions (we save each step as a different object):
 
-```{r}
+```{r, eval=FALSE}
 foo_foo_1 <- hop(foo_foo, through=forest)
 foo_foo_2 <- scoop(foo_foo_1, up=field_mice)
 foo_foo_3 <- bop(foo_foo_2, on=head)
 ```
 
-One of the main downsides of this approach is that you'll need to create intermediate names for each step. If natural names can be used, this will not be a problem, otherwise it can quickly become a source of error (using the wrong object for instance)! Additionally, such approach may affect your disk memory (your creating a new object in each step), especially if the data set is large.
+One of the main downsides of this approach is that you'll need to create intermediate names for each step. If natural names can be used, this will not be a problem, otherwise it can quickly become a source of error (using the wrong object for instance)! Additionally, such approach may affect your disk memory since you're creating a new object in each step. This is particularly true when the original data set is large.
 
 As an alternative, we could consider running the same code by over-writing the original object:
 
-```{r}
+```{r, eval=FALSE}
 foo_foo <- hop(foo_foo, through=forest)
 foo_foo <- scoop(foo_foo, up=field_mice)
 foo_foo <- bop(foo_foo, on=head)
 
 ```
 
-If this solution looks neater and more efficient (less thinking, less typing, less memory use), it is more painful to debug, as the entire code should be re-run from the beginning (when `foo_foo` was originally created). Moreover, calling the same object in each step obscures the changes performed in each line.
+If this solution looks neater and more efficient (less thinking, less typing, less memory use), it is more difficult to debug, as the entire code should be re-run from the beginning (when `foo_foo` was originally created). Moreover, calling the same object in each step obscures the changes performed in each line.
 
-To these two approaches, we prefer a third one that strings all the functions together without intermediate steps of saving the results. This procedure uses the so-called pipes ( defined by `%>%`), which takes automatically as input the output generated by the previous line of code:
+To these two approaches, we prefer a third one that strings all the functions together without intermediate steps of saving the results. This procedure uses the so-called pipes (defined by `%>%`), which takes automatically as input the output generated by the previous line of code:
 
-```{r}
+```{r, eval=FALSE}
 foo_foo %>% 
   hop(through = forest) %>% 
   scoop(up = field_mice) %>% 
   bop(on = head)
 ```
 
-This code is easier to read and understand as it focuses more on the verbs (here `hop`, `scoop`, and `bop`) rather than names
+This code is easier to read and understand as it focuses more on the verbs (here `hop()`, `scoop()`, and `bop()`) rather than names
 (`foo_foo_1`, or `foo_foo`). It can be surprising at first, but no worries, by the time you've read this book, you'll be fully familiar with this concept. 
 
 When lines are piped, R runs the entire block at once. So how can we understand the intermediate steps that were done, or how can we fix the code if an error occur? The answer to these questions is simple: run back the code bits by bits.
 
-For instance, in this previous example, we could start by printing `foo_foo` (in practice, only select `foo_foo` and run this code only) only to ensure that it is the object that we were supposed to have. 
-If it is the case, we can then extend the selection to the next line by selecting all the code before the pipe (do not select the pipe, else R is expecting additional code after it and will not show results).
-Repeat this until you found your error, or you ensure that all the steps have been performed correctly.
+For instance, in this previous example, we could start by printing `foo_foo` (in practice, only select `foo_foo` and run this code only) only to ensure that it is the object that we were supposed to have. If it is the case, we can then extend the selection to the next line by selecting all the code until (but excluding^[If your code ends up on a pipe, R is expecting additional code and will not show results: this usually creates errors since the next piece of code is probably not matching the current pipe's expected code.]!) the pipe. Repeat this until you found your error, or you've ensured that all the steps have been performed correctly.
 
-While reading this book, we advise you to apply this trick to each block of code for you to visualize the steps performed. 
+While reading this book, we advise you to apply this trick to each long pipes for you to get a hand on it, and to visualize the intermediate steps. 
 
 Note however that although pipes are very powerful, they are not always the best option:
 
@@ -202,123 +269,6 @@ Note however that although pipes are very powerful, they are not always the best
   - If some steps require multiple inputs, or provides multiple outputs, pipes should not be used as they usually require a primary object to transform.
   - The system of pipes works linearly: if your code requires a complex dependency structure, the pipes should be avoided.
 
-## Version Control / Git and GitHub {#git-and-github}
-
-Version control is a tool that tracks changes to files, especially source code files. Using version control means that you can not only track the changes, but manage them, record reasons for the changes, revert to previous versions, and most importantly, collaborate with multiple developers. Version control systems are simply software that helps users manage changes to source code over time. The reasons why everyone should use version control include then back up work, restoring prior versions, documenting reasons for changes, quickly determining differences in versions, easily sharing code, and developing in parallel with others.
-
-There are many tools for Version Control out there, but Git/GitHub are by far the most common, so we will quickly discuss them. We highly recommend that you integrate both Git and GitHub into your data scientific workflow. For a full review of Git and GitHub from an R programming perspective, we recommend [Happy Git with R](https://happygitwithr.com/) by Jenny Bryant.  In what follows, we simply provide the minimum information needed to get you up and running with Git and GitHub. Also, for an insightful discussion of the need for version control, please see [Cite bryan2018excuse].
-
-### Git
-
-Git is a version control system that runs locally and automatically organizes and saves versions of code on your computer, but does not connect to the internet. Git allows you to revert to earlier versions of your code, if necessary. To set up Git, follow the steps below:
-
-1) Download and install the latest version of Git.
-Download and install Git with standard options (allow 3rd party software).
-
-[Git for Windows](https://git-scm.com/download/win)
-
-[Git for Windows](https://git-scm.com/download/mac)
-
-2) Enable Git Bash in RStudio
-Go to 'Tool' on the top toolbar and select 'Global Options...' --> 'Terminal'. In the drop-down box for New terminals open, select 'Git Bash'. 
-
-3) Configure Git from Rstudio
-The easiest way is to use the package  `{usethis}`
-
-```{git}
-install.packages("usethis")
-
-library(usethis)
-
-use_git_conf (user.name = "your username", user.email = "your email address")
-
-```
-
-### GitHub
-
-GitHub is a cloud-based service that supports Git usage. It allows online backups of your code and facilitates collaboration between team members. While Git creates local repositories on your computer, GitHub allows users to create remote repositories, stored online, for their code.
-
-To set up GitHub, follow the steps below:
-
-1) Register for a GitHub Account
-To get started you can sign up for a free GitHub account: [GitHub](https://github.com/)
-We recommend you not to tie your account to your work and to use all lowercase to avoid confusion.
-
-2) Create a Test Repository in GitHub
-Once you log into your account, create a new repository by clicking the green button 'New'. You have to then name your repository and make some selections. We recommend you select the option 'Private' and click on the option "Initialize this repository with a README". The last step is to click on 'Create Repository'.
-
-Once the repository has been created you need to copy the repository URL to create a project in RStudio (next step). If you select the repository you just created, click on the green button 'Code' and copy the URL link.
-
-3) Create an RStudio Project from GitHub
-As we have seen, to create a new project,  select 'File' --> 'New Project...' from the top bar menu or by clicking on the ‘Project’ button in the top right of RStudio and selecting ‘New Project…’. You will select 'Version Control' --> 'Git'. Paste the repository URL link, select where you want to save this project locally, and click "Open in new session". Finally, click 'Create Project'.
-
-4) Register GitHub from Studio
-At his point, you will be asked to log into GitHub from RStudio. You should only have to do this once. 
-
-5) Push and Commit Changes
-Once you are done with your coding or have finished updating a series of scripts, you can simply push, or send them to GitHub, so others can see your changes. You have to first commit and then push it to GitHub. To do so, you can click the 'Git' icon on the top menu and select the option 'Commit'. You can select what you want to commit and describe the changes you did. After committing your code/files, you have to push it by clicking the option 'Push'.
-
-6) Pull Changes
-In case you are working with other colleagues, a good practice is to always pull (which means download) the code before you get started and before pushing any changes. The option pulls you simply update the repository based on changes others may have done. To do so, you can click the 'Git' icon on the top menu and select the option 'Pull'.
-
-## Tips on *how to read this book?*
-
-In this book, we assume that the readers have already some basic knowledge in R.
-If you are completely new to R, we recommend you reading "R for Data Science" by Garrett Grolemund and Hadley Wickham (https://r4ds.had.co.nz/) or looking at some documentation online to get you started with the basics. 
-
-Just like with any spoken language, the same message can be said in various ways. The same applies with writing scripts in R, each of us having our own styles, or our own preferences towards certain procedures, packages, functions, etc. In other words, writing scripts is personal. Through this book, we are not trying to impose our way of thinking/proceeding/building scripts, instead we aim in sharing our knowledge built through past experiences to help you find your own style.
-
-But to fully decode our message, you'll need some reading keys. These keys will be described in the next sections. 
-
-### Running code and handling errors
-
-For you to get the most out of this book, you need to understand (and eventually adhere to) our philosophy of scripting, and our way of working. This is why we are providing you with some tips to use, if you're comfortable with them:
-
-  1. Create a folder for this book on your computer, and create a script for each chapter in which you re-write yourself the code. If you work with the online version, you could copy/paste the code to go faster, but you may miss some subtleties.
-  
-  2. Do not be discourage when you get some errors: we all get some regularly. At first, this can be very frustrating, especially when you are not able to fix them quickly. If you get stuck on an error and cannot fix it immediately, take a break and come back later with fresh eyes, you may solve it then. And with time and experience, you'll notice that you can reduce the amount of errors, and will also solve them faster.
-  
-  3. The more code, the more difficult it is to find errors. This is true whether you use "regular" R-code or pipes. The best way to solve errors in such circumstances is to run the code line by line until you find the error, and understand why the input/output does not match expectations. 
-  
-  4. In the particular case of pipes, debugging errors means that you shouldn't run the entire block of code, but select parts of it and run it by adding in each run a new line. This can either be done by stopping your selection just before the adequate `%>%` sign, or by adding after that `%>%` sign the function `identity()`^[`identity()` is a function that returns as output the input as it is. This function is particularly useful in pipes as you can finish your pipes with it, meaning that you can put any line in comments (starting with '#') without worrying about finishing your pipe with a `%>%`].
-
-### Printing vs. Saving results
-  
-In many examples through this book, we apply changes to certain elements without actually saving them in an R object. This is quite convenient for us as many changes we do are only done for pedagogic reasons, and are not necessarily relevant for our analysis. 
-  
-Here is an example of such case (REF):
-
-```{r}
-sensory %>% 
-  rename(Panellist = Judge, Sample = Product)
-```
-
-If you run this code, you'll notice that we rename `Judge` to `Panellist`, and `Product` to `Sample`...at least this is what you see on screen. However, if you look at `sensory`, the data set still contains the column `Judge` and `Product` (`Panellist` and `Sample` do not exist!). This is simply because we did not save the changes in any R object.
-
-If we would want to save the element in a new object, we should save the outcome in an element using `<-`:
-
-```{r}
-newsensory <- sensory %>% 
-  rename(Panellist = Judge, Sample = Product)
-```
-
-Here, `newsensory` corresponds to `sensory`, but with the new names. Of course, if you would want to overwrite the previous file with the new names, you simply need to ensure that the name of the output is the same as the name of the input. Concretely, we replace here `newsensory` by `sensory`, meaning that the new names are saved in `sensory` (so the old names `Judge` and `Product` and definitely lost). This procedure saves computer memory and does not require you coming up with new names all the time. However, it also means that some changes that you applied may be lost, and if you have a mistake in your code, it is more complicated to find and ultimately solve it (you may need to re-run your entire script). 
-
-```{r}
-sensory <- sensory %>% 
-  rename(Panellist = Judge, Sample = Product)
-```
-
-To visualize the changes, you would need to type `newsensory` or `sensory` in R.
-Another (faster) way to visualize it is to put the entire block of code between brackets: Putting code between brackets is equivalent to asking to print the output. 
-
-```{r}
-(sensory <- sensory %>% 
-  rename(Panellist = Judge, Sample = Product))
-```
-
-Note that if you run all these lines of codes in R, you will get an error stating `Column 'Judge' doesn't exist.` This is a good illustration of a potential error mentioned above: We overwrote the original `sensory` (containing `Judge` and `Product`) with another version in which these columns were already renamed as `Panellist` and `Sample`. So when you re-run this code, you are trying to apply again the same changes to columns that no longer exist, hence the error...
-This is something that you need to take into consideration when overwriting elements (in this case, you should initialize `sensory` to its original version before trying).
 
 ### Calling Variables
 
@@ -326,26 +276,132 @@ In R, variables can be called in different ways when programming. If the names o
 
 Within the `{tidyverse}`, the names of variables that are included within a data set are usually called as it is, without quote:
 
-```{r}
+```{r, eval=FALSE}
 sensory %>% 
   dplyr::select(Judge, Product, Shiny)
 ```
 
-This is true for simple names that do not contain any special characters (e.g. space, `-, etc.`). For names that contain special characters, the use of backticks are required (backticks can also be used with simple names):
+This is true for simple names that do not contain any special characters (e.g. space, `-, etc.`). For names that contain special characters, the use of *backticks* are required (note that *backticks* can also be used with simple names):
 
-```{r}
+```{r, eval=FALSE}
 sensory %>% 
   dplyr::select(`Judge`, Product, `Color evenness`).
 ```
 
-While going through this book, you'll notice that many functions from the `{tidyverse}` sometimes require quotes, and sometimes doesn't. The simple way to know whether quotes are required or not is based on its existence in the data set or not: If the column exists and should be used, no quotes should be used. On the contrary, if the variable doesn't exist and should be created, then quotes should be used.
+While going through this book, you'll notice that many functions from the `{tidyverse}` sometimes require quotes, and sometimes don't. The simple way to know whether quotes are required or not is based on its existence in the data set or not: If the column exists and should be used, no quotes should be used. On the contrary, if the variable doesn't exist and should be created, then quotes should be used. 
 
-Let's illustrate this through a simple example involving `pivot_longer()` and `pivot_wider()` successively. For `pivot_longer()`, we create two new variables,one that contains the column names (informed by `names_to`) and one that contains the values (informed by `values_to`). Since these variables are being created, quotes are required for the new names. For `pivot_wider()`, quotes are not needed since the names of the variables to use (`names_from` and `values_from`) are present in the data:
+Let's illustrate this through a simple example involving `pivot_longer()` and `pivot_wider()` successively. For `pivot_longer()`, we create two new variables, one that contains the column names (informed by `names_to`) and one that contains the values (informed by `values_to`). Since these variables are being created, quotes are required for the new names. For `pivot_wider()`, quotes are not needed since the names of the variables to use (`names_from` and `values_from`) are present in the data:
 
-```{r}
+```{r, eval=FALSE}
 sensory %>% 
   pivot_longer(Shiny:Melting, names_to="Variables", values_to="Scores") %>% 
   pivot_wider(names_from=Variables, values_from=Scores)
 ```
 
-Let's get started?
+Unfortunately this rule of thumb is not always true (e.g. `separate()`, `unite()`, `column_to_rownames()`) but you'll quickly get familiar with the exceptions.
+
+### Printing vs. Saving results
+  
+In many examples through this book, we apply changes to certain elements without actually saving them in an R object. This is quite convenient for us as many changes we do are only done for pedagogic reasons, and are not necessarily relevant for our analyses. 
+  
+Here is an example of such case (REF):
+
+```{r, eval=FALSE}
+sensory %>% 
+  rename(Panellist = Judge, Sample = Product)
+```
+
+When you run this code, you can notice that we rename `Judge` to `Panellist`, and `Product` to `Sample`...at least this is what you see on screen. However, if you look at `sensory`, the data set still contains the column `Judge` and `Product` (`Panellist` and `Sample` do not exist!). This is simply because we did not save the changes in any R object.
+
+If we would want to save the element in a new object, we should save the outcome in an element using `<-`:
+
+```{r, eval=FALSE}
+newsensory <- sensory %>% 
+  rename(Panellist = Judge, Sample = Product)
+```
+
+Here, `newsensory` corresponds to `sensory`, but with the new names. Of course, if you would want to overwrite the previous file with the new names, you simply need to ensure that the name of the output is the same as the name of the input (like we did with `foo_foo` in REF). Concretely, we replace here `newsensory` by `sensory`, meaning that the new names are saved in `sensory` (so the old names `Judge` and `Product` are definitely lost). This procedure saves computer memory and does not require you coming up with new names all the time. However, it also means that some changes that you applied may be lost, and if you have a mistake in your code, it is more complicated to find and ultimately solve it (you may need to re-run your entire script). 
+
+```{r, eval=FALSE}
+sensory <- sensory %>% 
+  rename(Panellist = Judge, Sample = Product)
+```
+
+To visualize the changes, you would need to type `newsensory` or `sensory` in R.
+Another (faster) way to visualize it is to put the entire block of code between brackets: Putting code between brackets is equivalent to asking to print the output. 
+
+```{r, eval=FALSE}
+(sensory <- sensory %>% 
+  rename(Panellist = Judge, Sample = Product))
+```
+
+Note that if you run all these lines of codes in R, you will get an error stating `Column 'Judge' doesn't exist.` This is a good illustration of a potential error mentioned above: We overwrote the original `sensory` (containing `Judge` and `Product`) with another version in which these columns were already renamed as `Panellist` and `Sample`. So when you re-run this code, you are trying to apply again the same changes to columns that no longer exist, hence the error.
+
+This is something that you need to take into consideration when overwriting elements (in this case, you should initialize `sensory` to its original version before trying).
+
+### Running code and handling errors
+
+For you to get the most out of this book, you need to understand (and eventually adhere to) our philosophy of scripting, and our way of working. This is why we are providing you with some tips to use, if you're comfortable with them:
+
+  1. Create a folder for this book on your computer, and create a script for each chapter in which you re-type yourself each line of code. If you work with the online version, you could copy/paste the code to go faster, but you may miss some subtleties.
+  
+  2. Do not be discourage when you get some errors: we all get some. At first, this can be very frustrating, especially when you are not able to fix them quickly. If you get stuck on an error and cannot fix it immediately, take a break and come back later with fresh eyes, you may solve it then. And with time and experience, you'll notice that you can reduce the amount of errors, and will also solve them faster.
+  
+  3. The more code, the more difficult it is to find errors. This is true whether you use "regular" R-code or pipes. The best way to solve errors in such circumstances is to run the code line by line until you find the error, and understand why the input/output does not match expectations. 
+  
+  4. In the particular case of pipes, debugging errors means that you shouldn't run the entire block of code, but select parts of it and run it by adding in each run a new line. This can either be done by stopping your selection just before the adequate `%>%` sign (as mentioned earlier), or by adding after the last `%>%` sign the function `identity()`^[`identity()` is a function that returns as output the input as it is. This function is particularly useful in pipes as you can finish your pipes with it, meaning that you can put any line in comments (starting with '#') without worrying about finishing your pipe with a `%>%`].
+
+## Version Control / Git and GitHub {#git-and-github}
+
+Version control is a tool that tracks changes to files, especially source code files. Using version control means that you can not only track the changes, but manage them by for instance describing the changes, or reverting to previous versions. This is particularly important when collaborating with other developers. Version control systems are simply software that helps users manage changes to source code over time. The reasons why everyone should use version control include backing up work, restoring prior versions, documenting reasons for changes, quickly determining differences in versions, easily sharing code, and developing in parallel with others.
+
+There are many tools for Version Control out there, but Git/GitHub are by far the most common one. We highly recommend that you integrate both Git and GitHub into your data scientific workflow. For a full review of Git and GitHub from an R programming perspective, we recommend [Happy Git with R](https://happygitwithr.com/) by Jenny Bryant.  In what follows, we simply provide the minimum information needed to get you up and running with Git and GitHub. Also, for an insightful discussion of the need for version control, please see [Cite bryan2018excuse].
+
+### Git
+
+Git is a version control system that runs locally and automatically organizes and saves versions of code on your computer, but does not connect to the internet. Git allows you to revert to earlier versions of your code, if necessary. To set up Git, follow the following steps:
+
+1) Download and install the latest version of Git.
+Download and install Git with standard options (allow 3rd party software) for [Windows](https://git-scm.com/download/win) or [Mac](https://git-scm.com/download/mac)
+
+2) Enable Git Bash in RStudio
+Go to 'Tool' on the top toolbar and select 'Global Options...' > 'Terminal'. In the drop-down box for 'New terminals open', select 'Git Bash'. 
+
+3) Configure Git from Rstudio
+The easiest way is to use the package  `{usethis}`
+
+```{r, eval=FALSE}
+library(usethis)
+
+use_git_conf (user.name = "your username", user.email = "your email address")
+```
+
+### GitHub
+
+GitHub is a cloud-based service that supports Git usage. It allows online backups of your code and facilitates collaboration between team members. While Git creates local repositories on your computer, GitHub allows users to create remote online repositories for their code.
+
+To set up GitHub, follow the steps below:
+
+1) Register for a GitHub Account
+To get started you can sign up for a free GitHub account: [GitHub](https://github.com/)
+We recommend you not to tie your account to your work email and to use all lowercase to avoid confusion.
+
+2) Create a Test Repository in GitHub
+Once you log into your account, create a new repository by clicking the green button 'New'. You have to then name your repository and make some selections. We recommend you select the option 'Private' and click on the option "Initialize this repository with a README". The last step is to click on 'Create Repository'.
+
+Once the repository has been created you need to copy the repository URL to create a project in RStudio (next step). If you select the repository you just created, click on the green button 'Code' and copy the URL link.
+
+3) Create an RStudio Project from GitHub
+As we have seen, to create a new project,  select 'File' > 'New Project...' from the top bar menu or by clicking on the ‘Project’ button in the top right of RStudio and by selecting ‘New Project…’. Select then 'Version Control' > 'Git'. Paste the repository URL link, select where you want to save this project locally, and click "Open in new session". Finally, click 'Create Project'.
+
+4) Register GitHub from Studio
+At his point, you will be asked to log into GitHub from RStudio. You should only have to do this once. 
+
+5) Push and Commit Changes
+Once you are done with your coding, or have finished updating a series of scripts, you can simply push, or send them to GitHub, so others can see your changes. You have to first commit and then push it to GitHub. To do so, you can click the 'Git' icon on the top menu of RStudio and select the option 'Commit'. You can select what you want to commit and describe the changes you did. After committing your code/files, you have to push it by clicking the option 'Push'.
+
+6) Pull Changes
+In case you are working with other colleagues, a good practice is to always pull (which means download) the latest code available (i.e. the code that your collaborators have recently pushed) before you get started and before pushing any changes. To do so, you can click the 'Git' icon on the top menu and select the option 'Pull'.
+
+
+If you've read this through (no worries if everything is not completely clear yet, it will come!), and followed the different steps here, you should be ready to learn data science for sensory and consumer scientists. Let's get started?
