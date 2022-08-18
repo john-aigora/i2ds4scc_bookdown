@@ -66,7 +66,7 @@ The notion of 'simple manipulations' proposed here consists in data transformati
 
 #### Handling Columns
 
-##### Renaming Variables
+##### Renaming Variables {#renaming}
 
 The first simple transformation we consider consists of renaming one or multiple variables. This procedure can easily be done using the `rename()` function from the `{dplyr}` package.  In each of the examples below, we use the `names()` function to show just the names of the resulting data set.
 
@@ -358,7 +358,7 @@ split(sensory, sensory$Product)
 
 This function creates a list of *n* elements (*n* being the number of samples), each element corresponding to the data related to one sample. Such list can then be used in automated analyses by performing on each sub-data through the `map()` function, as it will be illustrated later. 
 
-### Reshaping the Data
+### Reshaping the Data {#pivots}
 
 
 Reshaping the data itself is done through pivoting, hence either creating a long and thin table (CREATE FIGURE), or a short and wide table (CREATE FIGURE). This is done through `pivot_longer()` and `pivot_wider()` from `{tidyr}`.
@@ -488,7 +488,7 @@ sensory %>%
 This procedure creates a tibble with 11 rows (product) and 33 columns (32 sensory attributes + 1 column including the product information) which contains the mean per attribute for each sample, also known as the sensory profiles of the products.
 
 
-#### Illustrations of Data Manipulation
+#### Illustrations of Data Manipulation {#means}
 
 
 Let's review the different transformations presented earlier by generating the sensory profiles of the samples through different approaches^[It is important to realize that any *data manipulation challenge* can be solved in many different ways, so don't be afraid to think out of the box when solving them...].
