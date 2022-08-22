@@ -142,13 +142,16 @@ Learning data science is much like learning a language or learning to play an in
 
 ## Cautions: Don’t that Everybody Does
 
-Don't edit raw data. Haven't we all worked with multiple versions of the same file, not knowing anymore what are the differences?
-Document (and justify) the changes.
-When coding, do not repeat more than 3 times the same block of code. If you need to do so, then look for better alternatives such as loops, automation, or create functions to be called...
+We have all been in situations in which, for a given study, we edited the raw data files (e.g. removed respondents who were not present for the full study) and saved them using a different name. Some time later, as we need to get back to this study, or share some data with colleagues, finding the *correct* file quickly becomes a challenge that may end up being time consuming. 
 
-[ADD MORE]
+It seems clear that such way of working is not viable, and as mentioned earlier, raw data should never be edited. Instead, we prefer to run every data manipulation steps (e.g. removing respondents) in R by also commenting why certain decisions are being made. This simplifies deeply the workflow, and the future you will be grateful when you will re-open this file later on and know exactly what was done and why.
+
+The same also applies for the analysis part. Documenting which analyses were performed using which parameters ensures reproducible research. If at first, documenting you code may seem *a loss of time*, it will pay back later when you will access your code again in some future. Indeed, if decisions are clear in your mind while you are writing your code, it is not necessarily the case later.
+
+Another important aspect is time: do not always go for the fastest or (what seems to be) easiest solution when coding. Instead, try to get the smartest and most efficient code. If you hard-code the names of the variables as they are in your data set, your code is restricted to that particular study, or to any study that exactly fits that format. But as soon as there is a small change (e.g. a small difference in the naming of one of the variables), it will quickly cost you a lot of time to adapt the code to your new study. To be more efficient, we prefer to define as parameters certain elements and/or read the names directly from the file for instance as this saves a lot time and effort. 
+
+Talking about efficiency, never use (through copy/paste for instance) the same lines of code more than twice. If you apply the same code more than 2 to 3 times in your analysis, then you should consider better alternatives such as loops and/or functions. This point is of utmost importance as any small change in that piece of code (e.g. changing a parameter, fixing a bug, etc.) only needs to be done once to be applied everywhere. On the other hand, if you reproduce the same code multiple times, you need to ensure that you correctly modified each and every parts that contain that code (and it is easy to skip some!) 
+
+
 
 With these preliminaries completed, and with you (hopefully) sufficiently motivated, let's begin learning data science!
-
-
-
