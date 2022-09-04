@@ -66,7 +66,7 @@ Many other options are available, and we let you explore them yourself to custom
 
 ## Getting Started in R
 
-### Conventions
+### Conventions {#packages}
 
 Before starting with R, it is important to talk about a few writing conventions that will be used in this book. These conventions are the one that are adopted in most book about R. 
 
@@ -269,6 +269,8 @@ When lines are piped, R runs the entire block at once. So how can we understand 
 For instance, in this previous example, we could start by printing `foo_foo` (in practice, only select `foo_foo` and run this code only) only to ensure that it is the object that we were supposed to have. If it is the case, we can then extend the selection to the next line by selecting all the code until (but excluding^[If your code ends up on a pipe, R is expecting additional code and will not show results: this usually creates errors since the next piece of code is probably not matching the current pipe's expected code.]!) the pipe. Repeat this until you found your error, or you've ensured that all the steps have been performed correctly.
 
 While reading this book, we advise you to apply this trick to each long pipes for you to get a hand on it, and to visualize the intermediate steps. 
+
+> Within a pipe, it is sometime needed to call the temporary data or output generated in the previous step. Since the current object does not exist yet, nor have a name (it is still *under-construction*), we need to find another way to call it. In practice, this is very simple and can be done by using `.` as we will see it extensively in Section @\ref(data-manip). 
 
 Note however that although pipes are very powerful, they are not always the best option:
 
