@@ -1,9 +1,9 @@
 library(tidyverse)
 library(readxl)
+library(here)
 
 library(tidytext)
 
-library(here)
 file_path <- here("data","cider_data.xlsx") 
 
 cider_og <- read_xlsx(file_path) %>% 
