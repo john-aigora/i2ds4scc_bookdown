@@ -4,24 +4,32 @@ knitr::opts_chunk$set(echo = TRUE, eval = TRUE)
 
 # Data Visualization {#data-viz}
 
+> One of the main goal of data analysis is to produce results. Although informative, such results are only impactful if they can be well-communicated. It is hence of utmost importance to present them in a neat way, often through visuals. 
+In this chapter, two forms of visuals (namely tables and graphs) are being generated using R. Although some design principles are being tackled, the aim of this chapter is to mainly focus on the *how to?* rather than on the design itself. 
+Although R already comes with tools for building and printing tables and graphs, we opt for using additional packages (`{flextable}` and `{gt}` for tables, `{ggplot2}` for graphs) as they provide more flexibility and possibilities.
+
 Tables and graphs are the two fundamental vehicles to communicate information clearly and effectively. They are useful visual elements to summarize and organize information to show patterns and relationships. Tables and graphs allow the audience/reader to easily and quickly get a clear idea of the data findings, make comparisons, get insights from it and ultimately, draft conclusions without much effort.
 
-The best medium of communication, whether a table, a bar chart, a line chart, or a radar plot, will highly depend on the type of data, the amount of data to be displayed (e.g. number of attributes or samples), and the purpose of the analysis. Usually, tables are meant to be read, so they are ideal when you have data that can not easily be presented by other communication elements, or when the data requires more specific attention. However, if you encounter a situation where you have a very long and/or wide table, which is common to see in QDA results, where the average and postdoc test are displayed for all the attributes and samples evaluated, other or at the very least additional vehicle of communication should be considered. The opposite applies to a graphical visualization, in the way that you have very little data to be displayed, the tables can be best suited. 
+The best medium of communication, whether a table, a bar chart, a line chart, or a radar plot, will highly depend on the type of data, the amount of data to be displayed (e.g. number of attributes or samples), and the purpose of the analysis. 
 
-Sometimes (if not often) you have to play with your data, and test displaying it as a table or different types of plots, maybe share it with a colleague for feedback, before you pick the best one. Remember, to select the best way to communicate your data, you must understand the needs of your audience, the purpose for which various forms of display can be effectively used and also the strengths and weaknesses of tables and each type of graphical representation.
+Usually, tables are meant to be read, so they are ideal when you have data that cannot easily be presented by other communication elements, or when the data requires more specific attention. However, if you encounter a situation where you have a very long and/or wide table, (which is common in sensory and consumer studies), other vehicle of communication should be considered. The same remark also applies to a graphical visualization, and if you have very little data to display, tables might be best suited. 
+
+Sometimes (if not often) you have to play with your data, and test displaying it as a table or different types of graphs, before deciding which one suit best. As practical advice, do not hesitate to ask colleagues for feedback as having an external point of view often helps. Remember, to select the best way to communicate your data, you must understand the needs of your audience, the purpose for which various forms of display can be effectively used, but also the strengths and weaknesses of each type of data representation considered.
 
 ## Design Principles
 
-Regardless of the way you decide to display your data, you must understand visual perception and its application to graphical communication. It is important to spend some time with the design and aesthetic aspects of your visualization. You should be able to recognize smart design by becoming familiar with some aspects and examples of great design. Inattention to the visual design such as tables with improper alignment of numbers and excessive use of lines and fill colors, can greatly diminish their effectiveness. We will summarize some important preattentive aspects that you should be aware of, but to read more about visual perception and graphical communication, as well as some examples of great design, we strongly recommend *Storytelling with Data* by Cole Nussbaumer Knaflic and *Show me the Number: Designing Table and Graphs to Enlighten* by Stephen Few.
+Regardless of the way you decide to display your data, you must understand visual perception and its application to graphical communication. It is important to spend some time with the design and aesthetic aspects of your visualization. You should be able to recognize smart design by becoming familiar with some aspects and examples of great design. Inattention to the visual design such as tables with improper alignment of numbers, excessive use of lines and fill colors, can greatly diminish their effectiveness. In other words, when used adequately, design should help you communicate your results by *clarifying* it, and not distract your audience from it. 
 
-We can easily demonstrate the difference between preattentive processing and attentive processing using an example provided by  Stephen Few in his book *Show me the Number: Designing Table and Graphs to Enlighten*. First, take a look at the numbers below and determine, as quickly as you can, how many times the number 5 appears:
+Some important pre-attentive aspects that you should be aware of will be presented in this section, but to read more about visual perception and graphical communication, as well as some examples of great design, we strongly recommend *Storytelling with Data* by Cole Nussbaumer Knaflic and *Show me the Number: Designing Table and Graphs to Enlighten* by Stephen Few. (REF)
+
+Since a *picture is worth a thousand words*, let's demonstrate the difference between pre-attentive and attentive processing using an example provided by Stephen Few in his book *Show me the Number: Designing Table and Graphs to Enlighten*. First, take a look at the numbers below and determine, as quickly as you can, how many times the number 5 appears:
 
 98734979027513649782316497802316487415113697412369846321
 12346879231648791300023665698774646821397486248797964312
 12369874474578962341680021364789613469174312679812439612
 12332146987412361789461230502135467980213648126498731203
 
-How many did you count? Probably this was a tedious task and it took you a few seconds or even minutes because it involved **attentive processing**. The list of numbers did not have any hint or called preattentive attributes that could help you to easily distinguish the number five from the other numbers, so we are forced to perform a sequential search throughout the whole list.
+This appears to be a tedious task and it most likely took you a few minutes because it involved **attentive processing**. The list of numbers did not have any hint (also called pre-attentive attributes) that could help you to easily distinguish the number five from the other numbers. Hence, you are forced to perform a sequential search throughout the whole list.
 
 Let's do it again, but now using the list of numbers below:
 
@@ -30,26 +38,23 @@ Let's do it again, but now using the list of numbers below:
 12369874474**5**78962341680021364789613469174312679812439612
 12332146987412361789461230**5**0213**5**467980213648126498731203
 
-This time the task is much easier and you can count the number of times the number 5 appears much fast. This is because we used the **preattentive attribute** of color intensity to distinguish the number five, standing it out in contrast to the rest. This remarkable example shows in a brilliant way the power of preattentive attributes for effective visual communication. As stated by Cole Nussbaumer Knaflic in her book *Storytelling with Data*, when we use pre-attentive attributes strategically, we enable our audience to see what we want them to see before they even know they are seeing it!
+This time the task is much easier and you can count the number of times the number 5 appears much faster. This is because we used the **pre-attentive attribute** of color intensity to distinguish the number five, standing it out in contrast to the rest. This example shows in an easy way the power of pre-attentive attributes for effective visual communication. As stated by Cole Nussbaumer Knaflic in her book *Storytelling with Data*, when we use pre-attentive attributes strategically, we enable our audience to see what we want them to see before they even know they are seeing it!
 
-The various preattentive attributes that can be used to draw your audience's attention quickly and create a visual hierarchy of information include **attributes of form** such as line length, line width, orientation, shape, size, added marks, and enclosure, **attributes of color** which would be hue and intensity, also spatial position and motion. Some of the strategies for a smart design for graphical communication described by Cole Nussbaumer include:
+The various pre-attentive attributes that can be used to draw your audience's attention quickly and create a visual hierarchy of information include **attributes of form** such as line length, line width, orientation, shape, size, added marks, and enclosure, **attributes of color** which would be hue and intensity, also spatial position and motion. Some of the strategies for a smart design for graphical communication described by Cole Nussbaumer include:
 
-- **Highlight the important stuff** - use tools such as bold, italics, underlining, uppercase text, color, and different sizes to draw your audience's attention to what you want them to focus on. 
+* **Highlight the important stuff** - use tools such as bold, italics, underlining, uppercase text, color, and different sizes to draw your audience's attention to what you want them to focus on. 
+* **Eliminate Distractions** - while some elements should be highlighted, unnecessary or irrelevant items or information should be identified to be cut or de-emphasized to minimize your audience's distraction. Get rid of noncritical data or components, things that wouldn't change the main message, and summarize when details aren't needed. When a piece of information is necessary to come along with your visualization but is not really a message-impacting, you should de-emphasize it - light gray usually works well for that purpose. 
 
-- **Eliminate Distractions** - while some elements should be highlighted, unnecessary or irrelevant items or information should be identified to be cut or de-emphasized to minimize your audience's distraction. Get rid of noncritical data or components, things that wouldn't change the main message, and summarize when details aren't needed. When a piece of information is necessary to come along with your visualization but is not really a message-impacting, you should de-emphasize it - light gray usually works well for that purpose. 
-
-Let's now focus on how to make nice tables and plots in R.
+Now the main stage is set, let's focus on how to build nice tables and graphs in R.
 
 ## Table Making
  
 Let's start using the package `{flextable}` to build tables using as an example the sensory data (Sensory Profile.xlsx). Let's first load the necessary libraries.
 
 ```{r, message=FALSE, warning=FALSE, echo = TRUE, eval = TRUE}
-
-library(here)
-library(readxl)
 library(tidyverse)
-
+library(readxl)
+library(here)
 ```
 
 In a situation where we are interested to display the mean for the appearance attributes evaluated in the 11 biscuits, we would need first to prepare the data, which means, selecting the wanted attributes and calculating the mean scored by panelists.
