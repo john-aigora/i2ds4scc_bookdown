@@ -8,13 +8,11 @@ knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 ```
 # Data Collection {#data-collection}
 
-## Design
-
-### Designs of sensory experiments
+## Designs of sensory experiments
 <!-- While reviewing my chapter (starting with data manipulation) I added a section at the start that explains the learning, the data we are using, and the main packages. Would it be an idea to add this here as well (and remove library(...) when no longer needed) for this chapter too? -->
 <!-- Good idea! I will add that -->
 
-#### General approach
+### General approach
 
 Sensory and consumer science relies on experiments during which subjects usually evaluate several samples one after the other. This type of procedure is called 'monadic sequential' and is common practice for all three main categories of tests (difference testing, descriptive analysis, hedonic testing). The main advantage of proceeding this way is that responses can be analyzed at the individual level so that analysis and interpretation can account for inter-individual differences, which is a constant feature of sensory data.
 
@@ -35,7 +33,7 @@ pwr.t.test(n = NULL,
 For difference and similarity tests, the reader may also refer to the `{sensR}` package and its `discrimSS()` function for sensory discrimination sample size calculation.
 
 
-#### Crossover designs {#Crossover}
+### Crossover designs {#Crossover}
 
 For any sensory experiment that implies the evaluation of more than one sample, first-order and/or carry-over effects should be expected. That is to say, the evaluation of a sample may affect the evaluation of the next sample even though sensory scientists try to lower such effects by asking panelists to pause between samples and use of appropriate mouth-cleansing techniques (drinking water, eating unsalted crackers, or a piece of apple, etc.). The use of crossover designs is thus highly recommended (@Macfie1989). 
 
@@ -92,7 +90,7 @@ optdes_5P14J <- optFederov(~prod+judge+rank,data=rbind(tab,add), augment=TRUE, n
                           rows=1:(nbJ*nbP), nRepeats = 100)
 ```
 
-#### Balanced incomplete block designs (BIBD) {#BIBD}
+### Balanced incomplete block designs (BIBD) {#BIBD}
 
 Sensory and consumer scientists may sometimes consider using incomplete designs, i.e. experiments in which each judge evaluates only a subset of the complete product set (@Wakeling1995). In this case, the number of samples evaluated by each judge remains constant but is lower than the number of products included in the study. 
 
@@ -104,6 +102,7 @@ The `optimaldesign()` function of `{SensoMineR}` can be used to search for a Bal
 incompDesign1 <- SensoMineR::optimaldesign(nbPanelist = 30, nbProd= 10, nbProdByPanelist = 4)
 incompDesign1$design
 ```
+<!-- Vanessa: As we are not calling the package before the function, maybe we should not do it here? / For some reason the code takes a very long time to run for me -->
 
 BIBD are only possible for certain combinations of numbers of treatment (products), numbers of blocks (judges), and block size (number of samples per judge). Note that `optimaldesign()` will yield a design even if it is not balanced but it will also generate contingency tables allowing you to evaluate the design's orthogonality, and how well balanced are ranks and carry-over effects.
 
@@ -113,7 +112,7 @@ You can also use the `{crossdes}` package to generate a BIBD with this simple sy
 
 Incomplete balanced designs also have drawbacks. First, from a purely statistical perspective, they are conducive to fewer observations and thus to a lower statistical power. Product and Judge effects are also partially confounded even though the confusion is usually considered as acceptable.
 
-#### Incomplete designs for hedonic tests: Sensory informed designs
+### Incomplete designs for hedonic tests: Sensory informed designs
 
 One may also be tempted to use incomplete balanced block designs for hedonic tests. However, proceeding this way is likely to induce framing bias. Indeed, each participant will only see part of the product set which would affect their frame of reference if the subset of product they evaluate only covers a limited area of the sensory space. 
 
@@ -126,18 +125,21 @@ To reduce the risks incurred by the use of BIBD, an alternative strategy is to u
 knitr::include_graphics("images/sensory_doe.png")
 ```
 
-### Product-related designs
+## Product-related designs
 
 Because of their contribution to product development, sensory and consumer scientists often deal with DoE other than sensory designs strictly speaking (see for instance @gacula2008design). Sensory-driven prod(*k*) uct development is indeed very frequent and implies strong interconnection between the measure of sensory responses and the manipulation of product variables (e.g. ingredients) or process variables (e.g. cooking parameters) (for a review, see @Yu2018). 
+<!-- Vanessa: In the book it shows: Sensory-driven prod(k) uct development. I didn't understand what this "k" is about. --> 
+
 
 In order to get the most of sensory experiments, it is thus essential to ensure that the products or prototypes to be tested will be conducive to sound and conclusive data. First and foremost, as in any experimental science, one wants to avoid confounding effects. In addition to this and to put it more generally, the goal of DoE is to define which trials to run in order to be able to draw reliable conclusions without spending time and resources on unnecessary trials. In other words, one seeks maximum efficiency. This is especially critical in sensory science to limit the number of products to be evaluated and to keep panelists' workload under control.
 
-#### Factorial designs
+### Factorial designs
 
 Full factorial designs are of course commonly used and their application is usually straightforward. They won't be detailed here. However, it is worth noting that when the number of factors increases, the corresponding number of trials can quickly become daunting (e.g., *2^k^* trials for a two-level design with *k* factors). Thus, always in the view of sparing experimental resources, incomplete and fractional designs are frequently used. Several strategies can be used to define which experiments to conduct (REF REF book Dean et al. 2018). Ref to @Lawson2014 (Design and analysis of experiments with R) and REf to Rasch et al 2011 (Optimal experimental design with R). One option would be to build an optimal design thanks to the `{AlgDesign}` or the `{OptimalDesign}` packages that calculate experimental designs for D, A and I criteria. An example is given below in the case of a mixture design but would apply to regular factorial designs as well.
+<!-- Vanessa: Maybe it's good to clarify what D, A and I criteria are / Ref have to be fixed in this part --> 
 
 
-#### Mixture designs
+### Mixture designs
 
 In many projects  (e.g. in the food industry, in the personal care industry), optimizing a product's formula implies adjusting the proportions of its ingredients. In such cases, the proportions are interdependent (the total sum of all components of a mixture must be 100%). Therefore, these factors (the proportions) must be treated as mixture components. Mixture designs are usually represented using ternary diagrams.
 
@@ -150,6 +152,8 @@ DesignPoints(mdes)
 ```
 
 Suppose that we want to adjust a biscuit recipe to optimize its sensory properties, we can design an experiment in which the proportion of ingredients vary. Let's play with butter, sugar, and flour. All three combined would account for 75% of the dough recipe and the remaining 25% would consist of other ingredients that we won't modify here (eggs, milk, chocolate, etc.). Besides, not any amount of these three ingredients would make sense (a biscuit with 75% of butter is not a biscuit, even in Brittany). We thus need to add constraints (ex: butter varies between 15 and 30% of this blend, sugar varies between 25 and 40%, and flour varies between 30 and 50%). Given this set of constraints, we can use `mixexp::Xvert` to find the extreme vertices of our design.
+
+<!-- Vanessa: Maybe it can be useful for the reader if we explain quickly the arguments of the functions shown--> 
 
 However, this design would imply 11 mixtures, which is more than needed to apply a Scheffé quadratic model (REF REF REF). To reduce the number of mixtures and still allow fitting a quadratic model, we can use the `optFederov()` function from `{AlgDesign}` to select a D-optimal subset. Here, let's limit to 9 products.
 
@@ -191,11 +195,12 @@ flextable::qflextable(Bmixt)
 
 Finally, when the design is built, it could be desirable to randomize the order in which each sample is being made, to avoid further biases:
 
+<!-- Vanessa: As the previous code is hidden, the user can't run the one above. --> 
 ```{r, echo=TRUE, eval=TRUE}
 Bmixt_shuffled <- Bmixt[sample(nrow(Bmixt)), ]
 ```
 
-
+<!-- Vanessa: Maybe table and text can be rearranged so the table 8.1 shows up after a quick explanation on this table is about. In the way it is here the table shows beforeit is called in the text.  --> 
 Once the data are collected we can use the `mixexp::MixModel()` function to fit a linear model and `mixexp::MixturePlot()` to draw a contour plot. Suppose that we obtain average liking scores for our 9 biscuits as given in Table \@ref(tab:biscuit-mixt), this simple code would allow to get a contour plot that shows where would be the optimal area for the biscuit formulation.
 
 ```{r, echo=TRUE, eval=TRUE}
@@ -211,11 +216,12 @@ ModelPlot(model = res,
           axislabs = c("Butter", "Sugar", "Flour"))
 ```
 
+<!-- Vanessa: I didn't quite understand this contour curve. What does the negative mean? I would recommend adding a conclusion on the range of each ingredient related to the optimum region, so the user understands how to interpret properly --> 
 
 Regardless of the construction of the mixture design, ternary diagrams are easy to plot with packages such as `{ggtern}` or `{Ternary}`. `{ggtern}` is particularly interesting because it builds on `{ggplot2}` and uses the same syntax.
 
 
-#### Screening designs
+### Screening designs
 
 Product development is not a monolithic process and in the early stages of a project it could be extremely useful to use a design of experiment in combination with sensory evaluation to identify most influential factors of interest [@Mao2007; @Pineau2019]. Factorial and mixture designs belong to the product developers' essential toolkit and could serve this purpose. In practice however, they can only include a relatively limited number of factors. By contrast, fractional factorial designs (aka screening designs) are extremely efficient at dealing with many factors, pending some sacrifices on the estimation of interactions and quadratic effects. If, for example, we want to estimate the effect of 5 factors and assume that three and four-factor interactions are negligible, we can then build a *2^5-1^* design (of, thus, 16 trials instead of 32) in which main effects are confounded with four-way interactions, and two-factor interactions are confounded with three-factor interactions. This design can be easily obtained with the `{FrF2}` package, with this simple command: `FrF2(16, 5, randomize = FALSE)`.
 To reduce the number of trials even further, we can go as in the example below with a quarter fraction *2^k-2^* design, in which each effect that can be estimated is confounded with three other interactions.
@@ -229,7 +235,7 @@ Although fractional designs are only scarcely used, studies have shown that they
 For higher number of factors, Plackett-Burman designs are the most commonly used fractional factorial designs. They can be easily obtained with the `pb` function of the `{FrF2}` package. For example, `FrF2::pb(12)` yields a 12 trials design that allows to test the effects of 11 factors.
 
 
-#### Sensory informed designs
+### Sensory informed designs
 Eventually, it is worth mentioning that, in some cases, sensory properties themselves can be used as factors and implemented in a DoE. In this line of thinking, Naes and Nyvold have suggested that working this way would leave more scope for creativity (@Naes2004). Naturally, this implies that product developers have (1) access to the measure of these properties and (2) can control the level of these properties and their interactions. These requirements are rarely met in food development but can be more easily implemented in some non-food applications (REF REF / Petiot).
 A specific case, is the use of sensory information to make a selection of a subset of products, as described above.
 
