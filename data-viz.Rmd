@@ -10,11 +10,11 @@ Although R already comes with tools for building and printing tables and graphs,
 
 Tables and graphs are the two fundamental vehicles to communicate information clearly and effectively. They are useful visual elements to summarize and organize information to show patterns and relationships. Tables and graphs allow the audience/reader to easily and quickly get a clear idea of the data findings, make comparisons, get insights from it and ultimately, draft conclusions without much effort.
 
-The best medium of communication, whether a table, a bar chart, a line chart, or a radar plot, will highly depend on the type of data, the amount of data to be displayed (e.g. number of attributes or samples), and the purpose of the analysis. 
+The best medium of communication, whether a table or a graph, will highly depend on the type and/or amount of data to display (e.g. number of attributes or samples), and the purpose of the analysis. 
 
-Usually, tables are meant to be read, so they are ideal when you have data that cannot easily be presented by other communication elements, or when the data requires more specific attention. However, if you encounter a situation where you have a very long and/or wide table, (which is common in sensory and consumer studies), other vehicle of communication should be considered. The same remark also applies to a graphical visualization, and if you have very little data to display, tables might be best suited. 
+Usually, tables are meant to be read, so they are ideal when you have data that cannot easily be presented by other communication elements, or when the data requires more specific attention. However, if you encounter a situation where you have a very long and/or wide table, (which is common in sensory and consumer studies), other vehicles of communication should be considered. Similarly, representing visually a very small amount of data may not be the best option, and tables might be better suited. 
 
-Sometimes (if not often) you have to play with your data, and test displaying it as a table or different types of graphs, before deciding which one suit best. As practical advice, do not hesitate to ask colleagues for feedback as having an external point of view often helps. Remember, to select the best way to communicate your data, you must understand the needs of your audience, the purpose for which various forms of display can be effectively used, but also the strengths and weaknesses of each type of data representation considered.
+Sometimes (if not often) you have to play with your data, and test displaying it as a table or different types of graphs, before deciding which one suit best. As practical advice, do not hesitate to ask colleagues for feedback as having an external point of view often helps. Just remember that, to select the best way to communicate your data, you must understand the needs of your audience, the purpose for which various forms of display can be effectively used, but also the strengths and weaknesses of each type of data representation considered.
 
 ## Design Principles
 
@@ -74,51 +74,72 @@ mean_sensory <- read_xlsx(file_path, sheet="Data") %>%
 
 ```
 
-Now that we are satisfied with the data we want to display, we can create the table from it. 
+Now that we are satisfied with the data we want to display, we can create the table from it. Let's start with loading the `{flextabe}` package. Since some functions from the `{officer}` package will also be used, we also load this package.
+
+```{r, eval=TRUE, echo=TRUE, message=FALSE, warning=FALSE}
+library(flextable)
+library(officer)
+```
+
+Let's now transform `mean_sensory` into a `flextable`:
 
 ```{r flextablebasic, message=FALSE, warning=FALSE, echo = TRUE, eval = TRUE, tab.cap="Appearance Attributes Mean (Basic Flextable)"}
-library(flextable)  
-
 flex_table <- mean_sensory %>% 
   flextable()
-
-flex_table
-
 ```
 
+```{r, eval=TRUE, echo=FALSE}
+flex_table
+```
 
-As you can see, we have a very simple and overcrowded table that clearly needs some design work to make it nicer. We can start improving it with some basic elements such as standardizing the number of decimals, changing the font size, adjusting the cell widths and heights, highlighting the header, and aligning the text.
+As you can see, we have a very simple and overcrowded table that clearly needs some design work to make it nicer. We can start improving it with some basic elements such as standardizing the number of decimals (`colformat_double()`), changing the font size (`fontsize()`), adjusting the cell widths and heights (`autofit()`), highlighting the header (`bold()`, `italic()`), and aligning the text (`align()`).
 
 ```{r flextablebasic2, message=FALSE, warning=FALSE, echo = TRUE, eval = TRUE, tab.cap="Appearance Attributes Mean (Basic Flextable 2)"}
-
 flex_table_design <- flex_table %>%
   colformat_double(digits = 2) %>%
-  fontsize(part = "all", size = 10) %>% 
+  fontsize(size = 10, part = "all") %>% 
   bold(bold = TRUE, part = "header") %>%
-  autofit() %>%
+  italic(j=-1, italic = TRUE, part = "body") %>%
   align(align = "center", part = "all")
-
-flex_table_design
-
 ```
 
+```{r, eval=TRUE, echo=FALSE}
+flex_table_design
+```
 
-After the basic aesthetic changes in the table, we can add additional elements such as the table title and also, depending on our purpose and where we want to call the audience's attention, use other strategies such as set background color. Let's here just highlight the optimized formulation.
+After applying some basic aesthetic changes to the table, let's add some elements such as a table title (`add_header_lines()`) and also, depending on our purpose and where we want to call the audience's attention, use other strategies such as changing colors (`bg()`, `color()`). Here we opt for changing the background of the header and we highlight the optimized formulation by writing it in orange.
 
 ```{r, flextabledesigned, message=FALSE, warning=FALSE, echo = TRUE, eval = TRUE, tab.cap="Appearance Attributes Mean (Improved Flextable)"}
-
-flex_table_design_2 <- flex_table_design %>%
-  bg (i=11, j = NULL, bg = "orange") %>%
-  add_header_lines(values = "Sensory Profile for Appearance of breakfast biscuits with varying contents of proteins and fibers") %>%
+flex_table_design %>%
+  bg(bg = "black", part = "header") %>% 
+  color(color = "white", part = "header") %>% 
   fontsize(size = 13, part = "header", i = 1) %>%
-  italic(italic = TRUE, part = "header")
+  color(i = 11, color = "orange", part = "body") %>%
+  color(i = 1:10, color = "grey70", part = "body") %>% 
+  add_header_lines(values = "Appearance Profile of 11 biscuits")
+```
 
-flex_table_design_2
+Alternatively, we could decide to be simpler by applying other pre-attentive attributes. For instance, the size of the table can be adjusted, and an horizontal line (`hline()`) can be added to delimit the optimal sample from the other. For the latter part, the customization of the line can be made using the function `fp_border()` from the `{officer}` package^[More information regarding the `{officer}` package are provided in Section REF PPT Export].
 
+```{r}
+flex_table_design %>%
+  hline(i=10, border=fp_border(color="grey70", style="dashed")) %>% 
+  autofit()
+```
+
+In some situations, applying some designing options might *destroy* the appearance of your table, in particular the border lines. If that should happen to you, just apply the function `fix_border_issues()` at the end of your code to solve it.
+
+Lastly, if the message should not be focused on `POpt`, but on some specific values (e.g. values for `Thickness` that are below 20 should be colored in blue, and above 40 in red), conditional formatting can be used:
+
+```{r}
+color_code <- ifelse(mean_sensory$Thickness <= 20, "blue", 
+                       ifelse(mean_sensory$Thickness >= 40, "red", "black"))
+flex_table_design %>% 
+  color(j=~Thickness, color=color_code)
 ```
 
 
-The table now looks much nicer and can be further improved with other preattentive attributes according to the main objective of your message. If you are interested in learning more about `{flextable}` package, we recommend the book *Using the flextable R package* by David Gohel (https://ardata-fr.github.io/flextable-book/index.html).
+If you are interested in learning more about `{flextable}` package, we recommend the book *Using the flextable R package* by David Gohel (https://ardata-fr.github.io/flextable-book/index.html).
 
 Another interesting package to create tables is the `{gt}` package. This package make it simple to produce nice-looking tables for a report or presentation. Let's first install and load the `{gt}` package.
 
