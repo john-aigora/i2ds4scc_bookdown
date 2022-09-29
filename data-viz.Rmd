@@ -10,11 +10,11 @@ Although R already comes with tools for building and printing tables and graphs,
 
 Tables and graphs are the two fundamental vehicles to communicate information clearly and effectively. They are useful visual elements to summarize and organize information to show patterns and relationships. Tables and graphs allow the audience/reader to easily and quickly get a clear idea of the data findings, make comparisons, get insights from it and ultimately, draft conclusions without much effort.
 
-The best medium of communication, whether a table or a graph, will highly depend on the type and/or amount of data to display (e.g. number of attributes or samples), and the purpose of the analysis. 
+The best medium of communication, whether a table, a bar chart, a line chart, or a radar plot, will highly depend on the type of data, the amount of data to be displayed (e.g. number of attributes or samples), and the purpose of the analysis. 
 
-Usually, tables are meant to be read, so they are ideal when you have data that cannot easily be presented by other communication elements, or when the data requires more specific attention. However, if you encounter a situation where you have a very long and/or wide table, (which is common in sensory and consumer studies), other vehicles of communication should be considered. Similarly, representing visually a very small amount of data may not be the best option, and tables might be better suited. 
+Usually, tables are meant to be read, so they are ideal when you have data that cannot easily be presented by other communication elements, or when the data requires more specific attention. However, if you encounter a situation where you have a very long and/or wide table, (which is common in sensory and consumer studies), other vehicle of communication should be considered. The same remark also applies to a graphical visualization, and if you have very little data to display, tables might be best suited. 
 
-Sometimes (if not often) you have to play with your data, and test displaying it as a table or different types of graphs, before deciding which one suit best. As practical advice, do not hesitate to ask colleagues for feedback as having an external point of view often helps. Just remember that, to select the best way to communicate your data, you must understand the needs of your audience, the purpose for which various forms of display can be effectively used, but also the strengths and weaknesses of each type of data representation considered.
+Sometimes (if not often) you have to play with your data, and test displaying it as a table or different types of graphs, before deciding which one suit best. As practical advice, do not hesitate to ask colleagues for feedback as having an external point of view often helps. Remember, to select the best way to communicate your data, you must understand the needs of your audience, the purpose for which various forms of display can be effectively used, but also the strengths and weaknesses of each type of data representation considered.
 
 ## Design Principles
 
@@ -49,7 +49,14 @@ Now the main stage is set, let's focus on how to build nice tables and graphs in
 
 ## Table Making
  
-Let's start using the package `{flextable}` to build tables using as an example the sensory data (Sensory Profile.xlsx). Let's first load the necessary libraries.
+By default, R allows printing matrices or data frames as tables. However, these tables cannot be customized and are only informative. An example of table can be shown here:
+
+```{r, eval=TRUE, echo=FALSE}
+matrix(c(1:6), nrow=2, ncol=3, dimnames=list(paste("Name row", 1:2), paste("Name col", 1:3)))
+```
+
+To extend table customization, dedicated packages are required. For illustration, the sensory data (stored in *biscuits_sensory_profile.xlsx*) is used. 
+Before starting, let's first load the usual libraries.
 
 ```{r, message=FALSE, warning=FALSE, echo = TRUE, eval = TRUE}
 library(tidyverse)
@@ -57,33 +64,23 @@ library(readxl)
 library(here)
 ```
 
-In a situation where we are interested to display the mean for the appearance attributes evaluated in the 11 biscuits, we would need first to prepare the data, which means, selecting the wanted attributes and calculating the mean scored by panelists.
+Let's imagine we want to communicate the sensory profiles of the 11 biscuits on the attributes related to appearance, a first step consists in transforming the data to create such results (see \@ref("means") for more details).
 
-```{r, message=FALSE, warning=FALSE, results='hide', echo = TRUE, eval = TRUE}
-
-# Sensory Profile Data
-
+```{r, echo = TRUE, eval = TRUE, message=FALSE, warning=FALSE, results='hide'}
 file_path <- here("data","biscuits_sensory_profile.xlsx") 
-
-# Sensory Appearance Attributes Mean
-
 mean_sensory <- read_xlsx(file_path, sheet="Data") %>% 
-  select(Product, "Shiny":"Color contrast") %>%
+  select(Product, Shiny:`Color contrast`) %>%
   group_by(Product) %>%
   summarize(across(.cols = where(is.numeric),.fns = mean))
-
 ```
 
-Now that we are satisfied with the data we want to display, we can create the table from it. Let's start with loading the `{flextabe}` package. Since some functions from the `{officer}` package will also be used, we also load this package.
+### Introduction to `{flextable}`
 
-```{r, eval=TRUE, echo=TRUE, message=FALSE, warning=FALSE}
-library(flextable)
-library(officer)
-```
+Now the correct table has been created, let's represent it in a neater way using our first dedicated package called `{flextable}`. Before going too deep in designing the table, let's simply apply the `flextable()` function to `mean_sensory` (after loading `{flextable}` first):
 
-Let's now transform `mean_sensory` into a `flextable`:
+```{r flextablebasic, echo = TRUE, eval = TRUE, message=FALSE, warning=FALSE, tab.cap="Appearance Attributes Mean (Basic Flextable)"}
+library(flextable)  
 
-```{r flextablebasic, message=FALSE, warning=FALSE, echo = TRUE, eval = TRUE, tab.cap="Appearance Attributes Mean (Basic Flextable)"}
 flex_table <- mean_sensory %>% 
   flextable()
 ```
@@ -92,14 +89,16 @@ flex_table <- mean_sensory %>%
 flex_table
 ```
 
-As you can see, we have a very simple and overcrowded table that clearly needs some design work to make it nicer. We can start improving it with some basic elements such as standardizing the number of decimals (`colformat_double()`), changing the font size (`fontsize()`), adjusting the cell widths and heights (`autofit()`), highlighting the header (`bold()`, `italic()`), and aligning the text (`align()`).
+As you can see, the table is being printed in the *Viewer* section of RStudio. This table is already better designed, although it is still quite overcrowded that could benefit from some additional design work to look nicer. 
 
-```{r flextablebasic2, message=FALSE, warning=FALSE, echo = TRUE, eval = TRUE, tab.cap="Appearance Attributes Mean (Basic Flextable 2)"}
+A first simple improvement consists in reducing the number of decimals (`colformat_double()`), changing the font size (`fontsize()`) and type (`bold()` or `italic()`), and aligning the text (`align()`) for instance.
+
+```{r flextablebasic2, echo = TRUE, eval = TRUE, message=FALSE, warning=FALSE, tab.cap="Appearance Attributes Mean (Basic Flextable 2)"}
 flex_table_design <- flex_table %>%
   colformat_double(digits = 2) %>%
   fontsize(size = 10, part = "all") %>% 
   bold(bold = TRUE, part = "header") %>%
-  italic(j=-1, italic = TRUE, part = "body") %>%
+  italic(j = -1, italic = TRUE, part = "body") %>%
   align(align = "center", part = "all")
 ```
 
@@ -107,9 +106,12 @@ flex_table_design <- flex_table %>%
 flex_table_design
 ```
 
-After applying some basic aesthetic changes to the table, let's add some elements such as a table title (`add_header_lines()`) and also, depending on our purpose and where we want to call the audience's attention, use other strategies such as changing colors (`bg()`, `color()`). Here we opt for changing the background of the header and we highlight the optimized formulation by writing it in orange.
+As can be seen, the function names are very intuitive, and so are the options. In particular, it is interesting to see that most functions allows applying changes to the entire table (`part = "all"`), the header only (`part = "header"`) or the body only (`part = "body"`). And even within a part, it is possible to make a sub-selection by selecting the rows (`i`) or columns (`j`) to include or exclude: Here, all the text in the body is set in italic except for the product names, hence the option `j=-1` (read exclude the first column).
 
-```{r, flextabledesigned, message=FALSE, warning=FALSE, echo = TRUE, eval = TRUE, tab.cap="Appearance Attributes Mean (Improved Flextable)"}
+After presenting some of the basic aesthetic options, let's go once step further and play around with coloring. For instance, let's imagine we would change the header background and text color, and would want to call the audience's attention by highlighting the optimized formulation. The following code could be used to do this (results are not being saved):
+
+```{r, flextabledesigned, echo = TRUE, eval = TRUE, message=FALSE, warning=FALSE, tab.cap="Appearance Attributes Mean (Improved Flextable)"}
+
 flex_table_design %>%
   bg(bg = "black", part = "header") %>% 
   color(color = "white", part = "header") %>% 
@@ -119,7 +121,7 @@ flex_table_design %>%
   add_header_lines(values = "Appearance Profile of 11 biscuits")
 ```
 
-Alternatively, we could decide to be simpler by applying other pre-attentive attributes. For instance, the size of the table can be adjusted, and an horizontal line (`hline()`) can be added to delimit the optimal sample from the other. For the latter part, the customization of the line can be made using the function `fp_border()` from the `{officer}` package^[More information regarding the `{officer}` package are provided in Section REF PPT Export].
+Alternatively, we could decide to be more sober by applying other pre-attentive attributes. For instance, the size of the table can be adjusted, and an horizontal line can be added to delimit the optimal sample from the other. For the latter part, the customization of the line can be made using the function `fp_border()` from the `{officer}` package^[More information regarding the `{officer}` package are provided in Section REF].
 
 ```{r}
 flex_table_design %>%
@@ -138,119 +140,106 @@ flex_table_design %>%
   color(j=~Thickness, color=color_code)
 ```
 
+Other illustrations of the use of `{flextable}` are provided in section REF AUTOREPORT. 
 
-If you are interested in learning more about `{flextable}` package, we recommend the book *Using the flextable R package* by David Gohel (https://ardata-fr.github.io/flextable-book/index.html).
+For curious readers who want to get a deeper look into all the possibilities provided by this package, we refer them to the book [*Using the flextable R package*](https://ardata-fr.github.io/flextable-book/index.html) by David Gohel and to its [gallery of tables](https://ardata.fr/en/flextable-gallery/) for inspiration.
 
-Another interesting package to create tables is the `{gt}` package. This package make it simple to produce nice-looking tables for a report or presentation. Let's first install and load the `{gt}` package.
+### Introdution to `{gt}`
 
-```{r, message=FALSE, warning=FALSE, echo = TRUE, eval = TRUE}
+As an alternative to `{flextable}`, the `{gt}` package can also be considered as it also produces nice-looking tables for reports or presentations. 
+Let's first install (if needed) and load the `{gt}` package.
+
+```{r, echo = TRUE, eval = TRUE, message=FALSE, warning=FALSE}
 library(gt)
-
 ```
 
-Focusing now on the consumer study (Consumer Test.xlsx), suppose we want to display a table with the average the consumers spent in the booth and the number of biscuits eaten for each product. We need to transform the time columns (expressed as min and s) to a double format and express them as minutes units, and then group them by product to get the average for the time spent and the number of biscuits eaten.
+Focusing now on the consumer study (*biscuits_consumer_test.xlsx*), let's display a table with the average number of biscuits (for each variant) consumers ate, and their corresponding eating time. To do so, we first need to transform the time columns (expressed as min and s) to a double format and express them in minutes. Then, we can group them by product to get the average for the time spent and the number of biscuits eaten.
 
-```{r, message=FALSE, warning=FALSE, results='hide', echo = TRUE, eval = TRUE}
-
-# Consumer Data
-
+```{r, echo = TRUE, eval = TRUE, message=FALSE, warning=FALSE, results='hide'}
 file_path <- here("data","biscuits_consumer_test.xlsx") 
 
-# Average of Consumption Time (min) and Number of Biscuits
-
 mean_consumer <- read_xlsx(file_path, sheet="Time Consumption") %>%
-  select(Product, `Time (min)`, `Nb biscuits`) %>%
-  separate(`Time (min)`, c("Time (min)", "time_sec"), sep = "min") %>%
-  mutate(time_sec = as.numeric(time_sec)) %>%
-  mutate(time_min_2 = time_sec/60) %>%
-  mutate(`Time (min)` = as.numeric(`Time (min)`)) %>%
-  mutate(`Time (min)` = `Time (min)` + time_min_2) %>%
-  select(-c("time_sec", "time_min_2")) %>%
-  group_by(Product) %>%
-  summarise_if(is.numeric, mean, na.rm = TRUE)
-
+  dplyr::select(Product, `Time (min)`, `Nb biscuits`) %>%
+  separate(`Time (min)`, c("Min", "Sec"), sep="min") %>%
+  mutate(across(c("Min","Sec"), as.numeric)) %>% 
+  mutate(Time = Min+Sec/60) %>% 
+  group_by(Product) %>% 
+  summarise(across(c("Time", "Nb biscuits"), mean, na.rm = TRUE)) %>% 
+  ungroup()
 ```
 
-Now that the data is ready, we can display it as table and make basics adjustments to make it look nicer.
+Now that the data is ready, we can display it with some basics adjustments to make it look nicer.
 
 <!-- Table cap doesn't appear --> 
-```{r gttablebasic, message=FALSE, warning=FALSE, echo = TRUE, eval = TRUE, tab.cap="Consumption time and number of biscuits eaten"}
-
-consumer_gt_table <- mean_consumer %>%
+```{r gttablebasic, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE, tab.cap="Consumption time and number of biscuits eaten"}
+mean_consumer %>%
   gt () %>%
   cols_align(align = "center", columns = everything()) %>%
   fmt_number(columns = c( "Time (min)", "Nb biscuits") , decimals = 2) %>%
   tab_header(title = md ("**Consumption time and number of biscuits eaten**"), 
              subtitle = md ("*Average taken from 99 consumers*"))
-
-consumer_gt_table
-
 ```
 
+Note that we used *Markdown* to style the title and subtitle by wrapping the values passed to the title or subtitle with the `md()` function. In Markdown, `**text**` writes the text in bold, and `*text*` in italic.
 
-Note that we used Markdown to style the title and subtitle by wrapping the values passed to the title or subtitle with the md() function. For Markdown ** makes the text bold and * makes the text italic.
-
-The `{gt}` package offers several resources to make beautiful tables using preattentive attributes. As an example, let's now focus on the average number of biscuits eaten only, since we saw that the consumption time was very similar among products. The idea is to use pre-attentive attributes for the audience to clearly see the formulation that got the most to the least biscuits eaten. Let's first prepare the data and calculate the overall time consumption considering all products.
+The `{gt}` package offers several resources to make beautiful tables. Let's illustrate this by focusing on the average number of biscuits eaten only since the average consumption time is very similar across products. The idea is to use pre-attentive attributes for the audience to clearly see which samples were the most popular (i.e. the most eaten) and which one were not. Let's first prepare the data and calculate the overall time consumption considering all products.
 
 ```{r,message=FALSE, warning=FALSE, results='hide', echo = TRUE, eval = TRUE}
-
-# Average of Number of Biscuits
-
-mean_consumer_2<- mean_consumer %>%
-  select(- "Time (min)") %>%
+mean_consumer_2 <- mean_consumer %>%
+  dplyr::select(- "Time") %>%
   arrange(desc (`Nb biscuits`))
-
-mean_time_consumption <- mean(mean_consumer$`Time (min)`) %>%
-  round(digits = 2)
 
 ```
 
-Now that the data is ready, we will make the basic table following the same style as before, but now displaying only the number of biscuits eaten. We will also add a source note expressing the average time for the biscuit consumption.
+Now that the data is ready, we can display using a similar style as before in which we add some color-code to accentuate products' consumption. We will also add a `note` to the table that expresses the average time used to consumer the biscuits. So let's start with creating the table:
 
 ```{r gttabledesigned, message=FALSE, warning=FALSE, results='hide', echo = TRUE, eval = TRUE}
+note <- str_c("Avg. consumption time: ", round(mean(mean_consumer$Time),2), " min")
 
-table_source <- str_c("Mean consumption time was ", mean_time_consumption, " min")
-
-consumer_gt_table_2 <-  mean_consumer_2 %>%
+consumption <- mean_consumer_2 %>%
   gt () %>%
   cols_align(align = "center", columns = everything()) %>%
   fmt_number(columns = "Nb biscuits" , decimals = 2) %>%
   tab_header(title = md ("**Number of biscuits eaten**"), 
              subtitle = md ("*Average taken from 99 consumers*")) %>%
-  tab_source_note(source_note = table_source)
-
-consumer_gt_table_2
-
+  tab_source_note(source_note = note)
 ```
 
-Now, we will use a nice tool to explicitly color across the range number of biscuits eaten range, so the most and least eaten products can be easily identified.
+Now, let's color code the cells based on the average number of biscuits eaten. To color code, the range of average number of biscuits eaten is required. Then, we can use the `col_numeric()` function from the `{scales}` package to generate the colors of interest (in practice, we provide the colour for the minimum, maximum, and the function generates automatically all the colors in between to create the gradient).
 
 <!-- Table cap doesn't appear --> 
-```{r gttablefinal, message=FALSE, warning=FALSE, echo = TRUE, eval = TRUE, tab.cap="Number of biscuits eaten"}
+```{r gttablefinal, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE, tab.cap="Number of biscuits eaten"}
+nb_range <- range(mean_consumer_2$`Nb biscuits`)
 
-library (scales)
-
-min_nb_biscuits <- min(mean_consumer_2$`Nb biscuits`)
-max_nb_biscuits <- max(mean_consumer_2$`Nb biscuits`)
-biscuits_palette <- scales::col_numeric(c("#FEF0D9", "#990000"), domain = c(min_nb_biscuits, max_nb_biscuits), alpha = 0.75)
-
-consumer_table_final <- consumer_gt_table_2 %>% 
-    data_color(columns = c(`Nb biscuits`), colors = biscuits_palette)
-
-consumer_table_final
-
+library(scales)
+consumption %>% 
+    data_color(columns=`Nb biscuits`, colors=col_numeric(c("#FEF0D9","#990000"), domain=nb_range, alpha=0.75))
 ```
 
+Applying this strategy of coloring the number of biscuits eaten according to their range makes the table nicer and easier to get insights from. In our case, we can quickly see that groups of products based on their average consumption: Product 10 is the most eaten, followed by a group that include products 5, 2, and 1. At last, samples 8 and 4 are the least consumed samples.
 
-Applying this strategy of coloring the number of biscuits eaten according to their range makes the table much nicer and easier to get insights. In our case, we can quickly see that product 10 was the most eaten and product 4 the least eaten by the consumers.
+Although the package `{gt}` proposed some nice feature, additional options are provided by its extension package called `{gtExtras}` which provides additional themes, formatting capabilities, opinionated diverging color palette, extra tools for highlighting values, possibility of embed bar plots in the table etc. For more information, please check [https://jthomasmock.github.io/gtExtras/](https://jthomasmock.github.io/gtExtras/).
 
-The package `{gtExtras}` provides some additional features that are currently not yet built in `{gt}`. The `{gtExtras}` package includes three different themes, additional formatting capabilities, opinionated diverging color palette, extra tools for highlight, possibility of embed bar plots in the table, among several other resources
+To illustrate one of the possible use of `{gtExtras}` let's twist the previous table as following: Since each consumer was provided with a maximum of 10 biscuits, let's transform the average consumption into percentages. We can then re-create the previous table in which we also add a bar-chart based on the percentages:
 
-Some other packages to build tables include `{huxtable}`, `{kable}` and `{kableExtra}`.
+```{r, eval=TRUE, echo=TRUE}
+library(gtExtras)
+
+mean_consumer_2 %>%
+  mutate(`Nb biscuits (%)` = 100*(`Nb biscuits`/10)) %>% 
+  gt () %>%
+  cols_align(align = "center", columns = everything()) %>%
+  fmt_number(columns = "Nb biscuits" , decimals=2) %>%
+  tab_header(title = md ("**Number of biscuits eaten**"), 
+             subtitle = md ("*Average taken from 99 consumers*")) %>%
+  tab_source_note(source_note = note) %>% 
+  gt_plt_bar_pct(`Nb biscuits (%)`, scaled=TRUE)
+```
+
+In this section, due to their simplicity and flexibility, we emphasized the use of `{flextable}` and `{gt}` to build beautiful tables for your reports. However, there are other alternatives including (amongst others) `{kable}` and `{kableExtra}`, or `{huxtable}` for readers that are not fully satisfied.
 
 
 ## Chart Making
-
 
 "A picture is worth 1000 words". This saying definitely applies to Statistics as well, since visual representation of data often appears clearer than the values themselves stored in a table. It is hence no surprise that R is a powerful tool for graphics. 
 
