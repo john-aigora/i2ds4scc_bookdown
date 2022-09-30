@@ -8,9 +8,9 @@ knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 ```
 # Data Collection {#data-collection}
 
+> Before the statistical analysis and vizualizations, the foremost proceduce step refers to a proper experimental design in a way that would assure relevant and meaningful data that are obtained with maximum efficiency. This chapter will approach from the estimation of the number of panelists, design of sensory evaluation sessions and design of experiments (DoE) to valuable execution tips and data importation.
+
 ## Designs of sensory experiments
-<!-- While reviewing my chapter (starting with data manipulation) I added a section at the start that explains the learning, the data we are using, and the main packages. Would it be an idea to add this here as well (and remove library(...) when no longer needed) for this chapter too? -->
-<!-- Good idea! I will add that -->
 
 ### General approach
 
@@ -157,6 +157,7 @@ Suppose that we want to adjust a biscuit recipe to optimize its sensory properti
 
 However, this design would imply 11 mixtures, which is more than needed to apply a Scheffé quadratic model (REF REF REF). To reduce the number of mixtures and still allow fitting a quadratic model, we can use the `optFederov()` function from `{AlgDesign}` to select a D-optimal subset. Here, let's limit to 9 products.
 
+<!-- Vanessa: I don't know why, but the warnings are showing up in the book --> 
 ```{r echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
 library(mixexp)
 library(AlgDesign)
@@ -200,7 +201,7 @@ Finally, when the design is built, it could be desirable to randomize the order 
 Bmixt_shuffled <- Bmixt[sample(nrow(Bmixt)), ]
 ```
 
-<!-- Vanessa: Maybe table and text can be rearranged so the table 8.1 shows up after a quick explanation on this table is about. In the way it is here the table shows beforeit is called in the text.  --> 
+<!-- Vanessa: Maybe table and text can be rearranged so the table 8.1 shows up after a quick explanation on what this table is about. In the way it is here, the table shows before it is called in the text.  --> 
 Once the data are collected we can use the `mixexp::MixModel()` function to fit a linear model and `mixexp::MixturePlot()` to draw a contour plot. Suppose that we obtain average liking scores for our 9 biscuits as given in Table \@ref(tab:biscuit-mixt), this simple code would allow to get a contour plot that shows where would be the optimal area for the biscuit formulation.
 
 ```{r, echo=TRUE, eval=TRUE}
@@ -226,7 +227,7 @@ Regardless of the construction of the mixture design, ternary diagrams are easy 
 Product development is not a monolithic process and in the early stages of a project it could be extremely useful to use a design of experiment in combination with sensory evaluation to identify most influential factors of interest [@Mao2007; @Pineau2019]. Factorial and mixture designs belong to the product developers' essential toolkit and could serve this purpose. In practice however, they can only include a relatively limited number of factors. By contrast, fractional factorial designs (aka screening designs) are extremely efficient at dealing with many factors, pending some sacrifices on the estimation of interactions and quadratic effects. If, for example, we want to estimate the effect of 5 factors and assume that three and four-factor interactions are negligible, we can then build a *2^5-1^* design (of, thus, 16 trials instead of 32) in which main effects are confounded with four-way interactions, and two-factor interactions are confounded with three-factor interactions. This design can be easily obtained with the `{FrF2}` package, with this simple command: `FrF2(16, 5, randomize = FALSE)`.
 To reduce the number of trials even further, we can go as in the example below with a quarter fraction *2^k-2^* design, in which each effect that can be estimated is confounded with three other interactions.
 
-```{r echo=TRUE, eval=TRUE, message=FALSE}
+```{r echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
 library(FrF2)
 FrF2(nruns = 8, nfactors = 5, randomize = FALSE)
 ```
@@ -253,6 +254,7 @@ Fortunately, we can spare the reader some of these imagination efforts and reite
 * **Individual evaluation**  
 Probably the most important requirement for the validity of sensory measurements is to perform individual evaluation. Sensory responses are very easily biased when judges can communicate. When this happens, observations cannot be considered independent which would rule out most statistical tests. Although this principle is generally accepted and correctly applied, some situations may be more challenging in this regard (such as project team meetings, b2b sample demonstration, tasting events, etc.). Individual evaluation is usually ensured by the use of partitioned sensory booths, but it can also be achieved by other means (table-top partitions, curtains, separate tables, separate rooms). There are some cases, in consumer research, where interactions between subjects are allowed or even encouraged because they correspond to real-life situations. But these are exceptions to the rule, and in such cases, observations are to be considered at the group level.
 
+<!-- Vanessa:Crossover reference doesn't show in the text correctly --> 
 * **Balanced order effects and treatments**  
 We already discussed the importance of balancing the evaluation order for first-order and carry-over effects (\@Crossover). We cannot overstate how necessary this precaution is to get valid data. On top of having to deal with such effects, sensory scientists sometimes want to test how products are perceived (or liked) under different conditions (e.g. blind vs. branded, with/without nutritional information, in the lab vs. at home, etc.). Choice must then be made between a within-group design (in which participants evaluate the products under the different conditions) and a between-group design (in which participants evaluate the product under one condition only). As often in consumer science, there is no perfect experiment and these two options have pros and cons. For instance, the within-group design would be more powerful and would allow data analysis at the individual level, but it would be more likely to induce response biases. Note that in both cases, participants must be randomly assigned to one group (corresponding either to a given condition, or to the order in which each condition is being experienced if the study follows a within-group design).
 
@@ -297,18 +299,18 @@ Although Excel is most likely one of the most popular way of storing data, there
 
 ### Importing Structured Excel File
 
-First, let's import the *Sensory Profile.xlsx* workbook using `readxl::read_xlsx()` by informing as parameter the `location` of the file and the `sheet` where it is stored. For convenience, we are using the `{here}`^[The package `{here}` is very handy as it provides an easy way to retrieve your file's path (within your working directory) by simply giving the name of the file and folder in which they are stored.] package to retrieve the path of the file (stored in `file_path`).
+First, let's import the *biscuits_sensory_profile.xlsx* workbook using `readxl::read_xlsx()` by informing as parameter the `location` of the file and the `sheet` where it is stored. For convenience, we are using the `{here}`^[The package `{here}` is very handy as it provides an easy way to retrieve your file's path (within your working directory) by simply giving the name of the file and folder in which they are stored.] package to retrieve the path of the file (stored in `file_path`).
 
 This file is called _structured_ as all the relevant information is already stored in the same sheet in a structured way. In other words, no decoding is required here, and there are no 'unexpected' rows or columns (e.g. empty lines, or lines with additional information regarding the data that is not data):
 
- - The first row within the *Data* sheet of *Sensory Profile.xlsx* contains the headers,  
+ - The first row within the *Data* sheet of *biscuits_sensory_profile.xlsx* contains the headers,  
  - From the second row onward, only data is being stored.
  
 Since this data will be used for some analyses, it is assigned data to an R object called `sensory`.
 
-```{r import_sensory, echo=FALSE}
+```{r import_sensory, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
 library(here)
-file_path <- here("data","Sensory Profile.xlsx") 
+file_path <- here("data","biscuits_sensory_profile.xlsx") 
 
 library(readxl)
 sensory <- read_xlsx(file_path, sheet="Data")
@@ -317,7 +319,8 @@ sensory <- read_xlsx(file_path, sheet="Data")
 
 To ensure that the importation went well, we print `sensory` to see how it looks like. Since `{readxl}` has been developed by Hadley Wickham and colleagues, its functions follow the `{tidyverse}` principles and the data thus imported is stored as a `tibble`. Let's take advantage of the printing properties of a `tibble` to evaluate `sensory`:
 
-```{r}
+<!-- We discussed having all prints hidden. In the first chapters there is an explanation for user. I put eval true because I assumed you want to show the outcomes. -->
+```{r, echo=FALSE, eval=TRUE}
 sensory
 ```
 
@@ -325,7 +328,7 @@ sensory
 
 ### Importing Unstructured Excel File
 
-In some cases, the data are not so well organized/structured, and may need to be *decoded*. This is the case for the workbook entitled *TFEQ.xlsx*. 
+In some cases, the data are not so well organized/structured, and may need to be *decoded*. This is the case for the workbook entitled *biscuits_traits.xlsx*. 
 
 In this file:
 
@@ -339,29 +342,38 @@ To import and decode this data set, multiple steps are required:
  - Import the data without the first line of header, but by providing the correct names obtained in the first step;
  - Decode each question (when needed) by replacing the numerical code by their corresponding labels.
 
-Let's start with importing the variables' names from *TFEQ.xlsx* (sheet *Variables*)
+Let's start with importing the variables' names from *biscuits_traits.xlsx* (sheet *Variables*)
 
-```{r import_TFEQ_labels1, echo=FALSE}
-file_path <- here("data","TFEQ.xlsx") 
+```{r import_TFEQ_labels1, echo=TRUE, eval=TRUE, message=FALSE}
+file_path <- here("data","biscuits_traits.xlsx") 
 
-(var_names <- read_xlsx(file_path, sheet="Variables"))
+var_names <- read_xlsx(file_path, sheet="Variables")
+```
+
+```{r, eval=TRUE, echo=FALSE}
+var_names
 ```
 
 In a similar way, let's import the information related to the levels of each variable, stored in the *Levels* sheet. 
 A deeper look at the *Levels* sheet shows that only the coded names of the variables are available. In order to include the final names, `var_names` is joined (using `inner_join`).
 
-```{r import_TFEQ_labels2}
+```{r import_TFEQ_labels2, echo=TRUE, eval=TRUE, message=FALSE}
 library(tidyverse)
-(var_labels <- read_xlsx(file_path, sheet="Levels") %>% 
-  inner_join(dplyr::select(var_names, Code, Name), by=c(Question="Code")))
+var_labels <- read_xlsx(file_path, sheet="Levels") %>% 
+  inner_join(dplyr::select(var_names, Code, Name), by=c(Question="Code"))
+```
+
+```{r, eval=TRUE, echo=FALSE}
+var_labels
 ```
 
 Ultimately, the data (*Data*) is imported by substituting the coded names with their corresponding names. This process can be done by skipping reading the first row of the data that contains the coded header (`skip=1`), and by passing `Var_names` as header or column names (after ensuring that the names' sequence perfectly match across the two tables!).
 
 Alternatively, you can import the data by specifying the range in which the data is being stored (here `range="A2:BJ108"``).
 
+<!-- Vanessa: Do you want to show this code? --> 
 ```{r, import_TFEQ_data3, echo=FALSE}
-TFEQ_data <- read_xlsx(file_path, sheet="Data", col_names=var_names$Name, skip=1)
+biscuits_traits_data <- read_xlsx(file_path, sheet="Data", col_names=var_names$Name, skip=1)
 
 ```
 
@@ -385,6 +397,8 @@ A first approach to tackle this problem could be to import each file separately,
 
 To counterbalance, we first introduce the function `excel_sheets()` from `{readxl}` as it provides all the sheet that are available in the file of interest. This allows us reading all the sheets from that file, regardless of the number of sessions. Second, the function `map()` from the `{purrr}` package comes handy as it applies a function (here `read_xlsx()`) to each element of a list or vector (here, the one obtained from `excel_sheets()`). 
 
+<!-- Vanessa: A simple solution that may worth mentioning is using rio::import_list. You import all the sheet with
+one single command --> 
 ```{r}
 path <- file.path("data", "excel_scrap.xlsx") 
 files <- path %>% 
