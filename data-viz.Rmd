@@ -122,7 +122,7 @@ flex_table_design %>%
 ```
 
 Alternatively, we could decide to be more sober by applying other pre-attentive attributes. For instance, the size of the table can be adjusted, and an horizontal line can be added to delimit the optimal sample from the other. For the latter part, the customization of the line can be made using the function `fp_border()` from the `{officer}` package^[More information regarding the `{officer}` package are provided in Section REF].
-
+<!-- There is a problem with fp_border in the code below --> 
 ```{r}
 flex_table_design %>%
   hline(i=10, border=fp_border(color="grey70", style="dashed")) %>% 
@@ -277,7 +277,7 @@ library(here)
 library(readxl)
 
 # Sensory Profiles Data
-file_path <- here("data","Sensory Profile.xlsx") 
+file_path <- here("data","biscuits_sensory_profile.xlsx") 
 p_info <- read_xlsx(file_path, sheet="Product Info") %>% 
   dplyr::select(-Type)
 
@@ -286,7 +286,7 @@ sensory <- read_xlsx(file_path, sheet="Data") %>%
   relocate(Protein:Fiber, .after=Product)
 
 # Number of Biscuits Eaten Data
-file_path <- here("Data","Consumer Test.xlsx")
+file_path <- here("Data","biscuits_consumer_test.xlsx")
 
 Nbiscuit <- read_xlsx(file_path, sheet="Time Consumption") %>% 
   mutate(Product = str_c("P", Product)) %>% 
