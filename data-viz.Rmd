@@ -277,17 +277,17 @@ library(readxl)
 
 # Sensory Profiles Data
 file_path <- here("data","biscuits_sensory_profile.xlsx") 
-p_info <- read_xlsx(file_path, sheet="Product Info") %>% 
+p_info <- readxl::read_xlsx(file_path, sheet="Product Info") %>% 
   dplyr::select(-Type)
 
-sensory <- read_xlsx(file_path, sheet="Data") %>% 
+sensory <- readxl::read_xlsx(file_path, sheet="Data") %>% 
   inner_join(p_info, by="Product") %>% 
   relocate(Protein:Fiber, .after=Product)
 
 # Number of Biscuits Eaten Data
 file_path <- here("Data","biscuits_consumer_test.xlsx")
 
-Nbiscuit <- read_xlsx(file_path, sheet="Time Consumption") %>% 
+Nbiscuit <- readxl::read_xlsx(file_path, sheet="Time Consumption") %>% 
   mutate(Product = str_c("P", Product)) %>% 
   rename(N = `Nb biscuits`)
 
