@@ -68,7 +68,7 @@ Let's imagine we want to communicate the sensory profiles of the 11 biscuits on 
 
 ```{r, echo = TRUE, eval = TRUE, message=FALSE, warning=FALSE, results='hide'}
 file_path <- here("data","biscuits_sensory_profile.xlsx") 
-mean_sensory <- read_xlsx(file_path, sheet="Data") %>% 
+mean_sensory <- readxl::read_xlsx(file_path, sheet="Data") %>% 
   select(Product, Shiny:`Color contrast`) %>%
   group_by(Product) %>%
   summarize(across(.cols = where(is.numeric),.fns = mean))
@@ -124,6 +124,8 @@ flex_table_design %>%
 Alternatively, we could decide to be more sober by applying other pre-attentive attributes. For instance, the size of the table can be adjusted, and an horizontal line can be added to delimit the optimal sample from the other. For the latter part, the customization of the line can be made using the function `fp_border()` from the `{officer}` package^[More information regarding the `{officer}` package are provided in Section REF].
 
 ```{r}
+library(officer)
+
 flex_table_design %>%
   hline(i=10, border=fp_border(color="grey70", style="dashed")) %>% 
   autofit()
@@ -158,7 +160,7 @@ Focusing now on the consumer study (*biscuits_consumer_test.xlsx*), let's displa
 ```{r, echo = TRUE, eval = TRUE, message=FALSE, warning=FALSE, results='hide'}
 file_path <- here("data","biscuits_consumer_test.xlsx") 
 
-mean_consumer <- read_xlsx(file_path, sheet="Time Consumption") %>%
+mean_consumer <- readxl::read_xlsx(file_path, sheet="Time Consumption") %>%
   dplyr::select(Product, `Time (min)`, `Nb biscuits`) %>%
   separate(`Time (min)`, c("Min", "Sec"), sep="min") %>%
   mutate(across(c("Min","Sec"), as.numeric)) %>% 
@@ -170,12 +172,11 @@ mean_consumer <- read_xlsx(file_path, sheet="Time Consumption") %>%
 
 Now that the data is ready, we can display it with some basics adjustments to make it look nicer.
 
-<!-- Table cap doesn't appear --> 
 ```{r gttablebasic, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE, tab.cap="Consumption time and number of biscuits eaten"}
 mean_consumer %>%
   gt () %>%
   cols_align(align = "center", columns = everything()) %>%
-  fmt_number(columns = c( "Time (min)", "Nb biscuits") , decimals = 2) %>%
+  fmt_number(columns = c("Time", "Nb biscuits") , decimals = 2) %>%
   tab_header(title = md ("**Consumption time and number of biscuits eaten**"), 
              subtitle = md ("*Average taken from 99 consumers*"))
 ```
@@ -267,17 +268,17 @@ To illustrate the use of `{ggplot2}`, both the sensory data (*biscuits_sensory_p
 ```{r, eval=TRUE, echo=TRUE}
 # Sensory Profiles Data
 file_path <- here("data","biscuits_sensory_profile.xlsx") 
-p_info <- read_xlsx(file_path, sheet="Product Info") %>% 
+p_info <- readxl::read_xlsx(file_path, sheet="Product Info") %>% 
   dplyr::select(-Type)
 
-sensory <- read_xlsx(file_path, sheet="Data") %>% 
+sensory <- readxl::read_xlsx(file_path, sheet="Data") %>% 
   inner_join(p_info, by="Product") %>% 
   relocate(Protein:Fiber, .after=Product)
 
 # Number of Biscuits Eaten Data
 file_path <- here("Data","biscuits_consumer_test.xlsx")
 
-Nbiscuits <- read_xlsx(file_path, sheet="Time Consumption") %>% 
+Nbiscuits <- readxl::read_xlsx(file_path, sheet="Time Consumption") %>% 
   mutate(Product = str_c("P", Product)) %>% 
   rename(N = `Nb biscuits`)
 ```
