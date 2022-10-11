@@ -3,27 +3,33 @@ knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 ```
 # Automated Reporting {#auto-report}
 
-## What and why Automated Reporting?
+>Learning a programming language is not only useful for the freedom it provides, it also increases largely the speed of the analysis thanks to the re-usability of the code. When many projects are built using the same base (e.g. similar questionnaires), the same analyses are often performed, also leading to similar reports. Automating the analysis process is simple by applying the same code to different dataset. But what about the reports? Should a new report be built manually for each project? 
+>In this section, we will show you how to build your own report directly from your code next to your analyses (or integrate your analysis within your reporting process). Such procedure has three main benefits, 1) build a new standardized report automatically for each new dataset analyzed, 2) mass-produce slides automatically, and 3) save you time for the interpretation of the results and the story-telling.
 
+## What and why Automated Reporting?
 
 Effective communication of results is among the essential duties of sensory scientists...and so is the data collection, data preparation, data analysis etc. Worst, the sometimes tedious mechanics of report production together with the sheer volume of data that many scientists must process combine to make reporting design and nice story-telling an afterthought in too many cases.
 Although this should preferably not be happening, it is necessary sometimes as presentation deadlines approach and time becomes limited. 
-
 Add to this work-load some last-minute changes due to either a change in the data, in the analysis, or maybe an error (e.g. copy/paste the wrong column, etc.) you have just been detected...how can we be sure that the latest version of the report is fully up-to-date, and that all the results/conclusions are correct? As the statistical software (e.g. R) is often separated from the reporting tool (e.g. Microsoft Office), it is easy to miss to transfer updated statistical outputs (e.g. values, tables, figures, etc.) to the report, hence creating inconsistencies.
 
-Let's consider another scenario, in which all the preliminary steps have been successfully done: you are now presenting your report to your manager or clients, and they come with a question such as: "Can we deep-dive into the results by looking at a particular group of consumers (e.g. gender split, or cluster split)?" Do you feel like going through the entire process again?
+Let's consider another scenario, in which all the preliminary steps have been successfully done. After a week of analyses and reporting, you present your report to your manager or clients, and they come with a question such as: "Can we deep-dive into the results by looking at a particular group of consumers (e.g. gender split, or cluster split)?" Do you feel like going through the entire process again?
 
-How would you feel if we would tell you that there is a way to build your report while running the analysis, by using the same script file? This means that in few clicks, say after updating the data to analyze (e.g. filter to the target group of consumers only), your report gets automatically re-generated with all the new updated results. Will you be interesting in such approach?
-
-Such solution seems ideal since it increases efficiency while reducing errors due to manual processing of results. More importantly, this gain in time and effort allow you designing nicer slides and building a better story. 
-
+How would you feel if we would tell you that there is a way to build your report while running the analysis, by using the same script file? This means that in few clicks, say after updating the data to analyze (e.g. filter to the target group of consumers only), your report gets automatically re-generated with all the new updated results. Such solution seems ideal since it increases efficiency while reducing errors due to manual processing of results. More importantly, this gain in time and effort allow you designing nicer slides and building a better story. 
 
 ## Integrating reports within analyses scripts
 
+In this section, let's integrate our report building process within our data analysis. By doing so, we do not focus on building a story yet. Instead, we improve our way of working by exporting directly all the statistical outputs that could^[We say *could* as we are in a process of mass-exportation of results, most of them being used for building the story although they may not be kept in the final deck.] be useful for our future story-telling. By doing so, we increase efficiency (especially if code can then be re-used for other studies) by *killing two birds with one stone*: We simultaneously run our analysis, create usable content for our final presentation, while reducing errors due to manual processing.
 
-In this section, let's integrate our report building process within our data analysis. By doing so, we do not focus on building a story yet. Instead, we improve our way of working by exporting directly all the statistical outputs that could^[We say *could* as we are in a process of mass-exportation of results, most of them being used for building the story although they would not be kept in the final deck.] be useful for our future story-telling. By doing so, we increase efficiency (especially if code can then be re-used for other studies) by *killing two birds with one stone*: We simultaneously run our analysis, create usable content for our final presentation, while reducing errors due to manual processing.
 
 Since Microsoft Office is often the tool used for sharing results, we will focus our attention in exporting results to Excel, PowerPoint, and Word. 
+
+As usual, let's start by loading the general package that we would need for our analyses (more specific packages being mentioned later.)
+
+```{r, eval=TRUE, echo=TRUE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(here)
+library(readxl)
+```
 
 <!-- 
 Integrating reporting within the analysis part, or integrating the analysis within the reporting part?
@@ -37,58 +43,44 @@ Integrating reporting within the analysis part, or integrating the analysis with
 To improve way of work (efficiency) and to keep track of steps taken along the way
 -->
 
-
-Note that in this chapter on automated reporting, some results (tables, figures) that are being created in one of the first section will be re-used in subsequent sections. In case you do not read this chapter linearly, you might get errors as you might be calling objects that do not exist yet. We advise you to read through the previous sections, find the script where the elements (table or figure) is being generated, run it, and resume your read.
-
-
-<!--  --------------------------------- Excel ---------------------------------  -->
+Note that in this chapter on automated reporting, some results (tables, figures) that are being created in one of the section may be re-used in subsequent sections. In case you do not read this chapter linearly, you might get errors as you might be calling objects that do not exist yet in your environment. If that should be the case, read through the previous sections to find the code where these elements are being generated, run it, and resume your read.
 
 ### Excel
 
-Although Excel is not our preferred tool for automated reporting, it is still one of the major ways to access and share data. Most data collection software offer the possibility to export data and results in Excel, while most data analysis software accept Excel format as inputs.  With the large use of Excel, it is no surprise that many of our colleagues or clients like to share data and results using spreadsheets. It is even less a surprise that R provides multiple solutions to import/export results from/to Excel. 
+Although Excel is not our preferred tool for automated reporting, it is still one of the major ways to access and share data. Most data collection software offer the possibility to export data and results in Excel, while most data analysis software accept Excel format as inputs.  With the large use of Excel, it is no surprise that many colleagues and/or clients like to share data and results using spreadsheets. It is even less a surprise that R provides multiple solutions to import/export results from/to Excel. 
 
 For importing Excel files, we have already presented the package `{readxl}` among others (see REF). For exporting results, two complementary packages (yet again, among others!) in terms of ease of use and flexibility in the outcome are proposed: `{writexl}` and `{openxlsx}`.
 
 As its name suggests, `{writexl}` is dedicated to exporting tables to Excel through the `write_xlsx()` function. Its use is very simple as it only takes as inputs the table (or list of tables)^[List of tables will generate multiple sheets within the same spreadsheet, one table being placed in each sheet.] to export to the file specified in the `path` parameter. 
 
-Let's illustrate this by using our *Sensory Profile.xlsx* file: Let's imagine that we would like to reduce our data set by only considering products that are high in Protein:
+Let's illustrate this by using our *biscuits_sensory_profile.xlsx* file: Let's imagine that we would like to reduce our data set by only considering products that are high in Protein:
 
-```{r}
-library(tidyverse)
-library(readxl)
-library(writexl)
-library(dplyr)
+```{r, eval=TRUE, echo=TRUE}
+file_path <- file.path("data", "biscuits_sensory_profile.xlsx")
+product_info <- read_excel(path=file_path, sheet="Product Info", range="A1:D12", col_names=TRUE)
 
-file_path <- file.path("data", "Sensory Profile.xlsx")
-
-product_info <- read_excel(path  = file_path,
-                           sheet = "Product Info",
-                           range = "A1:D12",
-                           col_names = TRUE)
-
-# Selecting Products with High Protein
 high_prot <- product_info %>% 
   filter(Protein %in% "High") %>% 
   pull(Product)
 
-# Filter Data to only keep Products with High Protein
-high_prot_data <- read_xlsx(path = file_path,
-                  sheet = "Data") %>% 
+high_prot_data <- read_xlsx(path=file_path, sheet="Data") %>% 
   filter(Product %in% high_prot)
-
-# Exporting Table to Excel
-write_xlsx(data, 
-           path = file.path("output", "High Protein Products only.xlsx"),
-           col_names = TRUE)
-
 ```
-<!-- When I run this code, I get an error for the last command. I guess you mean "high_prot_data" instead of "data" --> 
-  
-The export of tables using the `{writexl}` package is easy, yet simplistic as it does not allow formatting the tables (except for some minor possibilities for the header), nor does it allow exporting multiple tables within the same sheet. For more advanced exporting options, the use of **{openxlsx}** package is preferred as it allows more flexibility in structuring and formatting the Excel output.
 
-With `{openxlsx}`, the procedure starts with creating a workbook object (e.g. `wb`) using the `createWorkbook()` function. We can add worksheets to `wb` through the `addWorksheet()` function. 
+We then export this data into an excel sheet called *export.xlsx* that will be contained in our folder called *output*^[If the *output* folder does not exist, this code will return an error so make sure to create one.]:
 
-```{r}
+```{r, eval=FALSE, echo=TRUE}
+library(writexl)
+write_xlsx(high_prot_data, path="output/export.xlsx", col_names=TRUE)
+```
+
+The export of tables using `{writexl}` is intuitive and easy, yet simplistic as it does not allow formatting the tables (except for some minor possibilities for the header), nor does it allow exporting multiple tables within the same sheet. For more advanced exporting options, the use of `{openxlsx}` is preferred as it allows more flexibility in structuring and formatting the Excel output.
+
+>Note that `{readxl}` and `{openxlsx}` both contain a function called `read_xlsx()`. To avoid errors and to ensure we use the right function, we will call it as `readxl::read_xlsx()` for instance throughout this section. 
+
+With `{openxlsx}`, the procedure starts with creating a workbook object (e.g. `wb`) using `createWorkbook()`. We can add worksheets to `wb` through `addWorksheet()`. 
+
+```{r, eval=TRUE, echo=TRUE}
 library(openxlsx)
 
 # Create workbook object
@@ -96,29 +88,26 @@ wb <- openxlsx::createWorkbook()
 
 # Add a new worksheet
 addWorksheet(wb, sheetName = "Mean", gridLines = FALSE)
-
 ```
 
-Note that `addWorksheet()` allows controlling further the appearance of the worksheet:
+Note that with `addWorksheet()`, it is possible to control the appearance of the worksheet:
 
-  * show/hide grid lines using `gridLines`;
-  * color the sheet using `tabColour`;
-  * change the zoom on the sheet through `zoom`;
-  * show/hide the tab using `visible`;
-  * format the worksheet by specifying its size (`paperSize`) and orientation (`orientation`).
+* show/hide grid lines using `gridLines`;
+* color the sheet using `tabColour`;
+* change the zoom on the sheet through `zoom`;
+* show/hide the tab using `visible`;
+* format the worksheet by specifying its size (`paperSize`) and orientation (`orientation`).
 
 On a given worksheet, any table can be exported using `writeData()` or `writeDataTable()`, which controls where to write the table through the `startRow` and `startCol` options.
 
 Let's imagine we want to compute the sensory profiles of the products, and we want to export that into Excel. Rather then simply exporting the results, we want to customize the output a little bit by applying the Excel style named *TabelStyleLight9*:
 
-
-```{r}
-
+```{r, eval=TRUE, echo=TRUE}
 # Creating the Sensory Profiles with some Product Information
 p_info <- read_xlsx(file_path, sheet = "Product Info") %>% 
   dplyr::select(-Type)
 
-sensory <- read_xlsx(file_path, sheet="Data") %>% 
+sensory <- readxl::read_xlsx(file_path, sheet="Data") %>% 
   inner_join(p_info, by="Product") %>% 
   relocate(Protein:Fiber, .after=Product)
 
@@ -129,20 +118,17 @@ senso_mean <- sensory %>%
 
 
 # Exporting the Results to Excel
-writeDataTable(wb,
-               sheet = "Mean",
-               x = senso_mean, 
-               startCol = 1,
-               startRow = 1,
+writeDataTable(wb, sheet = "Mean", x = senso_mean, 
+               startCol = 1, startRow = 1,
                colNames = TRUE, rowNames = FALSE, 
                tableStyle = "TableStyleLight9")
-
-openXL(wb)
-
 ```
 
-
 At any time, you can visualize the Excel file that is being produced without exporting it yet using `openXL()`. This function comes very handy as it allows you checking that the output looks like what you would wish for.
+
+```{r, eval=FALSE, echo=TRUE}
+openXL(wb)
+```
 
 As can be seen, `writeData()` and `writeDataTable()` give us a lot of control on our export. For instance, we can:
 
@@ -154,42 +140,33 @@ As can be seen, `writeData()` and `writeDataTable()` give us a lot of control on
   * add a filter to the table using `withFilter`;
   * convert missing data to "#N/A" or any other string using `keepNA` and `na.string`.
 
-
 Rather than using some pre-defined formatting as was the case with `tableStyle`, let's consider some more advanced options in which we control (almost) everything. Let's start with setting up the formatting style we would like to apply:
 
-<!-- Did you mean 1 value after the decimal? --> 
-```{r}
-
+```{r, echo=TRUE, eval=TRUE}
 # Pre-define options to control the borders 
 options("openxlsx.borderColour" = "#4F80BD")
 options("openxlsx.borderStyle" = "thin")
 
-# Automatically set Number formats to 3 values after the decimal
+# Automatically set Number formats to 1 value after the decimal
 options("openxlsx.numFmt" = "0.0")
 
 # Change the font to Calibri size 10
 modifyBaseFont(wb,fontName = "Calibri", fontSize = 10)
 
 # Header Style (blue background, top/bottom borders, text centered/bold)
-headSty <- createStyle(fgFill = "#DCE6F1",
-                       border = "TopBottom",
-                       halign = "center",
-                       textDecoration = "bold")
-
+headSty <- createStyle(fgFill="#DCE6F1", border="TopBottom", halign="center", textDecoration="bold")
 ```
 
-  <!-- Is there a parentheses missing in 'setColWidths' ? -->
 Note that many more formatting options can be configured through:
 
   * `options()` to pre-define number formatting, border colors and style, etc.;
   * `modifyBaseFont()` to define the font name and font size;
   * `freezePane()` to freeze the first row and/or column of the table;
   * `createStyle()` to pre-define a style, or `addStyle()` to apply the styling to selected cells;
-  * `setColWidths` to control column width;
+  * `setColWidths()` to control column width;
   * `conditionalFormatting()` to format cells based on pre-defined conditions (see next for an example). 
   
-Let's export again the sensory profiles in a second sheet after applying these formatting:
-
+Let's export again the sensory profiles in a second sheet after applying these formatting options:
 
 ```{r}
 addWorksheet(wb, sheetName = "Mean (manual formatting)", gridLines = FALSE)
@@ -198,28 +175,17 @@ addWorksheet(wb, sheetName = "Mean (manual formatting)", gridLines = FALSE)
 freezePane(wb, sheet=2, firstRow=TRUE, firstCol=TRUE)
 
 # Export the data using writeData
-writeData(wb,
-          sheet =2,
-          x = senso_mean, 
-          startCol = 1,
-          startRow = 1,
-          colNames = TRUE, rowNames = FALSE, 
-          headerStyle = headSty)
-
-openXL(wb)
+writeData(wb, sheet=2, x=senso_mean, startCol=1, startRow=1, colNames=TRUE, rowNames=FALSE, headerStyle=headSty)
 
 ```
 
-
-You'll notice that the same table is now presented in a fairly different way. 
+You'll notice that the same table is now presented in a different way (use `openXL(wb)` to view it). 
 
 Let's now consider a third export of the sensory profiles, with an additional twist: for a given variable (i.e. column), the value is colored in red (resp. blue) if it is higher (resp. lower) than its mean. To do so, we need to use conditional formatting.  
 
 Let's start with creating two pre-defined parameters called `pos_style` (red) and `neg_style` (blue) using `createStyle()`that we will use to color the different cells. Let's also compute the overall mean per attribute.
 
-
-```{r openxlsx}
-
+```{r openxlsx, echo=TRUE, eval=TRUE}
 # Styles for conditional formatting
 pos_style <- createStyle(fontColour = "firebrick3", bgFill = "mistyrose1")
 neg_style <- createStyle(fontColour = "navy", bgFill = "lightsteelblue")
@@ -227,84 +193,45 @@ neg_style <- createStyle(fontColour = "navy", bgFill = "lightsteelblue")
 # Compute the overall mean
 overall_mean <- senso_mean %>% 
   summarize(across(where(is.numeric), mean))
-
 ```
-
 
 Let's then create a new worksheet in which we print the data of interest:
 
-```{r}
-
-# Add a new worksheet
+```{r, eval=TRUE, echo=TRUE}
 addWorksheet(wb, sheetName = "Conditional Formatting", gridLines=FALSE)
-
-# Write table: note that 
-writeDataTable(wb,
-               sheet = 3,
-               x = senso_mean, 
-               startCol = 1,
-               startRow = 1,
-               colNames = TRUE, rowNames = FALSE)
-
+writeDataTable(wb, sheet=3, x=senso_mean, startCol=1, startRow=1, colNames=TRUE, rowNames=FALSE)
 ```
 
+Finally, we color the cells according to the rules that was defined earlier. To do so, the decision whether `pos_style` or `neg_style` should be used is defined by the `rule` parameter from the `conditionalFormatting()`^[In `conditionalFormatting()`, you can specify to which `rows` and `cols` the formatting applies.] function.
 
-Finally, we color the cells according to the rules that was defined earlier. To do so, the decision whether `pos_style` or `neg_style` should be used is defined by the `rule` parameter from the `conditionalFormatting()`^[In `conditionalFormatting()`, you can specify to which `rows` and `cols` the formatting applies. In this example, `cols` takes `2` because the first column contains the row names.] function.
 
-
-```{r}
+```{r, eval=TRUE, echo=TRUE}
 # Adding formatting to the second column
 for (v in 1:ncol(overall_mean)){
-  
-  conditionalFormatting(wb,
-                        sheet = 3,
-                        cols  = v + 3,
-                        rows  = 1 + 1:nrow(senso_mean), 
-                        rule  = paste0(">", overall_mean[1,v]),
-                        style = pos_style)
-  
-  conditionalFormatting(wb,
-                        sheet = 3,
-                        cols  = v + 3,
-                        rows  = 1 + 1:nrow(senso_mean), 
-                        rule  = paste0("<", overall_mean[1,v]),
-                        style = neg_style)
-  
+  conditionalFormatting(wb, sheet=3, cols=v+3, rows=1+1:nrow(senso_mean), rule=paste0(">", overall_mean[1,v]), style=pos_style)
+  conditionalFormatting(wb, sheet=3, cols=v+3, rows=1+1:nrow(senso_mean), rule=paste0("<", overall_mean[1,v]), style=neg_style)
 }
-
-openXL(wb)
-
 ```
-
 
 Few things should be noted: 
 
-  * We want to run this for each sensory attribute, hence the `for` loop that goes from 1 to the number of columns stored in `overall_mean` (`overall_mean` only contains the overall mean scores for the sensory attributes);
-  * `senso_mean` however contains 3 extra columns: `Product`, `Protein`, and `Fiber` hence the parameter `cols = v + 3`;
-  * We apply the formatting to all the rows except the header, hence `rows = 1 + 1:nrow(senso_mean)`;
-  * Finally, we apply `pos_style` (resp. `neg_style`) if the value is larger (resp. lower) than the overall mean for that attribute using `rule = paste0(">", overall_mean[1,v])`.
+* We want to run this for each sensory attribute, hence the `for` loop that goes from 1 to the number of columns stored in `overall_mean` (`overall_mean` only contains the overall mean scores for the sensory attributes);
+* `senso_mean` however contains 3 extra columns: `Product`, `Protein`, and `Fiber` hence the parameter `cols = v + 3`;
+* We apply the formatting to all the rows except the header, hence `rows = 1 + 1:nrow(senso_mean)`;
+* Finally, we apply `pos_style` (resp. `neg_style`) if the value is larger (resp. lower) than the overall mean for that attribute using `rule = paste0(">", overall_mean[1,v])`.
  
 
-Note that once the spreadsheet is complete, we create the file using `saveWorkbook()` by specifying the name of the workbook `wb` and its path through `file`. In case such workbook already exists, it can be overwritten using `overwrite`. 
+Note that once the spreadsheet is complete, we export the results using `saveWorkbook()` by specifying the name of the workbook (`wb`) and its path through `file`. In case such workbook already exists, it can be overwritten using `overwrite`. 
 
-```{r}
-
-saveWorbook(wb, file="temp/excel export.xlsx")
-
+```{r, eval=FALSE, echo=TRUE}
+saveWorkbook(wb, file="output/export2.xlsx")
 ```
- <!-- I got this message when I ran this last code saying: Error in saveWorbook(wb, file = "temp/excel export.xlsx") : 
-  could not find function "saveWorbook" -->
 
-For more details on using **{openxlsx}** see <https://rdrr.io/cran/openxlsx/>.
-
-
-<!--  --------------------------------- PowerPoint ---------------------------------  -->
-
+For more details on using **{openxlsx}**, please visit (https://rdrr.io/cran/openxlsx/)<https://rdrr.io/cran/openxlsx/>.
 
 ### PowerPoint
 
 #### Creating a PowerPoint Deck
-
 
 Throughout the years, PowerPoint became one of the main support for presenting results, whether it is in academia, in conference, or in companies. It is hence important for us to show how to generate reports in PowerPoint from R directly. This can be done in different ways, yet we propose to use the `{officer}`^[It should be noted that {officer} contains conflicting function names with other packages we use (e.g. `read_xlsx()`). To ensure you use the right function, call the function from the package of interest (e.g. `readxl::read_xlsx()`).] package, as its application is vast while still remaining easy to use.
 
