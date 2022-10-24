@@ -133,7 +133,7 @@ Such table is then submitted to PCA. R proposes many solutions to run such analy
 
 It should however be noted that the `PCA()` function does not accept tibbles. Instead, the table should be stored in a matrix or data frame which contain the individuals' names (here the product names) as row names. Fortunately, there is an easy solution that allows converting a tibble into a data frame (`as.data.frame()`) and passing the `Product` column into row names (`column_to_rownames(var="Product")`).
 
-Since the data also contain two qualitative variables in `Protein` and `Fiber`, they should either be removed prior to running the analysis, or better be projected as supplementary through the `quali.sup` parameter from `PCA()`. Finally, since `POpt` is a commercial product, let's not include it in the analysis per se (it is not contributing to the construction of the dimensions). Instead we project it as supplementary (through `ind.sup`) to illustrate where it would be located on the space if it were.
+Since the data also contain two qualitative variables in `Protein` and `Fiber`, they should either be removed prior to running the analysis, or better be projected as supplementary through the `quali.sup` parameter from `PCA()`. Finally, since `POpt` is an optimized product, let's not include it in the analysis per se (it is not contributing to the construction of the dimensions). Instead we project it as supplementary (through `ind.sup`) to illustrate where it would be located on the space if it were.
 
 ```{r, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
 library(FactoMineR)
@@ -793,7 +793,7 @@ The sensory space is stored in `senso`, whereas the surface response plot inform
 * `PrefMap$f2`: contains the coordinates on dimension 2 in which predictions have be made;
 * `PrefMap$depasse`: contains the percentage of consumers that accept a product at each point of the space. This matrix is defined in such a way that `PrefMap$f1` links to the rows of the matrix, and `PrefMap$f2` links to the columns.
 
-Last but not least, `POpt` (which coordinates are stored in `senso_pca$ind.sup$coord`) can be projected on that space in order to see if this commercial sample could be considered as an optimized sample in terms of consumers' liking/preference.
+Last but not least, `POpt` (which coordinates are stored in `senso_pca$ind.sup$coord`) can be projected on that space in order to see how this optimized sample is considered in terms of consumers' liking/preference.
 
 Let's start with preparing the data by transforming everything back into a tibble:
 
