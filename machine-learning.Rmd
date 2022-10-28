@@ -4,13 +4,13 @@ knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 
 # Machine Learning {#machine-learning}
 
-Machine Learning is recently a hot topic in the sensory and consumer science field, proven to be one of the most game-changing technological advancements to support CPG companies in the development of new products, making a considerable role in speeding up and reducing the cost or steps involved in the R&D process at the same time. In today's fast-moving and increasingly competitive corporate world, companies that are embracing, adopting and opening their minds to digital transformation and artificial intelligence, moving towards the age of automation, are not one but many steps ahead of their competitors.
+Machine Learning is recently a hot topic in the sensory and consumer science field, proven to be one of the most game-changing technological advancements to support CPG companies in the development of new products, making a considerable role in speeding up and at the same time reducing the cost or steps involved in the R&D process. In today's fast-moving and increasingly competitive corporate world, companies that are embracing, adopting and opening their minds to digital transformation and artificial intelligence, moving towards the age of automation, are not one but many steps ahead of their competitors.
 
 Machine Learning (ML) is a branch of artificial intelligence based on the idea that systems can learn from data, that has the capability to evolve. Generally speaking, ML refers to various programming techniques that are able to process large amounts of data and extract useful information from it. It refers to a method of data analysis that build intelligent algorithms that can automatically improve through the experience gained from the data and identify patterns or make decisions with minimal human intervention, without being explicitly programmed. ML focuses on using data and algorithms to mimic the way humans learn, gradually improving their accuracy.
 
-The definition of the objectives or the situation where ML would bring value refers to the very first step of the process. Once that is clear, the next step is to collect data or dig into the historical data sets to understand what information is available and/or has to be obtained. The data varies according to the situation, but it may refers to product composition or formulation, analytical measurements (E.g., pH, color, rheology, instrumental texture, GCMS, etc), sensory attributes (E.g., creaminess, sweetness, bitterness, texture, consistency, etc), or consumer behavior (E.g., frequency of consumption/use, consumption/use situation, etc.), demographics (E.g., age, gender, skin type, etc) and responses (E.g. liking, CATA questions, JAR questions, etc). 
+The definition of the objectives or the situation where ML would bring value refers to the very first step of the process. Once that is clear, the next step is to collect data or dig into the historical data sets to understand what information is available and/or has to be obtained. The data varies according to the situation, but it may refers to product composition or formulation, analytical measurements (E.g., pH, color, rheology, instrumental texture, GCMS, etc), sensory attributes (E.g., creaminess, sweetness, bitterness, texture, consistency, etc), or consumer behavior (E.g., frequency of consumption/use, consumption/use situation, etc.), demographics (E.g., age, gender, skin type, etc) and consumer responses (E.g. liking, CATA questions, JAR questions, etc). 
 
-The data set size and quality are very important and will directly impact the model's robustness. There will be specific recommendations on that according to the situation, data type, and objectives. In general, the higher the number of objects, which is usually the number of products or samples, the better, with being 10-14 the minimum recommended. The number of measurements (analytical,  sensory and/or consumer measurements) and the number of consumers evaluating the products are also very relevant to the model's quality. In the Sensory and consumer science field, the number of measurements is usually very high, so not something likely to worry about. Regarding the number of consumers, the minimum number recommended would be 100, but the more the better. Regarding data quality, one of the most important aspects, besides the standardization of data collection, refers to the variability of the products/samples. The higher the variability between samples, the broader the space the model will be covering. Additionally, it is strongly recommended the capture the consumers individual differences, not only demographic information, but also JAR or IPM questions and conducting the study in a sequential monadic design.
+The data set size and quality are very important and will directly impact the model's robustness. There will be specific recommendations on that according to the situation, data type, and objectives. In general, the higher the number of objects, which is usually the number of products or samples, the better, with being 12-15 the minimum recommended. The number of measurements (analytical,  sensory and/or consumer measurements) and the number of consumers evaluating the products are also very relevant to the model's quality. In the sensory and consumer science field, the number of measurements is usually very high, so not something likely to worry about. Regarding the number of consumers, the minimum number recommended would be 100, but the more the better. Regarding data quality, one of the most important aspects, besides the standardization of data collection, refers to the variability of the products/samples. The higher the variability between samples, the broader the space the model will be covering. Additionally, it is strongly recommended the capture the consumers individual differences, not only demographic information, but also JAR or IPM questions and conducting the study in a sequential monadic design.
 
 According to the purposes and goals, there are some variations on how to group or classify ML algorithms which can be divided into three prominent methods: supervised learning, unsupervised learning, and reinforcement learning. In this chapter, we will be focusing on the first two approaches.
  
@@ -30,7 +30,7 @@ Unsupervised machine learning is commonly used to segment consumers into groups 
 
 In the sensory and consumer science field, unsupervised learning models are usually used for Clustering and Dimensionality Reduction.
 
-Clustering is a technique used to discover in a high-dimensional data, groups of observations that are similar to each other and significantly different from the rest. In other words, it is a method that groups unlabeled data based on their similarities and differences in the way that objects with most similarities remains into a group and has less or no similarities with the objects of another group.As previously mentioned, a very common application is to cluster consumers and classify groups of products based on their similarities/dissimilarities. Clustering algorithms can be categorized into a few types, which are Exclusive (E.g. k-means), Hierarchical and Probabilistic clustering (E.g. Gaussian Mixture Model). The first two are the ones most used and well known in the sensory field. 
+Clustering is a technique used to discover in a high-dimensional data, groups of observations that are similar to each other and significantly different from the rest. In other words, it is a method that groups unlabeled data based on their similarities and differences in the way that objects with most similarities remains into a group and has less or no similarities with the objects of another group. As previously mentioned, a very common application is to cluster consumers and classify groups of products based on their similarities/dissimilarities. Clustering algorithms can be categorized into a few types, which are Exclusive (E.g. k-means), Hierarchical and Probabilistic clustering (E.g. Gaussian Mixture Model). The first two are the ones most used and well known in the sensory field. 
 
 Dimensionality reduction is a technique used to transform a high dimensional space into a low-dimensional space that retains some meaningful properties of the original data. It refers to the process of reducing the number of features/attributes in a data set while maintaining as much of the variation as possible. This method is a important not only as a technique for data visualization, but also as a pre processing step to reduce training time and computational resources, improve ML algorithms performance/accuracy due to less misleading data, avoid problems of overfitting, find latent variables, remove redundant features and noise, among others. There are numerous dimensionality reduction methods that can be used according to the data type and different requirements. The most common and well known dimensionality reduction methods used in the sensory and consumer science field are the ones that apply linear transformations, including Principal Components Analysis (PCA) and Factor Analysis (FA).
 
@@ -86,7 +86,7 @@ reduced_dataset <- data.frame(pca_results$ind$coord[, 1:2]) %>%
 
 The PCA shows that there are apparently 3 distinct groups of wines. 
 
-Let's now use its results for the clustering analysis. Although agglomerative hierarchical clustering is more common in the sensory and consumer research, it was already shown in chapter 10, so for this example we decided to use a different solution - k-means clustering. K-means clustering is also a very known unsupervised machine learning algorithm for partitioning a given data set in a way that the total intra-cluster variation is minimized. Both approaches (hierarchical clustering and k-means) are fairly used, being the main different the rule of forming clustering and the requirement to pre-specify the number of cluster to be produced the main different between them. Detailed information about clustering methods and analysis can be found in the book Practical Guide to Cluster Analysis in R (REF).
+Let's now use its results for the clustering analysis. Although agglomerative hierarchical clustering is more common in the sensory and consumer research, it was already shown in Chapter \@ref(data-analysis), so for this example we decided to use a different solution - k-means clustering. K-means clustering is also a very known unsupervised machine learning algorithm for partitioning a given data set in a way that the total intra-cluster variation is minimized. Both approaches (hierarchical clustering and k-means) are fairly used, being the main different the rule of forming clustering and the requirement to pre-specify the number of cluster to be produced the main different between them. Detailed information about clustering methods and analysis can be found in the book *Practical Guide to Cluster Analysis in R: Unsupervised Machine Learning* by Alboukadel Kassambara (@Kassambara2017).
 
 Here we use k-means clustering as an example. The first step of k-means clustering is to estimate the optimal number of clusters (k), and this can be conveniently done using the function `fviz_nbclust ()` from `{factoextra}` package. The plot represents the variance within the clusters and the bend, also called "elbow", indicates that additional clusters beyond the third have little value. In our situation, we will then classify the observations into 3 clusters.
 
@@ -104,8 +104,6 @@ set.seed(123)
 
 km_dw <- kmeans(reduced_dataset, 3, nstart = 20)
 
-km_dw
-
 fviz_cluster(
   list(data = reduced_dataset, cluster = km_dw$cluster),
   ellipse.type = "norm",
@@ -119,23 +117,18 @@ In the resulting plot, we can easily see the observation represented by points, 
 
 ### Supervised learning
 
-There are many ways to carry out supervised machine learning, and it's by itself a big topic. We recommend reading (xxx) for more in-depth information. In sensory and consumer science, supervised learning is commonly carried out using a type of regression, using consumer ratings as output (target), and other information of products (i.e. sensory profiles) as input.    
+There are many ways to carry out supervised machine learning, and it's by itself a big topic. We recommend reading "Hands-On Machine Learning with R", by Bradley Boehmke and Brandon Greewell (https://bradleyboehmke.github.io/HOML/) for more in-depth information. In sensory and consumer science, supervised learning is commonly carried out using a type of regression, using consumer ratings as output (target), and other information of products (i.e. sensory profiles) as input.    
 
 #### Regression
 
 Regression methods approximate the target variable^[This is a bit of simplification. 
 In some cases it is some transformation of combination of predictors that 
 approximates target variable. An example of this is logistic regression.]
-with (usually linear) combination of predictor variables. 
-
-There are multiple regression algorithms varying by type of data they can handle,
-type of target variable and additional aspects like ability to perform 
+with (usually linear) combination of predictor variables. There are multiple regression algorithms varying by type of data they can handle, type of target variable and additional aspects like ability to perform 
 dimensionality reduction. We will take a walk through the ones most relevant for 
 sensory and consumer science.
 
-##### Linear regression
-
-The simplest and most popular variant is linear regression in which continuous 
+**Linear regression**: The simplest and most popular variant is linear regression in which continuous 
 target variable is approximated as linear combination of predictors in a way that 
 minimizes sum of squared estimates of errors (SSE). It can be for example used to 
 predict consumer liking of a product based on it's sensory profile, but user has
@@ -144,16 +137,12 @@ reasonable range of target values. This can be addressed by capping predictions
 to desired range. Functions in R to apply linear regression are: `lm()` and `glm()`
 or `parsnip::linear_reg() %>% parsnip::set_engine("lm")` when using `tidymodels` workflow.
 
-##### Logistic regression
-
-Logistic regression is an algorithm which by use of logistic transformation allows
+**Logistic regression**: Logistic regression is an algorithm which by use of logistic transformation allows
 to apply the same approach as linear regression to cases with binary target variables.
 It can be used in R with `glm(family = "binomial")` or
 `parsnip::logistic_reg() %>% parsnip::set_engine("glm")` when using `tidymodels` workflow.
 
-##### Penalized regression 
-
-It is often that the data we want to use for modeling have a lot of predictor 
+**Penalized regression**: It is often that the data we want to use for modeling have a lot of predictor 
 variables, possibly with lot of high correlations. In such cases linear/logistic
 regression may become unstable and produce unreasonable predictions. This can be
 addressed by use of so called penalized regression. It is a special case where 
@@ -174,18 +163,14 @@ $SSE + \lambda_1 \sum|\beta| + \lambda_2 \sum|\beta|^2$.
 Penalized regression can be also ran in `tidymodels` workflow with 
 or `parsnip::linear_reg() %>% parsnip::set_engine("glmnet")`.
 
-##### MARS
-
-One limitation of all mentioned so far methods is that they assume linear relationship
+**MARS**: One limitation of all mentioned so far methods is that they assume linear relationship
 between predictor and target variables. Multivariate adaptive regression spline (MARS)
 addresses this by modeling non-linearities with piece wise linear function. This
 gives a nice balance between simplicity and ability to fit complex data, for example
 $\Lambda$-shaped once where there is a maximal point from which function decreases 
 in both directions. In R this model can be accessed via `earth::earth()` function.
 
-##### PLS
-
-In case of multiple target variables one can apply partial least squares (PLS) regression
+**PLS**: In case of multiple target variables one can apply partial least squares (PLS) regression
 which, similarly to PCA looks for components that maximizes explained variance of
 the predictors, but at the same time also maximizes their correlation to target variables.
 PLS can be applied with `lm()` specifying multiple targets or in `tidymodels` workflow
@@ -220,7 +205,7 @@ noise in training data). Also, lack of clear interpretation may be not acceptabl
 in some business specific use cases. The later problem can be addressed by use of 
 explanation algorithms that will be discussed in later part of this chapter.
 
-##### Random forests
+#### Random forests
 
 A random forest is a set of decision trees, each one trained on random subset 
 of observations and/or predictors. The final prediction is an average of individual
