@@ -1,15 +1,14 @@
 library(tidyverse)
 library(readxl)
 library(here)
-
 library(tidytext)
 
-file_path <- here("data","cider_data.xlsx") 
-
+file_path <- here("data","cider_text_data.xlsx") 
 cider_og <- read_xlsx(file_path) %>% 
   mutate(sample = as.character(sample))
 
-  # Tokenization
+# Tokenization ------------------------------------------------------------
+
 cider <- cider_og %>% 
   unnest_tokens(tokens, comments, token="regex", pattern="[;|,|:|.|/]", to_lower=FALSE)
 

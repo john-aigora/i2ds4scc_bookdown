@@ -3,19 +3,21 @@ knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 ```
 # Text Analysis {#text-analysis}
 
+>In the previous chapters, most transformations and analyses were performed on *simple* data, i.e. data that represent something very specific, understandable, predictable, and stand-alone. For numerical variables (e.g. sensory attributes), one data entry is simply a number often defined within a range. For categorical variables or factors, each data entry is a pre-defined entry (e.g. product names, or a category for a given variable) chosen from a list of possible options. But there are situations where the data is intrinsically more *complex* and less structured. 
+A good illustration of such *complex* situation is text analysis. Before collecting the data, we do not know explicitely what kind of information we will get (with open-ended questions, respondents are free to say/write whatever they want!). In that case, each data entry (from words, to sentences, to paragraphs...) is more *messy* as it may contain relevant and less informative elements. The goal of the analysis is then to extract the relevant information from the data and to summarize it automatically. In this section, we will show you how such data can be processed and how infromation can be extracted.
+
 Humans exchange information through the use of languages. There is of course a very large number of different languages, each of them having their own specificity. The science that studies languages per se is called *linguistics*: It focuses on areas such as phonetics, phonology, morphology, syntax, semantics, and pragmatics.
 
-Natural Language Processing (NLP) is a sub-field of linguistics, computer science, and artificial intelligence. It connects computers to human language by processing, analyzing, and modeling large amounts of natural language data. One of the main goals of NLP is to "understand" the contents of documents, and to extract accurately information and insights from those documents.
+Natural Language Processing (NLP) is a sub-field of linguistics, computer science, and artificial intelligence. It connects computers to human language by processing, analyzing, and modeling large amounts of natural language data. One of the main goals of NLP is to *understand* the contents of documents, and to extract accurately information and insights from those documents. In Sensory and Consumer Research, we often refer to NLP when we talk about *Text Analysis* .
 
-In Sensory and Consumer Research, *Text Analysis* usually refers to NLP.
+Since the fields of linguistics and NLP are widely studied, a lot of documentations is already available online. The objective of this chapter is to provide sufficient information for you to be familiar with textual data, and to give you the keys to run the most useful analyses in Sensory and Consumer Research. 
 
-Since the fields of linguistics and NLP are widely studied, a lot of documentations is already available [REF REF REF?]. 
-The objective of this chapter is to provide sufficient information for you to be familiar with textual data, and to give you the keys to run the most useful analyses in Sensory and Consumer Research. For those who would like to dive deeper into NLP, we recommend reading (@Silge2017, @Becue-Bertaut2019), and (@Hvitfeldt2021) for more advanced techniques.
-
+For those who would like to dive deeper into NLP, we recommend reading (@Silge2017, @Becue-Bertaut2019), and (@Hvitfeldt2021) for more advanced techniques.
 
 ## Application of Text Analysis in Sensory and Consumer Science
+
 ### Text analysis as way to describe products
-<!-- Make sure the number of the section is ok / title can be rephrased if needed-->
+
 In recent years, open-ended comments have gained interest as it is the fastest, safest, most unbiased way to collect spontaneous data from participants (@Piqueras2015).
 
 Traditionally, most SCS questionnaires relied primarily on closed questions, to which open-ended questions were added to uncover the consumers' reasons for liking or disliking products. In practice, these open-ended questions were positioned right after liking questions, and aimed at providing some understanding about why a product may or may not be liked, and to give the participants a chance to reduce their frustration by explaining their responses to certain questions. As a result of such practices, these questions were usually not deeply analyzed.
@@ -26,88 +28,98 @@ The importance of open-ended questions increased further as it has been shown th
 
 The inclusion of open-ended questions as one of the primary elements of sensory and consumer tasks blurs the line with other fields, including psychology and sociology where these qualitative methods originated. More recently, advances in the technology (web-scraping, social listening, etc.) opened new doors that brought SCS closer to other fields such as marketing for instance. The amount of data that are collected with such techniques can be considerably larger, but the aim of the analysis stays the same: extracting information from text/comments.
 
-
 ### Objectives of Text Analysis
-
 
 Open-ended comments, and more generally textual responses in questionnaires, are by definition qualitative. This means that the primary analysis should be qualitative. It could simply consist in reading all these comments and eventually summarizing the information gathered. But as the number of comments increases, such an approach quickly becomes too time and energy consuming for the analysts. How can we transform such qualitative data into quantitative measures? How can we digest and summarize the information contained in these comments without losing the overall meaning of the messages (context)?
 
 One easy solution is to simply count how often a certain word is being used in a given context (e.g. how often the word `sweet` is being associated to each product evaluated). However, if such a solution is a reasonable one to start with, we will show some alternatives that allow going deeper into the understanding of textual inputs. This is the objective of the textual analysis and NLP that we are going to tackle in the next sections.
 
+### Classical *text analysis* workflow
+
+In SCS, the generic notion of *text analysis* often includes any step or procedure that allows going from the raw data (e.g. consumer comments, text scrapped from website or social media, etc.) to results and insights. However, such process requires many separate steps, often defined as following:
+
+1. **Tokenization** is the step that splits the raw data into statistical units of interest, also called token^[A token can be a single word, a group of *n*-words (also know as *n-grams*), a sentence, or an entire document.].
+2. Non-informal words or **stopwords** (e.g. *and*, *I*, *you*, etc.) are then removed from the data to facilitate the extraction of the information.
+3. **Stemming** consists in reducing words to their root form, hence grouping the different variants of the same word (e.g. singular/plural, infinitive or conjugated verbs, etc.)
+4. An extra (optional) step called **lemmatization** consists in grouping words that have similar meanings under one umbrella. The advantage of such procedure is that it simplifies further the analysis and its interpretation. However, it can be time consuming and more importantly, it relies on the analyst own judgement: two different analysts performing the same task on the same data will obtain different end results.
+5. The final data is then **analyzed** and summarized (often through counts) to extract information or patterns.
 
 ### Warnings
 
-
-Languages are complex, as many aspects can influence the meaning of a message. For instance, in spoken languages, the intonation is as important as the message itself. In written languages, non-word items (e.g. punctuation, emojis) may also completely change the meaning of a sentence (e.g.irony). Worst, some words have different meanings depending on their use (e.g. *like*), and the context of the message provides its meaning. Unfortunately, the full *context* is only available when analyzed manually (e.g. when the analyst reads all the comments), meaning that automating analyses do not always allow capturing it properly. In practice however, reading all the comments is not a realistic solution. This is why we suggest to automate the analysis to extract as much information as possible, before going back to the raw text to ensure that the conclusions drawn actually match the data. 
-
+Languages are complex, as many aspects can influence the meaning of a message. For instance, in spoken languages, the intonation is as important as the message itself. In written languages, non-word items (e.g. punctuation, emojis) may also completely change the meaning of a sentence (e.g.irony). Worst, some words have different meanings depending on their use (e.g. *like*), and the context of the message provides its meaning. Unfortunately, the full *context* is only available when analyzed manually (e.g. when the analyst reads all the comments), meaning that automating analyses do not always allow capturing it properly. In practice however, reading all the comments is not a realistic solution. This is why we suggest to automate the analysis to extract as much information as possible, before going back to the raw text to ensure that the conclusions drawn match the data. 
 
 ## Illustration using Sorting Task Data
 
+Let's start with loading the usual packages of need:
 
-To illustrate this chapter, the data set that we are using was kindly shared by Dr. Jacob Lahne. It is part of a study that aimed at developing a CATA lexicon for Virginia Hard (Alcoholic) Ciders (REF REF REF.). The data can be found in *cider_data.xlsx*.
+```{r, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(here)
+library(readxl)
+```
 
+The data set used for illustration was kindly shared by Dr. Jacob Lahne. It is part of a study that aimed in developing a CATA lexicon for Virginia Hard (Alcoholic) Ciders (REF REF REF.). The data can be found in *cider_text_data.xlsx*.
+
+Let's also import the data to our R session:
+
+```{r, echo=TRUE, eval=TRUE}
+file_path <- here("data","cider_text_data.xlsx") 
+cider_og <- read_xlsx(file_path) %>% 
+  mutate(sample = as.character(sample))
+```
 
 ### Data Pre-processing
 
+Before starting, it is important to mention that there is a large variety of R-based solutions and R packages that handle textual data, including:
 
-Before starting, it is important to mention that there is a large variety of R packages that handle textual data ^[Readers who are interested in the Reinert textual clustering method (REF REF Reinert 1983) can also have a look at the project IRaMuTeQ (http://www.iramuteq.org/), which is a free software dedicated to text analysis and developed in R and Python.]. Among others, we can mention the `{tm}` package for text mining, `{tokenizers}` to transform strings into tokens, `{SnowballC}` for text stemming, `{SpacyR}` for Natural Language Processing, or `{Xplortext}` for deep understanding and analysis of textual data. 
-<!-- More relevant package to add? -->
-<!-- Would be easier to read if the packages above are listed with bullet points -->
+* The IRaMuTeQ project (REF REF Reinert 1983) is a free software dedicated to text analysis and developed in R and Python. It includes Reinert textual clustering method (for more information, see [http://www.iramuteq.org/](http://www.iramuteq.org/))
+* `{tm}` package for text mining
+* `{tokenizers}` to transform strings into tokens
+* `{SnowballC}` for text stemming
+* `{SpacyR}` for Natural Language Processing
+* `{Xplortext}` for deep understanding and analysis of textual data. 
 
-However, to ensure a continuity with the rest of the book, we will emphasize the use of the `{stringr}` package for handling strings (here text) combined with the `{tidytext}` package. Note that `{stringr}` is part of the `tidyverse` and thus applies the `{tidyverse}` philosophy to textual data. 
+However, to ensure a continuity with the rest of the book, we will emphasize the use of the `{stringr}` package for handling strings (here text) combined with the `{tidytext}` package. Note that `{stringr}` is part of the `{tidyverse}` and both packages fit very well within the `{tidyverse}` philosophy. 
 
+Let's load this additional package:
+
+```{r, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
+library(tidytext)
+```
 
 ### Introduction to working with strings (`{stringr}`)
 
+The `{stringr}` package brings a large set of tools that allow working with strings. Most functions included in `{stringr}` start with `str_*()`. Here are some of the most convenient functions:
 
-As mentioned earlier, `{stringr}` is one of the packages included in the `{tidyverse}`. This package brings a large set of tools that allow working with strings. Most functions included in `{stringr}` start with `str_*()`. Here are some of the most convenient functions:
-
-  - `str_length()` to get the length of the string;
-  - `str_c()` to combine multiple strings into one;
-  - `str_detect()` to search for a pattern in a string, and `str_which()` find the position of a pattern within the string;
-  - `str_extract()` and `str_extract_all()` to extract the first (or all) matching pattern from a string;
-  - `str_remove()` and `str_remove_all()` to remove the first (or all) matching pattern from a string;
-  - `str_replace()`, `str_replace_all()`, to replace the first (or all) matching pattern with another one.
+* `str_length()` to get the length of the string;
+* `str_c()` to combine multiple strings into one;
+* `str_detect()` to search for a pattern in a string, and `str_which()` find the position of a pattern within the string;
+* `str_extract()` and `str_extract_all()` to extract the first (or all) matching pattern from a string;
+* `str_remove()` and `str_remove_all()` to remove the first (or all) matching pattern from a string;
+* `str_replace()`, `str_replace_all()`, to replace the first (or all) matching pattern with another one.
   
 It also includes *formatting* options that can be applied to strings, including:
 
-  - `str_to_upper()` and `str_to_lower()` to convert strings to uppercase or lowercase;
-  - `str_trim()` and `str_squish()` to remove white spaces;
-  - `str_order` to order the element of a character vector.
+* `str_to_upper()` and `str_to_lower()` to convert strings to uppercase or lowercase;
+* `str_trim()` and `str_squish()` to remove white spaces;
+* `str_order` to order the element of a character vector.
   
-Examples of application of some of these functions will be provided in the next sections.
+Examples of application of some of these functions is shown in the next sections.
   
-
 ### Tokenization
-
 
 The analysis of textual data starts with defining the statistical unit of interest, also known as *token*. This can either be a single word, a group of words, a sentence, a paragraph, a whole document etc. The procedure to transform the document into tokens is called *tokenization*. 
 
-Let's have a look at our data here:
+By looking at our data (`cider_og`), we can notice that for each sample evaluated, respondents are providing a set of descriptions, which can be a single word (e.g. `yeasty`) or a group of words (`like it will taste dry and acidic`). We can also note that this data set is fairly well structured since the responses are separated by a `;` or `,`.
 
+Let's transform this text into tokens using `unnest_tokens()` from the `{tidytext}` package. The function `unnest_tokens()` proposes different options for the tokenization including by *words*, *ngrams*, or *sentences* for instance. However, let's take advantage of the data structure and use a specific character to separate the tokens (here `;`, `,` etc.). The `regex` parameter allows us to specify the patterns to consider.
 
-```{r}
-library(tidyverse)
-library(readxl)
-library(here)
-
-file_path <- here("data","cider_data.xlsx") 
-cider_og <- read_xlsx(file_path) %>% 
-  mutate(sample = as.character(sample))
-
+```{r, eval=TRUE, echo=TRUE}
+cider <- cider_og %>% 
+  unnest_tokens(tokens, comments, token="regex", pattern="[;|,|:|.|/]", to_lower=FALSE)
 ```
 
-
-We notice here that for each sample evaluated, respondents are providing a set of descriptions, which can be a single word (e.g. `yeasty`) or a group of words (`like it will taste dry and acidic`). We can also note that this data set is fairly well structured since the responses are separated by a `;` or `,`.
-
-Let's transform this text into tokens using `unnest_tokens()` from the `{tidytext}` package. The function `unnest_tokens()` proposes different options for the tokenization, including by "words", "ngrams", or "sentences" for instance. However, in our example we can build on the data set structure and use a specific character to separate the tokens (here `;`, `,` etc.). For this, we are using "regex" that allows us to specify the different patterns.
-
-<!-- Maybe is a good idea to add" library(tidytext) at the neginning of the code? --> 
-<!-- It is not a big deal but I guess it is the first time in the book I see the code in (). Maybe you want to keep consistent or add a little explanation for the reader. --> 
-```{r}
-(cider <- cider_og %>% 
-  unnest_tokens(tokens, comments, token="regex", pattern="[;|,|:|.|/]", to_lower=FALSE))
-```
+As can be seen, the original comments from consumers are now split into tokens, increasing the size of the file from 168 individual comments to 947 rows of tokens.
 
 This procedure already provides some interesting information as we can readily count word usage and answer questions such as "how often the word *apple* is used to describe each samples?" for instance. However, a deeper look at the data shows some inconsistencies since some words starts with a space, or have capital letters (remember that R is case-sensitive!). Further pre-processing is thus needed.
 
