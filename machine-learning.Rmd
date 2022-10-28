@@ -4,6 +4,8 @@ knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 
 # Machine Learning {#machine-learning}
 
+> Machine Learning is a very interesting topic in the sensory and consumer science field, that has gained a lot of attention in recent years. This is a more complex and much broader topic, that deserves a whole book dedicated to it. Our intention in this chapter is to introduce the Machine Learning concept, highlight its main applications in the field, point out the differences between supervised and unsupervised machine learning models and present some basic code and steps for the reader to get familiar. Throughout this chapter, we suggest some specialized resources that can help you to dig deeper into this topic.
+
 Machine Learning is recently a hot topic in the sensory and consumer science field, proven to be one of the most game-changing technological advancements to support CPG companies in the development of new products, making a considerable role in speeding up and at the same time reducing the cost or steps involved in the R&D process. In today's fast-moving and increasingly competitive corporate world, companies that are embracing, adopting and opening their minds to digital transformation and artificial intelligence, moving towards the age of automation, are not one but many steps ahead of their competitors.
 
 Machine Learning (ML) is a branch of artificial intelligence based on the idea that systems can learn from data, that has the capability to evolve. Generally speaking, ML refers to various programming techniques that are able to process large amounts of data and extract useful information from it. It refers to a method of data analysis that build intelligent algorithms that can automatically improve through the experience gained from the data and identify patterns or make decisions with minimal human intervention, without being explicitly programmed. ML focuses on using data and algorithms to mimic the way humans learn, gradually improving their accuracy.
@@ -24,7 +26,7 @@ Unlike supervised learning, unsupervised learning uses unlabeled or untagged dat
 
 Unsupervised machine learning is commonly used to segment consumers into groups based on their similarities related to a variety of factors such as shopping or usage behavior, attitudes, interests, liking or preferences. As consumers in the same market segment tend to respond similarly, the segmentation process is a key strategy for companies to understand and tailor effectively their products or marketing approaches for different target groups. Similarly, unsupervised models are also very used to classify group of products in homogeneous analytical, sensory and/or consumer attributes in order to identify different segments in the market.
 
-<!-- Change order: First Supervised and then Unsupervised? (Vanessa) -->
+Let's get started by Unsupervised learning first.
 
 ### Unsupervised learning
 
@@ -66,7 +68,7 @@ As the data set being used contain variables with different units/scales, PCA wi
 ```{r pca_with_scaling}
 
 library (FactoMineR)
-require(factoextra)
+library (factoextra)
 
 pca_results <- PCA(wine_dataset, scale.unit = TRUE)
 
@@ -117,7 +119,7 @@ In the resulting plot, we can easily see the observation represented by points, 
 
 ### Supervised learning
 
-There are many ways to carry out supervised machine learning, and it's by itself a big topic. We recommend reading "Hands-On Machine Learning with R", by Bradley Boehmke and Brandon Greewell (https://bradleyboehmke.github.io/HOML/) for more in-depth information. In sensory and consumer science, supervised learning is commonly carried out using a type of regression, using consumer ratings as output (target), and other information of products (i.e. sensory profiles) as input.    
+There are many ways to carry out supervised machine learning, and it's by itself a big topic. We recommend reading "Hands-On Machine Learning with R", by Bradley Boehmke and Brandon Greewell (https://bradleyboehmke.github.io/HOML/) for more in-depth information. In sensory and consumer science, supervised learning is commonly carried out using a type of regression, where we use for instance consumer ratings as output (target), and products information (i.e. sensory profiles and analytical measurement) as input.    
 
 #### Regression
 
@@ -143,7 +145,7 @@ It can be used in R with `glm(family = "binomial")` or
 `parsnip::logistic_reg() %>% parsnip::set_engine("glm")` when using `tidymodels` workflow.
 
 **Penalized regression**: It is often that the data we want to use for modeling have a lot of predictor 
-variables, possibly with lot of high correlations. In such cases linear/logistic
+variables, possibly with lot of high correlations. In such cases, linear/logistic
 regression may become unstable and produce unreasonable predictions. This can be
 addressed by use of so called penalized regression. It is a special case where 
 instead of minimizing pure error term, algorithm minimizes both error and regression 
@@ -175,6 +177,7 @@ which, similarly to PCA looks for components that maximizes explained variance o
 the predictors, but at the same time also maximizes their correlation to target variables.
 PLS can be applied with `lm()` specifying multiple targets or in `tidymodels` workflow
 with `plsmod::pls() %>% parsnip::set_engine("mixOmics")`.
+
 
 There are many other ways to perform machine learning as well. Below is some brief introduction of them.
 
@@ -215,17 +218,16 @@ reducing the overfitting of datasets and increasing precision.
 
 ### Practical Guide to Machine Learning
 
-Now that we have general ideas of machine learning, we can try to build a simple machine learning model in the sensory and consumer context. 
+Now that we have a general idea of machine learning approach, we will try to build a simple machine learning model in the sensory and consumer context. 
 
-R contains fantastic systems for building machine learning models. The tidymodels framework (https://www.tidymodels.org/) is a collection of packages for modeling and machine learning using tidyverse principles, and among one of the most popular framework in R for machine learning. 
+R contains fantastic systems for building machine learning models. The tidymodels framework (https://www.tidymodels.org/) is a collection of packages for modeling and machine learning using tidyverse principles, and among one of the most popular framework in R for machine learning. In this context, we strongly recommend the book "Tidy Modeling with R", by Max Kuhn and Julia Silge (https://www.tmwr.org/).
 
 Tidymodels contains several core packages, including `rsample`, `parsnip`, `recipes`, `workflows`, `tune`, `yardstick`, `broom` and `dials`, along with some other specialized packages. These packages will help you build a variety of models in R and check their performances. 
 
-Just like tidyverse, you don't need to install/load all the packages separately, installing/loading `tidymodel` will load all the packages you will need for building machine learning models. 
+Just like tidyverse, you don't need to install/load all the packages separately, installing/loading `{tidymodel}` will load all the packages you will need for building machine learning models. 
  
 ``` {r install_load_tidymodels}
 
-# install.packages("tidymodels")
 library(tidymodels)
 
 ```
@@ -238,7 +240,6 @@ First we need to mutate the column "Wine_type" to be factors, as this column wou
 
 ```{r classification_Aigora_ml_training}
 
-# Data set preparation
 wine_classification_dataset <- wine_dataset %>% 
   mutate(Wine_type = as.factor(Wine_type))
 
@@ -246,7 +247,7 @@ wine_classification_dataset <- wine_dataset %>%
 
 #### Sampling the data
 
-The function `rsample::initial_split()` takes the original data and saves the information on how to make the partitions. We set the `strata` argument as `"Wine_type"` to conduct a stratified split. This ensures our training and test data sets would keep roughly the same proportions of all Wine types as in the original data, despite the imbalance we noticed in our class variable. `prop` is set to 0.7 as we are splitting data to be 70% for training and 30% for testing.
+The function `rsample::initial_split()` takes the original data and saves the information on how to make the partitions. We set the `strata` argument as `"Wine_type"` to conduct a stratified split. This ensures our training and test data sets would keep roughly the same proportions of all wine types as in the original data, despite the imbalance we noticed in our class variable. `prop` is set to 0.7 as we are splitting data to be 70% for training and 30% for testing.
 
 After the initial_split, we can use the training() and testing() functions to obtain the two data frames for training and testing. 
 
@@ -261,14 +262,9 @@ wine_testing <- testing(initial_split)
 
 #### Cross Validation
 
-<!-- tian: do we need to explain cross validated by product and by consumer here? -->
-
 Cross-validation is an important step for checking the model quality later. To do that, we need to use the resampling method to create a series of data sets similar to the training/testing split before building the model. For each data set, a subset is used for creating the model, and the other subset is used to measure the performance. Also noted that resampling is always used with the training set of the data defined earlier. 
 
-<!-- tian: a diagram could help here: https://www.tidymodels.org/start/resampling/#resampling -->
-
 We use `vfold_cv` to resample the data. Here we begin with a 5-fold cross-validation first. `strata` is set to `wind_type` to conduct stratified sampling, so that each resample is created within the stratification variable. 
-<!-- tian: maybe we need to explain stratify here more, does it mean that in each of those 5 fold, the ratio of wine_type will be similar to the original wine_type? -->
 
 ```{r cv}
 
@@ -290,15 +286,9 @@ model_recipe <- wine_train %>%
 
 ```
 
-<!-- tian: why we choose random forest here? -->
-
-We decided to use random forest classifier for the wine data.
-
-`rand_forest` has 3 hyper-parameters (`mtry, trees, min_n`) which can be tuned to achieve the best results.
+We will use here random forest classifier for the wine data. `rand_forest` has 3 hyper-parameters (`mtry, trees, min_n`) which can be tuned to achieve the best results.
 
 We set all of them as `tune()` right now. Model tuning is the process to find the best values for the parameters. Most often you start with the default values, and change them along the way. Since the model is not executing when created, these parameters can be changed using the tune() function. This provides a simple placeholder for the value. 
-
-<!-- (https://parsnip.tidymodels.org/articles/parsnip.html?q=tune#placeholders-for-parameters). -->
 
 ```{r method_selection_and_placeholder_for_parameters}
 
@@ -327,9 +317,6 @@ rf_wf <- workflow() %>%
 
 We created placeholders for tuning hyper-parameters earlier. Now it's time to define the scope of the search and choose the method for searching the parameter space, in this case it is `grid_regular`.
 
-<!-- there is a warning message about grid_regular, it's deprecated in tune now. -->
-<!-- for me is working fine (Vanessa) -->
-
 ```{r grid_def}
 
 params_grid <- rf_spec %>%
@@ -344,10 +331,8 @@ params_grid <- rf_spec %>%
 Now that We have defined the hyper-parameter search range, let's look for the best combination using `tune_grid()` function. We will leave the test set aside, and use a cross-validation set for this purpose, so that the model during training certainly will not see the data on which we will be making predictions. 
 
 We can use `autoplot()` function to take a quick look at the `tuning` object.
-<!-- tian: explain the graph here? --> 
 
-Next, we will obtain a reliable estimate of the quality of the model. We first select the best combination of parameters using `select_best()` function. The quality of the model can be estimated with a number of metrics. Here we decided to use roc_auc (Area Under the Receiver Operating Characteristic Curve).
-<!-- tian: I'm confused here. we are choosing the best paras, but where can we see the quality of the model? -->
+Next, we will obtain a reliable estimate of the quality of the model. We first select the best combination of parameters using `select_best()` function. The quality of the model can be estimated with a number of metrics. Here we decided to use `roc_auc` (Area Under the Receiver Operating Characteristic Curve).
 
 ```{r tuning_hyperparams}
 # Best parameters searching
@@ -380,7 +365,7 @@ final_model <- rf_wf %>%
 
 #### Assess the model quality
 
-A very important part in building machine learning models is to assess the quality of the models. To do so, first we can use the model to predict on the testing data set (`wind_testing`), which the model has not seen yet. 
+A very important part in building machine learning models is to assess the quality of the models. To do so, first we can use the model to predict on the testing data set (`wine_testing`), which the model has not seen yet. 
 
 `predict` is a generic function for putting the prediction results from models to convenient tables for further analysis. We combine the `wine_testing` data with the column of predicted Wine_type from the model by adding the `predict(final_model, wine_testing)`in the pipe. 
 
@@ -393,9 +378,7 @@ validation_data_pred <- wine_testing %>%
 
 The `validation_data_pred` is a data frame with testing data with `Wine_type` as the actual wine type, and a `.pred_class` column as the predicted Wind_type at the end. Now we can finally judge the quality of the model by comparing them. 
 
-A very pleasant method for visualize the classification results is to use a confusion matrix. Confusion matrix is a table where each row represents instances in the actual class, while each column represents the instances in a predicted class. Using the `autoplot()` function, We can see that in our wine type prediction, it's a 100% match!
-
-<!--and the associated statistics (accuracy, sensitivity specificity, precision, F1 score and a lot more: https://en.wikipedia.org/wiki/Confusion_matrix). -->
+A very pleasant method for visualize the classification results is to use a confusion matrix. Confusion matrix is a table where each row represents instances in the actual class, while each column represents the instances in a predicted class. Using the `autoplot()` function, We can see that in our wine type prediction, it's almost a 100% match!
 
 ```{r cm}
 
@@ -404,45 +387,3 @@ cm <- conf_mat(validation_data_pred, Wine_type, .pred_class)
 autoplot(cm, type = "heatmap")
 
 ```
-
-#### Using modelStudio to dive into the model
-
-`modelStudio` is an R package that provides an interactive studio for explanatory model analysis. It generate advanced interactive model explanations in the form of a serverless HTML site with only one line of code. Now we can use this tool to dive into the model and check which features are important for the model.
-
-<!-- tian: this code for model studio is not for the above model. Need to adjust -->
-
-``` {r model_studio}
-
-# Model Studio ------------------------------------------------------------
-
-library(DALEXtra)
-library(modelStudio)
-
-explainer <- explain_tidymodels(
-  final_model, 
-  data = training_data %>% 
-    column_to_rownames("id") %>%
-    select(-liking),
-  y = training_data$liking
-)
-
-resid <- model_performance(explainer)
-resid
-plot(resid)
-
-var_imp <- variable_importance(explainer)
-plot(var_imp)
-
-ms <- modelStudio(
-  explainer,
-  new_observation = validation_data %>%
-    column_to_rownames("id") %>%
-    select(-liking),
-  new_observation_y = round(validation_data$liking, 3)
-)
-
-# r2d3::save_d3_html(ms, "output/modelstudio.html")
-
-```
-
-<!-- tian: Do we want to include another regression example? it's more common in the sensory consumer science context -->
