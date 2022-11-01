@@ -5,6 +5,8 @@ knitr::opts_chunk$set(echo=FALSE, eval=FALSE)
 
 >After importing the data, the next crucial step is to ensure that the data as it is now available is of good quality and is the correct representation of reality. As an example, during importation, software (such as R) tends to guess (from reading the file) the nature of each variable. If such guess is correct in 99% of the case, there are situations in which it is erroneous, and ignoring such error can have huge consequences on the final results and conclusions. The goal of this section is hence to perform some pre-check of the data and to prepare them for future analyses.
 
+## Introduction
+
 *Data Preparation*, which consists of *data inspection* and *data cleaning*, is a critical step before any further *Data Manipulation* or *Data Analysis*. Having a good data preparation procedure ensures a good understanding of the data, and avoids what could be very critical mistakes.
 
 To illustrate the importance of the later point, let's imagine a study in which the samples are defined by their 3-digits code. 
@@ -48,7 +50,9 @@ Other informative solutions consists in printing a summary of the data through t
 
 ```{r, eval=TRUE, echo=TRUE}
 summary(sensory)
+```
 
+```{r, eval=TRUE, echo=TRUE}
 glimpse(sensory)
 ```
 
@@ -58,7 +62,7 @@ Such view might be sufficient for some first conclusions (e.g. Are my panelists 
 
 A first solution comes from the `{skimr}` package and its `skim()` function. By applying it to data, an automated extended summary is directly printed on screen by separating `character` type variables from `numeric` type variables:
 
-```{r, eval=TRUE, echo=TRUE}
+```{r, eval=FALSE, echo=TRUE}
 library(skimr)
 skim(sensory)
 ```
@@ -166,7 +170,7 @@ sensory %>%
 
 Using `na.rm=TRUE` is equivalent to removing the missing values from the data before performing the analysis, but only for the variable of interest. A similar approach consists in first rotating (using `pivot_longer()`) the data before removing missing values:
 
-```{r, echo=TRUE< eval=TRUE}
+```{r, echo=TRUE, eval=TRUE}
 sensory %>% 
   pivot_longer(Shiny:Melting, names_to="Variables", values_to="Scores") %>% 
   filter(!is.na(Scores)) %>% 

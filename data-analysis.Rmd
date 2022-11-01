@@ -3,12 +3,12 @@ knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 ```
 # Data Analysis {#data-analysis}
 
-## Chapter Overview
-
 >Although the data-science workflow suggests a clear separation between data manipulation and data analysis, in practice such separation is not that obvious. Indeed, most analyses require data manipulation. In fact, some data transformation can be seen as a part of both data transformation and data analysis. Yet, this Section is somewhat more dedicated to the analysis of data, by 1) presenting how some of the most common analyses in sensory and consumer reserach are performed, 2) integrating the analysis part to your script, and most importantly 3) providing applications and alternatives or extension to all the procedures presented in \@ref(data-manip) and in \@ref(data-viz). With that in mind, the emphasis is not on the results and interpretation of the results, but on the path to get such results.
 For practical reasons, this chapter is divided in 3 sub-sections, one dedicated to the sensory data, one to the consumer data, and one combining both.
 
-As one may expect, this chapter is mostly built around the `{tidyverse}`. So let's start with importing it (together with other useful packages).
+## Sensory Data
+
+As one may expect, this chapter is mostly built around the `{tidyverse}`:
 
 ```{r, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
 library(tidyverse)
@@ -16,16 +16,14 @@ library(here)
 library(readxl)
 ```
 
-## Sensory Data
-
 Let's start with the analysis of our sensory data stored in *biscuits_sensory_profile.xlsx*.
 
 ```{r, echo=TRUE, eval=TRUE}
-file_path <- here("data", "biscuits_sensory_ P_profile.xlsx")
-p_info <- read_xlsx(file_path, sheet = "Product Info") %>%
+file_path <- here("data", "biscuits_sensory_profile.xlsx")
+p_info <- readxl::read_xlsx(file_path, sheet = "Product Info") %>%
   dplyr::select(-Type)
 
-sensory <- read_xlsx(file_path, sheet = "Data") %>%
+sensory <- readxl::read_xlsx(file_path, sheet = "Data") %>%
   inner_join(p_info, by = "Product") %>%
   relocate(Protein:Fiber, .after = Product)
 ```
@@ -159,6 +157,10 @@ fviz_pca_ind(senso_pca, habillage = 2, repel = TRUE)
 fviz_pca_var(senso_pca)
 fviz_pca_biplot(senso_pca)
 ``` 
+
+```{r, eval=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+library(factoextra)
+```
 
 ```{r, eval=TRUE, echo=FALSE}
 library(patchwork)
@@ -404,7 +406,7 @@ The analysis of consumer data usually involves the same type of analysis as the 
 Let's start by importing the consumer data that is stored in *biscuits_consumer_test.xlsx*. Here, we import two sheets, one with the consumption time and number of biscuits (stored in `Nbiscuit`), and one with different consumer evaluations of the samples (stored in `consumer`)
 
 ```{r, echo=TRUE, eval=TRUE}
-file_path <- here("Data", "Consumer Test.xlsx")
+file_path <- here("Data","biscuits_consumer_test.xlsx")
 
 Nbiscuit <- read_xlsx(file_path, sheet = "Time Consumption") %>%
   mutate(Product = str_c("P", Product)) %>%
@@ -437,9 +439,7 @@ liking_start_hsd <- HSD.test(liking_start, "Product")$groups %>%
   as_tibble(rownames = "Product")
 
 liking_start_hsd
-```
 
-```{r}
 liking_end <- lm(`after_liking` ~ Product + Judge, data = consumer)
 liking_end_hsd <- HSD.test(liking_end, "Product")$groups %>%
   as_tibble(rownames = "Product")
@@ -515,7 +515,7 @@ N_liking_reg <- consumer %>%
 
 Since we only want to represent consumers with a significant regression line, we unfold the results stored in `glance` so that we can access the `p.value` of each regression.
 
-```{r}
+```{r, echo=TRUE, eval=TRUE}
 N_liking <- N_liking_reg %>%
   unnest(glance) %>%
   filter(p.value <= 0.05) %>%
@@ -594,7 +594,7 @@ consumer_dist <- consumer_wide %>%
 
 The AHC is performed using the `hclust()` function and the `method = "ward.D2"` parameter, which is the equivalent to `method = "ward"` for `agnes()`. To visualize the dendrogram, the `factoextra::fviz_dend()` function is used (here we propose to visualize the 2-clusters solution by setting `k=2`):
 
-```{r, echo=TRUE, eval=TRU0E, warning=FALSE, message=FALSE}
+```{r, echo=TRUE, eval=TRUE, warning=FALSE, message=FALSE}
 res_hclust <- hclust(consumer_dist, method = "ward.D2")
 fviz_dend(res_hclust, k = 2)
 ```
@@ -653,7 +653,7 @@ When combining sensory and consumer data collected on the same product, it is al
 
 Let's start by evaluating the simplest relationship between the sensory attributes and overall liking by looking at correlations. Here, we are combining the average liking score per cluster to the sensory profile of the products. The correlations are then computed using the `cor()` function:
 
-```{r}
+```{r, echo=TRUE, eval=TRUE}
 data_cor <- mean_cluster %>%
   dplyr::select(-N) %>%
   pivot_wider(names_from = Cluster, values_from = Liking) %>%
@@ -730,11 +730,11 @@ library(ggrepel)
 df <- data_reg %>%
   filter(Attribute %in% unique(c(lin, quad)))
 
-p <- ggplot(df, aes(x = Score, y = `1 (74)`, label = Product)) +
-  geom_point(pch = 20, cex = 2) +
-  geom_text_repel() +
-  theme_bw() +
-  facet_wrap(~Attribute, scales = "free_x")
+p <- ggplot(df, aes(x=Score, y=Liking, label=Product))+
+  geom_point(pch=20, cex=2)+
+  geom_text_repel()+
+  theme_bw()+
+  facet_wrap(~Attribute, scales="free_x")
 ```
 
 Let's now add a regression line to the model. To do so, `geom_smooth()` is being used with as `method = lm` combined to `formula = 'y ~ x'` for linear relationships, and `formula = 'y ~ x + I(x^2)'` for quadratic relationships (when both the linear and quadratic models are significant, the quadratic model is used).

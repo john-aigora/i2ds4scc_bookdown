@@ -31,18 +31,6 @@ library(here)
 library(readxl)
 ```
 
-<!-- 
-Integrating reporting within the analysis part, or integrating the analysis within the reporting part?
- -> Improved WoW
- -> Connection analysis/report reduce risks of mistakes (copy/paste updated values/tables, etc.)
- -> Keep track of what has been done (reproducible research): Explain choices for analysis, table presentation, charts
- -> Sharing code/analysis
- -> Gain in time/efficiency
- -> Massive slide production
- -> Less time require for analysis/slides production, more time for design/story-telling
-To improve way of work (efficiency) and to keep track of steps taken along the way
--->
-
 Note that in this chapter on automated reporting, some results (tables, figures) that are being created in one of the section may be re-used in subsequent sections. In case you do not read this chapter linearly, you might get errors as you might be calling objects that do not exist yet in your environment. If that should be the case, read through the previous sections to find the code where these elements are being generated, run it, and resume your read.
 
 ### Excel {#excel}
@@ -86,6 +74,15 @@ wb <- openxlsx::createWorkbook()
 
 # Add a new worksheet
 addWorksheet(wb, sheetName = "Mean", gridLines = FALSE)
+```
+
+```{r, eval=TRUE, echo=FALSE, message=FALSE, warning=FALSE}
+library(conflicted)
+conflict_prefer("read_xlsx", winner="readxl")
+conflict_prefer("filter", winner="dplyr")
+conflict_prefer("aov", "stats")
+conflict_prefer("lm", "stats")
+conflict_prefer("percent", "formattable")
 ```
 
 Note that with `addWorksheet()`, it is possible to control the appearance of the worksheet:
@@ -163,7 +160,7 @@ Note that many more formatting options can be configured through:
   
 Let's export again the sensory profiles in a second sheet after applying these formatting options:
 
-```{r}
+```{r, echo=TRUE, eval=TRUE}
 addWorksheet(wb, sheetName = "Mean (manual formatting)", gridLines = FALSE)
 
 # Freeze first row and first column
@@ -490,13 +487,13 @@ chart_to_export <- senso_mean %>%
 ```
 
 To export any *ggplot2* object to PowerPoint, the package `{rvg}` is required. 
-This package provides two graphics devices that produces Vector Graphics outputs in *DrawingML* format for Microsoft PowerPoint with `dml_pptx()` and for Microsoft Excel with `dml_xlsx()`, meaning the the graphics is being 'rebuilt' in PowerPoint or Word. To simplify, the generic `dml()` function is used, and depending on the output format, the corresponding function is being called. 
+This package provides two graphics devices that produces Vector Graphics outputs in *DrawingML* format for Microsoft PowerPoint with `dml_pptx()` and for Microsoft Excel with `dml_xlsx()`, meaninFg the the graphics is being 'rebuilt' in PowerPoint or Word. To simplify, the generic `dml()` function is used, and depending on the output format, the corresponding function is being called. 
 
 ```{r 5.2 rvg example, eval=TRUE, echo=TRUE}
 library(rvg)
 pptx_obj <- pptx_obj %>%
   add_slide(layout = "Title and Content", master = master) %>%
-  ph_with(value = dml(ggobj = chart_to_plot), location = ph_location_type(type = 'body'))
+  ph_with(value = dml(ggobj = chart_to_export), location = ph_location_type(type = 'body'))
 ```
 
 With `{rvg}`, the graphics are being *rebuilt* in PowerPoint, meaning that they are completely editable. It is hence possible to change color, re-write text, move labels, etc.

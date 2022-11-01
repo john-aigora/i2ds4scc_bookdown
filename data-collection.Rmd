@@ -11,14 +11,13 @@ knitr::opts_chunk$set(echo = TRUE, eval = TRUE)
 
 > Before any statistical analysis and vizualizations, robust data need to be collected. This important step often requires a *proper* experimental design, i.e. an experimental design that would assure relevant and meaningful data are obtained with maximum efficiency to answer our research questions. This chapter approaches all the required steps to reach such goal, from setting up the test (e.g. estimation of the number of panelists, design of sensory evaluation sessions and design of experiments), to the collection of data (through valuable execution tips) and its importation in a statistical software (R, here).
 
+## Designs of sensory (DoE) experiments
+
 Like with any other chapter, let's start by loading the `{tidyverse}`.
 
 ```{r, eval=TRUE, echo=TRUE, message=FALSE, warning=FALSE}
 library(tidyverse)
 ```
-
-
-## Designs of sensory (DoE) experiments
 
 ### General approach
 
@@ -315,7 +314,7 @@ library(here)
 file_path <- here("data","biscuits_sensory_profile.xlsx") 
 
 library(readxl)
-sensory <- read_xlsx(file_path, sheet="Data")
+sensory <- readxl::read_xlsx(file_path, sheet="Data")
 ```
 
 To ensure that the importation went well, it is advised to print `sensory` after importation. Since `{readxl}` has been developed by Hadley Wickham and colleagues, its functions follow the `{tidyverse}` principles and the data thus imported is stored in a `tibble`. Let's take advantage of the printing properties of a `tibble` to evaluate `sensory`:
@@ -346,7 +345,7 @@ Let's start with importing the variables' names from *biscuits_traits.xlsx* (she
 
 ```{r import_TFEQ_labels1, echo=TRUE, eval=TRUE, message=FALSE}
 file_path <- here("data","biscuits_traits.xlsx") 
-var_names <- read_xlsx(file_path, sheet="Variables")
+var_names <- readxl::read_xlsx(file_path, sheet="Variables")
 ```
 
 ```{r, eval=TRUE, echo=FALSE}
@@ -357,7 +356,7 @@ In a similar way, let's import the information related to the levels of each var
 A deeper look at the *Levels* sheet shows that only the coded names of the variables are available. In order to include the final names, `var_names` is joined (using `inner_join`).
 
 ```{r import_TFEQ_labels2, echo=TRUE, eval=TRUE, message=FALSE}
-var_labels <- read_xlsx(file_path, sheet="Levels") %>% 
+var_labels <- readxl::read_xlsx(file_path, sheet="Levels") %>% 
   inner_join(dplyr::select(var_names, Code, Name), by=c(Question="Code"))
 ```
 
@@ -370,7 +369,7 @@ Ultimately, the data (*Data*) is imported by substituting the coded names with t
 Alternatively, you can import the data by specifying the range in which the data is being stored (here `range="A2:BJ108"``).
 
 ```{r, import_TFEQ_data3, echo=FALSE, eval=TRUE}
-biscuits_traits_data <- read_xlsx(file_path, sheet="Data", col_names=var_names$Name, skip=1)
+biscuits_traits_data <- readxl::read_xlsx(file_path, sheet="Data", col_names=var_names$Name, skip=1)
 ```
 
 The data has now the right headers, however each variable is still coded numerically. This step to convert the numerical values with their corresponding labels is described in Section \@ref(data-prep).
@@ -396,7 +395,7 @@ path <- file.path("data", "excel_scrap.xlsx")
 files <- path %>% 
   excel_sheets() %>% 
   set_names(.) %>% 
-  map(~read_xlsx(path, sheet = .))
+  map(~readxl::read_xlsx(path, sheet = .))
 ```
 
 As can be seen, this procedure creates a list of tables, with as many elements are there are sheets in the excel file. 
