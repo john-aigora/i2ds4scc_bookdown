@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 11 Value Delivery | Data Science for Sensory and Consumer Scientists</title>
   <meta name="description" content="Open development of data science book for sensory and consumer scientists." />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 11 Value Delivery | Data Science for Sensory and Consumer Scientists" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="Open development of data science book for sensory and consumer scientists." />
   
@@ -24,7 +23,7 @@
 <meta name="author" content="Thierry Worch, Julien Delarue, Vanessa Rios de Souza, and John Ennis" />
 
 
-<meta name="date" content="2022-07-22" />
+<meta name="date" content="2022-11-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +32,8 @@
   
 <link rel="prev" href="data-analysis.html"/>
 <link rel="next" href="machine-learning.html"/>
-<script src="libs/header-attrs-2.6/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,14 +49,18 @@
 
 
 
-
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet" />
+<link href="libs/tabwid-1.0.0/scrool.css" rel="stylesheet" />
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -117,6 +120,29 @@ code span.vs { color: #4e9a06; } /* VerbatimString */
 code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 
@@ -136,9 +162,11 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
 <ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#who-should-read-this-book"><i class="fa fa-check"></i>Who Should Read This Book?</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-to-use-this-book"><i class="fa fa-check"></i>How to Use This Book</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-is-this-book-structured"><i class="fa fa-check"></i>How Is This Book Structured</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-to-use-this-book"><i class="fa fa-check"></i>How To Use This Book</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i>Acknowledgements</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="preface-1.html"><a href="preface-1.html"><i class="fa fa-check"></i>Preface</a></li>
 <li class="chapter" data-level="1" data-path="bienvenue.html"><a href="bienvenue.html"><i class="fa fa-check"></i><b>1</b> Bienvenue!</a>
 <ul>
 <li class="chapter" data-level="" data-path="bienvenue.html"><a href="bienvenue.html#why-data-science-for-sensory-and-consumer-science"><i class="fa fa-check"></i>Why Data Science for Sensory and Consumer Science?</a>
@@ -153,73 +181,78 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.1" data-path="start-R.html"><a href="start-R.html#introduction-to-r"><i class="fa fa-check"></i><b>2.1</b> Introduction to R</a>
 <ul>
 <li class="chapter" data-level="2.1.1" data-path="start-R.html"><a href="start-R.html#what-is-r"><i class="fa fa-check"></i><b>2.1.1</b> What is R?</a></li>
-<li class="chapter" data-level="2.1.2" data-path="start-R.html"><a href="start-R.html#why-learn-a-programming-language"><i class="fa fa-check"></i><b>2.1.2</b> Why Learn a Programming Language?</a></li>
+<li class="chapter" data-level="2.1.2" data-path="start-R.html"><a href="start-R.html#why-learning-r-or-any-programming-language"><i class="fa fa-check"></i><b>2.1.2</b> Why Learning R (or any Programming Language)?</a></li>
 <li class="chapter" data-level="2.1.3" data-path="start-R.html"><a href="start-R.html#why-r"><i class="fa fa-check"></i><b>2.1.3</b> Why R?</a></li>
-<li class="chapter" data-level="2.1.4" data-path="start-R.html"><a href="start-R.html#what-is-rstudio"><i class="fa fa-check"></i><b>2.1.4</b> What is RStudio?</a></li>
+<li class="chapter" data-level="2.1.4" data-path="start-R.html"><a href="start-R.html#rstudio"><i class="fa fa-check"></i><b>2.1.4</b> Why RStudio/Posit?</a></li>
 <li class="chapter" data-level="2.1.5" data-path="start-R.html"><a href="start-R.html#installing-r-and-rstudio"><i class="fa fa-check"></i><b>2.1.5</b> Installing R and RStudio</a></li>
 </ul></li>
 <li class="chapter" data-level="2.2" data-path="start-R.html"><a href="start-R.html#getting-started-in-r"><i class="fa fa-check"></i><b>2.2</b> Getting Started in R</a>
 <ul>
-<li class="chapter" data-level="2.2.1" data-path="start-R.html"><a href="start-R.html#create-a-local-project"><i class="fa fa-check"></i><b>2.2.1</b> Create a Local Project</a></li>
+<li class="chapter" data-level="2.2.1" data-path="start-R.html"><a href="start-R.html#packages"><i class="fa fa-check"></i><b>2.2.1</b> Conventions</a></li>
 <li class="chapter" data-level="2.2.2" data-path="start-R.html"><a href="start-R.html#install-and-load-packages"><i class="fa fa-check"></i><b>2.2.2</b> Install and Load Packages</a></li>
-<li class="chapter" data-level="2.2.3" data-path="start-R.html"><a href="start-R.html#r-scripts"><i class="fa fa-check"></i><b>2.2.3</b> R Scripts</a></li>
-<li class="chapter" data-level="2.2.4" data-path="start-R.html"><a href="start-R.html#run-sample-code"><i class="fa fa-check"></i><b>2.2.4</b> Run Sample Code</a></li>
+<li class="chapter" data-level="2.2.3" data-path="start-R.html"><a href="start-R.html#first-analysis-in-r"><i class="fa fa-check"></i><b>2.2.3</b> First Analysis in R</a></li>
+<li class="chapter" data-level="2.2.4" data-path="start-R.html"><a href="start-R.html#scripts"><i class="fa fa-check"></i><b>2.2.4</b> R Scripts</a></li>
+<li class="chapter" data-level="2.2.5" data-path="start-R.html"><a href="start-R.html#rprojects"><i class="fa fa-check"></i><b>2.2.5</b> Create a Local Project</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="start-R.html"><a href="start-R.html#introduction-to-the-magrittr-and-the-notion-of-pipes"><i class="fa fa-check"></i><b>2.3</b> Introduction to the <code>{magrittr}</code> and the notion of <em>pipes</em></a></li>
+<li class="chapter" data-level="2.3" data-path="start-R.html"><a href="start-R.html#further-tips-on-how-to-read-this-book"><i class="fa fa-check"></i><b>2.3</b> Further tips on <em>how to read this book?</em></a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="start-R.html"><a href="start-R.html#pipes"><i class="fa fa-check"></i><b>2.3.1</b> Introduction to the <code>{magrittr}</code> and the notion of <em>pipes</em></a></li>
+<li class="chapter" data-level="2.3.2" data-path="start-R.html"><a href="start-R.html#calling-variables"><i class="fa fa-check"></i><b>2.3.2</b> Calling Variables</a></li>
+<li class="chapter" data-level="2.3.3" data-path="start-R.html"><a href="start-R.html#print-save"><i class="fa fa-check"></i><b>2.3.3</b> Printing vs. Saving results</a></li>
+<li class="chapter" data-level="2.3.4" data-path="start-R.html"><a href="start-R.html#running-code-and-handling-errors"><i class="fa fa-check"></i><b>2.3.4</b> Running code and handling errors</a></li>
+</ul></li>
 <li class="chapter" data-level="2.4" data-path="start-R.html"><a href="start-R.html#git-and-github"><i class="fa fa-check"></i><b>2.4</b> Version Control / Git and GitHub</a>
 <ul>
 <li class="chapter" data-level="2.4.1" data-path="start-R.html"><a href="start-R.html#git"><i class="fa fa-check"></i><b>2.4.1</b> Git</a></li>
 <li class="chapter" data-level="2.4.2" data-path="start-R.html"><a href="start-R.html#github"><i class="fa fa-check"></i><b>2.4.2</b> GitHub</a></li>
 </ul></li>
-<li class="chapter" data-level="2.5" data-path="start-R.html"><a href="start-R.html#tips-on-how-to-read-this-book"><i class="fa fa-check"></i><b>2.5</b> Tips on <em>how to read this book?</em></a>
-<ul>
-<li class="chapter" data-level="2.5.1" data-path="start-R.html"><a href="start-R.html#running-code-and-handling-errors"><i class="fa fa-check"></i><b>2.5.1</b> Running code and handling errors</a></li>
-<li class="chapter" data-level="2.5.2" data-path="start-R.html"><a href="start-R.html#printing-vs.-saving-results"><i class="fa fa-check"></i><b>2.5.2</b> Printing vs. Saving results</a></li>
-<li class="chapter" data-level="2.5.3" data-path="start-R.html"><a href="start-R.html#calling-variables"><i class="fa fa-check"></i><b>2.5.3</b> Calling Variables</a></li>
-</ul></li>
 </ul></li>
 <li class="part"><span><b>Hors d’Oeuvres</b></span></li>
-<li class="chapter" data-level="3" data-path="data-science.html"><a href="data-science.html"><i class="fa fa-check"></i><b>3</b> Why Data Science?</a>
+<li class="chapter" data-level="3" data-path="data_science.html"><a href="data_science.html"><i class="fa fa-check"></i><b>3</b> Why Data Science?</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="data-science.html"><a href="data-science.html#history-and-definition"><i class="fa fa-check"></i><b>3.1</b> History and Definition</a></li>
-<li class="chapter" data-level="3.2" data-path="data-science.html"><a href="data-science.html#benefits-of-data-science"><i class="fa fa-check"></i><b>3.2</b> Benefits of Data Science</a>
+<li class="chapter" data-level="3.1" data-path="data_science.html"><a href="data_science.html#history-and-definition"><i class="fa fa-check"></i><b>3.1</b> History and Definition</a></li>
+<li class="chapter" data-level="3.2" data-path="data_science.html"><a href="data_science.html#benefits-of-data-science"><i class="fa fa-check"></i><b>3.2</b> Benefits of Data Science</a>
 <ul>
-<li class="chapter" data-level="3.2.1" data-path="data-science.html"><a href="data-science.html#reproducible-research"><i class="fa fa-check"></i><b>3.2.1</b> Reproducible Research</a></li>
-<li class="chapter" data-level="3.2.2" data-path="data-science.html"><a href="data-science.html#standardized-reporting"><i class="fa fa-check"></i><b>3.2.2</b> Standardized Reporting</a></li>
+<li class="chapter" data-level="3.2.1" data-path="data_science.html"><a href="data_science.html#reproducible-research"><i class="fa fa-check"></i><b>3.2.1</b> Reproducible Research</a></li>
+<li class="chapter" data-level="3.2.2" data-path="data_science.html"><a href="data_science.html#standardized-reporting"><i class="fa fa-check"></i><b>3.2.2</b> Standardized Reporting</a></li>
 </ul></li>
-<li class="chapter" data-level="3.3" data-path="data-science.html"><a href="data-science.html#data-scientific-workflow"><i class="fa fa-check"></i><b>3.3</b> Data Scientific Workflow</a>
+<li class="chapter" data-level="3.3" data-path="data_science.html"><a href="data_science.html#data-scientific-workflow"><i class="fa fa-check"></i><b>3.3</b> Data Scientific Workflow</a>
 <ul>
-<li class="chapter" data-level="3.3.1" data-path="data-science.html"><a href="data-science.html#data-collection2"><i class="fa fa-check"></i><b>3.3.1</b> Data Collection</a></li>
-<li class="chapter" data-level="3.3.2" data-path="data-science.html"><a href="data-science.html#data-preparation"><i class="fa fa-check"></i><b>3.3.2</b> Data Preparation</a></li>
-<li class="chapter" data-level="3.3.3" data-path="data-science.html"><a href="data-science.html#data-analysis2"><i class="fa fa-check"></i><b>3.3.3</b> Data Analysis</a></li>
-<li class="chapter" data-level="3.3.4" data-path="data-science.html"><a href="data-science.html#value-delivery2"><i class="fa fa-check"></i><b>3.3.4</b> Value Delivery</a></li>
+<li class="chapter" data-level="3.3.1" data-path="data_science.html"><a href="data_science.html#data-collection2"><i class="fa fa-check"></i><b>3.3.1</b> Data Collection</a></li>
+<li class="chapter" data-level="3.3.2" data-path="data_science.html"><a href="data_science.html#data-preparation"><i class="fa fa-check"></i><b>3.3.2</b> Data Preparation</a></li>
+<li class="chapter" data-level="3.3.3" data-path="data_science.html"><a href="data_science.html#data-analysis2"><i class="fa fa-check"></i><b>3.3.3</b> Data Analysis</a></li>
+<li class="chapter" data-level="3.3.4" data-path="data_science.html"><a href="data_science.html#value-delivery2"><i class="fa fa-check"></i><b>3.3.4</b> Value Delivery</a></li>
 </ul></li>
-<li class="chapter" data-level="3.4" data-path="data-science.html"><a href="data-science.html#how-to-learn-data-science"><i class="fa fa-check"></i><b>3.4</b> How to Learn Data Science</a></li>
-<li class="chapter" data-level="3.5" data-path="data-science.html"><a href="data-science.html#cautions-dont-that-everybody-does"><i class="fa fa-check"></i><b>3.5</b> Cautions: Don’t that Everybody Does</a></li>
+<li class="chapter" data-level="3.4" data-path="data_science.html"><a href="data_science.html#how-to-learn-data-science"><i class="fa fa-check"></i><b>3.4</b> How to Learn Data Science</a></li>
+<li class="chapter" data-level="3.5" data-path="data_science.html"><a href="data_science.html#cautions-dont-that-everybody-does"><i class="fa fa-check"></i><b>3.5</b> Cautions: Don’t that Everybody Does</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="data-manip.html"><a href="data-manip.html"><i class="fa fa-check"></i><b>4</b> Data Manipulation</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="data-manip.html"><a href="data-manip.html#chapter-overview"><i class="fa fa-check"></i><b>4.1</b> Chapter Overview</a></li>
-<li class="chapter" data-level="4.2" data-path="data-manip.html"><a href="data-manip.html#why-manipulating-data"><i class="fa fa-check"></i><b>4.2</b> Why Manipulating Data?</a></li>
-<li class="chapter" data-level="4.3" data-path="data-manip.html"><a href="data-manip.html#tidy-data"><i class="fa fa-check"></i><b>4.3</b> Tidying Data</a>
+<li class="chapter" data-level="4.1" data-path="data-manip.html"><a href="data-manip.html#why-manipulating-data"><i class="fa fa-check"></i><b>4.1</b> Why Manipulating Data?</a></li>
+<li class="chapter" data-level="4.2" data-path="data-manip.html"><a href="data-manip.html#tidy-data"><i class="fa fa-check"></i><b>4.2</b> Tidying Data</a>
 <ul>
-<li class="chapter" data-level="4.3.1" data-path="data-manip.html"><a href="data-manip.html#simple-manipulations"><i class="fa fa-check"></i><b>4.3.1</b> Simple Manipulations</a></li>
-<li class="chapter" data-level="4.3.2" data-path="data-manip.html"><a href="data-manip.html#reshaping-the-data"><i class="fa fa-check"></i><b>4.3.2</b> Reshaping the Data</a></li>
-<li class="chapter" data-level="4.3.3" data-path="data-manip.html"><a href="data-manip.html#transformation-that-alters-the-data"><i class="fa fa-check"></i><b>4.3.3</b> Transformation that Alters the Data</a></li>
-<li class="chapter" data-level="4.3.4" data-path="data-manip.html"><a href="data-manip.html#combining-data-from-different-sources"><i class="fa fa-check"></i><b>4.3.4</b> Combining Data from Different Sources</a></li>
+<li class="chapter" data-level="4.2.1" data-path="data-manip.html"><a href="data-manip.html#simple-manipulations"><i class="fa fa-check"></i><b>4.2.1</b> Simple Manipulations</a></li>
+<li class="chapter" data-level="4.2.2" data-path="data-manip.html"><a href="data-manip.html#pivots"><i class="fa fa-check"></i><b>4.2.2</b> Reshaping Data</a></li>
+<li class="chapter" data-level="4.2.3" data-path="data-manip.html"><a href="data-manip.html#transformation-that-alters-the-data"><i class="fa fa-check"></i><b>4.2.3</b> Transformation that Alters the Data</a></li>
+<li class="chapter" data-level="4.2.4" data-path="data-manip.html"><a href="data-manip.html#combining-data-from-different-sources"><i class="fa fa-check"></i><b>4.2.4</b> Combining Data from Different Sources</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="data-viz.html"><a href="data-viz.html"><i class="fa fa-check"></i><b>5</b> Data Visualization</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="data-viz.html"><a href="data-viz.html#design-principles"><i class="fa fa-check"></i><b>5.1</b> Design Principles</a></li>
-<li class="chapter" data-level="5.2" data-path="data-viz.html"><a href="data-viz.html#table-making"><i class="fa fa-check"></i><b>5.2</b> Table Making</a></li>
-<li class="chapter" data-level="5.3" data-path="data-viz.html"><a href="data-viz.html#chart-making"><i class="fa fa-check"></i><b>5.3</b> Chart Making</a>
+<li class="chapter" data-level="5.1" data-path="data-viz.html"><a href="data-viz.html#introduction"><i class="fa fa-check"></i><b>5.1</b> Introduction</a></li>
+<li class="chapter" data-level="5.2" data-path="data-viz.html"><a href="data-viz.html#design-principles"><i class="fa fa-check"></i><b>5.2</b> Design Principles</a></li>
+<li class="chapter" data-level="5.3" data-path="data-viz.html"><a href="data-viz.html#table_making"><i class="fa fa-check"></i><b>5.3</b> Table Making</a>
 <ul>
-<li class="chapter" data-level="5.3.1" data-path="data-viz.html"><a href="data-viz.html#philosophy-of-ggplot2"><i class="fa fa-check"></i><b>5.3.1</b> Philosophy of <code>{ggplot2}</code></a></li>
-<li class="chapter" data-level="5.3.2" data-path="data-viz.html"><a href="data-viz.html#getting-started-with-ggplot2"><i class="fa fa-check"></i><b>5.3.2</b> Getting started with <code>{ggplot2}</code></a></li>
-<li class="chapter" data-level="5.3.3" data-path="data-viz.html"><a href="data-viz.html#common-charts"><i class="fa fa-check"></i><b>5.3.3</b> Common Charts</a></li>
-<li class="chapter" data-level="5.3.4" data-path="data-viz.html"><a href="data-viz.html#miscealleneous"><i class="fa fa-check"></i><b>5.3.4</b> Miscealleneous</a></li>
-<li class="chapter" data-level="5.3.5" data-path="data-viz.html"><a href="data-viz.html#few-tips-and-tricks"><i class="fa fa-check"></i><b>5.3.5</b> Few Tips and Tricks</a></li>
+<li class="chapter" data-level="5.3.1" data-path="data-viz.html"><a href="data-viz.html#flextable"><i class="fa fa-check"></i><b>5.3.1</b> Introduction to <code>{flextable}</code></a></li>
+<li class="chapter" data-level="5.3.2" data-path="data-viz.html"><a href="data-viz.html#introdution-to-gt"><i class="fa fa-check"></i><b>5.3.2</b> Introdution to <code>{gt}</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="data-viz.html"><a href="data-viz.html#chart-making"><i class="fa fa-check"></i><b>5.4</b> Chart Making</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="data-viz.html"><a href="data-viz.html#philosophy-of-ggplot2"><i class="fa fa-check"></i><b>5.4.1</b> Philosophy of <code>{ggplot2}</code></a></li>
+<li class="chapter" data-level="5.4.2" data-path="data-viz.html"><a href="data-viz.html#getting-started-with-ggplot2"><i class="fa fa-check"></i><b>5.4.2</b> Getting started with <code>{ggplot2}</code></a></li>
+<li class="chapter" data-level="5.4.3" data-path="data-viz.html"><a href="data-viz.html#common-charts"><i class="fa fa-check"></i><b>5.4.3</b> Common Charts</a></li>
+<li class="chapter" data-level="5.4.4" data-path="data-viz.html"><a href="data-viz.html#miscealleneous"><i class="fa fa-check"></i><b>5.4.4</b> Miscealleneous</a></li>
+<li class="chapter" data-level="5.4.5" data-path="data-viz.html"><a href="data-viz.html#few-additional-tips-and-tricks"><i class="fa fa-check"></i><b>5.4.5</b> Few Additional Tips and Tricks</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="auto-report.html"><a href="auto-report.html"><i class="fa fa-check"></i><b>6</b> Automated Reporting</a>
@@ -245,109 +278,128 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <li class="part"><span><b>Bon Appétit</b></span></li>
 <li class="chapter" data-level="7" data-path="example-projects.html"><a href="example-projects.html"><i class="fa fa-check"></i><b>7</b> Example Project: The Biscuit Study</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="example-projects.html"><a href="example-projects.html#products"><i class="fa fa-check"></i><b>7.1</b> Products</a></li>
-<li class="chapter" data-level="7.2" data-path="example-projects.html"><a href="example-projects.html#consumer-test"><i class="fa fa-check"></i><b>7.2</b> Consumer test</a>
+<li class="chapter" data-level="7.1" data-path="example-projects.html"><a href="example-projects.html#objective-of-the-test"><i class="fa fa-check"></i><b>7.1</b> Objective of the Test</a></li>
+<li class="chapter" data-level="7.2" data-path="example-projects.html"><a href="example-projects.html#products"><i class="fa fa-check"></i><b>7.2</b> Products</a></li>
+<li class="chapter" data-level="7.3" data-path="example-projects.html"><a href="example-projects.html#consumer-test"><i class="fa fa-check"></i><b>7.3</b> Consumer test</a>
 <ul>
-<li class="chapter" data-level="7.2.1" data-path="example-projects.html"><a href="example-projects.html#participants"><i class="fa fa-check"></i><b>7.2.1</b> Participants</a></li>
-<li class="chapter" data-level="7.2.2" data-path="example-projects.html"><a href="example-projects.html#test-design"><i class="fa fa-check"></i><b>7.2.2</b> Test design</a></li>
+<li class="chapter" data-level="7.3.1" data-path="example-projects.html"><a href="example-projects.html#participants"><i class="fa fa-check"></i><b>7.3.1</b> Participants</a></li>
+<li class="chapter" data-level="7.3.2" data-path="example-projects.html"><a href="example-projects.html#test-design"><i class="fa fa-check"></i><b>7.3.2</b> Test design</a></li>
 </ul></li>
-<li class="chapter" data-level="7.3" data-path="example-projects.html"><a href="example-projects.html#sensory-descriptive-analysis-data"><i class="fa fa-check"></i><b>7.3</b> Sensory descriptive analysis data</a></li>
-<li class="chapter" data-level="7.4" data-path="example-projects.html"><a href="example-projects.html#summary-of-the-datasets"><i class="fa fa-check"></i><b>7.4</b> Summary of the datasets</a></li>
+<li class="chapter" data-level="7.4" data-path="example-projects.html"><a href="example-projects.html#sensory-descriptive-analysis-data"><i class="fa fa-check"></i><b>7.4</b> Sensory descriptive analysis data</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="data-collection.html"><a href="data-collection.html"><i class="fa fa-check"></i><b>8</b> Data Collection</a>
 <ul>
-<li class="chapter" data-level="8.1" data-path="data-collection.html"><a href="data-collection.html#design-1"><i class="fa fa-check"></i><b>8.1</b> Design</a>
+<li class="chapter" data-level="8.1" data-path="data-collection.html"><a href="data-collection.html#designs-of-sensory-doe-experiments"><i class="fa fa-check"></i><b>8.1</b> Designs of sensory (DoE) experiments</a>
 <ul>
-<li class="chapter" data-level="8.1.1" data-path="data-collection.html"><a href="data-collection.html#designs-of-sensory-experiments"><i class="fa fa-check"></i><b>8.1.1</b> Designs of sensory experiments</a></li>
-<li class="chapter" data-level="8.1.2" data-path="data-collection.html"><a href="data-collection.html#product-related-designs"><i class="fa fa-check"></i><b>8.1.2</b> Product-related designs</a></li>
+<li class="chapter" data-level="8.1.1" data-path="data-collection.html"><a href="data-collection.html#general-approach"><i class="fa fa-check"></i><b>8.1.1</b> General approach</a></li>
+<li class="chapter" data-level="8.1.2" data-path="data-collection.html"><a href="data-collection.html#Crossover"><i class="fa fa-check"></i><b>8.1.2</b> Crossover designs</a></li>
+<li class="chapter" data-level="8.1.3" data-path="data-collection.html"><a href="data-collection.html#BIBD"><i class="fa fa-check"></i><b>8.1.3</b> Balanced incomplete block designs (BIBD)</a></li>
+<li class="chapter" data-level="8.1.4" data-path="data-collection.html"><a href="data-collection.html#incomplete-designs-for-hedonic-tests-sensory-informed-designs"><i class="fa fa-check"></i><b>8.1.4</b> Incomplete designs for hedonic tests: Sensory informed designs</a></li>
 </ul></li>
-<li class="chapter" data-level="8.2" data-path="data-collection.html"><a href="data-collection.html#execute-1"><i class="fa fa-check"></i><b>8.2</b> Execute</a></li>
-<li class="chapter" data-level="8.3" data-path="data-collection.html"><a href="data-collection.html#data-import"><i class="fa fa-check"></i><b>8.3</b> Import</a>
+<li class="chapter" data-level="8.2" data-path="data-collection.html"><a href="data-collection.html#product-related-designs"><i class="fa fa-check"></i><b>8.2</b> Product-related designs</a>
 <ul>
-<li class="chapter" data-level="8.3.1" data-path="data-collection.html"><a href="data-collection.html#importing-structured-excel-file"><i class="fa fa-check"></i><b>8.3.1</b> Importing Structured Excel File</a></li>
-<li class="chapter" data-level="8.3.2" data-path="data-collection.html"><a href="data-collection.html#importing-unstructured-excel-file"><i class="fa fa-check"></i><b>8.3.2</b> Importing Unstructured Excel File</a></li>
-<li class="chapter" data-level="8.3.3" data-path="data-collection.html"><a href="data-collection.html#import-mult-sheet"><i class="fa fa-check"></i><b>8.3.3</b> Importing Data Stored in Multiple Sheets</a></li>
+<li class="chapter" data-level="8.2.1" data-path="data-collection.html"><a href="data-collection.html#factorial-designs"><i class="fa fa-check"></i><b>8.2.1</b> Factorial designs</a></li>
+<li class="chapter" data-level="8.2.2" data-path="data-collection.html"><a href="data-collection.html#mixture-designs"><i class="fa fa-check"></i><b>8.2.2</b> Mixture designs</a></li>
+<li class="chapter" data-level="8.2.3" data-path="data-collection.html"><a href="data-collection.html#screening-designs"><i class="fa fa-check"></i><b>8.2.3</b> Screening designs</a></li>
+<li class="chapter" data-level="8.2.4" data-path="data-collection.html"><a href="data-collection.html#sensory-informed-designs"><i class="fa fa-check"></i><b>8.2.4</b> Sensory informed designs</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="data-collection.html"><a href="data-collection.html#execute-1"><i class="fa fa-check"></i><b>8.3</b> Execute</a></li>
+<li class="chapter" data-level="8.4" data-path="data-collection.html"><a href="data-collection.html#data-import"><i class="fa fa-check"></i><b>8.4</b> Import</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="data-collection.html"><a href="data-collection.html#importing-structured-excel-file"><i class="fa fa-check"></i><b>8.4.1</b> Importing Structured Excel File</a></li>
+<li class="chapter" data-level="8.4.2" data-path="data-collection.html"><a href="data-collection.html#importing-unstructured-excel-file"><i class="fa fa-check"></i><b>8.4.2</b> Importing Unstructured Excel File</a></li>
+<li class="chapter" data-level="8.4.3" data-path="data-collection.html"><a href="data-collection.html#import-mult-sheet"><i class="fa fa-check"></i><b>8.4.3</b> Importing Data Stored in Multiple Sheets</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="data-prep.html"><a href="data-prep.html"><i class="fa fa-check"></i><b>9</b> Data Preparation</a>
 <ul>
-<li class="chapter" data-level="9.1" data-path="data-prep.html"><a href="data-prep.html#inspect"><i class="fa fa-check"></i><b>9.1</b> Inspect</a>
+<li class="chapter" data-level="9.1" data-path="data-prep.html"><a href="data-prep.html#introduction-1"><i class="fa fa-check"></i><b>9.1</b> Introduction</a></li>
+<li class="chapter" data-level="9.2" data-path="data-prep.html"><a href="data-prep.html#inspect"><i class="fa fa-check"></i><b>9.2</b> Inspect</a>
 <ul>
-<li class="chapter" data-level="9.1.1" data-path="data-prep.html"><a href="data-prep.html#data-inspection"><i class="fa fa-check"></i><b>9.1.1</b> Data Inspection</a></li>
-<li class="chapter" data-level="9.1.2" data-path="data-prep.html"><a href="data-prep.html#missing-data"><i class="fa fa-check"></i><b>9.1.2</b> Missing Data</a></li>
-<li class="chapter" data-level="9.1.3" data-path="data-prep.html"><a href="data-prep.html#design-inspection"><i class="fa fa-check"></i><b>9.1.3</b> Design Inspection</a></li>
+<li class="chapter" data-level="9.2.1" data-path="data-prep.html"><a href="data-prep.html#data-inspection"><i class="fa fa-check"></i><b>9.2.1</b> Data Inspection</a></li>
+<li class="chapter" data-level="9.2.2" data-path="data-prep.html"><a href="data-prep.html#missing-data"><i class="fa fa-check"></i><b>9.2.2</b> Missing Data</a></li>
+<li class="chapter" data-level="9.2.3" data-path="data-prep.html"><a href="data-prep.html#design-inspection"><i class="fa fa-check"></i><b>9.2.3</b> Design Inspection</a></li>
 </ul></li>
-<li class="chapter" data-level="9.2" data-path="data-prep.html"><a href="data-prep.html#clean"><i class="fa fa-check"></i><b>9.2</b> Clean</a>
+<li class="chapter" data-level="9.3" data-path="data-prep.html"><a href="data-prep.html#clean"><i class="fa fa-check"></i><b>9.3</b> Clean</a>
 <ul>
-<li class="chapter" data-level="9.2.1" data-path="data-prep.html"><a href="data-prep.html#handling-data-type"><i class="fa fa-check"></i><b>9.2.1</b> Handling Data Type</a></li>
-<li class="chapter" data-level="9.2.2" data-path="data-prep.html"><a href="data-prep.html#converting-between-types"><i class="fa fa-check"></i><b>9.2.2</b> Converting between Types</a></li>
-<li class="chapter" data-level="9.2.3" data-path="data-prep.html"><a href="data-prep.html#conclusions"><i class="fa fa-check"></i><b>9.2.3</b> Conclusions</a></li>
+<li class="chapter" data-level="9.3.1" data-path="data-prep.html"><a href="data-prep.html#handling-data-type"><i class="fa fa-check"></i><b>9.3.1</b> Handling Data Type</a></li>
+<li class="chapter" data-level="9.3.2" data-path="data-prep.html"><a href="data-prep.html#converting-between-types"><i class="fa fa-check"></i><b>9.3.2</b> Converting between Types</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="data-analysis.html"><a href="data-analysis.html"><i class="fa fa-check"></i><b>10</b> Data Analysis</a>
 <ul>
-<li class="chapter" data-level="10.1" data-path="data-analysis.html"><a href="data-analysis.html#chapter-overview-1"><i class="fa fa-check"></i><b>10.1</b> Chapter Overview</a></li>
-<li class="chapter" data-level="10.2" data-path="data-analysis.html"><a href="data-analysis.html#sensory-data"><i class="fa fa-check"></i><b>10.2</b> Sensory Data</a></li>
-<li class="chapter" data-level="10.3" data-path="data-analysis.html"><a href="data-analysis.html#demographic-and-questionnaire-data"><i class="fa fa-check"></i><b>10.3</b> Demographic and Questionnaire Data</a>
+<li class="chapter" data-level="10.1" data-path="data-analysis.html"><a href="data-analysis.html#sensory-data"><i class="fa fa-check"></i><b>10.1</b> Sensory Data</a></li>
+<li class="chapter" data-level="10.2" data-path="data-analysis.html"><a href="data-analysis.html#demographic-and-questionnaire-data"><i class="fa fa-check"></i><b>10.2</b> Demographic and Questionnaire Data</a>
 <ul>
-<li class="chapter" data-level="10.3.1" data-path="data-analysis.html"><a href="data-analysis.html#demographic-data-frequency-and-proportion"><i class="fa fa-check"></i><b>10.3.1</b> Demographic Data: Frequency and Proportion</a></li>
-<li class="chapter" data-level="10.3.2" data-path="data-analysis.html"><a href="data-analysis.html#personality-traits-and-eating-behavior-tfeq-data"><i class="fa fa-check"></i><b>10.3.2</b> Personality traits and eating behavior: TFEQ data</a></li>
+<li class="chapter" data-level="10.2.1" data-path="data-analysis.html"><a href="data-analysis.html#demographic-data-frequency-and-proportion"><i class="fa fa-check"></i><b>10.2.1</b> Demographic Data: Frequency and Proportion</a></li>
+<li class="chapter" data-level="10.2.2" data-path="data-analysis.html"><a href="data-analysis.html#eating-behavior-traits-tfeq-data"><i class="fa fa-check"></i><b>10.2.2</b> Eating behavior traits: TFEQ data</a></li>
 </ul></li>
-<li class="chapter" data-level="10.4" data-path="data-analysis.html"><a href="data-analysis.html#consumer-data"><i class="fa fa-check"></i><b>10.4</b> Consumer Data</a></li>
-<li class="chapter" data-level="10.5" data-path="data-analysis.html"><a href="data-analysis.html#combining-sensory-and-consumer-data"><i class="fa fa-check"></i><b>10.5</b> Combining Sensory and Consumer Data</a>
+<li class="chapter" data-level="10.3" data-path="data-analysis.html"><a href="data-analysis.html#consumer-data"><i class="fa fa-check"></i><b>10.3</b> Consumer Data</a></li>
+<li class="chapter" data-level="10.4" data-path="data-analysis.html"><a href="data-analysis.html#combining-sensory-and-consumer-data"><i class="fa fa-check"></i><b>10.4</b> Combining Sensory and Consumer Data</a>
 <ul>
-<li class="chapter" data-level="10.5.1" data-path="data-analysis.html"><a href="data-analysis.html#internal-preference-mapping"><i class="fa fa-check"></i><b>10.5.1</b> Internal Preference Mapping</a></li>
-<li class="chapter" data-level="10.5.2" data-path="data-analysis.html"><a href="data-analysis.html#consumers-clustering"><i class="fa fa-check"></i><b>10.5.2</b> Consumers Clustering</a></li>
-<li class="chapter" data-level="10.5.3" data-path="data-analysis.html"><a href="data-analysis.html#drivers-of-liking"><i class="fa fa-check"></i><b>10.5.3</b> Drivers of Liking</a></li>
-<li class="chapter" data-level="10.5.4" data-path="data-analysis.html"><a href="data-analysis.html#external-preference-mapping"><i class="fa fa-check"></i><b>10.5.4</b> External Preference Mapping</a></li>
+<li class="chapter" data-level="10.4.1" data-path="data-analysis.html"><a href="data-analysis.html#internal-preference-mapping"><i class="fa fa-check"></i><b>10.4.1</b> Internal Preference Mapping</a></li>
+<li class="chapter" data-level="10.4.2" data-path="data-analysis.html"><a href="data-analysis.html#consumers-clustering"><i class="fa fa-check"></i><b>10.4.2</b> Consumers Clustering</a></li>
+<li class="chapter" data-level="10.4.3" data-path="data-analysis.html"><a href="data-analysis.html#drivers-of-liking"><i class="fa fa-check"></i><b>10.4.3</b> Drivers of Liking</a></li>
+<li class="chapter" data-level="10.4.4" data-path="data-analysis.html"><a href="data-analysis.html#external-preference-mapping"><i class="fa fa-check"></i><b>10.4.4</b> External Preference Mapping</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="value-delivery.html"><a href="value-delivery.html"><i class="fa fa-check"></i><b>11</b> Value Delivery</a>
 <ul>
-<li class="chapter" data-level="11.1" data-path="value-delivery.html"><a href="value-delivery.html#communicate2"><i class="fa fa-check"></i><b>11.1</b> Communicate</a>
+<li class="chapter" data-level="11.1" data-path="value-delivery.html"><a href="value-delivery.html#how-to-communicate"><i class="fa fa-check"></i><b>11.1</b> How to Communicate?</a></li>
+<li class="chapter" data-level="11.2" data-path="value-delivery.html"><a href="value-delivery.html#exploratory-explanatory-and-predictive-analysis"><i class="fa fa-check"></i><b>11.2</b> Exploratory, Explanatory and Predictive Analysis</a></li>
+<li class="chapter" data-level="11.3" data-path="value-delivery.html"><a href="value-delivery.html#audience-awareness"><i class="fa fa-check"></i><b>11.3</b> Audience Awareness</a>
 <ul>
-<li class="chapter" data-level="11.1.1" data-path="value-delivery.html"><a href="value-delivery.html#exploratory-explanatory-and-predictive-analysis"><i class="fa fa-check"></i><b>11.1.1</b> Exploratory, Explanatory and Predictive Analysis</a></li>
-<li class="chapter" data-level="11.1.2" data-path="value-delivery.html"><a href="value-delivery.html#audience-awareness"><i class="fa fa-check"></i><b>11.1.2</b> Audience Awareness</a></li>
-<li class="chapter" data-level="11.1.3" data-path="value-delivery.html"><a href="value-delivery.html#method-to-communicate"><i class="fa fa-check"></i><b>11.1.3</b> Method to Communicate</a></li>
-<li class="chapter" data-level="11.1.4" data-path="value-delivery.html"><a href="value-delivery.html#storytelling"><i class="fa fa-check"></i><b>11.1.4</b> Storytelling</a></li>
+<li class="chapter" data-level="11.3.1" data-path="value-delivery.html"><a href="value-delivery.html#technical-audience"><i class="fa fa-check"></i><b>11.3.1</b> Technical Audience</a></li>
+<li class="chapter" data-level="11.3.2" data-path="value-delivery.html"><a href="value-delivery.html#management"><i class="fa fa-check"></i><b>11.3.2</b> Management</a></li>
+<li class="chapter" data-level="11.3.3" data-path="value-delivery.html"><a href="value-delivery.html#general-interest"><i class="fa fa-check"></i><b>11.3.3</b> General Interest</a></li>
 </ul></li>
-<li class="chapter" data-level="11.2" data-path="value-delivery.html"><a href="value-delivery.html#reformulate2"><i class="fa fa-check"></i><b>11.2</b> Reformulate</a></li>
+<li class="chapter" data-level="11.4" data-path="value-delivery.html"><a href="value-delivery.html#methods-to-communicate"><i class="fa fa-check"></i><b>11.4</b> Methods to Communicate</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="value-delivery.html"><a href="value-delivery.html#consider-the-mechanism"><i class="fa fa-check"></i><b>11.4.1</b> Consider the Mechanism</a></li>
+<li class="chapter" data-level="11.4.2" data-path="value-delivery.html"><a href="value-delivery.html#pick-the-correct-format"><i class="fa fa-check"></i><b>11.4.2</b> Pick the Correct Format</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="value-delivery.html"><a href="value-delivery.html#storytelling"><i class="fa fa-check"></i><b>11.5</b> Storytelling</a></li>
+<li class="chapter" data-level="11.6" data-path="value-delivery.html"><a href="value-delivery.html#reformulate2"><i class="fa fa-check"></i><b>11.6</b> Reformulate</a></li>
 </ul></li>
 <li class="part"><span><b>Haute Cuisine</b></span></li>
 <li class="chapter" data-level="12" data-path="machine-learning.html"><a href="machine-learning.html"><i class="fa fa-check"></i><b>12</b> Machine Learning</a>
 <ul>
-<li class="chapter" data-level="12.1" data-path="machine-learning.html"><a href="machine-learning.html#machine-learning-methods"><i class="fa fa-check"></i><b>12.1</b> Machine Learning Methods</a>
+<li class="chapter" data-level="12.1" data-path="machine-learning.html"><a href="machine-learning.html#introduction-2"><i class="fa fa-check"></i><b>12.1</b> Introduction</a></li>
+<li class="chapter" data-level="12.2" data-path="machine-learning.html"><a href="machine-learning.html#machine-learning-methods"><i class="fa fa-check"></i><b>12.2</b> Machine Learning Methods</a>
 <ul>
-<li class="chapter" data-level="12.1.1" data-path="machine-learning.html"><a href="machine-learning.html#unsupervised-learning"><i class="fa fa-check"></i><b>12.1.1</b> Unsupervised learning</a></li>
-<li class="chapter" data-level="12.1.2" data-path="machine-learning.html"><a href="machine-learning.html#supervised-learning"><i class="fa fa-check"></i><b>12.1.2</b> Supervised learning</a></li>
-<li class="chapter" data-level="12.1.3" data-path="machine-learning.html"><a href="machine-learning.html#practical-guide-to-machine-learning"><i class="fa fa-check"></i><b>12.1.3</b> Practical Guide to Machine Learning</a></li>
+<li class="chapter" data-level="12.2.1" data-path="machine-learning.html"><a href="machine-learning.html#unsupervised-learning"><i class="fa fa-check"></i><b>12.2.1</b> Unsupervised learning</a></li>
+<li class="chapter" data-level="12.2.2" data-path="machine-learning.html"><a href="machine-learning.html#supervised-learning"><i class="fa fa-check"></i><b>12.2.2</b> Supervised learning</a></li>
+<li class="chapter" data-level="12.2.3" data-path="machine-learning.html"><a href="machine-learning.html#practical-guide-to-machine-learning"><i class="fa fa-check"></i><b>12.2.3</b> Practical Guide to Machine Learning</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="13" data-path="text-analysis.html"><a href="text-analysis.html"><i class="fa fa-check"></i><b>13</b> Text Analysis</a>
 <ul>
-<li class="chapter" data-level="13.1" data-path="text-analysis.html"><a href="text-analysis.html#application-of-text-analysis-in-sensory-and-consumer-science"><i class="fa fa-check"></i><b>13.1</b> Application of Text Analysis in Sensory and Consumer Science</a>
+<li class="chapter" data-level="13.1" data-path="text-analysis.html"><a href="text-analysis.html#introduction-to-natural-language-processing"><i class="fa fa-check"></i><b>13.1</b> Introduction to Natural Language Processing</a></li>
+<li class="chapter" data-level="13.2" data-path="text-analysis.html"><a href="text-analysis.html#application-of-text-analysis-in-sensory-and-consumer-science"><i class="fa fa-check"></i><b>13.2</b> Application of Text Analysis in Sensory and Consumer Science</a>
 <ul>
-<li class="chapter" data-level="13.1.1" data-path="text-analysis.html"><a href="text-analysis.html#text-analysis-as-way-to-describe-products"><i class="fa fa-check"></i><b>13.1.1</b> Text analysis as way to describe products</a></li>
-<li class="chapter" data-level="13.1.2" data-path="text-analysis.html"><a href="text-analysis.html#objectives-of-text-analysis"><i class="fa fa-check"></i><b>13.1.2</b> Objectives of Text Analysis</a></li>
-<li class="chapter" data-level="13.1.3" data-path="text-analysis.html"><a href="text-analysis.html#warnings"><i class="fa fa-check"></i><b>13.1.3</b> Warnings</a></li>
+<li class="chapter" data-level="13.2.1" data-path="text-analysis.html"><a href="text-analysis.html#text-analysis-as-way-to-describe-products"><i class="fa fa-check"></i><b>13.2.1</b> Text analysis as way to describe products</a></li>
+<li class="chapter" data-level="13.2.2" data-path="text-analysis.html"><a href="text-analysis.html#objectives-of-text-analysis"><i class="fa fa-check"></i><b>13.2.2</b> Objectives of Text Analysis</a></li>
+<li class="chapter" data-level="13.2.3" data-path="text-analysis.html"><a href="text-analysis.html#classical-text-analysis-workflow"><i class="fa fa-check"></i><b>13.2.3</b> Classical <em>text analysis</em> workflow</a></li>
+<li class="chapter" data-level="13.2.4" data-path="text-analysis.html"><a href="text-analysis.html#warnings"><i class="fa fa-check"></i><b>13.2.4</b> Warnings</a></li>
 </ul></li>
-<li class="chapter" data-level="13.2" data-path="text-analysis.html"><a href="text-analysis.html#illustration-using-sorting-task-data"><i class="fa fa-check"></i><b>13.2</b> Illustration using Sorting Task Data</a>
+<li class="chapter" data-level="13.3" data-path="text-analysis.html"><a href="text-analysis.html#illustration-using-sorting-task-data"><i class="fa fa-check"></i><b>13.3</b> Illustration using Sorting Task Data</a>
 <ul>
-<li class="chapter" data-level="13.2.1" data-path="text-analysis.html"><a href="text-analysis.html#data-pre-processing"><i class="fa fa-check"></i><b>13.2.1</b> Data Pre-processing</a></li>
-<li class="chapter" data-level="13.2.2" data-path="text-analysis.html"><a href="text-analysis.html#introduction-to-working-with-strings-stringr"><i class="fa fa-check"></i><b>13.2.2</b> Introduction to working with strings (<code>{stringr}</code>)</a></li>
-<li class="chapter" data-level="13.2.3" data-path="text-analysis.html"><a href="text-analysis.html#tokenization"><i class="fa fa-check"></i><b>13.2.3</b> Tokenization</a></li>
-<li class="chapter" data-level="13.2.4" data-path="text-analysis.html"><a href="text-analysis.html#simple-transformation-lowercase"><i class="fa fa-check"></i><b>13.2.4</b> Simple Transformation (lowercase)</a></li>
-<li class="chapter" data-level="13.2.5" data-path="text-analysis.html"><a href="text-analysis.html#stopwords"><i class="fa fa-check"></i><b>13.2.5</b> Stopwords</a></li>
-<li class="chapter" data-level="13.2.6" data-path="text-analysis.html"><a href="text-analysis.html#stemming-and-lemmatization"><i class="fa fa-check"></i><b>13.2.6</b> Stemming and Lemmatization</a></li>
+<li class="chapter" data-level="13.3.1" data-path="text-analysis.html"><a href="text-analysis.html#data-pre-processing"><i class="fa fa-check"></i><b>13.3.1</b> Data Pre-processing</a></li>
+<li class="chapter" data-level="13.3.2" data-path="text-analysis.html"><a href="text-analysis.html#introduction-to-working-with-strings-stringr"><i class="fa fa-check"></i><b>13.3.2</b> Introduction to working with strings (<code>{stringr}</code>)</a></li>
+<li class="chapter" data-level="13.3.3" data-path="text-analysis.html"><a href="text-analysis.html#tokenization"><i class="fa fa-check"></i><b>13.3.3</b> Tokenization</a></li>
+<li class="chapter" data-level="13.3.4" data-path="text-analysis.html"><a href="text-analysis.html#simple-transformations"><i class="fa fa-check"></i><b>13.3.4</b> Simple Transformations</a></li>
+<li class="chapter" data-level="13.3.5" data-path="text-analysis.html"><a href="text-analysis.html#splitting-further-the-tokens"><i class="fa fa-check"></i><b>13.3.5</b> Splitting further the tokens</a></li>
+<li class="chapter" data-level="13.3.6" data-path="text-analysis.html"><a href="text-analysis.html#stopwords"><i class="fa fa-check"></i><b>13.3.6</b> Stopwords</a></li>
+<li class="chapter" data-level="13.3.7" data-path="text-analysis.html"><a href="text-analysis.html#stemming-and-lemmatization"><i class="fa fa-check"></i><b>13.3.7</b> Stemming and Lemmatization</a></li>
 </ul></li>
-<li class="chapter" data-level="13.3" data-path="text-analysis.html"><a href="text-analysis.html#text-analysis-1"><i class="fa fa-check"></i><b>13.3</b> Text Analysis</a>
+<li class="chapter" data-level="13.4" data-path="text-analysis.html"><a href="text-analysis.html#text-analysis-1"><i class="fa fa-check"></i><b>13.4</b> Text Analysis</a>
 <ul>
-<li class="chapter" data-level="13.3.1" data-path="text-analysis.html"><a href="text-analysis.html#raw-frequencies-and-visualization"><i class="fa fa-check"></i><b>13.3.1</b> Raw Frequencies and Visualization</a></li>
-<li class="chapter" data-level="13.3.2" data-path="text-analysis.html"><a href="text-analysis.html#bigrams-n-grams"><i class="fa fa-check"></i><b>13.3.2</b> Bigrams, <em>n</em>-grams</a></li>
-<li class="chapter" data-level="13.3.3" data-path="text-analysis.html"><a href="text-analysis.html#word-embedding"><i class="fa fa-check"></i><b>13.3.3</b> Word Embedding</a></li>
-<li class="chapter" data-level="13.3.4" data-path="text-analysis.html"><a href="text-analysis.html#sentiment-analysis"><i class="fa fa-check"></i><b>13.3.4</b> Sentiment Analysis</a></li>
+<li class="chapter" data-level="13.4.1" data-path="text-analysis.html"><a href="text-analysis.html#raw-frequencies-and-visualization"><i class="fa fa-check"></i><b>13.4.1</b> Raw Frequencies and Visualization</a></li>
+<li class="chapter" data-level="13.4.2" data-path="text-analysis.html"><a href="text-analysis.html#bigrams-n-grams"><i class="fa fa-check"></i><b>13.4.2</b> Bigrams, <em>n</em>-grams</a></li>
+<li class="chapter" data-level="13.4.3" data-path="text-analysis.html"><a href="text-analysis.html#word-embedding"><i class="fa fa-check"></i><b>13.4.3</b> Word Embedding</a></li>
+<li class="chapter" data-level="13.4.4" data-path="text-analysis.html"><a href="text-analysis.html#sentiment-analysis"><i class="fa fa-check"></i><b>13.4.4</b> Sentiment Analysis</a></li>
 </ul></li>
-<li class="chapter" data-level="13.4" data-path="text-analysis.html"><a href="text-analysis.html#to-go-further-1"><i class="fa fa-check"></i><b>13.4</b> To go further…</a></li>
+<li class="chapter" data-level="13.5" data-path="text-analysis.html"><a href="text-analysis.html#to-go-further-1"><i class="fa fa-check"></i><b>13.5</b> To go further…</a></li>
 </ul></li>
 <li class="chapter" data-level="14" data-path="dashboards.html"><a href="dashboards.html"><i class="fa fa-check"></i><b>14</b> Dashboards</a>
 <ul>
@@ -356,7 +408,8 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="14.2.1" data-path="dashboards.html"><a href="dashboards.html#what-is-a-shiny-application"><i class="fa fa-check"></i><b>14.2.1</b> What is a Shiny application?</a></li>
 <li class="chapter" data-level="14.2.2" data-path="dashboards.html"><a href="dashboards.html#starting-with-shiny"><i class="fa fa-check"></i><b>14.2.2</b> Starting with Shiny</a></li>
-<li class="chapter" data-level="14.2.3" data-path="dashboards.html"><a href="dashboards.html#deploying-the-application"><i class="fa fa-check"></i><b>14.2.3</b> Deploying the Application</a></li>
+<li class="chapter" data-level="14.2.3" data-path="dashboards.html"><a href="dashboards.html#illustration"><i class="fa fa-check"></i><b>14.2.3</b> Illustration</a></li>
+<li class="chapter" data-level="14.2.4" data-path="dashboards.html"><a href="dashboards.html#deploying-the-application"><i class="fa fa-check"></i><b>14.2.4</b> Deploying the Application</a></li>
 </ul></li>
 <li class="chapter" data-level="14.3" data-path="dashboards.html"><a href="dashboards.html#to-go-further-2"><i class="fa fa-check"></i><b>14.3</b> To go further…</a>
 <ul>
@@ -395,100 +448,149 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="value-delivery" class="section level1" number="11">
-<h1><span class="header-section-number">Chapter 11</span> Value Delivery</h1>
-<div id="communicate2" class="section level2" number="11.1">
-<h2><span class="header-section-number">11.1</span> Communicate</h2>
+<div id="value-delivery" class="section level1 hasAnchor" number="11">
+<h1><span class="header-section-number">Chapter 11</span> Value Delivery<a href="value-delivery.html#value-delivery" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<blockquote>
+<p>Most of this book focus on handling data through the procedure of data cleaning, transformation, analyses, or representation. This makes sense since the aim is to present data science in the context of sensory and consumer research. But these steps may be irrelevant if analysts or reseachers are not able to communicate their findings efficiently. Effective communication is as much important as any other step and so, we will guide you through that, providing some valuable tips and practical examples. This chapter approaches important topics to help you reach the goal of successful communication, from understanding the distinction between different analysis and audience awareness to methods to communicate, the art of storytelling, and ultimately reformulate.</p>
+</blockquote>
+<div id="how-to-communicate" class="section level2 hasAnchor" number="11.1">
+<h2><span class="header-section-number">11.1</span> How to Communicate?<a href="value-delivery.html#how-to-communicate" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Sensory and consumer scientists often act as consultant whether it be for their own company or for customers. Being able to communicate effectively is perhaps one of the most important skills they should master. Communication is a simple act of transferring information and although undervalued by many, plays a key role in any business’s success. Let’s start this chapter reminding that there are different ways to communicate, and this process usually includes a combination of two or more types of languages, which are:</p>
 <ul>
-<li><p>Vocal – the language produced by articulate sounds. It is the language used in client’s meetings and presentations for instance.</p></li>
-<li><p>Non-verbally – is related to the body language, gestures, and the tone and pitch of voice.</p></li>
-<li><p>Written – is the representation of a spoken language in a writing system, like proposals, technical documents, or final reports.</p></li>
-<li><p>Visual – is the communication using visual elements, such as the visual quality of presentations or other written documents, including formatting, logo, colors, figures, plots, etc.</p></li>
+<li><strong>Vocal</strong> – the language produced by articulate sounds. It is the language used in client’s meetings and presentations for instance.</li>
+<li><strong>Non-verbally</strong> – is related to the body language, gestures, and the tone and pitch of the voice.</li>
+<li><strong>Written</strong> – is the representation of a spoken language in a writing system, like proposals, technical documents, or final reports.</li>
+<li><strong>Visual</strong> – is the communication using visual elements, such as the visual quality of presentations or other written documents, including formatting, logo, colors, figures, plots, etc.</li>
 </ul>
-<p>It is through effective communication that you will bring potential clients’ attention and interest in your company and the services you provide, that will make you truly understand your client’s needs, gain their trust and provide the right solutions that will ultimately bring to a long-term partnership. Efficacious communication will be responsible for keeping a friendly relationship and your client’s commitment throughout the project development and will also help you to properly convey the outcomes of a project in a way that surpass and at the very least meet the expectations of your client and opens possibilities for follow-up engagements and/or recommendations.</p>
+<p>It is through effective communication that you will bring potential clients’ attention and interest in your company and the services you provide, that will make you truly understand your client’s needs, gain their trust and provide the right solutions that will ultimately bring to a long-term partnership. Efficacious communication will be responsible for keeping a friendly relationship and your clients’ commitment throughout the project development and will also help you to properly convey the outcomes of a project in a way that will at least meet (or better surpass) your clients’ expectations, and opens possibilities for follow-up engagements and/or recommendations.</p>
 <p>The ability to communicate accurately, clearly and as intended, is definitely something that consultants should not overlook because although it seems straightforward, it involves a number of skills that may take several years of practice to master. You will find plenty of materials on the Internet and books to help you to understand better and develop your very basic skills for effective communication. We will not focus on that in this chapter, but it is worth highlighting some important aptitudes for vocal communication, which may configure one of the most powerful types of communication with your client:</p>
 <ul>
-<li><p>Confidence. Being confident makes you be to be seen as an expert on the topic and as you are under the control of the situation. The audience will be more likely to trust, believe, be connected, and give credit to a confident person.</p></li>
-<li><p>Passion and Enthusiasm. You must be passionate about what you do and convinced and enthusiastic about the solution you provide. The audience can easily capture that on your vocally and non-verbally language and will be much more interested if they can see and feel your passion.</p></li>
-<li><p>Ability to be succinct. No matter how interesting you feel about a topic, you must know that the audience will lose interest after some time, especially if there is a lot of technical and detailed information. Be aware that the attention span of your audience isn’t long, so use your time wisely during the presentation, keeping it short and at the point.</p></li>
-<li><p>Feeling. This is a skill that definitely one needs time to master, but it is crucial that you pick what is going on with your client, if they seem to be understanding and following you, or if they seem to be confused or not sure about what you are talking about.</p></li>
+<li><strong>Confidence</strong>: Being confident makes you be to be seen as an expert on the topic and as having the situation under control. The audience will be more likely to trust, believe, be connected, and give credit to a confident person.</li>
+<li><strong>Passion and Enthusiasm</strong>: Be passionate about what you do, and convinced/enthusiastic about the solution you provide. The audience can easily capture that on your vocally and non-verbally language and will be much more interested if they can see and feel your passion.</li>
+<li><strong>Ability to be succinct</strong>. No matter how interesting you feel about a topic, you must know that the audience will lose interest after some time, especially if there is a lot of technical and detailed information. Be aware that the attention span of your audience isn’t long, so use your time wisely during the presentation, keeping it short and at the point.</li>
+<li><strong>Feeling</strong>. This is a skill that definitely one needs time to master, but it is crucial that you pick what is going on with your client, if they seem to be understanding and following you, or if they seem to be confused or not sure about what you are talking about.</li>
 </ul>
-<p>In this chapter, we will be focused on four topics that we believe any successful consultant should have in mind which are: Exploratory, Explanatory and Predictive Analysis; Audience Awareness; Method to Communicate; and Storytelling.</p>
-<div id="exploratory-explanatory-and-predictive-analysis" class="section level3" number="11.1.1">
-<h3><span class="header-section-number">11.1.1</span> Exploratory, Explanatory and Predictive Analysis</h3>
-<p>As a consultant in the field, you will likely be in a position where you get data from your client and will review it, do the analysis, and ultimately, convey the results. And here is where it is important to make a clear distinction between exploratory and explanatory analysis. Exploratory analysis in the stage you will dig into the data, to understand it, figure out patterns and things that may be interesting or important to highlight. The explanatory analysis is the ability, from the learnings from the previous step, to select and/or reorganize your data or remake your tables, plots, or charts in a way you can easily convey the message to your audience and make them straightforwardly understand and focus on the things is worthy. Let’s discuss that a little bit more.</p>
-<p>The hard work starts once you get the data. This is the time you will likely analyze it in multiple ways, make several plots, and look at the data from multiple angles. This is what we call, exploratory analysis! After understanding all the analysis, it may be tempting to show the audience everything, all the steps, decisions, different plots, and approaches you have taken, but do not do that. You don’t want to overload your audience making them go through the same tough path you went. Instead of showing your handwork, the robustness of your analysis, and building up your credibility, you will make your audience confused, bored, and lacking interest.</p>
-<p>Once you have done all the hard work on data analysis, it is the moment to take some time to stand back and look at the key findings and the message(s) you want to convey. It is important to keep in mind that there is always a balance to find between presenting quantified, accurate, and credible information (i.e. with sufficient details) and presenting information that makes sense, is relevant and that is easily readable and understandable. This challenging phase is what we call explanatory analysis! This is the moment you need to use your ability to translate an extensive, detailed, and complex version of your data analysis to a more concise/holistic version, to a version that will easily and clearly convey the message and highlight the main points. Keep in mind that the explanatory analysis has to be tailored according to your audience (as discussed in the next topic), which means that the way you will present the data analysis and the level of details provided will vary if you are presenting it to a group of experts in the field, including statisticians and mathematicians or in a lecture for a very diverse audience, as in a conference for instance. You need to find the right balance!</p>
+<p>In this chapter, we focus on four topics that we believe any successful consultant should have in mind which are: Exploratory, Explanatory and Predictive Analysis; Audience Awareness; Method to Communicate; and Storytelling.</p>
+</div>
+<div id="exploratory-explanatory-and-predictive-analysis" class="section level2 hasAnchor" number="11.2">
+<h2><span class="header-section-number">11.2</span> Exploratory, Explanatory and Predictive Analysis<a href="value-delivery.html#exploratory-explanatory-and-predictive-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>As a consultant in the field, you likely are in a position where you get data from your client and review it, do the analysis, and ultimately, convey the results. And here is where it is important to make a clear distinction between exploratory and explanatory analysis. <strong>Exploratory analysis</strong> is the stage where you dig into the data, get to understand them, figure out patterns and things that may be interesting or important to highlight. The <strong>explanatory analysis</strong> is the ability, from the learning from the previous step, to select and/or reorganize your data (by remaking your tables, plots, or charts) in a way you can easily convey the message to your audience, and ultimately make them understand and focus on the things that are worthy. Let’s discuss that a little bit more.</p>
+<p>The hard work starts once you get the data. This is the time you will likely analyze it in multiple ways, make several plots, and look at the data from multiple angles. This is what we call, exploratory analysis! After understanding all the analysis, it may be tempting to show the audience everything, all the steps, decisions, different plots, and approaches you have taken, but <strong>do not do that</strong>. You don’t want to overload your audience making them go through the same tough path you went. Instead of showing your handwork, the robustness of your analysis, and building up your credibility, you will make your audience confused, bored, and lacking interest.</p>
+<p>Once you have done all the hard work on data analysis, it is the moment to take some time to stand back and look at the key findings and the message(s) you want to convey. It is important to keep in mind that there is always a balance to find between presenting quantified, accurate, and credible information (i.e. with sufficient details) and presenting information that makes sense, is relevant and that is easily readable and understandable. This challenging phase is what we call explanatory analysis! This is the moment you need to use your ability to translate an extensive, detailed, and complex version of your data analysis to a more concise/holistic version, to a version that will easily and clearly convey the message and highlight the main points. Keep in mind that the explanatory analysis has to be tailored according to your audience (as discussed in the next topic), which means that the way you present the data analysis and the level of details provided vary if you are presenting it to a group of experts in the field, including statisticians and mathematicians or in a lecture for a very diverse audience, as in a conference for instance. You need to find the right balance!</p>
 <p>Some examples in the field to exemplify the two extremes (too complicated or too simple):</p>
 <ul>
-<li><p>Factorial maps – The overuse of factorial maps is a common practice in the sensory and consumer science field. It’s a great tool to explore data, to make or confirm hypotheses, but maybe not the best to communicate since not so many people can correctly read and interpret them. Therefore, a good approach would be to initially work with the factorial map to interpret and draw conclusions, but then, find another way through tables or alternative charts, that may be simpler and easier, to communicate the findings with your audience.</p></li>
-<li><p>Spider Plots – This is the other extreme when consultants can fail but not because they present a very complex and extensive analysis, but because they decide to show the data in such an easy way that puts at risk important information that should be captured. The use of spider plots is still a common practice that many people can easily understand, but the problem is that this analysis is so simple that can mask sensory complexity.</p></li>
+<li><em>Factorial maps</em> – The overuse of factorial maps is a common practice in the sensory and consumer science field. It’s a great tool to explore data, to make or confirm hypotheses, but maybe not the best to communicate since not so many people can correctly read and interpret them. Therefore, a good approach would be to initially work with the factorial map to interpret and draw conclusions, but then, find another way through tables or alternative charts (that may be simpler to understand) to communicate the findings to your audience.</li>
+<li><em>Spider Plots</em> – This is the other extreme when consultants can fail but not because they present a very complex and extensive analysis, but because they decide to show the data in such an easy way that puts at risk important information that should be captured. The use of spider plots is still a common practice that many people can easily understand, but the problem is that this analysis is so simple that it can mask sensory complexity.</li>
 </ul>
-<p>It is worth noticing that there is a third type of analysis in the data science field, predictive analysis. This is a hot topic in the area that involves techniques such as data modeling, machine learning, AI, and deep learning. Instead of being focused on exploring or explaining the data, predictive analysis is concerned with making successful predictions, in being sure the predictions are accurate. Examples of this approach include face recognition and text-speech. Eventually, some models can be studied to provide insights, but this is not always the case.</p>
+<p>It is worth noticing that there is a third type of analysis in the data science field, <strong>predictive analysis</strong>. This is a hot topic in the area that involves techniques such as data modeling, machine learning, AI, and deep learning. Instead of being focused on exploring or explaining the data, predictive analysis is concerned with making successful predictions, in ensuring that the predictions are accurate. Examples of this approach include face recognition and text-speech transcription. Eventually, some models can be studied to provide insights, but this is not always the case.</p>
 </div>
-<div id="audience-awareness" class="section level3" number="11.1.2">
-<h3><span class="header-section-number">11.1.2</span> Audience Awareness</h3>
-<p>One of the most important things about being a successful consultant is Audience Awareness! No matter how good you, your team, and the service or product your company offers if you fail to communicate with your target audience. Knowing the audience, the target people you will be, for instance, presenting the outcomes of a project or sending a final report, is just the cornerstone of any successful business. Knowing your audience makes you be better able to connect to them.</p>
+<div id="audience-awareness" class="section level2 hasAnchor" number="11.3">
+<h2><span class="header-section-number">11.3</span> Audience Awareness<a href="value-delivery.html#audience-awareness" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>One of the most important things about being a successful consultant is Audience Awareness! No matter how good you, your team, and the service or product your company offers, if you fail to communicate with your target audience, the message will not get through. Knowing the audience, who the target people are is the cornerstone of any successful business. Knowing your audience makes you be better able to connect to them.</p>
 <p>In order to know your audience, you must gather some information about them beforehand, such as:</p>
-<p>Background. Do they have a sensory science background? Statistical background? Do they have experience in data science, including R language? Do they have experience in automated reporting dashboards, machine learning, etc? If so, are they juniors, specialists, seniors?</p>
 <ul>
-<li><p>Vocabulary. Will your audience understand very technical terms, or do you need to use simplified terms to convey the same message? This topic is closely related to the audience’s background.</p></li>
-<li><p>Expectations. What is your audience expecting in a presentation or final report? A short summary of the project’s outcomes? A detailed explanation of the statistical analysis including appendixes with further details? Recommendations for follow-up projects? Interpretation and conclusion of the analysis?</p></li>
-<li><p>Role. What is the role your audience plays in the project? Are they the decisions makers? Are they the final users of a dashboard, for instance?</p></li>
+<li><strong>Background</strong>: Do they have a sensory science background? Statistical background? Do they have experience in data science, including R language? Do they have experience in automated reporting dashboards, machine learning, etc? If so, are they juniors, specialists, seniors?</li>
+<li><strong>Role</strong>: What is the role your audience plays in the project? Are they the decisions makers? Are they the final users of a dashboard, for instance?</li>
+<li><strong>Vocabulary</strong>: Will your audience understand very technical terms, or do you need to use simplified terms to convey the same message? This topic is closely related to the audience’s background.</li>
+<li><strong>Expectations</strong>: What is your audience expecting in a presentation or final report? A short summary of the project’s outcomes? A detailed explanation of the statistical analysis including appendixes with further details? Recommendations for follow-up projects? Interpretation and conclusion of the analysis?</li>
 </ul>
-<p>In general, according to the profile, the audience will likely fall into one of the three categories: Technical Audience, Management (Decisions Makers), and General Interest. There is no magical formula on how to deal exactly with each of these types of audience, but in general, based on our experience, we must highlight that one of the key differences are in the focus, language, level of technical and detailed information you will provide for each of those target public. In general, it tends to be necessary a higher level of details and technical information and a lower level of the big picture once you move from your general interest audience to the management, and further down to the technical audience (Figure 11.1). We will further discuss the main differences between each audience above.</p>
-<div class="figure" style="text-align: center"><span id="fig:trade-off"></span>
+<p>In general, according to the profile, the audience will likely fall into one of the three categories: <strong>Technical Audience</strong>, <strong>Management (Decisions Makers)</strong>, and <strong>General Interest</strong>. There is no magical formula on how to deal exactly with each of these types of audience, but in general, based on our experience, we must highlight that the key differences are in the focus, language, level of technical and detailed information you need to provide for each of those target public. In general, it tends to be necessary a higher level of details and technical information and a lower level of the big picture once you move from your general interest audience to the management, and further down to the technical audience (Figure <a href="value-delivery.html#fig:trade-off">11.1</a>). We will further discuss the main differences between each audience above.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:trade-off"></span>
 <img src="images/trade-off_value_delivery.jpg" alt="Trade-off curve based on the level of technical details and the big picture for each type of audience." width="471" />
 <p class="caption">
 Figure 11.1: Trade-off curve based on the level of technical details and the big picture for each type of audience.
 </p>
 </div>
-<div id="technical-audience" class="section level4" number="11.1.2.1">
-<h4><span class="header-section-number">11.1.2.1</span> Technical Audience</h4>
-<p>The technical audience refers to the ones who will likely have a significant background and experience in or related to the field you are providing consulting service, which means, for instance, Sensory Scientists, Statisticians, Data Analysts, Data Architecture, or your client’s IT group. They are the team that will likely be working closely with you throughout the project development, at different stages. This type of audience is usually more exigent and/or engaged and because of its expertise in the field, will likely be expecting a presentation, report, or any other technical document in a higher level of details and with a more technical vocabulary, otherwise, you will sound that you are not an expert in the topic. This audience usually needs a lower sense of the big picture of the project, which means, that they are less interested in the details like the timelines, main outcomes, etc. But be aware, it is very important to be able to distinguish your technical audience. For instance, you should not use sensory technical language to talk to the IT team and vice versa.</p>
+<div id="technical-audience" class="section level3 hasAnchor" number="11.3.1">
+<h3><span class="header-section-number">11.3.1</span> Technical Audience<a href="value-delivery.html#technical-audience" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The technical audience refers to the ones who will likely have a significant background and experience in or related to the field you are providing consulting service (e.g. Sensory Scientists, Statisticians, Data Analysts, Data Architecture, or your client’s IT group). They are the team that will likely be working closely with you throughout the project development, at different stages. This type of audience is usually more exigent and/or engaged and because of its expertise in the field, will likely be expecting a presentation, report, or any other technical document in a higher level of details and with a more technical vocabulary, otherwise, you will sound that you are not an expert in the topic. This audience usually needs a lower sense of the big picture of the project, which means, that they are less interested in the details like the timelines, main outcomes, etc. But be aware, it is very important to still be able to distinguish between different technical audience (e.g. don’t use sensory technical language to talk to the IT team).</p>
 </div>
-<div id="management" class="section level4" number="11.1.2.2">
-<h4><span class="header-section-number">11.1.2.2</span> Management</h4>
-<p>Although a person in a management position, e.g. Sensory Manager or Director and Principal/Senior Scientist, will likely have a broad experience and background in the field, maybe even higher than your technical audience, they tend to be more interested in the whole picture, which means timelines, progress of the project, potential issues, outcomes, applicability, next steps, etc. A person in a management position has many other projects and roles in a company and will not have time to be involved in the details, instead, they will likely designate a team, which will be your technical audience, to be closely involved. In this case, you should be more concise in a meeting, presentation, or report, for instance. It is advised to keep a certain level of technical language, but it is better to present things in a simpler way and in a lower level of detail than you would do for the technical audience. Additionally, the focus should be different, since as we mentioned, this audience is likely to be more interested in the whole picture instead of the specifics of the project.</p>
+<div id="management" class="section level3 hasAnchor" number="11.3.2">
+<h3><span class="header-section-number">11.3.2</span> Management<a href="value-delivery.html#management" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Although a person in a management position (e.g. Sensory Manager or Director and Principal/Senior Scientist) likely has a broad experience and background in the field, they tend to be more interested in the whole picture, which means timelines, progress of the project, potential issues, outcomes, applicability, next steps, etc. A person in a management position has many other projects and roles in a company and will not have time to be involved in the details. Instead, they likely designate a team (your technical audience) to be closely involved. In this case, you should be more concise in a meeting, presentation, or report, for instance. It is advised to keep a certain level of technical language, but it is better to present things in a simpler way and in a lower level of details than you would do for the technical audience. Additionally, the focus should be different, since as we mentioned, this audience is likely to be more interested in the whole picture instead of the specifics of the project.</p>
 <p>Another distinct type of audience that falls into the management audience would be the executives, as a VP of Research &amp; Regulatory for instance. This public is not necessarily from the field and has even less time and/or background to absorb the specifics. The focus should be the same (whole picture) but with even fewer technical details. The approach and language of this audience tend to be closer to the general interest.</p>
 </div>
-<div id="general-interest" class="section level4" number="11.1.2.3">
-<h4><span class="header-section-number">11.1.2.3</span> General Interest</h4>
-<p>The general audience usually refers to the ones that will likely be the final users or are somehow related, contributed, or are interested in the project. In this way, this public is usually the least interested in the details and the most interested in the whole picture. The general audience usually refers to a larger group of people with different backgrounds and distinct levels of expertise, for instance, an R&amp;D internship, a Chemistry Researcher, and a Senior Sensory Specialist can be all final users of a dashboard you developed. In this case, to make sure everyone follows you in a training, for instance, you must use less technical language and a lower level of details, otherwise, you will lose part of your audience’s attention. But at the same time, you may need to consider covering things that sound obvious to you, you ought to be careful about not skipping topics assuming that everyone knows about that or using certain terms and expressions considering that is evident for all. This can be the most challenging audience to deal with due to its diversity, but in a meeting, training session, or presentation, you should be very attentive and use your feeling to capture what going on and maybe change your position be better to connect with the audience</p>
+<div id="general-interest" class="section level3 hasAnchor" number="11.3.3">
+<h3><span class="header-section-number">11.3.3</span> General Interest<a href="value-delivery.html#general-interest" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The general audience usually refers to the ones that are likely the final users or are somehow related, contributed, or are interested in the project. In this way, this public is usually the least interested in the details and the most interested in the whole picture. The general audience usually refers to a larger group of people with different backgrounds and distinct levels of expertise, for instance, an R&amp;D internship, a Chemistry Researcher, and a Senior Sensory Specialist can be all final users of a dashboard you developed. In this case, to make sure everyone follows you in a training (say), you must use less technical language and a lower level of details, otherwise you will lose part of your audience’s attention. But at the same time, you may need to consider covering things that sound obvious to you, you ought to be careful about not skipping topics assuming that everyone knows about that or using certain terms and expressions considering that is evident for all. This can be the most challenging audience to deal with due to its diversity, but in a meeting, training session, or presentation, you should be very attentive and use your feeling to capture what’s going on and maybe change your position to better connect with the audience</p>
 <p>A valuable tip shared by Cole Nussbaumer, in her book Storytelling with data, is to avoid general audiences, such as the technical and management team at the same time, or general audience such as “anyone related to the field that might be interested in the project.” Having a broad audience will put you in a position where you can’t communicate effectively to any of them as you would be if the audience was narrowed down.</p>
 <ul>
-<li>Example</li>
+<li><strong>Example</strong></li>
 </ul>
-<p>We will use the PCA biplot from the biscuit sensory study shown in the previous chapter and point out the main differences in the approach according to the audience. As a quick reminder, 11 breakfast biscuits with varying contents of proteins and fibers were evaluated in this study. Products P01 to P09 are prototypes, product P10 is a standard commercial biscuit without enrichment and the eleventh product (Popt) is an additionally optimized biscuit.</p>
-<p>Let’s picture the situation is that the R&amp;D team has been developing multiple trials for the biscuit formulation, changing the concentration/ratio of protein and fiber, with the objective to have a product with a sensory profile as close as possible to the commercial biscuit. For this exercise, your role as a consultant was to support the R&amp;D team designing the study and conducting the analysis and ultimately analyzing ad interpreting the results to make the final conclusion (Figure 11.2).</p>
-<div class="figure" style="text-align: center"><span id="fig:pca"></span>
+<p>We will use the PCA biplot from the biscuits sensory study shown in the previous chapter and point out the main differences in the approach according to the audience. As a quick reminder, 11 breakfast biscuits with varying contents of proteins and fibers were evaluated in this study. Products <code>P01</code> to <code>P09</code> are prototypes, product <code>P10</code> is a standard commercial biscuit without enrichment and the eleventh product (<code>Popt</code>) is an additionally optimized biscuit.</p>
+<p>Let’s picture a situation where the R&amp;D team has been developing multiple trials for the biscuit formulation, changing the concentration/ratio of protein and fiber, with the objective to have a product with a sensory profile as close as possible to the commercial biscuit. For this exercise, your role as a consultant was to support the R&amp;D team designing the study and conducting the analysis and ultimately analyzing ad interpreting the results to make the final conclusion (Figure <a href="value-delivery.html#fig:pca">11.2</a>).</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:pca"></span>
 <img src="images/PCA.jpeg" alt="PCA Biplot Biscuit Study." width="85%" />
 <p class="caption">
 Figure 11.2: PCA Biplot Biscuit Study.
 </p>
 </div>
-<p>We won’t go deep into the interpretation since it’s not the focus of this example, but rather point out the approach we would recommend for each type of audience as shown in the table below.</p>
-<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="value-delivery.html#cb237-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
-<span id="cb237-2"><a href="value-delivery.html#cb237-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb237-3"><a href="value-delivery.html#cb237-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(flextable)</span>
-<span id="cb237-4"><a href="value-delivery.html#cb237-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb237-5"><a href="value-delivery.html#cb237-5" aria-hidden="true" tabindex="-1"></a>file_path <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">&quot;data/table value delivery.xlsx&quot;</span>)</span>
-<span id="cb237-6"><a href="value-delivery.html#cb237-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb237-7"><a href="value-delivery.html#cb237-7" aria-hidden="true" tabindex="-1"></a>table <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(file_path) <span class="sc">%&gt;%</span></span>
-<span id="cb237-8"><a href="value-delivery.html#cb237-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">flextable</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb237-9"><a href="value-delivery.html#cb237-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fontsize</span>(<span class="at">part =</span> <span class="st">&quot;all&quot;</span>, <span class="at">size =</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb237-10"><a href="value-delivery.html#cb237-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bold</span>(<span class="at">bold =</span> <span class="cn">TRUE</span>, <span class="at">part =</span> <span class="st">&quot;header&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb237-11"><a href="value-delivery.html#cb237-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bold</span>(<span class="at">i =</span> <span class="cn">NULL</span>, <span class="at">j =</span> <span class="dv">1</span>, <span class="at">bold =</span> <span class="cn">TRUE</span>, <span class="at">part =</span> <span class="st">&quot;body&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb237-12"><a href="value-delivery.html#cb237-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autofit</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb237-13"><a href="value-delivery.html#cb237-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">align</span>(<span class="at">align =</span> <span class="st">&quot;center&quot;</span>, <span class="at">part =</span> <span class="st">&quot;all&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb237-14"><a href="value-delivery.html#cb237-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hline</span>(<span class="at">i =</span> <span class="dv">5</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb237-15"><a href="value-delivery.html#cb237-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hline</span>(<span class="at">i =</span> <span class="dv">8</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb237-16"><a href="value-delivery.html#cb237-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hline</span>(<span class="at">i =</span> <span class="dv">16</span>)</span>
-<span id="cb237-17"><a href="value-delivery.html#cb237-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb237-18"><a href="value-delivery.html#cb237-18" aria-hidden="true" tabindex="-1"></a>table</span></code></pre></div>
-<p>Following those recommendations, your PCA for the management or general audience may look like the Figure 11.4. Note that the PCA was cleaned and simplified for a more straightforward understanding. Specifically, the PCA variance explanation and grid line were removed, attributes were slightly moved to avoid overlap, the samples, and attributes that we want less emphasize were given a lighter color and as the opposite, the attributes and samples that we may want to highlight and focus our audience attention were given a different and stronger color, pictures and a more appealing description were used instead of the samples codes and some strategies as to circle the important area/group of samples and attributes helps the audience to focus on what we deem most important to extract from this analysis. In this example, the idea may be to highlight to the audience that the optimized formulation is in fact closer to the commercial one, and to increase even more this similarity, some attributes, like sour, salty, overall flavor persistence, fatty flavor, and fatty in mouth, has to be increased.</p>
-<div class="figure" style="text-align: center"><span id="fig:pcamanagement"></span>
+<p>We won’t go deep into the interpretation since it’s not the focus of this example, but rather point out the approach we would recommend for each type of audience as shown in the Table <a href="value-delivery.html#tab:summary-table">11.1</a>).</p>
+<template id="b74d6926-b940-4dcc-aed7-1bbdaf14bba3"><style>
+.tabwid table{
+  border-spacing:0px !important;
+  border-collapse:collapse;
+  line-height:1;
+  margin-left:auto;
+  margin-right:auto;
+  border-width: 0;
+  display: table;
+  margin-top: 1.275em;
+  margin-bottom: 1.275em;
+  border-color: transparent;
+}
+.tabwid_left table{
+  margin-left:0;
+}
+.tabwid_right table{
+  margin-right:0;
+}
+.tabwid td {
+    padding: 0;
+}
+.tabwid a {
+  text-decoration: none;
+}
+.tabwid thead {
+    background-color: transparent;
+}
+.tabwid tfoot {
+    background-color: transparent;
+}
+.tabwid table tr {
+background-color: transparent;
+}
+</style><div class="tabwid"><style>.cl-c2576826{}.cl-c24049a2{font-family:'Arial';font-size:10pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-c24049a3{font-family:'Arial';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-c240709e{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-c240e5ce{width:985pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c240e5cf{width:657.6pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c240e5d0{width:566.9pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c240e5d1{width:187.8pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c240e5d2{width:566.9pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c240e5d3{width:187.8pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c240e5d4{width:657.6pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c240e5d5{width:985pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c240e5d6{width:187.8pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c240e5d7{width:566.9pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c240e5d8{width:657.6pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c2410cde{width:985pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c2410cdf{width:566.9pt;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c2410ce0{width:657.6pt;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c2410ce1{width:985pt;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c2410ce2{width:187.8pt;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c2410ce3{width:566.9pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c2410ce4{width:985pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c2410ce5{width:657.6pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c2410ce6{width:187.8pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c2410ce7{width:657.6pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c2410ce8{width:187.8pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c24133f8{width:566.9pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c24133f9{width:985pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c24133fa{width:657.6pt;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c24133fb{width:566.9pt;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c24133fc{width:985pt;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c24133fd{width:187.8pt;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c24133fe{width:985pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c24133ff{width:657.6pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c2413400{width:566.9pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c2413401{width:187.8pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c2413402{width:187.8pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c24154fa{width:657.6pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c24154fb{width:985pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c24154fc{width:566.9pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c24154fd{width:985pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c24154fe{width:187.8pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c24154ff{width:566.9pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c2415500{width:657.6pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table class='cl-c2576826'>
+<caption class>
+<p><span id="tab:summary-table">Table 11.1: </span>Exemplification of the approach for each type of audience.</p>
+</caption>
+<thead><tr style="overflow-wrap:break-word;"><td class="cl-c24154fe"><p class="cl-c240709e"><span class="cl-c24049a2">Topics</span></p></td><td class="cl-c2415500"><p class="cl-c240709e"><span class="cl-c24049a2">Technical Audience</span></p></td><td class="cl-c24154fd"><p class="cl-c240709e"><span class="cl-c24049a2">Management Audience</span></p></td><td class="cl-c24154ff"><p class="cl-c240709e"><span class="cl-c24049a2">General Audience</span></p></td></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-c240e5d1"><p class="cl-c240709e"><span class="cl-c24049a2">Context/Background Information</span></p></td><td class="cl-c240e5cf"><p class="cl-c240709e"><span class="cl-c24049a3">The objective of the study, including general and specific objectives</span></p></td><td class="cl-c240e5ce"><p class="cl-c240709e"><span class="cl-c24049a3">The level of information is somewhere between the Technical Audience and General Audience.</span></p></td><td class="cl-c240e5d0"><p class="cl-c240709e"><span class="cl-c24049a3">An overall and succinct description of the general objective of the study, samples tested, and type of test performed</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-c240e5d1"><p class="cl-c240709e"><span class="cl-c24049a2"></span></p></td><td class="cl-c240e5cf"><p class="cl-c240709e"><span class="cl-c24049a3">Information on the design of the experiment</span></p></td><td class="cl-c240e5ce"><p class="cl-c240709e"><span class="cl-c24049a3">In the case of the management audience, it is recommended some level of details you deem important and the use of technical language. Also, be prepared to show or discuss a deeper level of information as requested</span></p></td><td class="cl-c240e5d0"><p class="cl-c240709e"><span class="cl-c24049a3"></span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-c240e5d1"><p class="cl-c240709e"><span class="cl-c24049a2"></span></p></td><td class="cl-c240e5cf"><p class="cl-c240709e"><span class="cl-c24049a3">How samples were selected or screened for the study, including a detailed description of each sample</span></p></td><td class="cl-c240e5ce"><p class="cl-c240709e"><span class="cl-c24049a3">In the case of an executive audience, the level of information tends to be closer to the general audience</span></p></td><td class="cl-c240e5d0"><p class="cl-c240709e"><span class="cl-c24049a3"></span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-c240e5d1"><p class="cl-c240709e"><span class="cl-c24049a2"></span></p></td><td class="cl-c240e5cf"><p class="cl-c240709e"><span class="cl-c24049a3">Details about the panel such as number of panelists, level of training, and how panelists were trained for the attributes evaluated</span></p></td><td class="cl-c240e5ce"><p class="cl-c240709e"><span class="cl-c24049a3"></span></p></td><td class="cl-c240e5d0"><p class="cl-c240709e"><span class="cl-c24049a3"></span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-c24133fd"><p class="cl-c240709e"><span class="cl-c24049a2"></span></p></td><td class="cl-c24133fa"><p class="cl-c240709e"><span class="cl-c24049a3">Details about the test, how attributes were defined, and how and where samples were evaluated</span></p></td><td class="cl-c24133fc"><p class="cl-c240709e"><span class="cl-c24049a3"></span></p></td><td class="cl-c24133fb"><p class="cl-c240709e"><span class="cl-c24049a3"></span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-c2413401"><p class="cl-c240709e"><span class="cl-c24049a2">Data Exploration</span></p></td><td class="cl-c24133ff"><p class="cl-c240709e"><span class="cl-c24049a3">It may be important to show/mention the panel performance evaluation</span></p></td><td class="cl-c24133fe"><p class="cl-c240709e"><span class="cl-c24049a3"></span></p></td><td class="cl-c2413400"><p class="cl-c240709e"><span class="cl-c24049a3">It is not recommended to share the data exploration and analysis done before the PCA.</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-c240e5d3"><p class="cl-c240709e"><span class="cl-c24049a2"></span></p></td><td class="cl-c240e5d4"><p class="cl-c240709e"><span class="cl-c24049a3"></span></p></td><td class="cl-c240e5d5"><p class="cl-c240709e"><span class="cl-c24049a3"></span></p></td><td class="cl-c240e5d2"><p class="cl-c240709e"><span class="cl-c24049a3"></span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-c2410ce2"><p class="cl-c240709e"><span class="cl-c24049a2"></span></p></td><td class="cl-c2410ce0"><p class="cl-c240709e"><span class="cl-c24049a3">It is important to show the PCA diagnostics, including the Scree Plot and the plots displaying the contribution of each attribute in each dimension</span></p></td><td class="cl-c2410ce1"><p class="cl-c240709e"><span class="cl-c24049a3"></span></p></td><td class="cl-c2410cdf"><p class="cl-c240709e"><span class="cl-c24049a3">The general audience does not need to understand details such as why two components were chosen for the PCA</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-c2413402"><p class="cl-c240709e"><span class="cl-c24049a2"></span></p></td><td class="cl-c24154fa"><p class="cl-c240709e"><span class="cl-c24049a3"></span></p></td><td class="cl-c24154fb"><p class="cl-c240709e"><span class="cl-c24049a3"></span></p></td><td class="cl-c24154fc"><p class="cl-c240709e"><span class="cl-c24049a3"></span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-c240e5d3"><p class="cl-c240709e"><span class="cl-c24049a2"></span></p></td><td class="cl-c240e5d4"><p class="cl-c240709e"><span class="cl-c24049a3"></span></p></td><td class="cl-c240e5d5"><p class="cl-c240709e"><span class="cl-c24049a3"></span></p></td><td class="cl-c240e5d2"><p class="cl-c240709e"><span class="cl-c24049a3"></span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-c240e5d1"><p class="cl-c240709e"><span class="cl-c24049a2">Final Results (PCA)</span></p></td><td class="cl-c240e5cf"><p class="cl-c240709e"><span class="cl-c24049a3">The PCA can be shown in its traditional format without much editing as shown in the picture above</span></p></td><td class="cl-c240e5ce"><p class="cl-c240709e"><span class="cl-c24049a3"></span></p></td><td class="cl-c240e5d0"><p class="cl-c240709e"><span class="cl-c24049a3">Simple and clear explanation about PCA</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-c240e5d6"><p class="cl-c240709e"><span class="cl-c24049a2"></span></p></td><td class="cl-c240e5d8"><p class="cl-c240709e"><span class="cl-c24049a3">Provide a detailed interpretation, including not only the optimized sample, but all trials evaluated</span></p></td><td class="cl-c2410cde"><p class="cl-c240709e"><span class="cl-c24049a3"></span></p></td><td class="cl-c240e5d7"><p class="cl-c240709e"><span class="cl-c24049a3">Remove technical details such as the PC variance explanation</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-c240e5d6"><p class="cl-c240709e"><span class="cl-c24049a2"></span></p></td><td class="cl-c240e5d8"><p class="cl-c240709e"><span class="cl-c24049a3"></span></p></td><td class="cl-c2410cde"><p class="cl-c240709e"><span class="cl-c24049a3"></span></p></td><td class="cl-c240e5d7"><p class="cl-c240709e"><span class="cl-c24049a3">Show the PCA in a format that makes the interpretation and visualization easier and more obvious, some examples include:</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-c240e5d6"><p class="cl-c240709e"><span class="cl-c24049a2"></span></p></td><td class="cl-c240e5d8"><p class="cl-c240709e"><span class="cl-c24049a3"></span></p></td><td class="cl-c2410cde"><p class="cl-c240709e"><span class="cl-c24049a3"></span></p></td><td class="cl-c240e5d7"><p class="cl-c240709e"><span class="cl-c24049a3">- Use pictures instead of sample code</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-c240e5d1"><p class="cl-c240709e"><span class="cl-c24049a2"></span></p></td><td class="cl-c240e5cf"><p class="cl-c240709e"><span class="cl-c24049a3"></span></p></td><td class="cl-c240e5ce"><p class="cl-c240709e"><span class="cl-c24049a3"></span></p></td><td class="cl-c240e5d0"><p class="cl-c240709e"><span class="cl-c24049a3">- Use visual resources like circles to delimit groups of similar samples and attributes more relevant</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-c2410ce2"><p class="cl-c240709e"><span class="cl-c24049a2"></span></p></td><td class="cl-c2410ce0"><p class="cl-c240709e"><span class="cl-c24049a3"></span></p></td><td class="cl-c2410ce1"><p class="cl-c240709e"><span class="cl-c24049a3"></span></p></td><td class="cl-c2410cdf"><p class="cl-c240709e"><span class="cl-c24049a3">- Use different colors, letter sizes, or other visual resources to highlight important information, like an attribute or a sample</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-c2410ce6"><p class="cl-c240709e"><span class="cl-c24049a2">Conclusion and Recommendations</span></p></td><td class="cl-c2410ce5"><p class="cl-c240709e"><span class="cl-c24049a3">The conclusion can be more detailed, and recommendations can be done for further studies</span></p></td><td class="cl-c2410ce4"><p class="cl-c240709e"><span class="cl-c24049a3"></span></p></td><td class="cl-c2410ce3"><p class="cl-c240709e"><span class="cl-c24049a3">Very clear and succinct conclusion or recommendation.</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-c2410ce8"><p class="cl-c240709e"><span class="cl-c24049a2"></span></p></td><td class="cl-c2410ce7"><p class="cl-c240709e"><span class="cl-c24049a3"></span></p></td><td class="cl-c24133f9"><p class="cl-c240709e"><span class="cl-c24049a3"></span></p></td><td class="cl-c24133f8"><p class="cl-c240709e"><span class="cl-c24049a3">Example: The optimized formulation is close to the commercial but needs to be improved for some attribute</span></p></td></tr></tbody></table></div></template>
+<div class="flextable-shadow-host" id="013996c2-1743-4b8e-a165-385e2b43c208"></div>
+<script>
+var dest = document.getElementById("013996c2-1743-4b8e-a165-385e2b43c208");
+var template = document.getElementById("b74d6926-b940-4dcc-aed7-1bbdaf14bba3");
+var caption = template.content.querySelector("caption");
+if(caption) {
+  caption.style.cssText = "display:block;text-align:center;";
+  var newcapt = document.createElement("p");
+  newcapt.appendChild(caption)
+  dest.parentNode.insertBefore(newcapt, dest.previousSibling);
+}
+var fantome = dest.attachShadow({mode: 'open'});
+var templateContent = template.content;
+fantome.appendChild(templateContent);
+</script>
+
+<p>Following those recommendations, your PCA for the management or general audience may look like Figure <a href="value-delivery.html#fig:pcamanagement">11.3</a>.</p>
+<p>Note that the PCA was simplified for a more straightforward understanding:
+- the PCA variance explanation and grid lines were removed,
+- attributes were slightly moved to avoid overlap,
+- the samples and attributes with lower interest were given a lighter color
+- the attributes and samples we want our audience to focus their attention were given a different, stronger color,
+- pictures and a more appealing description were used instead of the samples codes
+- some strategies as to circle the important area/group of samples and attributes helps the audience to focus on what we deem most important to extract from this analysis were adopted.</p>
+<p>In this example, the idea may be to highlight to the audience that the optimized formulation is in fact closer to the commercial one, and to increase even more this similarity, some attributes, like sour, salty, overall flavor persistence, fatty flavor, and fatty in mouth, has to be increased.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:pcamanagement"></span>
 <img src="images/PCA_management.png" alt="PCA Biplot Biscuit Study Modified." width="85%" />
 <p class="caption">
 Figure 11.3: PCA Biplot Biscuit Study Modified.
@@ -496,72 +598,65 @@ Figure 11.3: PCA Biplot Biscuit Study Modified.
 </div>
 </div>
 </div>
-<div id="method-to-communicate" class="section level3" number="11.1.3">
-<h3><span class="header-section-number">11.1.3</span> Method to Communicate</h3>
+<div id="methods-to-communicate" class="section level2 hasAnchor" number="11.4">
+<h2><span class="header-section-number">11.4</span> Methods to Communicate<a href="value-delivery.html#methods-to-communicate" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>How will you communicate to your audience? Are you going to deliver a live presentation? Are you going to present a proposal in a live meeting? Or will the communication be a written document you will send through email?</p>
 <p>What is the format you will be using to communicate? Word, Excel, or PowerPoint? Are you going to send the document in PDF format? Are you going to present a dashboard? Are you going to share R Scripts?</p>
-<p>As we will discuss in more detail above, the way and the format you use to communicate to your clients or audience have a huge impact on successful communication, and you should be well aware of that!</p>
-<div id="consider-the-mechanism" class="section level4" number="11.1.3.1">
-<h4><span class="header-section-number">11.1.3.1</span> Consider the Mechanism</h4>
-<p>You should be aware that the primary method or mechanism you will use to communicate will strongly affect the way your audience effectively gets the information and so you should tailor it accordantly. One of the most important aspects is related to the amount of control you will have over the audience, how they get the information, and hence the level of details needed (Cole Nussbaumer).</p>
-<p>In a live presentation, for instance, you are in full control. You can answer questions your audience may have, you can slow down and go into a particular detail you deem important, or you can speed up over repetitive, obvious, or not-so-important topics. In short words, you are the expert there and so, you can easily provide effective communication, and because of that, you don’t need to overcrowd your slides or any other document and divert or lose your audience’s attention with very detailed information. You can for instance just show a plot or graph and a very simple interpretation or bullet points because you will be covering the nuances and details about that.</p>
-<p>In the case the communication will be through a written document in a non-live situation, you have much less control over your audience, on how they will take the information, on whether they will get the main point. In this situation, you will need to be more careful and likely provide a higher level of details to answer or clarify potential questions or doubts your audience may have. In this situation, showing a plot or graph and just a very simple interpretation or bullet points will likely not be enough.</p>
+<p>As we will discuss in more detail later, the way and the format you use to communicate to your clients or audience have a huge impact on successful communication, and you should be well aware of that!</p>
+<div id="consider-the-mechanism" class="section level3 hasAnchor" number="11.4.1">
+<h3><span class="header-section-number">11.4.1</span> Consider the Mechanism<a href="value-delivery.html#consider-the-mechanism" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>You should be aware that the primary method or mechanism you use to communicate strongly affect the way your audience effectively gets the information and so you should tailor it accordingly. One of the most important aspects is related to the amount of control you have over the audience, how they get the information, and hence the level of details needed (<span class="citation"><a href="#ref-Knaflic2015" role="doc-biblioref">Knaflic</a> (<a href="#ref-Knaflic2015" role="doc-biblioref">2015</a>)</span>).</p>
+<p>In a live presentation, for instance, you are in full control. You can answer questions your audience may have, you can slow down and go into a particular detail you deem important, or you can speed up over repetitive, obvious, or not-so-important topics. In short words, you are the expert there and so, you can easily provide effective communication, and because of that, you don’t need to overcrowd your slides or any other document and divert or lose your audience’s attention with unnecessary information. You can for instance just show a plot or graph and a very simple interpretation or bullet points because you are covering vocally the nuances and details about that.</p>
+<p>In the case the communication si done through a written document in a non-live situation, you have much less control over your audience, on how they will take the information, on whether they will get the main point. In this situation, you need to be more careful and likely provide a higher level of details to answer or clarify potential questions or doubts your audience may have. In this situation, showing a plot or graph and just a very simple interpretation or bullet points is likely not enough.</p>
 <p>It can be a great idea to merge those two formats, when possible, where you can give time to the audience to consume the information on their own for a while and give the topic thought and a moment where you can discuss it in a live situation, not in this order necessarily. So, for example, let’s pretend you have to present a proposal for a client. Instead of sending a dense document to explain all the details and just wait for the client’s response, you can make a more concise document, easier to go through if you have a live moment with the client. You can for instance present the proposal initially in a live meeting, where you cover in general all the important topics and details, and then send the written document to the client.</p>
 </div>
-<div id="pick-the-correct-format" class="section level4" number="11.1.3.2">
-<h4><span class="header-section-number">11.1.3.2</span> Pick the Correct Format</h4>
+<div id="pick-the-correct-format" class="section level3 hasAnchor" number="11.4.2">
+<h3><span class="header-section-number">11.4.2</span> Pick the Correct Format<a href="value-delivery.html#pick-the-correct-format" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The second point of this topic on the method of communication is related to the correct format to pick. There are certainly many ways for you to communicate with your client - word, excel, or PowerPoint whether in pdf format or not, dashboard, or even scripts – but surely one is the most suitable. Again, there is no universal answer for the best format to pick since it may vary according to clients’ requests and the type of project you are dealing with. But there is one thing you should always follow, unless strictly necessary, do not share documents in an editable format. You may use Word to write proposals or final reports, Excel for plots or tables, and PowerPoint for live presentations, and that’s totally fine, but never share that in the editable format. We always recommend saving in pdf format to share with your client or audience and this is because of two simple reasons. First, the pdf format cannot be modified! You definitely don’t want to take the risks of others changing your document which can lead to misunderstanding, putting you in a delicate situation. Second, the pdf format preserves document formatting which means that it retains the intended format if the file is viewed online or printed. In short words, it is very unprofessional to share documents in editable format.</p>
 <p>You may be wondering, so in what type of situation would you share an editable format? When would you share a document in Word, PowerPoint, or Excel? In the situation where you are working with a partner for instance. So, for example, a project that you are working on involves multiple partners and one unique report or presentation. In this case, it may be convenient to share the Word or PowerPoint document for each of the partners to include their inputs. After the document is ready, make sure you carefully review the formatting and save it in pdf before sending it out to the client.</p>
-<p>There are two other formats that may be common in the sensory data science field, which are dashboards and scripts. If you are developing a graphical user interface for your client, you will need to deploy the dashboard at some point to a server for your client to be able to access it. The deployment can be done in two ways: web-based, as a simple client web page, or locally, as a locally installed desktop application. The choice should be based on the client’s preference.</p>
+<p>There are two other formats that may be common in the sensory data science field, which are dashboards and scripts. If you are developing a graphical user interface for your client, you need to deploy the dashboard at some point to a server for your client to be able to access it. The deployment can be done in two ways: web-based, as a simple client web page, or locally, as a locally installed desktop application. The choice should be based on the client’s preference.</p>
 <p>The last method of communication that is fairly common in the field is R or any other programming language script. It is very common that the client requests the scripts used for a specific project, the text file containing the set of commands and comments you used for instance to develop an automated analysis reporting dashboard. You can share the repository where the scripts are hosted, or you can zip the scripts and share them with your clients. The details should be discussed with the client’s IT team since each company has a particular preference. As the scripts should always be available under the client’s requests, you should be careful to not display sensitive or confidential information by reusing codes or throughout the comments.</p>
 </div>
 </div>
-<div id="storytelling" class="section level3" number="11.1.4">
-<h3><span class="header-section-number">11.1.4</span> Storytelling</h3>
-<p>There are basically two ways to communicate with our audience, the first is called conventional rhetoric. A PowerPoint full of facts, filled with bullet points and statistics with a presenter with a formal and memorized speech and using the same voice tone, would be the best way to illustrate the conventional rhetoric style. This way to communicate, which drove the businesses of the past, has a more analytical approach, where statistics, charts, metrics would be dumped on the audience and left to them to digest. There is no need to say that this approach is completely outdated, it clearly fails to stimulate the audience’s attention or evoke their energy or emotions.</p>
-<p>The second way to communicate, which is the last topic we want to cover in this chapter and also happens to be a critical skill for any successful consultant, is through storytelling! Storytelling is something that we all know, from an early age we were introduced to the notion of narrative structure, which means a clear beginning, middle, and end. The ability of one going throughout this structure to tell us a story is what makes a book, play, or movie grab our attention and evoke our emotional responses, is what makes it interesting! In short words, storytelling is one of the most powerful and effective ways to attract people’s attention because we were taught to communicate with stories throughout history. This universal language that everyone can understand has the power to truly engage your audience because it translates abstract facts, numbers, and plots into compelling pictures; it inspires, motivates, and drive actions because it taps into people’s emotions.</p>
-<p>As described in the book Once Upon an Innovation, by Jean Storlie and Mimi Sherlock, the left side of our brain is linked to more logical and analytical thinking, including data processing, number handling, and statistical interpretations. The right side is linked to expression, emotional intelligence, and imagination, and in our context, will be the part of our brain that will capture the big picture, that will turn data and facts into possibilities and innovative ideas. If you as a consultant overwhelm your audience with analytical information you will reduce their capacity for big picture thinking, you will shut down their capability to generate novel ideas and solutions. We are not saying that numbers, plots, and facts are not important, but that they should be presented in a story narrative format, in a way that will be able to light up the right side of the brain, and this stimulation of both paths is what will trigger unexpected and novel solutions, inspire support and drive changes.</p>
-<p>In a real situation, you as a consultant will have many pieces of information that you will collect throughout the journey with a client, from the very first communication until the end of a project. You will have valuable information about your client company’s situation, challenges and issues, needs, expectations, potential solutions and/or failed attempts, and final outcomes. Storytelling is the master of tying all together and articulating it into the context of a story in a creative way to engage and persuade your audience. A good story will allow you to successfully connect with your audience, it will make your audience understand, reflect, and act in a way that plots, numbers, and facts altogether simply can’t.</p>
-<p>You may be wondering. How exactly should I construct a story? What should be covered in each piece of the narrative? We will provide here a summary of the pieces of a good story and the specifics based on our experience and also on the books Storytelling with Data by Cole Nussbaumer and Beyond Bullet Points by Cliff Atkinson. Both books dedicate a good part to Storytelling making them a great resource on this topic.</p>
-<div id="the-beginning-context" class="section level4" number="11.1.4.1">
-<h4><span class="header-section-number">11.1.4.1</span> The beginning (Context)</h4>
-<p>The key piece of any story is the context, the description of the situation, and surrounding details. This first step is the moment to set up the essential information or background on the topic you will be covering to get everyone on common ground. You should initially spend time to make sure your audience clearly understands the context, why this is important or necessary, and why they are there before diving into actions or results. Subsequently, you will raise the challenges or problems and also the recommended solutions. It is at this very first step that you will first grab your audience’s attention. If you fail at this moment, it is very unlike that you will recover their interest in the subsequent steps.</p>
+<div id="storytelling" class="section level2 hasAnchor" number="11.5">
+<h2><span class="header-section-number">11.5</span> Storytelling<a href="value-delivery.html#storytelling" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>There are basically two ways to communicate with our audience, the first is called conventional rhetoric. A PowerPoint full of facts, filled with bullet points and statistics with a presenter with a formal and memorized speech and using the same voice tone, would be the best way to illustrate the conventional rhetoric style. This way to communicate, which drove the businesses of the past, has a more analytical approach, where statistics, charts, metrics would be dumped on the audience and left to them to digest. There is no need to say that this approach is completely outdated, it clearly fails to stimulate the audience’s attention or evoke their energy or emotions.
+The second way to communicate, which is the last topic we want to cover in this chapter and also happens to be a critical skill for any successful consultant, is through storytelling! Storytelling is something that we all know, from an early age we were introduced to the notion of narrative structure, which means a clear beginning, middle, and end. The ability of one going throughout this structure to tell us a story is what makes a book, play, or movie grab our attention and evoke our emotional responses, is what makes it interesting! In short words, storytelling is one of the most powerful and effective ways to attract people’s attention because we were taught to communicate with stories throughout history. This universal language that everyone can understand has the power to truly engage your audience because it translates abstract facts, numbers, and plots into compelling pictures; it inspires, motivates, and drive actions because it taps into people’s emotions.</p>
+<p>As described in the book <em>Once Upon an Innovation</em>, by Jean Storlie and Mimi Sherlock (<span class="citation"><a href="#ref-Sherlock2020" role="doc-biblioref">Storlie and Sherlock</a> (<a href="#ref-Sherlock2020" role="doc-biblioref">2020</a>)</span>), the left side of our brain is linked to more logical and analytical thinking, including data processing, number handling, and statistical interpretations. The right side is linked to expression, emotional intelligence, and imagination, and in our context, will be the part of our brain that will capture the big picture, that will turn data and facts into possibilities and innovative ideas. If you as a consultant overwhelms your audience with analytics you will reduce their capacity for big picture thinking, you will shut down their capability to generate novel ideas and solutions. We are not saying that numbers, plots, and facts are not important, but that they should be presented in a story narrative format, in a way that will be able to light up the right side of the brain, and this stimulation of both paths is what trigger unexpected and novel solutions, inspire support and drive changes.</p>
+<p>In a real situation, you as a consultant have many pieces of information that you have collected throughout the journey with a client, from the very first communication until the end of a project. You have valuable information about your client company’s situation, challenges and issues, needs, expectations, potential solutions and/or failed attempts, and final outcomes. Storytelling is the master of tying all together and articulating it into the context of a story in a creative way to engage and persuade your audience. A good story allows you to successfully connect with your audience, it makes your audience understand, reflect, and act in a way that plots, numbers, and facts altogether simply can’t.</p>
+<p>You may be wondering. How exactly should I construct a story? What should be covered in each piece of the narrative? We will provide here a summary of the pieces of a good story and the specifics based on our experience and also on the books Storytelling with Data by Cole Nussbaumer (<span class="citation"><a href="#ref-Knaflic2015" role="doc-biblioref">Knaflic</a> (<a href="#ref-Knaflic2015" role="doc-biblioref">2015</a>)</span>) and Beyond Bullet Points by Cliff Atkinson (<span class="citation"><a href="#ref-Cliff2018" role="doc-biblioref">Atkinson</a> (<a href="#ref-Cliff2018" role="doc-biblioref">2018</a>)</span>). Both books dedicate a good part to Storytelling making them a great resource on this topic.</p>
+<p><strong>The beginning (Context)</strong></p>
+<p>The key piece of any story is the context, the description of the situation, and surrounding details. This first step is the moment to set up the essential information or background on the topic you will be covering to get everyone on common ground. You should initially spend time to make sure your audience clearly understands the context, why this is important or necessary, and why they are there before diving into actions or results. Subsequently, you will raise the challenges or problems and propose some recommended solutions. It is at this very first step that you will first grab your audience’s attention. If you fail at this moment, it is very unlikely that you will recover their interest in the subsequent steps.</p>
 <p>For live presentations, it is strongly recommended to use the first few minutes to be an icebreaker to make everyone feel more comfortable and create a more friendly environment. In order to do so, you can start introducing yourself in case you haven’t met everyone yet, you can have a conversation and talk about the latest news, ask about how they and their families are doing, etc. The second piece of advice is to start the presentation by stating bullets of the main points that will be covered, so your audience will have awareness of what you will be talking about.</p>
-</div>
-<div id="the-middle-action-and-impact" class="section level4" number="11.1.4.2">
-<h4><span class="header-section-number">11.1.4.2</span> The middle (Action and Impact)</h4>
-<p>Now is when you get to the crux of your story, it is at this moment that you will explain your solutions or actions and highlight the impacts. You will continue it in a way you will convince your audience of the solution you are proposing or make them clearly understand, agree, and be excited about the outcomes and possibilities of a solution you worked on. You should be careful to retain your audience’s attention addressing how they can be part and/or benefited from the solution you are referring to. In the case of a live presentation, pose always confidently, show enthusiasm about what you are talking about, and watch out for hidden clues, try to constantly catch your audience’s response/feedback through their expressions and body language.</p>
+<p><strong>The middle (Action and Impact)</strong></p>
+<p>Now is when you get to the crux of your story, it is at this moment that you will explain your solutions or actions and highlight the impacts. You will continue it in a way you will convince your audience of the solution you are proposing or make them clearly understand, agree, and be excited about the outcomes and possibilities of a solution you worked on. You should be careful to retain your audience’s attention addressing how they can be part and/or benefit from the solution you are referring to. In the case of a live presentation, pose always confidently, show enthusiasm about what you are talking about, and watch out for hidden clues, try to constantly catch your audience’s response/feedback through their expressions and body language.</p>
 <p>The content to build out your story at this moment is very dependent on the context of the situation, but from a consultant perspective, it will be likely the moment you will further develop the situation or problem covering relevant information, show some data to illustrate the situation, discuss potential solutions to address a particular topic or present the outcomes of your project.</p>
+<p><strong>The end (Conclusion)</strong></p>
+<p>This is the moment you close your story; it is when you should tie it back to the beginning to somehow recap the problem, highlight the basic idea and conclude the story. You should finish your presentation in an impactful way, re-emphasizing and repeating your main point, what you want to stick deeply in your audience’s mind. Once more, the content at the end of the story can be somehow dependent on the context of the situation, but in a consulting world, it would likely include a conclusion of the topic and also next steps and further recommendations.</p>
 </div>
-<div id="the-end-conclusion" class="section level4" number="11.1.4.3">
-<h4><span class="header-section-number">11.1.4.3</span> The end (Conclusion)</h4>
-<p>This is the moment you close your story; it is when you should tie it back to the beginning to somehow recap the problem, highlight the basic idea and conclude the story. You should finish your presentation in a very impactful way, re-emphasizing and repeating your main point, what you want to stick deeply in your audience’s mind. Once more, the content at the end of the story can be somehow dependent on the context of the situation, but in a consulting world, it would likely include a conclusion of the topic and also next steps and further recommendations.</p>
-</div>
-</div>
-</div>
-<div id="reformulate2" class="section level2" number="11.2">
-<h2><span class="header-section-number">11.2</span> Reformulate</h2>
-<p>Something important to keep in mind is the follow-up process after a report is sent or a presentation is delivered. The ability to receive feedback and reformulate is undoubtedly a very important and sometimes challenging skill that consultants seeking success should be aware of. It may be challenging since some consultants can be reluctant to feedback because of a misconception that they are the expert in the field and hence, their approach is the best. So, one of the most important rules, regardless of the expertise and knowledge you have in the field, is to be humble! Consultants must understand the idea that: 1) you need to make your client pleased unless you have a strong reason not to do so like ethical reasons or statistical rules and 2) your point of view can be biased over time and your client’s request may indeed improve the clarity of an outcome for instance. Or, you can simply be wrong, miss something and have taken not the best approach. It happens! So, be open to feedback and be prepared to reformulate!</p>
+<div id="reformulate2" class="section level2 hasAnchor" number="11.6">
+<h2><span class="header-section-number">11.6</span> Reformulate<a href="value-delivery.html#reformulate2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Something important to keep in mind is the follow-up process after a report is sent or a presentation is delivered. The ability to receive feedback and reformulate is undoubtedly a very important and sometimes challenging skill that consultants seeking success should be aware of. It may be challenging since some consultants can be reluctant to feedback because of a misconception that they are the expert in the field and hence, their approach is the best. So, one of the most important rules, regardless of the expertise and knowledge you have in the field, is to be humble! Consultants must understand the idea that: 1) you need to make your client pleased unless you have a strong reason not to do so like ethical reasons or statistical rules and 2) your point of view can be biased over time and your client’s request may indeed improve the clarity of an outcome for instance. Or, you can simply be wrong, miss something and have not taken the best approach. It happens! So, be open to feedback and be prepared to reformulate!</p>
 <p>Sometimes the client feedback is something very minor, to adjust the scale of a plot, match the color with the company’s palette or change the type of plot. In other cases, the feedback will demand a bit more time. It is common that the way you deemed best to present the outcomes is not that clear from your client’s view or the set of data or plots you selected did not convey the message you were expecting or in an extreme situation, your client does not agree or ask you to redo an experiment or procedure. In this case, you will need to dedicate more time to address your client’s request.</p>
-<p>Regardless of the situation, you should motivate and be open mind to your client’s feedback and afterward carefully work on that to tackle it all at once. You definitely want to avoid a situation where your report or presentation be back and forth with your client. It is recommended that you make all possible changes and prepare a convincing explanation for the things that you strongly do not agree with or have a solid reason not to do so. Ideally, you should get back to your client as soon as possible highlighting the changes that were made and explaining the ones not addressed.</p>
-<!-- Add bibliography 
-
-
-  - Storytelling with data – a data visualization guide for business professionals
-
-  - Beyond bullet Points
-
-  - Once Upon an Innovation: A Business Storytelling Techniques for Creative Problem Solving
-  
-  - Show me the Number: Designing Tables and Graphs to Enlighten
-  
-  -->
+<p>Regardless of the situation, you should be motivated and be open mind to your client’s feedback and afterward carefully work on that to tackle it all at once. You definitely want to avoid a situation where your report or presentation be back and forth with your client. It is recommended that you make all possible changes and prepare a convincing explanation for the things that you strongly do not agree with or have a solid reason not to do so. Ideally, you should get back to your client as soon as possible highlighting the changes that were made and explaining the ones not addressed.</p>
 
 </div>
 </div>
 
 
 
+</div>
+<h3>Bibliography<a href="bibliography.html#bibliography" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Cliff2018" class="csl-entry">
+Atkinson, Cliff. 2018. <em>Beyond Bullet Points: Using PowerPoint to Tell a Compelling Story That Gets Results</em>. 4th ed. Pearson Education, Inc.
+</div>
+<div id="ref-Knaflic2015" class="csl-entry">
+Knaflic, Cole Nussbaumer. 2015. <em>Storytelling with Data</em>. John Wiley &amp; Sons.
+</div>
+<div id="ref-Sherlock2020" class="csl-entry">
+Storlie, Jean, and Mimi Sherlock. 2020. <em>Once Upon an Innovation: Business Storytelling Techniques for Creative Problem Solving</em>. Beaver’s Pond Press.
+</div>
 </div>
             </section>
 
@@ -573,7 +668,6 @@ Figure 11.3: PCA Biplot Biscuit Study Modified.
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -592,6 +686,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -612,6 +707,10 @@ gitbook.start({
 "text": null
 },
 "download": ["i2ds4scc_bookdown.pdf", "i2ds4scc_bookdown.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "section"
 }

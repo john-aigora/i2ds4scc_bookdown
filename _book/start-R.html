@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 2 Getting Started | Data Science for Sensory and Consumer Scientists</title>
   <meta name="description" content="Open development of data science book for sensory and consumer scientists." />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 2 Getting Started | Data Science for Sensory and Consumer Scientists" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="Open development of data science book for sensory and consumer scientists." />
   
@@ -24,7 +23,7 @@
 <meta name="author" content="Thierry Worch, Julien Delarue, Vanessa Rios de Souza, and John Ennis" />
 
 
-<meta name="date" content="2022-07-22" />
+<meta name="date" content="2022-11-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,9 +31,9 @@
   
   
 <link rel="prev" href="bienvenue.html"/>
-<link rel="next" href="data-science.html"/>
-<script src="libs/header-attrs-2.6/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link rel="next" href="data_science.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,14 +49,18 @@
 
 
 
-
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet" />
+<link href="libs/tabwid-1.0.0/scrool.css" rel="stylesheet" />
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -117,6 +120,29 @@ code span.vs { color: #4e9a06; } /* VerbatimString */
 code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 
@@ -136,9 +162,11 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
 <ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#who-should-read-this-book"><i class="fa fa-check"></i>Who Should Read This Book?</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-to-use-this-book"><i class="fa fa-check"></i>How to Use This Book</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-is-this-book-structured"><i class="fa fa-check"></i>How Is This Book Structured</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-to-use-this-book"><i class="fa fa-check"></i>How To Use This Book</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i>Acknowledgements</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="preface-1.html"><a href="preface-1.html"><i class="fa fa-check"></i>Preface</a></li>
 <li class="chapter" data-level="1" data-path="bienvenue.html"><a href="bienvenue.html"><i class="fa fa-check"></i><b>1</b> Bienvenue!</a>
 <ul>
 <li class="chapter" data-level="" data-path="bienvenue.html"><a href="bienvenue.html#why-data-science-for-sensory-and-consumer-science"><i class="fa fa-check"></i>Why Data Science for Sensory and Consumer Science?</a>
@@ -153,73 +181,78 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.1" data-path="start-R.html"><a href="start-R.html#introduction-to-r"><i class="fa fa-check"></i><b>2.1</b> Introduction to R</a>
 <ul>
 <li class="chapter" data-level="2.1.1" data-path="start-R.html"><a href="start-R.html#what-is-r"><i class="fa fa-check"></i><b>2.1.1</b> What is R?</a></li>
-<li class="chapter" data-level="2.1.2" data-path="start-R.html"><a href="start-R.html#why-learn-a-programming-language"><i class="fa fa-check"></i><b>2.1.2</b> Why Learn a Programming Language?</a></li>
+<li class="chapter" data-level="2.1.2" data-path="start-R.html"><a href="start-R.html#why-learning-r-or-any-programming-language"><i class="fa fa-check"></i><b>2.1.2</b> Why Learning R (or any Programming Language)?</a></li>
 <li class="chapter" data-level="2.1.3" data-path="start-R.html"><a href="start-R.html#why-r"><i class="fa fa-check"></i><b>2.1.3</b> Why R?</a></li>
-<li class="chapter" data-level="2.1.4" data-path="start-R.html"><a href="start-R.html#what-is-rstudio"><i class="fa fa-check"></i><b>2.1.4</b> What is RStudio?</a></li>
+<li class="chapter" data-level="2.1.4" data-path="start-R.html"><a href="start-R.html#rstudio"><i class="fa fa-check"></i><b>2.1.4</b> Why RStudio/Posit?</a></li>
 <li class="chapter" data-level="2.1.5" data-path="start-R.html"><a href="start-R.html#installing-r-and-rstudio"><i class="fa fa-check"></i><b>2.1.5</b> Installing R and RStudio</a></li>
 </ul></li>
 <li class="chapter" data-level="2.2" data-path="start-R.html"><a href="start-R.html#getting-started-in-r"><i class="fa fa-check"></i><b>2.2</b> Getting Started in R</a>
 <ul>
-<li class="chapter" data-level="2.2.1" data-path="start-R.html"><a href="start-R.html#create-a-local-project"><i class="fa fa-check"></i><b>2.2.1</b> Create a Local Project</a></li>
+<li class="chapter" data-level="2.2.1" data-path="start-R.html"><a href="start-R.html#packages"><i class="fa fa-check"></i><b>2.2.1</b> Conventions</a></li>
 <li class="chapter" data-level="2.2.2" data-path="start-R.html"><a href="start-R.html#install-and-load-packages"><i class="fa fa-check"></i><b>2.2.2</b> Install and Load Packages</a></li>
-<li class="chapter" data-level="2.2.3" data-path="start-R.html"><a href="start-R.html#r-scripts"><i class="fa fa-check"></i><b>2.2.3</b> R Scripts</a></li>
-<li class="chapter" data-level="2.2.4" data-path="start-R.html"><a href="start-R.html#run-sample-code"><i class="fa fa-check"></i><b>2.2.4</b> Run Sample Code</a></li>
+<li class="chapter" data-level="2.2.3" data-path="start-R.html"><a href="start-R.html#first-analysis-in-r"><i class="fa fa-check"></i><b>2.2.3</b> First Analysis in R</a></li>
+<li class="chapter" data-level="2.2.4" data-path="start-R.html"><a href="start-R.html#scripts"><i class="fa fa-check"></i><b>2.2.4</b> R Scripts</a></li>
+<li class="chapter" data-level="2.2.5" data-path="start-R.html"><a href="start-R.html#rprojects"><i class="fa fa-check"></i><b>2.2.5</b> Create a Local Project</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="start-R.html"><a href="start-R.html#introduction-to-the-magrittr-and-the-notion-of-pipes"><i class="fa fa-check"></i><b>2.3</b> Introduction to the <code>{magrittr}</code> and the notion of <em>pipes</em></a></li>
+<li class="chapter" data-level="2.3" data-path="start-R.html"><a href="start-R.html#further-tips-on-how-to-read-this-book"><i class="fa fa-check"></i><b>2.3</b> Further tips on <em>how to read this book?</em></a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="start-R.html"><a href="start-R.html#pipes"><i class="fa fa-check"></i><b>2.3.1</b> Introduction to the <code>{magrittr}</code> and the notion of <em>pipes</em></a></li>
+<li class="chapter" data-level="2.3.2" data-path="start-R.html"><a href="start-R.html#calling-variables"><i class="fa fa-check"></i><b>2.3.2</b> Calling Variables</a></li>
+<li class="chapter" data-level="2.3.3" data-path="start-R.html"><a href="start-R.html#print-save"><i class="fa fa-check"></i><b>2.3.3</b> Printing vs. Saving results</a></li>
+<li class="chapter" data-level="2.3.4" data-path="start-R.html"><a href="start-R.html#running-code-and-handling-errors"><i class="fa fa-check"></i><b>2.3.4</b> Running code and handling errors</a></li>
+</ul></li>
 <li class="chapter" data-level="2.4" data-path="start-R.html"><a href="start-R.html#git-and-github"><i class="fa fa-check"></i><b>2.4</b> Version Control / Git and GitHub</a>
 <ul>
 <li class="chapter" data-level="2.4.1" data-path="start-R.html"><a href="start-R.html#git"><i class="fa fa-check"></i><b>2.4.1</b> Git</a></li>
 <li class="chapter" data-level="2.4.2" data-path="start-R.html"><a href="start-R.html#github"><i class="fa fa-check"></i><b>2.4.2</b> GitHub</a></li>
 </ul></li>
-<li class="chapter" data-level="2.5" data-path="start-R.html"><a href="start-R.html#tips-on-how-to-read-this-book"><i class="fa fa-check"></i><b>2.5</b> Tips on <em>how to read this book?</em></a>
-<ul>
-<li class="chapter" data-level="2.5.1" data-path="start-R.html"><a href="start-R.html#running-code-and-handling-errors"><i class="fa fa-check"></i><b>2.5.1</b> Running code and handling errors</a></li>
-<li class="chapter" data-level="2.5.2" data-path="start-R.html"><a href="start-R.html#printing-vs.-saving-results"><i class="fa fa-check"></i><b>2.5.2</b> Printing vs. Saving results</a></li>
-<li class="chapter" data-level="2.5.3" data-path="start-R.html"><a href="start-R.html#calling-variables"><i class="fa fa-check"></i><b>2.5.3</b> Calling Variables</a></li>
-</ul></li>
 </ul></li>
 <li class="part"><span><b>Hors d’Oeuvres</b></span></li>
-<li class="chapter" data-level="3" data-path="data-science.html"><a href="data-science.html"><i class="fa fa-check"></i><b>3</b> Why Data Science?</a>
+<li class="chapter" data-level="3" data-path="data_science.html"><a href="data_science.html"><i class="fa fa-check"></i><b>3</b> Why Data Science?</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="data-science.html"><a href="data-science.html#history-and-definition"><i class="fa fa-check"></i><b>3.1</b> History and Definition</a></li>
-<li class="chapter" data-level="3.2" data-path="data-science.html"><a href="data-science.html#benefits-of-data-science"><i class="fa fa-check"></i><b>3.2</b> Benefits of Data Science</a>
+<li class="chapter" data-level="3.1" data-path="data_science.html"><a href="data_science.html#history-and-definition"><i class="fa fa-check"></i><b>3.1</b> History and Definition</a></li>
+<li class="chapter" data-level="3.2" data-path="data_science.html"><a href="data_science.html#benefits-of-data-science"><i class="fa fa-check"></i><b>3.2</b> Benefits of Data Science</a>
 <ul>
-<li class="chapter" data-level="3.2.1" data-path="data-science.html"><a href="data-science.html#reproducible-research"><i class="fa fa-check"></i><b>3.2.1</b> Reproducible Research</a></li>
-<li class="chapter" data-level="3.2.2" data-path="data-science.html"><a href="data-science.html#standardized-reporting"><i class="fa fa-check"></i><b>3.2.2</b> Standardized Reporting</a></li>
+<li class="chapter" data-level="3.2.1" data-path="data_science.html"><a href="data_science.html#reproducible-research"><i class="fa fa-check"></i><b>3.2.1</b> Reproducible Research</a></li>
+<li class="chapter" data-level="3.2.2" data-path="data_science.html"><a href="data_science.html#standardized-reporting"><i class="fa fa-check"></i><b>3.2.2</b> Standardized Reporting</a></li>
 </ul></li>
-<li class="chapter" data-level="3.3" data-path="data-science.html"><a href="data-science.html#data-scientific-workflow"><i class="fa fa-check"></i><b>3.3</b> Data Scientific Workflow</a>
+<li class="chapter" data-level="3.3" data-path="data_science.html"><a href="data_science.html#data-scientific-workflow"><i class="fa fa-check"></i><b>3.3</b> Data Scientific Workflow</a>
 <ul>
-<li class="chapter" data-level="3.3.1" data-path="data-science.html"><a href="data-science.html#data-collection2"><i class="fa fa-check"></i><b>3.3.1</b> Data Collection</a></li>
-<li class="chapter" data-level="3.3.2" data-path="data-science.html"><a href="data-science.html#data-preparation"><i class="fa fa-check"></i><b>3.3.2</b> Data Preparation</a></li>
-<li class="chapter" data-level="3.3.3" data-path="data-science.html"><a href="data-science.html#data-analysis2"><i class="fa fa-check"></i><b>3.3.3</b> Data Analysis</a></li>
-<li class="chapter" data-level="3.3.4" data-path="data-science.html"><a href="data-science.html#value-delivery2"><i class="fa fa-check"></i><b>3.3.4</b> Value Delivery</a></li>
+<li class="chapter" data-level="3.3.1" data-path="data_science.html"><a href="data_science.html#data-collection2"><i class="fa fa-check"></i><b>3.3.1</b> Data Collection</a></li>
+<li class="chapter" data-level="3.3.2" data-path="data_science.html"><a href="data_science.html#data-preparation"><i class="fa fa-check"></i><b>3.3.2</b> Data Preparation</a></li>
+<li class="chapter" data-level="3.3.3" data-path="data_science.html"><a href="data_science.html#data-analysis2"><i class="fa fa-check"></i><b>3.3.3</b> Data Analysis</a></li>
+<li class="chapter" data-level="3.3.4" data-path="data_science.html"><a href="data_science.html#value-delivery2"><i class="fa fa-check"></i><b>3.3.4</b> Value Delivery</a></li>
 </ul></li>
-<li class="chapter" data-level="3.4" data-path="data-science.html"><a href="data-science.html#how-to-learn-data-science"><i class="fa fa-check"></i><b>3.4</b> How to Learn Data Science</a></li>
-<li class="chapter" data-level="3.5" data-path="data-science.html"><a href="data-science.html#cautions-dont-that-everybody-does"><i class="fa fa-check"></i><b>3.5</b> Cautions: Don’t that Everybody Does</a></li>
+<li class="chapter" data-level="3.4" data-path="data_science.html"><a href="data_science.html#how-to-learn-data-science"><i class="fa fa-check"></i><b>3.4</b> How to Learn Data Science</a></li>
+<li class="chapter" data-level="3.5" data-path="data_science.html"><a href="data_science.html#cautions-dont-that-everybody-does"><i class="fa fa-check"></i><b>3.5</b> Cautions: Don’t that Everybody Does</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="data-manip.html"><a href="data-manip.html"><i class="fa fa-check"></i><b>4</b> Data Manipulation</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="data-manip.html"><a href="data-manip.html#chapter-overview"><i class="fa fa-check"></i><b>4.1</b> Chapter Overview</a></li>
-<li class="chapter" data-level="4.2" data-path="data-manip.html"><a href="data-manip.html#why-manipulating-data"><i class="fa fa-check"></i><b>4.2</b> Why Manipulating Data?</a></li>
-<li class="chapter" data-level="4.3" data-path="data-manip.html"><a href="data-manip.html#tidy-data"><i class="fa fa-check"></i><b>4.3</b> Tidying Data</a>
+<li class="chapter" data-level="4.1" data-path="data-manip.html"><a href="data-manip.html#why-manipulating-data"><i class="fa fa-check"></i><b>4.1</b> Why Manipulating Data?</a></li>
+<li class="chapter" data-level="4.2" data-path="data-manip.html"><a href="data-manip.html#tidy-data"><i class="fa fa-check"></i><b>4.2</b> Tidying Data</a>
 <ul>
-<li class="chapter" data-level="4.3.1" data-path="data-manip.html"><a href="data-manip.html#simple-manipulations"><i class="fa fa-check"></i><b>4.3.1</b> Simple Manipulations</a></li>
-<li class="chapter" data-level="4.3.2" data-path="data-manip.html"><a href="data-manip.html#reshaping-the-data"><i class="fa fa-check"></i><b>4.3.2</b> Reshaping the Data</a></li>
-<li class="chapter" data-level="4.3.3" data-path="data-manip.html"><a href="data-manip.html#transformation-that-alters-the-data"><i class="fa fa-check"></i><b>4.3.3</b> Transformation that Alters the Data</a></li>
-<li class="chapter" data-level="4.3.4" data-path="data-manip.html"><a href="data-manip.html#combining-data-from-different-sources"><i class="fa fa-check"></i><b>4.3.4</b> Combining Data from Different Sources</a></li>
+<li class="chapter" data-level="4.2.1" data-path="data-manip.html"><a href="data-manip.html#simple-manipulations"><i class="fa fa-check"></i><b>4.2.1</b> Simple Manipulations</a></li>
+<li class="chapter" data-level="4.2.2" data-path="data-manip.html"><a href="data-manip.html#pivots"><i class="fa fa-check"></i><b>4.2.2</b> Reshaping Data</a></li>
+<li class="chapter" data-level="4.2.3" data-path="data-manip.html"><a href="data-manip.html#transformation-that-alters-the-data"><i class="fa fa-check"></i><b>4.2.3</b> Transformation that Alters the Data</a></li>
+<li class="chapter" data-level="4.2.4" data-path="data-manip.html"><a href="data-manip.html#combining-data-from-different-sources"><i class="fa fa-check"></i><b>4.2.4</b> Combining Data from Different Sources</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="data-viz.html"><a href="data-viz.html"><i class="fa fa-check"></i><b>5</b> Data Visualization</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="data-viz.html"><a href="data-viz.html#design-principles"><i class="fa fa-check"></i><b>5.1</b> Design Principles</a></li>
-<li class="chapter" data-level="5.2" data-path="data-viz.html"><a href="data-viz.html#table-making"><i class="fa fa-check"></i><b>5.2</b> Table Making</a></li>
-<li class="chapter" data-level="5.3" data-path="data-viz.html"><a href="data-viz.html#chart-making"><i class="fa fa-check"></i><b>5.3</b> Chart Making</a>
+<li class="chapter" data-level="5.1" data-path="data-viz.html"><a href="data-viz.html#introduction"><i class="fa fa-check"></i><b>5.1</b> Introduction</a></li>
+<li class="chapter" data-level="5.2" data-path="data-viz.html"><a href="data-viz.html#design-principles"><i class="fa fa-check"></i><b>5.2</b> Design Principles</a></li>
+<li class="chapter" data-level="5.3" data-path="data-viz.html"><a href="data-viz.html#table_making"><i class="fa fa-check"></i><b>5.3</b> Table Making</a>
 <ul>
-<li class="chapter" data-level="5.3.1" data-path="data-viz.html"><a href="data-viz.html#philosophy-of-ggplot2"><i class="fa fa-check"></i><b>5.3.1</b> Philosophy of <code>{ggplot2}</code></a></li>
-<li class="chapter" data-level="5.3.2" data-path="data-viz.html"><a href="data-viz.html#getting-started-with-ggplot2"><i class="fa fa-check"></i><b>5.3.2</b> Getting started with <code>{ggplot2}</code></a></li>
-<li class="chapter" data-level="5.3.3" data-path="data-viz.html"><a href="data-viz.html#common-charts"><i class="fa fa-check"></i><b>5.3.3</b> Common Charts</a></li>
-<li class="chapter" data-level="5.3.4" data-path="data-viz.html"><a href="data-viz.html#miscealleneous"><i class="fa fa-check"></i><b>5.3.4</b> Miscealleneous</a></li>
-<li class="chapter" data-level="5.3.5" data-path="data-viz.html"><a href="data-viz.html#few-tips-and-tricks"><i class="fa fa-check"></i><b>5.3.5</b> Few Tips and Tricks</a></li>
+<li class="chapter" data-level="5.3.1" data-path="data-viz.html"><a href="data-viz.html#flextable"><i class="fa fa-check"></i><b>5.3.1</b> Introduction to <code>{flextable}</code></a></li>
+<li class="chapter" data-level="5.3.2" data-path="data-viz.html"><a href="data-viz.html#introdution-to-gt"><i class="fa fa-check"></i><b>5.3.2</b> Introdution to <code>{gt}</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="data-viz.html"><a href="data-viz.html#chart-making"><i class="fa fa-check"></i><b>5.4</b> Chart Making</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="data-viz.html"><a href="data-viz.html#philosophy-of-ggplot2"><i class="fa fa-check"></i><b>5.4.1</b> Philosophy of <code>{ggplot2}</code></a></li>
+<li class="chapter" data-level="5.4.2" data-path="data-viz.html"><a href="data-viz.html#getting-started-with-ggplot2"><i class="fa fa-check"></i><b>5.4.2</b> Getting started with <code>{ggplot2}</code></a></li>
+<li class="chapter" data-level="5.4.3" data-path="data-viz.html"><a href="data-viz.html#common-charts"><i class="fa fa-check"></i><b>5.4.3</b> Common Charts</a></li>
+<li class="chapter" data-level="5.4.4" data-path="data-viz.html"><a href="data-viz.html#miscealleneous"><i class="fa fa-check"></i><b>5.4.4</b> Miscealleneous</a></li>
+<li class="chapter" data-level="5.4.5" data-path="data-viz.html"><a href="data-viz.html#few-additional-tips-and-tricks"><i class="fa fa-check"></i><b>5.4.5</b> Few Additional Tips and Tricks</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="auto-report.html"><a href="auto-report.html"><i class="fa fa-check"></i><b>6</b> Automated Reporting</a>
@@ -245,109 +278,128 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <li class="part"><span><b>Bon Appétit</b></span></li>
 <li class="chapter" data-level="7" data-path="example-projects.html"><a href="example-projects.html"><i class="fa fa-check"></i><b>7</b> Example Project: The Biscuit Study</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="example-projects.html"><a href="example-projects.html#products"><i class="fa fa-check"></i><b>7.1</b> Products</a></li>
-<li class="chapter" data-level="7.2" data-path="example-projects.html"><a href="example-projects.html#consumer-test"><i class="fa fa-check"></i><b>7.2</b> Consumer test</a>
+<li class="chapter" data-level="7.1" data-path="example-projects.html"><a href="example-projects.html#objective-of-the-test"><i class="fa fa-check"></i><b>7.1</b> Objective of the Test</a></li>
+<li class="chapter" data-level="7.2" data-path="example-projects.html"><a href="example-projects.html#products"><i class="fa fa-check"></i><b>7.2</b> Products</a></li>
+<li class="chapter" data-level="7.3" data-path="example-projects.html"><a href="example-projects.html#consumer-test"><i class="fa fa-check"></i><b>7.3</b> Consumer test</a>
 <ul>
-<li class="chapter" data-level="7.2.1" data-path="example-projects.html"><a href="example-projects.html#participants"><i class="fa fa-check"></i><b>7.2.1</b> Participants</a></li>
-<li class="chapter" data-level="7.2.2" data-path="example-projects.html"><a href="example-projects.html#test-design"><i class="fa fa-check"></i><b>7.2.2</b> Test design</a></li>
+<li class="chapter" data-level="7.3.1" data-path="example-projects.html"><a href="example-projects.html#participants"><i class="fa fa-check"></i><b>7.3.1</b> Participants</a></li>
+<li class="chapter" data-level="7.3.2" data-path="example-projects.html"><a href="example-projects.html#test-design"><i class="fa fa-check"></i><b>7.3.2</b> Test design</a></li>
 </ul></li>
-<li class="chapter" data-level="7.3" data-path="example-projects.html"><a href="example-projects.html#sensory-descriptive-analysis-data"><i class="fa fa-check"></i><b>7.3</b> Sensory descriptive analysis data</a></li>
-<li class="chapter" data-level="7.4" data-path="example-projects.html"><a href="example-projects.html#summary-of-the-datasets"><i class="fa fa-check"></i><b>7.4</b> Summary of the datasets</a></li>
+<li class="chapter" data-level="7.4" data-path="example-projects.html"><a href="example-projects.html#sensory-descriptive-analysis-data"><i class="fa fa-check"></i><b>7.4</b> Sensory descriptive analysis data</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="data-collection.html"><a href="data-collection.html"><i class="fa fa-check"></i><b>8</b> Data Collection</a>
 <ul>
-<li class="chapter" data-level="8.1" data-path="data-collection.html"><a href="data-collection.html#design-1"><i class="fa fa-check"></i><b>8.1</b> Design</a>
+<li class="chapter" data-level="8.1" data-path="data-collection.html"><a href="data-collection.html#designs-of-sensory-doe-experiments"><i class="fa fa-check"></i><b>8.1</b> Designs of sensory (DoE) experiments</a>
 <ul>
-<li class="chapter" data-level="8.1.1" data-path="data-collection.html"><a href="data-collection.html#designs-of-sensory-experiments"><i class="fa fa-check"></i><b>8.1.1</b> Designs of sensory experiments</a></li>
-<li class="chapter" data-level="8.1.2" data-path="data-collection.html"><a href="data-collection.html#product-related-designs"><i class="fa fa-check"></i><b>8.1.2</b> Product-related designs</a></li>
+<li class="chapter" data-level="8.1.1" data-path="data-collection.html"><a href="data-collection.html#general-approach"><i class="fa fa-check"></i><b>8.1.1</b> General approach</a></li>
+<li class="chapter" data-level="8.1.2" data-path="data-collection.html"><a href="data-collection.html#Crossover"><i class="fa fa-check"></i><b>8.1.2</b> Crossover designs</a></li>
+<li class="chapter" data-level="8.1.3" data-path="data-collection.html"><a href="data-collection.html#BIBD"><i class="fa fa-check"></i><b>8.1.3</b> Balanced incomplete block designs (BIBD)</a></li>
+<li class="chapter" data-level="8.1.4" data-path="data-collection.html"><a href="data-collection.html#incomplete-designs-for-hedonic-tests-sensory-informed-designs"><i class="fa fa-check"></i><b>8.1.4</b> Incomplete designs for hedonic tests: Sensory informed designs</a></li>
 </ul></li>
-<li class="chapter" data-level="8.2" data-path="data-collection.html"><a href="data-collection.html#execute-1"><i class="fa fa-check"></i><b>8.2</b> Execute</a></li>
-<li class="chapter" data-level="8.3" data-path="data-collection.html"><a href="data-collection.html#data-import"><i class="fa fa-check"></i><b>8.3</b> Import</a>
+<li class="chapter" data-level="8.2" data-path="data-collection.html"><a href="data-collection.html#product-related-designs"><i class="fa fa-check"></i><b>8.2</b> Product-related designs</a>
 <ul>
-<li class="chapter" data-level="8.3.1" data-path="data-collection.html"><a href="data-collection.html#importing-structured-excel-file"><i class="fa fa-check"></i><b>8.3.1</b> Importing Structured Excel File</a></li>
-<li class="chapter" data-level="8.3.2" data-path="data-collection.html"><a href="data-collection.html#importing-unstructured-excel-file"><i class="fa fa-check"></i><b>8.3.2</b> Importing Unstructured Excel File</a></li>
-<li class="chapter" data-level="8.3.3" data-path="data-collection.html"><a href="data-collection.html#import-mult-sheet"><i class="fa fa-check"></i><b>8.3.3</b> Importing Data Stored in Multiple Sheets</a></li>
+<li class="chapter" data-level="8.2.1" data-path="data-collection.html"><a href="data-collection.html#factorial-designs"><i class="fa fa-check"></i><b>8.2.1</b> Factorial designs</a></li>
+<li class="chapter" data-level="8.2.2" data-path="data-collection.html"><a href="data-collection.html#mixture-designs"><i class="fa fa-check"></i><b>8.2.2</b> Mixture designs</a></li>
+<li class="chapter" data-level="8.2.3" data-path="data-collection.html"><a href="data-collection.html#screening-designs"><i class="fa fa-check"></i><b>8.2.3</b> Screening designs</a></li>
+<li class="chapter" data-level="8.2.4" data-path="data-collection.html"><a href="data-collection.html#sensory-informed-designs"><i class="fa fa-check"></i><b>8.2.4</b> Sensory informed designs</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="data-collection.html"><a href="data-collection.html#execute-1"><i class="fa fa-check"></i><b>8.3</b> Execute</a></li>
+<li class="chapter" data-level="8.4" data-path="data-collection.html"><a href="data-collection.html#data-import"><i class="fa fa-check"></i><b>8.4</b> Import</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="data-collection.html"><a href="data-collection.html#importing-structured-excel-file"><i class="fa fa-check"></i><b>8.4.1</b> Importing Structured Excel File</a></li>
+<li class="chapter" data-level="8.4.2" data-path="data-collection.html"><a href="data-collection.html#importing-unstructured-excel-file"><i class="fa fa-check"></i><b>8.4.2</b> Importing Unstructured Excel File</a></li>
+<li class="chapter" data-level="8.4.3" data-path="data-collection.html"><a href="data-collection.html#import-mult-sheet"><i class="fa fa-check"></i><b>8.4.3</b> Importing Data Stored in Multiple Sheets</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="data-prep.html"><a href="data-prep.html"><i class="fa fa-check"></i><b>9</b> Data Preparation</a>
 <ul>
-<li class="chapter" data-level="9.1" data-path="data-prep.html"><a href="data-prep.html#inspect"><i class="fa fa-check"></i><b>9.1</b> Inspect</a>
+<li class="chapter" data-level="9.1" data-path="data-prep.html"><a href="data-prep.html#introduction-1"><i class="fa fa-check"></i><b>9.1</b> Introduction</a></li>
+<li class="chapter" data-level="9.2" data-path="data-prep.html"><a href="data-prep.html#inspect"><i class="fa fa-check"></i><b>9.2</b> Inspect</a>
 <ul>
-<li class="chapter" data-level="9.1.1" data-path="data-prep.html"><a href="data-prep.html#data-inspection"><i class="fa fa-check"></i><b>9.1.1</b> Data Inspection</a></li>
-<li class="chapter" data-level="9.1.2" data-path="data-prep.html"><a href="data-prep.html#missing-data"><i class="fa fa-check"></i><b>9.1.2</b> Missing Data</a></li>
-<li class="chapter" data-level="9.1.3" data-path="data-prep.html"><a href="data-prep.html#design-inspection"><i class="fa fa-check"></i><b>9.1.3</b> Design Inspection</a></li>
+<li class="chapter" data-level="9.2.1" data-path="data-prep.html"><a href="data-prep.html#data-inspection"><i class="fa fa-check"></i><b>9.2.1</b> Data Inspection</a></li>
+<li class="chapter" data-level="9.2.2" data-path="data-prep.html"><a href="data-prep.html#missing-data"><i class="fa fa-check"></i><b>9.2.2</b> Missing Data</a></li>
+<li class="chapter" data-level="9.2.3" data-path="data-prep.html"><a href="data-prep.html#design-inspection"><i class="fa fa-check"></i><b>9.2.3</b> Design Inspection</a></li>
 </ul></li>
-<li class="chapter" data-level="9.2" data-path="data-prep.html"><a href="data-prep.html#clean"><i class="fa fa-check"></i><b>9.2</b> Clean</a>
+<li class="chapter" data-level="9.3" data-path="data-prep.html"><a href="data-prep.html#clean"><i class="fa fa-check"></i><b>9.3</b> Clean</a>
 <ul>
-<li class="chapter" data-level="9.2.1" data-path="data-prep.html"><a href="data-prep.html#handling-data-type"><i class="fa fa-check"></i><b>9.2.1</b> Handling Data Type</a></li>
-<li class="chapter" data-level="9.2.2" data-path="data-prep.html"><a href="data-prep.html#converting-between-types"><i class="fa fa-check"></i><b>9.2.2</b> Converting between Types</a></li>
-<li class="chapter" data-level="9.2.3" data-path="data-prep.html"><a href="data-prep.html#conclusions"><i class="fa fa-check"></i><b>9.2.3</b> Conclusions</a></li>
+<li class="chapter" data-level="9.3.1" data-path="data-prep.html"><a href="data-prep.html#handling-data-type"><i class="fa fa-check"></i><b>9.3.1</b> Handling Data Type</a></li>
+<li class="chapter" data-level="9.3.2" data-path="data-prep.html"><a href="data-prep.html#converting-between-types"><i class="fa fa-check"></i><b>9.3.2</b> Converting between Types</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="data-analysis.html"><a href="data-analysis.html"><i class="fa fa-check"></i><b>10</b> Data Analysis</a>
 <ul>
-<li class="chapter" data-level="10.1" data-path="data-analysis.html"><a href="data-analysis.html#chapter-overview-1"><i class="fa fa-check"></i><b>10.1</b> Chapter Overview</a></li>
-<li class="chapter" data-level="10.2" data-path="data-analysis.html"><a href="data-analysis.html#sensory-data"><i class="fa fa-check"></i><b>10.2</b> Sensory Data</a></li>
-<li class="chapter" data-level="10.3" data-path="data-analysis.html"><a href="data-analysis.html#demographic-and-questionnaire-data"><i class="fa fa-check"></i><b>10.3</b> Demographic and Questionnaire Data</a>
+<li class="chapter" data-level="10.1" data-path="data-analysis.html"><a href="data-analysis.html#sensory-data"><i class="fa fa-check"></i><b>10.1</b> Sensory Data</a></li>
+<li class="chapter" data-level="10.2" data-path="data-analysis.html"><a href="data-analysis.html#demographic-and-questionnaire-data"><i class="fa fa-check"></i><b>10.2</b> Demographic and Questionnaire Data</a>
 <ul>
-<li class="chapter" data-level="10.3.1" data-path="data-analysis.html"><a href="data-analysis.html#demographic-data-frequency-and-proportion"><i class="fa fa-check"></i><b>10.3.1</b> Demographic Data: Frequency and Proportion</a></li>
-<li class="chapter" data-level="10.3.2" data-path="data-analysis.html"><a href="data-analysis.html#personality-traits-and-eating-behavior-tfeq-data"><i class="fa fa-check"></i><b>10.3.2</b> Personality traits and eating behavior: TFEQ data</a></li>
+<li class="chapter" data-level="10.2.1" data-path="data-analysis.html"><a href="data-analysis.html#demographic-data-frequency-and-proportion"><i class="fa fa-check"></i><b>10.2.1</b> Demographic Data: Frequency and Proportion</a></li>
+<li class="chapter" data-level="10.2.2" data-path="data-analysis.html"><a href="data-analysis.html#eating-behavior-traits-tfeq-data"><i class="fa fa-check"></i><b>10.2.2</b> Eating behavior traits: TFEQ data</a></li>
 </ul></li>
-<li class="chapter" data-level="10.4" data-path="data-analysis.html"><a href="data-analysis.html#consumer-data"><i class="fa fa-check"></i><b>10.4</b> Consumer Data</a></li>
-<li class="chapter" data-level="10.5" data-path="data-analysis.html"><a href="data-analysis.html#combining-sensory-and-consumer-data"><i class="fa fa-check"></i><b>10.5</b> Combining Sensory and Consumer Data</a>
+<li class="chapter" data-level="10.3" data-path="data-analysis.html"><a href="data-analysis.html#consumer-data"><i class="fa fa-check"></i><b>10.3</b> Consumer Data</a></li>
+<li class="chapter" data-level="10.4" data-path="data-analysis.html"><a href="data-analysis.html#combining-sensory-and-consumer-data"><i class="fa fa-check"></i><b>10.4</b> Combining Sensory and Consumer Data</a>
 <ul>
-<li class="chapter" data-level="10.5.1" data-path="data-analysis.html"><a href="data-analysis.html#internal-preference-mapping"><i class="fa fa-check"></i><b>10.5.1</b> Internal Preference Mapping</a></li>
-<li class="chapter" data-level="10.5.2" data-path="data-analysis.html"><a href="data-analysis.html#consumers-clustering"><i class="fa fa-check"></i><b>10.5.2</b> Consumers Clustering</a></li>
-<li class="chapter" data-level="10.5.3" data-path="data-analysis.html"><a href="data-analysis.html#drivers-of-liking"><i class="fa fa-check"></i><b>10.5.3</b> Drivers of Liking</a></li>
-<li class="chapter" data-level="10.5.4" data-path="data-analysis.html"><a href="data-analysis.html#external-preference-mapping"><i class="fa fa-check"></i><b>10.5.4</b> External Preference Mapping</a></li>
+<li class="chapter" data-level="10.4.1" data-path="data-analysis.html"><a href="data-analysis.html#internal-preference-mapping"><i class="fa fa-check"></i><b>10.4.1</b> Internal Preference Mapping</a></li>
+<li class="chapter" data-level="10.4.2" data-path="data-analysis.html"><a href="data-analysis.html#consumers-clustering"><i class="fa fa-check"></i><b>10.4.2</b> Consumers Clustering</a></li>
+<li class="chapter" data-level="10.4.3" data-path="data-analysis.html"><a href="data-analysis.html#drivers-of-liking"><i class="fa fa-check"></i><b>10.4.3</b> Drivers of Liking</a></li>
+<li class="chapter" data-level="10.4.4" data-path="data-analysis.html"><a href="data-analysis.html#external-preference-mapping"><i class="fa fa-check"></i><b>10.4.4</b> External Preference Mapping</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="value-delivery.html"><a href="value-delivery.html"><i class="fa fa-check"></i><b>11</b> Value Delivery</a>
 <ul>
-<li class="chapter" data-level="11.1" data-path="value-delivery.html"><a href="value-delivery.html#communicate2"><i class="fa fa-check"></i><b>11.1</b> Communicate</a>
+<li class="chapter" data-level="11.1" data-path="value-delivery.html"><a href="value-delivery.html#how-to-communicate"><i class="fa fa-check"></i><b>11.1</b> How to Communicate?</a></li>
+<li class="chapter" data-level="11.2" data-path="value-delivery.html"><a href="value-delivery.html#exploratory-explanatory-and-predictive-analysis"><i class="fa fa-check"></i><b>11.2</b> Exploratory, Explanatory and Predictive Analysis</a></li>
+<li class="chapter" data-level="11.3" data-path="value-delivery.html"><a href="value-delivery.html#audience-awareness"><i class="fa fa-check"></i><b>11.3</b> Audience Awareness</a>
 <ul>
-<li class="chapter" data-level="11.1.1" data-path="value-delivery.html"><a href="value-delivery.html#exploratory-explanatory-and-predictive-analysis"><i class="fa fa-check"></i><b>11.1.1</b> Exploratory, Explanatory and Predictive Analysis</a></li>
-<li class="chapter" data-level="11.1.2" data-path="value-delivery.html"><a href="value-delivery.html#audience-awareness"><i class="fa fa-check"></i><b>11.1.2</b> Audience Awareness</a></li>
-<li class="chapter" data-level="11.1.3" data-path="value-delivery.html"><a href="value-delivery.html#method-to-communicate"><i class="fa fa-check"></i><b>11.1.3</b> Method to Communicate</a></li>
-<li class="chapter" data-level="11.1.4" data-path="value-delivery.html"><a href="value-delivery.html#storytelling"><i class="fa fa-check"></i><b>11.1.4</b> Storytelling</a></li>
+<li class="chapter" data-level="11.3.1" data-path="value-delivery.html"><a href="value-delivery.html#technical-audience"><i class="fa fa-check"></i><b>11.3.1</b> Technical Audience</a></li>
+<li class="chapter" data-level="11.3.2" data-path="value-delivery.html"><a href="value-delivery.html#management"><i class="fa fa-check"></i><b>11.3.2</b> Management</a></li>
+<li class="chapter" data-level="11.3.3" data-path="value-delivery.html"><a href="value-delivery.html#general-interest"><i class="fa fa-check"></i><b>11.3.3</b> General Interest</a></li>
 </ul></li>
-<li class="chapter" data-level="11.2" data-path="value-delivery.html"><a href="value-delivery.html#reformulate2"><i class="fa fa-check"></i><b>11.2</b> Reformulate</a></li>
+<li class="chapter" data-level="11.4" data-path="value-delivery.html"><a href="value-delivery.html#methods-to-communicate"><i class="fa fa-check"></i><b>11.4</b> Methods to Communicate</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="value-delivery.html"><a href="value-delivery.html#consider-the-mechanism"><i class="fa fa-check"></i><b>11.4.1</b> Consider the Mechanism</a></li>
+<li class="chapter" data-level="11.4.2" data-path="value-delivery.html"><a href="value-delivery.html#pick-the-correct-format"><i class="fa fa-check"></i><b>11.4.2</b> Pick the Correct Format</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="value-delivery.html"><a href="value-delivery.html#storytelling"><i class="fa fa-check"></i><b>11.5</b> Storytelling</a></li>
+<li class="chapter" data-level="11.6" data-path="value-delivery.html"><a href="value-delivery.html#reformulate2"><i class="fa fa-check"></i><b>11.6</b> Reformulate</a></li>
 </ul></li>
 <li class="part"><span><b>Haute Cuisine</b></span></li>
 <li class="chapter" data-level="12" data-path="machine-learning.html"><a href="machine-learning.html"><i class="fa fa-check"></i><b>12</b> Machine Learning</a>
 <ul>
-<li class="chapter" data-level="12.1" data-path="machine-learning.html"><a href="machine-learning.html#machine-learning-methods"><i class="fa fa-check"></i><b>12.1</b> Machine Learning Methods</a>
+<li class="chapter" data-level="12.1" data-path="machine-learning.html"><a href="machine-learning.html#introduction-2"><i class="fa fa-check"></i><b>12.1</b> Introduction</a></li>
+<li class="chapter" data-level="12.2" data-path="machine-learning.html"><a href="machine-learning.html#machine-learning-methods"><i class="fa fa-check"></i><b>12.2</b> Machine Learning Methods</a>
 <ul>
-<li class="chapter" data-level="12.1.1" data-path="machine-learning.html"><a href="machine-learning.html#unsupervised-learning"><i class="fa fa-check"></i><b>12.1.1</b> Unsupervised learning</a></li>
-<li class="chapter" data-level="12.1.2" data-path="machine-learning.html"><a href="machine-learning.html#supervised-learning"><i class="fa fa-check"></i><b>12.1.2</b> Supervised learning</a></li>
-<li class="chapter" data-level="12.1.3" data-path="machine-learning.html"><a href="machine-learning.html#practical-guide-to-machine-learning"><i class="fa fa-check"></i><b>12.1.3</b> Practical Guide to Machine Learning</a></li>
+<li class="chapter" data-level="12.2.1" data-path="machine-learning.html"><a href="machine-learning.html#unsupervised-learning"><i class="fa fa-check"></i><b>12.2.1</b> Unsupervised learning</a></li>
+<li class="chapter" data-level="12.2.2" data-path="machine-learning.html"><a href="machine-learning.html#supervised-learning"><i class="fa fa-check"></i><b>12.2.2</b> Supervised learning</a></li>
+<li class="chapter" data-level="12.2.3" data-path="machine-learning.html"><a href="machine-learning.html#practical-guide-to-machine-learning"><i class="fa fa-check"></i><b>12.2.3</b> Practical Guide to Machine Learning</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="13" data-path="text-analysis.html"><a href="text-analysis.html"><i class="fa fa-check"></i><b>13</b> Text Analysis</a>
 <ul>
-<li class="chapter" data-level="13.1" data-path="text-analysis.html"><a href="text-analysis.html#application-of-text-analysis-in-sensory-and-consumer-science"><i class="fa fa-check"></i><b>13.1</b> Application of Text Analysis in Sensory and Consumer Science</a>
+<li class="chapter" data-level="13.1" data-path="text-analysis.html"><a href="text-analysis.html#introduction-to-natural-language-processing"><i class="fa fa-check"></i><b>13.1</b> Introduction to Natural Language Processing</a></li>
+<li class="chapter" data-level="13.2" data-path="text-analysis.html"><a href="text-analysis.html#application-of-text-analysis-in-sensory-and-consumer-science"><i class="fa fa-check"></i><b>13.2</b> Application of Text Analysis in Sensory and Consumer Science</a>
 <ul>
-<li class="chapter" data-level="13.1.1" data-path="text-analysis.html"><a href="text-analysis.html#text-analysis-as-way-to-describe-products"><i class="fa fa-check"></i><b>13.1.1</b> Text analysis as way to describe products</a></li>
-<li class="chapter" data-level="13.1.2" data-path="text-analysis.html"><a href="text-analysis.html#objectives-of-text-analysis"><i class="fa fa-check"></i><b>13.1.2</b> Objectives of Text Analysis</a></li>
-<li class="chapter" data-level="13.1.3" data-path="text-analysis.html"><a href="text-analysis.html#warnings"><i class="fa fa-check"></i><b>13.1.3</b> Warnings</a></li>
+<li class="chapter" data-level="13.2.1" data-path="text-analysis.html"><a href="text-analysis.html#text-analysis-as-way-to-describe-products"><i class="fa fa-check"></i><b>13.2.1</b> Text analysis as way to describe products</a></li>
+<li class="chapter" data-level="13.2.2" data-path="text-analysis.html"><a href="text-analysis.html#objectives-of-text-analysis"><i class="fa fa-check"></i><b>13.2.2</b> Objectives of Text Analysis</a></li>
+<li class="chapter" data-level="13.2.3" data-path="text-analysis.html"><a href="text-analysis.html#classical-text-analysis-workflow"><i class="fa fa-check"></i><b>13.2.3</b> Classical <em>text analysis</em> workflow</a></li>
+<li class="chapter" data-level="13.2.4" data-path="text-analysis.html"><a href="text-analysis.html#warnings"><i class="fa fa-check"></i><b>13.2.4</b> Warnings</a></li>
 </ul></li>
-<li class="chapter" data-level="13.2" data-path="text-analysis.html"><a href="text-analysis.html#illustration-using-sorting-task-data"><i class="fa fa-check"></i><b>13.2</b> Illustration using Sorting Task Data</a>
+<li class="chapter" data-level="13.3" data-path="text-analysis.html"><a href="text-analysis.html#illustration-using-sorting-task-data"><i class="fa fa-check"></i><b>13.3</b> Illustration using Sorting Task Data</a>
 <ul>
-<li class="chapter" data-level="13.2.1" data-path="text-analysis.html"><a href="text-analysis.html#data-pre-processing"><i class="fa fa-check"></i><b>13.2.1</b> Data Pre-processing</a></li>
-<li class="chapter" data-level="13.2.2" data-path="text-analysis.html"><a href="text-analysis.html#introduction-to-working-with-strings-stringr"><i class="fa fa-check"></i><b>13.2.2</b> Introduction to working with strings (<code>{stringr}</code>)</a></li>
-<li class="chapter" data-level="13.2.3" data-path="text-analysis.html"><a href="text-analysis.html#tokenization"><i class="fa fa-check"></i><b>13.2.3</b> Tokenization</a></li>
-<li class="chapter" data-level="13.2.4" data-path="text-analysis.html"><a href="text-analysis.html#simple-transformation-lowercase"><i class="fa fa-check"></i><b>13.2.4</b> Simple Transformation (lowercase)</a></li>
-<li class="chapter" data-level="13.2.5" data-path="text-analysis.html"><a href="text-analysis.html#stopwords"><i class="fa fa-check"></i><b>13.2.5</b> Stopwords</a></li>
-<li class="chapter" data-level="13.2.6" data-path="text-analysis.html"><a href="text-analysis.html#stemming-and-lemmatization"><i class="fa fa-check"></i><b>13.2.6</b> Stemming and Lemmatization</a></li>
+<li class="chapter" data-level="13.3.1" data-path="text-analysis.html"><a href="text-analysis.html#data-pre-processing"><i class="fa fa-check"></i><b>13.3.1</b> Data Pre-processing</a></li>
+<li class="chapter" data-level="13.3.2" data-path="text-analysis.html"><a href="text-analysis.html#introduction-to-working-with-strings-stringr"><i class="fa fa-check"></i><b>13.3.2</b> Introduction to working with strings (<code>{stringr}</code>)</a></li>
+<li class="chapter" data-level="13.3.3" data-path="text-analysis.html"><a href="text-analysis.html#tokenization"><i class="fa fa-check"></i><b>13.3.3</b> Tokenization</a></li>
+<li class="chapter" data-level="13.3.4" data-path="text-analysis.html"><a href="text-analysis.html#simple-transformations"><i class="fa fa-check"></i><b>13.3.4</b> Simple Transformations</a></li>
+<li class="chapter" data-level="13.3.5" data-path="text-analysis.html"><a href="text-analysis.html#splitting-further-the-tokens"><i class="fa fa-check"></i><b>13.3.5</b> Splitting further the tokens</a></li>
+<li class="chapter" data-level="13.3.6" data-path="text-analysis.html"><a href="text-analysis.html#stopwords"><i class="fa fa-check"></i><b>13.3.6</b> Stopwords</a></li>
+<li class="chapter" data-level="13.3.7" data-path="text-analysis.html"><a href="text-analysis.html#stemming-and-lemmatization"><i class="fa fa-check"></i><b>13.3.7</b> Stemming and Lemmatization</a></li>
 </ul></li>
-<li class="chapter" data-level="13.3" data-path="text-analysis.html"><a href="text-analysis.html#text-analysis-1"><i class="fa fa-check"></i><b>13.3</b> Text Analysis</a>
+<li class="chapter" data-level="13.4" data-path="text-analysis.html"><a href="text-analysis.html#text-analysis-1"><i class="fa fa-check"></i><b>13.4</b> Text Analysis</a>
 <ul>
-<li class="chapter" data-level="13.3.1" data-path="text-analysis.html"><a href="text-analysis.html#raw-frequencies-and-visualization"><i class="fa fa-check"></i><b>13.3.1</b> Raw Frequencies and Visualization</a></li>
-<li class="chapter" data-level="13.3.2" data-path="text-analysis.html"><a href="text-analysis.html#bigrams-n-grams"><i class="fa fa-check"></i><b>13.3.2</b> Bigrams, <em>n</em>-grams</a></li>
-<li class="chapter" data-level="13.3.3" data-path="text-analysis.html"><a href="text-analysis.html#word-embedding"><i class="fa fa-check"></i><b>13.3.3</b> Word Embedding</a></li>
-<li class="chapter" data-level="13.3.4" data-path="text-analysis.html"><a href="text-analysis.html#sentiment-analysis"><i class="fa fa-check"></i><b>13.3.4</b> Sentiment Analysis</a></li>
+<li class="chapter" data-level="13.4.1" data-path="text-analysis.html"><a href="text-analysis.html#raw-frequencies-and-visualization"><i class="fa fa-check"></i><b>13.4.1</b> Raw Frequencies and Visualization</a></li>
+<li class="chapter" data-level="13.4.2" data-path="text-analysis.html"><a href="text-analysis.html#bigrams-n-grams"><i class="fa fa-check"></i><b>13.4.2</b> Bigrams, <em>n</em>-grams</a></li>
+<li class="chapter" data-level="13.4.3" data-path="text-analysis.html"><a href="text-analysis.html#word-embedding"><i class="fa fa-check"></i><b>13.4.3</b> Word Embedding</a></li>
+<li class="chapter" data-level="13.4.4" data-path="text-analysis.html"><a href="text-analysis.html#sentiment-analysis"><i class="fa fa-check"></i><b>13.4.4</b> Sentiment Analysis</a></li>
 </ul></li>
-<li class="chapter" data-level="13.4" data-path="text-analysis.html"><a href="text-analysis.html#to-go-further-1"><i class="fa fa-check"></i><b>13.4</b> To go further…</a></li>
+<li class="chapter" data-level="13.5" data-path="text-analysis.html"><a href="text-analysis.html#to-go-further-1"><i class="fa fa-check"></i><b>13.5</b> To go further…</a></li>
 </ul></li>
 <li class="chapter" data-level="14" data-path="dashboards.html"><a href="dashboards.html"><i class="fa fa-check"></i><b>14</b> Dashboards</a>
 <ul>
@@ -356,7 +408,8 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="14.2.1" data-path="dashboards.html"><a href="dashboards.html#what-is-a-shiny-application"><i class="fa fa-check"></i><b>14.2.1</b> What is a Shiny application?</a></li>
 <li class="chapter" data-level="14.2.2" data-path="dashboards.html"><a href="dashboards.html#starting-with-shiny"><i class="fa fa-check"></i><b>14.2.2</b> Starting with Shiny</a></li>
-<li class="chapter" data-level="14.2.3" data-path="dashboards.html"><a href="dashboards.html#deploying-the-application"><i class="fa fa-check"></i><b>14.2.3</b> Deploying the Application</a></li>
+<li class="chapter" data-level="14.2.3" data-path="dashboards.html"><a href="dashboards.html#illustration"><i class="fa fa-check"></i><b>14.2.3</b> Illustration</a></li>
+<li class="chapter" data-level="14.2.4" data-path="dashboards.html"><a href="dashboards.html#deploying-the-application"><i class="fa fa-check"></i><b>14.2.4</b> Deploying the Application</a></li>
 </ul></li>
 <li class="chapter" data-level="14.3" data-path="dashboards.html"><a href="dashboards.html#to-go-further-2"><i class="fa fa-check"></i><b>14.3</b> To go further…</a>
 <ul>
@@ -395,136 +448,204 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="start-R" class="section level1" number="2">
-<h1><span class="header-section-number">Chapter 2</span> Getting Started</h1>
-<div id="introduction-to-r" class="section level2" number="2.1">
-<h2><span class="header-section-number">2.1</span> Introduction to R</h2>
-<div id="what-is-r" class="section level3" number="2.1.1">
-<h3><span class="header-section-number">2.1.1</span> What is R?</h3>
-<p>First released in 1995, R is an open-source programming language and software environment. It is a free and powerful statistical software widely used for statistical analysis, graphics representation, and reporting. R was created by Ross Ihaka and Robert Gentleman at the University of Auckland, New Zealand, and is currently developed by the R Development Core Team. The name “R” was based on Ihaka’s and Gentleman’s first names and partly a play on the name of the Bell Labs Language S.</p>
-<p>R is a scripting language (not a compiled language) that runs the codes or commands in order. It is one of the most popular languages used by statisticians, data analysts, researchers, and marketers to retrieve, clean, analyze, visualize and present data. It is currently the 7th most popular programming language in the world and one of the most known in the sensory and consumer science field.</p>
+<div id="start-R" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Getting Started<a href="start-R.html#start-R" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="introduction-to-r" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> Introduction to R<a href="start-R.html#introduction-to-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="what-is-r" class="section level3 hasAnchor" number="2.1.1">
+<h3><span class="header-section-number">2.1.1</span> What is R?<a href="start-R.html#what-is-r" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>First released in 1995, R is an open-source programming language and software environment, that is widely used for statistical analyses, graphical representations, and reporting. R was created by Ross Ihaka and Robert Gentleman at the University of Auckland, New Zealand, and is currently developed by the R Development Core Team <span class="citation">(<a href="#ref-Rmanual" role="doc-biblioref">R Core Team 2022</a>)</span>.</p>
+<p>R is a scripting language (not a compiled language) that runs the lines of code or commands one by one, in order. It is one of the most popular languages used by statisticians, data analysts, researchers, marketers etc. to retrieve, clean, analyze, visualize and represent data. By the time this book is being written, it is among the most popular programming languages in the world, including the sensory and consumer science field.</p>
+<blockquote>
+<p>Do you know why R is called as such?
+It seems that the name <em>R</em> has two potential origins: It is the first letter of both Ihaka’s and Gentleman’s first names, but also it is a play on the name of Bell Labs Software called S it originates from (a lot of code that runs in S also run in R).</p>
+</blockquote>
 </div>
-<div id="why-learn-a-programming-language" class="section level3" number="2.1.2">
-<h3><span class="header-section-number">2.1.2</span> Why Learn a Programming Language?</h3>
-<p>There are several reasons why you should learn a programming language. One of the top reasons is the CONTROL it gives you. Differently from statistical software to analyze/visualize data for instance, you clearly see what is happening, what is behind the scenes, step by step. You are fully under control, and so it ends up teaching you abstract thinking and problem-solving. It allows you an INCREASED CAPABILITY and CONTINUOUS IMPROVEMENT, in the way you play with your data, extract the best you can and continuously improve it. The flexibility it gives you is just incredible!</p>
-<p>Allied to this control, the SPEED is also something that stands out. In a few seconds, we run a long and complex script to make some plots, and if you decide to change something like removing a specific attribute or some panelists, for instance, you re-run everything in no time.</p>
-<p>Learning a programming language also play an important role in REDUCING ERRORS, and this is in part because you are under control. You can run the script line by line and see what’s happening and check if things are working properly in every and each step. It also allows you REPRODUCIBLE RESULTS by embedding script, data sets, and results in a single file.</p>
-<p>Last, but not least, it IMPROVES COLLABORATION. When the user uses version control, which will be discussed shortly, it makes it possible to track changes to the source over time and make collaboration with multiple developers.</p>
+<div id="why-learning-r-or-any-programming-language" class="section level3 hasAnchor" number="2.1.2">
+<h3><span class="header-section-number">2.1.2</span> Why Learning R (or any Programming Language)?<a href="start-R.html#why-learning-r-or-any-programming-language" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>There are several reasons why you should learn R, or any programming language for that matter.</p>
+<p>First, it gives the user a lot of <strong>control</strong>. Compared to other statistical software which can be seen as a 1. a <em>black box</em> (you do not have necessarily access to the code that runs behind the scene), and 2. are restricted to the features their developers provide, R allows you to see what is happening at each step of your analysis (you can print the code that runs behind each function to ensure that it does what you are expecting…), and allows exploring any type of analysis. This means that users are fully in control, and are only limited by their imagination (and maybe their program skills?). A direct advantage of this way of working helps <strong>reducing errors</strong>, since you can run the script line by line and see what’s happening in each step to ensure that things are working properly the way it is meant to.</p>
+<p>Allied to the control it provides, knowing a programming language allows you gaining in <strong>efficiency</strong> and <strong>speed</strong>. It may take some time at first to build the required skills to write efficient scripts, but once acquired, it will pay you back exponentially. A simple example showcasing this could be situations in which you have analyzed your data, and either realized that the data should be altered, or a different project with similar type of data also need analyzing. In both scenario, you would traditionally need to re-run the full set of analyses manually, which can be time-consuming. However, with a programming language, you can update all your tables, figures, and reports by simply applying to the new data your previous scripts.</p>
+<p>Such solution brings us to the next reason, which is related to <strong>abstract thinking</strong> and <strong>problem-solving</strong> mindset. These are two components that are necessary to acquire good programming skills (no worries if you’re not confident in having that in you yet, the more you program, the more you’ll develop these skills) hence <strong>increasing your capability</strong> through <strong>continuous improvement</strong>. In other words, the more you play with your data, try new things etc., the more you’ll improve as a programmer, and most importantly the more diverse and flexible you’ll become. And quickly enough, you’ll discover that each challenge can be solved in various different ways (as you will see in <a href="data-manip.html#means">4.2.3.3</a>), so be imaginative and don’t be afraid to think outside the box.</p>
+<p>Last but not least, it <strong>improves collaboration</strong> and allows for <strong>reproducible research</strong> as your analyses are made transparent to colleagues if you decide to share your scripts with them. By embedding script, data sets, and results in a single file (we also recommend adding explanations regarding eventual decisions that were made for clarity) you and your colleagues can always track down why you obtain certain results by simply re-reading your script or re-running the analyses. In situations in which multiple users are collaborating on the same project, <strong>version control</strong> (see <a href="start-R.html#git-and-github">2.4</a>) also allows tracking changes done by the different contributors.</p>
 </div>
-<div id="why-r" class="section level3" number="2.1.3">
-<h3><span class="header-section-number">2.1.3</span> Why R?</h3>
-<p>For sensory and consumer scientists, we recommend the R ecosystem of tools for three main reasons. The first reason is cultural - R has from its inception been oriented more towards statistics than to computer science, making the feeling of programming in R more natural (in our experience) for sensory and consumer scientists than programming in Python. This opinion of experience is not to say that a sensory and consumer scientist shouldn’t learn Python if they are so inclined, or even that Python tools aren’t sometimes superior to R tools (in fact, they sometimes are). This latter point leads to our second reason, which is that R tools are typically better suited to sensory and consumer science than are Python tools. Even when Python tools are superior, the R tools are still sufficient for sensory and consumer science purposes, plus there are many custom packages such as <code>{SensR}</code>, <code>{SensoMineR}</code>, and <code>{FactoMineR}</code> that have been specifically developed for sensory and consumer science. Finally, the recent work by the RStudio company, and especially the exceptional work of Hadley Wickham, has lead to a very low barrier to entry for programming within R together with exceptional tools for data manipulation.</p>
-<p>On top of the main reasons described above, R is well-supported by an active community in the way the extensive online help throughout the numerous forums or websites is readily available. Besides, there are several books, courses, and other educational materials to support the user. As mentioned, the universe of available packages is vast, being the programming language with the more specialized tools for sensory analysis. Lastly, R excels at data manipulation and results reporting.</p>
+<div id="why-r" class="section level3 hasAnchor" number="2.1.3">
+<h3><span class="header-section-number">2.1.3</span> Why R?<a href="start-R.html#why-r" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>For sensory and consumer scientists, we recommend the R ecosystem for three main reasons.</p>
+<p>The first reason is <strong>cultural</strong>. R has from its inception been oriented more towards statistics than to computer science, making the feeling of programming in R more natural (in our experience) for sensory and consumer scientists than Python for instance. This opinion of experience is not to say that a sensory and consumer scientist shouldn’t learn other languages (such as Python) if they are inclined to, or even that other tools aren’t sometimes better than their R equivalent. Yet, to our experience, R tools are typically better suited to sensory and consumer science than any other solution we are aware of (especially in programming language).</p>
+<p>This leads to our second reason, namely <strong>availability</strong>. R provides many tools that are suitable and relevant for sensory and consumer science purposes, while also providing many packages (e.g. <code>{SensoMineR}</code> and <code>{FactoMineR}</code>, <code>{SensR}</code>, <code>{FreeSortR}</code>, <code>{cata}</code> just to name a few…) that have been specifically developed for the analysis of sensory and consumer data. If you want to learn more about R, especially in the context of analyzing sensory and consumer data, we refer you to <span class="citation"><a href="#ref-Le2018" role="doc-biblioref">Lê and Worch</a> (<a href="#ref-Le2018" role="doc-biblioref">2018</a>)</span>.</p>
+<p>Finally, the recent work done by the RStudio company, and especially the exceptional work of Hadley Wickham, has lead to a very low barrier to entry for programming within R. This is supplemented by the strong support provided by an active online community via numerous forums and websites, and by the several books, courses, and other educational materials made available.</p>
 </div>
-<div id="what-is-rstudio" class="section level3" number="2.1.4">
-<h3><span class="header-section-number">2.1.4</span> What is RStudio?</h3>
-<p>RStudio is a powerful and easy way to interact with R programming. It is an Integrated Development Environment (IDE) for R (also Python) that comes with a multi-panel window setup that provides access to all primary things on a single screen, which means that all information you need to write code is available in a single window that includes a console, syntax-highlighting editor that supports direct code execution, as well as tools for plotting, history, debugging and workplace management (<a href="https://www.rstudio.com/" class="uri">https://www.rstudio.com/</a>).</p>
-<p>Besides the convenience of having all panels on a single screen, we strongly recommend you to go for RStudio instead of R software due to other important reasons such as having a text editor that is full-proof and full-featured, auto-completion while writing scripts, many shortcuts, and access to all objects created in the Environment tab. Also, the highlighting tool for the editor makes coding easier and less error-prone.</p>
+<div id="rstudio" class="section level3 hasAnchor" number="2.1.4">
+<h3><span class="header-section-number">2.1.4</span> Why RStudio/Posit?<a href="start-R.html#rstudio" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>RStudio</strong> (now renamed as Posit) is a powerful and easy way to interact with R programming. It is an Integrated Development Environment (IDE) for R<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> that comes with a multi-panel window setup that provides access to all primary things on a single screen. Such approach facilitates writing code since all information is available in a single window that includes a console, a script editor that supports direct code execution, as well as tools for plotting, history, debugging and workplace management (see <a href="https://www.rstudio.com/">https://www.rstudio.com/</a><a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>).</p>
+<p>Besides the convenience of having all panels on a single screen, we strongly recommend the use of Rstudio as it offers many important features that facilitates scripting. For instance, the script editor provides many features including auto-completion of functions/R elements, hover menus that provides information regarding the arguments of the functions, handy shortcuts (see <a href="start-R.html#scripts">2.2.4</a>) etc. Additionally, the Environment section provides easy access to all objects available in the console. Last but not least, RStudio works with a powerful system of <em>projects</em> (see <a href="start-R.html#rprojects">2.2.5</a>)</p>
 </div>
-<div id="installing-r-and-rstudio" class="section level3" number="2.1.5">
-<h3><span class="header-section-number">2.1.5</span> Installing R and RStudio</h3>
-<p>The first step in this journey is to install R. For this, visit <a href="https://www.r-project.org/">The R Project for Statistical Computing</a>. From there, follow the download instructions to install R for your particular platform. We suggest you download the latest version of R and install it with default options. Note that if you are running R 4.0 or higher, you might need to install Rtools:
-<a href="https://cran.r-project.org/bin/windows/Rtools/" class="uri">https://cran.r-project.org/bin/windows/Rtools/</a></p>
-<p>Next, you need to install RStudio. To do so, visit the <a href="https://rstudio.com/products/rstudio/download/">RStudio desktop download page</a> and follow the installation instructions. Download and install the latest version of RStudio with default options and for adjustments:
-- Uncheck ‘Restore .RData’ into the workspace at the startup
-- Select ‘Never’ for ‘Save workspace to.RData on exit’
-- Change the color scheme to dark (e.g. “Idle Fingers”)
-- Put the console on the right</p>
-<p>Once you have installed R and RStudio, you should be able to open RStudio and enter the following into the Console to receive the number “3” as your output:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="start-R.html#cb1-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb1-2"><a href="start-R.html#cb1-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">2</span></span>
-<span id="cb1-3"><a href="start-R.html#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="start-R.html#cb1-4" aria-hidden="true" tabindex="-1"></a>x <span class="sc">+</span> y</span></code></pre></div>
-</div>
-</div>
-<div id="getting-started-in-r" class="section level2" number="2.2">
-<h2><span class="header-section-number">2.2</span> Getting Started in R</h2>
-<div id="create-a-local-project" class="section level3" number="2.2.1">
-<h3><span class="header-section-number">2.2.1</span> Create a Local Project</h3>
-<p>We strongly recommend you always work on an RStudio project. RStudio projects make it straightforward to divide your work into multiple contexts, each with its working directory, workspace, history, and source documents. It keeps all of your files such as R scripts, R markdown documents, R functions and data, and also activity, organized, together in one place. Additionally, it helps you manage your file path (so your computer can find things) and allow for more advanced capabilities. RStudio projects allow independence between projects, which means that you can open more than one project at the same time and switch very easily between them without fear of them interfering with each other.</p>
-<p>To create a new project locally in RStudio, select ‘File’ –&gt; ‘New Project…’ from the main menu. Typically, a new project is created in a new directory. You can also create a new project by clicking on the ‘Project’ button in the top right of RStudio and selecting ‘New Project….’ Once your new project has been created you will now have a new folder on your computer that contains the basic file structure. You probably want to add folders to better organize all the files and documents, such as a folder for input, output and scripts.</p>
-</div>
-<div id="install-and-load-packages" class="section level3" number="2.2.2">
-<h3><span class="header-section-number">2.2.2</span> Install and Load Packages</h3>
-<p>The base installation of R comes with many useful packages that contain many of the functions you will use on a daily basis, however, you will very quickly feel the urge to extend R’s capabilities and this is possible by using R packages that can easily be downloaded and installed in R. An R package is a collection of functions, data sets, help files, and documentation, developed by the community, that extends the capabilities of base R, by improving existing base R functionalities or by adding new ones.</p>
-<p>There several packages out there, but we listed above some of the packages we will be consistently be using throughout this book.</p>
+<div id="installing-r-and-rstudio" class="section level3 hasAnchor" number="2.1.5">
+<h3><span class="header-section-number">2.1.5</span> Installing R and RStudio<a href="start-R.html#installing-r-and-rstudio" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The first step in this journey is to install R. For this, visit <a href="https://www.r-project.org/">The R Project for Statistical Computing</a> website. From there, follow the download instructions to install R on your operating system. We suggest you download the latest version of R and install it with default options. Note that if you are running R 4.0 or higher, you will need to install Rtools:
+<a href="https://cran.r-project.org/bin/windows/Rtools/">https://cran.r-project.org/bin/windows/Rtools/</a></p>
+<p>Next, you need to install RStudio/Posit. To do so, visit the <a href="https://rstudio.com/products/rstudio/download/">RStudio desktop download page</a> and follow the installation instructions. Download and install the latest version of RStudio with default options.</p>
+<p>We then advise you to apply the following adjustments:</p>
 <ul>
-<li><p>Essential packages (or collections): <code>tidyverse</code>, <code>readxl</code></p></li>
-<li><p>Custom Microsoft office document creation: <code>officer</code>, <code>flextable</code>, <code>rvg</code>, <code>openxlsx</code>, <code>extrafont</code>, <code>extrafontdb</code></p></li>
-<li><p>Sensory specific packages: <code>sensR</code> , <code>SensoMineR</code>, <code>FactoMineR</code>, <code>factoextra</code></p></li>
+<li>Uncheck <em>Restore .RData</em> into the workspace at the startup (<em>Tools</em> &gt; <em>Global Options…</em>&gt; <em>General</em>)</li>
+<li>Select <em>Never</em> for <em>Save workspace to.RData on exit</em> (<em>Tools</em> &gt; <em>Global Options…</em>&gt; <em>General</em>)</li>
+<li>Change the color scheme to dark (e.g. “Idle Fingers”) (<em>Tools</em> &gt; <em>Global Options…</em>&gt; <em>Appearance</em>)</li>
+<li>Put the console on the right (<em>View</em> &gt; <em>Panes</em> &gt; <em>Console on Right</em>)</li>
 </ul>
-<p>There are many more, for statistical tests of all varieties, to multivariate analysis, to machine learning, to text analysis, etc.</p>
-<p>You only need to install each package once per R version. To install a package, you can type <code>install.packages("[package name]")</code>. R will download the packages from CRAN and install the onto your computer.</p>
+<p>Many other options are available, and we let you explore them yourself to customize Rstudio to your own liking.</p>
+</div>
+</div>
+<div id="getting-started-in-r" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> Getting Started in R<a href="start-R.html#getting-started-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="packages" class="section level3 hasAnchor" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> Conventions<a href="start-R.html#packages" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Before starting with R, it is important to talk about a few writing conventions that will be used in this book. These conventions are the one that are adopted in most book about R.</p>
+<p>Throughout this book, since the goal is to teach you to read and write your own code in R, we need to refer to some R functions and R packages. In most cases, the raw R-code that we will be writing and that we advise you to reproduce is introduced in some <em>special sections</em> such as:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="start-R.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span></code></pre></div>
+<p>This section shows the code to type on top, and the results (as shown by the R console) in the bottom. To save some space, we may not always show the outputs of the code. Hence it is important for you to run the code to learn it, and to understand it.</p>
+<p>Since in most situations, providing code alone is not sufficient, we will also provide explanation in writing. When doing so, we need to refer to R functions and packages throughout the text. In that case, we will clearly make the distinctions between R objects, R functions, and R packages by applying the following rules:</p>
+<ul>
+<li>An R object will be written simply as such: <code>name_object</code></li>
+<li>An R function will always be written by ending with <em>()</em>: <code>name_function()</code></li>
+<li>An R package will always be written between <em>{}</em>: <code>{name_package}</code></li>
+</ul>
+<p>In some cases, we may want to specify from which package a function belongs to. Rather than calling <code>name_function()</code> from the <code>{name_package}</code> package, we adopt the R terminology <code>name_package::name_function()</code>. This terminology is very important to know and (sometimes) to use in your script to avoid surprises and error.</p>
+<p>For illustration, multiple packages have a function called <code>select()</code>. Since we are often interested in using the <code>select()</code> function from the <code>{dplyr}</code> package, we can use <code>dplyr::select()</code> in our code to call it. The reason for this particular writing is to avoid errors by calling the <em>wrong</em> <code>select()</code> function. By simply calling <code>select()</code>, we call the <code>select()</code> function from the last package loaded that contains a function with that name. However, by specifying the package it belongs to (here <code>{dplyr}</code>) we ensure that the right <code>select()</code> function (here from <code>{dplyr}</code>) is always called.</p>
+</div>
+<div id="install-and-load-packages" class="section level3 hasAnchor" number="2.2.2">
+<h3><span class="header-section-number">2.2.2</span> Install and Load Packages<a href="start-R.html#install-and-load-packages" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The base installation of R comes with many useful packages that contain many of the functions you will use on a daily basis. However, once you want some more specific analyses, you will quickly feel the urge to extend R’s capabilities. This is possible by using R packages.</p>
+<p>An R package is a collection of functions, data sets, help files, and documentation, developed by the community that extends the capabilities of base R by improving existing base R functions or by adding new ones.</p>
+<p>As of early 2022, there were more than 16000 different packages available on the CRAN alone (excluding packages that are available through other sources such as GitHub). Here is a short list of packages that we will be consistently using throughout this book.</p>
+<ul>
+<li>Essential packages (or collections): <code>{tidyverse}</code>, <code>{readxl}</code>, <code>{writexl}</code></li>
+<li>Custom Microsoft office document creation: <code>{officer}</code>, <code>{flextable}</code>, <code>{rvg}</code>, <code>{openxlsx}</code></li>
+<li>Sensory specific packages: <code>{SensoMineR}</code>, <code>{FactoMineR}</code>, <code>{factoextra}</code></li>
+</ul>
+<p>There are many more packages available for statistical tests of all varieties, to multivariate analysis, to machine learning, to text analysis, etc., some being mentioned later in this book.</p>
+<blockquote>
+<p>Due to this extensive number of packages, it is not always easy to remember which package does what, nor what are the functions that they propose. Of course, the help file can provide such information. More interestingly, some packages provide <em>Cheat Sheets</em> which aim in describing the most relevant functions and their use. Within RStudio, some Cheat Sheets can be found under <em>Help</em> &gt; <em>Cheat Sheets</em>, but many more can be found online.</p>
+</blockquote>
+<p>To install a package, you can type <code>install.packages("package_name")</code> in your console. R will download (an internet connection is required) the packages from the CRAN and install it into your computer. Each package only needs to be installed once per R version.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="start-R.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;tidyverse&quot;</span>)</span></code></pre></div>
-<p>If a script loads package that are not installed, RStudio will prompt you to install the package
-Also, note that if you do not have write access on your computer, you might need IT help to install packages.</p>
-<p>Once you have installed a package onto your computer it is not immediately available for you to use until you load it with <code>library()</code>.</p>
+<blockquote>
+<p>If a script loads a package that is not yet installed, RStudio will prompt a message on top so that you can install them directly. Also, note that if you do not have write access on your computer, you might need IT help to install your packages.</p>
+</blockquote>
+<p>Once you have installed a package onto your computer, its content is only available for use once it’s loaded. To load a package, use <code>library(package_name)</code>.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="start-R.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<p>A package should only be installed once, however it should be loaded for each new session of R. To simplify your scripting, we recommend to start your scripts with all the packages that you would need. So as soon as you open your script, you can run the first lines of code and ensure that all your functions are made available to you.</p>
+<p>If you forget to load a package of interest, and yet run your code, you will get an error of the sort: <code>Error in ...: could not find function "..."</code></p>
+<p>Note that certain packages may no longer be maintained, and the procedure presented above hence no longer works for those packages. This is for instance the case for <code>{sensR}</code>, an excellent package dedicated to the analysis of discrimination tests.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="start-R.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;sensR&quot;</span>)</span></code></pre></div>
+<p>As you can see, running this code provide the following message: <code>Warning in install.packages : package ‘sensR’ is not available for this version of R</code></p>
+<p>No worries, there is an alternative way to get it installed by using the <code>install_version()</code> function from <code>{remotes}</code>. In this case, we need to provide the version of the package to install. Since the latest version of <code>{sensR}</code> is 1.5.2, we can install it as following:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="start-R.html#cb5-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_version</span>(<span class="st">&quot;sensR&quot;</span>, <span class="at">version =</span> <span class="st">&quot;1.5.2&quot;</span>)</span></code></pre></div>
+<p>Last but not least, packages are often improved over time (e.g. through bug fixes, addition of new functions etc.). To update some existing packages, you can use the function <code>update.packages()</code> or simply re-install it using <code>install.packages(package_name)</code>.</p>
+<blockquote>
+<p>RStudio also proposes a section called <em>Packages</em> (bottom right of your screen if you applied the changes proposed in <a href="start-R.html#rstudio">2.1.4</a>) where you can see which packages are installed, install new packages, or update already existing packages in a few clicks.</p>
+</blockquote>
 </div>
-<div id="r-scripts" class="section level3" number="2.2.3">
-<h3><span class="header-section-number">2.2.3</span> R Scripts</h3>
-<p>You can enter and run your code at the R Console and there are certainly many cases where it makes sense, such as opening a help menu, taking a quick look at your dataset, debugging a function, or maybe a simple calculation or testing. However, nothing you write will be saved, which means that once you close your project or restart the R session, you will lose all the code stream. And if you make an error, or want to make a change in your code, you will have to re-enter the set of commands, typing it all over again. Because of this and many other reasons, you should write any important code as an R script.</p>
-<p>An R script is simply a text file containing a bunch of R code or set of commands (that you would enter on the command line in R) and comments that can be conveniently saved and used later to re-execute the commands. The R script can be edited so you can execute a modified version of the commands.</p>
-<p>You can create a new script in RStudio by clicking the ‘New File’ icon in the upper left of the main toolbar and then selecting ‘RScript’ or by clicking ‘File’ in the main menu and then selecting ‘New File’ –&gt; ‘R Script.’ The script will open in the Script Editor panel and is ready for text entry. Once you are done you can save your script by clicking the ‘Save’ icon at the top of the Script Editor and can open it later to re-run your code and/or continue your work where you have stopped.</p>
-<p>Unlike typing in the console, when you type your code in the R script, nothing is going to happen. You need to send it to the console by running it. There are a few ways to do this. If you want to run your code line by line, you just highlight the code you want to run (or place cursor on the single line of the code) and use the shortcut Ctrl-Enter (Windows) or Command-Return (Mac). To run the entire script (all lines of the code) you can click ‘Run’ in the upper right of the main toolbar or use the shortcut Ctrl-Shift-Enter (Windows) or Command-Shift-Return (Mac).</p>
-<p>A few other useful shortcuts that are absolutely useful include:
-- Interrupt current command - Esc
-- Navigate command history - up and lower arrows
-- Attempt completion - Tab
-- Call help for a function - F1
-- Restart R Session: Ctrl-Shift-F10 (Windows) and Cmd-Shift-F10 (Mac)</p>
+<div id="first-analysis-in-r" class="section level3 hasAnchor" number="2.2.3">
+<h3><span class="header-section-number">2.2.3</span> First Analysis in R<a href="start-R.html#first-analysis-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Like any language, R is best learned through examples. Let’s start with a simple example where we analyze a tetrad test to illustrate the basic principles.</p>
+<p>Suppose you have 15 out of 44 correct answers in a tetrad test. Using the package <code>{sensR}</code><a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a>, it’s very easy to analyze these data:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="start-R.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sensR)</span>
+<span id="cb6-2"><a href="start-R.html#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="start-R.html#cb6-3" aria-hidden="true" tabindex="-1"></a>num_correct <span class="ot">&lt;-</span> <span class="dv">15</span>  </span>
+<span id="cb6-4"><a href="start-R.html#cb6-4" aria-hidden="true" tabindex="-1"></a>num_total <span class="ot">&lt;-</span> <span class="dv">44</span>  </span>
+<span id="cb6-5"><a href="start-R.html#cb6-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb6-6"><a href="start-R.html#cb6-6" aria-hidden="true" tabindex="-1"></a>discrim_res <span class="ot">&lt;-</span> <span class="fu">discrim</span>(<span class="at">correct =</span> num_correct, <span class="at">total =</span> num_total, <span class="at">method =</span> <span class="st">&quot;tetrad&quot;</span>)  </span>
+<span id="cb6-7"><a href="start-R.html#cb6-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb6-8"><a href="start-R.html#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(discrim_res)  </span></code></pre></div>
+<pre><code>## 
+## Estimates for the tetrad discrimination protocol with 15 correct
+## answers in 44 trials. One-sided p-value and 95 % two-sided confidence
+## intervals are based on the &#39;exact&#39; binomial test. 
+## 
+##         Estimate Std. Error  Lower  Upper
+## pc       0.34091    0.07146 0.3333 0.4992
+## pd       0.01136    0.10719 0.0000 0.2488
+## d-prime  0.20363    0.96585 0.0000 1.0193
+## 
+## Result of difference test:
+## &#39;exact&#39; binomial test:  p-value = 0.5141 
+## Alternative hypothesis: d-prime is greater than 0</code></pre>
+<p>In a few lines of code, you’ve just analysed your tetrad test data.</p>
 </div>
-<div id="run-sample-code" class="section level3" number="2.2.4">
-<h3><span class="header-section-number">2.2.4</span> Run Sample Code</h3>
-<p>Like any language, R is best learned first through example then through study. Lets start with a simple example where we analyze a Tetrad test to illustrate the basic principles.</p>
-<p>Suppose you have 15 out of 44 correct in a Tetrad test. Using the package <code>sensR</code>, it’s very easy to analyze these data:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="start-R.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;sensR&quot;</span>)</span>
-<span id="cb4-2"><a href="start-R.html#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="start-R.html#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sensR)</span>
-<span id="cb4-4"><a href="start-R.html#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="start-R.html#cb4-5" aria-hidden="true" tabindex="-1"></a>num_correct <span class="ot">&lt;-</span> <span class="dv">15</span>  </span>
-<span id="cb4-6"><a href="start-R.html#cb4-6" aria-hidden="true" tabindex="-1"></a>num_total <span class="ot">&lt;-</span> <span class="dv">44</span>  </span>
-<span id="cb4-7"><a href="start-R.html#cb4-7" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb4-8"><a href="start-R.html#cb4-8" aria-hidden="true" tabindex="-1"></a>discrim_res <span class="ot">&lt;-</span> <span class="fu">discrim</span>(num_correct, num_total, <span class="at">method =</span> <span class="st">&quot;tetrad&quot;</span>)  </span>
-<span id="cb4-9"><a href="start-R.html#cb4-9" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb4-10"><a href="start-R.html#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(discrim_res)  </span></code></pre></div>
+<div id="scripts" class="section level3 hasAnchor" number="2.2.4">
+<h3><span class="header-section-number">2.2.4</span> R Scripts<a href="start-R.html#scripts" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>You may have entered the code to analyze your tetrad test data directly into the R Console. Although this is possible, and there are many situations where it makes sense (e.g. opening a help menu, taking a quick look at your data, debugging a function, or maybe a simple calculation or testing), it is not the most efficient way of working and we would recommend <strong>NOT</strong> to do so. Indeed, the code directly written in the console cannot easily be modified, retrieved, or saved. Hence, once you close or restart your R session, you will lose it all. Also, if you make an error in your code (even just a typo), or simply want to make a small change, you will have to re-enter the entire set of commands, typing it all over again. For all those reasons (and many more), you should write any important code into a <strong>script</strong>.</p>
+<p>An R script is simply a text file (with the extension <em>.R</em>) containing R code, set of commands (that you would enter on the command line in R) and comments that can easily be edited, executed, and saved later for (re)use.</p>
+<p>You can create a new script in RStudio by clicking the <em>New File</em> icon in the upper left of the main toolbar and then selecting <em>RScript</em>, by clicking <em>File</em> in the main menu and then selecting <em>New File</em> &gt; <em>R Script</em>, or by simply using <em>CTRL + SHIFT + N</em> (Windows)<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a>. The script will open in the Script Editor panel and is ready for text entry. Once you are done you can save your script by clicking the <em>Save</em> icon at the top of the Script Editor and can open it later to re-run your code and/or continue your work where you left it.</p>
+<p>Unlike typing code in the console, writing code in an R script is not being executed. Instead, you need to send/run it to the console. There are a few ways to do this. If you want to run a line of code, place the cursor anywhere on the line of the code and use the shortcut <em>Ctrl + Enter</em> . If you want a portion of the code, select by highlighting the code of interest and run it using the same shortcut. To run the entire script (all lines of the code) you can click ‘Run’ in the upper right of the main toolbar or use the shortcut <em>Ctrl + Shift + Enter</em>.</p>
+<p>A few other relevant shortcuts are:</p>
+<ul>
+<li>Interrupt current command - <em>Esc</em></li>
+<li>Navigate command history - <em>up and lower arrows</em></li>
+<li>Attempt completion - <em>Tab</em></li>
+<li>Call help for a function - <em>F1</em></li>
+<li>Restart R Session: <em>Ctrl + Shift + F10</em></li>
+<li>Search in File - <em>CTRL + F</em></li>
+<li>Search in All Files (within a project or folder) - <em>CTRL + SHIFT + F</em></li>
+<li>Commenting a line of code - <em>CTRL + SHIFT + C</em></li>
+<li>Insertion of a section in the code - <em>CTRL + SHIFT + R</em></li>
+<li>Insertion of a pipe (<code>%&gt;%</code>) - <em>CTRL + SHIFT + M</em></li>
+</ul>
+<p>There are many more shortcut options. A complete list is available within R Studio under <em>Tools</em> &gt; <em>Keyboard Shortcut Help</em> (or directly using <em>ALT + SHIFT + K</em>). So have a look at them, and don’t hesitate to learn by heart the one that you use regularly as it will simplify your scripting procedure.</p>
+</div>
+<div id="rprojects" class="section level3 hasAnchor" number="2.2.5">
+<h3><span class="header-section-number">2.2.5</span> Create a Local Project<a href="start-R.html#rprojects" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Next to scripts, working with RStudio projects will facilitate your life even further. RStudio projects make it straightforward to divide your work into multiple contexts, each with its own working directory, workspace, history, and source documents. It keeps all of your files (R scripts, R markdown documents, R functions, data etc.) in one place. RStudio projects allow independence between projects, which means that you can open more than one project at the time, and switch at ease between them without fear of interference (they all use their own R session). Moreover, those projects are not linked to any computer, meaning that the file path are linked to the project itself: While sharing a RStudio project with colleagues, they do not need to update any file path to make it work.</p>
+<p>To create a new project locally in RStudio, select <em>File</em> &gt; <em>New Project…</em> from the main menu. Typically, a new project is created in a new directory, also you can also transform an already existing folder on your computer into an RStudio Project. You can also create a new project by clicking on the <em>Project</em> button in the top right of RStudio and selecting <em>New Project…</em>. Once your new project has been created you will now have a new folder on your computer that contains the basic file structure. You probably want to add folders to better organize all the files and documents, such as a folder for input, output and scripts.</p>
+<p>For consistency, we suggest you keep the same folder structure across projects. For example, you may create a folder that contains your scripts, one for the data, one for exporting results from R (excel files, figures, report, etc.). If you adopt this strategy, you may see an interest in the code below, which automatically creates all your folder. To run this code, the <code>{fs}</code> package is required. Here, 5 folders are being created:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="start-R.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fs)</span>
+<span id="cb8-2"><a href="start-R.html#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="start-R.html#cb8-3" aria-hidden="true" tabindex="-1"></a>fs<span class="sc">::</span><span class="fu">dir_create</span>(<span class="at">path=</span><span class="fu">c</span>(<span class="st">&quot;code&quot;</span>, <span class="st">&quot;data&quot;</span>, <span class="st">&quot;docs&quot;</span>, <span class="st">&quot;output&quot;</span>, <span class="st">&quot;template&quot;</span>))</span></code></pre></div>
 </div>
 </div>
-<div id="introduction-to-the-magrittr-and-the-notion-of-pipes" class="section level2" number="2.3">
-<h2><span class="header-section-number">2.3</span> Introduction to the <code>{magrittr}</code> and the notion of <em>pipes</em></h2>
-<p>R is an <em>evolving</em> programming language that evolves and expends very rapidly.</p>
+<div id="further-tips-on-how-to-read-this-book" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> Further tips on <em>how to read this book?</em><a href="start-R.html#further-tips-on-how-to-read-this-book" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In this book, we assume that the readers have already some basic knowledge in R.
+If you are completely new to R, we recommend you reading “R for Data Science” by <a href="https://r4ds.had.co.nz/">Wickham and Grolemund</a> <span class="citation">(<a href="#ref-Wickham2016" role="doc-biblioref">2016</a>)</span> or looking at some documentation online to get you started with the basics.</p>
+<p>Just like with any spoken language, the same message can be said in various ways. The same applies with writing scripts in R, each of us having our own styles, or our own preferences towards certain procedures, packages, functions, etc. In other words, writing scripts is personal. Through this book, we are not trying to impose our way of thinking/proceeding/building scripts, instead we aim in sharing our knowledge built through past experiences to help you find your own.</p>
+<p>But to fully decode our message, you’ll need some reading keys. These keys will be described in the next sections.</p>
+<p>Note that the lines of code presented in this section do not run and are simply presented for illustration.</p>
+<div id="pipes" class="section level3 hasAnchor" number="2.3.1">
+<h3><span class="header-section-number">2.3.1</span> Introduction to the <code>{magrittr}</code> and the notion of <em>pipes</em><a href="start-R.html#pipes" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>R is an <em>evolving</em> programming language that expends very rapidly.</p>
 <p>If most additions/improvements have a fairly limited reach, the introduction of the <code>{tidyverse}</code> in 2016 by H. Wickham revolutionized the way of scripting in R for many users. At least for us, it had a large impact as we fully embraced its philosophy, as we see its advantage for Data Science and for analyzing our sensory and consumer data. It is hence no surprise that you’ll read and learn a lot about it in this book.</p>
-<p>As you may know, the <code>{tidyverse}</code> is a grouping of packages dedicated to Data Science, which includes (among others) <code>{readr}</code> for data importation, <code>{tibble}</code> for the data structure, <code>{stringr}</code> and <code>{forcats}</code> for handling strings and factors, <code>{dplyr}</code> and <code>{tidyr}</code> for manipulating and tidying data, <code>{ggplot2}</code> for data visualization, and <code>{purrr}</code> for functional programming. But more importantly, it also includes <code>{magrittr}</code>, the package that arguably impacted the most our way of scripting by introducing the notion of <em>pipes</em> (defined as <code>%&gt;%</code>) as it provides code that is much easier to read and understand.</p>
-<p>To illustrate the advantage of the use of pipes, let’s use the example provided by H. Wickham in his book <em>R for Data Science</em>.
+<p>As you may know, the <code>{tidyverse}</code> is a grouping of packages dedicated to Data Science, which includes (amongst others) <code>{readr}</code> for data importation, <code>{tibble}</code> for the data structure, <code>{stringr}</code> and <code>{forcats}</code> for handling strings and factors, <code>{dplyr}</code> and <code>{tidyr}</code> for manipulating and tidying data, <code>{ggplot2}</code> for data visualization, and <code>{purrr}</code> for functional programming. But more importantly, it also includes <code>{magrittr}</code>, the package that arguably impacted the most our way of scripting by introducing the notion of <em>pipes</em> (defined as <code>%&gt;%</code>) as it provides code that is much easier to read and understand.</p>
+<p>To illustrate the advantage of coding with pipes, let’s use the example provided by H. Wickham in his book <em>R for Data Science</em>.
 It is some code that tells a story about a little bunny names Foo Foo:
-<em>Little bunny Foo Foo</em>
-<em>Went hopping through the forest</em>
-<em>Scooping up the field mice</em>
-<em>and bopping them on the head</em></p>
+&gt; Little bunny Foo Foo
+&gt; Went hopping through the forest
+&gt; Scooping up the field mice
+&gt; and bopping them on the head</p>
 <p>If we were meant to tell this story though code, we would start by creating an object name <code>FooFoo</code> which is a little bunny:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="start-R.html#cb5-1" aria-hidden="true" tabindex="-1"></a>foo_foo <span class="ot">&lt;-</span> <span class="fu">little_bunny</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="start-R.html#cb9-1" aria-hidden="true" tabindex="-1"></a>foo_foo <span class="ot">&lt;-</span> <span class="fu">little_bunny</span>()</span></code></pre></div>
 <p>To this object, we then apply different functions (we save each step as a different object):</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="start-R.html#cb6-1" aria-hidden="true" tabindex="-1"></a>foo_foo_1 <span class="ot">&lt;-</span> <span class="fu">hop</span>(foo_foo, <span class="at">through=</span>forest)</span>
-<span id="cb6-2"><a href="start-R.html#cb6-2" aria-hidden="true" tabindex="-1"></a>foo_foo_2 <span class="ot">&lt;-</span> <span class="fu">scoop</span>(foo_foo_1, <span class="at">up=</span>field_mice)</span>
-<span id="cb6-3"><a href="start-R.html#cb6-3" aria-hidden="true" tabindex="-1"></a>foo_foo_3 <span class="ot">&lt;-</span> <span class="fu">bop</span>(foo_foo_2, <span class="at">on=</span>head)</span></code></pre></div>
-<p>One of the main downsides of this approach is that you’ll need to create intermediate names for each step. If natural names can be used, this will not be a problem, otherwise it can quickly become a source of error (using the wrong object for instance)! Additionally, such approach may affect your disk memory (your creating a new object in each step), especially if the data set is large.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="start-R.html#cb10-1" aria-hidden="true" tabindex="-1"></a>foo_foo_1 <span class="ot">&lt;-</span> <span class="fu">hop</span>(foo_foo, <span class="at">through=</span>forest)</span>
+<span id="cb10-2"><a href="start-R.html#cb10-2" aria-hidden="true" tabindex="-1"></a>foo_foo_2 <span class="ot">&lt;-</span> <span class="fu">scoop</span>(foo_foo_1, <span class="at">up=</span>field_mice)</span>
+<span id="cb10-3"><a href="start-R.html#cb10-3" aria-hidden="true" tabindex="-1"></a>foo_foo_3 <span class="ot">&lt;-</span> <span class="fu">bop</span>(foo_foo_2, <span class="at">on=</span>head)</span></code></pre></div>
+<p>One of the main downsides of this approach is that you’ll need to create intermediate names for each step. If natural names can be used, this will not be a problem, otherwise it can quickly become a source of error (using the wrong object for instance)! Additionally, such approach may affect your disk memory since you’re creating a new object in each step. This can be problematic when the original data set is large.</p>
 <p>As an alternative, we could consider running the same code by over-writing the original object:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="start-R.html#cb7-1" aria-hidden="true" tabindex="-1"></a>foo_foo <span class="ot">&lt;-</span> <span class="fu">hop</span>(foo_foo, <span class="at">through=</span>forest)</span>
-<span id="cb7-2"><a href="start-R.html#cb7-2" aria-hidden="true" tabindex="-1"></a>foo_foo <span class="ot">&lt;-</span> <span class="fu">scoop</span>(foo_foo, <span class="at">up=</span>field_mice)</span>
-<span id="cb7-3"><a href="start-R.html#cb7-3" aria-hidden="true" tabindex="-1"></a>foo_foo <span class="ot">&lt;-</span> <span class="fu">bop</span>(foo_foo, <span class="at">on=</span>head)</span></code></pre></div>
-<p>If this solution looks neater and more efficient (less thinking, less typing, less memory use), it is more painful to debug, as the entire code should be re-run from the beginning (when <code>foo_foo</code> was originally created). Moreover, calling the same object in each step obscures the changes performed in each line.</p>
-<p>To these two approaches, we prefer a third one that strings all the functions together without intermediate steps of saving the results. This procedure uses the so-called pipes ( defined by <code>%&gt;%</code>), which takes automatically as input the output generated by the previous line of code:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="start-R.html#cb8-1" aria-hidden="true" tabindex="-1"></a>foo_foo <span class="sc">%&gt;%</span> </span>
-<span id="cb8-2"><a href="start-R.html#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hop</span>(<span class="at">through =</span> forest) <span class="sc">%&gt;%</span> </span>
-<span id="cb8-3"><a href="start-R.html#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scoop</span>(<span class="at">up =</span> field_mice) <span class="sc">%&gt;%</span> </span>
-<span id="cb8-4"><a href="start-R.html#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bop</span>(<span class="at">on =</span> head)</span></code></pre></div>
-<p>This code is easier to read and understand as it focuses more on the verbs (here <code>hop</code>, <code>scoop</code>, and <code>bop</code>) rather than names
-(<code>foo_foo_1</code>, or <code>foo_foo</code>). It can be surprising at first, but no worries, by the time you’ve read this book, you’ll be fully familiar with this concept.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="start-R.html#cb11-1" aria-hidden="true" tabindex="-1"></a>foo_foo <span class="ot">&lt;-</span> <span class="fu">hop</span>(foo_foo, <span class="at">through=</span>forest)</span>
+<span id="cb11-2"><a href="start-R.html#cb11-2" aria-hidden="true" tabindex="-1"></a>foo_foo <span class="ot">&lt;-</span> <span class="fu">scoop</span>(foo_foo, <span class="at">up=</span>field_mice)</span>
+<span id="cb11-3"><a href="start-R.html#cb11-3" aria-hidden="true" tabindex="-1"></a>foo_foo <span class="ot">&lt;-</span> <span class="fu">bop</span>(foo_foo, <span class="at">on=</span>head)</span></code></pre></div>
+<p>If this solution looks neater and more efficient (less thinking, less typing, less memory use), it is more difficult to debug, as the entire code should be re-run from the beginning (when <code>foo_foo</code> was originally created). Moreover, calling the same object in each step obscures the changes performed in each line.</p>
+<p>To these two approaches, we prefer a third one that strings all the functions together without intermediate steps of saving the results. This procedure uses the so-called pipes (defined by <code>%&gt;%</code>), which takes automatically as input the output generated by the previous line of code:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="start-R.html#cb12-1" aria-hidden="true" tabindex="-1"></a>foo_foo <span class="sc">%&gt;%</span> </span>
+<span id="cb12-2"><a href="start-R.html#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hop</span>(<span class="at">through =</span> forest) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-3"><a href="start-R.html#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scoop</span>(<span class="at">up =</span> field_mice) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-4"><a href="start-R.html#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bop</span>(<span class="at">on =</span> head)</span></code></pre></div>
+<p>This code is easier to read and understand as it focuses more on the verbs (here <code>hop()</code>, <code>scoop()</code>, and <code>bop()</code>) rather than the names (<code>foo_foo_1</code>, or <code>foo_foo</code>). It can be surprising at first, but no worries, by the time you’ve read this book, you’ll be fully familiar with this concept.</p>
 <p>When lines are piped, R runs the entire block at once. So how can we understand the intermediate steps that were done, or how can we fix the code if an error occur? The answer to these questions is simple: run back the code bits by bits.</p>
-<p>For instance, in this previous example, we could start by printing <code>foo_foo</code> (in practice, only select <code>foo_foo</code> and run this code only) only to ensure that it is the object that we were supposed to have.
-If it is the case, we can then extend the selection to the next line by selecting all the code before the pipe (do not select the pipe, else R is expecting additional code after it and will not show results).
-Repeat this until you found your error, or you ensure that all the steps have been performed correctly.</p>
-<p>While reading this book, we advise you to apply this trick to each block of code for you to visualize the steps performed.</p>
+<p>For instance, in this previous example, we could start by printing <code>foo_foo</code> (in practice, only select <code>foo_foo</code> and run this code only) only to ensure that it is the object that we were supposed to have. If it is the case, we can then extend the selection to the next line by selecting all the code until (but excluding<a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a>!) the pipe. Repeat this until you found your error, or you’ve ensured that all the steps have been performed correctly.</p>
+<p>While reading this book, we advise you to apply this trick to each long pipes for you to get a hand on it, and to visualize the intermediate steps.</p>
+<blockquote>
+<p>Within a pipe, it is sometime needed to call the temporary data or output generated in the previous step. Since the current object does not exist yet, nor have a name (it is still <em>under-construction</em>), we need to find another way to call it. In practice, this is very simple and can be done by using <code>.</code> as we will see it extensively in Chapter <a href="data-manip.html#data-manip">4</a>.</p>
+</blockquote>
 <p>Note however that although pipes are very powerful, they are not always the best option:</p>
 <ul>
 <li>A rule of thumb suggests that if you are piping more than 10 lines of code, you’re probably better of splitting it into 2 or more blocks (saving results in intermediate step) as this simplifies debugging.</li>
@@ -532,107 +653,103 @@ Repeat this until you found your error, or you ensure that all the steps have be
 <li>The system of pipes works linearly: if your code requires a complex dependency structure, the pipes should be avoided.</li>
 </ul>
 </div>
-<div id="git-and-github" class="section level2" number="2.4">
-<h2><span class="header-section-number">2.4</span> Version Control / Git and GitHub</h2>
-<p>Version control is a tool that tracks changes to files, especially source code files. Using version control means that you can not only track the changes, but manage them, record reasons for the changes, revert to previous versions, and most importantly, collaborate with multiple developers. Version control systems are simply software that helps users manage changes to source code over time. The reasons why everyone should use version control include then back up work, restoring prior versions, documenting reasons for changes, quickly determining differences in versions, easily sharing code, and developing in parallel with others.</p>
-<p>There are many tools for Version Control out there, but Git/GitHub are by far the most common, so we will quickly discuss them. We highly recommend that you integrate both Git and GitHub into your data scientific workflow. For a full review of Git and GitHub from an R programming perspective, we recommend <a href="https://happygitwithr.com/">Happy Git with R</a> by Jenny Bryant. In what follows, we simply provide the minimum information needed to get you up and running with Git and GitHub. Also, for an insightful discussion of the need for version control, please see [Cite bryan2018excuse].</p>
-<div id="git" class="section level3" number="2.4.1">
-<h3><span class="header-section-number">2.4.1</span> Git</h3>
-<p>Git is a version control system that runs locally and automatically organizes and saves versions of code on your computer, but does not connect to the internet. Git allows you to revert to earlier versions of your code, if necessary. To set up Git, follow the steps below:</p>
+<div id="calling-variables" class="section level3 hasAnchor" number="2.3.2">
+<h3><span class="header-section-number">2.3.2</span> Calling Variables<a href="start-R.html#calling-variables" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In R, variables can be called in different ways when programming. If the names of variables should be read from the data (e.g. “Product,” “products,” “samples,” etc.), you will often use strings, meaning that the name used will be defined between quotes (e.g. <code>"Product"</code>).</p>
+<p>Within the <code>{tidyverse}</code>, the names of variables that are included within a data set are usually called as it is, without quote:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="start-R.html#cb13-1" aria-hidden="true" tabindex="-1"></a>sensory <span class="sc">%&gt;%</span> </span>
+<span id="cb13-2"><a href="start-R.html#cb13-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Judge, Product, Shiny)</span></code></pre></div>
+<p>This is true for simple names that do not contain any special characters (e.g. space, <code>-, etc.</code>). For names that contain special characters, the use of <em>backticks</em> are required (note that <em>backticks</em> can also be used with simple names):</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="start-R.html#cb14-1" aria-hidden="true" tabindex="-1"></a>sensory <span class="sc">%&gt;%</span> </span>
+<span id="cb14-2"><a href="start-R.html#cb14-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="st">`</span><span class="at">Judge</span><span class="st">`</span>, Product, <span class="st">`</span><span class="at">Color evenness</span><span class="st">`</span>).</span></code></pre></div>
+<p>While going through this book, you’ll notice that many functions from the <code>{tidyverse}</code> sometimes require quotes, and sometimes don’t. The simple way to know whether quotes are required or not is based on its existence in the data set or not: If the column exists and should be used, no quotes should be used. On the contrary, if the variable doesn’t exist and should be created, then quotes should be used.</p>
+<p>Let’s illustrate this through a simple example involving <code>pivot_longer()</code> and <code>pivot_wider()</code> successively (see <a href="data-manip.html#pivots">4.2.2</a> for more information). For <code>pivot_longer()</code>, we create two new variables, one that contains the column names (informed by <code>names_to</code>) and one that contains the values (informed by <code>values_to</code>). Since these variables are being created, quotes are required for the new names. For <code>pivot_wider()</code>, quotes are not needed since the names of the variables to use (<code>names_from</code> and <code>values_from</code>) are present in the data:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="start-R.html#cb15-1" aria-hidden="true" tabindex="-1"></a>sensory <span class="sc">%&gt;%</span> </span>
+<span id="cb15-2"><a href="start-R.html#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(Shiny<span class="sc">:</span>Melting, <span class="at">names_to=</span><span class="st">&quot;Variables&quot;</span>, <span class="at">values_to=</span><span class="st">&quot;Scores&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-3"><a href="start-R.html#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from=</span>Variables, <span class="at">values_from=</span>Scores)</span></code></pre></div>
+<p>Unfortunately this rule of thumb is not always true (e.g. <code>separate()</code>, <code>unite()</code>, <code>column_to_rownames()</code>) but you’ll quickly get familiar with these exceptions.</p>
+</div>
+<div id="print-save" class="section level3 hasAnchor" number="2.3.3">
+<h3><span class="header-section-number">2.3.3</span> Printing vs. Saving results<a href="start-R.html#print-save" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In many examples through this book, we apply changes to certain elements without actually saving them in an R object. This is quite convenient for us as many changes we do are only done for pedagogic reasons, and are not necessarily relevant for our analyses.</p>
+<p>Here is an example of such case (see <a href="data-manip.html#renaming">4.2.1.1.1</a>):</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="start-R.html#cb16-1" aria-hidden="true" tabindex="-1"></a>sensory <span class="sc">%&gt;%</span> </span>
+<span id="cb16-2"><a href="start-R.html#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Panellist =</span> Judge, <span class="at">Sample =</span> Product)</span></code></pre></div>
+<p>When you run this code, you can notice that we rename <code>Judge</code> to <code>Panellist</code>, and <code>Product</code> to <code>Sample</code>…at least this is what you see on screen. However, if you look at <code>sensory</code>, the data set still contains the column <code>Judge</code> and <code>Product</code> (<code>Panellist</code> and <code>Sample</code> do not exist!). This is simply because we did not save the changes.</p>
+<p>If we would want to save the element in a new object, we should save the outcome in an element using <code>&lt;-</code>:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="start-R.html#cb17-1" aria-hidden="true" tabindex="-1"></a>newsensory <span class="ot">&lt;-</span> sensory <span class="sc">%&gt;%</span> </span>
+<span id="cb17-2"><a href="start-R.html#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Panellist =</span> Judge, <span class="at">Sample =</span> Product)</span></code></pre></div>
+<p>Here, <code>newsensory</code> corresponds to <code>sensory</code>, but with the new names. Of course, if you would want to overwrite the previous file with the new names, you simply need to ensure that the name of the output is the same as the name of the input (like we did with <code>foo_foo</code> in <a href="start-R.html#pipes">2.3.1</a>). Concretely, we replace here <code>newsensory</code> by <code>sensory</code>, meaning that the new names are saved in <code>sensory</code> (so the old names <code>Judge</code> and <code>Product</code> are definitely lost). This procedure saves computer memory and does not require you coming up with new names all the time. However, it also means that some changes that you applied may be lost, and if you have a mistake in your code, it is more complicated to find and ultimately solve it (you may need to re-run your entire script).</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="start-R.html#cb18-1" aria-hidden="true" tabindex="-1"></a>sensory <span class="ot">&lt;-</span> sensory <span class="sc">%&gt;%</span> </span>
+<span id="cb18-2"><a href="start-R.html#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Panellist =</span> Judge, <span class="at">Sample =</span> Product)</span></code></pre></div>
+<p>To visualize the changes, you would need to type <code>newsensory</code> or <code>sensory</code> in R.
+Another (faster) way to visualize it is to put the entire block of code between brackets: Putting code between brackets is equivalent to asking to print the output after being run.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="start-R.html#cb19-1" aria-hidden="true" tabindex="-1"></a>(sensory <span class="ot">&lt;-</span> sensory <span class="sc">%&gt;%</span> </span>
+<span id="cb19-2"><a href="start-R.html#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Panellist =</span> Judge, <span class="at">Sample =</span> Product))</span></code></pre></div>
+<p>Note that if you run all these lines of codes in R, you will get an error stating <code>Column 'Judge' doesn't exist.</code> This is a good illustration of a potential error mentioned above: We overwrote the original <code>sensory</code> (containing <code>Judge</code> and <code>Product</code>) with another version in which these columns were already renamed as <code>Panellist</code> and <code>Sample</code>. So when you re-run this code, you are trying to apply again the same changes to columns that no longer exist, hence the error.</p>
+<p>This is something that you need to take into consideration when overwriting elements (in this case, you should initialize <code>sensory</code> to its original version before trying).</p>
+</div>
+<div id="running-code-and-handling-errors" class="section level3 hasAnchor" number="2.3.4">
+<h3><span class="header-section-number">2.3.4</span> Running code and handling errors<a href="start-R.html#running-code-and-handling-errors" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>For you to get the most out of this book, you need to understand (and eventually adhere to) our philosophy of scripting, and our way of working. This is why we are providing you with some tips to use, if you’re comfortable with them:</p>
 <ol style="list-style-type: decimal">
-<li>Download and install the latest version of Git.
-Download and install Git with standard options (allow 3rd party software).</li>
+<li><p>Create a folder for this book on your computer, and create a script for each chapter in which you re-type yourself each line of code. If you work with the online version, you could copy/paste the code to go faster, but you may miss some subtleties.</p></li>
+<li><p>Do not be discourage when you get some errors: we all get some. At first, this can be very frustrating, especially when you are not able to fix them quickly. If you get stuck on an error and cannot fix it immediately, take a break and come back later with fresh eyes, you may solve it then. And with time and experience, you’ll notice that you can reduce the amount of errors, and will also solve them faster (you will also learn to understand the error messages provided by R).</p></li>
+<li><p>The more code, the more difficult it is to find errors. This is true whether you use <em>regular</em> R-code or pipes. The best way to solve errors in such circumstances is to run the code line by line until you find the error, and understand why the input/output does not match expectations.</p></li>
+<li><p>In the particular case of pipes, debugging errors means that you shouldn’t run the entire block of code, but select parts of it and run it by adding in each run a new line. This can either be done by stopping your selection just before the adequate <code>%&gt;%</code> sign (as mentioned earlier), or by adding after the last <code>%&gt;%</code> sign the function <code>identity()</code><a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a>.</p></li>
 </ol>
-<p><a href="https://git-scm.com/download/win">Git for Windows</a></p>
-<p><a href="https://git-scm.com/download/mac">Git for Windows</a></p>
-<ol start="2" style="list-style-type: decimal">
+</div>
+</div>
+<div id="git-and-github" class="section level2 hasAnchor" number="2.4">
+<h2><span class="header-section-number">2.4</span> Version Control / Git and GitHub<a href="start-R.html#git-and-github" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Version control is a tool that tracks changes to files, especially source code files. Using version control means that you can not only track the changes, but manage them by for instance describing the changes, or reverting to previous versions. This is particularly important when collaborating with other developers.</p>
+<p>Version control systems are simply software that helps users manage changes to source code over time. The reasons why everyone should use version control include backing up work, restoring prior versions, documenting reasons for changes, quickly determining differences in versions, easily sharing code, and developing in parallel with others.</p>
+<p>There are many tools for Version Control out there, but Git/GitHub are by far the most common one. We highly recommend that you integrate both Git and GitHub into your data science workflow. For a full review of Git and GitHub from an R programming perspective, we recommend <a href="https://happygitwithr.com/">Happy Git with R</a> by Jenny Bryant. In what follows, we simply provide the minimum information needed to get you up and running with Git and GitHub. Also, for an insightful discussion of the need for version control, please see <span class="citation"><a href="#ref-Bryan2018" role="doc-biblioref">Bryan</a> (<a href="#ref-Bryan2018" role="doc-biblioref">2018</a>)</span>.</p>
+<div id="git" class="section level3 hasAnchor" number="2.4.1">
+<h3><span class="header-section-number">2.4.1</span> Git<a href="start-R.html#git" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Git is a version control system that runs locally and automatically organizes and saves versions of code on your computer, but does not connect to the internet. Git allows you to revert to earlier versions of your code, if necessary. To set up Git, follow the following steps:</p>
+<ol style="list-style-type: decimal">
+<li><p>Download and install the latest version of Git.
+Download and install Git with standard options (allow 3rd party software) for <a href="https://git-scm.com/download/win">Windows</a> or <a href="https://git-scm.com/download/mac">Mac</a></p></li>
 <li><p>Enable Git Bash in RStudio
-Go to ‘Tool’ on the top toolbar and select ‘Global Options…’ –&gt; ‘Terminal.’ In the drop-down box for New terminals open, select ‘Git Bash.’</p></li>
+Go to ‘Tool’ on the top toolbar and select ‘Global Options…’ &gt; ‘Terminal.’ In the drop-down box for ‘New terminals open,’ select ‘Git Bash.’</p></li>
 <li><p>Configure Git from Rstudio
 The easiest way is to use the package <code>{usethis}</code></p></li>
 </ol>
-<pre class="git"><code>install.packages(&quot;usethis&quot;)
-
-library(usethis)
-
-use_git_conf (user.name = &quot;your username&quot;, user.email = &quot;your email address&quot;)
-</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="start-R.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(usethis)</span>
+<span id="cb20-2"><a href="start-R.html#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">use_git_conf</span> (<span class="at">user.name =</span> <span class="st">&quot;your username&quot;</span>, <span class="at">user.email =</span> <span class="st">&quot;your email address&quot;</span>)</span></code></pre></div>
 </div>
-<div id="github" class="section level3" number="2.4.2">
-<h3><span class="header-section-number">2.4.2</span> GitHub</h3>
-<p>GitHub is a cloud-based service that supports Git usage. It allows online backups of your code and facilitates collaboration between team members. While Git creates local repositories on your computer, GitHub allows users to create remote repositories, stored online, for their code.</p>
+<div id="github" class="section level3 hasAnchor" number="2.4.2">
+<h3><span class="header-section-number">2.4.2</span> GitHub<a href="start-R.html#github" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>GitHub is a cloud-based service that supports Git usage. It allows online backups of your code and facilitates collaboration between team members. While Git creates local repositories on your computer, GitHub allows users to create remote online repositories for their code.</p>
 <p>To set up GitHub, follow the steps below:</p>
 <ol style="list-style-type: decimal">
-<li><p>Register for a GitHub Account
-To get started you can sign up for a free GitHub account: <a href="https://github.com/">GitHub</a>
-We recommend you not to tie your account to your work and to use all lowercase to avoid confusion.</p></li>
-<li><p>Create a Test Repository in GitHub
-Once you log into your account, create a new repository by clicking the green button ‘New.’ You have to then name your repository and make some selections. We recommend you select the option ‘Private’ and click on the option “Initialize this repository with a README.” The last step is to click on ‘Create Repository.’</p></li>
+<li>Register for a GitHub Account
+To get started you can sign up for a free GitHub account: <a href="https://github.com/">GitHub</a></li>
 </ol>
+<p>We recommend you not to tie your account to your work email and to use all lowercase to avoid confusion.</p>
+<ol start="2" style="list-style-type: decimal">
+<li>Create a Test Repository in GitHub</li>
+</ol>
+<p>Once you log into your account, create a new repository by clicking the green button ‘New.’ You have to then name your repository and make some selections. We recommend you select the option ‘Private’ and click on the option “Initialize this repository with a README.” The last step is to click on ‘Create Repository.’</p>
 <p>Once the repository has been created you need to copy the repository URL to create a project in RStudio (next step). If you select the repository you just created, click on the green button ‘Code’ and copy the URL link.</p>
 <ol start="3" style="list-style-type: decimal">
-<li><p>Create an RStudio Project from GitHub
-As we have seen, to create a new project, select ‘File’ –&gt; ‘New Project…’ from the top bar menu or by clicking on the ‘Project’ button in the top right of RStudio and selecting ‘New Project….’ You will select ‘Version Control’ –&gt; ‘Git.’ Paste the repository URL link, select where you want to save this project locally, and click “Open in new session.” Finally, click ‘Create Project.’</p></li>
-<li><p>Register GitHub from Studio
-At his point, you will be asked to log into GitHub from RStudio. You should only have to do this once.</p></li>
-<li><p>Push and Commit Changes
-Once you are done with your coding or have finished updating a series of scripts, you can simply push, or send them to GitHub, so others can see your changes. You have to first commit and then push it to GitHub. To do so, you can click the ‘Git’ icon on the top menu and select the option ‘Commit.’ You can select what you want to commit and describe the changes you did. After committing your code/files, you have to push it by clicking the option ‘Push.’</p></li>
-<li><p>Pull Changes
-In case you are working with other colleagues, a good practice is to always pull (which means download) the code before you get started and before pushing any changes. The option pulls you simply update the repository based on changes others may have done. To do so, you can click the ‘Git’ icon on the top menu and select the option ‘Pull.’</p></li>
+<li>Create an RStudio Project from GitHub</li>
 </ol>
-</div>
-</div>
-<div id="tips-on-how-to-read-this-book" class="section level2" number="2.5">
-<h2><span class="header-section-number">2.5</span> Tips on <em>how to read this book?</em></h2>
-<p>In this book, we assume that the readers have already some basic knowledge in R.
-If you are completely new to R, we recommend you reading “R for Data Science” by Garrett Grolemund and Hadley Wickham (<a href="https://r4ds.had.co.nz/" class="uri">https://r4ds.had.co.nz/</a>) or looking at some documentation online to get you started with the basics.</p>
-<p>Just like with any spoken language, the same message can be said in various ways. The same applies with writing scripts in R, each of us having our own styles, or our own preferences towards certain procedures, packages, functions, etc. In other words, writing scripts is personal. Through this book, we are not trying to impose our way of thinking/proceeding/building scripts, instead we aim in sharing our knowledge built through past experiences to help you find your own style.</p>
-<p>But to fully decode our message, you’ll need some reading keys. These keys will be described in the next sections.</p>
-<div id="running-code-and-handling-errors" class="section level3" number="2.5.1">
-<h3><span class="header-section-number">2.5.1</span> Running code and handling errors</h3>
-<p>For you to get the most out of this book, you need to understand (and eventually adhere to) our philosophy of scripting, and our way of working. This is why we are providing you with some tips to use, if you’re comfortable with them:</p>
-<ol style="list-style-type: decimal">
-<li><p>Create a folder for this book on your computer, and create a script for each chapter in which you re-write yourself the code. If you work with the online version, you could copy/paste the code to go faster, but you may miss some subtleties.</p></li>
-<li><p>Do not be discourage when you get some errors: we all get some regularly. At first, this can be very frustrating, especially when you are not able to fix them quickly. If you get stuck on an error and cannot fix it immediately, take a break and come back later with fresh eyes, you may solve it then. And with time and experience, you’ll notice that you can reduce the amount of errors, and will also solve them faster.</p></li>
-<li><p>The more code, the more difficult it is to find errors. This is true whether you use “regular” R-code or pipes. The best way to solve errors in such circumstances is to run the code line by line until you find the error, and understand why the input/output does not match expectations.</p></li>
-<li><p>In the particular case of pipes, debugging errors means that you shouldn’t run the entire block of code, but select parts of it and run it by adding in each run a new line. This can either be done by stopping your selection just before the adequate <code>%&gt;%</code> sign, or by adding after that <code>%&gt;%</code> sign the function <code>identity()</code><a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>.</p></li>
+<p>As we have seen, to create a new project, select ‘File’ &gt; ‘New Project…’ from the top bar menu or by clicking on the ‘Project’ button in the top right of RStudio and by selecting ‘New Project….’ Select then ‘Version Control’ &gt; ‘Git.’ Paste the repository URL link, select where you want to save this project locally, and click “Open in new session.” Finally, click ‘Create Project.’</p>
+<ol start="4" style="list-style-type: decimal">
+<li>Register GitHub from Studio</li>
 </ol>
-</div>
-<div id="printing-vs.-saving-results" class="section level3" number="2.5.2">
-<h3><span class="header-section-number">2.5.2</span> Printing vs. Saving results</h3>
-<p>In many examples through this book, we apply changes to certain elements without actually saving them in an R object. This is quite convenient for us as many changes we do are only done for pedagogic reasons, and are not necessarily relevant for our analysis.</p>
-<p>Here is an example of such case (REF):</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="start-R.html#cb10-1" aria-hidden="true" tabindex="-1"></a>sensory <span class="sc">%&gt;%</span> </span>
-<span id="cb10-2"><a href="start-R.html#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Panellist =</span> Judge, <span class="at">Sample =</span> Product)</span></code></pre></div>
-<p>If you run this code, you’ll notice that we rename <code>Judge</code> to <code>Panellist</code>, and <code>Product</code> to <code>Sample</code>…at least this is what you see on screen. However, if you look at <code>sensory</code>, the data set still contains the column <code>Judge</code> and <code>Product</code> (<code>Panellist</code> and <code>Sample</code> do not exist!). This is simply because we did not save the changes in any R object.</p>
-<p>If we would want to save the element in a new object, we should save the outcome in an element using <code>&lt;-</code>:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="start-R.html#cb11-1" aria-hidden="true" tabindex="-1"></a>newsensory <span class="ot">&lt;-</span> sensory <span class="sc">%&gt;%</span> </span>
-<span id="cb11-2"><a href="start-R.html#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Panellist =</span> Judge, <span class="at">Sample =</span> Product)</span></code></pre></div>
-<p>Here, <code>newsensory</code> corresponds to <code>sensory</code>, but with the new names. Of course, if you would want to overwrite the previous file with the new names, you simply need to ensure that the name of the output is the same as the name of the input. Concretely, we replace here <code>newsensory</code> by <code>sensory</code>, meaning that the new names are saved in <code>sensory</code> (so the old names <code>Judge</code> and <code>Product</code> and definitely lost). This procedure saves computer memory and does not require you coming up with new names all the time. However, it also means that some changes that you applied may be lost, and if you have a mistake in your code, it is more complicated to find and ultimately solve it (you may need to re-run your entire script).</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="start-R.html#cb12-1" aria-hidden="true" tabindex="-1"></a>sensory <span class="ot">&lt;-</span> sensory <span class="sc">%&gt;%</span> </span>
-<span id="cb12-2"><a href="start-R.html#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Panellist =</span> Judge, <span class="at">Sample =</span> Product)</span></code></pre></div>
-<p>To visualize the changes, you would need to type <code>newsensory</code> or <code>sensory</code> in R.
-Another (faster) way to visualize it is to put the entire block of code between brackets: Putting code between brackets is equivalent to asking to print the output.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="start-R.html#cb13-1" aria-hidden="true" tabindex="-1"></a>(sensory <span class="ot">&lt;-</span> sensory <span class="sc">%&gt;%</span> </span>
-<span id="cb13-2"><a href="start-R.html#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Panellist =</span> Judge, <span class="at">Sample =</span> Product))</span></code></pre></div>
-<p>Note that if you run all these lines of codes in R, you will get an error stating <code>Column 'Judge' doesn't exist.</code> This is a good illustration of a potential error mentioned above: We overwrote the original <code>sensory</code> (containing <code>Judge</code> and <code>Product</code>) with another version in which these columns were already renamed as <code>Panellist</code> and <code>Sample</code>. So when you re-run this code, you are trying to apply again the same changes to columns that no longer exist, hence the error…
-This is something that you need to take into consideration when overwriting elements (in this case, you should initialize <code>sensory</code> to its original version before trying).</p>
-</div>
-<div id="calling-variables" class="section level3" number="2.5.3">
-<h3><span class="header-section-number">2.5.3</span> Calling Variables</h3>
-<p>In R, variables can be called in different ways when programming. If the names of variables should be read from the data (e.g. “Product,” “products,” “samples,” etc.), you will often use strings, meaning that the name used will be defined between quotes (e.g. <code>"Product"</code>).</p>
-<p>Within the <code>{tidyverse}</code>, the names of variables that are included within a data set are usually called as it is, without quote:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="start-R.html#cb14-1" aria-hidden="true" tabindex="-1"></a>sensory <span class="sc">%&gt;%</span> </span>
-<span id="cb14-2"><a href="start-R.html#cb14-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Judge, Product, Shiny)</span></code></pre></div>
-<p>This is true for simple names that do not contain any special characters (e.g. space, <code>-, etc.</code>). For names that contain special characters, the use of backticks are required (backticks can also be used with simple names):</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="start-R.html#cb15-1" aria-hidden="true" tabindex="-1"></a>sensory <span class="sc">%&gt;%</span> </span>
-<span id="cb15-2"><a href="start-R.html#cb15-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="st">`</span><span class="at">Judge</span><span class="st">`</span>, Product, <span class="st">`</span><span class="at">Color evenness</span><span class="st">`</span>).</span></code></pre></div>
-<p>While going through this book, you’ll notice that many functions from the <code>{tidyverse}</code> sometimes require quotes, and sometimes doesn’t. The simple way to know whether quotes are required or not is based on its existence in the data set or not: If the column exists and should be used, no quotes should be used. On the contrary, if the variable doesn’t exist and should be created, then quotes should be used.</p>
-<p>Let’s illustrate this through a simple example involving <code>pivot_longer()</code> and <code>pivot_wider()</code> successively. For <code>pivot_longer()</code>, we create two new variables,one that contains the column names (informed by <code>names_to</code>) and one that contains the values (informed by <code>values_to</code>). Since these variables are being created, quotes are required for the new names. For <code>pivot_wider()</code>, quotes are not needed since the names of the variables to use (<code>names_from</code> and <code>values_from</code>) are present in the data:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="start-R.html#cb16-1" aria-hidden="true" tabindex="-1"></a>sensory <span class="sc">%&gt;%</span> </span>
-<span id="cb16-2"><a href="start-R.html#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(Shiny<span class="sc">:</span>Melting, <span class="at">names_to=</span><span class="st">&quot;Variables&quot;</span>, <span class="at">values_to=</span><span class="st">&quot;Scores&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb16-3"><a href="start-R.html#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from=</span>Variables, <span class="at">values_from=</span>Scores)</span></code></pre></div>
-<p>Let’s get started?</p>
+<p>At his point, you will be asked to log into GitHub from RStudio. You should only have to do this once.</p>
+<ol start="5" style="list-style-type: decimal">
+<li>Push and Commit Changes</li>
+</ol>
+<p>Once you are done with your coding, or have finished updating a series of scripts, you can simply push, or send them to GitHub, so others can see your changes. You have to first commit and then push it to GitHub. To do so, you can click the ‘Git’ icon on the top menu of RStudio and select the option ‘Commit.’ You can select what you want to commit and describe the changes you did. After committing your code/files, you have to push it by clicking the option ‘Push.’</p>
+<ol start="6" style="list-style-type: decimal">
+<li>Pull Changes</li>
+</ol>
+<p>In case you are working with other colleagues, a good practice is to always pull (which means download) the latest code available (i.e. the code that your collaborators have recently pushed) before you get started and before pushing any changes. To do so, you can click the ‘Git’ icon on the top menu and select the option ‘Pull.’</p>
+<p>If you’ve read this through (no worries if everything is not completely clear yet, it will come!), and followed the different steps here, you should be ready to learn data science for sensory and consumer scientists. Let’s get started?</p>
 
 </div>
 </div>
@@ -640,11 +757,31 @@ This is something that you need to take into consideration when overwriting elem
 
 
 
+</div>
+<h3>Bibliography<a href="bibliography.html#bibliography" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Bryan2018" class="csl-entry">
+Bryan, Jennifer. 2018. <span>“<span class="nocase">Excuse Me, Do You Have a Moment to Talk About Version Control?</span>”</span> <em>The American Statistician</em> 72: 20. <a href="https://doi.org/10.1080/00031305.2017.1399928">https://doi.org/10.1080/00031305.2017.1399928</a>.
+</div>
+<div id="ref-Le2018" class="csl-entry">
+Lê, Sébastien, and Thierry Worch. 2018. <em><span class="nocase">Analyzing Sensory Data with R</span></em>. Chapman; Hall/CRC. <a href="https://doi.org/10.1201/9781315373416">https://doi.org/10.1201/9781315373416</a>.
+</div>
+<div id="ref-Rmanual" class="csl-entry">
+R Core Team. 2022. <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>.
+</div>
+<div id="ref-Wickham2016" class="csl-entry">
+Wickham, Hadley, and Garrett Grolemund. 2016. <em><span class="nocase">R for data science: import, tidy, transform, visualize, and model data</span></em>. " O’Reilly Media, Inc.".
+</div>
 </div>
 <div class="footnotes">
 <hr />
 <ol start="3">
-<li id="fn3"><p><code>identity()</code> is a function that returns as output the input as it is. This function is particularly useful in pipes as you can finish your pipes with it, meaning that you can put any line in comments (starting with ‘#’) without worrying about finishing your pipe with a <code>%&gt;%</code><a href="start-R.html#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p>Originally, RStudio was only developed for R. More recently, it extended its use for other programming languages (e.g. Python), and to accentuate its reach to other programming languages, RStudio changed its name to Posit to avoid the misinterpretation that it is only dedicated to R.<a href="start-R.html#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn4"><p>As we are writing this book, the name Posit is not yet in use, and the website is still defined as <em>rstudio</em>.<a href="start-R.html#fnref4" class="footnote-back">↩︎</a></p></li>
+<li id="fn5"><p>In the previous section, we show you how to install it!<a href="start-R.html#fnref5" class="footnote-back">↩︎</a></p></li>
+<li id="fn6"><p>The shortcuts are given for Windows users. For Mac users, replace <em>CTRL</em> by <em>Cmd</em> and it should also work.<a href="start-R.html#fnref6" class="footnote-back">↩︎</a></p></li>
+<li id="fn7"><p>If your code ends up on a pipe, R is expecting additional code and will not show results: this usually creates errors since the next piece of code is probably not matching the current pipe’s expected code.<a href="start-R.html#fnref7" class="footnote-back">↩︎</a></p></li>
+<li id="fn8"><p><code>identity()</code> is a function that returns as output the input as it is. This function is particularly useful in pipes as you can finish your pipes with it, meaning that you can put any line in comments (starting with ‘#’) without worrying about finishing your pipe with a <code>%&gt;%</code><a href="start-R.html#fnref8" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
@@ -653,11 +790,10 @@ This is something that you need to take into consideration when overwriting elem
         </div>
       </div>
 <a href="bienvenue.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="data-science.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="data_science.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -676,6 +812,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -696,6 +833,10 @@ gitbook.start({
 "text": null
 },
 "download": ["i2ds4scc_bookdown.pdf", "i2ds4scc_bookdown.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "section"
 }

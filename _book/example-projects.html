@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 7 Example Project: The Biscuit Study | Data Science for Sensory and Consumer Scientists</title>
   <meta name="description" content="Open development of data science book for sensory and consumer scientists." />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 7 Example Project: The Biscuit Study | Data Science for Sensory and Consumer Scientists" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="Open development of data science book for sensory and consumer scientists." />
   
@@ -24,7 +23,7 @@
 <meta name="author" content="Thierry Worch, Julien Delarue, Vanessa Rios de Souza, and John Ennis" />
 
 
-<meta name="date" content="2022-07-22" />
+<meta name="date" content="2022-11-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +32,8 @@
   
 <link rel="prev" href="auto-report.html"/>
 <link rel="next" href="data-collection.html"/>
-<script src="libs/header-attrs-2.6/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,14 +49,18 @@
 
 
 
-
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet" />
+<link href="libs/tabwid-1.0.0/scrool.css" rel="stylesheet" />
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -117,6 +120,29 @@ code span.vs { color: #4e9a06; } /* VerbatimString */
 code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 
@@ -136,9 +162,11 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
 <ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#who-should-read-this-book"><i class="fa fa-check"></i>Who Should Read This Book?</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-to-use-this-book"><i class="fa fa-check"></i>How to Use This Book</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-is-this-book-structured"><i class="fa fa-check"></i>How Is This Book Structured</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-to-use-this-book"><i class="fa fa-check"></i>How To Use This Book</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i>Acknowledgements</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="preface-1.html"><a href="preface-1.html"><i class="fa fa-check"></i>Preface</a></li>
 <li class="chapter" data-level="1" data-path="bienvenue.html"><a href="bienvenue.html"><i class="fa fa-check"></i><b>1</b> Bienvenue!</a>
 <ul>
 <li class="chapter" data-level="" data-path="bienvenue.html"><a href="bienvenue.html#why-data-science-for-sensory-and-consumer-science"><i class="fa fa-check"></i>Why Data Science for Sensory and Consumer Science?</a>
@@ -153,73 +181,78 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.1" data-path="start-R.html"><a href="start-R.html#introduction-to-r"><i class="fa fa-check"></i><b>2.1</b> Introduction to R</a>
 <ul>
 <li class="chapter" data-level="2.1.1" data-path="start-R.html"><a href="start-R.html#what-is-r"><i class="fa fa-check"></i><b>2.1.1</b> What is R?</a></li>
-<li class="chapter" data-level="2.1.2" data-path="start-R.html"><a href="start-R.html#why-learn-a-programming-language"><i class="fa fa-check"></i><b>2.1.2</b> Why Learn a Programming Language?</a></li>
+<li class="chapter" data-level="2.1.2" data-path="start-R.html"><a href="start-R.html#why-learning-r-or-any-programming-language"><i class="fa fa-check"></i><b>2.1.2</b> Why Learning R (or any Programming Language)?</a></li>
 <li class="chapter" data-level="2.1.3" data-path="start-R.html"><a href="start-R.html#why-r"><i class="fa fa-check"></i><b>2.1.3</b> Why R?</a></li>
-<li class="chapter" data-level="2.1.4" data-path="start-R.html"><a href="start-R.html#what-is-rstudio"><i class="fa fa-check"></i><b>2.1.4</b> What is RStudio?</a></li>
+<li class="chapter" data-level="2.1.4" data-path="start-R.html"><a href="start-R.html#rstudio"><i class="fa fa-check"></i><b>2.1.4</b> Why RStudio/Posit?</a></li>
 <li class="chapter" data-level="2.1.5" data-path="start-R.html"><a href="start-R.html#installing-r-and-rstudio"><i class="fa fa-check"></i><b>2.1.5</b> Installing R and RStudio</a></li>
 </ul></li>
 <li class="chapter" data-level="2.2" data-path="start-R.html"><a href="start-R.html#getting-started-in-r"><i class="fa fa-check"></i><b>2.2</b> Getting Started in R</a>
 <ul>
-<li class="chapter" data-level="2.2.1" data-path="start-R.html"><a href="start-R.html#create-a-local-project"><i class="fa fa-check"></i><b>2.2.1</b> Create a Local Project</a></li>
+<li class="chapter" data-level="2.2.1" data-path="start-R.html"><a href="start-R.html#packages"><i class="fa fa-check"></i><b>2.2.1</b> Conventions</a></li>
 <li class="chapter" data-level="2.2.2" data-path="start-R.html"><a href="start-R.html#install-and-load-packages"><i class="fa fa-check"></i><b>2.2.2</b> Install and Load Packages</a></li>
-<li class="chapter" data-level="2.2.3" data-path="start-R.html"><a href="start-R.html#r-scripts"><i class="fa fa-check"></i><b>2.2.3</b> R Scripts</a></li>
-<li class="chapter" data-level="2.2.4" data-path="start-R.html"><a href="start-R.html#run-sample-code"><i class="fa fa-check"></i><b>2.2.4</b> Run Sample Code</a></li>
+<li class="chapter" data-level="2.2.3" data-path="start-R.html"><a href="start-R.html#first-analysis-in-r"><i class="fa fa-check"></i><b>2.2.3</b> First Analysis in R</a></li>
+<li class="chapter" data-level="2.2.4" data-path="start-R.html"><a href="start-R.html#scripts"><i class="fa fa-check"></i><b>2.2.4</b> R Scripts</a></li>
+<li class="chapter" data-level="2.2.5" data-path="start-R.html"><a href="start-R.html#rprojects"><i class="fa fa-check"></i><b>2.2.5</b> Create a Local Project</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="start-R.html"><a href="start-R.html#introduction-to-the-magrittr-and-the-notion-of-pipes"><i class="fa fa-check"></i><b>2.3</b> Introduction to the <code>{magrittr}</code> and the notion of <em>pipes</em></a></li>
+<li class="chapter" data-level="2.3" data-path="start-R.html"><a href="start-R.html#further-tips-on-how-to-read-this-book"><i class="fa fa-check"></i><b>2.3</b> Further tips on <em>how to read this book?</em></a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="start-R.html"><a href="start-R.html#pipes"><i class="fa fa-check"></i><b>2.3.1</b> Introduction to the <code>{magrittr}</code> and the notion of <em>pipes</em></a></li>
+<li class="chapter" data-level="2.3.2" data-path="start-R.html"><a href="start-R.html#calling-variables"><i class="fa fa-check"></i><b>2.3.2</b> Calling Variables</a></li>
+<li class="chapter" data-level="2.3.3" data-path="start-R.html"><a href="start-R.html#print-save"><i class="fa fa-check"></i><b>2.3.3</b> Printing vs. Saving results</a></li>
+<li class="chapter" data-level="2.3.4" data-path="start-R.html"><a href="start-R.html#running-code-and-handling-errors"><i class="fa fa-check"></i><b>2.3.4</b> Running code and handling errors</a></li>
+</ul></li>
 <li class="chapter" data-level="2.4" data-path="start-R.html"><a href="start-R.html#git-and-github"><i class="fa fa-check"></i><b>2.4</b> Version Control / Git and GitHub</a>
 <ul>
 <li class="chapter" data-level="2.4.1" data-path="start-R.html"><a href="start-R.html#git"><i class="fa fa-check"></i><b>2.4.1</b> Git</a></li>
 <li class="chapter" data-level="2.4.2" data-path="start-R.html"><a href="start-R.html#github"><i class="fa fa-check"></i><b>2.4.2</b> GitHub</a></li>
 </ul></li>
-<li class="chapter" data-level="2.5" data-path="start-R.html"><a href="start-R.html#tips-on-how-to-read-this-book"><i class="fa fa-check"></i><b>2.5</b> Tips on <em>how to read this book?</em></a>
-<ul>
-<li class="chapter" data-level="2.5.1" data-path="start-R.html"><a href="start-R.html#running-code-and-handling-errors"><i class="fa fa-check"></i><b>2.5.1</b> Running code and handling errors</a></li>
-<li class="chapter" data-level="2.5.2" data-path="start-R.html"><a href="start-R.html#printing-vs.-saving-results"><i class="fa fa-check"></i><b>2.5.2</b> Printing vs. Saving results</a></li>
-<li class="chapter" data-level="2.5.3" data-path="start-R.html"><a href="start-R.html#calling-variables"><i class="fa fa-check"></i><b>2.5.3</b> Calling Variables</a></li>
-</ul></li>
 </ul></li>
 <li class="part"><span><b>Hors d’Oeuvres</b></span></li>
-<li class="chapter" data-level="3" data-path="data-science.html"><a href="data-science.html"><i class="fa fa-check"></i><b>3</b> Why Data Science?</a>
+<li class="chapter" data-level="3" data-path="data_science.html"><a href="data_science.html"><i class="fa fa-check"></i><b>3</b> Why Data Science?</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="data-science.html"><a href="data-science.html#history-and-definition"><i class="fa fa-check"></i><b>3.1</b> History and Definition</a></li>
-<li class="chapter" data-level="3.2" data-path="data-science.html"><a href="data-science.html#benefits-of-data-science"><i class="fa fa-check"></i><b>3.2</b> Benefits of Data Science</a>
+<li class="chapter" data-level="3.1" data-path="data_science.html"><a href="data_science.html#history-and-definition"><i class="fa fa-check"></i><b>3.1</b> History and Definition</a></li>
+<li class="chapter" data-level="3.2" data-path="data_science.html"><a href="data_science.html#benefits-of-data-science"><i class="fa fa-check"></i><b>3.2</b> Benefits of Data Science</a>
 <ul>
-<li class="chapter" data-level="3.2.1" data-path="data-science.html"><a href="data-science.html#reproducible-research"><i class="fa fa-check"></i><b>3.2.1</b> Reproducible Research</a></li>
-<li class="chapter" data-level="3.2.2" data-path="data-science.html"><a href="data-science.html#standardized-reporting"><i class="fa fa-check"></i><b>3.2.2</b> Standardized Reporting</a></li>
+<li class="chapter" data-level="3.2.1" data-path="data_science.html"><a href="data_science.html#reproducible-research"><i class="fa fa-check"></i><b>3.2.1</b> Reproducible Research</a></li>
+<li class="chapter" data-level="3.2.2" data-path="data_science.html"><a href="data_science.html#standardized-reporting"><i class="fa fa-check"></i><b>3.2.2</b> Standardized Reporting</a></li>
 </ul></li>
-<li class="chapter" data-level="3.3" data-path="data-science.html"><a href="data-science.html#data-scientific-workflow"><i class="fa fa-check"></i><b>3.3</b> Data Scientific Workflow</a>
+<li class="chapter" data-level="3.3" data-path="data_science.html"><a href="data_science.html#data-scientific-workflow"><i class="fa fa-check"></i><b>3.3</b> Data Scientific Workflow</a>
 <ul>
-<li class="chapter" data-level="3.3.1" data-path="data-science.html"><a href="data-science.html#data-collection2"><i class="fa fa-check"></i><b>3.3.1</b> Data Collection</a></li>
-<li class="chapter" data-level="3.3.2" data-path="data-science.html"><a href="data-science.html#data-preparation"><i class="fa fa-check"></i><b>3.3.2</b> Data Preparation</a></li>
-<li class="chapter" data-level="3.3.3" data-path="data-science.html"><a href="data-science.html#data-analysis2"><i class="fa fa-check"></i><b>3.3.3</b> Data Analysis</a></li>
-<li class="chapter" data-level="3.3.4" data-path="data-science.html"><a href="data-science.html#value-delivery2"><i class="fa fa-check"></i><b>3.3.4</b> Value Delivery</a></li>
+<li class="chapter" data-level="3.3.1" data-path="data_science.html"><a href="data_science.html#data-collection2"><i class="fa fa-check"></i><b>3.3.1</b> Data Collection</a></li>
+<li class="chapter" data-level="3.3.2" data-path="data_science.html"><a href="data_science.html#data-preparation"><i class="fa fa-check"></i><b>3.3.2</b> Data Preparation</a></li>
+<li class="chapter" data-level="3.3.3" data-path="data_science.html"><a href="data_science.html#data-analysis2"><i class="fa fa-check"></i><b>3.3.3</b> Data Analysis</a></li>
+<li class="chapter" data-level="3.3.4" data-path="data_science.html"><a href="data_science.html#value-delivery2"><i class="fa fa-check"></i><b>3.3.4</b> Value Delivery</a></li>
 </ul></li>
-<li class="chapter" data-level="3.4" data-path="data-science.html"><a href="data-science.html#how-to-learn-data-science"><i class="fa fa-check"></i><b>3.4</b> How to Learn Data Science</a></li>
-<li class="chapter" data-level="3.5" data-path="data-science.html"><a href="data-science.html#cautions-dont-that-everybody-does"><i class="fa fa-check"></i><b>3.5</b> Cautions: Don’t that Everybody Does</a></li>
+<li class="chapter" data-level="3.4" data-path="data_science.html"><a href="data_science.html#how-to-learn-data-science"><i class="fa fa-check"></i><b>3.4</b> How to Learn Data Science</a></li>
+<li class="chapter" data-level="3.5" data-path="data_science.html"><a href="data_science.html#cautions-dont-that-everybody-does"><i class="fa fa-check"></i><b>3.5</b> Cautions: Don’t that Everybody Does</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="data-manip.html"><a href="data-manip.html"><i class="fa fa-check"></i><b>4</b> Data Manipulation</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="data-manip.html"><a href="data-manip.html#chapter-overview"><i class="fa fa-check"></i><b>4.1</b> Chapter Overview</a></li>
-<li class="chapter" data-level="4.2" data-path="data-manip.html"><a href="data-manip.html#why-manipulating-data"><i class="fa fa-check"></i><b>4.2</b> Why Manipulating Data?</a></li>
-<li class="chapter" data-level="4.3" data-path="data-manip.html"><a href="data-manip.html#tidy-data"><i class="fa fa-check"></i><b>4.3</b> Tidying Data</a>
+<li class="chapter" data-level="4.1" data-path="data-manip.html"><a href="data-manip.html#why-manipulating-data"><i class="fa fa-check"></i><b>4.1</b> Why Manipulating Data?</a></li>
+<li class="chapter" data-level="4.2" data-path="data-manip.html"><a href="data-manip.html#tidy-data"><i class="fa fa-check"></i><b>4.2</b> Tidying Data</a>
 <ul>
-<li class="chapter" data-level="4.3.1" data-path="data-manip.html"><a href="data-manip.html#simple-manipulations"><i class="fa fa-check"></i><b>4.3.1</b> Simple Manipulations</a></li>
-<li class="chapter" data-level="4.3.2" data-path="data-manip.html"><a href="data-manip.html#reshaping-the-data"><i class="fa fa-check"></i><b>4.3.2</b> Reshaping the Data</a></li>
-<li class="chapter" data-level="4.3.3" data-path="data-manip.html"><a href="data-manip.html#transformation-that-alters-the-data"><i class="fa fa-check"></i><b>4.3.3</b> Transformation that Alters the Data</a></li>
-<li class="chapter" data-level="4.3.4" data-path="data-manip.html"><a href="data-manip.html#combining-data-from-different-sources"><i class="fa fa-check"></i><b>4.3.4</b> Combining Data from Different Sources</a></li>
+<li class="chapter" data-level="4.2.1" data-path="data-manip.html"><a href="data-manip.html#simple-manipulations"><i class="fa fa-check"></i><b>4.2.1</b> Simple Manipulations</a></li>
+<li class="chapter" data-level="4.2.2" data-path="data-manip.html"><a href="data-manip.html#pivots"><i class="fa fa-check"></i><b>4.2.2</b> Reshaping Data</a></li>
+<li class="chapter" data-level="4.2.3" data-path="data-manip.html"><a href="data-manip.html#transformation-that-alters-the-data"><i class="fa fa-check"></i><b>4.2.3</b> Transformation that Alters the Data</a></li>
+<li class="chapter" data-level="4.2.4" data-path="data-manip.html"><a href="data-manip.html#combining-data-from-different-sources"><i class="fa fa-check"></i><b>4.2.4</b> Combining Data from Different Sources</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="data-viz.html"><a href="data-viz.html"><i class="fa fa-check"></i><b>5</b> Data Visualization</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="data-viz.html"><a href="data-viz.html#design-principles"><i class="fa fa-check"></i><b>5.1</b> Design Principles</a></li>
-<li class="chapter" data-level="5.2" data-path="data-viz.html"><a href="data-viz.html#table-making"><i class="fa fa-check"></i><b>5.2</b> Table Making</a></li>
-<li class="chapter" data-level="5.3" data-path="data-viz.html"><a href="data-viz.html#chart-making"><i class="fa fa-check"></i><b>5.3</b> Chart Making</a>
+<li class="chapter" data-level="5.1" data-path="data-viz.html"><a href="data-viz.html#introduction"><i class="fa fa-check"></i><b>5.1</b> Introduction</a></li>
+<li class="chapter" data-level="5.2" data-path="data-viz.html"><a href="data-viz.html#design-principles"><i class="fa fa-check"></i><b>5.2</b> Design Principles</a></li>
+<li class="chapter" data-level="5.3" data-path="data-viz.html"><a href="data-viz.html#table_making"><i class="fa fa-check"></i><b>5.3</b> Table Making</a>
 <ul>
-<li class="chapter" data-level="5.3.1" data-path="data-viz.html"><a href="data-viz.html#philosophy-of-ggplot2"><i class="fa fa-check"></i><b>5.3.1</b> Philosophy of <code>{ggplot2}</code></a></li>
-<li class="chapter" data-level="5.3.2" data-path="data-viz.html"><a href="data-viz.html#getting-started-with-ggplot2"><i class="fa fa-check"></i><b>5.3.2</b> Getting started with <code>{ggplot2}</code></a></li>
-<li class="chapter" data-level="5.3.3" data-path="data-viz.html"><a href="data-viz.html#common-charts"><i class="fa fa-check"></i><b>5.3.3</b> Common Charts</a></li>
-<li class="chapter" data-level="5.3.4" data-path="data-viz.html"><a href="data-viz.html#miscealleneous"><i class="fa fa-check"></i><b>5.3.4</b> Miscealleneous</a></li>
-<li class="chapter" data-level="5.3.5" data-path="data-viz.html"><a href="data-viz.html#few-tips-and-tricks"><i class="fa fa-check"></i><b>5.3.5</b> Few Tips and Tricks</a></li>
+<li class="chapter" data-level="5.3.1" data-path="data-viz.html"><a href="data-viz.html#flextable"><i class="fa fa-check"></i><b>5.3.1</b> Introduction to <code>{flextable}</code></a></li>
+<li class="chapter" data-level="5.3.2" data-path="data-viz.html"><a href="data-viz.html#introdution-to-gt"><i class="fa fa-check"></i><b>5.3.2</b> Introdution to <code>{gt}</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="data-viz.html"><a href="data-viz.html#chart-making"><i class="fa fa-check"></i><b>5.4</b> Chart Making</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="data-viz.html"><a href="data-viz.html#philosophy-of-ggplot2"><i class="fa fa-check"></i><b>5.4.1</b> Philosophy of <code>{ggplot2}</code></a></li>
+<li class="chapter" data-level="5.4.2" data-path="data-viz.html"><a href="data-viz.html#getting-started-with-ggplot2"><i class="fa fa-check"></i><b>5.4.2</b> Getting started with <code>{ggplot2}</code></a></li>
+<li class="chapter" data-level="5.4.3" data-path="data-viz.html"><a href="data-viz.html#common-charts"><i class="fa fa-check"></i><b>5.4.3</b> Common Charts</a></li>
+<li class="chapter" data-level="5.4.4" data-path="data-viz.html"><a href="data-viz.html#miscealleneous"><i class="fa fa-check"></i><b>5.4.4</b> Miscealleneous</a></li>
+<li class="chapter" data-level="5.4.5" data-path="data-viz.html"><a href="data-viz.html#few-additional-tips-and-tricks"><i class="fa fa-check"></i><b>5.4.5</b> Few Additional Tips and Tricks</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="auto-report.html"><a href="auto-report.html"><i class="fa fa-check"></i><b>6</b> Automated Reporting</a>
@@ -245,109 +278,128 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <li class="part"><span><b>Bon Appétit</b></span></li>
 <li class="chapter" data-level="7" data-path="example-projects.html"><a href="example-projects.html"><i class="fa fa-check"></i><b>7</b> Example Project: The Biscuit Study</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="example-projects.html"><a href="example-projects.html#products"><i class="fa fa-check"></i><b>7.1</b> Products</a></li>
-<li class="chapter" data-level="7.2" data-path="example-projects.html"><a href="example-projects.html#consumer-test"><i class="fa fa-check"></i><b>7.2</b> Consumer test</a>
+<li class="chapter" data-level="7.1" data-path="example-projects.html"><a href="example-projects.html#objective-of-the-test"><i class="fa fa-check"></i><b>7.1</b> Objective of the Test</a></li>
+<li class="chapter" data-level="7.2" data-path="example-projects.html"><a href="example-projects.html#products"><i class="fa fa-check"></i><b>7.2</b> Products</a></li>
+<li class="chapter" data-level="7.3" data-path="example-projects.html"><a href="example-projects.html#consumer-test"><i class="fa fa-check"></i><b>7.3</b> Consumer test</a>
 <ul>
-<li class="chapter" data-level="7.2.1" data-path="example-projects.html"><a href="example-projects.html#participants"><i class="fa fa-check"></i><b>7.2.1</b> Participants</a></li>
-<li class="chapter" data-level="7.2.2" data-path="example-projects.html"><a href="example-projects.html#test-design"><i class="fa fa-check"></i><b>7.2.2</b> Test design</a></li>
+<li class="chapter" data-level="7.3.1" data-path="example-projects.html"><a href="example-projects.html#participants"><i class="fa fa-check"></i><b>7.3.1</b> Participants</a></li>
+<li class="chapter" data-level="7.3.2" data-path="example-projects.html"><a href="example-projects.html#test-design"><i class="fa fa-check"></i><b>7.3.2</b> Test design</a></li>
 </ul></li>
-<li class="chapter" data-level="7.3" data-path="example-projects.html"><a href="example-projects.html#sensory-descriptive-analysis-data"><i class="fa fa-check"></i><b>7.3</b> Sensory descriptive analysis data</a></li>
-<li class="chapter" data-level="7.4" data-path="example-projects.html"><a href="example-projects.html#summary-of-the-datasets"><i class="fa fa-check"></i><b>7.4</b> Summary of the datasets</a></li>
+<li class="chapter" data-level="7.4" data-path="example-projects.html"><a href="example-projects.html#sensory-descriptive-analysis-data"><i class="fa fa-check"></i><b>7.4</b> Sensory descriptive analysis data</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="data-collection.html"><a href="data-collection.html"><i class="fa fa-check"></i><b>8</b> Data Collection</a>
 <ul>
-<li class="chapter" data-level="8.1" data-path="data-collection.html"><a href="data-collection.html#design-1"><i class="fa fa-check"></i><b>8.1</b> Design</a>
+<li class="chapter" data-level="8.1" data-path="data-collection.html"><a href="data-collection.html#designs-of-sensory-doe-experiments"><i class="fa fa-check"></i><b>8.1</b> Designs of sensory (DoE) experiments</a>
 <ul>
-<li class="chapter" data-level="8.1.1" data-path="data-collection.html"><a href="data-collection.html#designs-of-sensory-experiments"><i class="fa fa-check"></i><b>8.1.1</b> Designs of sensory experiments</a></li>
-<li class="chapter" data-level="8.1.2" data-path="data-collection.html"><a href="data-collection.html#product-related-designs"><i class="fa fa-check"></i><b>8.1.2</b> Product-related designs</a></li>
+<li class="chapter" data-level="8.1.1" data-path="data-collection.html"><a href="data-collection.html#general-approach"><i class="fa fa-check"></i><b>8.1.1</b> General approach</a></li>
+<li class="chapter" data-level="8.1.2" data-path="data-collection.html"><a href="data-collection.html#Crossover"><i class="fa fa-check"></i><b>8.1.2</b> Crossover designs</a></li>
+<li class="chapter" data-level="8.1.3" data-path="data-collection.html"><a href="data-collection.html#BIBD"><i class="fa fa-check"></i><b>8.1.3</b> Balanced incomplete block designs (BIBD)</a></li>
+<li class="chapter" data-level="8.1.4" data-path="data-collection.html"><a href="data-collection.html#incomplete-designs-for-hedonic-tests-sensory-informed-designs"><i class="fa fa-check"></i><b>8.1.4</b> Incomplete designs for hedonic tests: Sensory informed designs</a></li>
 </ul></li>
-<li class="chapter" data-level="8.2" data-path="data-collection.html"><a href="data-collection.html#execute-1"><i class="fa fa-check"></i><b>8.2</b> Execute</a></li>
-<li class="chapter" data-level="8.3" data-path="data-collection.html"><a href="data-collection.html#data-import"><i class="fa fa-check"></i><b>8.3</b> Import</a>
+<li class="chapter" data-level="8.2" data-path="data-collection.html"><a href="data-collection.html#product-related-designs"><i class="fa fa-check"></i><b>8.2</b> Product-related designs</a>
 <ul>
-<li class="chapter" data-level="8.3.1" data-path="data-collection.html"><a href="data-collection.html#importing-structured-excel-file"><i class="fa fa-check"></i><b>8.3.1</b> Importing Structured Excel File</a></li>
-<li class="chapter" data-level="8.3.2" data-path="data-collection.html"><a href="data-collection.html#importing-unstructured-excel-file"><i class="fa fa-check"></i><b>8.3.2</b> Importing Unstructured Excel File</a></li>
-<li class="chapter" data-level="8.3.3" data-path="data-collection.html"><a href="data-collection.html#import-mult-sheet"><i class="fa fa-check"></i><b>8.3.3</b> Importing Data Stored in Multiple Sheets</a></li>
+<li class="chapter" data-level="8.2.1" data-path="data-collection.html"><a href="data-collection.html#factorial-designs"><i class="fa fa-check"></i><b>8.2.1</b> Factorial designs</a></li>
+<li class="chapter" data-level="8.2.2" data-path="data-collection.html"><a href="data-collection.html#mixture-designs"><i class="fa fa-check"></i><b>8.2.2</b> Mixture designs</a></li>
+<li class="chapter" data-level="8.2.3" data-path="data-collection.html"><a href="data-collection.html#screening-designs"><i class="fa fa-check"></i><b>8.2.3</b> Screening designs</a></li>
+<li class="chapter" data-level="8.2.4" data-path="data-collection.html"><a href="data-collection.html#sensory-informed-designs"><i class="fa fa-check"></i><b>8.2.4</b> Sensory informed designs</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="data-collection.html"><a href="data-collection.html#execute-1"><i class="fa fa-check"></i><b>8.3</b> Execute</a></li>
+<li class="chapter" data-level="8.4" data-path="data-collection.html"><a href="data-collection.html#data-import"><i class="fa fa-check"></i><b>8.4</b> Import</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="data-collection.html"><a href="data-collection.html#importing-structured-excel-file"><i class="fa fa-check"></i><b>8.4.1</b> Importing Structured Excel File</a></li>
+<li class="chapter" data-level="8.4.2" data-path="data-collection.html"><a href="data-collection.html#importing-unstructured-excel-file"><i class="fa fa-check"></i><b>8.4.2</b> Importing Unstructured Excel File</a></li>
+<li class="chapter" data-level="8.4.3" data-path="data-collection.html"><a href="data-collection.html#import-mult-sheet"><i class="fa fa-check"></i><b>8.4.3</b> Importing Data Stored in Multiple Sheets</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="data-prep.html"><a href="data-prep.html"><i class="fa fa-check"></i><b>9</b> Data Preparation</a>
 <ul>
-<li class="chapter" data-level="9.1" data-path="data-prep.html"><a href="data-prep.html#inspect"><i class="fa fa-check"></i><b>9.1</b> Inspect</a>
+<li class="chapter" data-level="9.1" data-path="data-prep.html"><a href="data-prep.html#introduction-1"><i class="fa fa-check"></i><b>9.1</b> Introduction</a></li>
+<li class="chapter" data-level="9.2" data-path="data-prep.html"><a href="data-prep.html#inspect"><i class="fa fa-check"></i><b>9.2</b> Inspect</a>
 <ul>
-<li class="chapter" data-level="9.1.1" data-path="data-prep.html"><a href="data-prep.html#data-inspection"><i class="fa fa-check"></i><b>9.1.1</b> Data Inspection</a></li>
-<li class="chapter" data-level="9.1.2" data-path="data-prep.html"><a href="data-prep.html#missing-data"><i class="fa fa-check"></i><b>9.1.2</b> Missing Data</a></li>
-<li class="chapter" data-level="9.1.3" data-path="data-prep.html"><a href="data-prep.html#design-inspection"><i class="fa fa-check"></i><b>9.1.3</b> Design Inspection</a></li>
+<li class="chapter" data-level="9.2.1" data-path="data-prep.html"><a href="data-prep.html#data-inspection"><i class="fa fa-check"></i><b>9.2.1</b> Data Inspection</a></li>
+<li class="chapter" data-level="9.2.2" data-path="data-prep.html"><a href="data-prep.html#missing-data"><i class="fa fa-check"></i><b>9.2.2</b> Missing Data</a></li>
+<li class="chapter" data-level="9.2.3" data-path="data-prep.html"><a href="data-prep.html#design-inspection"><i class="fa fa-check"></i><b>9.2.3</b> Design Inspection</a></li>
 </ul></li>
-<li class="chapter" data-level="9.2" data-path="data-prep.html"><a href="data-prep.html#clean"><i class="fa fa-check"></i><b>9.2</b> Clean</a>
+<li class="chapter" data-level="9.3" data-path="data-prep.html"><a href="data-prep.html#clean"><i class="fa fa-check"></i><b>9.3</b> Clean</a>
 <ul>
-<li class="chapter" data-level="9.2.1" data-path="data-prep.html"><a href="data-prep.html#handling-data-type"><i class="fa fa-check"></i><b>9.2.1</b> Handling Data Type</a></li>
-<li class="chapter" data-level="9.2.2" data-path="data-prep.html"><a href="data-prep.html#converting-between-types"><i class="fa fa-check"></i><b>9.2.2</b> Converting between Types</a></li>
-<li class="chapter" data-level="9.2.3" data-path="data-prep.html"><a href="data-prep.html#conclusions"><i class="fa fa-check"></i><b>9.2.3</b> Conclusions</a></li>
+<li class="chapter" data-level="9.3.1" data-path="data-prep.html"><a href="data-prep.html#handling-data-type"><i class="fa fa-check"></i><b>9.3.1</b> Handling Data Type</a></li>
+<li class="chapter" data-level="9.3.2" data-path="data-prep.html"><a href="data-prep.html#converting-between-types"><i class="fa fa-check"></i><b>9.3.2</b> Converting between Types</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="data-analysis.html"><a href="data-analysis.html"><i class="fa fa-check"></i><b>10</b> Data Analysis</a>
 <ul>
-<li class="chapter" data-level="10.1" data-path="data-analysis.html"><a href="data-analysis.html#chapter-overview-1"><i class="fa fa-check"></i><b>10.1</b> Chapter Overview</a></li>
-<li class="chapter" data-level="10.2" data-path="data-analysis.html"><a href="data-analysis.html#sensory-data"><i class="fa fa-check"></i><b>10.2</b> Sensory Data</a></li>
-<li class="chapter" data-level="10.3" data-path="data-analysis.html"><a href="data-analysis.html#demographic-and-questionnaire-data"><i class="fa fa-check"></i><b>10.3</b> Demographic and Questionnaire Data</a>
+<li class="chapter" data-level="10.1" data-path="data-analysis.html"><a href="data-analysis.html#sensory-data"><i class="fa fa-check"></i><b>10.1</b> Sensory Data</a></li>
+<li class="chapter" data-level="10.2" data-path="data-analysis.html"><a href="data-analysis.html#demographic-and-questionnaire-data"><i class="fa fa-check"></i><b>10.2</b> Demographic and Questionnaire Data</a>
 <ul>
-<li class="chapter" data-level="10.3.1" data-path="data-analysis.html"><a href="data-analysis.html#demographic-data-frequency-and-proportion"><i class="fa fa-check"></i><b>10.3.1</b> Demographic Data: Frequency and Proportion</a></li>
-<li class="chapter" data-level="10.3.2" data-path="data-analysis.html"><a href="data-analysis.html#personality-traits-and-eating-behavior-tfeq-data"><i class="fa fa-check"></i><b>10.3.2</b> Personality traits and eating behavior: TFEQ data</a></li>
+<li class="chapter" data-level="10.2.1" data-path="data-analysis.html"><a href="data-analysis.html#demographic-data-frequency-and-proportion"><i class="fa fa-check"></i><b>10.2.1</b> Demographic Data: Frequency and Proportion</a></li>
+<li class="chapter" data-level="10.2.2" data-path="data-analysis.html"><a href="data-analysis.html#eating-behavior-traits-tfeq-data"><i class="fa fa-check"></i><b>10.2.2</b> Eating behavior traits: TFEQ data</a></li>
 </ul></li>
-<li class="chapter" data-level="10.4" data-path="data-analysis.html"><a href="data-analysis.html#consumer-data"><i class="fa fa-check"></i><b>10.4</b> Consumer Data</a></li>
-<li class="chapter" data-level="10.5" data-path="data-analysis.html"><a href="data-analysis.html#combining-sensory-and-consumer-data"><i class="fa fa-check"></i><b>10.5</b> Combining Sensory and Consumer Data</a>
+<li class="chapter" data-level="10.3" data-path="data-analysis.html"><a href="data-analysis.html#consumer-data"><i class="fa fa-check"></i><b>10.3</b> Consumer Data</a></li>
+<li class="chapter" data-level="10.4" data-path="data-analysis.html"><a href="data-analysis.html#combining-sensory-and-consumer-data"><i class="fa fa-check"></i><b>10.4</b> Combining Sensory and Consumer Data</a>
 <ul>
-<li class="chapter" data-level="10.5.1" data-path="data-analysis.html"><a href="data-analysis.html#internal-preference-mapping"><i class="fa fa-check"></i><b>10.5.1</b> Internal Preference Mapping</a></li>
-<li class="chapter" data-level="10.5.2" data-path="data-analysis.html"><a href="data-analysis.html#consumers-clustering"><i class="fa fa-check"></i><b>10.5.2</b> Consumers Clustering</a></li>
-<li class="chapter" data-level="10.5.3" data-path="data-analysis.html"><a href="data-analysis.html#drivers-of-liking"><i class="fa fa-check"></i><b>10.5.3</b> Drivers of Liking</a></li>
-<li class="chapter" data-level="10.5.4" data-path="data-analysis.html"><a href="data-analysis.html#external-preference-mapping"><i class="fa fa-check"></i><b>10.5.4</b> External Preference Mapping</a></li>
+<li class="chapter" data-level="10.4.1" data-path="data-analysis.html"><a href="data-analysis.html#internal-preference-mapping"><i class="fa fa-check"></i><b>10.4.1</b> Internal Preference Mapping</a></li>
+<li class="chapter" data-level="10.4.2" data-path="data-analysis.html"><a href="data-analysis.html#consumers-clustering"><i class="fa fa-check"></i><b>10.4.2</b> Consumers Clustering</a></li>
+<li class="chapter" data-level="10.4.3" data-path="data-analysis.html"><a href="data-analysis.html#drivers-of-liking"><i class="fa fa-check"></i><b>10.4.3</b> Drivers of Liking</a></li>
+<li class="chapter" data-level="10.4.4" data-path="data-analysis.html"><a href="data-analysis.html#external-preference-mapping"><i class="fa fa-check"></i><b>10.4.4</b> External Preference Mapping</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="value-delivery.html"><a href="value-delivery.html"><i class="fa fa-check"></i><b>11</b> Value Delivery</a>
 <ul>
-<li class="chapter" data-level="11.1" data-path="value-delivery.html"><a href="value-delivery.html#communicate2"><i class="fa fa-check"></i><b>11.1</b> Communicate</a>
+<li class="chapter" data-level="11.1" data-path="value-delivery.html"><a href="value-delivery.html#how-to-communicate"><i class="fa fa-check"></i><b>11.1</b> How to Communicate?</a></li>
+<li class="chapter" data-level="11.2" data-path="value-delivery.html"><a href="value-delivery.html#exploratory-explanatory-and-predictive-analysis"><i class="fa fa-check"></i><b>11.2</b> Exploratory, Explanatory and Predictive Analysis</a></li>
+<li class="chapter" data-level="11.3" data-path="value-delivery.html"><a href="value-delivery.html#audience-awareness"><i class="fa fa-check"></i><b>11.3</b> Audience Awareness</a>
 <ul>
-<li class="chapter" data-level="11.1.1" data-path="value-delivery.html"><a href="value-delivery.html#exploratory-explanatory-and-predictive-analysis"><i class="fa fa-check"></i><b>11.1.1</b> Exploratory, Explanatory and Predictive Analysis</a></li>
-<li class="chapter" data-level="11.1.2" data-path="value-delivery.html"><a href="value-delivery.html#audience-awareness"><i class="fa fa-check"></i><b>11.1.2</b> Audience Awareness</a></li>
-<li class="chapter" data-level="11.1.3" data-path="value-delivery.html"><a href="value-delivery.html#method-to-communicate"><i class="fa fa-check"></i><b>11.1.3</b> Method to Communicate</a></li>
-<li class="chapter" data-level="11.1.4" data-path="value-delivery.html"><a href="value-delivery.html#storytelling"><i class="fa fa-check"></i><b>11.1.4</b> Storytelling</a></li>
+<li class="chapter" data-level="11.3.1" data-path="value-delivery.html"><a href="value-delivery.html#technical-audience"><i class="fa fa-check"></i><b>11.3.1</b> Technical Audience</a></li>
+<li class="chapter" data-level="11.3.2" data-path="value-delivery.html"><a href="value-delivery.html#management"><i class="fa fa-check"></i><b>11.3.2</b> Management</a></li>
+<li class="chapter" data-level="11.3.3" data-path="value-delivery.html"><a href="value-delivery.html#general-interest"><i class="fa fa-check"></i><b>11.3.3</b> General Interest</a></li>
 </ul></li>
-<li class="chapter" data-level="11.2" data-path="value-delivery.html"><a href="value-delivery.html#reformulate2"><i class="fa fa-check"></i><b>11.2</b> Reformulate</a></li>
+<li class="chapter" data-level="11.4" data-path="value-delivery.html"><a href="value-delivery.html#methods-to-communicate"><i class="fa fa-check"></i><b>11.4</b> Methods to Communicate</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="value-delivery.html"><a href="value-delivery.html#consider-the-mechanism"><i class="fa fa-check"></i><b>11.4.1</b> Consider the Mechanism</a></li>
+<li class="chapter" data-level="11.4.2" data-path="value-delivery.html"><a href="value-delivery.html#pick-the-correct-format"><i class="fa fa-check"></i><b>11.4.2</b> Pick the Correct Format</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="value-delivery.html"><a href="value-delivery.html#storytelling"><i class="fa fa-check"></i><b>11.5</b> Storytelling</a></li>
+<li class="chapter" data-level="11.6" data-path="value-delivery.html"><a href="value-delivery.html#reformulate2"><i class="fa fa-check"></i><b>11.6</b> Reformulate</a></li>
 </ul></li>
 <li class="part"><span><b>Haute Cuisine</b></span></li>
 <li class="chapter" data-level="12" data-path="machine-learning.html"><a href="machine-learning.html"><i class="fa fa-check"></i><b>12</b> Machine Learning</a>
 <ul>
-<li class="chapter" data-level="12.1" data-path="machine-learning.html"><a href="machine-learning.html#machine-learning-methods"><i class="fa fa-check"></i><b>12.1</b> Machine Learning Methods</a>
+<li class="chapter" data-level="12.1" data-path="machine-learning.html"><a href="machine-learning.html#introduction-2"><i class="fa fa-check"></i><b>12.1</b> Introduction</a></li>
+<li class="chapter" data-level="12.2" data-path="machine-learning.html"><a href="machine-learning.html#machine-learning-methods"><i class="fa fa-check"></i><b>12.2</b> Machine Learning Methods</a>
 <ul>
-<li class="chapter" data-level="12.1.1" data-path="machine-learning.html"><a href="machine-learning.html#unsupervised-learning"><i class="fa fa-check"></i><b>12.1.1</b> Unsupervised learning</a></li>
-<li class="chapter" data-level="12.1.2" data-path="machine-learning.html"><a href="machine-learning.html#supervised-learning"><i class="fa fa-check"></i><b>12.1.2</b> Supervised learning</a></li>
-<li class="chapter" data-level="12.1.3" data-path="machine-learning.html"><a href="machine-learning.html#practical-guide-to-machine-learning"><i class="fa fa-check"></i><b>12.1.3</b> Practical Guide to Machine Learning</a></li>
+<li class="chapter" data-level="12.2.1" data-path="machine-learning.html"><a href="machine-learning.html#unsupervised-learning"><i class="fa fa-check"></i><b>12.2.1</b> Unsupervised learning</a></li>
+<li class="chapter" data-level="12.2.2" data-path="machine-learning.html"><a href="machine-learning.html#supervised-learning"><i class="fa fa-check"></i><b>12.2.2</b> Supervised learning</a></li>
+<li class="chapter" data-level="12.2.3" data-path="machine-learning.html"><a href="machine-learning.html#practical-guide-to-machine-learning"><i class="fa fa-check"></i><b>12.2.3</b> Practical Guide to Machine Learning</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="13" data-path="text-analysis.html"><a href="text-analysis.html"><i class="fa fa-check"></i><b>13</b> Text Analysis</a>
 <ul>
-<li class="chapter" data-level="13.1" data-path="text-analysis.html"><a href="text-analysis.html#application-of-text-analysis-in-sensory-and-consumer-science"><i class="fa fa-check"></i><b>13.1</b> Application of Text Analysis in Sensory and Consumer Science</a>
+<li class="chapter" data-level="13.1" data-path="text-analysis.html"><a href="text-analysis.html#introduction-to-natural-language-processing"><i class="fa fa-check"></i><b>13.1</b> Introduction to Natural Language Processing</a></li>
+<li class="chapter" data-level="13.2" data-path="text-analysis.html"><a href="text-analysis.html#application-of-text-analysis-in-sensory-and-consumer-science"><i class="fa fa-check"></i><b>13.2</b> Application of Text Analysis in Sensory and Consumer Science</a>
 <ul>
-<li class="chapter" data-level="13.1.1" data-path="text-analysis.html"><a href="text-analysis.html#text-analysis-as-way-to-describe-products"><i class="fa fa-check"></i><b>13.1.1</b> Text analysis as way to describe products</a></li>
-<li class="chapter" data-level="13.1.2" data-path="text-analysis.html"><a href="text-analysis.html#objectives-of-text-analysis"><i class="fa fa-check"></i><b>13.1.2</b> Objectives of Text Analysis</a></li>
-<li class="chapter" data-level="13.1.3" data-path="text-analysis.html"><a href="text-analysis.html#warnings"><i class="fa fa-check"></i><b>13.1.3</b> Warnings</a></li>
+<li class="chapter" data-level="13.2.1" data-path="text-analysis.html"><a href="text-analysis.html#text-analysis-as-way-to-describe-products"><i class="fa fa-check"></i><b>13.2.1</b> Text analysis as way to describe products</a></li>
+<li class="chapter" data-level="13.2.2" data-path="text-analysis.html"><a href="text-analysis.html#objectives-of-text-analysis"><i class="fa fa-check"></i><b>13.2.2</b> Objectives of Text Analysis</a></li>
+<li class="chapter" data-level="13.2.3" data-path="text-analysis.html"><a href="text-analysis.html#classical-text-analysis-workflow"><i class="fa fa-check"></i><b>13.2.3</b> Classical <em>text analysis</em> workflow</a></li>
+<li class="chapter" data-level="13.2.4" data-path="text-analysis.html"><a href="text-analysis.html#warnings"><i class="fa fa-check"></i><b>13.2.4</b> Warnings</a></li>
 </ul></li>
-<li class="chapter" data-level="13.2" data-path="text-analysis.html"><a href="text-analysis.html#illustration-using-sorting-task-data"><i class="fa fa-check"></i><b>13.2</b> Illustration using Sorting Task Data</a>
+<li class="chapter" data-level="13.3" data-path="text-analysis.html"><a href="text-analysis.html#illustration-using-sorting-task-data"><i class="fa fa-check"></i><b>13.3</b> Illustration using Sorting Task Data</a>
 <ul>
-<li class="chapter" data-level="13.2.1" data-path="text-analysis.html"><a href="text-analysis.html#data-pre-processing"><i class="fa fa-check"></i><b>13.2.1</b> Data Pre-processing</a></li>
-<li class="chapter" data-level="13.2.2" data-path="text-analysis.html"><a href="text-analysis.html#introduction-to-working-with-strings-stringr"><i class="fa fa-check"></i><b>13.2.2</b> Introduction to working with strings (<code>{stringr}</code>)</a></li>
-<li class="chapter" data-level="13.2.3" data-path="text-analysis.html"><a href="text-analysis.html#tokenization"><i class="fa fa-check"></i><b>13.2.3</b> Tokenization</a></li>
-<li class="chapter" data-level="13.2.4" data-path="text-analysis.html"><a href="text-analysis.html#simple-transformation-lowercase"><i class="fa fa-check"></i><b>13.2.4</b> Simple Transformation (lowercase)</a></li>
-<li class="chapter" data-level="13.2.5" data-path="text-analysis.html"><a href="text-analysis.html#stopwords"><i class="fa fa-check"></i><b>13.2.5</b> Stopwords</a></li>
-<li class="chapter" data-level="13.2.6" data-path="text-analysis.html"><a href="text-analysis.html#stemming-and-lemmatization"><i class="fa fa-check"></i><b>13.2.6</b> Stemming and Lemmatization</a></li>
+<li class="chapter" data-level="13.3.1" data-path="text-analysis.html"><a href="text-analysis.html#data-pre-processing"><i class="fa fa-check"></i><b>13.3.1</b> Data Pre-processing</a></li>
+<li class="chapter" data-level="13.3.2" data-path="text-analysis.html"><a href="text-analysis.html#introduction-to-working-with-strings-stringr"><i class="fa fa-check"></i><b>13.3.2</b> Introduction to working with strings (<code>{stringr}</code>)</a></li>
+<li class="chapter" data-level="13.3.3" data-path="text-analysis.html"><a href="text-analysis.html#tokenization"><i class="fa fa-check"></i><b>13.3.3</b> Tokenization</a></li>
+<li class="chapter" data-level="13.3.4" data-path="text-analysis.html"><a href="text-analysis.html#simple-transformations"><i class="fa fa-check"></i><b>13.3.4</b> Simple Transformations</a></li>
+<li class="chapter" data-level="13.3.5" data-path="text-analysis.html"><a href="text-analysis.html#splitting-further-the-tokens"><i class="fa fa-check"></i><b>13.3.5</b> Splitting further the tokens</a></li>
+<li class="chapter" data-level="13.3.6" data-path="text-analysis.html"><a href="text-analysis.html#stopwords"><i class="fa fa-check"></i><b>13.3.6</b> Stopwords</a></li>
+<li class="chapter" data-level="13.3.7" data-path="text-analysis.html"><a href="text-analysis.html#stemming-and-lemmatization"><i class="fa fa-check"></i><b>13.3.7</b> Stemming and Lemmatization</a></li>
 </ul></li>
-<li class="chapter" data-level="13.3" data-path="text-analysis.html"><a href="text-analysis.html#text-analysis-1"><i class="fa fa-check"></i><b>13.3</b> Text Analysis</a>
+<li class="chapter" data-level="13.4" data-path="text-analysis.html"><a href="text-analysis.html#text-analysis-1"><i class="fa fa-check"></i><b>13.4</b> Text Analysis</a>
 <ul>
-<li class="chapter" data-level="13.3.1" data-path="text-analysis.html"><a href="text-analysis.html#raw-frequencies-and-visualization"><i class="fa fa-check"></i><b>13.3.1</b> Raw Frequencies and Visualization</a></li>
-<li class="chapter" data-level="13.3.2" data-path="text-analysis.html"><a href="text-analysis.html#bigrams-n-grams"><i class="fa fa-check"></i><b>13.3.2</b> Bigrams, <em>n</em>-grams</a></li>
-<li class="chapter" data-level="13.3.3" data-path="text-analysis.html"><a href="text-analysis.html#word-embedding"><i class="fa fa-check"></i><b>13.3.3</b> Word Embedding</a></li>
-<li class="chapter" data-level="13.3.4" data-path="text-analysis.html"><a href="text-analysis.html#sentiment-analysis"><i class="fa fa-check"></i><b>13.3.4</b> Sentiment Analysis</a></li>
+<li class="chapter" data-level="13.4.1" data-path="text-analysis.html"><a href="text-analysis.html#raw-frequencies-and-visualization"><i class="fa fa-check"></i><b>13.4.1</b> Raw Frequencies and Visualization</a></li>
+<li class="chapter" data-level="13.4.2" data-path="text-analysis.html"><a href="text-analysis.html#bigrams-n-grams"><i class="fa fa-check"></i><b>13.4.2</b> Bigrams, <em>n</em>-grams</a></li>
+<li class="chapter" data-level="13.4.3" data-path="text-analysis.html"><a href="text-analysis.html#word-embedding"><i class="fa fa-check"></i><b>13.4.3</b> Word Embedding</a></li>
+<li class="chapter" data-level="13.4.4" data-path="text-analysis.html"><a href="text-analysis.html#sentiment-analysis"><i class="fa fa-check"></i><b>13.4.4</b> Sentiment Analysis</a></li>
 </ul></li>
-<li class="chapter" data-level="13.4" data-path="text-analysis.html"><a href="text-analysis.html#to-go-further-1"><i class="fa fa-check"></i><b>13.4</b> To go further…</a></li>
+<li class="chapter" data-level="13.5" data-path="text-analysis.html"><a href="text-analysis.html#to-go-further-1"><i class="fa fa-check"></i><b>13.5</b> To go further…</a></li>
 </ul></li>
 <li class="chapter" data-level="14" data-path="dashboards.html"><a href="dashboards.html"><i class="fa fa-check"></i><b>14</b> Dashboards</a>
 <ul>
@@ -356,7 +408,8 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="14.2.1" data-path="dashboards.html"><a href="dashboards.html#what-is-a-shiny-application"><i class="fa fa-check"></i><b>14.2.1</b> What is a Shiny application?</a></li>
 <li class="chapter" data-level="14.2.2" data-path="dashboards.html"><a href="dashboards.html#starting-with-shiny"><i class="fa fa-check"></i><b>14.2.2</b> Starting with Shiny</a></li>
-<li class="chapter" data-level="14.2.3" data-path="dashboards.html"><a href="dashboards.html#deploying-the-application"><i class="fa fa-check"></i><b>14.2.3</b> Deploying the Application</a></li>
+<li class="chapter" data-level="14.2.3" data-path="dashboards.html"><a href="dashboards.html#illustration"><i class="fa fa-check"></i><b>14.2.3</b> Illustration</a></li>
+<li class="chapter" data-level="14.2.4" data-path="dashboards.html"><a href="dashboards.html#deploying-the-application"><i class="fa fa-check"></i><b>14.2.4</b> Deploying the Application</a></li>
 </ul></li>
 <li class="chapter" data-level="14.3" data-path="dashboards.html"><a href="dashboards.html#to-go-further-2"><i class="fa fa-check"></i><b>14.3</b> To go further…</a>
 <ul>
@@ -395,35 +448,37 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="example-projects" class="section level1" number="7">
-<h1><span class="header-section-number">Chapter 7</span> Example Project: The Biscuit Study</h1>
-<p>The dataset that we use as a main example throughout this book comes from a sensory study on biscuits. The study was part of project BISENS funded by the French National Research Agency (ANR, programme ALIA 2008). These biscuits were developed for breakfast consumption and specifically designed to improve satiety.
-The study was conducted in France with one hundred and seven consumers who tested a total of 10 biscuit recipes (including 9 experimental products varying in their fiber and protein content). Fibers and proteins are known to increase satiety.<br />
-The study aimed to measure the liking for these biscuits, its link with eaten quantities and the evolution of hunger sensations over ad libitum consumption. All the volunteers therefore participated to ten morning sessions in order to test every product (one biscuit type per session). After they completed all the sessions, they also filled a questionnaire about food-related personality traits such as cognitive restraint and sensitivity to hunger.<br />
-Parallel to this, a panel of nine trained judges performed a descriptive analysis of the biscuits. They evaluated the same 10 products as well as an additional product whose recipe was optimized for liking and satiating properties.<br />
-Data from the biscuit study are gathered in three Excel files that can be accessed here [ADD LINK HERE]:</p>
+<div id="example-projects" class="section level1 hasAnchor" number="7">
+<h1><span class="header-section-number">Chapter 7</span> Example Project: The Biscuit Study<a href="example-projects.html#example-projects" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="objective-of-the-test" class="section level2 hasAnchor" number="7.1">
+<h2><span class="header-section-number">7.1</span> Objective of the Test<a href="example-projects.html#objective-of-the-test" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The data set that we use as a main example throughout this book comes from a sensory study on biscuits. The study was part of project BISENS funded by the French National Research Agency (ANR, programme ALIA 2008). These biscuits were developed for breakfast consumption and specifically designed to improve satiety.</p>
+<p>The study was conducted in France with one hundred and seven consumers who tested a total of 10 biscuit recipes (including 9 experimental products varying in their fiber and protein content), as fibers and proteins are known to increase satiety.</p>
+<p>The study aimed to measure the liking for these biscuits, its link with eaten quantities and the evolution of hunger sensations over ad libitum consumption. All the volunteers therefore participated to ten morning sessions in order to test every product (one biscuit type per session). After they completed all the sessions, they also filled a questionnaire about food-related personality traits such as cognitive restraint and sensitivity to hunger.<br />
+Parallel to this, a panel of nine trained judges performed a quantitative descriptive analysis of the biscuits. They evaluated the same 10 products as well as an additional product whose recipe was optimized for liking and satiating properties.</p>
+<p>Data from the biscuit study are gathered in three Excel files that can be accessed here [ADD LINK HERE]:</p>
 <ul>
-<li>biscuits_consumer_test.xls<br />
+<li>biscuits_consumer_test.xlsx<br />
 </li>
-<li>biscuits_sensory_profile.xls<br />
+<li>biscuits_sensory_profile.xlsx<br />
 </li>
-<li>biscuits_traits.xls</li>
+<li>biscuits_traits.xlsx</li>
 </ul>
-<div id="products" class="section level2" number="7.1">
-<h2><span class="header-section-number">7.1</span> Products</h2>
-<p>In total, 11 products were considered in this study. They are all breakfast biscuits with varying contents of proteins and fibers (Table <a href="example-projects.html#tab:biscuit-set">7.1</a>). Products P01 to P09 are prototypes whereas product P10 is a standard commercial biscuit without enrichment. The eleventh product Popt is an additional optimized biscuit that has been evaluated only by the trained panel for descriptive analysis.</p>
-<template id="a1c94e02-18e4-417e-9da1-87fdf3cbaf7f"><style>
+</div>
+<div id="products" class="section level2 hasAnchor" number="7.2">
+<h2><span class="header-section-number">7.2</span> Products<a href="example-projects.html#products" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In total, 11 products were considered in this study. They are all breakfast biscuits with varying contents of proteins and fibers (Table <a href="example-projects.html#tab:biscuit-set">7.1</a>). Products <em>P01</em> to <em>P09</em> are prototypes whereas product <em>P10</em> is a standard commercial biscuit without enrichment. The eleventh product <em>Popt</em> is an additional optimized biscuit that has been evaluated only by the trained panel for descriptive analysis.</p>
+<template id="0b98d4fd-7624-4b33-8180-bcf5327a3a52"><style>
 .tabwid table{
+  border-spacing:0px !important;
   border-collapse:collapse;
   line-height:1;
   margin-left:auto;
   margin-right:auto;
   border-width: 0;
   display: table;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  table-layout: fixed;
-  border-spacing: 0;
+  margin-top: 1.275em;
+  margin-bottom: 1.275em;
   border-color: transparent;
 }
 .tabwid_left table{
@@ -447,18 +502,18 @@ Data from the biscuit study are gathered in three Excel files that can be access
 .tabwid table tr {
 background-color: transparent;
 }
-</style><div class="tabwid"><style>.cl-e7777034{border-collapse:collapse;}.cl-e761a236{font-family:'Arial';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-e7620456{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:3pt;padding-top:3pt;padding-left:3pt;padding-right:3pt;line-height: 1;background-color:transparent;}.cl-e762648c{width:50pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e762648d{width:40pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e762648e{width:53pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e762648f{width:114pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e7626490{width:40pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e7626491{width:50pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e7626492{width:114pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e7626493{width:53pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e7626494{width:50pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e7626495{width:40pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e7626496{width:53pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e762781e{width:114pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e762781f{width:40pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e7627820{width:114pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e7627821{width:53pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e7627822{width:50pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e7627823{width:50pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e7627824{width:40pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e7627825{width:114pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e7627826{width:53pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table class='cl-e7777034'>
+</style><div class="tabwid"><style>.cl-9497165c{}.cl-9481cc66{font-family:'Arial';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-94821b30{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-9482ce7c{width:55.4pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-9482ce7d{width:45.6pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-9482ce7e{width:58.4pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-9482ce7f{width:119pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-9482ce80{width:45.6pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-9482ce81{width:55.4pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-9482ce82{width:119pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-9482ce83{width:58.4pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-9482ce84{width:55.4pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-9482ce85{width:45.6pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-9482ce86{width:58.4pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-9482f58c{width:119pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-9482f58d{width:45.6pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-9482f58e{width:119pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-9482f58f{width:58.4pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-9482f590{width:55.4pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-9482f591{width:55.4pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-9482f592{width:45.6pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-9482f593{width:119pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-9482f594{width:58.4pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table class='cl-9497165c'>
 <caption class>
-<span id="tab:biscuit-set">Table 7.1: </span>Product set for the biscuit study
+<p><span id="tab:biscuit-set">Table 7.1: </span>Product set for the biscuit study</p>
 </caption>
-<thead><tr style="overflow-wrap:break-word;"><td class="cl-e7627826"><p class="cl-e7620456"><span class="cl-e761a236">Product</span></p></td><td class="cl-e7627823"><p class="cl-e7620456"><span class="cl-e761a236">Protein</span></p></td><td class="cl-e7627824"><p class="cl-e7620456"><span class="cl-e761a236">Fiber</span></p></td><td class="cl-e7627825"><p class="cl-e7620456"><span class="cl-e761a236">Type</span></p></td></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-e762648e"><p class="cl-e7620456"><span class="cl-e761a236">P01</span></p></td><td class="cl-e762648c"><p class="cl-e7620456"><span class="cl-e761a236">Low</span></p></td><td class="cl-e762648d"><p class="cl-e7620456"><span class="cl-e761a236">Low</span></p></td><td class="cl-e762648f"><p class="cl-e7620456"><span class="cl-e761a236">Trial</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-e7627821"><p class="cl-e7620456"><span class="cl-e761a236">P02</span></p></td><td class="cl-e7627822"><p class="cl-e7620456"><span class="cl-e761a236">Low</span></p></td><td class="cl-e762781f"><p class="cl-e7620456"><span class="cl-e761a236">High</span></p></td><td class="cl-e7627820"><p class="cl-e7620456"><span class="cl-e761a236">Trial</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-e7627821"><p class="cl-e7620456"><span class="cl-e761a236">P03</span></p></td><td class="cl-e7627822"><p class="cl-e7620456"><span class="cl-e761a236">High</span></p></td><td class="cl-e762781f"><p class="cl-e7620456"><span class="cl-e761a236">High</span></p></td><td class="cl-e7627820"><p class="cl-e7620456"><span class="cl-e761a236">Trial</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-e7627821"><p class="cl-e7620456"><span class="cl-e761a236">P04</span></p></td><td class="cl-e7627822"><p class="cl-e7620456"><span class="cl-e761a236">High</span></p></td><td class="cl-e762781f"><p class="cl-e7620456"><span class="cl-e761a236">High</span></p></td><td class="cl-e7627820"><p class="cl-e7620456"><span class="cl-e761a236">Trial</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-e7627821"><p class="cl-e7620456"><span class="cl-e761a236">P05</span></p></td><td class="cl-e7627822"><p class="cl-e7620456"><span class="cl-e761a236">High</span></p></td><td class="cl-e762781f"><p class="cl-e7620456"><span class="cl-e761a236">Low</span></p></td><td class="cl-e7627820"><p class="cl-e7620456"><span class="cl-e761a236">Trial</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-e7627821"><p class="cl-e7620456"><span class="cl-e761a236">P06</span></p></td><td class="cl-e7627822"><p class="cl-e7620456"><span class="cl-e761a236">High</span></p></td><td class="cl-e762781f"><p class="cl-e7620456"><span class="cl-e761a236">Low</span></p></td><td class="cl-e7627820"><p class="cl-e7620456"><span class="cl-e761a236">Trial</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-e7627821"><p class="cl-e7620456"><span class="cl-e761a236">P07</span></p></td><td class="cl-e7627822"><p class="cl-e7620456"><span class="cl-e761a236">Low</span></p></td><td class="cl-e762781f"><p class="cl-e7620456"><span class="cl-e761a236">High</span></p></td><td class="cl-e7627820"><p class="cl-e7620456"><span class="cl-e761a236">Trial</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-e7627821"><p class="cl-e7620456"><span class="cl-e761a236">P08</span></p></td><td class="cl-e7627822"><p class="cl-e7620456"><span class="cl-e761a236">High</span></p></td><td class="cl-e762781f"><p class="cl-e7620456"><span class="cl-e761a236">Low</span></p></td><td class="cl-e7627820"><p class="cl-e7620456"><span class="cl-e761a236">Trial</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-e7627821"><p class="cl-e7620456"><span class="cl-e761a236">P09</span></p></td><td class="cl-e7627822"><p class="cl-e7620456"><span class="cl-e761a236">High</span></p></td><td class="cl-e762781f"><p class="cl-e7620456"><span class="cl-e761a236">High</span></p></td><td class="cl-e7627820"><p class="cl-e7620456"><span class="cl-e761a236">Trial</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-e7626493"><p class="cl-e7620456"><span class="cl-e761a236">P10</span></p></td><td class="cl-e7626491"><p class="cl-e7620456"><span class="cl-e761a236">Low</span></p></td><td class="cl-e7626490"><p class="cl-e7620456"><span class="cl-e761a236">Low</span></p></td><td class="cl-e7626492"><p class="cl-e7620456"><span class="cl-e761a236">Commercial product</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-e7626496"><p class="cl-e7620456"><span class="cl-e761a236">POpt</span></p></td><td class="cl-e7626494"><p class="cl-e7620456"><span class="cl-e761a236">High</span></p></td><td class="cl-e7626495"><p class="cl-e7620456"><span class="cl-e761a236">Low</span></p></td><td class="cl-e762781e"><p class="cl-e7620456"><span class="cl-e761a236">Optimized trial</span></p></td></tr></tbody></table></div></template>
-<div id="523171c6-b944-4e26-a016-225b7fd10e11"></div>
+<thead><tr style="overflow-wrap:break-word;"><td class="cl-9482f594"><p class="cl-94821b30"><span class="cl-9481cc66">Product</span></p></td><td class="cl-9482f591"><p class="cl-94821b30"><span class="cl-9481cc66">Protein</span></p></td><td class="cl-9482f592"><p class="cl-94821b30"><span class="cl-9481cc66">Fiber</span></p></td><td class="cl-9482f593"><p class="cl-94821b30"><span class="cl-9481cc66">Type</span></p></td></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-9482ce7e"><p class="cl-94821b30"><span class="cl-9481cc66">P01</span></p></td><td class="cl-9482ce7c"><p class="cl-94821b30"><span class="cl-9481cc66">Low</span></p></td><td class="cl-9482ce7d"><p class="cl-94821b30"><span class="cl-9481cc66">Low</span></p></td><td class="cl-9482ce7f"><p class="cl-94821b30"><span class="cl-9481cc66">Trial</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-9482f58f"><p class="cl-94821b30"><span class="cl-9481cc66">P02</span></p></td><td class="cl-9482f590"><p class="cl-94821b30"><span class="cl-9481cc66">Low</span></p></td><td class="cl-9482f58d"><p class="cl-94821b30"><span class="cl-9481cc66">High</span></p></td><td class="cl-9482f58e"><p class="cl-94821b30"><span class="cl-9481cc66">Trial</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-9482f58f"><p class="cl-94821b30"><span class="cl-9481cc66">P03</span></p></td><td class="cl-9482f590"><p class="cl-94821b30"><span class="cl-9481cc66">High</span></p></td><td class="cl-9482f58d"><p class="cl-94821b30"><span class="cl-9481cc66">High</span></p></td><td class="cl-9482f58e"><p class="cl-94821b30"><span class="cl-9481cc66">Trial</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-9482f58f"><p class="cl-94821b30"><span class="cl-9481cc66">P04</span></p></td><td class="cl-9482f590"><p class="cl-94821b30"><span class="cl-9481cc66">High</span></p></td><td class="cl-9482f58d"><p class="cl-94821b30"><span class="cl-9481cc66">High</span></p></td><td class="cl-9482f58e"><p class="cl-94821b30"><span class="cl-9481cc66">Trial</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-9482f58f"><p class="cl-94821b30"><span class="cl-9481cc66">P05</span></p></td><td class="cl-9482f590"><p class="cl-94821b30"><span class="cl-9481cc66">High</span></p></td><td class="cl-9482f58d"><p class="cl-94821b30"><span class="cl-9481cc66">Low</span></p></td><td class="cl-9482f58e"><p class="cl-94821b30"><span class="cl-9481cc66">Trial</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-9482f58f"><p class="cl-94821b30"><span class="cl-9481cc66">P06</span></p></td><td class="cl-9482f590"><p class="cl-94821b30"><span class="cl-9481cc66">High</span></p></td><td class="cl-9482f58d"><p class="cl-94821b30"><span class="cl-9481cc66">Low</span></p></td><td class="cl-9482f58e"><p class="cl-94821b30"><span class="cl-9481cc66">Trial</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-9482f58f"><p class="cl-94821b30"><span class="cl-9481cc66">P07</span></p></td><td class="cl-9482f590"><p class="cl-94821b30"><span class="cl-9481cc66">Low</span></p></td><td class="cl-9482f58d"><p class="cl-94821b30"><span class="cl-9481cc66">High</span></p></td><td class="cl-9482f58e"><p class="cl-94821b30"><span class="cl-9481cc66">Trial</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-9482f58f"><p class="cl-94821b30"><span class="cl-9481cc66">P08</span></p></td><td class="cl-9482f590"><p class="cl-94821b30"><span class="cl-9481cc66">High</span></p></td><td class="cl-9482f58d"><p class="cl-94821b30"><span class="cl-9481cc66">Low</span></p></td><td class="cl-9482f58e"><p class="cl-94821b30"><span class="cl-9481cc66">Trial</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-9482f58f"><p class="cl-94821b30"><span class="cl-9481cc66">P09</span></p></td><td class="cl-9482f590"><p class="cl-94821b30"><span class="cl-9481cc66">High</span></p></td><td class="cl-9482f58d"><p class="cl-94821b30"><span class="cl-9481cc66">High</span></p></td><td class="cl-9482f58e"><p class="cl-94821b30"><span class="cl-9481cc66">Trial</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-9482ce83"><p class="cl-94821b30"><span class="cl-9481cc66">P10</span></p></td><td class="cl-9482ce81"><p class="cl-94821b30"><span class="cl-9481cc66">Low</span></p></td><td class="cl-9482ce80"><p class="cl-94821b30"><span class="cl-9481cc66">Low</span></p></td><td class="cl-9482ce82"><p class="cl-94821b30"><span class="cl-9481cc66">Commercial product</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-9482ce86"><p class="cl-94821b30"><span class="cl-9481cc66">POpt</span></p></td><td class="cl-9482ce84"><p class="cl-94821b30"><span class="cl-9481cc66">High</span></p></td><td class="cl-9482ce85"><p class="cl-94821b30"><span class="cl-9481cc66">Low</span></p></td><td class="cl-9482f58c"><p class="cl-94821b30"><span class="cl-9481cc66">Optimized trial</span></p></td></tr></tbody></table></div></template>
+<div class="flextable-shadow-host" id="cc5c9191-2498-452e-8d5d-9e8b088435c2"></div>
 <script>
-var dest = document.getElementById("523171c6-b944-4e26-a016-225b7fd10e11");
-var template = document.getElementById("a1c94e02-18e4-417e-9da1-87fdf3cbaf7f");
+var dest = document.getElementById("cc5c9191-2498-452e-8d5d-9e8b088435c2");
+var template = document.getElementById("0b98d4fd-7624-4b33-8180-bcf5327a3a52");
 var caption = template.content.querySelector("caption");
 if(caption) {
-  caption.style.cssText = "display:block;"
+  caption.style.cssText = "display:block;text-align:center;";
   var newcapt = document.createElement("p");
   newcapt.appendChild(caption)
   dest.parentNode.insertBefore(newcapt, dest.previousSibling);
@@ -466,44 +521,63 @@ if(caption) {
 var fantome = dest.attachShadow({mode: 'open'});
 var templateContent = template.content;
 fantome.appendChild(templateContent);
-fantome.appendChild(templateContent);
 </script>
 
-<p>In total, 11 products were considered in this study. They are all breakfast biscuits with varying contents of proteins and fibers. Products P01 to P09 are prototypes whereas product P10 is a standard commercial biscuit without enrichment. The eleventh product Popt is an additional optimized biscuit that has been evaluated only by the trained panel for descriptive analysis.</p>
 </div>
-<div id="consumer-test" class="section level2" number="7.2">
-<h2><span class="header-section-number">7.2</span> Consumer test</h2>
-<div id="participants" class="section level3" number="7.2.1">
-<h3><span class="header-section-number">7.2.1</span> Participants</h3>
-<p>107 women of normal weight (Body Mass Index (BMI): 18-26) participated to the test. All were regular consumers of breakfast biscuits. The biscuits_traits.xls file gives some sociodemographic information (e.g. marital status, household, income, occupation).</p>
+<div id="consumer-test" class="section level2 hasAnchor" number="7.3">
+<h2><span class="header-section-number">7.3</span> Consumer test<a href="example-projects.html#consumer-test" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="participants" class="section level3 hasAnchor" number="7.3.1">
+<h3><span class="header-section-number">7.3.1</span> Participants<a href="example-projects.html#participants" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>107 women who were all regular consumers of breakfast biscuits participated to the test. The <em>biscuits_traits.xlsx</em> file gives information about their Body Mass Index (BMI) (Q4-Q6) and their socio-demographics (Q7-Q11: marital status, household, income, occupation, highest degree).<br />
+This files also gives participants’ answers to a self-assessment questionnaire (Q12-62) that evaluates eating behavioral traits with emphasis on the tendency to control food intake cognitively. Resulting scores are loaded into three factors: cognitive restraint (conscious restriction of food intake in order to
+control body weight or to promote weight loss), disinhibition (or emotional eating), and susceptibility to hunger (or uncontrolled eating, i.e. tendency to eat more than usual due to a loss of control over intake accompanied by feelings of hunger). This questionnaire is thus known as the Three-Factor Eating Questionnaire (TFEQ) <span class="citation">(<a href="#ref-stunkard1985" role="doc-biblioref">Stunkard and Messick 1985</a>)</span> and is one of the most commonly used questionnaires to evaluate eating behaviors in relation to overweight or obesity <span class="citation">(<a href="#ref-blundell2010" role="doc-biblioref">Blundell et al. 2010</a>)</span>. Calculation of these factors is detailed in chapter [<a href="data-analysis.html#data-analysis">10</a>].</p>
 </div>
-<div id="test-design" class="section level3" number="7.2.2">
-<h3><span class="header-section-number">7.2.2</span> Test design</h3>
-<p>Consumers evaluated one biscuit type per session. Product evaluation order was randomized across the panel.<br />
-The design of the sessions is summarized in Figure <a href="example-projects.html#fig:test-design">7.1</a> with main measured variables. After they first rated their appetite sensations using visual analog scales (VAS), the participants tasted and rated one biscuit for liking. They were then served with a box of the same biscuits for <em>ad libitum</em> consumption, followed by a new questionnaire regarding their liking, pleasure and appetite sensations.</p>
-<div class="figure" style="text-align: center"><span id="fig:test-design"></span>
+<div id="test-design" class="section level3 hasAnchor" number="7.3.2">
+<h3><span class="header-section-number">7.3.2</span> Test design<a href="example-projects.html#test-design" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The presentation order of the different products was randomized across the panel. Again, consumers evaluated one biscuit type per day/session.</p>
+<p>The design of the sessions is summarized in Figure <a href="example-projects.html#fig:test-design">7.1</a> with main measured variables. After they first rated their appetite sensations using visual analog scales (VAS), the participants tasted and rated one biscuit for liking. They were then served with a box of the same biscuits for <em>ad libitum</em> consumption (with a maximum of 10 biscuits), followed by a new questionnaire regarding their liking, pleasure and appetite sensations.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:test-design"></span>
 <img src="images/consumer_test_design.png" alt="General design for the consumer test of the biscuit study. Participants were served with a different set of biscuits every session." width="1529" />
 <p class="caption">
 Figure 7.1: General design for the consumer test of the biscuit study. Participants were served with a different set of biscuits every session.
 </p>
 </div>
-<p>The liking was measured with two different scales:<br />
-1. with a horizontally oriented unstructured linear scale (VAS) anchored with ‘I don’t like this biscuit at all’ (left end) and ‘I like this biscuit a lot’ (right end) at two times (at the first bite and when stopping their consumption).<br />
-2. with a vertically oriented semantic nine-point hedonic scale when stopping their consumption.<br />
-VAS scales are frequently used in nutrition studies (REF REF), whereas the nine-point hedonic scale is more popular in sensory and consumer science (REF REF).</p>
-<p>Once done, participants were asked about the reason(s) why they stopped eating (6 potential reasons rated with <em>Likert</em> scales ranging from <em>strongly disagree</em> to to <em>strongly agree</em>). They were also asked how much they would like to eat other types of foods (11 food items rated using a VAS).</p>
-<p>The time spent in the booth and the number of biscuits eaten by each participant was recorded by the experimenters, as well as the type of drink they selected and the approximate volume they drank during each session. These data are stored in the <strong>Consumer Test.xlsx</strong> file, in the second tab named <em>Time Consumption</em>.</p>
+<p>The liking was measured with two different scales:</p>
+<ol style="list-style-type: decimal">
+<li>with a horizontally oriented unstructured linear scale (i.e. VAS) anchored with <em>‘I don’t like this biscuit at all’</em> (left end) and <em>‘I like this biscuit a lot’</em> (right end) at two different times: after the first bite and at the end of their consumption.</li>
+<li>with a vertically oriented semantic nine-point hedonic scale when stopping their consumption.
+VAS scales are frequently used in nutrition studies <span class="citation">(<a href="#ref-stubbs2000" role="doc-biblioref">Stubbs et al. 2000</a>)</span>, whereas the nine-point hedonic scale is more popular in sensory and consumer science <span class="citation">(<a href="#ref-peryam1957" role="doc-biblioref">Peryam and Pilgrim 1957</a>; <a href="#ref-wichchukit2015" role="doc-biblioref">Wichchukit and O’Mahony 2015</a>)</span>.</li>
+</ol>
+<p>Once done, participants were asked about the reason(s) why they stopped eating (6 potential reasons rated with <em>Likert</em> scales ranging from <em>strongly disagree</em> to <em>strongly agree</em>). They were also asked how much they would like to eat other types of foods (11 food items rated using a VAS).</p>
+<p>The time spent in the booth and the number of biscuits eaten by each participant was recorded by the experimenters, as well as the type of drink they selected and the approximate volume they drank during each session. These data are stored in <em>biscuits_consumer_test.xlsx</em>, in the second tab named <em>Time Consumption</em>.</p>
 </div>
 </div>
-<div id="sensory-descriptive-analysis-data" class="section level2" number="7.3">
-<h2><span class="header-section-number">7.3</span> Sensory descriptive analysis data</h2>
-<p>A panel of 9 trained judges evaluated the 11 products for 32 sensory attributes (8 attributes for aspect, 3 for odor, 12 for flavor, 9 for texture).<br />
-For each product, the judges individually reported the perceived intensity of each attribute on an unstructured linear scale. Intensities were automatically converted by the acquisition system into a score ranging from 0 to 60.</p>
-</div>
-<div id="summary-of-the-datasets" class="section level2" number="7.4">
-<h2><span class="header-section-number">7.4</span> Summary of the datasets</h2>
-<p>List of the variables in each data sets (or just the size of each data set?).</p>
+<div id="sensory-descriptive-analysis-data" class="section level2 hasAnchor" number="7.4">
+<h2><span class="header-section-number">7.4</span> Sensory descriptive analysis data<a href="example-projects.html#sensory-descriptive-analysis-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A panel of 9 trained judges evaluated the 11 products on 32 sensory attributes (8 attributes for aspect, 3 for odor, 12 for flavor, 9 for texture).</p>
+<p>For each product, the judges individually reported the perceived intensity of each attribute on an unstructured linear scale. Intensities were automatically converted by the acquisition system into a score ranging from 0 to 60. These data are stored in <em>biscuits_sensory_profile.xlsx</em>.</p>
+<!-- ## Summary of the datasets
 
+List of the variables in each data sets (or just the size of each data set?). -->
+
+</div>
+</div>
+<h3>Bibliography<a href="bibliography.html#bibliography" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-blundell2010" class="csl-entry">
+Blundell, J., C. De Graaf, T. Hulshof, S. Jebb, B. Livingstone, A. Lluch, D. Mela, et al. 2010. <span>“Appetite Control: Methodological Aspects of the Evaluation of Foods.”</span> <em>Obesity Reviews</em> 11 (3): 251–70. https://doi.org/<a href="https://doi.org/10.1111/j.1467-789X.2010.00714.x">https://doi.org/10.1111/j.1467-789X.2010.00714.x</a>.
+</div>
+<div id="ref-peryam1957" class="csl-entry">
+Peryam, David R, and Francis J Pilgrim. 1957. <span>“Hedonic Scale Method of Measuring Food Preferences.”</span> <em>Food Technology</em>.
+</div>
+<div id="ref-stubbs2000" class="csl-entry">
+Stubbs, R James, Darren A Hughes, Alexandra M Johnstone, Edel Rowley, C Reid, M Elia, Rebecca Stratton, H Delargy, N King, and JE Blundell. 2000. <span>“The Use of Visual Analogue Scales to Assess Motivation to Eat in Human Subjects: A Review of Their Reliability and Validity with an Evaluation of New Hand-Held Computerized Systems for Temporal Tracking of Appetite Ratings.”</span> <em>British Journal of Nutrition</em> 84 (4): 405–15.
+</div>
+<div id="ref-stunkard1985" class="csl-entry">
+Stunkard, Albert J, and Samuel Messick. 1985. <span>“The Three-Factor Eating Questionnaire to Measure Dietary Restraint, Disinhibition and Hunger.”</span> <em>Journal of Psychosomatic Research</em> 29 (1): 71–83.
+</div>
+<div id="ref-wichchukit2015" class="csl-entry">
+Wichchukit, Sukanya, and Michael O’Mahony. 2015. <span>“The 9-Point Hedonic Scale and Hedonic Ranking in Food Science: Some Reappraisals and Alternatives.”</span> <em>Journal of the Science of Food and Agriculture</em> 95 (11): 2167–78.
 </div>
 </div>
             </section>
@@ -516,7 +590,6 @@ For each product, the judges individually reported the perceived intensity of ea
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -535,6 +608,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -555,6 +629,10 @@ gitbook.start({
 "text": null
 },
 "download": ["i2ds4scc_bookdown.pdf", "i2ds4scc_bookdown.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "section"
 }
