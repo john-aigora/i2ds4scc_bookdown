@@ -20,380 +20,364 @@ Machine Learning is currently a hot topic in the sensory and consumer science fi
 
 Machine Learning (ML) is a branch of AI, which is based on the idea that systems can learn from data, and that has the capability to evolve. Generally speaking, ML refers to various programming techniques that are able to process large amounts of data and extract useful information from it. It refers to a method of data analysis that build intelligent algorithms that can automatically improve through the experience gained from the data and identify patterns or make decisions with minimal human intervention, without being explicitly programmed. ML focuses on using data and algorithms to mimic the way humans learn, gradually improving their accuracy.
 
-The definition of the objectives or the situation where ML would bring value refers to the very first step of the process. Once that is clear, the next step is to collect data or dig into the historical data sets to understand what information is available and/or has to be obtained. The data varies according to the situation, but it may refer to product composition or formulation, instrumental measurements (e.g., pH, color, rheology, GCMS, etc.), sensory attributes (e.g., creaminess, sweetness, bitterness, texture, consistency, etc.), or consumer behavior (e.g., frequency of consumption/use, consumption/use situation, etc.), demographics (e.g., age, gender, skin type, etc.) and consumer responses (e.g. liking, CATA questions, JAR questions, etc.). 
+Defining the objectives or the situation where ML would bring value is the very first step of the process. Once that is clear, the next step is to collect data or dig into the historical data sets to understand what information is available and/or has to be obtained. The data varies according to the situation, but it may refer to product composition or formulation, instrumental measurements (e.g., pH, color, rheology, GCMS, etc.), sensory attributes (e.g., creaminess, sweetness, bitterness, texture, consistency, etc.), consumer behavior (e.g., frequency of consumption/use, consumption/use situation, etc.), demographics (e.g., age, gender, skin type, etc.) consumer responses (e.g. liking, CATA questions, JAR questions, etc.) just to name a few. 
 
-The data set size and quality are very important as they impact directly the model's robustness. Specific recommendations on that according to the situation, data type, and objectives are as following: In general, the higher the number of objects (usually the number of samples) the better, 12-15 being the minimum recommended. The number of measurements (instrumental,  sensory and/or consumer measurements) and the number of consumers evaluating the products are also very relevant to the model's quality. In sensory and consumer science studies, the number of measurements is usually sufficient, so nothing to worry about here. In practice, it is recommended to have a minimum of 100 consumers, although the more the better. Regarding data quality, one of the most important aspects (besides the standardization of data collection) corresponds to the variability of the samples. The larger the variability between samples, the broader the space the model will cover. Additionally, it is strongly recommended to capture the consumers' individual differences, not only through demographic information, but also through Just About Right (JAR) or Ideal Profile Method (IPM) questions. Ultimately, within-subject design (sequential monadic design) provide better quality models.
+The size of the data set and its quality are very important as they impact directly the model's robustness. Specific recommendations on that according to the situation, data type, and objectives are as following: 
 
-Depending on the aims of the analysis, there are some variations on how to group or classify ML algorithms. They can be divided into three prominent methods: supervised learning, unsupervised learning, and reinforcement learning. In this section, we mainly focus on the first two approaches.
- 
-## Machine Learning Methods
+* The higher the number of statistical units the better, 12-15 being the minimum recommended when statistical units correspond to samples. 
+* The number of measurements (instrumental,  sensory and/or consumer measurements) and the number of consumers evaluating the products are also very relevant to the model's quality. In sensory and consumer science studies, the number of measurements is usually sufficient, as in practice, it is recommended to have a minimum of 100 consumers (although here again, the more the better). 
 
-Supervised learning is the most popular type of machine learning that uses labeled data, it is a process that involves providing input data as well as correct output data to the machine learning model. The ultimate goal of the algorithm is to find a mapping function to map input variables with output variables. In supervised learning, models are initially trained using a subset of the data (training data set) and afterwards, the model is tested and validated using the other part of the data (test data set and validation data set). Once this process is done, the model can continuously improve, discovering new patterns and relationships as it trains itself on new data sets.
+For data quality, one of the most important aspects (besides the standardization of data collection) corresponds to the variability of the samples. The larger the variability between samples, the broader the space the model will cover. Additionally, it is strongly recommended to capture the consumers' individual differences, not only through demographic information, but also through perception (including Just About Right (JAR) or Ideal Profile Method (IPM) questions). Ultimately, within-subject design (i.e. sequential monadic design) provide better quality models.
 
-A very common situation where supervised learning is widely used is to predict consumer responses (E.g., Liking, Perception, Benefit) based on analytical measurements and/or sensory data. In this situation, ML models can provide insights and directions on how to improve product performance and has also the ability to predict consumer response based on analytical and/or sensory data, working as a powerful screening tool where only prototypes or products with the highest potential are moved to the next level, which may be the consumer testing. Another common situation is the use of supervised machine learning to predict product sensory profile or consumer response, based on the formulation or ingredients of a product. In this situation, the ML would be of great support for the developers, who can much easier understand and get clear directions on what has to be changed in the formulation to improve the product sensory profile or consumer performance. 
+## Introduction of the Data
 
-Unlike supervised learning, unsupervised learning uses unlabeled or untagged data, which means inputs where the output values are not known. In this case, users do not need to supervise the model, instead, the algorithm operates independently to finds patterns and trends, trying to learn from the data distribution the distinguishing features and associations through similarity and dissimilarity measurements. Its ability to discover hidden patterns and get similarities/differences information is what make it the ideal solution for exploratory analysis and consumer segmentation, extracting insights from the data sets. 
+For this section, the wine data set from the `{rattle}` package is used. This data consists of the results of a chemical analysis of wines grown in a specific area of Italy. Three types of wine are represented in the 178 samples, with the results of 13 chemical analyses recorded for each sample.
 
-Unsupervised machine learning is commonly used to segment consumers into groups based on their similarities related to a variety of factors such as shopping or usage behavior, attitudes, interests, liking or preferences. As consumers in the same market segment tend to respond similarly, the segmentation process is a key strategy for companies to understand and tailor effectively their products or marketing approaches for different target groups. Similarly, unsupervised models are also very used to classify group of products in homogeneous analytical, sensory and/or consumer attributes in order to identify different segments in the market.
+<!-- Provide a short description of the data (Reference?) -->
 
-Let's get started by Unsupervised learning first.
-
-### Unsupervised learning
-
-In the sensory and consumer science field, unsupervised learning models are usually used for Clustering and Dimensionality Reduction.
-
-Clustering is a technique used to discover in a high-dimensional data, groups of observations that are similar to each other and significantly different from the rest. In other words, it is a method that groups unlabeled data based on their similarities and differences in the way that objects with most similarities remains into a group and has less or no similarities with the objects of another group. As previously mentioned, a very common application is to cluster consumers and classify groups of products based on their similarities/dissimilarities. Clustering algorithms can be categorized into a few types, which are Exclusive (E.g. k-means), Hierarchical and Probabilistic clustering (E.g. Gaussian Mixture Model). The first two are the ones most used and well known in the sensory field. 
-
-Dimensionality reduction is a technique used to transform a high dimensional space into a low-dimensional space that retains some meaningful properties of the original data. It refers to the process of reducing the number of features/attributes in a data set while maintaining as much of the variation as possible. This method is a important not only as a technique for data visualization, but also as a pre processing step to reduce training time and computational resources, improve ML algorithms performance/accuracy due to less misleading data, avoid problems of overfitting, find latent variables, remove redundant features and noise, among others. There are numerous dimensionality reduction methods that can be used according to the data type and different requirements. The most common and well known dimensionality reduction methods used in the sensory and consumer science field are the ones that apply linear transformations, including Principal Components Analysis (PCA) and Factor Analysis (FA).
-
-#### Clustering and Dimensionality Reduction
-
-Let's start installing/loading the necessary packages and by preparing the dataset for the cluster analysis, with PCA being used as a pre processing method. We will be using a wine dataset, from `rattle` package, that consists of the results of a chemical analysis of wines grown in a specific area of Italy. Three types of wine are represented in the 178 samples, with the results of 13 chemical analyses recorded for each sample. 
-
-```{r}
+```{r, eval=TRUE, echo=TRUE, warning=FALSE, message=FALSE}
 library(tidyverse)
 library(rattle)
 
-# load data
-
-wine.fl <- "http://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data"
-wine <- read.csv(wine.fl,header = F)
-
-# Names of the variables
-
-wine.names=c("Alcohol", "Malic acid", "Ash", "Alcalinity of ash", "Magnesium",
-             "Total phenols", "Flavanoids", "Nonflavanoid phenols", "Proanthocyanins",
-             "Color intensity", "Hue", "OD280/OD315 of diluted wines", "Proline")
-colnames(wine)[2:14]=wine.names
-colnames(wine)[1]="Wine_type"
-
-wine_dataset <- tibble(wine)
-
+wine <- rattle::wine %>% 
+  as_tibble()
 ```
 
-Dimensionality reduction technique via PCA will be applied before clustering to allow coherent patterns to be detected more clearly. As well known, PCA retains most of the information/variance of the data set and by removing features with low variance, a more robust clustering can be generated. In other words, this technique reveals distinct groups if data exhibits clustering and by retaining the components with the highest variance, the clusters tends to be more visible.
+## Machine Learning Methods
 
-As the data set being used contain variables with different units/scales, PCA with scaling will be applied. We will be using the `{FactoMineR}` package to perform the PCA analysis and `{factoextra}` to easily extract and visualize the results.
+The notion of Machine Learning is vast, as it covers a large variety of analyses. In fact, ML algorithms are often classify based on the goals of their analysis. Three main groups are often considered: 
 
-```{r pca_with_scaling}
+* Unsupervised Learning:
 
-library (FactoMineR)
+Unsupervised ML aims in finding structure within the data. It takes as input unlabeled data, meaning that no *output* values are yet known. In this case, the algorithms operate independently on the data to find patterns and trends, by for instance learning from the data distribution the features that distinguish between statistical entities using similarity and dissimilarity measurements. 
+Such ability to discover *unknown* patterns in the data makes such algorithms ideal for exploratory analysis. In Sensory and Consumer Science, the most known Unsupervised ML techniques are Principal Component Analysis (PCA) for dimensionality reduction and cluster analysis (e.g. consumer segmentation). 
+
+* Supervised Learning:
+
+Supervised ML is arguably the most popular type of ML: When people talk about ML, they usually refer to Supervised techniques. Supervised ML takes as input labeled data, meaning that the statistical entities are defined by one or more output variables. The aim of the algorithm is then to a find a mapping function that connects the input variables with those output variables. Ultimately, the ML model tries to explain as well as possible the output variables using the input variables.
+A common situation requiring Supervised ML in Sensory and Consumer Science consists in predicting consumer responses (e.g. liking) using sensory descriptions, analytic data, demographic information, etc. ML models provide insights on how to improve product performance, and allow predicting consumer responses of new prototypes or products. Another common situation is to use Supervised ML to predict the sensory profile of products using formulation or ingredients data.
+
+* Semi-supervised Learning:
+
+Semi-Supervised ML is not an ML approach per se. Instead, it is a combination of both Unsupervised and Supervised approaches, which aims first in creating an output variable using Unsupervised techniques, and to then explain or use this output variable using other information through Supervised ML. A good example of Semi-Supervised approach consists in defining clusters of consumers based on liking (unsupervised), and to characterize such clusters using demographic data using decision trees for instance (supervised). External Preference Mapping is another example since first we reduce the dimensionality of the sensory data through PCA (unsupervised), and we then use this dimensions to explain the liking scores of consumers using regressions (supervised).
+
+* Reinforcement Learning:
+
+<!-- Provide definition -->
+
+In the next section, we only focus on the first two approaches (unsupervised and supervised) since these are the most common approaches used in Sensory and Consumer research.
+
+## Unsupervised Machine learning
+
+In the sensory and consumer science field, unsupervised learning models are usually used for Dimensionality Reduction and Clustering.
+
+### Dimensionality Reduction
+
+Dimensionality reduction is a technique used to transform a high dimensional space into a lower dimensional space that still retains as much information as possible. In practice, the original high-dimensional space involves many variables (one variable being one dimension) that are correlated with each other, which are then summarized by *latent* variables or *principal components*, which are orthogonal to each other.^[When all the *principal components* are considered, none of the information present in the raw data is lost, and their representation is simply shifted from an unstructured high-dimensional space to a structured low-dimensional space.]
+
+In practice, dimensionality reduction is performed for the following reasons (amongst others):
+
+* Summarizing Data (and removing redundant features);
+* 2D or 3D visualization of the data (most important information); 
+* Finding latent variables and Uncorrelating variables;
+* Pre-processing step to reduce training time and computational resources;
+* Improve ML algorithms accuracy by removing the lower dimensions (the one containing less information) often considered as *noise*;
+* Avoid problems of overfitting.
+
+Some of these approaches were presented earlier in this book, in particular in Section \@ref(data-analysis). However, there are numerous dimensionality reduction methods that can be used depending on the data at hand. The most common and well known methods used in the sensory and consumer science are the ones that apply linear transformations, including Principal Components Analysis (PCA), Factor Analysis (FA), and derivatives such as (Multiple) Correspondence Analysis, Multiple Factor Analysis, etc.
+
+Let's apply this technique to our `wine` data, first to get familiar with the data by visualizing the information in a 2D plot, and then by reducing the data set to the first 2 dimensions only.
+
+Since the different variables represent analytical measures that are defined using different scales, a standardized PCA is performed. This is the default option in `PCA()` from `{FactoMineR}`(`scale.unit=TRUE`):
+
+```{r, eval=TRUE, echo=TRUE, warning=FALSE, message=FALSE}
+library(FactoMineR)
+res_pca <- PCA(wine, quali.sup=1, scale.unit=TRUE, graph=FALSE)
+```
+
+The results of the PCA can be visualized using `{factoextra}`:
+
+```{r, eval=TRUE, echo=TRUE, warning=FALSE, message=FALSE}
 library (factoextra)
-
-pca_results <- PCA(wine_dataset, scale.unit = TRUE)
-
-pca_eig <- fviz_eig(pca_results, addlabels = TRUE, ylim = c(0,50))
-
-pca_plot <- fviz_pca_biplot(pca_results, repel = TRUE,
-                            label = "var",
-                            col.var = "red",
-                            col.ind = "black")
-
-pca_plot
-
-reduced_dataset <- data.frame(pca_results$ind$coord[, 1:2]) %>%
-  tibble()
-
+# fviz_eig(res_pca, addlabels=TRUE, ylim=c(0,50))
+fviz_pca_biplot(pca_results, repel=TRUE, label="var", col.var="red", col.ind="black")
 ```
 
-The PCA shows that there are apparently 3 distinct groups of wines. 
+The first plan of the PCA suggests that there are 3 distinct groups of wines. Let's define them mathematically using some cluster analysis. For this process, we propose to reduce the full data to its first two components only. Such approach is used here to illustrate how PCA can be used as a pre-processing step. Additionally, such pre-processing step can help detecting clearer patterns in the data, as we will see in the next section with clustering.
 
-Let's now use its results for the clustering analysis. Although agglomerative hierarchical clustering is more common in the sensory and consumer research, it was already shown in Chapter \@ref(data-analysis), so for this example we decided to use a different solution - k-means clustering. K-means clustering is also a very known unsupervised machine learning algorithm for partitioning a given data set in a way that the total intra-cluster variation is minimized. Both approaches (hierarchical clustering and k-means) are fairly used, being the main different the rule of forming clustering and the requirement to pre-specify the number of cluster to be produced the main different between them. Detailed information about clustering methods and analysis can be found in the book *Practical Guide to Cluster Analysis in R: Unsupervised Machine Learning* by Alboukadel Kassambara (@Kassambara2017).
+> Note that such use of PCA as pre-processing step was already done earlier in Section \@ref(prefmap) when the sensory space was reduced to its first 2 dimensions before performing the external preference mapping.
 
-Here we use k-means clustering as an example. The first step of k-means clustering is to estimate the optimal number of clusters (k), and this can be conveniently done using the function `fviz_nbclust ()` from `{factoextra}` package. The plot represents the variance within the clusters and the bend, also called "elbow", indicates that additional clusters beyond the third have little value. In our situation, we will then classify the observations into 3 clusters.
+```{r echo=TRUE, eval=TRUE}
+wine_reduced <- as_tibble(pca_results$ind$coord[,1:2])
+```
 
-```{r find_opt_cluster_number}
+### Clustering
 
+Clustering is a technique used to discover in high-dimensional data groups of observations that are similar to each other, and different from others. In other words, it is a method that groups unlabeled data based on their similarities and differences in a way that objects with strong similarities are grouped together, and are separated from objects to whom they have little to no similarities. 
+
+Again, a very common application in S&C Science is to segment consumers based on a variety of factors such as shopping or usage behavior, attitudes, interests, preferences. As consumers in the same market segment tend to respond similarly, the segmentation process is a key strategy for companies to understand and tailor effectively their products or marketing approaches for different target groups. Similarly, it is also used to classify products in homogeneous groups based on their analytical, sensory and/or consumer description in order to identify different segments in the market.
+
+In practice, many algorithms of clustering exist. They can be categorized into a different types including *exclusive* (e.g. k-means), *hierarchical* (see Section \@ref(hac) for an example) and *probabilistic* (e.g. Gaussian Mixture Model). The first two are the ones most used and well known in the sensory field. 
+
+Although agglomerative hierarchical clustering (HAC) is more common in the sensory and consumer research, an example illustrating such approach was already provided in Section \@ref(hac). For that reason, we propose to use another approach in *k-means*. K-means clustering is a popular unsupervised machine learning algorithm for partitioning a given data set in a way that the total intra-cluster variation is minimized. Both approaches (HAC and k-means) however differ in their ways of forming clusters, For instance, the algorithm of k-means require the user to pre-specify the number of cluster to be created, whereas HAC produce a tree (called dendrogram) which helps deciding on the optimal number of clusters. Detailed information about clustering methods and analysis can be found in the book *Practical Guide to Cluster Analysis in R: Unsupervised Machine Learning* by Alboukadel Kassambara (@Kassambara2017).
+
+In order to cluster our wines, let's start with defining the optimal number of clusters (k) to consider. This can be done using `fviz_nbclust()` from `{factoextra}`. This functions creates a graph which represents the variance within the clusters. On this representation, the bend (also called *elbow*) indicates the optimal number of clusters, any additional cluster beyond that point have little value.
+
+```{r find_opt_cluster_number, eval=TRUE, echo=TRUE}
 fviz_nbclust(reduced_dataset, kmeans, method = "wss")
-
 ```
 
-As the k-means algorithm starts with k randomly selected centroids, it's recommend to initially set a seed, through the use of the function `set.seed ()`, to make reproducible results. We will then perform k-means clustering with k = 3. In the k-means function, we can also choose the number of random sets, which means the number of times R will try different random starting assignments. The default is 1, but to get more stable results we will specify nstart = 20. The function `fviz_cluster`, from `{factoextra}` package, will be used for the visualization. 
+Here, the optimal solution consists in defining 3 clusters.
 
-```{r kmeans_cluster_analysis}
+Next, the k-means algorithm starts with randomly selecting k (here 3) centroids. In order to be able to reproduce our results (despite the randomness), we propose to initially set a seed (through `set.seed ()`)^[`set.seed()` fixes random selections so that they can easily be reproduced.]. Otherwise, it is recommended to set within `kmeans()` a number of random sets, i.e. the number of times (here 20) R will try different random starting assignments. By increasing this number, more stable results are produced. 
 
+```{r kmeans_cluster_analysis, echo=TRUE, eval=TRUE}
 set.seed(123)
-
-km_dw <- kmeans(reduced_dataset, 3, nstart = 20)
-
-fviz_cluster(
-  list(data = reduced_dataset, cluster = km_dw$cluster),
-  ellipse.type = "norm",
-  geom = "point",
-  stand = FALSE
-)
-
+wine_kmeans <- kmeans(wine_reduced, centers=3, nstart=20)
 ```
 
-In the resulting plot, we can easily see the observation represented by points, and the color and ellipse identifying each of the 3 clusters. We suggest you to re-run the codes to define the optimal number of clustering and the cluster analysis without dimensionality reduction. You will see how patterns were detected much more clear when this technique was applied.
+Finally, the results can be visualized using `fviz_cluster()` from `{factoextra}`:
 
-### Supervised learning
+```{r, echo=TRUE, eval=TRUE}
+fviz_cluster(list(data=wine_reduced, cluster=wine_kmeans$cluster),
+             ellipse.type="norm", geom="point", stand=FALSE)
+```
 
-There are many ways to carry out supervised machine learning, and it's by itself a big topic. We recommend reading "Hands-On Machine Learning with R", by Bradley Boehmke and Brandon Greewell (https://bradleyboehmke.github.io/HOML/) for more in-depth information. In sensory and consumer science, supervised learning is commonly carried out using a type of regression, where we use for instance consumer ratings as output (target), and products information (i.e. sensory profiles and analytical measurement) as input.    
+In the resulting plot, the 3 clusters are clearly separated, as can be seen by their little to no overlap. 
 
-#### Regression
+>An interesting suggestion is to run the same analysis on the full data (here, we limited it to the first 2 dimensions of the PCA) and to compare the results.
 
-Regression methods approximate the target variable^[This is a bit of simplification. 
-In some cases it is some transformation of combination of predictors that 
-approximates target variable. An example of this is logistic regression.]
-with (usually linear) combination of predictor variables. There are multiple regression algorithms varying by type of data they can handle, type of target variable and additional aspects like ability to perform 
-dimensionality reduction. We will take a walk through the ones most relevant for 
-sensory and consumer science.
+## Supervised learning
 
-**Linear regression**: The simplest and most popular variant is linear regression in which continuous 
-target variable is approximated as linear combination of predictors in a way that 
-minimizes sum of squared estimates of errors (SSE). It can be for example used to 
-predict consumer liking of a product based on it's sensory profile, but user has
-to keep in mind that linear regression can in some cases return value outside 
-reasonable range of target values. This can be addressed by capping predictions 
-to desired range. Functions in R to apply linear regression are: `lm()` and `glm()`
-or `parsnip::linear_reg() %>% parsnip::set_engine("lm")` when using `tidymodels` workflow.
+There are many ways to carry out Supervised ML, which again would require an entire book dedicated just to it. In this section, we will introduce you to the basics, which should give you a nice kick-start for your own analysis. For those who want to learn more on this topic, we recommend reading "Hands-On Machine Learning with R", by Bradley Boehmke and Brandon Greewell (https://bradleyboehmke.github.io/HOML)[https://bradleyboehmke.github.io/HOML], and to "Tidy Modeling with R" by Max Kuhn and Sylvia Silge (https://www.tmwr.org/)[https://www.tmwr.org/] for more in-depth information. 
 
-**Logistic regression**: Logistic regression is an algorithm which by use of logistic transformation allows
-to apply the same approach as linear regression to cases with binary target variables.
-It can be used in R with `glm(family = "binomial")` or
-`parsnip::logistic_reg() %>% parsnip::set_engine("glm")` when using `tidymodels` workflow.
+### Workflow
 
-**Penalized regression**: It is often that the data we want to use for modeling have a lot of predictor 
-variables, possibly with lot of high correlations. In such cases, linear/logistic
-regression may become unstable and produce unreasonable predictions. This can be
-addressed by use of so called penalized regression. It is a special case where 
-instead of minimizing pure error term, algorithm minimizes both error and regression 
-coefficients at the same time. This leads to more stable predictions.
+In sensory and consumer science, supervised learning is commonly carried out using a regression type of analysis, where for instance consumer ratings are used as output (target), and products information (i.e. sensory profiles and/or analytical measurement) are used as input. The goal of the analysis is then to explain (and sometime predict) the (say) liking scores using the sensory information of the products.
 
-There are three variations of penalized regression and all of them can be accessed
-via function `glmnet::glmnet()` ($\beta$ is set of regression coefficients and 
-$\lambda$ is a parameter to be set by user or determined from cross-validation):
+To do so, models are initially trained using a subset of the data (called *training set*). Once obtained, the model is then tested and validated on another part of the data (called *test set* and *validation set*)^[It is common practice to split the data so that the model is built by using 60% of the data, the remaining 40% being used for testing and validation. It is however important to use separate data for these steps to avoid any over-fitting.]. Once this process is done, the model can be continuously improved, discovering new patterns and relationships as it trains itself using new data sets.
 
-+ Ridge regression (L2 penalty) minimizes $SSE + \lambda \sum|\beta|^2$ and drives
-the coefficients to smaller values
-+ Lasso regression (L1 penalty) $SSE + \lambda \sum|\beta|$ and forces some of the
-coefficients to vanish what can be used for variable selection
-+ Elastic-net regression is a combination of the two previous variants 
-$SSE + \lambda_1 \sum|\beta| + \lambda_2 \sum|\beta|^2$.
+### Regression
 
-Penalized regression can be also ran in `tidymodels` workflow with 
-or `parsnip::linear_reg() %>% parsnip::set_engine("glmnet")`.
+Regression methods approximate the target variable^[This is a bit of simplification since in some cases, it is some transformations of combination of predictors that approximate the target variable, as in logistic regression for example.] with (usually linear) combination of predictor variables. There are many regression algorithms varying by type of data they can handle, type of target variable, and additional aspects such as the ability to perform dimensionality reduction. The most relevant methods for sensory and consumer science will be presented here.
 
-**MARS**: One limitation of all mentioned so far methods is that they assume linear relationship
-between predictor and target variables. Multivariate adaptive regression spline (MARS)
-addresses this by modeling non-linearities with piece wise linear function. This
-gives a nice balance between simplicity and ability to fit complex data, for example
-$\Lambda$-shaped once where there is a maximal point from which function decreases 
-in both directions. In R this model can be accessed via `earth::earth()` function.
+* **Linear regression**: 
 
-**PLS**: In case of multiple target variables one can apply partial least squares (PLS) regression
-which, similarly to PCA looks for components that maximizes explained variance of
-the predictors, but at the same time also maximizes their correlation to target variables.
-PLS can be applied with `lm()` specifying multiple targets or in `tidymodels` workflow
-with `plsmod::pls() %>% parsnip::set_engine("mixOmics")`.
+The simplest and most popular variant is linear regression in which a continuous target variable is approximated as linear combination of predictors in a way that the sum of squares of the errors (SSE) is minimized. It can be for example used to predict consumer liking of a product based on it's sensory profile, but user has to keep in mind that linear regression can in some cases return value outside reasonable range of target values. This can be addressed by capping the predictions to a desired range. Functions in R to apply linear regression are: `lm()` and `glm()` or `parsnip::linear_reg() %>% parsnip::set_engine("lm")` when using the `{tidymodels}` workflow.
 
+* **Logistic regression**: 
 
-There are many other ways to perform machine learning as well. Below is some brief introduction of them.
+Logistic regression is an algorithm which by use of logistic transformation allows to apply the same approach as linear regression to cases with binary target variables. It can be used in R with `glm(family = "binomial")` or `parsnip::logistic_reg() %>% parsnip::set_engine("glm")` when using the `{tidymodels}` workflow.
 
-#### K-nearest neighbors
+* **Penalized regression**: 
 
-A very simple, yet useful and robust algorithm that works for both numeric and nominal
-target variables is K-nearest neighbors. The idea is that for every new observation
-we want to predict the algorithms finds K closest points in training set and use
-either their mean value (for numeric targets) or most frequent value (for nominal targets) as prediction. This algorithm can be used with `kknn::kknn()` function or in `tidymodels` workflow
-with `parsnip::nearest_neighbor() %>% parsnip::set_engine("kknn")`.
+Often, the data used for modeling contain a lot of (highly correlated) predictor variables. In such cases, linear and/or logistic regression may become unstable and produce unreasonable results. This can be addressed through the use of so-called penalized regression. Instead of minimizing pure error term, the algorithm minimizes both the error and the regression coefficients at the same time. This leads to more stable predictions.
 
-#### Decision trees
+There are three variations of penalized regression and all of them can be accessed via `glmnet::glmnet()` ($\beta$ is set of regression coefficients and $\lambda$ is a parameter to be set by user or determined from cross-validation):
 
-Decision tree models the data by splitting the training set in smaller subsets 
-in a way that each split is done by a predictor variable so that it maximizes 
-the difference in target variable between the subsets. One important advantage 
-of decision trees is that they can model complex relationships and interactions
-between predictors. To use decision tree in R one can use `rpart::rpart()` or
-in `tidymodels` workflow with `parsnip::decision_tree() %>% parsnip::set_engine("rpart")`.
++ Ridge regression (L2 penalty) minimizes $SSE + \lambda \sum|\beta|^2$ and drives the coefficients to smaller values; 
++ Lasso regression (L1 penalty) minimizes $SSE + \lambda \sum|\beta|$ and forces some of the coefficients to vanish, which allows some variable selection
++ Elastic-net regression is a combination of the two previous variants  $SSE + \lambda_1 \sum|\beta| + \lambda_2 \sum|\beta|^2$.
 
-#### Black boxes
+Penalized regression can be also ran in the `{tidymodels}` workflow using `parsnip::linear_reg() %>% parsnip::set_engine("glmnet")`.
 
-So called black boxes are class of models that have too complex structure to directly
-interpret relationship between predictor variables and a value predicted by the model.
-Their advantage usually is ability to model more complicated data than in case of
-interpretable models, but they have greater risk of overfitting (fitting to
-noise in training data). Also, lack of clear interpretation may be not acceptable
-in some business specific use cases. The later problem can be addressed by use of 
-explanation algorithms that will be discussed in later part of this chapter.
+* **MARS**: 
 
-#### Random forests
+One limitation of all above-mentioned methods is that they assume linear relationship between the predictor and the target variables. Multivariate adaptive regression spline (MARS) addresses this *issue* by modeling non-linear relationship with piece wise linear function. This gives a nice balance between simplicity and ability to fit complex data, for example $\Lambda$-shaped once where there is a maximal point from which function decreases in both directions. In R this model can be accessed via `earth::earth()` function.
 
-A random forest is a set of decision trees, each one trained on random subset 
-of observations and/or predictors. The final prediction is an average of individual
-trees' predictions, in the way that increasing the number of trees increases the precision 
-of the outcome. A random forest minimize the limitations of a decision tree algorithm,
-reducing the overfitting of datasets and increasing precision. 
+* **PLS**: 
 
-### Practical Guide to Machine Learning
+In case of single and multiple target variables, partial least squares (PLS) regression can be applied. Similarly to PCA, PLS looks for components that maximizes the explained variance of the predictors, while simultaneously maximizing their correlation to the target variables. PLS can be applied with `lm()` by specifying multiple targets or in the `{tidymodels}` workflow with `plsmod::pls() %>% parsnip::set_engine("mixOmics")`.
 
-Now that we have a general idea of machine learning approach, we will try to build a simple machine learning model in the sensory and consumer context. 
+### Other common Supervised ML algorithms
 
-R contains fantastic systems for building machine learning models. The tidymodels framework (https://www.tidymodels.org/) is a collection of packages for modeling and machine learning using tidyverse principles, and among one of the most popular framework in R for machine learning. In this context, we strongly recommend the book "Tidy Modeling with R", by Max Kuhn and Julia Silge (https://www.tmwr.org/).
+Additional Supervised ML techniques include:
 
-Tidymodels contains several core packages, including `rsample`, `parsnip`, `recipes`, `workflows`, `tune`, `yardstick`, `broom` and `dials`, along with some other specialized packages. These packages will help you build a variety of models in R and check their performances. 
+* **K-nearest neighbors**
 
-Just like tidyverse, you don't need to install/load all the packages separately, installing/loading `{tidymodel}` will load all the packages you will need for building machine learning models. 
- 
-``` {r install_load_tidymodels}
+A very simple, yet useful and robust algorithm that works for both numeric and nominal target variables is K-nearest neighbors. The idea is that for every new observation to predict, the algorithms finds K closest points in the training set and use either their mean value (for numeric targets) or the most frequent value (for nominal targets) as prediction. This algorithm can be used with `kknn::kknn()` function or in the `{tidymodels}` workflow with `parsnip::nearest_neighbor() %>% parsnip::set_engine("kknn")`.
 
+* **Decision trees**
+
+Decision tree algorithms model the data by splitting the training set in smaller subsets in a way that each split is done by a predictor variable so that it maximizes the difference in target variable between the subsets. One important advantage of decision trees is that they can model complex relationships and interactions between predictors. To use decision tree in R, `rpart::rpart()` or in the `{tidymodels}` workflow  `parsnip::decision_tree() %>% parsnip::set_engine("rpart")` can be used.
+
+* **Black boxes**
+
+The black boxes algorithm includes models for which the structure is too complex to directly interpret relationship between predictor variables and a value predicted by the model. The advantage of such models is their ability to model more complicated data than in case of interpretable models, but they have a greater risk of overfitting. Also, the lack of clear interpretation may not be acceptable in some business specific use cases. The later problem can be addressed by use of explanation algorithms that will be discussed in a later part of this chapter.
+
+* **Random forests**
+
+A random forest is a set of decision trees, each one trained on random subset of observations and/or predictors. The final prediction is then obtained by averaging the individual trees' predictions. By increasing the number of trees, we also increase the precision of the results. The random forest algorithm hence minimizes some of the limitations of a decision tree algorithm, by for instance reducing the risks of overfitting, and by increasing its precision. 
+
+## Practical Guide to Supervised Machine Learning
+
+Now that we have a general idea of the purpose of Supervised ML approach, let's build a simple machine learning model in the context of a sensory and consumer study. But before doing that, let's introduce the `{tidumodels}` framework
+
+### Introduction to the `{tidymodels}` framework
+
+R contains many fantastic systems for building machine learning models. For various reasons that will be explained here, we propose to use the `{tidymodels}` framework (https://www.tidymodels.org/) for our analysis.
+
+Similarly to the `{tidyverse}`, `{tidymodels}` is a collection of packages dedicated to modeling. It contains packages such as `{rsample}` (general resampling infrastructure), `{yardstick}` (performance metrics), `{recipes}` (pre-processing and feature engineering steps for modeling), `{workflows}` (modeling workflow), `{broom}` (tidy statistical objects) and `{parsnip}` (fitting models) just to name a few. Yet, the similarity between `{tidymdels}` and `{tidyverse}` does not end there since `{tidymodels}` is built (and uses) on the `{tidyverse}`, hence being the perfect extension for modeling data.
+
+Besides modeling data, `{tidymodels}` aims in *tidying* the process of modeling data. Such process is done at different level:
+
+* Tidying the entire modeling workflow by integrating the different steps (including data preparation, model fitting, and data prediction) into simple functions (`{parnsip}`).
+* Tidying (by standardizing) the inputs and outputs for the different Machine Learning algorithms^[To avoid re-inventing the wheel and to be more flexible, `{tidymodels}` allows calling ML algorithm from various packages in a standardized way, even when those packages often require the data to be structured in a different way, use different names for similar parameters, etc.]
+* Tidying the models so that the outputs can be easily extracted and used.
+* Providing all the relevant functions required for modelling in one unique collection of packages.
+
+Regardless of the algorithm used, the typical modeling approach used by `{tidymodels}` is as following:
+
+1. Split your data into training and test set (including sets for Cross-Validation)
+2. Build a recipe by informing the model and any pre-processing step required on the data
+3. Define the model (and its parameter) to consider
+4. Create a workflow by combining the previous step together
+5. Run your model
+6. Evaluate your model
+7. Predict new values
+
+For more information, we refer the readers to "Tidy Modeling with R" by Max Kuhn and Julia Silge (https://www.tmwr.org/)[https://www.tmwr.org/].
+
+Let's load the `{tidymodels}` package:
+
+```{r install_load_tidymodels, eval=TRUE, echo=TRUE, warning=FALSE, message=FALSE}
 library(tidymodels)
-
 ```
 
-We will still use the wine data set to build our supervised model using the `tidymodel` packages. Let's prepare the data before we go to details for modeling.
+### Sampling the data
 
-#### Preparing data for ML
+As mentioned earlier, an important step consists in splitting the data into a training and testing set. To do so, the function `initial_split()` is used. This function takes as input the original data and returns the information on how to make the different partitions. In practice, such partition could be obtain completely randomly by simply specifying the proportion of data in each partition (here `prop=0.7` meaning that 70% of the data is in the training set, the rest being in the test set). However, we can provide constraints so that the structure of the original data is respected. In our case, `Type` contains 3 levels which may not be perfectly balanced. By specifying `strata=Type`, we ensure that the different splits respect the original data in terms of proportions for `Type`.
 
-First we need to mutate the column "Wine_type" to be factors, as this column would be the target later.
+After the `initial_split()`, the `training()` and `testing()` functions are used to obtain the training and testing subsets. 
 
-```{r classification_Aigora_ml_training}
-
-wine_classification_dataset <- wine_dataset %>% 
-  mutate(Wine_type = as.factor(Wine_type))
-
+```{r prep_train_test_data, echo=TRUE, eval=TRUE}
+wine_split <- initial_split(data=wine, strata="Type", prop=0.7)
+wine_train <- training(wine_split)
+wine_testing <- testing(wine_split)
 ```
 
-#### Sampling the data
+### Cross Validation
 
-The function `rsample::initial_split()` takes the original data and saves the information on how to make the partitions. We set the `strata` argument as `"Wine_type"` to conduct a stratified split. This ensures our training and test data sets would keep roughly the same proportions of all wine types as in the original data, despite the imbalance we noticed in our class variable. `prop` is set to 0.7 as we are splitting data to be 70% for training and 30% for testing.
+Cross-validation (CV) is an important step for checking the model quality. To allow performing CV, additional sets of data are required. These sets of data can be obtained through resampling method before building the model. In practice, for each new set of data, a subset is used for building the model, the other subset being then used to measure the performance of such model (similar to the training and testing set defined earlier). However, in this case, the resampling is only performed on the training set defined earlier. 
 
-After the initial_split, we can use the training() and testing() functions to obtain the two data frames for training and testing. 
+To generate such sets of data, the `vfold_cv` function is used. Here we start with a 5-fold cross-validation first. Again, `strata=Type` to a conduct stratified sampling to ensure that each resample is created within the stratification variable. 
 
-```{r prep_train_test_data}
-
-initial_split <- initial_split(data = wine_classification_dataset, strata = "Wine_type", prop = 0.7)
-
-wine_train <- training(initial_split)
-wine_testing <- testing(initial_split)
-
+```{r cv, echo=TRUE, eval=TRUE}
+wine_cv <- wine_train %>% 
+  vfold_cv(v=5, strata=Type)
 ```
 
-#### Cross Validation
+### Data Preprocessing `{recipes}`
 
-Cross-validation is an important step for checking the model quality later. To do that, we need to use the resampling method to create a series of data sets similar to the training/testing split before building the model. For each data set, a subset is used for creating the model, and the other subset is used to measure the performance. Also noted that resampling is always used with the training set of the data defined earlier. 
+The `{recipes}` package contains a rich set of data manipulation tools which can be used to preprocess the data and to define roles for each variable (e.g. outcome and predictor). To add a recipe, the function `recipe()` is used. This function has two arguments: a formula and the data (here `wine_train`). Any variable on the left-hand side of the tilde (`~`) is considered the model outcome. In our example, we want to use a machine learning model to predict the type of the wine, therefore `Type` would be the target on the left hand side of the `~`. On the right-hand side of the tilde are the predictors. One can write out all the variables, but an easier option is to use the dot (`.`) to indicate all other variables as predictors.
 
-We use `vfold_cv` to resample the data. Here we begin with a 5-fold cross-validation first. `strata` is set to `wind_type` to conduct stratified sampling, so that each resample is created within the stratification variable. 
-
-```{r cv}
-
-wine_cv <- wine_train %>% vfold_cv(v = 5,strata = Wine_type)
-
-```
-
-Now we have a resampled `wine_cv` for further building the model. 
-
-#### Choose ML method using "recipe"
-
-The recipe package is part of `tidymodels`. It contains a rich set of data manipulation tools which can be used to preprocess data and to define roles for each variable (e.g. outcome and predictor). To add a recipe, we simply use the function `recipe`. `recipe` has two arguments: a formula and the data. Any variable on the left-hand side of the tilde (~) is considered the model outcome. In our example, we want to use machine learning model to predict the type of the wine, therefore `Wine_type` would be the target on the left hand side of the `~`. On the right-hand side of the tilde are the predictors. One can write out all the variables, but an easier option is to use the dot (.) to indicate all other variables as predictors.
-
-```{r recipe}
-
-# Random forest model definition
+```{r recipe, echo=TRUE, eval=TRUE}
 model_recipe <- wine_train %>% 
-  recipe(Wine_type ~ .)
-
+  recipe(Type ~ .)
 ```
 
-We will use here random forest classifier for the wine data. `rand_forest` has 3 hyper-parameters (`mtry, trees, min_n`) which can be tuned to achieve the best results.
+In this instance, we do not need to preprocess further any of the variables present in the data. Yet if it were the case, we could use the various  `step_*()` functions, which then perform any transformation required on the declared variables including:
 
-We set all of them as `tune()` right now. Model tuning is the process to find the best values for the parameters. Most often you start with the default values, and change them along the way. Since the model is not executing when created, these parameters can be changed using the tune() function. This provides a simple placeholder for the value. 
+* `step_log()` for a log transformation;
+* `step_dummy()` to transform categorical data into dummy variables (useful to combine with functions such `all_nominal_predictors()`, `starts_with()`, `matches()`, etc.);
+* `step_interact()` creates interaction variables;
+* `step_num2factor()` converts numeric variables to factor;
+* `step_scale()` scales numeric variables;
+* `step_pca()` converts numeric data into 1 or more principal components.
+* etc.
 
-```{r method_selection_and_placeholder_for_parameters}
+>It should be noted that by default, any of the pre-processing performed here on the trained data set is also applied adequately on the test set. For instance, with `step_scale()`, the mean and standard deviation are computed on the training data, and are then applied on the test data (the means and standard deviation are not re-computed from the test set).
 
+### Model definition
+
+Once the model formula is defined, and the instructions for the data pre-processing is set, we need to decide which type of ML algorithm should be used. Let's consider the random forest classifier for the wine data using `rand_forest()` (the algorithm proposed by the `{ranger}` package is used here). This function has 3 hyper-parameters (`mtry, trees, min_n`) which can be tuned to achieve the best possible results.
+
+Model tuning is the process of finding the optimal values for those parameters. Most often, the best option is to start with the default values, and to change them along the way while monitoring their impact on the model quality. Since the model is not yet executed, these parameters can be changed using the `tune()` function. This provides a simple placeholder for the value. Let's set all of them as `tune()`.
+
+<!-- I do not really understand the end of this paragraph (part about tune())...is it possible to re-write it a bit? -->
+
+```{r method_selection_and_placeholder_for_parameters, echo=TRUE, eval=TRUE}
 rf_spec <- rand_forest(
   mtry = tune(),
   trees = tune(),
   min_n = tune()) %>%
   set_mode("classification") %>% 
   set_engine(engine = "ranger")
-
 ```
 
-#### Set the whole Process into a workflow
+### Set the whole Process into a workflow
 
-Let's combine the model and recipe into a single `workflow ()` object to better manage the two R objects.
+Finally, we combine the model and the recipe into a single `workflow()`:
 
-```{r workflow_def}
-
+```{r workflow_def, echo=TRUE, eval=TRUE}
 rf_wf <- workflow() %>%
   add_recipe(model_recipe) %>% 
   add_model(rf_spec)
-
 ```
 
-#### Tuning the parameters
+### Tuning the parameters
 
-We created placeholders for tuning hyper-parameters earlier. Now it's time to define the scope of the search and choose the method for searching the parameter space, in this case it is `grid_regular`.
+In the previous section, placeholders for tuning hyper-parameters were created. It is time to define the scope of the search, and to choose the method for searching the parameter space. To do so, `grid_regular()` can be used:
 
-```{r grid_def}
-
+```{r grid_def, echo=TRUE, eval=TRUE, warning=FALSE, message=FALSE}
 params_grid <- rf_spec %>%
   parameters() %>%
-  update(mtry = mtry(range = c(1, 2)),
-         trees = trees(range = c(10, 200))) %>% 
-  grid_regular(levels = 5)
-
-
+  update(mtry = mtry(range = c(1,2)),
+         trees = trees(range = c(10,200))) %>% 
+  grid_regular(levels=5)
 ```
 
-Now that We have defined the hyper-parameter search range, let's look for the best combination using `tune_grid()` function. We will leave the test set aside, and use a cross-validation set for this purpose, so that the model during training certainly will not see the data on which we will be making predictions. 
+Now that the hyper-parameter search range is defined, let's look for the best combination using the `tune_grid()` function. The cross-validation set is used for this purpose, so that the data used for training the model has not been used yet. 
 
-We can use `autoplot()` function to take a quick look at the `tuning` object.
+```{r tuning_hyperparams, echo=TRUE, eval=TRUE}
+tuning <- tune_grid(rf_wf, resamples=wine_cv, grid=params_grid)
+```
 
-Next, we will obtain a reliable estimate of the quality of the model. We first select the best combination of parameters using `select_best()` function. The quality of the model can be estimated with a number of metrics. Here we decided to use `roc_auc` (Area Under the Receiver Operating Characteristic Curve).
+The `autoplot()` function is called to take a quick look at the `tuning` object.
 
-```{r tuning_hyperparams}
-# Best parameters searching
-
-tuning <- tune_grid(
-  rf_wf,
-  resamples = wine_cv,
-  grid = params_grid
-)
-
+```{r, echo=TRUE, eval=TRUE}
 autoplot(tuning)
-
-params_best <- select_best(tuning, "roc_auc")
-
 ```
 
-#### Train the final model
+Ultimately, the best combination of parameters is obtained using the `select_best()` function. Such paramaters is defined based on the quality of the model, which can be estimated through a various metrics. Here we decided to use `roc_auc` (Area Under the Receiver Operating Characteristic Curve), as it provides a reliable estimate of the quality of the model.
 
-Now that we have found the best parameters for the model, we can train the final model on the entire training set. 
+```{r, echo=TRUE, eval=TRUE}
+params_best <- select_best(tuning, "roc_auc")
+```
 
-```{r fit_best_model}
+### Model training
 
-# Finalize model 
+The best parameters can be applied to our model, and the final model can be trained using the entire training set. This is done using the `fit()` function that we apply to our workflow. 
 
+```{r fit_best_model, echo=TRUE, eval=TRUE}
 final_model <- rf_wf %>%
   finalize_workflow(params_best) %>%
   fit(wine_train)
-
 ```
 
-#### Assess the model quality
+### Model evaluation
 
-A very important part in building machine learning models is to assess the quality of the models. To do so, first we can use the model to predict on the testing data set (`wine_testing`), which the model has not seen yet. 
+A very important part in building machine learning models is to assess the quality of the model. A first approach consists in applying the model thus obtained on the testing data set (`wine_testing`), which the model has not seen yet. 
 
-`predict` is a generic function for putting the prediction results from models to convenient tables for further analysis. We combine the `wine_testing` data with the column of predicted Wine_type from the model by adding the `predict(final_model, wine_testing)`in the pipe. 
+To do so, the `predict()` function is used. The `predict()` function of `{tidymodels}` allows adding in an easy way the predictions obtained from models to the original data. This procedure allows comparing the predictions with the actual data: 
 
-```{r prediction}
-
-validation_data_pred <- wine_testing %>%
+```{r prediction, echo=TRUE, eval=TRUE}
+obs_vs_pred <- wine_testing %>%
   bind_cols(predict(final_model, .))
-
 ```
 
-The `validation_data_pred` is a data frame with testing data with `Wine_type` as the actual wine type, and a `.pred_class` column as the predicted Wind_type at the end. Now we can finally judge the quality of the model by comparing them. 
+Here, `obs_vs_pred` is a data frame which contains both the actual wine type (`Type`) and the predicted wine type (`.pred_class`). Comparing these two variables allow judging the quality of the model. Such comparison can be done through a confusion matrix. A confusion matrix is a table where each row represents instances in the actual class, while each column represents the instances in a predicted class. From the `autoplot()` function, it appears that the predictions were almost perfect (only one wine was mis-classified).
 
-A very pleasant method for visualize the classification results is to use a confusion matrix. Confusion matrix is a table where each row represents instances in the actual class, while each column represents the instances in a predicted class. Using the `autoplot()` function, We can see that in our wine type prediction, it's almost a 100% match!
-
-```{r cm}
-
-cm <- conf_mat(validation_data_pred, Wine_type, .pred_class)
-
+```{r cm, echo=TRUE, eval=TRUE}
+cm <- conf_mat(obs_vs_pred, Type, .pred_class)
 autoplot(cm, type = "heatmap")
-
 ```
+
+## To go further
+
+<!-- Quick remark on the fact that although this way of working may seem complicated at first, it is very efficient as everything is tidied.
+For instance, with workflows, it is easy to try differet ML algorithms by simply creating multiple models.
+Possibility to compare models...or even combine models in ensemble to improve further the results!
+
+Should we add some more results regarding the quality of the model?
+Should we add some more results regarding the interpretation of the model? Here we do not know which variables played a role in deciding to which group each wine belong to... -->
