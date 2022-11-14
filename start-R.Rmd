@@ -275,10 +275,119 @@ While reading this book, we advise you to apply this trick to each long pipes fo
 
 Note however that although pipes are very powerful, they are not always the best option:
 
-  - A rule of thumb suggests that if you are piping more than 10 lines of code, you're probably better of splitting it into 2 or more blocks (saving results in intermediate step) as this simplifies debugging. 
-  - If some steps require multiple inputs, or provides multiple outputs, pipes should not be used as they usually require a primary object to transform.
-  - The system of pipes works linearly: if your code requires a complex dependency structure, the pipes should be avoided.
+* A rule of thumb suggests that if you are piping more than 10 lines of code, you're probably better of splitting it into 2 or more blocks (saving results in intermediate step) as this simplifies debugging. 
+* If some steps require multiple inputs, or provides multiple outputs, pipes should not be used as they usually require a primary object to transform.
+* The system of pipes works linearly: if your code requires a complex dependency structure, the pipes should be avoided.
 
+### Tibbles
+
+Within the `{tidyverse}`, another valuable (yet often forgotten) package is the `{tibble}` package. This package aims in providing a new format to store data.
+
+In appearance, a *tibble* looks like just any other table, whether it is a matrix or a data frame. But in the background, it is defined as an optimized version of a data frame that kept (and extended) all the relevant parts, and removed all the unnecessary part.
+
+To show you the properties of a tibble, let's load the data set called `sensochoc` from the `SensoMineR` package:
+
+```{r, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(SensoMineR)
+data(chocolates)
+```
+
+If you type `sensochoc` in your R session, the entire data set is being printed, which makes it difficult to read. Here, we opt for simpler solution by only showing the first lines using `head()`
+
+```{r, eval=TRUE, echo=TRUE}
+head(sensochoc)
+```
+
+This is the typical output from a `matrix()` or `data.frame()` in R. In particular, one can note that the first column does not have header, as it represents the row names.
+
+Let's convert this table into a tibble (using `as_tibble()`) and look at the output:
+
+```{r, echo=TRUE, eval=TRUE}
+sensochoc_tb <- sensochoc %>% 
+  as_tibble()
+sensochoc_tb
+```
+
+The appearance of the table looks quite different, and there are some interesting things that can be noticed:
+
+* The dimensions of the table is shown straight at the top.
+* By default, the printing function for tibbles only print a pre-defined number of rows (by default 10), and as many columns as the screen allows. All other columns are informed in some text under the table.
+* [Not applicable here] Although data frame converts some names (e.g. replacing spaces with .), tibbles keep the same as in the original file.
+* [Not applicable here] Numbers are also automatically formatted to 3 values after the decimal (by default), and negative values are printed in red.
+* Under the header, the type of each variable is informed. Although very valuable, this information is not provided with matrix or data frame.
+* The row names are lost, as tibbles do not have row names. In this example, there is no information in the row names, so we can ignore them, although we could have easily recovered them by adding `rownames = "name variable"` in `as_tibble()` which would have added them as a new column called `name variable` to the data.
+
+>Certain packages including `{SensoMineR}` do not accept tibbles. Instead, they require matrices or data frame as inputs, and use their row names for certain analysis (see Section \@ref(sensory-analysis) for an example of PCA). Fortunately, there is a very easy way to convert tibbles to (say) data frame through `as.data.frame()` combined with `column_to_rownames()` to automatically pass the information present in a column as row names (the complementary function `rownames_to_column()` also exists).
+
+To go further, let's extract from `sensochoc` the 4th column (`Product`):
+
+```{r, eval=TRUE, echo=TRUE}
+sensochoc[,4]
+```
+
+By extracting a column of a data frame, the resulting output is converted into a vector.
+Let's reproduce the same extraction to `sensochoctb`:
+
+```{r, eval=TRUE, echo=TRUE}
+sensochoc_tb[,4]
+```
+
+Subsetting from a tibble with `[]` always returns a tibble, which is very convenient with programming as we then know what to expect (unlike data frame which can return a data frame or a vector depending on the situation).
+
+Last but not least, tibbles can take as entries single elements (e.g. numbers, characters, dates, etc.), but also lists of elements. This particular property is very interesting since it allows combining different outputs in one table although they may have different structures.
+
+Let's start with converting the table in a long format:
+
+```{r, echo=TRUE, eval=TRUE}
+sensochoc_tb <- sensochoc_tb %>%
+  dplyr::select(-c("Session","Rank")) %>% 
+  pivot_longer(-c("Panelist","Product"), names_to="Attributes", values_to="Scores")
+```
+
+This new tibble has 4872 rows and 4 columns. Since we have 14 attributes, that means that each attribute has 348 data points. 
+
+Let's nest the results by `Attributes`:
+
+```{r, echo=TRUE, eval=TRUE}
+sensochoc_tb <- sensochoc_tb %>%
+  nest_by(Attributes)
+```
+
+This new tibble has only 14 rows (one per attribute), yet the new column called `data` contains a list of dimensions [348 rows and 3 columns]. This correspond to the original data^[We could easily retrieve the original data by simply using `sensochoc_tbl %>% unnest(data)`].
+
+Let's now run an ANOVA for each attribute:
+
+```{r, echo=TRUE, eval=TRUE}
+sensochoc_tb <- sensochoc_tb %>% 
+  mutate(ANOVA = list(aov(Scores ~ Product + Panelist, data=data)))
+```
+
+This code adds another column (called `ANOVA`) which contains the results of the ANOVA model.
+Let's imagine we're interested in `Acidity`, we could extract the results of the anova as following:
+
+```{r, echo=TRUE, eval=TRUE}
+sensochoc_tb %>% 
+  filter(Attributes == "Acidity") %>% 
+  summarize(broom::tidy(ANOVA))
+```
+
+Since extracting the information regarding the models is also of interest, let's add that to our tibble as well. This can easily be done using the `glance()` function from `{broom}`:
+
+```{r, echo=TRUE, eval=TRUE}
+sensochoc_tb <- sensochoc_tb %>% 
+  mutate(Results = list(broom::glance(ANOVA)))
+```
+
+Here again, if we would want to see the results for `Acidity` only, we could extract that information as following:
+
+```{r}
+sensochoc_tb %>% 
+  filter(Attributes == "Acidity") %>% 
+  summarize(Results)
+```
+
+So as we can see, the same tibble of 14 row and 4 columns contain, per attribute, the raw `data`, the results of the `ANOVA`, as well as the overall `Results` of each of the model. Although all these tables have completely different structures (`data` has 348 rows and 3 columns, whereas `Results` has 1 row and 6 columns), they are still related to the same *objects* (here attributes). Hence keeping them in the same *tidy* place facilitates follow-up analysis by avoiding creating multiple objects, and by reducing the risks of error. An example of such use of tibbles is provided in Section \@ref(tibble-use), in which we also show how to use the information stored in the different elements.
 
 ### Calling Variables
 

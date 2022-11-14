@@ -6,7 +6,7 @@ knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 >Although the data-science workflow suggests a clear separation between data manipulation and data analysis, in practice such separation is not that obvious. Indeed, most analyses require data manipulation. In fact, some data transformation can be seen as a part of both data transformation and data analysis. Yet, this Section is somewhat more dedicated to the analysis of data, by 1) presenting how some of the most common analyses in sensory and consumer reserach are performed, 2) integrating the analysis part to your script, and most importantly 3) providing applications and alternatives or extension to all the procedures presented in \@ref(data-manip) and in \@ref(data-viz). With that in mind, the emphasis is not on the results and interpretation of the results, but on the path to get such results.
 For practical reasons, this chapter is divided in 3 sub-sections, one dedicated to the sensory data, one to the consumer data, and one combining both.
 
-## Sensory Data
+## Sensory Data {#sensory-analysis}
 
 As one may expect, this chapter is mostly built around the `{tidyverse}`:
 
@@ -399,7 +399,7 @@ TFEQ_score %>%
   theme_bw()
 ```
 
-## Consumer Data
+## Consumer Data {#tibble-use}
 
 The analysis of consumer data usually involves the same type of analysis as the ones for sensory data (e.g. ANOVA, PCA, etc.), but the way the data is being collected (absence of duplicates) and its underlying nature (affect vs. descriptive) require some adjustments.
 
@@ -450,10 +450,8 @@ Both at the start and at the end of the evaluation, significant differences (at 
 To further compare the liking assessment of the samples after the first bite and at the end of the tasting, the results obtained from `liking_start_hsd` and `liking_end_hsd` are combined. We then represent the results in a bar-chart:
 
 ```{r, eval=TRUE, echo=TRUE}
-list(
-  Start = liking_start_hsd %>% rename(Liking = `1stbite_liking`),
-  End = liking_end_hsd %>% rename(Liking = `after_liking`)
-) %>%
+list(Start = liking_start_hsd %>% rename(Liking = `1stbite_liking`),
+     End = liking_end_hsd %>% rename(Liking = `after_liking`)) %>%
   enframe(name = "Moment", value = "res") %>%
   unnest(res) %>%
   mutate(Moment = factor(Moment, levels = c("Start", "End"))) %>%
