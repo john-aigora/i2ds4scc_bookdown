@@ -31,9 +31,7 @@ For data quality, one of the most important aspects (besides the standardization
 
 ## Introduction of the Data
 
-For this section, the wine data set from the `{rattle}` package is used. This data consists of the results of a chemical analysis of wines grown in a specific area of Italy. Three types of wine are represented in the 178 samples, with the results of 13 chemical analyses recorded for each sample.
-
-<!-- Provide a short description of the data (Reference?) -->
+For this section, the wine data set from the `{rattle}` package is used (https://rdrr.io/cran/rattle.data/man/wine.html). This data consists of the results of a chemical analysis of wines grown in a specific area of Italy. Three types of wine are represented in the 178 samples, with the results of 13 chemical analyses recorded for each sample (e.g., alcohol, malic acid, color intensity, etc.).
 
 ```{r, eval=TRUE, echo=TRUE, warning=FALSE, message=FALSE}
 library(tidyverse)
@@ -61,9 +59,8 @@ A common situation requiring Supervised ML in Sensory and Consumer Science consi
 
 Semi-Supervised ML is not an ML approach per se. Instead, it is a combination of both Unsupervised and Supervised approaches, which aims first in creating an output variable using Unsupervised techniques, and to then explain or use this output variable using other information through Supervised ML. A good example of Semi-Supervised approach consists in defining clusters of consumers based on liking (unsupervised), and to characterize such clusters using demographic data using decision trees for instance (supervised). External Preference Mapping is another example since first we reduce the dimensionality of the sensory data through PCA (unsupervised), and we then use this dimensions to explain the liking scores of consumers using regressions (supervised).
 
-* Reinforcement Learning:
+> There is another type of Machine Learning - Reinforcement Learning, where feedback is provided to the machine. It is a technique that enables an agent to learn through trial and error from its own actions and experiences. Reinforcement Learning is commonly used in some tech applications (e.g. gaming and robotics), specially when large data sets are available, but it is not typically used in sensory and consumer science at the moment.
 
-<!-- Provide definition -->
 
 In the next section, we only focus on the first two approaches (unsupervised and supervised) since these are the most common approaches used in Sensory and Consumer research.
 
@@ -75,7 +72,7 @@ In the sensory and consumer science field, unsupervised learning models are usua
 
 Dimensionality reduction is a technique used to transform a high dimensional space into a lower dimensional space that still retains as much information as possible. In practice, the original high-dimensional space involves many variables (one variable being one dimension) that are correlated with each other, which are then summarized by *latent* variables or *principal components*, which are orthogonal to each other.^[When all the *principal components* are considered, none of the information present in the raw data is lost, and their representation is simply shifted from an unstructured high-dimensional space to a structured low-dimensional space.]
 
-In practice, dimensionality reduction is performed for the following reasons (amongst others):
+In practice, dimensionality reduction is performed for the following reasons (among others):
 
 * Summarizing Data (and removing redundant features);
 * 2D or 3D visualization of the data (most important information); 
@@ -100,7 +97,7 @@ The results of the PCA can be visualized using `{factoextra}`:
 ```{r, eval=TRUE, echo=TRUE, warning=FALSE, message=FALSE}
 library (factoextra)
 # fviz_eig(res_pca, addlabels=TRUE, ylim=c(0,50))
-fviz_pca_biplot(pca_results, repel=TRUE, label="var", col.var="red", col.ind="black")
+fviz_pca_biplot(res_pca, repel=TRUE, label="var", col.var="red", col.ind="black")
 ```
 
 The first plan of the PCA suggests that there are 3 distinct groups of wines. Let's define them mathematically using some cluster analysis. For this process, we propose to reduce the full data to its first two components only. Such approach is used here to illustrate how PCA can be used as a pre-processing step. Additionally, such pre-processing step can help detecting clearer patterns in the data, as we will see in the next section with clustering.
@@ -108,7 +105,7 @@ The first plan of the PCA suggests that there are 3 distinct groups of wines. Le
 > Note that such use of PCA as pre-processing step was already done earlier in Section \@ref(prefmap) when the sensory space was reduced to its first 2 dimensions before performing the external preference mapping.
 
 ```{r echo=TRUE, eval=TRUE}
-wine_reduced <- as_tibble(pca_results$ind$coord[,1:2])
+wine_reduced <- as_tibble(res_pca$ind$coord[,1:2])
 ```
 
 ### Clustering
@@ -124,7 +121,7 @@ Although agglomerative hierarchical clustering (HAC) is more common in the senso
 In order to cluster our wines, let's start with defining the optimal number of clusters (k) to consider. This can be done using `fviz_nbclust()` from `{factoextra}`. This functions creates a graph which represents the variance within the clusters. On this representation, the bend (also called *elbow*) indicates the optimal number of clusters, any additional cluster beyond that point have little value.
 
 ```{r find_opt_cluster_number, eval=TRUE, echo=TRUE}
-fviz_nbclust(reduced_dataset, kmeans, method = "wss")
+fviz_nbclust(wine_reduced, kmeans, method = "wss")
 ```
 
 Here, the optimal solution consists in defining 3 clusters.
@@ -211,7 +208,7 @@ A random forest is a set of decision trees, each one trained on random subset of
 
 ## Practical Guide to Supervised Machine Learning
 
-Now that we have a general idea of the purpose of Supervised ML approach, let's build a simple machine learning model in the context of a sensory and consumer study. But before doing that, let's introduce the `{tidumodels}` framework
+Now that we have a general idea of the purpose of Supervised ML approach, let's build a simple machine learning model in the context of a sensory and consumer study. But before doing that, let's introduce the `{tidymodels}` framework
 
 ### Introduction to the `{tidymodels}` framework
 
@@ -276,7 +273,7 @@ model_recipe <- wine_train %>%
   recipe(Type ~ .)
 ```
 
-In this instance, we do not need to preprocess further any of the variables present in the data. Yet if it were the case, we could use the various  `step_*()` functions, which then perform any transformation required on the declared variables including:
+In this instance, we do not need to preprocess further any of the variables present in the data. Yet if it was the case, we could use the various  `step_*()` functions, which then perform any transformation required on the declared variables including:
 
 * `step_log()` for a log transformation;
 * `step_dummy()` to transform categorical data into dummy variables (useful to combine with functions such `all_nominal_predictors()`, `starts_with()`, `matches()`, etc.);
@@ -366,14 +363,15 @@ obs_vs_pred <- wine_testing %>%
   bind_cols(predict(final_model, .))
 ```
 
-Here, `obs_vs_pred` is a data frame which contains both the actual wine type (`Type`) and the predicted wine type (`.pred_class`). Comparing these two variables allow judging the quality of the model. Such comparison can be done through a confusion matrix. A confusion matrix is a table where each row represents instances in the actual class, while each column represents the instances in a predicted class. From the `autoplot()` function, it appears that the predictions were almost perfect (only one wine was mis-classified).
+Here, `obs_vs_pred` is a data frame which contains both the actual wine type (`Type`) and the predicted wine type (`.pred_class`). Comparing these two variables allow judging the quality of the model. Such comparison can be done through a confusion matrix. A confusion matrix is a table where each row represents instances in the actual class, while each column represents the instances in a predicted class. From the `autoplot()` function, it appears that the predictions were almost perfect (only two wines was wrongly classified).
 
 ```{r cm, echo=TRUE, eval=TRUE}
 cm <- conf_mat(obs_vs_pred, Type, .pred_class)
 autoplot(cm, type = "heatmap")
 ```
 
-## To go further
+<!-- Bartek: Could you add the Feature Importance plot and extract some model metrics, please? --> 
+
 
 <!-- Quick remark on the fact that although this way of working may seem complicated at first, it is very efficient as everything is tidied.
 For instance, with workflows, it is easy to try differet ML algorithms by simply creating multiple models.
