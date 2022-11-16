@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 1 Bienvenue! | Data Science for Sensory and Consumer Scientists</title>
   <meta name="description" content="Open development of data science book for sensory and consumer scientists." />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 1 Bienvenue! | Data Science for Sensory and Consumer Scientists" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="Open development of data science book for sensory and consumer scientists." />
   
@@ -24,17 +23,17 @@
 <meta name="author" content="Thierry Worch, Julien Delarue, Vanessa Rios de Souza, and John Ennis" />
 
 
-<meta name="date" content="2022-05-11" />
+<meta name="date" content="2022-11-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="index.html"/>
+<link rel="prev" href="preface-1.html"/>
 <link rel="next" href="start-R.html"/>
-<script src="libs/header-attrs-2.6/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,14 +49,18 @@
 
 
 
-
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet" />
+<link href="libs/tabwid-1.0.0/scrool.css" rel="stylesheet" />
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -117,6 +120,29 @@ code span.vs { color: #4e9a06; } /* VerbatimString */
 code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 
@@ -136,9 +162,11 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
 <ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#who-should-read-this-book"><i class="fa fa-check"></i>Who Should Read This Book?</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-to-use-this-book"><i class="fa fa-check"></i>How to Use This Book</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-is-this-book-structured"><i class="fa fa-check"></i>How Is This Book Structured</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-to-use-this-book"><i class="fa fa-check"></i>How To Use This Book</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i>Acknowledgements</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="preface-1.html"><a href="preface-1.html"><i class="fa fa-check"></i>Preface</a></li>
 <li class="chapter" data-level="1" data-path="bienvenue.html"><a href="bienvenue.html"><i class="fa fa-check"></i><b>1</b> Bienvenue!</a>
 <ul>
 <li class="chapter" data-level="" data-path="bienvenue.html"><a href="bienvenue.html#why-data-science-for-sensory-and-consumer-science"><i class="fa fa-check"></i>Why Data Science for Sensory and Consumer Science?</a>
@@ -153,68 +181,78 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.1" data-path="start-R.html"><a href="start-R.html#introduction-to-r"><i class="fa fa-check"></i><b>2.1</b> Introduction to R</a>
 <ul>
 <li class="chapter" data-level="2.1.1" data-path="start-R.html"><a href="start-R.html#what-is-r"><i class="fa fa-check"></i><b>2.1.1</b> What is R?</a></li>
-<li class="chapter" data-level="2.1.2" data-path="start-R.html"><a href="start-R.html#why-learn-a-programming-language"><i class="fa fa-check"></i><b>2.1.2</b> Why Learn a Programming Language?</a></li>
+<li class="chapter" data-level="2.1.2" data-path="start-R.html"><a href="start-R.html#why-learning-r-or-any-programming-language"><i class="fa fa-check"></i><b>2.1.2</b> Why Learning R (or any Programming Language)?</a></li>
 <li class="chapter" data-level="2.1.3" data-path="start-R.html"><a href="start-R.html#why-r"><i class="fa fa-check"></i><b>2.1.3</b> Why R?</a></li>
-<li class="chapter" data-level="2.1.4" data-path="start-R.html"><a href="start-R.html#what-is-rstudio"><i class="fa fa-check"></i><b>2.1.4</b> What is RStudio?</a></li>
+<li class="chapter" data-level="2.1.4" data-path="start-R.html"><a href="start-R.html#rstudio"><i class="fa fa-check"></i><b>2.1.4</b> Why RStudio/Posit?</a></li>
 <li class="chapter" data-level="2.1.5" data-path="start-R.html"><a href="start-R.html#installing-r-and-rstudio"><i class="fa fa-check"></i><b>2.1.5</b> Installing R and RStudio</a></li>
 </ul></li>
 <li class="chapter" data-level="2.2" data-path="start-R.html"><a href="start-R.html#getting-started-in-r"><i class="fa fa-check"></i><b>2.2</b> Getting Started in R</a>
 <ul>
-<li class="chapter" data-level="2.2.1" data-path="start-R.html"><a href="start-R.html#create-a-local-project"><i class="fa fa-check"></i><b>2.2.1</b> Create a Local Project</a></li>
+<li class="chapter" data-level="2.2.1" data-path="start-R.html"><a href="start-R.html#packages"><i class="fa fa-check"></i><b>2.2.1</b> Conventions</a></li>
 <li class="chapter" data-level="2.2.2" data-path="start-R.html"><a href="start-R.html#install-and-load-packages"><i class="fa fa-check"></i><b>2.2.2</b> Install and Load Packages</a></li>
-<li class="chapter" data-level="2.2.3" data-path="start-R.html"><a href="start-R.html#r-scripts"><i class="fa fa-check"></i><b>2.2.3</b> R Scripts</a></li>
-<li class="chapter" data-level="2.2.4" data-path="start-R.html"><a href="start-R.html#run-sample-code"><i class="fa fa-check"></i><b>2.2.4</b> Run Sample Code</a></li>
-<li class="chapter" data-level="2.2.5" data-path="start-R.html"><a href="start-R.html#introduction-to-the-magrittr-and-the-notion-of-pipes"><i class="fa fa-check"></i><b>2.2.5</b> Introduction to the <code>{magrittr}</code> and the notion of <em>pipes</em></a></li>
+<li class="chapter" data-level="2.2.3" data-path="start-R.html"><a href="start-R.html#first-analysis-in-r"><i class="fa fa-check"></i><b>2.2.3</b> First Analysis in R</a></li>
+<li class="chapter" data-level="2.2.4" data-path="start-R.html"><a href="start-R.html#scripts"><i class="fa fa-check"></i><b>2.2.4</b> R Scripts</a></li>
+<li class="chapter" data-level="2.2.5" data-path="start-R.html"><a href="start-R.html#rprojects"><i class="fa fa-check"></i><b>2.2.5</b> Create a Local Project</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="start-R.html"><a href="start-R.html#git-and-github"><i class="fa fa-check"></i><b>2.3</b> Version Contrl / Git and GitHub</a>
+<li class="chapter" data-level="2.3" data-path="start-R.html"><a href="start-R.html#further-tips-on-how-to-read-this-book"><i class="fa fa-check"></i><b>2.3</b> Further tips on <em>how to read this book?</em></a>
 <ul>
-<li class="chapter" data-level="2.3.1" data-path="start-R.html"><a href="start-R.html#git"><i class="fa fa-check"></i><b>2.3.1</b> Git</a></li>
-<li class="chapter" data-level="2.3.2" data-path="start-R.html"><a href="start-R.html#github"><i class="fa fa-check"></i><b>2.3.2</b> GitHub</a></li>
-<li class="chapter" data-level="2.3.3" data-path="start-R.html"><a href="start-R.html#tips-on-how-to-read-this-book"><i class="fa fa-check"></i><b>2.3.3</b> Tips on <em>how to read this book?</em></a></li>
+<li class="chapter" data-level="2.3.1" data-path="start-R.html"><a href="start-R.html#pipes"><i class="fa fa-check"></i><b>2.3.1</b> Introduction to the <code>{magrittr}</code> and the notion of <em>pipes</em></a></li>
+<li class="chapter" data-level="2.3.2" data-path="start-R.html"><a href="start-R.html#calling-variables"><i class="fa fa-check"></i><b>2.3.2</b> Calling Variables</a></li>
+<li class="chapter" data-level="2.3.3" data-path="start-R.html"><a href="start-R.html#print-save"><i class="fa fa-check"></i><b>2.3.3</b> Printing vs. Saving results</a></li>
+<li class="chapter" data-level="2.3.4" data-path="start-R.html"><a href="start-R.html#running-code-and-handling-errors"><i class="fa fa-check"></i><b>2.3.4</b> Running code and handling errors</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="start-R.html"><a href="start-R.html#git-and-github"><i class="fa fa-check"></i><b>2.4</b> Version Control / Git and GitHub</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="start-R.html"><a href="start-R.html#git"><i class="fa fa-check"></i><b>2.4.1</b> Git</a></li>
+<li class="chapter" data-level="2.4.2" data-path="start-R.html"><a href="start-R.html#github"><i class="fa fa-check"></i><b>2.4.2</b> GitHub</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>Hors d’Oeuvres</b></span></li>
-<li class="chapter" data-level="3" data-path="data-science.html"><a href="data-science.html"><i class="fa fa-check"></i><b>3</b> Why Data Science?</a>
+<li class="chapter" data-level="3" data-path="data_science.html"><a href="data_science.html"><i class="fa fa-check"></i><b>3</b> Why Data Science?</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="data-science.html"><a href="data-science.html#history-and-definition"><i class="fa fa-check"></i><b>3.1</b> History and Definition</a></li>
-<li class="chapter" data-level="3.2" data-path="data-science.html"><a href="data-science.html#benefits-of-data-science"><i class="fa fa-check"></i><b>3.2</b> Benefits of Data Science</a>
+<li class="chapter" data-level="3.1" data-path="data_science.html"><a href="data_science.html#history-and-definition"><i class="fa fa-check"></i><b>3.1</b> History and Definition</a></li>
+<li class="chapter" data-level="3.2" data-path="data_science.html"><a href="data_science.html#benefits-of-data-science"><i class="fa fa-check"></i><b>3.2</b> Benefits of Data Science</a>
 <ul>
-<li class="chapter" data-level="3.2.1" data-path="data-science.html"><a href="data-science.html#reproducible-research"><i class="fa fa-check"></i><b>3.2.1</b> Reproducible Research</a></li>
-<li class="chapter" data-level="3.2.2" data-path="data-science.html"><a href="data-science.html#standardized-reporting"><i class="fa fa-check"></i><b>3.2.2</b> Standardized Reporting</a></li>
+<li class="chapter" data-level="3.2.1" data-path="data_science.html"><a href="data_science.html#reproducible-research"><i class="fa fa-check"></i><b>3.2.1</b> Reproducible Research</a></li>
+<li class="chapter" data-level="3.2.2" data-path="data_science.html"><a href="data_science.html#standardized-reporting"><i class="fa fa-check"></i><b>3.2.2</b> Standardized Reporting</a></li>
 </ul></li>
-<li class="chapter" data-level="3.3" data-path="data-science.html"><a href="data-science.html#data-scientific-workflow"><i class="fa fa-check"></i><b>3.3</b> Data Scientific Workflow</a>
+<li class="chapter" data-level="3.3" data-path="data_science.html"><a href="data_science.html#data-scientific-workflow"><i class="fa fa-check"></i><b>3.3</b> Data Scientific Workflow</a>
 <ul>
-<li class="chapter" data-level="3.3.1" data-path="data-science.html"><a href="data-science.html#data-collection2"><i class="fa fa-check"></i><b>3.3.1</b> Data Collection</a></li>
-<li class="chapter" data-level="3.3.2" data-path="data-science.html"><a href="data-science.html#data-preparation"><i class="fa fa-check"></i><b>3.3.2</b> Data Preparation</a></li>
-<li class="chapter" data-level="3.3.3" data-path="data-science.html"><a href="data-science.html#data-analysis2"><i class="fa fa-check"></i><b>3.3.3</b> Data Analysis</a></li>
-<li class="chapter" data-level="3.3.4" data-path="data-science.html"><a href="data-science.html#value-delivery2"><i class="fa fa-check"></i><b>3.3.4</b> Value Delivery</a></li>
+<li class="chapter" data-level="3.3.1" data-path="data_science.html"><a href="data_science.html#data-collection2"><i class="fa fa-check"></i><b>3.3.1</b> Data Collection</a></li>
+<li class="chapter" data-level="3.3.2" data-path="data_science.html"><a href="data_science.html#data-preparation"><i class="fa fa-check"></i><b>3.3.2</b> Data Preparation</a></li>
+<li class="chapter" data-level="3.3.3" data-path="data_science.html"><a href="data_science.html#data-analysis2"><i class="fa fa-check"></i><b>3.3.3</b> Data Analysis</a></li>
+<li class="chapter" data-level="3.3.4" data-path="data_science.html"><a href="data_science.html#value-delivery2"><i class="fa fa-check"></i><b>3.3.4</b> Value Delivery</a></li>
 </ul></li>
-<li class="chapter" data-level="3.4" data-path="data-science.html"><a href="data-science.html#how-to-learn-data-science"><i class="fa fa-check"></i><b>3.4</b> How to Learn Data Science</a></li>
-<li class="chapter" data-level="3.5" data-path="data-science.html"><a href="data-science.html#cautions-dont-that-everybody-does"><i class="fa fa-check"></i><b>3.5</b> Cautions: Don’t that Everybody Does</a></li>
+<li class="chapter" data-level="3.4" data-path="data_science.html"><a href="data_science.html#how-to-learn-data-science"><i class="fa fa-check"></i><b>3.4</b> How to Learn Data Science</a></li>
+<li class="chapter" data-level="3.5" data-path="data_science.html"><a href="data_science.html#cautions-dont-that-everybody-does"><i class="fa fa-check"></i><b>3.5</b> Cautions: Don’t that Everybody Does</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="data-manip.html"><a href="data-manip.html"><i class="fa fa-check"></i><b>4</b> Data Manipulation</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="data-manip.html"><a href="data-manip.html#chapter-overview"><i class="fa fa-check"></i><b>4.1</b> Chapter Overview</a></li>
-<li class="chapter" data-level="4.2" data-path="data-manip.html"><a href="data-manip.html#why-manipulating-data"><i class="fa fa-check"></i><b>4.2</b> Why Manipulating Data?</a></li>
-<li class="chapter" data-level="4.3" data-path="data-manip.html"><a href="data-manip.html#tidy-data"><i class="fa fa-check"></i><b>4.3</b> Tidying Data</a>
+<li class="chapter" data-level="4.1" data-path="data-manip.html"><a href="data-manip.html#why-manipulating-data"><i class="fa fa-check"></i><b>4.1</b> Why Manipulating Data?</a></li>
+<li class="chapter" data-level="4.2" data-path="data-manip.html"><a href="data-manip.html#tidy-data"><i class="fa fa-check"></i><b>4.2</b> Tidying Data</a>
 <ul>
-<li class="chapter" data-level="4.3.1" data-path="data-manip.html"><a href="data-manip.html#simple-manipulations"><i class="fa fa-check"></i><b>4.3.1</b> Simple Manipulations</a></li>
-<li class="chapter" data-level="4.3.2" data-path="data-manip.html"><a href="data-manip.html#reshaping-the-data"><i class="fa fa-check"></i><b>4.3.2</b> Reshaping the Data</a></li>
-<li class="chapter" data-level="4.3.3" data-path="data-manip.html"><a href="data-manip.html#transformation-that-alters-the-data"><i class="fa fa-check"></i><b>4.3.3</b> Transformation that Alters the Data</a></li>
-<li class="chapter" data-level="4.3.4" data-path="data-manip.html"><a href="data-manip.html#combining-data-from-different-sources"><i class="fa fa-check"></i><b>4.3.4</b> Combining Data from Different Sources</a></li>
+<li class="chapter" data-level="4.2.1" data-path="data-manip.html"><a href="data-manip.html#simple-manipulations"><i class="fa fa-check"></i><b>4.2.1</b> Simple Manipulations</a></li>
+<li class="chapter" data-level="4.2.2" data-path="data-manip.html"><a href="data-manip.html#pivots"><i class="fa fa-check"></i><b>4.2.2</b> Reshaping Data</a></li>
+<li class="chapter" data-level="4.2.3" data-path="data-manip.html"><a href="data-manip.html#transformation-that-alters-the-data"><i class="fa fa-check"></i><b>4.2.3</b> Transformation that Alters the Data</a></li>
+<li class="chapter" data-level="4.2.4" data-path="data-manip.html"><a href="data-manip.html#combining-data-from-different-sources"><i class="fa fa-check"></i><b>4.2.4</b> Combining Data from Different Sources</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="data-viz.html"><a href="data-viz.html"><i class="fa fa-check"></i><b>5</b> Data Visualization</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="data-viz.html"><a href="data-viz.html#design-principles"><i class="fa fa-check"></i><b>5.1</b> Design Principles</a></li>
-<li class="chapter" data-level="5.2" data-path="data-viz.html"><a href="data-viz.html#table-making"><i class="fa fa-check"></i><b>5.2</b> Table Making</a></li>
-<li class="chapter" data-level="5.3" data-path="data-viz.html"><a href="data-viz.html#chart-making"><i class="fa fa-check"></i><b>5.3</b> Chart Making</a>
+<li class="chapter" data-level="5.1" data-path="data-viz.html"><a href="data-viz.html#introduction"><i class="fa fa-check"></i><b>5.1</b> Introduction</a></li>
+<li class="chapter" data-level="5.2" data-path="data-viz.html"><a href="data-viz.html#design-principles"><i class="fa fa-check"></i><b>5.2</b> Design Principles</a></li>
+<li class="chapter" data-level="5.3" data-path="data-viz.html"><a href="data-viz.html#table_making"><i class="fa fa-check"></i><b>5.3</b> Table Making</a>
 <ul>
-<li class="chapter" data-level="5.3.1" data-path="data-viz.html"><a href="data-viz.html#philosophy-of-ggplot2"><i class="fa fa-check"></i><b>5.3.1</b> Philosophy of <code>{ggplot2}</code></a></li>
-<li class="chapter" data-level="5.3.2" data-path="data-viz.html"><a href="data-viz.html#getting-started-with-ggplot2"><i class="fa fa-check"></i><b>5.3.2</b> Getting started with <code>{ggplot2}</code></a></li>
-<li class="chapter" data-level="5.3.3" data-path="data-viz.html"><a href="data-viz.html#common-charts"><i class="fa fa-check"></i><b>5.3.3</b> Common Charts</a></li>
-<li class="chapter" data-level="5.3.4" data-path="data-viz.html"><a href="data-viz.html#miscealleneous"><i class="fa fa-check"></i><b>5.3.4</b> Miscealleneous</a></li>
-<li class="chapter" data-level="5.3.5" data-path="data-viz.html"><a href="data-viz.html#few-tips-and-tricks"><i class="fa fa-check"></i><b>5.3.5</b> Few Tips and Tricks</a></li>
+<li class="chapter" data-level="5.3.1" data-path="data-viz.html"><a href="data-viz.html#flextable"><i class="fa fa-check"></i><b>5.3.1</b> Introduction to <code>{flextable}</code></a></li>
+<li class="chapter" data-level="5.3.2" data-path="data-viz.html"><a href="data-viz.html#introdution-to-gt"><i class="fa fa-check"></i><b>5.3.2</b> Introdution to <code>{gt}</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="data-viz.html"><a href="data-viz.html#chart-making"><i class="fa fa-check"></i><b>5.4</b> Chart Making</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="data-viz.html"><a href="data-viz.html#philosophy-of-ggplot2"><i class="fa fa-check"></i><b>5.4.1</b> Philosophy of <code>{ggplot2}</code></a></li>
+<li class="chapter" data-level="5.4.2" data-path="data-viz.html"><a href="data-viz.html#getting-started-with-ggplot2"><i class="fa fa-check"></i><b>5.4.2</b> Getting started with <code>{ggplot2}</code></a></li>
+<li class="chapter" data-level="5.4.3" data-path="data-viz.html"><a href="data-viz.html#common-charts"><i class="fa fa-check"></i><b>5.4.3</b> Common Charts</a></li>
+<li class="chapter" data-level="5.4.4" data-path="data-viz.html"><a href="data-viz.html#miscealleneous"><i class="fa fa-check"></i><b>5.4.4</b> Miscealleneous</a></li>
+<li class="chapter" data-level="5.4.5" data-path="data-viz.html"><a href="data-viz.html#few-additional-tips-and-tricks"><i class="fa fa-check"></i><b>5.4.5</b> Few Additional Tips and Tricks</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="auto-report.html"><a href="auto-report.html"><i class="fa fa-check"></i><b>6</b> Automated Reporting</a>
@@ -240,120 +278,128 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <li class="part"><span><b>Bon Appétit</b></span></li>
 <li class="chapter" data-level="7" data-path="example-projects.html"><a href="example-projects.html"><i class="fa fa-check"></i><b>7</b> Example Project: The Biscuit Study</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="example-projects.html"><a href="example-projects.html#products"><i class="fa fa-check"></i><b>7.1</b> Products</a></li>
-<li class="chapter" data-level="7.2" data-path="example-projects.html"><a href="example-projects.html#consumer-test"><i class="fa fa-check"></i><b>7.2</b> Consumer test</a>
+<li class="chapter" data-level="7.1" data-path="example-projects.html"><a href="example-projects.html#objective-of-the-test"><i class="fa fa-check"></i><b>7.1</b> Objective of the Test</a></li>
+<li class="chapter" data-level="7.2" data-path="example-projects.html"><a href="example-projects.html#products"><i class="fa fa-check"></i><b>7.2</b> Products</a></li>
+<li class="chapter" data-level="7.3" data-path="example-projects.html"><a href="example-projects.html#consumer-test"><i class="fa fa-check"></i><b>7.3</b> Consumer test</a>
 <ul>
-<li class="chapter" data-level="7.2.1" data-path="example-projects.html"><a href="example-projects.html#participants"><i class="fa fa-check"></i><b>7.2.1</b> Participants</a></li>
-<li class="chapter" data-level="7.2.2" data-path="example-projects.html"><a href="example-projects.html#test-design"><i class="fa fa-check"></i><b>7.2.2</b> Test design</a></li>
+<li class="chapter" data-level="7.3.1" data-path="example-projects.html"><a href="example-projects.html#participants"><i class="fa fa-check"></i><b>7.3.1</b> Participants</a></li>
+<li class="chapter" data-level="7.3.2" data-path="example-projects.html"><a href="example-projects.html#test-design"><i class="fa fa-check"></i><b>7.3.2</b> Test design</a></li>
 </ul></li>
-<li class="chapter" data-level="7.3" data-path="example-projects.html"><a href="example-projects.html#sensory-descriptive-analysis-data"><i class="fa fa-check"></i><b>7.3</b> Sensory descriptive analysis data</a></li>
-<li class="chapter" data-level="7.4" data-path="example-projects.html"><a href="example-projects.html#summary-of-the-datasets"><i class="fa fa-check"></i><b>7.4</b> Summary of the datasets</a></li>
+<li class="chapter" data-level="7.4" data-path="example-projects.html"><a href="example-projects.html#sensory-descriptive-analysis-data"><i class="fa fa-check"></i><b>7.4</b> Sensory descriptive analysis data</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="data-collection.html"><a href="data-collection.html"><i class="fa fa-check"></i><b>8</b> Data Collection</a>
 <ul>
-<li class="chapter" data-level="8.1" data-path="data-collection.html"><a href="data-collection.html#design-1"><i class="fa fa-check"></i><b>8.1</b> Design</a>
+<li class="chapter" data-level="8.1" data-path="data-collection.html"><a href="data-collection.html#designs-of-sensory-doe-experiments"><i class="fa fa-check"></i><b>8.1</b> Designs of sensory (DoE) experiments</a>
 <ul>
-<li class="chapter" data-level="8.1.1" data-path="data-collection.html"><a href="data-collection.html#designs-of-sensory-experiments"><i class="fa fa-check"></i><b>8.1.1</b> Designs of sensory experiments</a></li>
-<li class="chapter" data-level="8.1.2" data-path="data-collection.html"><a href="data-collection.html#product-related-designs"><i class="fa fa-check"></i><b>8.1.2</b> Product-related designs</a></li>
+<li class="chapter" data-level="8.1.1" data-path="data-collection.html"><a href="data-collection.html#general-approach"><i class="fa fa-check"></i><b>8.1.1</b> General approach</a></li>
+<li class="chapter" data-level="8.1.2" data-path="data-collection.html"><a href="data-collection.html#Crossover"><i class="fa fa-check"></i><b>8.1.2</b> Crossover designs</a></li>
+<li class="chapter" data-level="8.1.3" data-path="data-collection.html"><a href="data-collection.html#BIBD"><i class="fa fa-check"></i><b>8.1.3</b> Balanced incomplete block designs (BIBD)</a></li>
+<li class="chapter" data-level="8.1.4" data-path="data-collection.html"><a href="data-collection.html#incomplete-designs-for-hedonic-tests-sensory-informed-designs"><i class="fa fa-check"></i><b>8.1.4</b> Incomplete designs for hedonic tests: Sensory informed designs</a></li>
 </ul></li>
-<li class="chapter" data-level="8.2" data-path="data-collection.html"><a href="data-collection.html#execute-1"><i class="fa fa-check"></i><b>8.2</b> Execute</a></li>
-<li class="chapter" data-level="8.3" data-path="data-collection.html"><a href="data-collection.html#data-import"><i class="fa fa-check"></i><b>8.3</b> Import</a>
+<li class="chapter" data-level="8.2" data-path="data-collection.html"><a href="data-collection.html#product-related-designs"><i class="fa fa-check"></i><b>8.2</b> Product-related designs</a>
 <ul>
-<li class="chapter" data-level="8.3.1" data-path="data-collection.html"><a href="data-collection.html#importing-structured-excel-file"><i class="fa fa-check"></i><b>8.3.1</b> Importing Structured Excel File</a></li>
-<li class="chapter" data-level="8.3.2" data-path="data-collection.html"><a href="data-collection.html#importing-unstructured-excel-file"><i class="fa fa-check"></i><b>8.3.2</b> Importing Unstructured Excel File</a></li>
-<li class="chapter" data-level="8.3.3" data-path="data-collection.html"><a href="data-collection.html#import-mult-sheet"><i class="fa fa-check"></i><b>8.3.3</b> Importing Data Stored in Multiple Sheets</a></li>
+<li class="chapter" data-level="8.2.1" data-path="data-collection.html"><a href="data-collection.html#factorial-designs"><i class="fa fa-check"></i><b>8.2.1</b> Factorial designs</a></li>
+<li class="chapter" data-level="8.2.2" data-path="data-collection.html"><a href="data-collection.html#mixture-designs"><i class="fa fa-check"></i><b>8.2.2</b> Mixture designs</a></li>
+<li class="chapter" data-level="8.2.3" data-path="data-collection.html"><a href="data-collection.html#screening-designs"><i class="fa fa-check"></i><b>8.2.3</b> Screening designs</a></li>
+<li class="chapter" data-level="8.2.4" data-path="data-collection.html"><a href="data-collection.html#sensory-informed-designs"><i class="fa fa-check"></i><b>8.2.4</b> Sensory informed designs</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="data-collection.html"><a href="data-collection.html#execute-1"><i class="fa fa-check"></i><b>8.3</b> Execute</a></li>
+<li class="chapter" data-level="8.4" data-path="data-collection.html"><a href="data-collection.html#data-import"><i class="fa fa-check"></i><b>8.4</b> Import</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="data-collection.html"><a href="data-collection.html#importing-structured-excel-file"><i class="fa fa-check"></i><b>8.4.1</b> Importing Structured Excel File</a></li>
+<li class="chapter" data-level="8.4.2" data-path="data-collection.html"><a href="data-collection.html#importing-unstructured-excel-file"><i class="fa fa-check"></i><b>8.4.2</b> Importing Unstructured Excel File</a></li>
+<li class="chapter" data-level="8.4.3" data-path="data-collection.html"><a href="data-collection.html#import-mult-sheet"><i class="fa fa-check"></i><b>8.4.3</b> Importing Data Stored in Multiple Sheets</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="data-prep.html"><a href="data-prep.html"><i class="fa fa-check"></i><b>9</b> Data Preparation</a>
 <ul>
-<li class="chapter" data-level="9.1" data-path="data-prep.html"><a href="data-prep.html#inspect"><i class="fa fa-check"></i><b>9.1</b> Inspect</a>
+<li class="chapter" data-level="9.1" data-path="data-prep.html"><a href="data-prep.html#introduction-1"><i class="fa fa-check"></i><b>9.1</b> Introduction</a></li>
+<li class="chapter" data-level="9.2" data-path="data-prep.html"><a href="data-prep.html#inspect"><i class="fa fa-check"></i><b>9.2</b> Inspect</a>
 <ul>
-<li class="chapter" data-level="9.1.1" data-path="data-prep.html"><a href="data-prep.html#data-inspection"><i class="fa fa-check"></i><b>9.1.1</b> Data Inspection</a></li>
-<li class="chapter" data-level="9.1.2" data-path="data-prep.html"><a href="data-prep.html#missing-data"><i class="fa fa-check"></i><b>9.1.2</b> Missing Data</a></li>
-<li class="chapter" data-level="9.1.3" data-path="data-prep.html"><a href="data-prep.html#design-inspection"><i class="fa fa-check"></i><b>9.1.3</b> Design Inspection</a></li>
+<li class="chapter" data-level="9.2.1" data-path="data-prep.html"><a href="data-prep.html#data-inspection"><i class="fa fa-check"></i><b>9.2.1</b> Data Inspection</a></li>
+<li class="chapter" data-level="9.2.2" data-path="data-prep.html"><a href="data-prep.html#missing-data"><i class="fa fa-check"></i><b>9.2.2</b> Missing Data</a></li>
+<li class="chapter" data-level="9.2.3" data-path="data-prep.html"><a href="data-prep.html#design-inspection"><i class="fa fa-check"></i><b>9.2.3</b> Design Inspection</a></li>
 </ul></li>
-<li class="chapter" data-level="9.2" data-path="data-prep.html"><a href="data-prep.html#clean"><i class="fa fa-check"></i><b>9.2</b> Clean</a>
+<li class="chapter" data-level="9.3" data-path="data-prep.html"><a href="data-prep.html#clean"><i class="fa fa-check"></i><b>9.3</b> Clean</a>
 <ul>
-<li class="chapter" data-level="9.2.1" data-path="data-prep.html"><a href="data-prep.html#handling-data-type"><i class="fa fa-check"></i><b>9.2.1</b> Handling Data Type</a></li>
-<li class="chapter" data-level="9.2.2" data-path="data-prep.html"><a href="data-prep.html#converting-between-types"><i class="fa fa-check"></i><b>9.2.2</b> Converting between Types</a></li>
-<li class="chapter" data-level="9.2.3" data-path="data-prep.html"><a href="data-prep.html#conclusions"><i class="fa fa-check"></i><b>9.2.3</b> Conclusions</a></li>
+<li class="chapter" data-level="9.3.1" data-path="data-prep.html"><a href="data-prep.html#handling-data-type"><i class="fa fa-check"></i><b>9.3.1</b> Handling Data Type</a></li>
+<li class="chapter" data-level="9.3.2" data-path="data-prep.html"><a href="data-prep.html#converting-between-types"><i class="fa fa-check"></i><b>9.3.2</b> Converting between Types</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="data-analysis.html"><a href="data-analysis.html"><i class="fa fa-check"></i><b>10</b> Data Analysis</a>
 <ul>
-<li class="chapter" data-level="10.1" data-path="data-analysis.html"><a href="data-analysis.html#chapter-overview-1"><i class="fa fa-check"></i><b>10.1</b> Chapter Overview</a></li>
-<li class="chapter" data-level="10.2" data-path="data-analysis.html"><a href="data-analysis.html#sensory-data"><i class="fa fa-check"></i><b>10.2</b> Sensory Data</a></li>
-<li class="chapter" data-level="10.3" data-path="data-analysis.html"><a href="data-analysis.html#demographic-and-questionnaire-data"><i class="fa fa-check"></i><b>10.3</b> Demographic and Questionnaire Data</a>
+<li class="chapter" data-level="10.1" data-path="data-analysis.html"><a href="data-analysis.html#sensory-data"><i class="fa fa-check"></i><b>10.1</b> Sensory Data</a></li>
+<li class="chapter" data-level="10.2" data-path="data-analysis.html"><a href="data-analysis.html#demographic-and-questionnaire-data"><i class="fa fa-check"></i><b>10.2</b> Demographic and Questionnaire Data</a>
 <ul>
-<li class="chapter" data-level="10.3.1" data-path="data-analysis.html"><a href="data-analysis.html#demographic-data-frequency-and-proportion"><i class="fa fa-check"></i><b>10.3.1</b> Demographic Data: Frequency and Proportion</a></li>
-<li class="chapter" data-level="10.3.2" data-path="data-analysis.html"><a href="data-analysis.html#personality-traits-and-eating-behavior-tfeq-data"><i class="fa fa-check"></i><b>10.3.2</b> Personality traits and eating behavior: TFEQ data</a></li>
+<li class="chapter" data-level="10.2.1" data-path="data-analysis.html"><a href="data-analysis.html#demographic-data-frequency-and-proportion"><i class="fa fa-check"></i><b>10.2.1</b> Demographic Data: Frequency and Proportion</a></li>
+<li class="chapter" data-level="10.2.2" data-path="data-analysis.html"><a href="data-analysis.html#eating-behavior-traits-tfeq-data"><i class="fa fa-check"></i><b>10.2.2</b> Eating behavior traits: TFEQ data</a></li>
 </ul></li>
-<li class="chapter" data-level="10.4" data-path="data-analysis.html"><a href="data-analysis.html#consumer-data"><i class="fa fa-check"></i><b>10.4</b> Consumer Data</a></li>
-<li class="chapter" data-level="10.5" data-path="data-analysis.html"><a href="data-analysis.html#combining-sensory-and-consumer-data"><i class="fa fa-check"></i><b>10.5</b> Combining Sensory and Consumer Data</a>
+<li class="chapter" data-level="10.3" data-path="data-analysis.html"><a href="data-analysis.html#consumer-data"><i class="fa fa-check"></i><b>10.3</b> Consumer Data</a></li>
+<li class="chapter" data-level="10.4" data-path="data-analysis.html"><a href="data-analysis.html#combining-sensory-and-consumer-data"><i class="fa fa-check"></i><b>10.4</b> Combining Sensory and Consumer Data</a>
 <ul>
-<li class="chapter" data-level="10.5.1" data-path="data-analysis.html"><a href="data-analysis.html#internal-preference-mapping"><i class="fa fa-check"></i><b>10.5.1</b> Internal Preference Mapping</a></li>
-<li class="chapter" data-level="10.5.2" data-path="data-analysis.html"><a href="data-analysis.html#consumers-clustering"><i class="fa fa-check"></i><b>10.5.2</b> Consumers Clustering</a></li>
-<li class="chapter" data-level="10.5.3" data-path="data-analysis.html"><a href="data-analysis.html#drivers-of-liking"><i class="fa fa-check"></i><b>10.5.3</b> Drivers of Liking</a></li>
-<li class="chapter" data-level="10.5.4" data-path="data-analysis.html"><a href="data-analysis.html#external-preference-mapping"><i class="fa fa-check"></i><b>10.5.4</b> External Preference Mapping</a></li>
+<li class="chapter" data-level="10.4.1" data-path="data-analysis.html"><a href="data-analysis.html#internal-preference-mapping"><i class="fa fa-check"></i><b>10.4.1</b> Internal Preference Mapping</a></li>
+<li class="chapter" data-level="10.4.2" data-path="data-analysis.html"><a href="data-analysis.html#consumers-clustering"><i class="fa fa-check"></i><b>10.4.2</b> Consumers Clustering</a></li>
+<li class="chapter" data-level="10.4.3" data-path="data-analysis.html"><a href="data-analysis.html#drivers-of-liking"><i class="fa fa-check"></i><b>10.4.3</b> Drivers of Liking</a></li>
+<li class="chapter" data-level="10.4.4" data-path="data-analysis.html"><a href="data-analysis.html#external-preference-mapping"><i class="fa fa-check"></i><b>10.4.4</b> External Preference Mapping</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="value-delivery.html"><a href="value-delivery.html"><i class="fa fa-check"></i><b>11</b> Value Delivery</a>
 <ul>
-<li class="chapter" data-level="11.1" data-path="value-delivery.html"><a href="value-delivery.html#communicate2"><i class="fa fa-check"></i><b>11.1</b> Communicate</a>
+<li class="chapter" data-level="11.1" data-path="value-delivery.html"><a href="value-delivery.html#how-to-communicate"><i class="fa fa-check"></i><b>11.1</b> How to Communicate?</a></li>
+<li class="chapter" data-level="11.2" data-path="value-delivery.html"><a href="value-delivery.html#exploratory-explanatory-and-predictive-analysis"><i class="fa fa-check"></i><b>11.2</b> Exploratory, Explanatory and Predictive Analysis</a></li>
+<li class="chapter" data-level="11.3" data-path="value-delivery.html"><a href="value-delivery.html#audience-awareness"><i class="fa fa-check"></i><b>11.3</b> Audience Awareness</a>
 <ul>
-<li class="chapter" data-level="11.1.1" data-path="value-delivery.html"><a href="value-delivery.html#exploratory-explanatory-and-predictive-analysis"><i class="fa fa-check"></i><b>11.1.1</b> Exploratory, Explanatory and Predictive Analysis</a></li>
-<li class="chapter" data-level="11.1.2" data-path="value-delivery.html"><a href="value-delivery.html#audience-awareness"><i class="fa fa-check"></i><b>11.1.2</b> Audience Awareness</a></li>
-<li class="chapter" data-level="11.1.3" data-path="value-delivery.html"><a href="value-delivery.html#method-to-communicate"><i class="fa fa-check"></i><b>11.1.3</b> Method to Communicate</a></li>
-<li class="chapter" data-level="11.1.4" data-path="value-delivery.html"><a href="value-delivery.html#storytelling"><i class="fa fa-check"></i><b>11.1.4</b> Storytelling</a></li>
+<li class="chapter" data-level="11.3.1" data-path="value-delivery.html"><a href="value-delivery.html#technical-audience"><i class="fa fa-check"></i><b>11.3.1</b> Technical Audience</a></li>
+<li class="chapter" data-level="11.3.2" data-path="value-delivery.html"><a href="value-delivery.html#management"><i class="fa fa-check"></i><b>11.3.2</b> Management</a></li>
+<li class="chapter" data-level="11.3.3" data-path="value-delivery.html"><a href="value-delivery.html#general-interest"><i class="fa fa-check"></i><b>11.3.3</b> General Interest</a></li>
 </ul></li>
-<li class="chapter" data-level="11.2" data-path="value-delivery.html"><a href="value-delivery.html#reformulate2"><i class="fa fa-check"></i><b>11.2</b> Reformulate</a></li>
+<li class="chapter" data-level="11.4" data-path="value-delivery.html"><a href="value-delivery.html#methods-to-communicate"><i class="fa fa-check"></i><b>11.4</b> Methods to Communicate</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="value-delivery.html"><a href="value-delivery.html#consider-the-mechanism"><i class="fa fa-check"></i><b>11.4.1</b> Consider the Mechanism</a></li>
+<li class="chapter" data-level="11.4.2" data-path="value-delivery.html"><a href="value-delivery.html#pick-the-correct-format"><i class="fa fa-check"></i><b>11.4.2</b> Pick the Correct Format</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="value-delivery.html"><a href="value-delivery.html#storytelling"><i class="fa fa-check"></i><b>11.5</b> Storytelling</a></li>
+<li class="chapter" data-level="11.6" data-path="value-delivery.html"><a href="value-delivery.html#reformulate2"><i class="fa fa-check"></i><b>11.6</b> Reformulate</a></li>
 </ul></li>
 <li class="part"><span><b>Haute Cuisine</b></span></li>
 <li class="chapter" data-level="12" data-path="machine-learning.html"><a href="machine-learning.html"><i class="fa fa-check"></i><b>12</b> Machine Learning</a>
 <ul>
-<li class="chapter" data-level="12.1" data-path="machine-learning.html"><a href="machine-learning.html#methods-overview"><i class="fa fa-check"></i><b>12.1</b> Methods Overview</a>
+<li class="chapter" data-level="12.1" data-path="machine-learning.html"><a href="machine-learning.html#introduction-2"><i class="fa fa-check"></i><b>12.1</b> Introduction</a></li>
+<li class="chapter" data-level="12.2" data-path="machine-learning.html"><a href="machine-learning.html#machine-learning-methods"><i class="fa fa-check"></i><b>12.2</b> Machine Learning Methods</a>
 <ul>
-<li class="chapter" data-level="12.1.1" data-path="machine-learning.html"><a href="machine-learning.html#unsupervised-learning"><i class="fa fa-check"></i><b>12.1.1</b> Unsupervised learning</a></li>
-<li class="chapter" data-level="12.1.2" data-path="machine-learning.html"><a href="machine-learning.html#supervised-learning"><i class="fa fa-check"></i><b>12.1.2</b> Supervised learning</a></li>
+<li class="chapter" data-level="12.2.1" data-path="machine-learning.html"><a href="machine-learning.html#unsupervised-learning"><i class="fa fa-check"></i><b>12.2.1</b> Unsupervised learning</a></li>
+<li class="chapter" data-level="12.2.2" data-path="machine-learning.html"><a href="machine-learning.html#supervised-learning"><i class="fa fa-check"></i><b>12.2.2</b> Supervised learning</a></li>
+<li class="chapter" data-level="12.2.3" data-path="machine-learning.html"><a href="machine-learning.html#practical-guide-to-machine-learning"><i class="fa fa-check"></i><b>12.2.3</b> Practical Guide to Machine Learning</a></li>
 </ul></li>
-<li class="chapter" data-level="12.2" data-path="machine-learning.html"><a href="machine-learning.html#key-topics"><i class="fa fa-check"></i><b>12.2</b> Key Topics</a>
-<ul>
-<li class="chapter" data-level="12.2.1" data-path="machine-learning.html"><a href="machine-learning.html#model-validation"><i class="fa fa-check"></i><b>12.2.1</b> Model Validation</a></li>
-<li class="chapter" data-level="12.2.2" data-path="machine-learning.html"><a href="machine-learning.html#interpretability"><i class="fa fa-check"></i><b>12.2.2</b> Interpretability</a></li>
-</ul></li>
-<li class="chapter" data-level="12.3" data-path="machine-learning.html"><a href="machine-learning.html#common-applications"><i class="fa fa-check"></i><b>12.3</b> Common Applications</a>
-<ul>
-<li class="chapter" data-level="12.3.1" data-path="machine-learning.html"><a href="machine-learning.html#predicting-sensory-profiles-from-instrumental-data"><i class="fa fa-check"></i><b>12.3.1</b> Predicting sensory profiles from instrumental data</a></li>
-<li class="chapter" data-level="12.3.2" data-path="machine-learning.html"><a href="machine-learning.html#predicting-consumer-response-from-sensory-profiles"><i class="fa fa-check"></i><b>12.3.2</b> Predicting consumer response from sensory profiles</a></li>
-<li class="chapter" data-level="12.3.3" data-path="machine-learning.html"><a href="machine-learning.html#characterizing-consumer-clusters"><i class="fa fa-check"></i><b>12.3.3</b> Characterizing consumer clusters</a></li>
-</ul></li>
-<li class="chapter" data-level="12.4" data-path="machine-learning.html"><a href="machine-learning.html#code"><i class="fa fa-check"></i><b>12.4</b> Code</a></li>
 </ul></li>
 <li class="chapter" data-level="13" data-path="text-analysis.html"><a href="text-analysis.html"><i class="fa fa-check"></i><b>13</b> Text Analysis</a>
 <ul>
-<li class="chapter" data-level="13.1" data-path="text-analysis.html"><a href="text-analysis.html#application-of-text-analysis-in-sensory-and-consumer-science"><i class="fa fa-check"></i><b>13.1</b> Application of Text Analysis in Sensory and Consumer Science</a>
+<li class="chapter" data-level="13.1" data-path="text-analysis.html"><a href="text-analysis.html#introduction-to-natural-language-processing"><i class="fa fa-check"></i><b>13.1</b> Introduction to Natural Language Processing</a></li>
+<li class="chapter" data-level="13.2" data-path="text-analysis.html"><a href="text-analysis.html#application-of-text-analysis-in-sensory-and-consumer-science"><i class="fa fa-check"></i><b>13.2</b> Application of Text Analysis in Sensory and Consumer Science</a>
 <ul>
-<li class="chapter" data-level="13.1.1" data-path="text-analysis.html"><a href="text-analysis.html#text-analysis-as-way-to-describe-products"><i class="fa fa-check"></i><b>13.1.1</b> Text analysis as way to describe products</a></li>
-<li class="chapter" data-level="13.1.2" data-path="text-analysis.html"><a href="text-analysis.html#objectives-of-text-analysis"><i class="fa fa-check"></i><b>13.1.2</b> Objectives of Text Analysis</a></li>
-<li class="chapter" data-level="13.1.3" data-path="text-analysis.html"><a href="text-analysis.html#warnings"><i class="fa fa-check"></i><b>13.1.3</b> Warnings</a></li>
+<li class="chapter" data-level="13.2.1" data-path="text-analysis.html"><a href="text-analysis.html#text-analysis-as-way-to-describe-products"><i class="fa fa-check"></i><b>13.2.1</b> Text analysis as way to describe products</a></li>
+<li class="chapter" data-level="13.2.2" data-path="text-analysis.html"><a href="text-analysis.html#objectives-of-text-analysis"><i class="fa fa-check"></i><b>13.2.2</b> Objectives of Text Analysis</a></li>
+<li class="chapter" data-level="13.2.3" data-path="text-analysis.html"><a href="text-analysis.html#classical-text-analysis-workflow"><i class="fa fa-check"></i><b>13.2.3</b> Classical <em>text analysis</em> workflow</a></li>
+<li class="chapter" data-level="13.2.4" data-path="text-analysis.html"><a href="text-analysis.html#warnings"><i class="fa fa-check"></i><b>13.2.4</b> Warnings</a></li>
 </ul></li>
-<li class="chapter" data-level="13.2" data-path="text-analysis.html"><a href="text-analysis.html#illustration-using-sorting-task-data"><i class="fa fa-check"></i><b>13.2</b> Illustration using Sorting Task Data</a>
+<li class="chapter" data-level="13.3" data-path="text-analysis.html"><a href="text-analysis.html#illustration-using-sorting-task-data"><i class="fa fa-check"></i><b>13.3</b> Illustration using Sorting Task Data</a>
 <ul>
-<li class="chapter" data-level="13.2.1" data-path="text-analysis.html"><a href="text-analysis.html#data-pre-processing"><i class="fa fa-check"></i><b>13.2.1</b> Data Pre-processing</a></li>
-<li class="chapter" data-level="13.2.2" data-path="text-analysis.html"><a href="text-analysis.html#introduction-to-working-with-strings-stringr"><i class="fa fa-check"></i><b>13.2.2</b> Introduction to working with strings (<code>{stringr}</code>)</a></li>
-<li class="chapter" data-level="13.2.3" data-path="text-analysis.html"><a href="text-analysis.html#tokenization"><i class="fa fa-check"></i><b>13.2.3</b> Tokenization</a></li>
-<li class="chapter" data-level="13.2.4" data-path="text-analysis.html"><a href="text-analysis.html#simple-transformation-lowercase"><i class="fa fa-check"></i><b>13.2.4</b> Simple Transformation (lowercase)</a></li>
-<li class="chapter" data-level="13.2.5" data-path="text-analysis.html"><a href="text-analysis.html#stopwords"><i class="fa fa-check"></i><b>13.2.5</b> Stopwords</a></li>
-<li class="chapter" data-level="13.2.6" data-path="text-analysis.html"><a href="text-analysis.html#stemming-and-lemmatization"><i class="fa fa-check"></i><b>13.2.6</b> Stemming and Lemmatization</a></li>
+<li class="chapter" data-level="13.3.1" data-path="text-analysis.html"><a href="text-analysis.html#data-pre-processing"><i class="fa fa-check"></i><b>13.3.1</b> Data Pre-processing</a></li>
+<li class="chapter" data-level="13.3.2" data-path="text-analysis.html"><a href="text-analysis.html#introduction-to-working-with-strings-stringr"><i class="fa fa-check"></i><b>13.3.2</b> Introduction to working with strings (<code>{stringr}</code>)</a></li>
+<li class="chapter" data-level="13.3.3" data-path="text-analysis.html"><a href="text-analysis.html#tokenization"><i class="fa fa-check"></i><b>13.3.3</b> Tokenization</a></li>
+<li class="chapter" data-level="13.3.4" data-path="text-analysis.html"><a href="text-analysis.html#simple-transformations"><i class="fa fa-check"></i><b>13.3.4</b> Simple Transformations</a></li>
+<li class="chapter" data-level="13.3.5" data-path="text-analysis.html"><a href="text-analysis.html#splitting-further-the-tokens"><i class="fa fa-check"></i><b>13.3.5</b> Splitting further the tokens</a></li>
+<li class="chapter" data-level="13.3.6" data-path="text-analysis.html"><a href="text-analysis.html#stopwords"><i class="fa fa-check"></i><b>13.3.6</b> Stopwords</a></li>
+<li class="chapter" data-level="13.3.7" data-path="text-analysis.html"><a href="text-analysis.html#stemming-and-lemmatization"><i class="fa fa-check"></i><b>13.3.7</b> Stemming and Lemmatization</a></li>
 </ul></li>
-<li class="chapter" data-level="13.3" data-path="text-analysis.html"><a href="text-analysis.html#text-analysis-1"><i class="fa fa-check"></i><b>13.3</b> Text Analysis</a>
+<li class="chapter" data-level="13.4" data-path="text-analysis.html"><a href="text-analysis.html#text-analysis-1"><i class="fa fa-check"></i><b>13.4</b> Text Analysis</a>
 <ul>
-<li class="chapter" data-level="13.3.1" data-path="text-analysis.html"><a href="text-analysis.html#raw-frequencies-and-visualization"><i class="fa fa-check"></i><b>13.3.1</b> Raw Frequencies and Visualization</a></li>
-<li class="chapter" data-level="13.3.2" data-path="text-analysis.html"><a href="text-analysis.html#bigrams-n-grams"><i class="fa fa-check"></i><b>13.3.2</b> Bigrams, <em>n</em>-grams</a></li>
-<li class="chapter" data-level="13.3.3" data-path="text-analysis.html"><a href="text-analysis.html#word-embedding"><i class="fa fa-check"></i><b>13.3.3</b> Word Embedding</a></li>
-<li class="chapter" data-level="13.3.4" data-path="text-analysis.html"><a href="text-analysis.html#sentiment-analysis"><i class="fa fa-check"></i><b>13.3.4</b> Sentiment Analysis</a></li>
+<li class="chapter" data-level="13.4.1" data-path="text-analysis.html"><a href="text-analysis.html#raw-frequencies-and-visualization"><i class="fa fa-check"></i><b>13.4.1</b> Raw Frequencies and Visualization</a></li>
+<li class="chapter" data-level="13.4.2" data-path="text-analysis.html"><a href="text-analysis.html#bigrams-n-grams"><i class="fa fa-check"></i><b>13.4.2</b> Bigrams, <em>n</em>-grams</a></li>
+<li class="chapter" data-level="13.4.3" data-path="text-analysis.html"><a href="text-analysis.html#word-embedding"><i class="fa fa-check"></i><b>13.4.3</b> Word Embedding</a></li>
+<li class="chapter" data-level="13.4.4" data-path="text-analysis.html"><a href="text-analysis.html#sentiment-analysis"><i class="fa fa-check"></i><b>13.4.4</b> Sentiment Analysis</a></li>
 </ul></li>
-<li class="chapter" data-level="13.4" data-path="text-analysis.html"><a href="text-analysis.html#to-go-further-1"><i class="fa fa-check"></i><b>13.4</b> To go further…</a></li>
+<li class="chapter" data-level="13.5" data-path="text-analysis.html"><a href="text-analysis.html#to-go-further-1"><i class="fa fa-check"></i><b>13.5</b> To go further…</a></li>
 </ul></li>
 <li class="chapter" data-level="14" data-path="dashboards.html"><a href="dashboards.html"><i class="fa fa-check"></i><b>14</b> Dashboards</a>
 <ul>
@@ -362,7 +408,8 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="14.2.1" data-path="dashboards.html"><a href="dashboards.html#what-is-a-shiny-application"><i class="fa fa-check"></i><b>14.2.1</b> What is a Shiny application?</a></li>
 <li class="chapter" data-level="14.2.2" data-path="dashboards.html"><a href="dashboards.html#starting-with-shiny"><i class="fa fa-check"></i><b>14.2.2</b> Starting with Shiny</a></li>
-<li class="chapter" data-level="14.2.3" data-path="dashboards.html"><a href="dashboards.html#deploying-the-application"><i class="fa fa-check"></i><b>14.2.3</b> Deploying the Application</a></li>
+<li class="chapter" data-level="14.2.3" data-path="dashboards.html"><a href="dashboards.html#illustration"><i class="fa fa-check"></i><b>14.2.3</b> Illustration</a></li>
+<li class="chapter" data-level="14.2.4" data-path="dashboards.html"><a href="dashboards.html#deploying-the-application"><i class="fa fa-check"></i><b>14.2.4</b> Deploying the Application</a></li>
 </ul></li>
 <li class="chapter" data-level="14.3" data-path="dashboards.html"><a href="dashboards.html#to-go-further-2"><i class="fa fa-check"></i><b>14.3</b> To go further…</a>
 <ul>
@@ -377,18 +424,8 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <li class="part"><span><b>Digestifs</b></span></li>
 <li class="chapter" data-level="15" data-path="next-steps.html"><a href="next-steps.html"><i class="fa fa-check"></i><b>15</b> Conclusion and Next Steps</a>
 <ul>
-<li class="chapter" data-level="15.1" data-path="next-steps.html"><a href="next-steps.html#sensory-analysis-in-r"><i class="fa fa-check"></i><b>15.1</b> Sensory Analysis in R</a></li>
-<li class="chapter" data-level="15.2" data-path="next-steps.html"><a href="next-steps.html#other-recommended-resources"><i class="fa fa-check"></i><b>15.2</b> Other Recommended Resources</a>
-<ul>
-<li class="chapter" data-level="15.2.1" data-path="next-steps.html"><a href="next-steps.html#r-for-data-science"><i class="fa fa-check"></i><b>15.2.1</b> R for Data Science</a></li>
-<li class="chapter" data-level="15.2.2" data-path="next-steps.html"><a href="next-steps.html#hands-on-machine-learning-with-r"><i class="fa fa-check"></i><b>15.2.2</b> Hands-On Machine Learning with R</a></li>
-<li class="chapter" data-level="15.2.3" data-path="next-steps.html"><a href="next-steps.html#factoextra"><i class="fa fa-check"></i><b>15.2.3</b> FactoExtra</a></li>
-<li class="chapter" data-level="15.2.4" data-path="next-steps.html"><a href="next-steps.html#r-graphics-cookbook"><i class="fa fa-check"></i><b>15.2.4</b> R Graphics Cookbook</a></li>
-<li class="chapter" data-level="15.2.5" data-path="next-steps.html"><a href="next-steps.html#storytelling-with-data"><i class="fa fa-check"></i><b>15.2.5</b> Storytelling with Data</a></li>
-<li class="chapter" data-level="15.2.6" data-path="next-steps.html"><a href="next-steps.html#text-mining-wtih-r"><i class="fa fa-check"></i><b>15.2.6</b> Text Mining wtih R</a></li>
-</ul></li>
-<li class="chapter" data-level="15.3" data-path="next-steps.html"><a href="next-steps.html#databases-graph-and-otherwise"><i class="fa fa-check"></i><b>15.3</b> Databases (Graph and Otherwise)</a></li>
-<li class="chapter" data-level="15.4" data-path="next-steps.html"><a href="next-steps.html#python-and-other-languages"><i class="fa fa-check"></i><b>15.4</b> Python and Other Languages</a></li>
+<li class="chapter" data-level="15.1" data-path="next-steps.html"><a href="next-steps.html#other-recommended-resources"><i class="fa fa-check"></i><b>15.1</b> Other Recommended Resources</a></li>
+<li class="chapter" data-level="15.2" data-path="next-steps.html"><a href="next-steps.html#useful-r-packages"><i class="fa fa-check"></i><b>15.2</b> Useful R Packages</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="bibliography.html"><a href="bibliography.html"><i class="fa fa-check"></i>Bibliography</a></li>
 <li class="divider"></li>
@@ -411,41 +448,59 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="bienvenue" class="section level1" number="1">
-<h1><span class="header-section-number">Chapter 1</span> Bienvenue!</h1>
-<div id="why-data-science-for-sensory-and-consumer-science" class="section level2 unnumbered">
-<h2>Why Data Science for Sensory and Consumer Science?</h2>
+<div id="bienvenue" class="section level1 hasAnchor" number="1">
+<h1><span class="header-section-number">Chapter 1</span> Bienvenue!<a href="bienvenue.html#bienvenue" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="why-data-science-for-sensory-and-consumer-science" class="section level2 unnumbered hasAnchor">
+<h2>Why Data Science for Sensory and Consumer Science?<a href="bienvenue.html#why-data-science-for-sensory-and-consumer-science" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Located at the crossroads of biology, social science, and design, sensory and consumer science (SCS) is definitely the tastiest of all sciences. On the menu is a wide diversity of products and experiences that sensory and consumer scientists approach through the lens of human senses. Thanks to a wide set of refined methods, they have access to rich, complex and mouthwatering data. Delightedly, data science empowers them and leads them to explore new flavorful territories.</p>
-<div id="core-principles-in-sensory-and-consumer-science" class="section level3 unnumbered">
-<h3>Core principles in Sensory and Consumer Science</h3>
-<p>Sensory and consumer science is considered as a pillar of food science and technology and is useful to product development, quality control and market research. Most scientific and methodological advances in the field are applied to food. This book makes no exception as we chose a cookie formulation dataset as a main thread. However, SCS widely applies to many other consumer goods; so are the content of this book and the principles set out below.</p>
-<div id="measuring-and-analyzing-human-responses" class="section level4 unnumbered">
-<h4>Measuring and analyzing human responses</h4>
-<p>Sensory and consumer science aims at measuring and understanding consumers’ sensory perceptions as well as the judgements, emotions and behaviors that may arise from these perceptions. SCS is thus primarily a science of measurement, although a very particular one that uses human beings and their senses as measuring instruments. In other words, sensory and consumer researchers measure and analyze human responses.</p>
-<p>To this end, SCS relies essentially on sensory evaluation which comprises a set of techniques that mostly derive from psychophysics and behavioral research. It uses psychological models to help separate signal from noise in collected data [ref O’Mahony, D.Ennis, others?]. Besides, sensory evaluation has developed its own methodological framework that includes most refined techniques for the accurate measurement of product sensory properties while minimizing the potentially biasing effects of brand identity and the influence of other external information on consumer perception (<span class="citation"><a href="bibliography.html#ref-LawlessHeym2010" role="doc-biblioref">Lawless and Heymann</a> (<a href="bibliography.html#ref-LawlessHeym2010" role="doc-biblioref">2010</a>)</span>).</p>
+<div id="core-principles-in-sensory-and-consumer-science" class="section level3 unnumbered hasAnchor">
+<h3>Core principles in Sensory and Consumer Science<a href="bienvenue.html#core-principles-in-sensory-and-consumer-science" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Sensory and consumer science is considered as a pillar of food science and technology and is essential to product development, quality control and market research. Most scientific and methodological advances in the field are applied to food. This book makes no exception as we chose a cookie formulation dataset as a main thread. However, SCS widely applies to many other consumer goods; so are the content of this book and the principles set out below.</p>
+<div id="measuring-and-analyzing-human-responses" class="section level4 unnumbered hasAnchor">
+<h4>Measuring and analyzing human responses<a href="bienvenue.html#measuring-and-analyzing-human-responses" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Sensory and consumer science aims at measuring and understanding consumers’ sensory perceptions as well as the judgement, emotions and behaviors that may arise from these perceptions. SCS is thus primarily a science of measurement, although a very particular one that uses human beings and their senses as measuring instruments. In other words, sensory and consumer researchers measure and analyze human responses.</p>
+<p>To this end, SCS relies essentially on sensory evaluation which comprises a set of techniques that mostly derive from psychophysics and behavioral research. It uses psychological models to help separate signal from noise in collected data [ref O’Mahony, D.Ennis, others?]. Besides, sensory evaluation has developed its own methodological framework that includes most refined techniques for the accurate measurement of product sensory properties while minimizing the potentially biasing effects of brand identity and the influence of other external information on consumer perception <span class="citation">(<a href="#ref-LawlessHeym2010" role="doc-biblioref">Lawless and Heymann 2010</a>)</span>.</p>
 <p>A detailed description of sensory methods is beyond the scope of this book and many textbooks on sensory evaluation methods are available to readers seeking more information. However, just to give a brief overview, it is worth remembering that sensory methods can be roughly divided into three categories, each of them bearing many variants:</p>
 <ul>
 <li>Discrimination tests that aim at detecting subtle differences between products.</li>
-<li>Descriptive analysis (DA), also referred to as ‘sensory profiling,’ aims at providing both qualitative and quantitative information about product sensory properties.</li>
+<li>Descriptive analysis (DA), also referred to as ‘sensory profiling,’ aims at providing both qualitative and quantitative information about products’ sensory properties.</li>
 <li>Affective tests. This category includes hedonic tests that aim at measuring consumers’ liking for the tested products or their preferences among a product set.</li>
 </ul>
 <p>Each test category generates its own type of data and related statistical questions in relation to the objectives of the study. Typically, data from difference tests with forced-choice procedures (e.g. triangle test, duo-trio, 2-AFC, etc.) consist in series of binary answers (correct/failed) depending on whether judges successfully picked the odd sample(s) among a set of three or more samples.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> These data are used to determine whether the number of correct choices is above the level expected by chance.</p>
-<p>Conventional descriptive analysis data consist in intensity scores given by each panelist to evaluated samples on a series of sensory attributes, hence resulting in a product x attribute x panelist dataset (Figure 1). Note that depending on the DA method, quantifying means other than intensity ratings can be used (ranks, frequency, counts, etc.). Most frequently, each panelist evaluates all the samples in the product set. However, the use of balanced incomplete design can also be found when the experimenters aim to limit the number of samples evaluated by each subject.</p>
+<p>Conventional descriptive analysis data consist in intensity scores given by each panelist to evaluated samples on a series of sensory attributes, hence resulting in a product x attribute x panelist dataset (Figure 1). Note that depending on the DA method, quantifying means other than intensity ratings can be used (ranks, frequency, counts, etc.). Most frequently, each panelist evaluates all the samples in the product set. However, the use of a balanced incomplete design can also be found when the experimenters aim to limit the number of samples evaluated by each subject.</p>
 <!-- Insert figure 1 about here -->
-<p>Eventually, datasets from hedonic tests consist of hedonic scores (i.e. degrees of liking, or preference ranks) given by each interviewed consumer to a series of products. As for DA, each consumer usually evaluates all the samples in the product set, but balanced incomplete designs are sometimes used too. In addition, some companies favor pure monadic evaluation of product (i.e. between-subject design or independent groups design) which obviously result in unrelated sample datasets.</p>
-<p>Sensory and consumer researchers also borrow methods from other fields, in particular from sociology and experimental psychology. Definitely a multidisciplinary area, SCS develops in many directions and reaches disciplines that range from genetics and physiology to social marketing, behavioral economics and computational neuroscience. So have diversified the types of data sensory and consumer scientists must deal with. As in many scientific fields, the development of sophisticated statistical techniques and access to powerful data analysis tools have played an important role in the evolution of sensory &amp; consumer science. Statisticians and data analysts in SCS have developed their own field of research, coined Sensometrics (<span class="citation"><a href="bibliography.html#ref-Schlich1993" role="doc-biblioref">Schlich</a> (<a href="bibliography.html#ref-Schlich1993" role="doc-biblioref">1993</a>)</span>, <span class="citation"><a href="bibliography.html#ref-Brockhoff2011" role="doc-biblioref">Brockhoff</a> (<a href="bibliography.html#ref-Brockhoff2011" role="doc-biblioref">2011</a>)</span> ,<span class="citation"><a href="bibliography.html#ref-Qannari2017" role="doc-biblioref">Qannari</a> (<a href="bibliography.html#ref-Qannari2017" role="doc-biblioref">2017</a>)</span>). Now then, what makes sensory &amp; consumer science special? And how does it influence the way sensory and consumer data are handled?</p>
+<p>Eventually, datasets from hedonic tests consist of hedonic scores (i.e. degrees of liking, or preference ranks) given by each interviewed consumer to a series of products. As for DA, each consumer usually evaluates all the samples in the product set, but balanced incomplete designs are sometimes used too. In addition, some companies favor pure monadic evaluation of products (i.e. between-subject design or independent groups design) which obviously result in unrelated sample datasets.</p>
+<p>Sensory and consumer researchers also borrow methods from other fields, in particular from sociology and experimental psychology. As a result, it is now frequent to collect textual sensory data from open comments and qualitative interviews, or sensory distances or co-occurrences from projective and sorting tasks. Definitely a multidisciplinary area, SCS develops in many directions and reaches disciplines that range from genetics and physiology to social marketing, behavioral economics and computational neuroscience. So have diversified the types of data sensory and consumer scientists must deal with. As in many scientific fields, the development of sophisticated statistical techniques and access to powerful data analysis tools have played an important role in the evolution of sensory &amp; consumer science. Statisticians and data analysts in SCS have developed their own field of research, coined Sensometrics <span class="citation">(<a href="#ref-Schlich1993" role="doc-biblioref">Schlich 1993</a>; <a href="#ref-Brockhoff2011" role="doc-biblioref">Brockhoff 2011</a>; <a href="#ref-Qannari2017" role="doc-biblioref">Qannari 2017</a>)</span>. Now then, what makes sensory &amp; consumer science special? And how does it influence the way sensory and consumer data are handled?</p>
 </div>
-<div id="dealing-with-human-diversity" class="section level4 unnumbered">
-<h4>Dealing with human diversity</h4>
-<p>Sensory evaluation attempts to isolate the sensory properties of foods and provides important and useful information about these properties to product developers, food scientists, and managers (<span class="citation"><a href="bibliography.html#ref-LawlessHeym2010" role="doc-biblioref">Lawless and Heymann</a> (<a href="bibliography.html#ref-LawlessHeym2010" role="doc-biblioref">2010</a>)</span>). However, one should bear in mind that these ‘sensory properties’ actually result from the interaction between the object (the food) and the perceiver of that object (the consumer). In fact, we may very well consider the true object of evaluation in SCS to be mental representations. They are nonetheless very concrete and directly impact behaviors, health and economic decisions (<span class="citation"><a href="bibliography.html#ref-Kahneman2000" role="doc-biblioref">Kahneman and Tversky</a> (<a href="bibliography.html#ref-Kahneman2000" role="doc-biblioref">2000</a>)</span>).
-A direct consequence of this is that sensory data depend both on the product to be evaluated and on the subjects who evaluate the product. Because people are different, sensory data are expected to differ accordingly. In its core principle, SCS recognizes the diversity of human beings, biologically, socially and culturally speaking, not to mention the fact that each individual has their own personal history and experience with products. In short, people perceive things differently and like different things. For this reason, SCS only relies on groups of people (i.e. a panel of judges, a sample of consumers) and never on a single individual’s response. Yet, sensory and consumer scientists usually collect individual data and analyze them at a refined level of granularity (individual, subgroups) before considering larger groups (specific populations or marketing targets).</p>
+<div id="dealing-with-human-diversity" class="section level4 unnumbered hasAnchor">
+<h4>Dealing with human diversity<a href="bienvenue.html#dealing-with-human-diversity" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Sensory evaluation attempts to isolate the sensory properties of foods and provides important and useful information about these properties to product developers, food scientists, and managers <span class="citation">(<a href="#ref-LawlessHeym2010" role="doc-biblioref">Lawless and Heymann 2010</a>)</span>. However, one should bear in mind that these ‘sensory properties’ actually result from the interaction between the object (the food) and the perceiver of that object (the consumer). In fact, we may very well consider the true object of evaluation in SCS to be mental representations. They are nonetheless very concrete and directly impact behaviors, health and economic decisions <span class="citation">(<a href="#ref-Kahneman2000" role="doc-biblioref">Kahneman and Tversky 2000</a>)</span>.
+A direct consequence of this is that sensory data depend both on the product to be evaluated and on the subjects who evaluate the product. Because people are different, individual sensory data are expected to differ accordingly. In its core principle, SCS recognizes the diversity of human beings, biologically, socially and culturally speaking, not to mention the fact that each individual has their own personal history and experience with products. In short, people perceive things differently and like different things. For this reason, SCS only relies on groups of people (i.e. a panel of judges, a sample of consumers) and never on a single individual’s response. Yet, sensory and consumer scientists usually collect individual data and analyze them at a refined level of granularity (individual, subgroups) before considering larger groups (specific populations or marketing targets).</p>
 <p>This said, sensory and consumer studies must lead to operational recommendations. They are used to make informed decisions on product development, to launch new product, and sometimes to help define food and health policies. Data science can precisely help sensory and consumer scientists to reach those objectives while taking diversity into account.</p>
-<p>For measures of sensory description, sensory and consumer scientists can manage the diversity of human responses to a certain extent by training panels to use a consensual vocabulary, by aligning evaluated concepts and calibrating the quantification of evaluations on scales (<span class="citation"><a href="bibliography.html#ref-Bleibaum2020" role="doc-biblioref">Bleibaum</a> (<a href="bibliography.html#ref-Bleibaum2020" role="doc-biblioref">2020</a>)</span>). However, this won’t eliminate interindividual differences in sensitivity, simply because we are genetically determined to be different on top of differences due to age, physiological state, illness, etc. Nowadays, as the field becomes more and more consumer-oriented, it becomes clear that the use of several subjects in a panel cannot be assimilated to a mere repetition of individual measurements. Accordingly, sensory methods have been developed to allow panelists to better express their own perceptions and to get a more accurate picture of how people perceive products (<span class="citation"><a href="bibliography.html#ref-Varela2012" role="doc-biblioref">Varela and Ares</a> (<a href="bibliography.html#ref-Varela2012" role="doc-biblioref">2012</a>)</span>). These methods yield richer and more complex data that require more advanced analysis techniques to extract relevant and actionable information. Historically, one the first methodological innovations in this direction has been the use of free choice profiling combined to Generalized Procrustes Analysis (<span class="citation"><a href="bibliography.html#ref-Williams1984" role="doc-biblioref">Williams and Langron</a> (<a href="bibliography.html#ref-Williams1984" role="doc-biblioref">1984</a>)</span>). Since then, sensory and data analysis methods have multiplied greatly (<span class="citation"><a href="bibliography.html#ref-Delarue2015" role="doc-biblioref">Delarue, Lawlor, and Rogeaux</a> (<a href="bibliography.html#ref-Delarue2015" role="doc-biblioref">2015</a>)</span>). Naturally, data science has become even more crucial to accompany this evolution.</p>
-<p>As regards hedonic tests (liking, acceptance, preference…), the measurements are in essence subjective and participants to such tests are by definition ‘untrained’ consumers. A constant outcome of these tests is to find important interindividual differences and it is very common to find consumers who have opposite sensory preference patterns. Clustering and segmentation techniques are thus routinely applied to consumer data. One difficulty though, is to link these differences in preferences to other consumer variables, should they be sociodemographic, psychographic, or related to usage and attitudes. Most often, one set of variables is not enough to fully explain preference patterns. In saturated markets however, being able to understand individual needs and preferences is critical should one intend to develop customized products. This makes the understanding of consumer segments even more important. Nowadays, these segments go far beyond sensory preferences and must take into account variables that touch environmental awareness and sustainability dimensions.</p>
+<p>For measures of sensory description, sensory and consumer scientists can manage the diversity of human responses to a certain extent by training panels to use a consensual vocabulary, by aligning evaluated concepts and calibrating the quantification of evaluations on scales <span class="citation">(<a href="#ref-Bleibaum2020" role="doc-biblioref">Bleibaum 2020</a>)</span>. However, this won’t eliminate interindividual differences in sensitivity, simply because we are genetically different, on top of differences due to age, physiological state, illness, etc. Nowadays, as the field becomes more and more consumer-oriented, it becomes clear that the use of several subjects in a panel cannot be assimilated to a mere repetition of individual measurements. Accordingly, sensory methods have been developed to allow panelists to better express their own perceptions and to get a more accurate picture of how people perceive products <span class="citation">(<a href="#ref-Varela2012" role="doc-biblioref">Varela and Ares 2012</a>)</span>. These methods yield richer and more complex data that require more advanced analysis techniques to extract relevant and actionable information. Historically, one the first methodological innovations in this direction has been the use of free choice profiling combined to Generalized Procrustes Analysis <span class="citation">(<a href="#ref-Williams1984" role="doc-biblioref">Williams and Langron 1984</a>)</span>. Since then, sensory and data analysis methods have multiplied greatly <span class="citation">(<a href="#ref-Delarue2015" role="doc-biblioref">Delarue, Lawlor, and Rogeaux 2015</a>)</span>. Naturally, data science has become even more crucial to accompany this evolution.</p>
+<p>As regards hedonic tests (liking, acceptance, preference…), the measurements are in essence subjective and participants to such tests are by definition ‘untrained’ consumers. A constant outcome of these tests is to find important interindividual differences and it is very common to find consumers who have opposite sensory preference patterns. Clustering and segmentation techniques are thus routinely applied to consumer data. One difficulty though, is to link these differences in preferences to other consumer variables, should they be sociodemographic, psychographic, or related to usage and attitudes. Most often, one set of variables (e.g. demographics) is not enough to fully explain preference patterns. In saturated and ever changing markets however, being able to understand individual needs and preferences is critical should one intend to develop customized products. This makes the understanding of consumer segments even more important. Nowadays, these segments go far beyond sensory preferences and must take into account variables that touch environmental awareness and sustainability dimensions.</p>
+</div>
+<div id="specificities-of-data-handled-in-sensory-and-consumer-science" class="section level4 unnumbered hasAnchor">
+<h4>Specificities of data handled in sensory and consumer science<a href="bienvenue.html#specificities-of-data-handled-in-sensory-and-consumer-science" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Sensory and consumer data are usually of relatively small size. Indeed, we often deal with a number of subjects ranging between a dozen (for trained panels) and few hundreds (for consumer hedonic tests). Of course, when multiplied by the number of samples being evaluated by each subject, we would get a much larger numbers of observations, but this will still be relatively modest compared with so-called big data generated everywhere online. The same goes with the number of variables in sensory data sets. Sensory descriptive analysis, for example, typically relies on 10 to 50 attributes, which could be seen as a lot but is in fact much less than in other fields producing experimental data with thousands of variables like chemometrics, genomics, etc.</p>
+<p>This being said, it must be stressed that sensory and consumer data are very diverse (Figure 2). Indeed, the need to understand perceptions and preferences often leads sensory and consumer scientists to deal with multiple datasets, each possibly comprising various data types. Most sensory techniques yield quantitative (e.g. intensity, similarity, hedonic) data collected from rating scales or ranking tasks, but other methods would provide inter-product distances (e.g. napping), co-occurrences (e.g. free sorting), citation frequencies (e.g. CATA), or texts (e.g. open-ended comments, natural speech). Besides, agreement scores from Likert scales would often be used when sensory studies are combined with usage and attitude surveys or psychometrics questionnaires. To add richer information, but more complexity to this picture, experimenters are sometimes interested the temporal dimension of sensory measurements (by the means of methods like TI, TDS, TCATA) or may simply aim to measure reaction times (e.g. Implicit Association Test).<br />
+Eventually, different type of data can result from the same task. For example, this would typically be the case for <em>free JAR</em> that yields both categorization data with hedonic valence and textual data <span class="citation">(<a href="#ref-Luc2022" role="doc-biblioref">Luc et al. 2022</a>)</span>. With the development of all sorts of media and data collection means, such patterns will surely become even more frequent.</p>
+<p>As could be expected, sensory and consumer studies are often multifaceted and collected data may all relate to each other when they apply to the same product set and/or to the same consumers (Figure 3). Such links between datasets are usually sought because they allow uncovering consumers’ motivations and their drivers of preferences, thanks to modeling techniques (e.g. preference mapping, PLS regression), segmentation analyses (e.g. latent variables clustering), and machine learning. As a prerequisite to the application of any of these techniques though, it is critical to understand how these data are structured, and to properly handle them in a reliable and efficient manner. Many examples of such data manipulation are given throughout this book and specific guidance is given in Chapter <a href="data-manip.html#data-manip">4</a>.</p>
+<p>Last, it is worth mentioning that sensory and consumer data are intrinsically subjective. This is of course a good thing because the goal of any sensory study is to capture subjects’ point of view. However, it could make some of the usual data quality criteria useless. This is specially true for hedonic data, for which repeatability and reference values could be questionable notions <span class="citation">(<a href="#ref-Koster2003" role="doc-biblioref">Köster 2003</a>; <a href="#ref-Kosteretal2003" role="doc-biblioref">Köster et al. 2003</a>)</span>. Sensory and consumer scientists may nonetheless rely on techniques allowing them to evaluate the degree of consensus of their panel, or tools like jackknife and bootstrap to evaluate the robustness of their data.</p>
 </div>
 </div>
-<div id="computational-sensory-science" class="section level3 unnumbered">
-<h3>Computational Sensory Science</h3>
+<div id="computational-sensory-science" class="section level3 unnumbered hasAnchor">
+<h3>Computational Sensory Science<a href="bienvenue.html#computational-sensory-science" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We can make an analogy of the future (or maybe the present already) of the sensory and consumer science field with other areas that advanced into the computational field, such as computational neuroscience and computational biology. A quick search in Wikipedia on the definition of those fields and a little about on how those areas evolved or how the term ‘computational’ was introduced will make you realize that is the same path as the consumer and sensory field is moving along.</p>
+<ul>
+<li><p><strong>Computational neuroscience</strong>: “is a branch of neuroscience which employs mathematical models, computer simulations, theoretical analysis and abstractions of the brain to understand the principles that govern the development, structure, physiology and cognitive abilities of the nervous system. The term ‘computational neuroscience’ was introduced to provide a summary of the current status of a field which was referred to by a variety of names, such as neural modeling, brain theory and neural networks.” (<a href="https://en.wikipedia.org/wiki/Computational_neuroscience" class="uri">https://en.wikipedia.org/wiki/Computational_neuroscience</a>)</p></li>
+<li><p><strong>Computational biology</strong>: is a branch of biology that “involves the development and application of data-analytical and theoretical methods, mathematical modelling and computational simulation techniques to the study of biological, ecological, behavioral, and social systems. Computational biology, which includes many aspects of bioinformatics and much more, is the science of using biological data to develop algorithms or models in order to understand biological systems and relationships.” (<a href="https://en.wikipedia.org/wiki/Statistical_model" class="uri">https://en.wikipedia.org/wiki/Statistical_model</a>)</p></li>
+</ul>
+<p>The sensory and consumer science field although not officially named with the term ‘computational,’ is already expanded in this field. The way consumer and sensory data is explored today is extremely advanced and went way beyond the simple statistical analysis performed a few years ago using the data collected from standard consumer or trained panel studies. Nowadays, sensory is getting into the big data field by organizing and putting together years of historical data into a database to answer future business questions and extract meaningful information.</p>
+<p>Advances in digital technologies such as the integration of biometrics to assess consumers’ physiological and emotional responses, incorporation of virtual, augmented, and mixed reality, and even the use of sensor technologies (electronic noses and tongues) for sensory analysis are already widely used in the field. Additionally, data is being collected from different sources, such as social media. Those advanced technologies and complex data being extracted require much more advanced tools and computer capabilities to analyze and get meaningful information.</p>
+<p>Rapid data acquisition, allied with the need for flexible, customized, and fast results interpretation, is opening a huge way for automation. The urge to deep explore, segment products/consumer, and discover new or hidden patterns and relationships to get the most valuable insights from the data sets is also nurturing the implementation of Artificial Intelligence, particularly Machine Learning.</p>
+<p>At this point, we hope to have motivated you even more about the importance of data science for practitioners or students of sensory and consumer science who want to participate in the emerging field of computational sensory science.</p>
+<p>Let’s get started?</p>
 
 </div>
 </div>
@@ -453,6 +508,45 @@ A direct consequence of this is that sensory data depend both on the product to 
 
 
 
+</div>
+<h3>Bibliography<a href="bibliography.html#bibliography" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Bleibaum2020" class="csl-entry">
+Bleibaum, Rebecca N, ed. 2020. <em><span class="nocase">Descriptive Analysis Testing for Sensory Evaluation</span></em>. 2nd ed. ASTM International. <a href="https://doi.org/10.1520/mnl13-2nd-eb">https://doi.org/10.1520/mnl13-2nd-eb</a>.
+</div>
+<div id="ref-Brockhoff2011" class="csl-entry">
+Brockhoff, Per B. 2011. <span>“<span>Sensometrics</span>.”</span> Springer.
+</div>
+<div id="ref-Delarue2015" class="csl-entry">
+Delarue, Julien, Ben Lawlor, and Michel Rogeaux. 2015. <em><span class="nocase">Rapid Sensory Profiling Techniques and Related Methods: Applications in New Product Development and Consumer Research</span></em>. Cambridge, UK: Woodhead Publishing Ltd. <a href="https://doi.org/10.1016/C2013-0-16502-6">https://doi.org/10.1016/C2013-0-16502-6</a>.
+</div>
+<div id="ref-Kahneman2000" class="csl-entry">
+Kahneman, D, and A Tversky. 2000. <em><span class="nocase">Choices, values and frames</span></em>. Cambridge: Cambridge University Press; the Russell Sage Foundation.
+</div>
+<div id="ref-Koster2003" class="csl-entry">
+Köster, Ep. 2003. <span>“The Psychology of Food Choice: Some Often Encountered Fallacies.”</span> <em>Food Quality and Preference</em> 14: 359–73.
+</div>
+<div id="ref-Kosteretal2003" class="csl-entry">
+Köster, Ep, T. Couronne, F. Léon, C. Lévy, and A. S. Marcelino. 2003. <span>“Repeatability in Hedonic Sensory Measurement: A Conceptual Exploration.”</span> <em>Food Quality and Preference</em> 14 (March): 165–76. <a href="https://doi.org/10.1016/S0950-3293(02)00075-7">https://doi.org/10.1016/S0950-3293(02)00075-7</a>.
+</div>
+<div id="ref-LawlessHeym2010" class="csl-entry">
+Lawless, Harry T, and Hildegarde Heymann. 2010. <em><span class="nocase">Sensory evaluation of food: principles and practices</span></em>. 2nd ed. Food Science Text Series. Springer New York.
+</div>
+<div id="ref-Luc2022" class="csl-entry">
+Luc, Alexiane, Sébastien Lê, Mathilde Philippe, El Mostafa Qannari, and Evelyne Vigneau. 2022. <span>“Free JAR Experiment: Data Analysis and Comparison with JAR Task.”</span> <em>Food Quality and Preference</em> 98 (June): 104453. <a href="https://doi.org/10.1016/J.FOODQUAL.2021.104453">https://doi.org/10.1016/J.FOODQUAL.2021.104453</a>.
+</div>
+<div id="ref-Qannari2017" class="csl-entry">
+Qannari, El Mostafa. 2017. <span>“<span class="nocase">Sensometrics approaches in sensory and consumer research</span>.”</span> <em>Current Opinion in Food Science</em> 15: 8–13. https://doi.org/<a href="https://doi.org/10.1016/j.cofs.2017.04.001">https://doi.org/10.1016/j.cofs.2017.04.001</a>.
+</div>
+<div id="ref-Schlich1993" class="csl-entry">
+Schlich, Pascal. 1993. <span>“<span class="nocase">Contribution <span class="nocase">à</span> la sensom<span class="nocase">é</span>trie</span>.”</span> PhD thesis, Universit<span>é</span> Paris-Sud.
+</div>
+<div id="ref-Varela2012" class="csl-entry">
+Varela, Paula, and Gastón Ares. 2012. <span>“<span class="nocase">Sensory profiling, the blurred line between sensory and consumer science. A review of novel methods for product characterization</span>.”</span> <em>Food Research International</em> 48 (2): 893–908. <a href="https://doi.org/10.1016/j.foodres.2012.06.037">https://doi.org/10.1016/j.foodres.2012.06.037</a>.
+</div>
+<div id="ref-Williams1984" class="csl-entry">
+Williams, A, and S Langron. 1984. <span>“<span class="nocase">The use of Free-choice Profiling for the evaluation of commercial ports</span>”</span> 35 (5): 558–68.
+</div>
 </div>
 <div class="footnotes">
 <hr />
@@ -465,12 +559,11 @@ A direct consequence of this is that sensory data depend both on the product to 
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="preface-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="start-R.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -489,6 +582,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -509,6 +603,10 @@ gitbook.start({
 "text": null
 },
 "download": ["i2ds4scc_bookdown.pdf", "i2ds4scc_bookdown.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "section"
 }

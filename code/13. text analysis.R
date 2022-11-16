@@ -1,18 +1,20 @@
 library(tidyverse)
 library(readxl)
-
+library(here)
 library(tidytext)
 
-library(here)
-file_path <- here("data","cider_data.xlsx") 
-
+file_path <- here("data","cider_text_data.xlsx") 
 cider_og <- read_xlsx(file_path) %>% 
   mutate(sample = as.character(sample))
 
-  # Tokenization
+# Tokenization ------------------------------------------------------------
+
 cider <- cider_og %>% 
   unnest_tokens(tokens, comments, token="regex", pattern="[;|,|:|.|/]", to_lower=FALSE)
 
+# Cleaning ----------------------------------------------------------------
+
+  ## First Clean
 cider <- cider %>% 
   mutate(tokens = str_to_lower(tokens)) %>% 
   mutate(tokens = str_trim(tokens)) %>% 
@@ -21,20 +23,23 @@ cider <- cider %>%
   mutate(tokens = str_remove_all(tokens, pattern="[ó|ò]")) %>% 
   mutate(tokens = str_replace_all(tokens, pattern="õ", replacement="'"))
 
-  # Stop Words
+  ## Further Clean
 cider <- cider %>% 
   relocate(subject, .before=sample) %>% 
   group_by(subject, sample) %>% 
   mutate(num = row_number()) %>% 
   ungroup() %>% 
-  unnest_tokens(tokens, tokens, token="regex", pattern=" ")
+  unnest_tokens(tokens, tokens, token="regex", pattern=" |-")
 
 cider %>%
   count(tokens) %>%
   arrange(desc(n))
 
-    ## Creating the List
+  ## Stop Words
 library(stopwords)
+length(stopwords(source="snowball"))
+length(stopwords(source="stopwords-iso"))
+
 stopword_list <- stopwords(source="snowball")
 
 word_list <- cider %>% 
@@ -42,23 +47,21 @@ word_list <- cider %>%
   pull(tokens)
 
 intersect(stopword_list, word_list)
-word_list[!word_list %in% stopword_list]
-
 stopword_list <- stopword_list[!stopword_list %in% c("off","no","not","too","very")]
+
+word_list[!word_list %in% stopword_list]
 stopword_list <- c(stopword_list, c("accompany","amount","anything","considering","despite","expected",
                                     "just","like","neither","one","order","others","products",
-                                    "sample","seems","something","thank","think","though","time","way",
-                                    "-"))
+                                    "sample","seems","something","thank","think","though","time","way"))
 
 stopword_list[order(stopword_list)]
     
-    ## Cleaning the Data
 cider <- cider %>% 
   anti_join(tibble(tokens = stopword_list), by="tokens")
 
-(cider %>% 
+cider %>% 
   count(tokens) %>% 
-  arrange(desc(n)))
+  arrange(desc(n))
 
   ## Stemming
 library(SnowballC)
@@ -66,36 +69,38 @@ cider <- cider %>%
   mutate(stem = wordStem(tokens))
 
 cider %>% 
-  count(stem) %>% 
-  arrange(desc(n))
+  count(stem)
   
   ## Lemmatization
 library(spacyr)
 
 spacy_initialize(entity=FALSE)
-
 lemma <- spacy_parse(cider$tokens) %>% 
   as_tibble() %>% 
   dplyr::select(tokens=token, lemma) %>% 
   unique()
-
 cider <- full_join(cider, lemma, by="tokens")
 
+cider %>% 
+  count(lemma)
+
+  ## Manual grouping
 cider %>% 
   count(lemma) %>% 
   filter(lemma %in% c("moldy","rotten"))
 
-  ## Manual grouping
 cider %>% 
   mutate(lemma = str_replace(lemma, "moldy", "rotten")) %>% 
   count(lemma) %>% 
   filter(lemma %in% c("moldy","rotten"))
 
-new_list <- read_xlsx("temp/Example of word grouping.xlsx")
+new_list <- read_xlsx("data/Example of word grouping.xlsx")
 cider <- cider %>% 
   full_join(new_list, by="lemma") %>% 
   mutate(lemma = ifelse(is.na(`new name`), lemma, `new name`)) %>% 
   dplyr::select(-`new name`)
+
+# Data Analysis -----------------------------------------------------------
 
   ## Visualization (Overall)
 cider %>% 
@@ -113,7 +118,7 @@ cider %>%
   coord_flip()+
   ggtitle("List of words mentioned at least 10 times")
 
-  ## Contingency Table and CA
+  ## Contingency Table
 cider %>% 
   filter(!is.na(lemma), !is.na(sample)) %>% 
   group_by(sample, lemma) %>% 
@@ -121,6 +126,28 @@ cider %>%
   ungroup() %>% 
   pivot_wider(names_from=lemma, values_from=n, values_fill=0)
 
+prod_term <- cider %>% 
+  filter(!is.na(lemma), !is.na(sample)) %>% 
+  group_by(sample, lemma) %>% 
+  count() %>% 
+  ungroup() %>% 
+  split(.$sample) %>% 
+  map(function(data){
+    data %>% 
+      arrange(desc(n)) %>% 
+      filter(n>=5) %>% 
+      ggplot(aes(x=reorder(lemma, n), y=n))+
+      geom_col()+
+      theme_minimal()+
+      xlab("")+
+      ylab("")+
+      theme(axis.line = element_line(colour="grey80"))+
+      coord_flip()+
+      ggtitle(paste0("List of words mentioned at least 5 times for ", 
+                     data %>% pull(sample) %>% unique()))
+  })
+
+  ## Correspondence Analysis
 cider_ct <- cider %>% 
   filter(!is.na(lemma), !is.na(sample)) %>% 
   group_by(sample, lemma) %>% 
@@ -133,29 +160,6 @@ cider_ct <- cider %>%
 
 library(FactoMineR)
 cider_CA <- CA(cider_ct)
-
-  ## Words mentioned >5 times (Product)
-cider %>% 
-  filter(!is.na(lemma), !is.na(sample)) %>% 
-  group_by(sample, lemma) %>% 
-  count() %>% 
-  ungroup() %>% 
-  split(.$sample) %>% 
-  map(function(data){
-    
-    data %>% 
-      arrange(desc(n)) %>% 
-      filter(n>=5) %>% 
-      ggplot(aes(x=reorder(lemma, n), y=n))+
-      geom_col()+
-      theme_minimal()+
-      xlab("")+
-      ylab("")+
-      theme(axis.line = element_line(colour="grey80"))+
-      coord_flip()+
-      ggtitle(paste0("List of words mentioned at least 5 times for ", data %>% pull(sample) %>% unique()))
-    
-  })
 
   ## Wordclouds
 cider_wc <- cider %>% 
@@ -181,7 +185,7 @@ cider_wc %>%
   theme_minimal()+
   facet_wrap(~sample)
 
-  # n-grams
+  ## n-grams
 cider_2grams <- cider_og %>% 
   unnest_tokens(bigrams, comments, token="ngrams", n=2)
 
