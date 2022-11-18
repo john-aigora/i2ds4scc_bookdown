@@ -375,12 +375,17 @@ cm <- conf_mat(obs_vs_pred, Type, .pred_class)
 autoplot(cm, type = "heatmap")
 ```
 
-<!-- Bartek: Could you add the Feature Importance plot and extract some model metrics, please? --> 
+<!-- Bartek: Could you add the Feature Importance plot and extract some model metrics, please?
+
+I changed the type of the FI to be ratio so it is easier to interpret now.
+
+The interpretation now is that the higher the variable is, the more important it is. For example after permutating (spoil the variable) Color variable it turns out that the model will be more than 2.5 times worse than the one with the correct Color variable.
+-->  
 
 ```{r}
 library(DALEXtra)
 library(modelStudio)
-
+library(tidymodels)
 data_to_explain <- wine_train
 explainer <- explain_tidymodels(
   final_model, 
@@ -388,12 +393,18 @@ explainer <- explain_tidymodels(
     select(-Type),
   y = data_to_explain$Type
 )
-var_imp <- variable_importance(explainer, loss_function = loss_cross_entropy)
+
+var_imp <- variable_importance(explainer, loss_function = loss_cross_entropy, type = "ratio")
 plot(var_imp)
 
 
 ```
-<!-- Kappa (kap()) is a similar measure to accuracy(), but is normalized by the accuracy that would be expected by chance alone and is very useful when one or more classes have large frequency distributions.
+<!-- 
+@Vanessa the problem here is multiclass classification so the metrics are different than thouse that you used to (RMSE, MSE etc. - we can not have them here).
+
+Accuracy is one metric for evaluating classification models. Informally, accuracy is the fraction of predictions our model got right.
+
+Kappa (kap()) is a similar measure to accuracy(), but is normalized by the accuracy that would be expected by chance alone and is very useful when one or more classes have large frequency distributions.
 --> 
 
 ```{r}
@@ -401,8 +412,6 @@ obs_vs_pred_prob <- bind_cols(wine_testing %>% select(Type), predict(final_model
   mutate(Type = as.factor(Type))
 
 accuracy(obs_vs_pred, truth = "Type", estimate = ".pred_class")
-precision(obs_vs_pred, truth = "Type", estimate = ".pred_class")
-specificity(obs_vs_pred, truth = "Type", estimate = ".pred_class")
 kap(obs_vs_pred, truth = "Type", estimate = ".pred_class")
 
 ```
