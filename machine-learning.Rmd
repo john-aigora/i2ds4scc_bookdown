@@ -58,7 +58,7 @@ A common situation requiring Supervised ML in Sensory and Consumer Science consi
 
 Semi-Supervised ML is not an ML approach per se. Instead, it is a combination of both Unsupervised and Supervised approaches, which aims first in creating an output variable using Unsupervised techniques, and to then explain or use this output variable using other information through Supervised ML. A good example of Semi-Supervised approach consists in defining clusters of consumers based on liking (unsupervised), and to characterize such clusters using demographic data using decision trees for instance (supervised). External Preference Mapping is another example since first we reduce the dimensionality of the sensory data through PCA (unsupervised), and we then use these dimensions to explain the liking scores of consumers using regressions (supervised).
 
-> The third type of Machine Learning is called *Reinforcement Learning*, which is based on providing feedback to the machine. It is a technique that enables an agent to learn through trial and error from its own actions and experiences. Reinforcement Learning is commonly used in some tech applications (e.g. gaming and robotics), specially when large data sets are available. Such approach has little reach in sensory and consumer science at the moment, hence we are not going to develop it further here.
+> The forth type of Machine Learning is called *Reinforcement Learning*, which is based on providing feedback to the machine. It is a technique that enables an agent to learn through trial and error from its own actions and experiences. Reinforcement Learning is commonly used in some tech applications (e.g. gaming and robotics), specially when large data sets are available. Such approach has little reach in sensory and consumer science at the moment, hence we are not going to develop it further here.
 
 ## Unsupervised Machine learning
 
@@ -292,15 +292,10 @@ In this instance, we do not need to preprocess further any of the variables pres
 
 Once the model formula is defined, and the instructions for the data pre-processing is set, we need to decide which type of ML algorithm should be used. Let's consider the random forest classifier for the wine data using `rand_forest()` (the algorithm proposed by the `{ranger}` package is used here). This function has 3 hyper-parameters (`mtry, trees, min_n`) which can be tuned to achieve the best possible results.
 
-Model tuning is the process of finding the optimal values for those parameters. Most often, the best option is to start with the default values, and to change them along the way while monitoring their impact on the model quality. Since the model is not yet executed, these parameters can be changed using the `tune()` function. This provides a simple placeholder for the value. Let's set all of them as `tune()`.
+Model tuning is the process of finding the optimal values for those parameters. In order to find the best hyper-parameter combinations, we need to define a search range for each of them. When we choose the family of the model we want to use (`rand_forest` in this example), we have to let the machine knows that a given parameter (`mtry, trees, min_n`) is not defined explicitly and will be tuned instead. To achieve such a result, we must use the function `tune()`.
 
 <!-- I do not really understand the end of this paragraph (part about tune())...is it possible to re-write it a bit? -->
-<!-- Bartek - Actually bellow we just define which model we want to use and the tune() is just the placeholder - having this placeholder   later we can specify the range of values of each of the parameters which we want to train the models for. Istead of having tune() we couldspecify exactly values for theseparameters e.g. trees = 10. It would mean that we have 10 trees contained in the ensemble. 
 
-I would remoce these 2 sentences: "the best option is to start with the default values, and to change them along the way while monitoring their impact on the model quality. Since the model is not yet executed, these parameters can be changed using the `tune()` function."
-
-Below my proposal what could we write:
-Model tuning is the process of finding the optimal values for those parameters. In order to find the best combination of hyper-parameter combinations, we need to define a search range for each of them (defined 2 chunks below). When we choose the family of the model we want to use (rand_forest), we have to let the computer know that a given parameter (mttry, trees, min_n) is not defined explicitly and will be tuned instead. To achieve such a result, we must use the function tune()-->
 ```{r method_selection_and_placeholder_for_parameters, echo=TRUE, eval=TRUE}
 rf_spec <- rand_forest(
   mtry = tune(),
@@ -378,37 +373,7 @@ cm <- conf_mat(obs_vs_pred, Type, .pred_class)
 autoplot(cm, type = "heatmap")
 ```
 
-<!-- Bartek: Could you add the Feature Importance plot and extract some model metrics, please?
-
-I changed the type of the FI to be ratio so it is easier to interpret now.
-
-The interpretation now is that the higher the variable is, the more important it is. For example after permutating (spoil the variable) Color variable it turns out that the model will be more than 2.5 times worse than the one with the correct Color variable.
--->  
-
-```{r}
-library(DALEXtra)
-library(modelStudio)
-library(tidymodels)
-data_to_explain <- wine_train
-explainer <- explain_tidymodels(
-  final_model, 
-  data = data_to_explain %>% 
-    select(-Type),
-  y = data_to_explain$Type
-)
-
-var_imp <- variable_importance(explainer, loss_function = loss_cross_entropy, type = "ratio")
-plot(var_imp)
-
-
-```
-<!-- 
-@Vanessa the problem here is multiclass classification so the metrics are different than thouse that you used to (RMSE, MSE etc. - we can not have them here).
-
-Accuracy is one metric for evaluating classification models. Informally, accuracy is the fraction of predictions our model got right.
-
-Kappa (kap()) is a similar measure to accuracy(), but is normalized by the accuracy that would be expected by chance alone and is very useful when one or more classes have large frequency distributions.
---> 
+There are several ways to look into the model quality, being the approach and model metrics highly dependent on the situation/type of model used. In our case, that we have a multiclass classification, we can besides the confusion matrix, check the model accuracy. Classification accuracy is a metric that summarized the fraction of predictions our model got right (somehow it brings similar information we get from the confusion matrix). We have to first organize the data to have have the model predictions. Then we directly calculate the accuracy and also kappa accuracy, using the functions `accuracy ()` and `kap ()`. Kappa (kap()) is a similar measure to accuracy(), but is normalized by the accuracy that would be expected by chance alone. It can be very useful when one or more classes have large frequency distributions.
 
 ```{r}
 obs_vs_pred_prob <- bind_cols(wine_testing %>% select(Type), predict(final_model, wine_testing, type = "prob")) %>% 
@@ -418,6 +383,33 @@ accuracy(obs_vs_pred, truth = "Type", estimate = ".pred_class")
 kap(obs_vs_pred, truth = "Type", estimate = ".pred_class")
 
 ```
+
+The accuracy and Kappa accuracy of our model is extremely high (> 0.94), emphasizing its great model performance.
+
+A simple and easy way to have a higher level understanding on what variables play the most important role in our model (wine classification) is through the called Feature Importance plot. To create this plot, we need to first create a object known as `explainer` from the tidymodels workflow, using the function `explain_tidymodels` from the package `{DALEXtra}`. This function will take as argument the model to be explained, the data to be used to calculate the explanations which should be passed without a target column (`wine_train` removing the columns `Type`) and the numeric vector with outputs/scores (y). The `explainer` object can be then used to create the Feature Importance plot using the function `variable_importance`.
+
+The interpretation is very straight forward, in the way that variables are conveniently ordered according to their importance. The higher the cross entropy loss after permutations, the more important the variable is to in our case, decide to which group each wine belong to. So, for example, if color is permuted (spoil the variable), it turns out that the model will be more than 2.5 times worse than the one with the correct color variable. In summary, cross entropy loss after permutations measures how much the permutation of a variable would impact the model performance. The higher the impact, the most important the variable is.
+
+```{r fi, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE, results='hide'}
+library(DALEXtra)
+library(modelStudio)
+
+data_to_explain <- wine_train
+
+explainer <- explain_tidymodels(
+  model = final_model, 
+  data = data_to_explain %>% 
+    select(-Type),
+  y = data_to_explain$Type
+)
+
+var_imp <- variable_importance(explainer, loss_function = loss_cross_entropy, type = "ratio")
+plot(var_imp)
+```
+
+Building a machine learning model may seem complicated at first since there are many steps and important things to watch out for. Although we presented here a simple example, for one specific situation of classification, you will realize that this way of working (typical modeling approach showed), is highly applicable to other situations. Again, the main idea of this chapter is to open your mind, provide you with the basics, and ultimately motivate you to seek and learn more about machine learning! 
+
+
 <!-- Quick remark on the fact that although this way of working may seem complicated at first, it is very efficient as everything is tidied.
 For instance, with workflows, it is easy to try differet ML algorithms by simply creating multiple models.
 Possibility to compare models...or even combine models in ensemble to improve further the results!
