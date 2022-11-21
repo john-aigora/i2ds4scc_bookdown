@@ -4,30 +4,29 @@ knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 
 # Machine Learning {#machine-learning}
 
-> Artificial Intelligence (AI) and Machine Learning (ML) in particular have gained a lot of attention in recent years. With the increase of data availability, data storage, and computing power, many techniques that were just *dreams* back then are now easily accessible, and used. And of course, the sensory and consumer science field is not an exception to this rule as we start seeing more and more ML applications...although in our case, we do not have *Big Data*, instead we do have *diverse data*!
+> Artificial Intelligence (AI) and Machine Learning (ML) in particular have gained a lot of attention in recent years. With the increase of data availability, data storage, and computing power, many techniques that were just *dreams* back then are now easily accessible, and used. And of course, the sensory and consumer science field is not an exception to this rule as we start seeing more and more ML applications...although in our case, we do not have *Big Data* per se, but we do have *diverse data*!
 For many of us, AI and ML seems to be a broad and complex topic. This assertion is true, and in fact it would deserve a whole book dedicated just to it. However, our intention in this chapter is to introduce and demistify the concept of ML, by:
-
+>
 >1. explaining the differences between supervised and unsupervised ML models,
 2. proving that we were already doing it long ago, 
 3. extending it to more advanced techniques,
 4. highlighting its main applications in the field.
-
+>
 > To do so, some basic code and steps will be provided to the reader to get familiar with such approach. Throughout this chapter, some more specialized resources is provided for those who have the courage and motivation to dig deeper into this topic.
 
 ## Introduction
 
 Machine Learning is currently a hot topic in the sensory and consumer science field. It is one of the most game-changing technological advancements to support CPG companies in the development of new products, playing a considerable role in speeding up (and at the same time reducing the costs) the steps involved in the R&D process. In today's fast-moving and increasingly competitive corporate world, companies that are embracing, adopting and opening their minds to digital transformation and artificial intelligence (AI), moving towards the age of automation, are not one but many steps ahead of their competitors.
 
-Machine Learning (ML) is a branch of AI, which is based on the idea that systems can learn from data, and that has the capability to evolve. Generally speaking, ML refers to various programming techniques that are able to process large amounts of data and extract useful information from it. It refers to a method of data analysis that build intelligent algorithms that can automatically improve through the experience gained from the data and identify patterns or make decisions with minimal human intervention, without being explicitly programmed. ML focuses on using data and algorithms to mimic the way humans learn, gradually improving their accuracy.
+Machine Learning (ML) is a branch of AI, which is based on the idea that systems can learn from data, and that has the capability to evolve. Generally speaking, ML refers to various programming techniques that are able to process large amounts of data and extract useful information from it. It refers to a method of data analysis that builds intelligent algorithms that can automatically improve through the experience gained from the data and identify patterns or make decisions with minimal human intervention, without being explicitly programmed. ML focuses on using data and algorithms to mimic the way humans learn, gradually improving their accuracy.
 
-Defining the objectives or the situation where ML would bring value is the very first step of the process. Once that is clear, the next step is to collect data or dig into the historical data sets to understand what information is available and/or has to be obtained. The data varies according to the situation, but it may refer to product composition or formulation, instrumental measurements (e.g., pH, color, rheology, GCMS, etc.), sensory attributes (e.g., creaminess, sweetness, bitterness, texture, consistency, etc.), consumer behavior (e.g., frequency of consumption/use, consumption/use situation, etc.), demographics (e.g., age, gender, skin type, etc.) consumer responses (e.g. liking, CATA questions, JAR questions, etc.) just to name a few. 
+Defining the objectives or the situation where ML would bring value is the very first step of the process. Once that is clear, the next step is to collect data or dig into the historical data sets to understand what information is available and/or has to be obtained. The data varies according to the situation, but it may refer to product composition or formulation, instrumental measurements (e.g., pH, color, rheology, GCMS, etc.), sensory attributes (e.g., creaminess, sweetness, bitterness, texture, consistency, etc.), consumer behavior (e.g., frequency of consumption/use, consumption/use situation, etc.), demographics (e.g., age, gender, skin type, etc.) and consumer responses (e.g. liking, CATA questions, JAR questions, etc.) just to name a few. 
 
 The size of the data set and its quality are very important as they impact directly the model's robustness. Specific recommendations on that according to the situation, data type, and objectives are as following: 
 
 * The higher the number of statistical units the better, 12-15 being the minimum recommended when statistical units correspond to samples. 
 * The number of measurements (instrumental,  sensory and/or consumer measurements) and the number of consumers evaluating the products are also very relevant to the model's quality. In sensory and consumer science studies, the number of measurements is usually sufficient, as in practice, it is recommended to have a minimum of 100 consumers (although here again, the more the better). 
-
-For data quality, one of the most important aspects (besides the standardization of data collection) corresponds to the variability of the samples. The larger the variability between samples, the broader the space the model will cover. Additionally, it is strongly recommended to capture the consumers' individual differences, not only through demographic information, but also through perception (including Just About Right (JAR) or Ideal Profile Method (IPM) questions). Ultimately, within-subject design (i.e. sequential monadic design) provide better quality models.
+For data quality, one of the most important aspects (besides the standardization of data collection) corresponds to the variability of the samples. The larger the variability between samples, the broader the space the model covers. Additionally, it is strongly recommended to capture the consumers' individual differences, not only through demographic information, but also through perception (including Just About Right (JAR) or Ideal Profile Method (IPM) questions). Ultimately, within-subject design (i.e. sequential monadic design) provide better quality models.
 
 ## Introduction of the Data
 
@@ -43,7 +42,7 @@ wine <- rattle::wine %>%
 
 ## Machine Learning Methods
 
-The notion of Machine Learning is vast, as it covers a large variety of analyses. In fact, ML algorithms are often classify based on the goals of their analysis. Three main groups are often considered: 
+The notion of Machine Learning is vast, as it covers a large variety of analyses. In fact, ML algorithms are often classify based on the goals of their analysis. Three main groups are often considered, two of them being: 
 
 * Unsupervised Learning:
 
@@ -52,25 +51,22 @@ Such ability to discover *unknown* patterns in the data makes such algorithms id
 
 * Supervised Learning:
 
-Supervised ML is arguably the most popular type of ML: When people talk about ML, they usually refer to Supervised techniques. Supervised ML takes as input labeled data, meaning that the statistical entities are defined by one or more output variables. The aim of the algorithm is then to a find a mapping function that connects the input variables with those output variables. Ultimately, the ML model tries to explain as well as possible the output variables using the input variables.
+Supervised ML is arguably the most popular type of ML: When people talk about ML, they often refer to Supervised techniques. Supervised ML takes as input labeled data, meaning that the statistical entities are defined by one or more output variables. The aim of the algorithm is then to a find a mapping function that connects the input variables with those output variables. Ultimately, the ML model tries to explain as well as possible the output variables using the input variables.
 A common situation requiring Supervised ML in Sensory and Consumer Science consists in predicting consumer responses (e.g. liking) using sensory descriptions, analytic data, demographic information, etc. ML models provide insights on how to improve product performance, and allow predicting consumer responses of new prototypes or products. Another common situation is to use Supervised ML to predict the sensory profile of products using formulation or ingredients data.
 
 * Semi-supervised Learning:
 
-Semi-Supervised ML is not an ML approach per se. Instead, it is a combination of both Unsupervised and Supervised approaches, which aims first in creating an output variable using Unsupervised techniques, and to then explain or use this output variable using other information through Supervised ML. A good example of Semi-Supervised approach consists in defining clusters of consumers based on liking (unsupervised), and to characterize such clusters using demographic data using decision trees for instance (supervised). External Preference Mapping is another example since first we reduce the dimensionality of the sensory data through PCA (unsupervised), and we then use this dimensions to explain the liking scores of consumers using regressions (supervised).
+Semi-Supervised ML is not an ML approach per se. Instead, it is a combination of both Unsupervised and Supervised approaches, which aims first in creating an output variable using Unsupervised techniques, and to then explain or use this output variable using other information through Supervised ML. A good example of Semi-Supervised approach consists in defining clusters of consumers based on liking (unsupervised), and to characterize such clusters using demographic data using decision trees for instance (supervised). External Preference Mapping is another example since first we reduce the dimensionality of the sensory data through PCA (unsupervised), and we then use these dimensions to explain the liking scores of consumers using regressions (supervised).
 
-> There is another type of Machine Learning - Reinforcement Learning, where feedback is provided to the machine. It is a technique that enables an agent to learn through trial and error from its own actions and experiences. Reinforcement Learning is commonly used in some tech applications (e.g. gaming and robotics), specially when large data sets are available, but it is not typically used in sensory and consumer science at the moment.
-
-
-In the next section, we only focus on the first two approaches (unsupervised and supervised) since these are the most common approaches used in Sensory and Consumer research.
+> The third type of Machine Learning is called *Reinforcement Learning*, which is based on providing feedback to the machine. It is a technique that enables an agent to learn through trial and error from its own actions and experiences. Reinforcement Learning is commonly used in some tech applications (e.g. gaming and robotics), specially when large data sets are available. Such approach has little reach in sensory and consumer science at the moment, hence we are not going to develop it further here.
 
 ## Unsupervised Machine learning
 
-In the sensory and consumer science field, unsupervised learning models are usually used for Dimensionality Reduction and Clustering.
+In the sensory and consumer science field, unsupervised learning models are mainly used for Dimensionality Reduction and Clustering.
 
 ### Dimensionality Reduction
 
-Dimensionality reduction is a technique used to transform a high dimensional space into a lower dimensional space that still retains as much information as possible. In practice, the original high-dimensional space involves many variables (one variable being one dimension) that are correlated with each other, which are then summarized by *latent* variables or *principal components*, which are orthogonal to each other.^[When all the *principal components* are considered, none of the information present in the raw data is lost, and their representation is simply shifted from an unstructured high-dimensional space to a structured low-dimensional space.]
+Dimensionality reduction is a technique used to transform a high dimensional space into a lower dimensional space that still retains as much information as possible. In practice, the original high-dimensional space involves many variables (one variable being one dimension) that are correlated with each other, which are then summarized by *latent* variables or *principal components*, which are orthogonal to each other.^[When all the *principal components* are considered, none of the information present in the raw data is lost, and their representation is simply shifted from an unstructured high-dimensional space to a structured low*er*-dimensional space.]
 
 In practice, dimensionality reduction is performed for the following reasons (among others):
 
@@ -79,7 +75,7 @@ In practice, dimensionality reduction is performed for the following reasons (am
 * Finding latent variables and Uncorrelating variables;
 * Pre-processing step to reduce training time and computational resources;
 * Improve ML algorithms accuracy by removing the lower dimensions (the one containing less information) often considered as *noise*;
-* Avoid problems of overfitting.
+* Avoid problems of over-fitting.
 
 Some of these approaches were presented earlier in this book, in particular in Section \@ref(data-analysis). However, there are numerous dimensionality reduction methods that can be used depending on the data at hand. The most common and well known methods used in the sensory and consumer science are the ones that apply linear transformations, including Principal Components Analysis (PCA), Factor Analysis (FA), and derivatives such as (Multiple) Correspondence Analysis, Multiple Factor Analysis, etc.
 
@@ -112,11 +108,12 @@ wine_reduced <- as_tibble(res_pca$ind$coord[,1:2])
 
 Clustering is a technique used to discover in high-dimensional data groups of observations that are similar to each other, and different from others. In other words, it is a method that groups unlabeled data based on their similarities and differences in a way that objects with strong similarities are grouped together, and are separated from objects to whom they have little to no similarities. 
 
-Again, a very common application in S&C Science is to segment consumers based on a variety of factors such as shopping or usage behavior, attitudes, interests, preferences. As consumers in the same market segment tend to respond similarly, the segmentation process is a key strategy for companies to understand and tailor effectively their products or marketing approaches for different target groups. Similarly, it is also used to classify products in homogeneous groups based on their analytical, sensory and/or consumer description in order to identify different segments in the market.
+Again, a very common application in S&C Science is to segment consumers based on a variety of factors such as shopping or usage behavior, attitudes, interests, preferences. As consumers being associated in the same market segment tend to respond similarly, the segmentation process is a key strategy for companies to understand and tailor effectively their products or marketing approaches for different target groups. Similarly, it is also used to classify products in homogeneous groups based on their analytical, sensory and/or consumer description in order to identify different segments in the market.
 
 In practice, many algorithms of clustering exist. They can be categorized into a different types including *exclusive* (e.g. k-means), *hierarchical* (see Section \@ref(hac) for an example) and *probabilistic* (e.g. Gaussian Mixture Model). The first two are the ones most used and well known in the sensory field. 
 
-Although agglomerative hierarchical clustering (HAC) is more common in the sensory and consumer research, an example illustrating such approach was already provided in Section \@ref(hac). For that reason, we propose to use another approach in *k-means*. K-means clustering is a popular unsupervised machine learning algorithm for partitioning a given data set in a way that the total intra-cluster variation is minimized. Both approaches (HAC and k-means) however differ in their ways of forming clusters, For instance, the algorithm of k-means require the user to pre-specify the number of cluster to be created, whereas HAC produce a tree (called dendrogram) which helps deciding on the optimal number of clusters. Detailed information about clustering methods and analysis can be found in the book *Practical Guide to Cluster Analysis in R: Unsupervised Machine Learning* by Alboukadel Kassambara (@Kassambara2017).
+Although agglomerative hierarchical clustering (HAC) is more common in the sensory and consumer research, an example illustrating such approach was already provided in Section \@ref(hac). For that reason, we propose to use another approach in *k-means*. 
+K-means clustering is a popular unsupervised machine learning algorithm for partitioning a given data set in a way that the total intra-cluster variation is minimized. Both approaches (HAC and k-means) however differ in their ways of forming clusters, For instance, the algorithm of k-means require the user to pre-specify the number of cluster to be created, whereas HAC produce a tree (called dendrogram) which helps deciding on the optimal number of clusters. Detailed information about clustering methods and analysis can be found in the book *Practical Guide to Cluster Analysis in R: Unsupervised Machine Learning* by Alboukadel Kassambara (@Kassambara2017).
 
 In order to cluster our wines, let's start with defining the optimal number of clusters (k) to consider. This can be done using `fviz_nbclust()` from `{factoextra}`. This functions creates a graph which represents the variance within the clusters. On this representation, the bend (also called *elbow*) indicates the optimal number of clusters, any additional cluster beyond that point have little value.
 
@@ -143,6 +140,12 @@ fviz_cluster(list(data=wine_reduced, cluster=wine_kmeans$cluster),
 In the resulting plot, the 3 clusters are clearly separated, as can be seen by their little to no overlap. 
 
 >An interesting suggestion is to run the same analysis on the full data (here, we limited it to the first 2 dimensions of the PCA) and to compare the results.
+
+<!-- JULIEN: add here some text on Nantes' approach for clustering 
+I think it would also be good to mention the clustering technique they also developed that remove atypical consumers or group them in a bin cluster as this is something very typical to S&C studies I guess -->
+
+It should be noted here that some other interesting clustering approach that are very specific to sensory and consumer studies have been developed recently. It is for instance the case of ...
+
 
 ## Supervised learning
 
