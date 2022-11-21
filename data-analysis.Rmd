@@ -92,7 +92,7 @@ res_aov <- senso_aov1 %>%
 ```
 
 ```{r, echo=TRUE, eval=TRUE}
-res_aov %>% 
+res_aov %>%
   filter(p.value >= 0.05)
 ```
 
@@ -101,7 +101,7 @@ As can be seen, the products do not show any significant differences at 5% for 4
 Rather than showing the results in a table, let's visualize them graphically as a bar-chart by representing the F-values. The attributes are ordered decreasingly, and colour-coded based on their significance:
 
 ```{r, echo=TRUE, eval=TRUE}
-res_aov %>% 
+res_aov %>%
   mutate(Signif = ifelse(p.value <= 0.05, "Signif.", "Not Signif.")) %>%
   mutate(Signif = factor(Signif, levels = c("Signif.", "Not Signif."))) %>%
   ggplot(aes(x = reorder(Attribute, statistic), y = statistic, fill = Signif)) +
@@ -165,10 +165,10 @@ library(factoextra)
 ```{r, eval=TRUE, echo=FALSE}
 library(patchwork)
 
-p1 = fviz_pca_ind(senso_pca, habillage = "Protein", repel = TRUE)
-p2 = fviz_pca_ind(senso_pca, habillage = 2, repel = TRUE)
-p3 = fviz_pca_var(senso_pca)
-p4 = fviz_pca_biplot(senso_pca)
+p1 <- fviz_pca_ind(senso_pca, habillage = "Protein", repel = TRUE)
+p2 <- fviz_pca_ind(senso_pca, habillage = 2, repel = TRUE)
+p3 <- fviz_pca_var(senso_pca)
+p4 <- fviz_pca_biplot(senso_pca)
 
 (p1 + p2) / (p3 + p4)
 ```
@@ -387,15 +387,15 @@ TFEQ_score <- TFEQ_coded %>%
 Such results can then be visualized graphically, for instance by representing the distribution of `TFEQ_score` for the 3 TFEQ factors:
 
 ```{r, echo=TRUE, eval=TRUE}
-TFEQ_score %>% 
-  dplyr::select(-Total) %>% 
-  pivot_longer(-Judge, names_to="Factor", values_to="Scores") %>% 
-  ggplot(aes(x=Scores, color=Factor))+
-  geom_density(lwd=1.5, key_glyph="path")+
-  xlab("TFEQ Score")+
-  ylab("")+
-  guides(color = guide_legend(override.aes = list(linetype = 1)))+
-  ggtitle("Distribution of the Individual TFEQ-factor Scores")+
+TFEQ_score %>%
+  dplyr::select(-Total) %>%
+  pivot_longer(-Judge, names_to = "Factor", values_to = "Scores") %>%
+  ggplot(aes(x = Scores, color = Factor)) +
+  geom_density(lwd = 1.5, key_glyph = "path") +
+  xlab("TFEQ Score") +
+  ylab("") +
+  guides(color = guide_legend(override.aes = list(linetype = 1))) +
+  ggtitle("Distribution of the Individual TFEQ-factor Scores") +
   theme_bw()
 ```
 
@@ -406,7 +406,7 @@ The analysis of consumer data usually involves the same type of analysis as the 
 Let's start by importing the consumer data that is stored in *biscuits_consumer_test.xlsx*. Here, we import two sheets, one with the consumption time and number of biscuits (stored in `Nbiscuit`), and one with different consumer evaluations of the samples (stored in `consumer`)
 
 ```{r, echo=TRUE, eval=TRUE}
-file_path <- here("Data","biscuits_consumer_test.xlsx")
+file_path <- here("Data", "biscuits_consumer_test.xlsx")
 
 Nbiscuit <- read_xlsx(file_path, sheet = "Time Consumption") %>%
   mutate(Product = str_c("P", Product)) %>%
@@ -450,8 +450,10 @@ Both at the start and at the end of the evaluation, significant differences (at 
 To further compare the liking assessment of the samples after the first bite and at the end of the tasting, the results obtained from `liking_start_hsd` and `liking_end_hsd` are combined. We then represent the results in a bar-chart:
 
 ```{r, eval=TRUE, echo=TRUE}
-list(Start = liking_start_hsd %>% rename(Liking = `1stbite_liking`),
-     End = liking_end_hsd %>% rename(Liking = `after_liking`)) %>%
+list(
+  Start = liking_start_hsd %>% rename(Liking = `1stbite_liking`),
+  End = liking_end_hsd %>% rename(Liking = `after_liking`)
+) %>%
   enframe(name = "Moment", value = "res") %>%
   unnest(res) %>%
   mutate(Moment = factor(Moment, levels = c("Start", "End"))) %>%
@@ -681,7 +683,7 @@ Let's start by combining the sensory data to the average liking score per produc
 
 ```{r, eval=TRUE, echo=TRUE}
 data_reg <- mean_cluster %>%
-  filter(Cluster == "1 (74)") %>% 
+  filter(Cluster == "1 (74)") %>%
   dplyr::select(-N) %>%
   inner_join(senso_mean %>% dplyr::select(-c(Protein, Fiber)), by = "Product") %>%
   pivot_longer(Shiny:Melting, names_to = "Attribute", values_to = "Score") %>%
@@ -696,10 +698,12 @@ Both the linear regression and the quadratic regression are then run on `Liking`
 For its concision, we opt for the second option.
 
 ```{r, echo=TRUE, eval=TRUE}
-res_reg <- data_reg %>% 
-  nest_by(Attribute) %>% 
-  mutate(lin_mod = list(lm(Liking ~ Score, data=data)), 
-         quad_mod = list(lm(Liking ~ poly(Score, 2), data=data)))
+res_reg <- data_reg %>%
+  nest_by(Attribute) %>%
+  mutate(
+    lin_mod = list(lm(Liking ~ Score, data = data)),
+    quad_mod = list(lm(Liking ~ poly(Score, 2), data = data))
+  )
 ```
 
 We extract the attributes that are significantly linked to liking (at 5%, and we accept 6% for quadratic effects). To do so, the results stored in `lin_mod` and `quad_mod` need unfolding (`summarize()`) and restructuring (`broom::tidy()`). 
@@ -712,11 +716,11 @@ lin <- res_reg %>%
   pull(Attribute) %>%
   as.character()
 
-quad <- res_reg %>% 
-  summarise(broom::tidy(quad_mod)) %>% 
-  ungroup() %>% 
+quad <- res_reg %>%
+  summarise(broom::tidy(quad_mod)) %>%
+  ungroup() %>%
   filter(term == "poly(Score, 2)2", p.value <= 0.06) %>%
-  pull(Attribute) %>% 
+  pull(Attribute) %>%
   as.character()
 ```
 
@@ -728,11 +732,11 @@ library(ggrepel)
 df <- data_reg %>%
   filter(Attribute %in% unique(c(lin, quad)))
 
-p <- ggplot(df, aes(x=Score, y=Liking, label=Product))+
-  geom_point(pch=20, cex=2)+
-  geom_text_repel()+
-  theme_bw()+
-  facet_wrap(~Attribute, scales="free_x")
+p <- ggplot(df, aes(x = Score, y = Liking, label = Product)) +
+  geom_point(pch = 20, cex = 2) +
+  geom_text_repel() +
+  theme_bw() +
+  facet_wrap(~Attribute, scales = "free_x")
 ```
 
 Let's now add a regression line to the model. To do so, `geom_smooth()` is being used with as `method = lm` combined to `formula = 'y ~ x'` for linear relationships, and `formula = 'y ~ x + I(x^2)'` for quadratic relationships (when both the linear and quadratic models are significant, the quadratic model is used).
