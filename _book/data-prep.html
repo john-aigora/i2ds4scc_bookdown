@@ -5,25 +5,25 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 9 Data Preparation | Data Science for Sensory and Consumer Scientists</title>
-  <meta name="description" content="Open development of data science book for sensory and consumer scientists." />
-  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
+  <meta name="description" content="Open development of data science book for sensory and consumer scientists.." />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 9 Data Preparation | Data Science for Sensory and Consumer Scientists" />
   <meta property="og:type" content="book" />
   
-  <meta property="og:description" content="Open development of data science book for sensory and consumer scientists." />
-  
+  <meta property="og:description" content="Open development of data science book for sensory and consumer scientists.." />
+  <meta name="github-repo" content="john-aigora/i2ds4scc_bookdown" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapter 9 Data Preparation | Data Science for Sensory and Consumer Scientists" />
   
-  <meta name="twitter:description" content="Open development of data science book for sensory and consumer scientists." />
+  <meta name="twitter:description" content="Open development of data science book for sensory and consumer scientists.." />
   
 
 <meta name="author" content="Thierry Worch, Julien Delarue, Vanessa Rios de Souza, and John Ennis" />
 
 
-<meta name="date" content="2022-11-09" />
+<meta name="date" content="2022-12-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,15 +32,15 @@
   
 <link rel="prev" href="data-collection.html"/>
 <link rel="next" href="data-analysis.html"/>
-<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="libs/jquery/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
-<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+<link href="libs/gitbook/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-clipboard.css" rel="stylesheet" />
 
 
 
@@ -49,11 +49,10 @@
 
 
 
-<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
-<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet" />
-<link href="libs/tabwid-1.0.0/scrool.css" rel="stylesheet" />
+<link href="libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections/anchor-sections.js"></script>
+<link href="libs/tabwid/tabwid.css" rel="stylesheet" />
 
 
 <style type="text/css">
@@ -86,38 +85,39 @@ pre.numberSource code > span > a:first-child::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  background-color: #f8f8f8; }
+  {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ef2929; } /* Alert */
-code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #c4a000; } /* Attribute */
-code span.bn { color: #0000cf; } /* BaseN */
-code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4e9a06; } /* Char */
-code span.cn { color: #000000; } /* Constant */
-code span.co { color: #8f5902; font-style: italic; } /* Comment */
-code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
-code span.dt { color: #204a87; } /* DataType */
-code span.dv { color: #0000cf; } /* DecVal */
-code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
-code span.fl { color: #0000cf; } /* Float */
-code span.fu { color: #000000; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
-code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
-code span.ot { color: #8f5902; } /* Other */
-code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
-code span.sc { color: #000000; } /* SpecialChar */
-code span.ss { color: #4e9a06; } /* SpecialString */
-code span.st { color: #4e9a06; } /* String */
-code span.va { color: #000000; } /* Variable */
-code span.vs { color: #4e9a06; } /* VerbatimString */
-code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 <style type="text/css">
@@ -143,7 +143,7 @@ div.csl-indent {
 }
 </style>
 
-<link rel="stylesheet" href="style.css" type="text/css" />
+<link rel="stylesheet" href="css/style.css" type="text/css" />
 </head>
 
 <body>
@@ -166,16 +166,15 @@ div.csl-indent {
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-to-use-this-book"><i class="fa fa-check"></i>How To Use This Book</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i>Acknowledgements</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="preface-1.html"><a href="preface-1.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="" data-path="about-the-author.html"><a href="about-the-author.html"><i class="fa fa-check"></i>About the Author</a></li>
 <li class="chapter" data-level="1" data-path="bienvenue.html"><a href="bienvenue.html"><i class="fa fa-check"></i><b>1</b> Bienvenue!</a>
 <ul>
-<li class="chapter" data-level="" data-path="bienvenue.html"><a href="bienvenue.html#why-data-science-for-sensory-and-consumer-science"><i class="fa fa-check"></i>Why Data Science for Sensory and Consumer Science?</a>
+<li class="chapter" data-level="1.1" data-path="bienvenue.html"><a href="bienvenue.html#why-data-science-for-sensory-and-consumer-science"><i class="fa fa-check"></i><b>1.1</b> Why Data Science for Sensory and Consumer Science?</a>
 <ul>
-<li class="chapter" data-level="" data-path="bienvenue.html"><a href="bienvenue.html#core-principles-in-sensory-and-consumer-science"><i class="fa fa-check"></i>Core principles in Sensory and Consumer Science</a></li>
-<li class="chapter" data-level="" data-path="bienvenue.html"><a href="bienvenue.html#computational-sensory-science"><i class="fa fa-check"></i>Computational Sensory Science</a></li>
+<li class="chapter" data-level="1.1.1" data-path="bienvenue.html"><a href="bienvenue.html#core-principles-in-sensory-and-consumer-science"><i class="fa fa-check"></i><b>1.1.1</b> Core principles in Sensory and Consumer Science</a></li>
+<li class="chapter" data-level="1.1.2" data-path="bienvenue.html"><a href="bienvenue.html#computational-sensory-science"><i class="fa fa-check"></i><b>1.1.2</b> Computational Sensory Science</a></li>
 </ul></li>
 </ul></li>
-<li class="part"><span><b>Apéritifs</b></span></li>
 <li class="chapter" data-level="2" data-path="start-R.html"><a href="start-R.html"><i class="fa fa-check"></i><b>2</b> Getting Started</a>
 <ul>
 <li class="chapter" data-level="2.1" data-path="start-R.html"><a href="start-R.html#introduction-to-r"><i class="fa fa-check"></i><b>2.1</b> Introduction to R</a>
@@ -197,9 +196,10 @@ div.csl-indent {
 <li class="chapter" data-level="2.3" data-path="start-R.html"><a href="start-R.html#further-tips-on-how-to-read-this-book"><i class="fa fa-check"></i><b>2.3</b> Further tips on <em>how to read this book?</em></a>
 <ul>
 <li class="chapter" data-level="2.3.1" data-path="start-R.html"><a href="start-R.html#pipes"><i class="fa fa-check"></i><b>2.3.1</b> Introduction to the <code>{magrittr}</code> and the notion of <em>pipes</em></a></li>
-<li class="chapter" data-level="2.3.2" data-path="start-R.html"><a href="start-R.html#calling-variables"><i class="fa fa-check"></i><b>2.3.2</b> Calling Variables</a></li>
-<li class="chapter" data-level="2.3.3" data-path="start-R.html"><a href="start-R.html#print-save"><i class="fa fa-check"></i><b>2.3.3</b> Printing vs. Saving results</a></li>
-<li class="chapter" data-level="2.3.4" data-path="start-R.html"><a href="start-R.html#running-code-and-handling-errors"><i class="fa fa-check"></i><b>2.3.4</b> Running code and handling errors</a></li>
+<li class="chapter" data-level="2.3.2" data-path="start-R.html"><a href="start-R.html#tibbles"><i class="fa fa-check"></i><b>2.3.2</b> Tibbles</a></li>
+<li class="chapter" data-level="2.3.3" data-path="start-R.html"><a href="start-R.html#calling-variables"><i class="fa fa-check"></i><b>2.3.3</b> Calling Variables</a></li>
+<li class="chapter" data-level="2.3.4" data-path="start-R.html"><a href="start-R.html#print-save"><i class="fa fa-check"></i><b>2.3.4</b> Printing vs. Saving results</a></li>
+<li class="chapter" data-level="2.3.5" data-path="start-R.html"><a href="start-R.html#running-code-and-handling-errors"><i class="fa fa-check"></i><b>2.3.5</b> Running code and handling errors</a></li>
 </ul></li>
 <li class="chapter" data-level="2.4" data-path="start-R.html"><a href="start-R.html#git-and-github"><i class="fa fa-check"></i><b>2.4</b> Version Control / Git and GitHub</a>
 <ul>
@@ -207,7 +207,6 @@ div.csl-indent {
 <li class="chapter" data-level="2.4.2" data-path="start-R.html"><a href="start-R.html#github"><i class="fa fa-check"></i><b>2.4.2</b> GitHub</a></li>
 </ul></li>
 </ul></li>
-<li class="part"><span><b>Hors d’Oeuvres</b></span></li>
 <li class="chapter" data-level="3" data-path="data_science.html"><a href="data_science.html"><i class="fa fa-check"></i><b>3</b> Why Data Science?</a>
 <ul>
 <li class="chapter" data-level="3.1" data-path="data_science.html"><a href="data_science.html#history-and-definition"><i class="fa fa-check"></i><b>3.1</b> History and Definition</a></li>
@@ -275,7 +274,6 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="6.4" data-path="auto-report.html"><a href="auto-report.html#to-go-further"><i class="fa fa-check"></i><b>6.4</b> To go further…</a></li>
 </ul></li>
-<li class="part"><span><b>Bon Appétit</b></span></li>
 <li class="chapter" data-level="7" data-path="example-projects.html"><a href="example-projects.html"><i class="fa fa-check"></i><b>7</b> Example Project: The Biscuit Study</a>
 <ul>
 <li class="chapter" data-level="7.1" data-path="example-projects.html"><a href="example-projects.html#objective-of-the-test"><i class="fa fa-check"></i><b>7.1</b> Objective of the Test</a></li>
@@ -328,19 +326,19 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="10" data-path="data-analysis.html"><a href="data-analysis.html"><i class="fa fa-check"></i><b>10</b> Data Analysis</a>
 <ul>
-<li class="chapter" data-level="10.1" data-path="data-analysis.html"><a href="data-analysis.html#sensory-data"><i class="fa fa-check"></i><b>10.1</b> Sensory Data</a></li>
+<li class="chapter" data-level="10.1" data-path="data-analysis.html"><a href="data-analysis.html#sensory-analysis"><i class="fa fa-check"></i><b>10.1</b> Sensory Data</a></li>
 <li class="chapter" data-level="10.2" data-path="data-analysis.html"><a href="data-analysis.html#demographic-and-questionnaire-data"><i class="fa fa-check"></i><b>10.2</b> Demographic and Questionnaire Data</a>
 <ul>
 <li class="chapter" data-level="10.2.1" data-path="data-analysis.html"><a href="data-analysis.html#demographic-data-frequency-and-proportion"><i class="fa fa-check"></i><b>10.2.1</b> Demographic Data: Frequency and Proportion</a></li>
 <li class="chapter" data-level="10.2.2" data-path="data-analysis.html"><a href="data-analysis.html#eating-behavior-traits-tfeq-data"><i class="fa fa-check"></i><b>10.2.2</b> Eating behavior traits: TFEQ data</a></li>
 </ul></li>
-<li class="chapter" data-level="10.3" data-path="data-analysis.html"><a href="data-analysis.html#consumer-data"><i class="fa fa-check"></i><b>10.3</b> Consumer Data</a></li>
+<li class="chapter" data-level="10.3" data-path="data-analysis.html"><a href="data-analysis.html#tibble-use"><i class="fa fa-check"></i><b>10.3</b> Consumer Data</a></li>
 <li class="chapter" data-level="10.4" data-path="data-analysis.html"><a href="data-analysis.html#combining-sensory-and-consumer-data"><i class="fa fa-check"></i><b>10.4</b> Combining Sensory and Consumer Data</a>
 <ul>
 <li class="chapter" data-level="10.4.1" data-path="data-analysis.html"><a href="data-analysis.html#internal-preference-mapping"><i class="fa fa-check"></i><b>10.4.1</b> Internal Preference Mapping</a></li>
-<li class="chapter" data-level="10.4.2" data-path="data-analysis.html"><a href="data-analysis.html#consumers-clustering"><i class="fa fa-check"></i><b>10.4.2</b> Consumers Clustering</a></li>
+<li class="chapter" data-level="10.4.2" data-path="data-analysis.html"><a href="data-analysis.html#hac"><i class="fa fa-check"></i><b>10.4.2</b> Consumers Clustering</a></li>
 <li class="chapter" data-level="10.4.3" data-path="data-analysis.html"><a href="data-analysis.html#drivers-of-liking"><i class="fa fa-check"></i><b>10.4.3</b> Drivers of Liking</a></li>
-<li class="chapter" data-level="10.4.4" data-path="data-analysis.html"><a href="data-analysis.html#external-preference-mapping"><i class="fa fa-check"></i><b>10.4.4</b> External Preference Mapping</a></li>
+<li class="chapter" data-level="10.4.4" data-path="data-analysis.html"><a href="data-analysis.html#prefmap"><i class="fa fa-check"></i><b>10.4.4</b> External Preference Mapping</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="value-delivery.html"><a href="value-delivery.html"><i class="fa fa-check"></i><b>11</b> Value Delivery</a>
@@ -361,15 +359,33 @@ div.csl-indent {
 <li class="chapter" data-level="11.5" data-path="value-delivery.html"><a href="value-delivery.html#storytelling"><i class="fa fa-check"></i><b>11.5</b> Storytelling</a></li>
 <li class="chapter" data-level="11.6" data-path="value-delivery.html"><a href="value-delivery.html#reformulate2"><i class="fa fa-check"></i><b>11.6</b> Reformulate</a></li>
 </ul></li>
-<li class="part"><span><b>Haute Cuisine</b></span></li>
 <li class="chapter" data-level="12" data-path="machine-learning.html"><a href="machine-learning.html"><i class="fa fa-check"></i><b>12</b> Machine Learning</a>
 <ul>
 <li class="chapter" data-level="12.1" data-path="machine-learning.html"><a href="machine-learning.html#introduction-2"><i class="fa fa-check"></i><b>12.1</b> Introduction</a></li>
-<li class="chapter" data-level="12.2" data-path="machine-learning.html"><a href="machine-learning.html#machine-learning-methods"><i class="fa fa-check"></i><b>12.2</b> Machine Learning Methods</a>
+<li class="chapter" data-level="12.2" data-path="machine-learning.html"><a href="machine-learning.html#introduction-of-the-data"><i class="fa fa-check"></i><b>12.2</b> Introduction of the Data</a></li>
+<li class="chapter" data-level="12.3" data-path="machine-learning.html"><a href="machine-learning.html#machine-learning-methods"><i class="fa fa-check"></i><b>12.3</b> Machine Learning Methods</a></li>
+<li class="chapter" data-level="12.4" data-path="machine-learning.html"><a href="machine-learning.html#unsupervised-machine-learning"><i class="fa fa-check"></i><b>12.4</b> Unsupervised Machine learning</a>
 <ul>
-<li class="chapter" data-level="12.2.1" data-path="machine-learning.html"><a href="machine-learning.html#unsupervised-learning"><i class="fa fa-check"></i><b>12.2.1</b> Unsupervised learning</a></li>
-<li class="chapter" data-level="12.2.2" data-path="machine-learning.html"><a href="machine-learning.html#supervised-learning"><i class="fa fa-check"></i><b>12.2.2</b> Supervised learning</a></li>
-<li class="chapter" data-level="12.2.3" data-path="machine-learning.html"><a href="machine-learning.html#practical-guide-to-machine-learning"><i class="fa fa-check"></i><b>12.2.3</b> Practical Guide to Machine Learning</a></li>
+<li class="chapter" data-level="12.4.1" data-path="machine-learning.html"><a href="machine-learning.html#dimensionality-reduction"><i class="fa fa-check"></i><b>12.4.1</b> Dimensionality Reduction</a></li>
+<li class="chapter" data-level="12.4.2" data-path="machine-learning.html"><a href="machine-learning.html#clustering"><i class="fa fa-check"></i><b>12.4.2</b> Clustering</a></li>
+</ul></li>
+<li class="chapter" data-level="12.5" data-path="machine-learning.html"><a href="machine-learning.html#supervised-learning"><i class="fa fa-check"></i><b>12.5</b> Supervised learning</a>
+<ul>
+<li class="chapter" data-level="12.5.1" data-path="machine-learning.html"><a href="machine-learning.html#workflow"><i class="fa fa-check"></i><b>12.5.1</b> Workflow</a></li>
+<li class="chapter" data-level="12.5.2" data-path="machine-learning.html"><a href="machine-learning.html#regression"><i class="fa fa-check"></i><b>12.5.2</b> Regression</a></li>
+<li class="chapter" data-level="12.5.3" data-path="machine-learning.html"><a href="machine-learning.html#other-common-supervised-ml-algorithms"><i class="fa fa-check"></i><b>12.5.3</b> Other common Supervised ML algorithms</a></li>
+</ul></li>
+<li class="chapter" data-level="12.6" data-path="machine-learning.html"><a href="machine-learning.html#practical-guide-to-supervised-machine-learning"><i class="fa fa-check"></i><b>12.6</b> Practical Guide to Supervised Machine Learning</a>
+<ul>
+<li class="chapter" data-level="12.6.1" data-path="machine-learning.html"><a href="machine-learning.html#introduction-to-the-tidymodels-framework"><i class="fa fa-check"></i><b>12.6.1</b> Introduction to the <code>{tidymodels}</code> framework</a></li>
+<li class="chapter" data-level="12.6.2" data-path="machine-learning.html"><a href="machine-learning.html#sampling-the-data"><i class="fa fa-check"></i><b>12.6.2</b> Sampling the data</a></li>
+<li class="chapter" data-level="12.6.3" data-path="machine-learning.html"><a href="machine-learning.html#cross-validation"><i class="fa fa-check"></i><b>12.6.3</b> Cross Validation</a></li>
+<li class="chapter" data-level="12.6.4" data-path="machine-learning.html"><a href="machine-learning.html#data-preprocessing-recipes"><i class="fa fa-check"></i><b>12.6.4</b> Data Preprocessing <code>{recipes}</code></a></li>
+<li class="chapter" data-level="12.6.5" data-path="machine-learning.html"><a href="machine-learning.html#model-definition"><i class="fa fa-check"></i><b>12.6.5</b> Model definition</a></li>
+<li class="chapter" data-level="12.6.6" data-path="machine-learning.html"><a href="machine-learning.html#set-the-whole-process-into-a-workflow"><i class="fa fa-check"></i><b>12.6.6</b> Set the whole Process into a workflow</a></li>
+<li class="chapter" data-level="12.6.7" data-path="machine-learning.html"><a href="machine-learning.html#tuning-the-parameters"><i class="fa fa-check"></i><b>12.6.7</b> Tuning the parameters</a></li>
+<li class="chapter" data-level="12.6.8" data-path="machine-learning.html"><a href="machine-learning.html#model-training"><i class="fa fa-check"></i><b>12.6.8</b> Model training</a></li>
+<li class="chapter" data-level="12.6.9" data-path="machine-learning.html"><a href="machine-learning.html#model-evaluation"><i class="fa fa-check"></i><b>12.6.9</b> Model evaluation</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="13" data-path="text-analysis.html"><a href="text-analysis.html"><i class="fa fa-check"></i><b>13</b> Text Analysis</a>
@@ -421,15 +437,14 @@ div.csl-indent {
 <li class="chapter" data-level="14.3.6" data-path="dashboards.html"><a href="dashboards.html#documentation-and-books"><i class="fa fa-check"></i><b>14.3.6</b> Documentation and Books</a></li>
 </ul></li>
 </ul></li>
-<li class="part"><span><b>Digestifs</b></span></li>
 <li class="chapter" data-level="15" data-path="next-steps.html"><a href="next-steps.html"><i class="fa fa-check"></i><b>15</b> Conclusion and Next Steps</a>
 <ul>
 <li class="chapter" data-level="15.1" data-path="next-steps.html"><a href="next-steps.html#other-recommended-resources"><i class="fa fa-check"></i><b>15.1</b> Other Recommended Resources</a></li>
 <li class="chapter" data-level="15.2" data-path="next-steps.html"><a href="next-steps.html#useful-r-packages"><i class="fa fa-check"></i><b>15.2</b> Useful R Packages</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="bibliography.html"><a href="bibliography.html"><i class="fa fa-check"></i>Bibliography</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
-<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+<li><a href="https://bookdown.org" target="blank">Published with bookdown</a></li>
 
 </ul>
 
@@ -465,12 +480,12 @@ There is clearly a thin line between data preparation (and particularly <em>data
 <p>The <em>Data Analysis</em> step ultimately converts the data into results (through values, graphics, tables, etc.) that provide more insights (through interpretation) about the data.</p>
 <p>The data used in this chapter corresponds to the <em>biscuits_sensory_profile.xlsx</em> that you already imported in Section <a href="data-collection.html#data-collection">8</a> but with few missing values. This new data set is stored in <em>biscuits_sensory_profile_with_NA.xlsx</em>.</p>
 <p>As usual, we start this chapter by loading the main packages we need and by importing this data set:</p>
-<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="data-prep.html#cb231-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb231-2"><a href="data-prep.html#cb231-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
-<span id="cb231-3"><a href="data-prep.html#cb231-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
-<span id="cb231-4"><a href="data-prep.html#cb231-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb231-5"><a href="data-prep.html#cb231-5" aria-hidden="true" tabindex="-1"></a>file_path <span class="ot">&lt;-</span> <span class="fu">here</span>(<span class="st">&quot;data&quot;</span>,<span class="st">&quot;biscuits_sensory_profile_with_NA.xlsx&quot;</span>)</span>
-<span id="cb231-6"><a href="data-prep.html#cb231-6" aria-hidden="true" tabindex="-1"></a>sensory <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(file_path, <span class="at">sheet=</span><span class="st">&quot;Data&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="data-prep.html#cb242-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb242-2"><a href="data-prep.html#cb242-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb242-3"><a href="data-prep.html#cb242-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<span id="cb242-4"><a href="data-prep.html#cb242-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb242-5"><a href="data-prep.html#cb242-5" aria-hidden="true" tabindex="-1"></a>file_path <span class="ot">&lt;-</span> <span class="fu">here</span>(<span class="st">&quot;data&quot;</span>,<span class="st">&quot;biscuits_sensory_profile_with_NA.xlsx&quot;</span>)</span>
+<span id="cb242-6"><a href="data-prep.html#cb242-6" aria-hidden="true" tabindex="-1"></a>sensory <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(file_path, <span class="at">sheet=</span><span class="st">&quot;Data&quot;</span>)</span></code></pre></div>
 </div>
 <div id="inspect" class="section level2 hasAnchor" number="9.2">
 <h2><span class="header-section-number">9.2</span> Inspect<a href="data-prep.html#inspect" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -478,146 +493,178 @@ There is clearly a thin line between data preparation (and particularly <em>data
 <h3><span class="header-section-number">9.2.1</span> Data Inspection<a href="data-prep.html#data-inspection" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>To inspect the data, different steps can be used.
 First, since <code>read_xlsx()</code> returns a tibble, let’s take advantage of its printing properties to get a fill of the data:</p>
-<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="data-prep.html#cb232-1" aria-hidden="true" tabindex="-1"></a>sensory</span></code></pre></div>
-<pre><code>## # A tibble: 99 x 34
-##    Judge Product Shiny `External color inten~` `Color evenness` `Qty of inclus~`
-##    &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;                   &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;
-##  1 J01   P01      52.8                    30               22.8              9.6
-##  2 J01   P02      48.6                    30               13.2             10.8
-##  3 J01   P03      48                      45.6             17.4              7.8
-##  4 J01   P04      46.2                    45.6             37.8              0  
-##  5 J01   P05       0                      23.4             49.2              0  
-##  6 J01   P06       0                      50.4             24               27.6
-##  7 J01   P07       5.4                     6.6             17.4              0  
-##  8 J01   P08       0                      51.6             48.6             23.4
-##  9 J01   P09       0                      42.6             18               21  
-## 10 J01   P10      53.4                    36.6             11.4             18  
-## # ... with 89 more rows, and 28 more variables: `Surface defects` &lt;dbl&gt;,
-## #   `Print quality` &lt;dbl&gt;, Thickness &lt;dbl&gt;, `Color contrast` &lt;dbl&gt;,
-## #   `Overall odor intensity` &lt;dbl&gt;, `Fatty odor` &lt;dbl&gt;, `Roasted odor` &lt;dbl&gt;,
-## #   `Cereal flavor` &lt;dbl&gt;, `RawDough flavor` &lt;dbl&gt;, `Fatty flavor` &lt;dbl&gt;,
-## #   `Dairy flavor` &lt;dbl&gt;, `Roasted flavor` &lt;dbl&gt;,
-## #   `Overall flavor persistence` &lt;dbl&gt;, Salty &lt;dbl&gt;, Sweet &lt;dbl&gt;, Sour &lt;dbl&gt;,
-## #   Bitter &lt;dbl&gt;, Astringent &lt;dbl&gt;, Warming &lt;dbl&gt;, ...</code></pre>
+<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="data-prep.html#cb243-1" aria-hidden="true" tabindex="-1"></a>sensory</span></code></pre></div>
+<pre><code>## # A tibble: 99 × 34
+##    Judge Product Shiny Extern…¹ Color…² Qty o…³ Surfa…⁴
+##    &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+##  1 J01   P01      52.8     30      22.8     9.6    22.8
+##  2 J01   P02      48.6     30      13.2    10.8    13.2
+##  3 J01   P03      48       45.6    17.4     7.8    14.4
+##  4 J01   P04      46.2     45.6    37.8     0      48.6
+##  5 J01   P05       0       23.4    49.2     0      12.6
+##  6 J01   P06       0       50.4    24      27.6    39.6
+##  7 J01   P07       5.4      6.6    17.4     0      36  
+##  8 J01   P08       0       51.6    48.6    23.4    18  
+##  9 J01   P09       0       42.6    18      21      36  
+## 10 J01   P10      53.4     36.6    11.4    18      10.8
+## # … with 89 more rows, 27 more variables:
+## #   `Print quality` &lt;dbl&gt;, Thickness &lt;dbl&gt;,
+## #   `Color contrast` &lt;dbl&gt;,
+## #   `Overall odor intensity` &lt;dbl&gt;,
+## #   `Fatty odor` &lt;dbl&gt;, `Roasted odor` &lt;dbl&gt;,
+## #   `Cereal flavor` &lt;dbl&gt;, `RawDough flavor` &lt;dbl&gt;,
+## #   `Fatty flavor` &lt;dbl&gt;, `Dairy flavor` &lt;dbl&gt;, …</code></pre>
 <p>Other informative solutions consists in printing a summary of the data through the <code>summary()</code> or <code>glimpse()</code>:</p>
-<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="data-prep.html#cb234-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(sensory)</span></code></pre></div>
-<pre><code>##     Judge             Product              Shiny      External color intensity
-##  Length:99          Length:99          Min.   : 0.0   Min.   : 6.60           
-##  Class :character   Class :character   1st Qu.: 9.3   1st Qu.:27.00           
-##  Mode  :character   Mode  :character   Median :21.0   Median :34.80           
-##                                        Mean   :23.9   Mean   :33.68           
-##                                        3rd Qu.:38.4   3rd Qu.:42.60           
-##                                        Max.   :54.0   Max.   :55.20           
-##                                                                               
-##  Color evenness  Qty of inclusions Surface defects Print quality  
-##  Min.   : 6.60   Min.   : 0.00     Min.   : 4.80   Min.   :12.00  
-##  1st Qu.:19.50   1st Qu.:13.80     1st Qu.:15.30   1st Qu.:36.30  
-##  Median :26.40   Median :19.80     Median :21.00   Median :40.80  
-##  Mean   :28.19   Mean   :20.63     Mean   :23.35   Mean   :40.72  
-##  3rd Qu.:37.20   3rd Qu.:29.10     3rd Qu.:30.60   3rd Qu.:47.10  
-##  Max.   :53.40   Max.   :40.80     Max.   :51.60   Max.   :60.00  
-##                                                                   
-##    Thickness     Color contrast Overall odor intensity   Fatty odor    
-##  Min.   : 7.80   Min.   : 5.4   Min.   : 0.00          Min.   : 0.000  
-##  1st Qu.:18.30   1st Qu.:21.0   1st Qu.:10.20          1st Qu.: 0.000  
-##  Median :25.80   Median :32.4   Median :18.00          Median : 5.400  
-##  Mean   :25.48   Mean   :29.7   Mean   :18.67          Mean   : 6.848  
-##  3rd Qu.:32.10   3rd Qu.:40.2   3rd Qu.:26.10          3rd Qu.:10.650  
-##  Max.   :52.80   Max.   :51.6   Max.   :40.20          Max.   :27.000  
-##                  NA&#39;s   :2                             NA&#39;s   :1       
-##   Roasted odor   Cereal flavor   RawDough flavor  Fatty flavor   
-##  Min.   : 0.00   Min.   : 0.00   Min.   : 0.00   Min.   : 0.000  
-##  1st Qu.: 8.10   1st Qu.:18.00   1st Qu.: 3.00   1st Qu.: 0.000  
-##  Median :15.00   Median :25.20   Median :13.20   Median : 6.600  
-##  Mean   :15.07   Mean   :24.99   Mean   :14.23   Mean   : 7.531  
-##  3rd Qu.:20.70   3rd Qu.:31.20   3rd Qu.:24.60   3rd Qu.:13.800  
-##  Max.   :42.00   Max.   :48.00   Max.   :43.20   Max.   :24.000  
-##                                                  NA&#39;s   :2       
-##   Dairy flavor    Roasted flavor  Overall flavor persistence     Salty       
-##  Min.   : 0.000   Min.   : 0.00   Min.   : 0.00              Min.   : 0.000  
-##  1st Qu.: 0.000   1st Qu.: 9.00   1st Qu.:16.20              1st Qu.: 0.000  
-##  Median : 7.200   Median :17.40   Median :22.80              Median : 1.200  
-##  Mean   : 9.106   Mean   :17.68   Mean   :22.73              Mean   : 5.027  
-##  3rd Qu.:13.500   3rd Qu.:24.60   3rd Qu.:28.80              3rd Qu.:10.050  
-##  Max.   :46.800   Max.   :51.60   Max.   :43.80              Max.   :19.200  
-##                                                                              
-##      Sweet            Sour            Bitter         Astringent   
-##  Min.   : 0.00   Min.   : 0.000   Min.   : 0.000   Min.   : 0.00  
-##  1st Qu.: 9.90   1st Qu.: 0.000   1st Qu.: 0.000   1st Qu.: 0.00  
-##  Median :18.00   Median : 0.000   Median : 7.800   Median : 8.40  
-##  Mean   :17.82   Mean   : 1.604   Mean   : 8.103   Mean   :11.45  
-##  3rd Qu.:24.30   3rd Qu.: 0.000   3rd Qu.:14.100   3rd Qu.:19.50  
-##  Max.   :43.20   Max.   :13.800   Max.   :27.600   Max.   :34.20  
-##                  NA&#39;s   :10                                       
-##     Warming      Initial hardness    Brittle         Crunchy     
-##  Min.   : 0.00   Min.   : 0.00    Min.   : 0.00   Min.   : 8.40  
-##  1st Qu.: 9.30   1st Qu.:19.50    1st Qu.:27.60   1st Qu.:23.25  
-##  Median :16.80   Median :30.60    Median :34.80   Median :30.60  
-##  Mean   :16.76   Mean   :30.12    Mean   :31.65   Mean   :29.62  
-##  3rd Qu.:25.20   3rd Qu.:39.30    3rd Qu.:39.00   3rd Qu.:36.30  
-##  Max.   :47.40   Max.   :60.00    Max.   :57.00   Max.   :48.60  
-##                                   NA&#39;s   :2                      
-##  Fatty in mouth       Light       Dry in mouth   Qty of inclusions in mouth
-##  Min.   : 0.000   Min.   : 5.4   Min.   :11.40   Min.   : 0.00             
-##  1st Qu.: 0.000   1st Qu.:22.8   1st Qu.:39.00   1st Qu.:15.90             
-##  Median : 5.700   Median :31.2   Median :45.00   Median :26.40             
-##  Mean   : 7.356   Mean   :30.1   Mean   :42.99   Mean   :24.92             
-##  3rd Qu.:13.050   3rd Qu.:36.6   3rd Qu.:49.80   3rd Qu.:35.40             
-##  Max.   :27.000   Max.   :53.4   Max.   :58.80   Max.   :45.60             
-##  NA&#39;s   :1        NA&#39;s   :1                                                
-##      Sticky         Melting    
-##  Min.   : 6.00   Min.   : 0.0  
-##  1st Qu.:27.00   1st Qu.:13.2  
-##  Median :33.60   Median :19.2  
-##  Mean   :32.73   Mean   :20.5  
-##  3rd Qu.:39.60   3rd Qu.:27.3  
-##  Max.   :52.80   Max.   :38.4  
+<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="data-prep.html#cb245-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(sensory)</span></code></pre></div>
+<pre><code>##     Judge             Product              Shiny     
+##  Length:99          Length:99          Min.   : 0.0  
+##  Class :character   Class :character   1st Qu.: 9.3  
+##  Mode  :character   Mode  :character   Median :21.0  
+##                                        Mean   :23.9  
+##                                        3rd Qu.:38.4  
+##                                        Max.   :54.0  
+##                                                      
+##  External color intensity Color evenness
+##  Min.   : 6.6             Min.   : 6.6  
+##  1st Qu.:27.0             1st Qu.:19.5  
+##  Median :34.8             Median :26.4  
+##  Mean   :33.7             Mean   :28.2  
+##  3rd Qu.:42.6             3rd Qu.:37.2  
+##  Max.   :55.2             Max.   :53.4  
+##                                         
+##  Qty of inclusions Surface defects Print quality 
+##  Min.   : 0.0      Min.   : 4.8    Min.   :12.0  
+##  1st Qu.:13.8      1st Qu.:15.3    1st Qu.:36.3  
+##  Median :19.8      Median :21.0    Median :40.8  
+##  Mean   :20.6      Mean   :23.4    Mean   :40.7  
+##  3rd Qu.:29.1      3rd Qu.:30.6    3rd Qu.:47.1  
+##  Max.   :40.8      Max.   :51.6    Max.   :60.0  
+##                                                  
+##    Thickness    Color contrast Overall odor intensity
+##  Min.   : 7.8   Min.   : 5.4   Min.   : 0.0          
+##  1st Qu.:18.3   1st Qu.:21.0   1st Qu.:10.2          
+##  Median :25.8   Median :32.4   Median :18.0          
+##  Mean   :25.5   Mean   :29.7   Mean   :18.7          
+##  3rd Qu.:32.1   3rd Qu.:40.2   3rd Qu.:26.1          
+##  Max.   :52.8   Max.   :51.6   Max.   :40.2          
+##                 NA&#39;s   :2                            
+##    Fatty odor     Roasted odor  Cereal flavor 
+##  Min.   : 0.00   Min.   : 0.0   Min.   : 0.0  
+##  1st Qu.: 0.00   1st Qu.: 8.1   1st Qu.:18.0  
+##  Median : 5.40   Median :15.0   Median :25.2  
+##  Mean   : 6.85   Mean   :15.1   Mean   :25.0  
+##  3rd Qu.:10.65   3rd Qu.:20.7   3rd Qu.:31.2  
+##  Max.   :27.00   Max.   :42.0   Max.   :48.0  
+##  NA&#39;s   :1                                    
+##  RawDough flavor  Fatty flavor    Dairy flavor  
+##  Min.   : 0.0    Min.   : 0.00   Min.   : 0.00  
+##  1st Qu.: 3.0    1st Qu.: 0.00   1st Qu.: 0.00  
+##  Median :13.2    Median : 6.60   Median : 7.20  
+##  Mean   :14.2    Mean   : 7.53   Mean   : 9.11  
+##  3rd Qu.:24.6    3rd Qu.:13.80   3rd Qu.:13.50  
+##  Max.   :43.2    Max.   :24.00   Max.   :46.80  
+##                  NA&#39;s   :2                      
+##  Roasted flavor Overall flavor persistence
+##  Min.   : 0.0   Min.   : 0.0              
+##  1st Qu.: 9.0   1st Qu.:16.2              
+##  Median :17.4   Median :22.8              
+##  Mean   :17.7   Mean   :22.7              
+##  3rd Qu.:24.6   3rd Qu.:28.8              
+##  Max.   :51.6   Max.   :43.8              
+##                                           
+##      Salty           Sweet           Sour     
+##  Min.   : 0.00   Min.   : 0.0   Min.   : 0.0  
+##  1st Qu.: 0.00   1st Qu.: 9.9   1st Qu.: 0.0  
+##  Median : 1.20   Median :18.0   Median : 0.0  
+##  Mean   : 5.03   Mean   :17.8   Mean   : 1.6  
+##  3rd Qu.:10.05   3rd Qu.:24.3   3rd Qu.: 0.0  
+##  Max.   :19.20   Max.   :43.2   Max.   :13.8  
+##                                 NA&#39;s   :10    
+##      Bitter       Astringent      Warming    
+##  Min.   : 0.0   Min.   : 0.0   Min.   : 0.0  
+##  1st Qu.: 0.0   1st Qu.: 0.0   1st Qu.: 9.3  
+##  Median : 7.8   Median : 8.4   Median :16.8  
+##  Mean   : 8.1   Mean   :11.4   Mean   :16.8  
+##  3rd Qu.:14.1   3rd Qu.:19.5   3rd Qu.:25.2  
+##  Max.   :27.6   Max.   :34.2   Max.   :47.4  
+##                                              
+##  Initial hardness    Brittle        Crunchy    
+##  Min.   : 0.0     Min.   : 0.0   Min.   : 8.4  
+##  1st Qu.:19.5     1st Qu.:27.6   1st Qu.:23.2  
+##  Median :30.6     Median :34.8   Median :30.6  
+##  Mean   :30.1     Mean   :31.6   Mean   :29.6  
+##  3rd Qu.:39.3     3rd Qu.:39.0   3rd Qu.:36.3  
+##  Max.   :60.0     Max.   :57.0   Max.   :48.6  
+##                   NA&#39;s   :2                    
+##  Fatty in mouth      Light       Dry in mouth 
+##  Min.   : 0.00   Min.   : 5.4   Min.   :11.4  
+##  1st Qu.: 0.00   1st Qu.:22.8   1st Qu.:39.0  
+##  Median : 5.70   Median :31.2   Median :45.0  
+##  Mean   : 7.36   Mean   :30.1   Mean   :43.0  
+##  3rd Qu.:13.05   3rd Qu.:36.6   3rd Qu.:49.8  
+##  Max.   :27.00   Max.   :53.4   Max.   :58.8  
+##  NA&#39;s   :1       NA&#39;s   :1                    
+##  Qty of inclusions in mouth     Sticky    
+##  Min.   : 0.0               Min.   : 6.0  
+##  1st Qu.:15.9               1st Qu.:27.0  
+##  Median :26.4               Median :33.6  
+##  Mean   :24.9               Mean   :32.7  
+##  3rd Qu.:35.4               3rd Qu.:39.6  
+##  Max.   :45.6               Max.   :52.8  
+##                                           
+##     Melting    
+##  Min.   : 0.0  
+##  1st Qu.:13.2  
+##  Median :19.2  
+##  Mean   :20.5  
+##  3rd Qu.:27.3  
+##  Max.   :38.4  
 ## </code></pre>
-<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="data-prep.html#cb236-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(sensory)</span></code></pre></div>
+<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="data-prep.html#cb247-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(sensory)</span></code></pre></div>
 <pre><code>## Rows: 99
 ## Columns: 34
-## $ Judge                        &lt;chr&gt; &quot;J01&quot;, &quot;J01&quot;, &quot;J01&quot;, &quot;J01&quot;, &quot;J01&quot;, &quot;J01&quot;,~
-## $ Product                      &lt;chr&gt; &quot;P01&quot;, &quot;P02&quot;, &quot;P03&quot;, &quot;P04&quot;, &quot;P05&quot;, &quot;P06&quot;,~
-## $ Shiny                        &lt;dbl&gt; 52.8, 48.6, 48.0, 46.2, 0.0, 0.0, 5.4, 0.~
-## $ `External color intensity`   &lt;dbl&gt; 30.0, 30.0, 45.6, 45.6, 23.4, 50.4, 6.6, ~
-## $ `Color evenness`             &lt;dbl&gt; 22.8, 13.2, 17.4, 37.8, 49.2, 24.0, 17.4,~
-## $ `Qty of inclusions`          &lt;dbl&gt; 9.6, 10.8, 7.8, 0.0, 0.0, 27.6, 0.0, 23.4~
-## $ `Surface defects`            &lt;dbl&gt; 22.8, 13.2, 14.4, 48.6, 12.6, 39.6, 36.0,~
-## $ `Print quality`              &lt;dbl&gt; 48.6, 54.0, 49.2, 45.6, 47.4, 53.4, 42.6,~
-## $ Thickness                    &lt;dbl&gt; 38.4, 35.4, 25.8, 43.2, 29.4, 36.0, 32.4,~
-## $ `Color contrast`             &lt;dbl&gt; 37.8, 40.2, 17.4, NA, 12.6, 21.0, 41.4, 5~
-## $ `Overall odor intensity`     &lt;dbl&gt; 16.8, 24.6, 21.6, 7.2, 18.0, 0.0, 13.8, 1~
-## $ `Fatty odor`                 &lt;dbl&gt; 6.6, 5.4, 0.0, 0.0, 8.4, 0.0, 0.0, 7.8, 6~
-## $ `Roasted odor`               &lt;dbl&gt; 15.6, 20.4, 18.6, 6.0, 16.2, 7.2, 16.2, 1~
-## $ `Cereal flavor`              &lt;dbl&gt; 24.6, 25.8, 30.0, 16.2, 21.6, 28.8, 18.0,~
-## $ `RawDough flavor`            &lt;dbl&gt; 28.2, 28.8, 26.4, 28.2, 27.6, 27.6, 21.0,~
-## $ `Fatty flavor`               &lt;dbl&gt; 13.8, 7.2, 0.0, 0.0, 6.6, 0.0, 6.0, 7.2, ~
-## $ `Dairy flavor`               &lt;dbl&gt; 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0~
-## $ `Roasted flavor`             &lt;dbl&gt; 24.6, 19.2, 27.0, 28.2, 20.4, 22.2, 21.6,~
-## $ `Overall flavor persistence` &lt;dbl&gt; 23.4, 24.6, 25.2, 14.4, 21.0, 25.2, 18.0,~
-## $ Salty                        &lt;dbl&gt; 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0~
-## $ Sweet                        &lt;dbl&gt; 13.8, 19.2, 9.6, 11.4, 20.4, 21.0, 10.8, ~
-## $ Sour                         &lt;dbl&gt; 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0~
-## $ Bitter                       &lt;dbl&gt; 19.2, 21.6, 21.0, 9.0, 8.4, 18.6, 0.0, 9.~
-## $ Astringent                   &lt;dbl&gt; 0.0, 0.0, 25.8, 18.6, 16.2, 25.2, 21.0, 2~
-## $ Warming                      &lt;dbl&gt; 0.0, 0.0, 13.8, 0.0, 0.0, 14.4, 10.8, 19.~
-## $ `Initial hardness`           &lt;dbl&gt; 11.4, 17.4, 33.0, 19.8, 16.2, 28.2, 10.2,~
-## $ Brittle                      &lt;dbl&gt; 39.6, 35.4, 27.6, 33.6, 38.4, 33.0, 29.4,~
-## $ Crunchy                      &lt;dbl&gt; 25.8, 32.4, 25.2, 28.8, 35.4, 27.6, 27.0,~
-## $ `Fatty in mouth`             &lt;dbl&gt; 0.0, 9.6, 6.0, 9.6, 7.2, 0.0, 5.4, 5.4, 1~
-## $ Light                        &lt;dbl&gt; 22.8, 21.0, 20.4, NA, 44.4, 24.0, 25.8, 3~
-## $ `Dry in mouth`               &lt;dbl&gt; 27.0, 25.8, 31.2, 28.2, 34.2, 33.6, 22.2,~
-## $ `Qty of inclusions in mouth` &lt;dbl&gt; 27.6, 22.2, 10.2, 13.2, 18.0, 26.4, 9.0, ~
-## $ Sticky                       &lt;dbl&gt; 37.2, 35.4, 37.2, 21.6, 39.0, 36.0, 22.8,~
-## $ Melting                      &lt;dbl&gt; 33.6, 36.0, 8.4, 34.2, 34.8, 21.6, 34.8, ~</code></pre>
+## $ Judge                        &lt;chr&gt; &quot;J01&quot;, &quot;J01&quot;, &quot;J…
+## $ Product                      &lt;chr&gt; &quot;P01&quot;, &quot;P02&quot;, &quot;P…
+## $ Shiny                        &lt;dbl&gt; 52.8, 48.6, 48.0…
+## $ `External color intensity`   &lt;dbl&gt; 30.0, 30.0, 45.6…
+## $ `Color evenness`             &lt;dbl&gt; 22.8, 13.2, 17.4…
+## $ `Qty of inclusions`          &lt;dbl&gt; 9.6, 10.8, 7.8, …
+## $ `Surface defects`            &lt;dbl&gt; 22.8, 13.2, 14.4…
+## $ `Print quality`              &lt;dbl&gt; 48.6, 54.0, 49.2…
+## $ Thickness                    &lt;dbl&gt; 38.4, 35.4, 25.8…
+## $ `Color contrast`             &lt;dbl&gt; 37.8, 40.2, 17.4…
+## $ `Overall odor intensity`     &lt;dbl&gt; 16.8, 24.6, 21.6…
+## $ `Fatty odor`                 &lt;dbl&gt; 6.6, 5.4, 0.0, 0…
+## $ `Roasted odor`               &lt;dbl&gt; 15.6, 20.4, 18.6…
+## $ `Cereal flavor`              &lt;dbl&gt; 24.6, 25.8, 30.0…
+## $ `RawDough flavor`            &lt;dbl&gt; 28.2, 28.8, 26.4…
+## $ `Fatty flavor`               &lt;dbl&gt; 13.8, 7.2, 0.0, …
+## $ `Dairy flavor`               &lt;dbl&gt; 0.0, 0.0, 0.0, 0…
+## $ `Roasted flavor`             &lt;dbl&gt; 24.6, 19.2, 27.0…
+## $ `Overall flavor persistence` &lt;dbl&gt; 23.4, 24.6, 25.2…
+## $ Salty                        &lt;dbl&gt; 0.0, 0.0, 0.0, 0…
+## $ Sweet                        &lt;dbl&gt; 13.8, 19.2, 9.6,…
+## $ Sour                         &lt;dbl&gt; 0.0, 0.0, 0.0, 0…
+## $ Bitter                       &lt;dbl&gt; 19.2, 21.6, 21.0…
+## $ Astringent                   &lt;dbl&gt; 0.0, 0.0, 25.8, …
+## $ Warming                      &lt;dbl&gt; 0.0, 0.0, 13.8, …
+## $ `Initial hardness`           &lt;dbl&gt; 11.4, 17.4, 33.0…
+## $ Brittle                      &lt;dbl&gt; 39.6, 35.4, 27.6…
+## $ Crunchy                      &lt;dbl&gt; 25.8, 32.4, 25.2…
+## $ `Fatty in mouth`             &lt;dbl&gt; 0.0, 9.6, 6.0, 9…
+## $ Light                        &lt;dbl&gt; 22.8, 21.0, 20.4…
+## $ `Dry in mouth`               &lt;dbl&gt; 27.0, 25.8, 31.2…
+## $ `Qty of inclusions in mouth` &lt;dbl&gt; 27.6, 22.2, 10.2…
+## $ Sticky                       &lt;dbl&gt; 37.2, 35.4, 37.2…
+## $ Melting                      &lt;dbl&gt; 33.6, 36.0, 8.4,…</code></pre>
 <p>These functions provide relevant yet basic views of each variable present in the data including their types, the range of values, means, and medians, as well as the first values of each variables.</p>
 <p>Such view might be sufficient for some first conclusions (e.g. Are my panelists considered as numerical or nominal data? Do I have missing values?), yet it is not sufficient to fully ensure that the data is ready for analysis. For the latter, more extensive analyses can be performed automatically in different ways. These analyses include looking at the distribution of some variables, or the frequencies of character levels.</p>
 <p>A first solution comes from the <code>{skimr}</code> package and its <code>skim()</code> function. By applying it to data, an automated extended summary is directly printed on screen by separating <code>character</code> type variables from <code>numeric</code> type variables:</p>
-<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="data-prep.html#cb238-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(skimr)</span>
-<span id="cb238-2"><a href="data-prep.html#cb238-2" aria-hidden="true" tabindex="-1"></a><span class="fu">skim</span>(sensory)</span></code></pre></div>
+<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="data-prep.html#cb249-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(skimr)</span>
+<span id="cb249-2"><a href="data-prep.html#cb249-2" aria-hidden="true" tabindex="-1"></a><span class="fu">skim</span>(sensory)</span></code></pre></div>
 <p>Another approach consists in generating automatically an html report with some pre-defined analyses using <code>create_report()</code> from the <code>{DataExplorer}</code> package.</p>
-<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="data-prep.html#cb239-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DataExplorer)</span>
-<span id="cb239-2"><a href="data-prep.html#cb239-2" aria-hidden="true" tabindex="-1"></a><span class="fu">create_report</span>(sensory)</span></code></pre></div>
+<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="data-prep.html#cb250-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DataExplorer)</span>
+<span id="cb250-2"><a href="data-prep.html#cb250-2" aria-hidden="true" tabindex="-1"></a><span class="fu">create_report</span>(sensory)</span></code></pre></div>
 <p>Unless specified otherwise through <code>output_file</code>, <code>output_dir</code>, and <code>output_format</code>, the report will be saved as an html file on your active directory as <em>report.html</em>. This report provides many statistics on your data, including some simple statistics (e.g. raw counts, percentages), informs you on the structure of your data, as well as on eventual missing data. It also generates graphics to describe your variables (e.g. univariate distribution, correlation and PCA).</p>
 <blockquote>
 <p>Note that the analyses performed to build this report can be called directly within R. For instance, <code>introduce()</code> and <code>plot_intro()</code> generates the first part of the report, whereas <code>plot_missing()</code> and <code>profile_missing()</code> provide information regarding missing data just to name those.</p>
@@ -629,36 +676,36 @@ First, since <code>read_xlsx()</code> returns a tibble, let’s take advantage o
 <div id="visualization-of-missing-values" class="section level4 hasAnchor" number="9.2.2.1">
 <h4><span class="header-section-number">9.2.2.1</span> Visualization of Missing Values<a href="data-prep.html#visualization-of-missing-values" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>A first approach to inspect and visualize where the missing values are is by representing them visually. To do so, the <code>{visdat}</code> package provides a neat solution as it represents graphically the data by highlighting where missing values are located. Such visual representation is obtained using the <code>vis_miss()</code> function:</p>
-<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="data-prep.html#cb240-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(visdat)</span>
-<span id="cb240-2"><a href="data-prep.html#cb240-2" aria-hidden="true" tabindex="-1"></a>sensory <span class="sc">%&gt;%</span> </span>
-<span id="cb240-3"><a href="data-prep.html#cb240-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">vis_miss</span>()</span></code></pre></div>
-<p><img src="i2ds4scc_bookdown_files/figure-html/unnamed-chunk-200-1.png" width="672" /></p>
+<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="data-prep.html#cb251-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(visdat)</span>
+<span id="cb251-2"><a href="data-prep.html#cb251-2" aria-hidden="true" tabindex="-1"></a>sensory <span class="sc">%&gt;%</span> </span>
+<span id="cb251-3"><a href="data-prep.html#cb251-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">vis_miss</span>()</span></code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-210-1.png" width="672" /></p>
 <p>As can be seen, missing values are only present in few variables. However, <code>Sour</code> contains up to 10% of missing data, which can be quite critical in some situations.</p>
 <p>If we would want to dig deeper and assess for which products (say) data are missing, we could re-create the same plots per product. The following code would generate that for you:</p>
-<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="data-prep.html#cb241-1" aria-hidden="true" tabindex="-1"></a>sensory <span class="sc">%&gt;%</span> </span>
-<span id="cb241-2"><a href="data-prep.html#cb241-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">split</span>(.<span class="sc">$</span>Product) <span class="sc">%&gt;%</span> </span>
-<span id="cb241-3"><a href="data-prep.html#cb241-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="cf">function</span>(data){</span>
-<span id="cb241-4"><a href="data-prep.html#cb241-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">vis_miss</span>(data)</span>
-<span id="cb241-5"><a href="data-prep.html#cb241-5" aria-hidden="true" tabindex="-1"></a>  })</span></code></pre></div>
+<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="data-prep.html#cb252-1" aria-hidden="true" tabindex="-1"></a>sensory <span class="sc">%&gt;%</span> </span>
+<span id="cb252-2"><a href="data-prep.html#cb252-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">split</span>(.<span class="sc">$</span>Product) <span class="sc">%&gt;%</span> </span>
+<span id="cb252-3"><a href="data-prep.html#cb252-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="cf">function</span>(data){</span>
+<span id="cb252-4"><a href="data-prep.html#cb252-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">vis_miss</span>(data)</span>
+<span id="cb252-5"><a href="data-prep.html#cb252-5" aria-hidden="true" tabindex="-1"></a>  })</span></code></pre></div>
 <p>Of course, such approach could also be applied per panelist for instance.</p>
 <p>Once we’ve investigated where the missing values are located, we can go further by understanding if there are some sorts of relationship between missing values. In other words, are the missing values random? Or are they somewhat structured?
 To answer these questions, the <code>{naniar}</code> package provides an interesting function called <code>gg_miss_upset()</code> which studies the relationship between missing values:</p>
-<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="data-prep.html#cb242-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(naniar)</span>
-<span id="cb242-2"><a href="data-prep.html#cb242-2" aria-hidden="true" tabindex="-1"></a>sensory <span class="sc">%&gt;%</span></span>
-<span id="cb242-3"><a href="data-prep.html#cb242-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg_miss_upset</span>()</span></code></pre></div>
-<p><img src="i2ds4scc_bookdown_files/figure-html/unnamed-chunk-202-1.png" width="672" /></p>
+<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="data-prep.html#cb253-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(naniar)</span>
+<span id="cb253-2"><a href="data-prep.html#cb253-2" aria-hidden="true" tabindex="-1"></a>sensory <span class="sc">%&gt;%</span></span>
+<span id="cb253-3"><a href="data-prep.html#cb253-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg_miss_upset</span>()</span></code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-212-1.png" width="672" /></p>
 <p>It seems here that the only connection between NAs is observed between <code>Light</code> and <code>Color contrast</code>.</p>
 <p>Such relational structure can also be visualized in a scatter plot using the <code>geom_miss_point()</code> function from the same package:</p>
-<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="data-prep.html#cb243-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(sensory, <span class="fu">aes</span>(<span class="at">x=</span>Product, <span class="at">y=</span>Sour))<span class="sc">+</span></span>
-<span id="cb243-2"><a href="data-prep.html#cb243-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_miss_point</span>()</span></code></pre></div>
-<p><img src="i2ds4scc_bookdown_files/figure-html/unnamed-chunk-203-1.png" width="672" /></p>
+<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="data-prep.html#cb254-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(sensory, <span class="fu">aes</span>(<span class="at">x=</span>Product, <span class="at">y=</span>Sour))<span class="sc">+</span></span>
+<span id="cb254-2"><a href="data-prep.html#cb254-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_miss_point</span>()</span></code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-213-1.png" width="672" /></p>
 <p>Here, the relationship between <code>Product</code> and <code>Sour</code> is shown. Such plot may help decide what to do with missing values, whether it is ignoring, removing, or predicting them.</p>
 </div>
 <div id="ignoring-missing-values" class="section level4 hasAnchor" number="9.2.2.2">
 <h4><span class="header-section-number">9.2.2.2</span> Ignoring Missing Values<a href="data-prep.html#ignoring-missing-values" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>A first solution to handle missing values is to simply <em>ignore</em> them, as many analyses handle them well. For instance, an ANOVA could be run for such attribute, and results are being produced:</p>
-<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="data-prep.html#cb244-1" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(<span class="fu">aov</span>(Light <span class="sc">~</span> Product <span class="sc">+</span> Judge, <span class="at">data=</span>sensory))</span></code></pre></div>
-<pre><code>## # A tibble: 3 x 6
+<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="data-prep.html#cb255-1" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(<span class="fu">aov</span>(Light <span class="sc">~</span> Product <span class="sc">+</span> Judge, <span class="at">data=</span>sensory))</span></code></pre></div>
+<pre><code>## # A tibble: 3 × 6
 ##   term         df sumsq meansq statistic  p.value
 ##   &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
 ## 1 Product      10 2379.  238.       4.73  2.71e-5
@@ -666,11 +713,11 @@ To answer these questions, the <code>{naniar}</code> package provides an interes
 ## 3 Residuals    79 3975.   50.3     NA    NA</code></pre>
 <p>This solution may work fine when the number of missing values is small, but be aware that it can also provide erroneous results in case they are not handled the way the analyst is expecting them to be handled.</p>
 <p>For some other analyses, <em>ignoring</em> the presence of missing values may simply provide unwanted results. To illustrate this, let’s compute the simple mean per product for <code>Light</code></p>
-<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="data-prep.html#cb246-1" aria-hidden="true" tabindex="-1"></a>sensory <span class="sc">%&gt;%</span> </span>
-<span id="cb246-2"><a href="data-prep.html#cb246-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Product) <span class="sc">%&gt;%</span> </span>
-<span id="cb246-3"><a href="data-prep.html#cb246-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Light =</span> <span class="fu">mean</span>(Light)) <span class="sc">%&gt;%</span> </span>
-<span id="cb246-4"><a href="data-prep.html#cb246-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code></pre></div>
-<pre><code>## # A tibble: 11 x 2
+<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="data-prep.html#cb257-1" aria-hidden="true" tabindex="-1"></a>sensory <span class="sc">%&gt;%</span> </span>
+<span id="cb257-2"><a href="data-prep.html#cb257-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Product) <span class="sc">%&gt;%</span> </span>
+<span id="cb257-3"><a href="data-prep.html#cb257-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Light =</span> <span class="fu">mean</span>(Light)) <span class="sc">%&gt;%</span> </span>
+<span id="cb257-4"><a href="data-prep.html#cb257-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code></pre></div>
+<pre><code>## # A tibble: 11 × 2
 ##    Product Light
 ##    &lt;chr&gt;   &lt;dbl&gt;
 ##  1 P01      29.6
@@ -689,35 +736,35 @@ To answer these questions, the <code>{naniar}</code> package provides an interes
 <div id="removing-missing-values" class="section level4 hasAnchor" number="9.2.2.3">
 <h4><span class="header-section-number">9.2.2.3</span> Removing Missing Values<a href="data-prep.html#removing-missing-values" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>To enforce the mean to be computed, we need to inform R to remove any missing values beforehand. Such procedure can be done manually by simply filtering out any missing data (here for <code>Sour</code>) before running the analysis:</p>
-<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="data-prep.html#cb248-1" aria-hidden="true" tabindex="-1"></a>sensory <span class="sc">%&gt;%</span> </span>
-<span id="cb248-2"><a href="data-prep.html#cb248-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Sour))</span></code></pre></div>
-<pre><code>## # A tibble: 89 x 34
-##    Judge Product Shiny `External color inten~` `Color evenness` `Qty of inclus~`
-##    &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;                   &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;
-##  1 J01   P01      52.8                    30               22.8              9.6
-##  2 J01   P02      48.6                    30               13.2             10.8
-##  3 J01   P03      48                      45.6             17.4              7.8
-##  4 J01   P04      46.2                    45.6             37.8              0  
-##  5 J01   P05       0                      23.4             49.2              0  
-##  6 J01   P06       0                      50.4             24               27.6
-##  7 J01   P07       5.4                     6.6             17.4              0  
-##  8 J01   P08       0                      51.6             48.6             23.4
-##  9 J01   P09       0                      42.6             18               21  
-## 10 J01   P10      53.4                    36.6             11.4             18  
-## # ... with 79 more rows, and 28 more variables: `Surface defects` &lt;dbl&gt;,
-## #   `Print quality` &lt;dbl&gt;, Thickness &lt;dbl&gt;, `Color contrast` &lt;dbl&gt;,
-## #   `Overall odor intensity` &lt;dbl&gt;, `Fatty odor` &lt;dbl&gt;, `Roasted odor` &lt;dbl&gt;,
-## #   `Cereal flavor` &lt;dbl&gt;, `RawDough flavor` &lt;dbl&gt;, `Fatty flavor` &lt;dbl&gt;,
-## #   `Dairy flavor` &lt;dbl&gt;, `Roasted flavor` &lt;dbl&gt;,
-## #   `Overall flavor persistence` &lt;dbl&gt;, Salty &lt;dbl&gt;, Sweet &lt;dbl&gt;, Sour &lt;dbl&gt;,
-## #   Bitter &lt;dbl&gt;, Astringent &lt;dbl&gt;, Warming &lt;dbl&gt;, ...</code></pre>
+<div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb259-1"><a href="data-prep.html#cb259-1" aria-hidden="true" tabindex="-1"></a>sensory <span class="sc">%&gt;%</span> </span>
+<span id="cb259-2"><a href="data-prep.html#cb259-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Sour))</span></code></pre></div>
+<pre><code>## # A tibble: 89 × 34
+##    Judge Product Shiny Extern…¹ Color…² Qty o…³ Surfa…⁴
+##    &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+##  1 J01   P01      52.8     30      22.8     9.6    22.8
+##  2 J01   P02      48.6     30      13.2    10.8    13.2
+##  3 J01   P03      48       45.6    17.4     7.8    14.4
+##  4 J01   P04      46.2     45.6    37.8     0      48.6
+##  5 J01   P05       0       23.4    49.2     0      12.6
+##  6 J01   P06       0       50.4    24      27.6    39.6
+##  7 J01   P07       5.4      6.6    17.4     0      36  
+##  8 J01   P08       0       51.6    48.6    23.4    18  
+##  9 J01   P09       0       42.6    18      21      36  
+## 10 J01   P10      53.4     36.6    11.4    18      10.8
+## # … with 79 more rows, 27 more variables:
+## #   `Print quality` &lt;dbl&gt;, Thickness &lt;dbl&gt;,
+## #   `Color contrast` &lt;dbl&gt;,
+## #   `Overall odor intensity` &lt;dbl&gt;,
+## #   `Fatty odor` &lt;dbl&gt;, `Roasted odor` &lt;dbl&gt;,
+## #   `Cereal flavor` &lt;dbl&gt;, `RawDough flavor` &lt;dbl&gt;,
+## #   `Fatty flavor` &lt;dbl&gt;, `Dairy flavor` &lt;dbl&gt;, …</code></pre>
 <p>However, this latter solution is not always satisfactory as it also deletes real data since the data set went from 99 to 89 rows. This means that for variables that did not have missing values for instance, existing data have been removed.</p>
 <p>Hence, we prefer another alternative which consists in removing missing values within the analysis procedure (here <code>mean()</code>) through the parameter <code>na.rm=TRUE</code>:</p>
-<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="data-prep.html#cb250-1" aria-hidden="true" tabindex="-1"></a>sensory <span class="sc">%&gt;%</span> </span>
-<span id="cb250-2"><a href="data-prep.html#cb250-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Product) <span class="sc">%&gt;%</span> </span>
-<span id="cb250-3"><a href="data-prep.html#cb250-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Light =</span> <span class="fu">mean</span>(Light, <span class="at">na.rm=</span><span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb250-4"><a href="data-prep.html#cb250-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code></pre></div>
-<pre><code>## # A tibble: 11 x 2
+<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb261-1"><a href="data-prep.html#cb261-1" aria-hidden="true" tabindex="-1"></a>sensory <span class="sc">%&gt;%</span> </span>
+<span id="cb261-2"><a href="data-prep.html#cb261-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Product) <span class="sc">%&gt;%</span> </span>
+<span id="cb261-3"><a href="data-prep.html#cb261-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Light =</span> <span class="fu">mean</span>(Light, <span class="at">na.rm=</span><span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb261-4"><a href="data-prep.html#cb261-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code></pre></div>
+<pre><code>## # A tibble: 11 × 2
 ##    Product Light
 ##    &lt;chr&gt;   &lt;dbl&gt;
 ##  1 P01      29.6
@@ -732,17 +779,17 @@ To answer these questions, the <code>{naniar}</code> package provides an interes
 ## 10 P10      27.7
 ## 11 POpt     28.7</code></pre>
 <p>Using <code>na.rm=TRUE</code> is equivalent to removing the missing values from the data before performing the analysis, but only for the variable of interest. A similar approach consists in first rotating (using <code>pivot_longer()</code>) the data before removing missing values:</p>
-<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="data-prep.html#cb252-1" aria-hidden="true" tabindex="-1"></a>sensory <span class="sc">%&gt;%</span> </span>
-<span id="cb252-2"><a href="data-prep.html#cb252-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(Shiny<span class="sc">:</span>Melting, <span class="at">names_to=</span><span class="st">&quot;Variables&quot;</span>, <span class="at">values_to=</span><span class="st">&quot;Scores&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb252-3"><a href="data-prep.html#cb252-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Scores)) <span class="sc">%&gt;%</span> </span>
-<span id="cb252-4"><a href="data-prep.html#cb252-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Product, Variables) <span class="sc">%&gt;%</span> </span>
-<span id="cb252-5"><a href="data-prep.html#cb252-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Means =</span> <span class="fu">mean</span>(Scores)) <span class="sc">%&gt;%</span> </span>
-<span id="cb252-6"><a href="data-prep.html#cb252-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb252-7"><a href="data-prep.html#cb252-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Variables, <span class="at">values_from =</span> Means) <span class="sc">%&gt;%</span> </span>
-<span id="cb252-8"><a href="data-prep.html#cb252-8" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Product, Sour, Light)</span></code></pre></div>
-<pre><code>## `summarise()` has grouped output by &#39;Product&#39;. You can override using the
-## `.groups` argument.</code></pre>
-<pre><code>## # A tibble: 11 x 3
+<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb263-1"><a href="data-prep.html#cb263-1" aria-hidden="true" tabindex="-1"></a>sensory <span class="sc">%&gt;%</span> </span>
+<span id="cb263-2"><a href="data-prep.html#cb263-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(Shiny<span class="sc">:</span>Melting, <span class="at">names_to=</span><span class="st">&quot;Variables&quot;</span>, <span class="at">values_to=</span><span class="st">&quot;Scores&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb263-3"><a href="data-prep.html#cb263-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Scores)) <span class="sc">%&gt;%</span> </span>
+<span id="cb263-4"><a href="data-prep.html#cb263-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Product, Variables) <span class="sc">%&gt;%</span> </span>
+<span id="cb263-5"><a href="data-prep.html#cb263-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Means =</span> <span class="fu">mean</span>(Scores)) <span class="sc">%&gt;%</span> </span>
+<span id="cb263-6"><a href="data-prep.html#cb263-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb263-7"><a href="data-prep.html#cb263-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Variables, <span class="at">values_from =</span> Means) <span class="sc">%&gt;%</span> </span>
+<span id="cb263-8"><a href="data-prep.html#cb263-8" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Product, Sour, Light)</span></code></pre></div>
+<pre><code>## `summarise()` has grouped output by &#39;Product&#39;. You can
+## override using the `.groups` argument.</code></pre>
+<pre><code>## # A tibble: 11 × 3
 ##    Product  Sour Light
 ##    &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;
 ##  1 P01     0      29.6
@@ -756,17 +803,17 @@ To answer these questions, the <code>{naniar}</code> package provides an interes
 ##  9 P09     0      22.7
 ## 10 P10     5.07   27.7
 ## 11 POpt    2.2    28.7</code></pre>
-<p>If this solution seems satisfactory as the means were computed without using <code>na.rm=TRUE</code> for both <code>Sour</code> and <code>Light</code> (who contained missing values), its use is limited since converting the data to its original format (i.e. performing <code>pivot_wider()</code> after <code>pivot_longer()</code> without computing the mean in between) will reintroduce the missing values<a href="#fn40" class="footnote-ref" id="fnref40"><sup>40</sup></a>.</p>
+<p>If this solution seems satisfactory as the means were computed without using <code>na.rm=TRUE</code> for both <code>Sour</code> and <code>Light</code> (who contained missing values), its use is limited since converting the data to its original format (i.e. performing <code>pivot_wider()</code> after <code>pivot_longer()</code> without computing the mean in between) will reintroduce the missing values<a href="#fn42" class="footnote-ref" id="fnref42"><sup>42</sup></a>.</p>
 <p>It should be noted that removing missing values has the impact of unbalancing the data. By taking the example of <code>Light</code> and <code>Sour</code>, let’s print the number of panelist evaluating each product:</p>
-<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="data-prep.html#cb255-1" aria-hidden="true" tabindex="-1"></a>sensory <span class="sc">%&gt;%</span> </span>
-<span id="cb255-2"><a href="data-prep.html#cb255-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(Shiny<span class="sc">:</span>Melting, <span class="at">names_to=</span><span class="st">&quot;Variables&quot;</span>, <span class="at">values_to=</span><span class="st">&quot;Scores&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb255-3"><a href="data-prep.html#cb255-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Scores),</span>
-<span id="cb255-4"><a href="data-prep.html#cb255-4" aria-hidden="true" tabindex="-1"></a>         Variables <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Light&quot;</span>,<span class="st">&quot;Sour&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb255-5"><a href="data-prep.html#cb255-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Product, Variables) <span class="sc">%&gt;%</span> </span>
-<span id="cb255-6"><a href="data-prep.html#cb255-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb255-7"><a href="data-prep.html#cb255-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb255-8"><a href="data-prep.html#cb255-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from=</span>Variables, <span class="at">values_from=</span>n)</span></code></pre></div>
-<pre><code>## # A tibble: 11 x 3
+<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="data-prep.html#cb266-1" aria-hidden="true" tabindex="-1"></a>sensory <span class="sc">%&gt;%</span> </span>
+<span id="cb266-2"><a href="data-prep.html#cb266-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(Shiny<span class="sc">:</span>Melting, <span class="at">names_to=</span><span class="st">&quot;Variables&quot;</span>, <span class="at">values_to=</span><span class="st">&quot;Scores&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb266-3"><a href="data-prep.html#cb266-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Scores),</span>
+<span id="cb266-4"><a href="data-prep.html#cb266-4" aria-hidden="true" tabindex="-1"></a>         Variables <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Light&quot;</span>,<span class="st">&quot;Sour&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb266-5"><a href="data-prep.html#cb266-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Product, Variables) <span class="sc">%&gt;%</span> </span>
+<span id="cb266-6"><a href="data-prep.html#cb266-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb266-7"><a href="data-prep.html#cb266-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb266-8"><a href="data-prep.html#cb266-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from=</span>Variables, <span class="at">values_from=</span>n)</span></code></pre></div>
+<pre><code>## # A tibble: 11 × 3
 ##    Product Light  Sour
 ##    &lt;chr&gt;   &lt;int&gt; &lt;int&gt;
 ##  1 P01         9     8
@@ -784,18 +831,19 @@ To answer these questions, the <code>{naniar}</code> package provides an interes
 <p>The solution of <em>blindly</em> removing missing values is a solution that you may sometime use. However, it is not the only strategy, and we can consider other approaches that are more in-line with the nature of the data.</p>
 <p>Rather than removing the missing values only, we could consider removing blocks of data, whether it is attributes, products, or panelists that present missing data. This solution is particularly handy when tests are performed in multiple sessions and some respondents did not manage to attend them all. It can then be relevant to remove completely those respondents from your data.</p>
 <p>The procedure presented below show the procedure on how to remove attributes with missing data, but could easily be adapted to panelists or products:</p>
-<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="data-prep.html#cb257-1" aria-hidden="true" tabindex="-1"></a>sensory_long <span class="ot">&lt;-</span> sensory <span class="sc">%&gt;%</span> </span>
-<span id="cb257-2"><a href="data-prep.html#cb257-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(Shiny<span class="sc">:</span>Melting, <span class="at">names_to=</span><span class="st">&quot;Variables&quot;</span>, <span class="at">values_to=</span><span class="st">&quot;Scores&quot;</span>)</span>
-<span id="cb257-3"><a href="data-prep.html#cb257-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb257-4"><a href="data-prep.html#cb257-4" aria-hidden="true" tabindex="-1"></a>(attr_rmv <span class="ot">&lt;-</span> sensory_long <span class="sc">%&gt;%</span> </span>
-<span id="cb257-5"><a href="data-prep.html#cb257-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(Scores)) <span class="sc">%&gt;%</span> </span>
-<span id="cb257-6"><a href="data-prep.html#cb257-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(Variables) <span class="sc">%&gt;%</span> </span>
-<span id="cb257-7"><a href="data-prep.html#cb257-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unique</span>())</span></code></pre></div>
-<pre><code>## [1] &quot;Color contrast&quot; &quot;Light&quot;          &quot;Sour&quot;           &quot;Fatty flavor&quot;  
-## [5] &quot;Fatty in mouth&quot; &quot;Fatty odor&quot;     &quot;Brittle&quot;</code></pre>
-<div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb259-1"><a href="data-prep.html#cb259-1" aria-hidden="true" tabindex="-1"></a>sensory_clean <span class="ot">&lt;-</span> sensory_long <span class="sc">%&gt;%</span> </span>
-<span id="cb259-2"><a href="data-prep.html#cb259-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>(Variables <span class="sc">%in%</span> attr_rmv)) <span class="sc">%&gt;%</span> </span>
-<span id="cb259-3"><a href="data-prep.html#cb259-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from=</span>Variables, <span class="at">values_from=</span>Scores)</span></code></pre></div>
+<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="data-prep.html#cb268-1" aria-hidden="true" tabindex="-1"></a>sensory_long <span class="ot">&lt;-</span> sensory <span class="sc">%&gt;%</span> </span>
+<span id="cb268-2"><a href="data-prep.html#cb268-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(Shiny<span class="sc">:</span>Melting, <span class="at">names_to=</span><span class="st">&quot;Variables&quot;</span>, <span class="at">values_to=</span><span class="st">&quot;Scores&quot;</span>)</span>
+<span id="cb268-3"><a href="data-prep.html#cb268-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb268-4"><a href="data-prep.html#cb268-4" aria-hidden="true" tabindex="-1"></a>(attr_rmv <span class="ot">&lt;-</span> sensory_long <span class="sc">%&gt;%</span> </span>
+<span id="cb268-5"><a href="data-prep.html#cb268-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(Scores)) <span class="sc">%&gt;%</span> </span>
+<span id="cb268-6"><a href="data-prep.html#cb268-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(Variables) <span class="sc">%&gt;%</span> </span>
+<span id="cb268-7"><a href="data-prep.html#cb268-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unique</span>())</span></code></pre></div>
+<pre><code>## [1] &quot;Color contrast&quot; &quot;Light&quot;          &quot;Sour&quot;          
+## [4] &quot;Fatty flavor&quot;   &quot;Fatty in mouth&quot; &quot;Fatty odor&quot;    
+## [7] &quot;Brittle&quot;</code></pre>
+<div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb270-1"><a href="data-prep.html#cb270-1" aria-hidden="true" tabindex="-1"></a>sensory_clean <span class="ot">&lt;-</span> sensory_long <span class="sc">%&gt;%</span> </span>
+<span id="cb270-2"><a href="data-prep.html#cb270-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>(Variables <span class="sc">%in%</span> attr_rmv)) <span class="sc">%&gt;%</span> </span>
+<span id="cb270-3"><a href="data-prep.html#cb270-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from=</span>Variables, <span class="at">values_from=</span>Scores)</span></code></pre></div>
 <p>This procedure removed the 7 attributes that contained missing values, leading to a table with 99 rows and 29 columns (instead of 36).</p>
 </div>
 <div id="imputing-missing-values" class="section level4 hasAnchor" number="9.2.2.4">
@@ -803,10 +851,10 @@ To answer these questions, the <code>{naniar}</code> package provides an interes
 <p>Rather than removing missing data, another strategy consists in imputing missing values. Here again, many strategies can be considered, starting with replacing them with a fixed value. Such approach is usually not the most suitable one, yet it can be relevant in certain cases. For instance, in a CATA task, missing values are often replaced with 0s (not ticked).</p>
 <p>To replace missing values with a fixed value, <code>replace_na()</code> can be used. When applied to a tibble, this function requires you defining using <code>list()</code> the columns to apply it to, and which values to use (each column being treated separately).</p>
 <p>For convenience, let’s apply it to <code>sensory</code> by replacing missing values for <code>Sour</code> by the value <code>888</code> and for <code>Light</code> with <code>999</code> (we use these extreme values to track changes more easily):</p>
-<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="data-prep.html#cb260-1" aria-hidden="true" tabindex="-1"></a>sensory <span class="sc">%&gt;%</span> </span>
-<span id="cb260-2"><a href="data-prep.html#cb260-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">replace_na</span>(<span class="fu">list</span>(<span class="at">Sour =</span> <span class="dv">888</span>, <span class="at">Light =</span> <span class="dv">999</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb260-3"><a href="data-prep.html#cb260-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Judge, Product, Sour, Light)</span></code></pre></div>
-<pre><code>## # A tibble: 99 x 4
+<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb271-1"><a href="data-prep.html#cb271-1" aria-hidden="true" tabindex="-1"></a>sensory <span class="sc">%&gt;%</span> </span>
+<span id="cb271-2"><a href="data-prep.html#cb271-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">replace_na</span>(<span class="fu">list</span>(<span class="at">Sour =</span> <span class="dv">888</span>, <span class="at">Light =</span> <span class="dv">999</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb271-3"><a href="data-prep.html#cb271-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Judge, Product, Sour, Light)</span></code></pre></div>
+<pre><code>## # A tibble: 99 × 4
 ##    Judge Product  Sour Light
 ##    &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;
 ##  1 J01   P01         0  22.8
@@ -819,7 +867,7 @@ To answer these questions, the <code>{naniar}</code> package provides an interes
 ##  8 J01   P08         0  39  
 ##  9 J01   P09         0  21  
 ## 10 J01   P10         0  33  
-## # ... with 89 more rows</code></pre>
+## # … with 89 more rows</code></pre>
 <p>When dealing with intensity scale, it is more frequent to replace missing values by the mean score for that product and attribute. When the test is duplicated, the mean provided by the <em>panelist x product x attribute</em> combination across the different repetitions available is even preferred as it maintains individual variability within the scores.</p>
 <p>Such approach is a 2-steps process:</p>
 <ol style="list-style-type: decimal">
@@ -827,19 +875,19 @@ To answer these questions, the <code>{naniar}</code> package provides an interes
 <li>Combine it to the data</li>
 </ol>
 <p>For simplicity, <code>sensory_long</code> is used as starting point:</p>
-<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb262-1"><a href="data-prep.html#cb262-1" aria-hidden="true" tabindex="-1"></a>prod_mean <span class="ot">&lt;-</span> sensory_long <span class="sc">%&gt;%</span> </span>
-<span id="cb262-2"><a href="data-prep.html#cb262-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Product, Variables) <span class="sc">%&gt;%</span> </span>
-<span id="cb262-3"><a href="data-prep.html#cb262-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Mean =</span> <span class="fu">mean</span>(Scores, <span class="at">na.rm=</span><span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb262-4"><a href="data-prep.html#cb262-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code></pre></div>
-<pre><code>## `summarise()` has grouped output by &#39;Product&#39;. You can override using the
-## `.groups` argument.</code></pre>
-<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="data-prep.html#cb264-1" aria-hidden="true" tabindex="-1"></a>sensory_long <span class="sc">%&gt;%</span> </span>
-<span id="cb264-2"><a href="data-prep.html#cb264-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">full_join</span>(prod_mean, <span class="at">by=</span><span class="fu">c</span>(<span class="st">&quot;Product&quot;</span>,<span class="st">&quot;Variables&quot;</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb264-3"><a href="data-prep.html#cb264-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Scores =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(Scores), Mean, Scores)) <span class="sc">%&gt;%</span> </span>
-<span id="cb264-4"><a href="data-prep.html#cb264-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span><span class="st">&quot;Mean&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb264-5"><a href="data-prep.html#cb264-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from=</span>Variables, <span class="at">values_from=</span>Scores) <span class="sc">%&gt;%</span> </span>
-<span id="cb264-6"><a href="data-prep.html#cb264-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Judge, Product, Sour, Light)</span></code></pre></div>
-<pre><code>## # A tibble: 99 x 4
+<div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb273-1"><a href="data-prep.html#cb273-1" aria-hidden="true" tabindex="-1"></a>prod_mean <span class="ot">&lt;-</span> sensory_long <span class="sc">%&gt;%</span> </span>
+<span id="cb273-2"><a href="data-prep.html#cb273-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Product, Variables) <span class="sc">%&gt;%</span> </span>
+<span id="cb273-3"><a href="data-prep.html#cb273-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Mean =</span> <span class="fu">mean</span>(Scores, <span class="at">na.rm=</span><span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb273-4"><a href="data-prep.html#cb273-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code></pre></div>
+<pre><code>## `summarise()` has grouped output by &#39;Product&#39;. You can
+## override using the `.groups` argument.</code></pre>
+<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="data-prep.html#cb275-1" aria-hidden="true" tabindex="-1"></a>sensory_long <span class="sc">%&gt;%</span> </span>
+<span id="cb275-2"><a href="data-prep.html#cb275-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">full_join</span>(prod_mean, <span class="at">by=</span><span class="fu">c</span>(<span class="st">&quot;Product&quot;</span>,<span class="st">&quot;Variables&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb275-3"><a href="data-prep.html#cb275-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Scores =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(Scores), Mean, Scores)) <span class="sc">%&gt;%</span> </span>
+<span id="cb275-4"><a href="data-prep.html#cb275-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span><span class="st">&quot;Mean&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb275-5"><a href="data-prep.html#cb275-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from=</span>Variables, <span class="at">values_from=</span>Scores) <span class="sc">%&gt;%</span> </span>
+<span id="cb275-6"><a href="data-prep.html#cb275-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Judge, Product, Sour, Light)</span></code></pre></div>
+<pre><code>## # A tibble: 99 × 4
 ##    Judge Product  Sour Light
 ##    &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;
 ##  1 J01   P01         0  22.8
@@ -852,15 +900,15 @@ To answer these questions, the <code>{naniar}</code> package provides an interes
 ##  8 J01   P08         0  39  
 ##  9 J01   P09         0  21  
 ## 10 J01   P10         0  33  
-## # ... with 89 more rows</code></pre>
+## # … with 89 more rows</code></pre>
 <p>As can be seen, the missing value associated to <code>J01</code> for <code>Light</code> and <code>P04</code> has been replaced by <code>40.7</code>. In fact, any missing values related to <code>P04</code> and <code>Light</code> would automatically be replaced by <code>40.7</code> here. For other products (and other attributes), their respective means would be used.</p>
-<p>When the model used to impute missing values is fairly simple (here, replacing by the mean correspond to a simple 1-way ANOVA), the imputation can be done directly through the <code>impute_lm()</code> function from the <code>{simputation}</code> package. To mimic the previous approach, the one-way ANOVA is being used<a href="#fn41" class="footnote-ref" id="fnref41"><sup>41</sup></a>. Here, missing data for both <code>Sour</code> and <code>Light</code> are being imputed independently using the same model:</p>
-<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="data-prep.html#cb266-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(simputation)</span>
-<span id="cb266-2"><a href="data-prep.html#cb266-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb266-3"><a href="data-prep.html#cb266-3" aria-hidden="true" tabindex="-1"></a>sensory <span class="sc">%&gt;%</span> </span>
-<span id="cb266-4"><a href="data-prep.html#cb266-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">impute_lm</span>(Sour <span class="sc">+</span> Light <span class="sc">~</span> Product) <span class="sc">%&gt;%</span> </span>
-<span id="cb266-5"><a href="data-prep.html#cb266-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Judge, Product, Sour, Light)</span></code></pre></div>
-<pre><code>## # A tibble: 99 x 4
+<p>When the model used to impute missing values is fairly simple (here, replacing by the mean correspond to a simple 1-way ANOVA), the imputation can be done directly through the <code>impute_lm()</code> function from the <code>{simputation}</code> package. To mimic the previous approach, the one-way ANOVA is being used<a href="#fn43" class="footnote-ref" id="fnref43"><sup>43</sup></a>. Here, missing data for both <code>Sour</code> and <code>Light</code> are being imputed independently using the same model:</p>
+<div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb277-1"><a href="data-prep.html#cb277-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(simputation)</span>
+<span id="cb277-2"><a href="data-prep.html#cb277-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb277-3"><a href="data-prep.html#cb277-3" aria-hidden="true" tabindex="-1"></a>sensory <span class="sc">%&gt;%</span> </span>
+<span id="cb277-4"><a href="data-prep.html#cb277-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">impute_lm</span>(Sour <span class="sc">+</span> Light <span class="sc">~</span> Product) <span class="sc">%&gt;%</span> </span>
+<span id="cb277-5"><a href="data-prep.html#cb277-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Judge, Product, Sour, Light)</span></code></pre></div>
+<pre><code>## # A tibble: 99 × 4
 ##    Judge Product  Sour Light
 ##    &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;
 ##  1 J01   P01         0  22.8
@@ -873,15 +921,15 @@ To answer these questions, the <code>{naniar}</code> package provides an interes
 ##  8 J01   P08         0  39  
 ##  9 J01   P09         0  21  
 ## 10 J01   P10         0  33  
-## # ... with 89 more rows</code></pre>
+## # … with 89 more rows</code></pre>
 <p>As can be seen, this procedure provides the same results as before, but in less steps!</p>
 <p>In some situations, implementing missing values using such ANOVA (or regression) model can lead to aberrations. It is for instance the case when the imputed values falls outside the scale boundaries. To avoid such situations, <code>{simputation}</code> also provides other more advanced alternatives including (amongst others) <code>impute_rf()</code> which uses random forest to impute the missing values.</p>
 <p>Last but not least, imputation of missing values could also be done in a multivariate way, by using the structure of the data (e.g. correlation) to predict the missing values. This is the approach proposed in the <code>{missMDA}</code> package. Since our data are numeric, the imputation is done through PCA with the <code>imputePCA()</code> function. Note that here, the imputed values are stored in the object <code>.$completeObs</code> (here, <code>sensory</code> is used):</p>
-<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="data-prep.html#cb268-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(missMDA)</span>
-<span id="cb268-2"><a href="data-prep.html#cb268-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb268-3"><a href="data-prep.html#cb268-3" aria-hidden="true" tabindex="-1"></a><span class="fu">imputePCA</span>(sensory, <span class="at">quali.sup=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">method=</span><span class="st">&quot;EM&quot;</span>)<span class="sc">$</span>completeObs <span class="sc">%&gt;%</span> </span>
-<span id="cb268-4"><a href="data-prep.html#cb268-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Judge, Product, Sour, Light)</span></code></pre></div>
-<pre><code>## # A tibble: 99 x 4
+<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb279-1"><a href="data-prep.html#cb279-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(missMDA)</span>
+<span id="cb279-2"><a href="data-prep.html#cb279-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb279-3"><a href="data-prep.html#cb279-3" aria-hidden="true" tabindex="-1"></a><span class="fu">imputePCA</span>(sensory, <span class="at">quali.sup=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">method=</span><span class="st">&quot;EM&quot;</span>)<span class="sc">$</span>completeObs <span class="sc">%&gt;%</span> </span>
+<span id="cb279-4"><a href="data-prep.html#cb279-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Judge, Product, Sour, Light)</span></code></pre></div>
+<pre><code>## # A tibble: 99 × 4
 ##    Judge Product  Sour Light
 ##    &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;
 ##  1 J01   P01         0  22.8
@@ -894,7 +942,7 @@ To answer these questions, the <code>{naniar}</code> package provides an interes
 ##  8 J01   P08         0  39  
 ##  9 J01   P09         0  21  
 ## 10 J01   P10         0  33  
-## # ... with 89 more rows</code></pre>
+## # … with 89 more rows</code></pre>
 <p>In this case, it can be seen that the missing value for <code>J01</code><em>x</em><code>P04</code><em>x</em><code>Light</code> has been replaced by the value <code>33.7</code>.</p>
 </div>
 <div id="limitations" class="section level4 hasAnchor" number="9.2.2.5">
@@ -908,16 +956,16 @@ To answer these questions, the <code>{naniar}</code> package provides an interes
 <p>The next point of interest - quite specific to sensory and consumer data - is to ensure that the design is well balanced, and handles correctly the first-order and carry-over effects. This step is particularly important for those who analyze the data but were not involved from the start in that study (and hence were not involved during the test set-up).</p>
 <p>Let’s show a simple procedure that would check part of the quality of a design. Since our data set stored in <em>biscuits_sensory_profile.xlsx</em> does not contain any information regarding the experimental design, let’s use <code>sensochoc</code> from <code>{SensoMineR}</code> instead.</p>
 <p>To load (and clean) the data, let’s run these lines of code:</p>
-<div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb270-1"><a href="data-prep.html#cb270-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(SensoMineR)</span>
-<span id="cb270-2"><a href="data-prep.html#cb270-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb270-3"><a href="data-prep.html#cb270-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(chocolates)</span>
-<span id="cb270-4"><a href="data-prep.html#cb270-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb270-5"><a href="data-prep.html#cb270-5" aria-hidden="true" tabindex="-1"></a>dataset <span class="ot">&lt;-</span> sensochoc <span class="sc">%&gt;%</span> </span>
-<span id="cb270-6"><a href="data-prep.html#cb270-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb270-7"><a href="data-prep.html#cb270-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">c</span>(Panelist, Session, Rank, Product), as.character))</span></code></pre></div>
+<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb281-1"><a href="data-prep.html#cb281-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(SensoMineR)</span>
+<span id="cb281-2"><a href="data-prep.html#cb281-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb281-3"><a href="data-prep.html#cb281-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(chocolates)</span>
+<span id="cb281-4"><a href="data-prep.html#cb281-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb281-5"><a href="data-prep.html#cb281-5" aria-hidden="true" tabindex="-1"></a>dataset <span class="ot">&lt;-</span> sensochoc <span class="sc">%&gt;%</span> </span>
+<span id="cb281-6"><a href="data-prep.html#cb281-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb281-7"><a href="data-prep.html#cb281-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">c</span>(Panelist, Session, Rank, Product), as.character))</span></code></pre></div>
 <p>The data consist of 6 products (<code>Product</code>) evaluated by 29 panelists (<code>Panelist</code>) in duplicates (<code>Session</code>). The presentation order is stored in <code>Rank</code>.</p>
 <p>To evaluate whether the products have been equally presented at each position, a simple cross-count between <code>Product</code> and <code>Rank</code> is done. This can be done using the <code>xtabs()</code> function:</p>
-<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb271-1"><a href="data-prep.html#cb271-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span>Product <span class="sc">+</span> Rank, <span class="at">data=</span>dataset)</span></code></pre></div>
+<div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb282-1"><a href="data-prep.html#cb282-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span>Product <span class="sc">+</span> Rank, <span class="at">data=</span>dataset)</span></code></pre></div>
 <pre><code>##        Rank
 ## Product  1  2  3  4  5  6
 ##   choc1  9  9 10  9 11 10
@@ -927,58 +975,60 @@ To answer these questions, the <code>{naniar}</code> package provides an interes
 ##   choc5 11  8 11 10 10  8
 ##   choc6  9 11  9  9 11  9</code></pre>
 <p>Such table can also be obtained using <code>group_by()</code> and <code>count()</code> to get the results in a tibble:</p>
-<div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb273-1"><a href="data-prep.html#cb273-1" aria-hidden="true" tabindex="-1"></a>dataset <span class="sc">%&gt;%</span> </span>
-<span id="cb273-2"><a href="data-prep.html#cb273-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Product) <span class="sc">%&gt;%</span> </span>
-<span id="cb273-3"><a href="data-prep.html#cb273-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(Rank) <span class="sc">%&gt;%</span> </span>
-<span id="cb273-4"><a href="data-prep.html#cb273-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb273-5"><a href="data-prep.html#cb273-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from=</span>Rank, <span class="at">values_from=</span>n)</span></code></pre></div>
+<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb284-1"><a href="data-prep.html#cb284-1" aria-hidden="true" tabindex="-1"></a>dataset <span class="sc">%&gt;%</span> </span>
+<span id="cb284-2"><a href="data-prep.html#cb284-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Product) <span class="sc">%&gt;%</span> </span>
+<span id="cb284-3"><a href="data-prep.html#cb284-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(Rank) <span class="sc">%&gt;%</span> </span>
+<span id="cb284-4"><a href="data-prep.html#cb284-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb284-5"><a href="data-prep.html#cb284-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from=</span>Rank, <span class="at">values_from=</span>n)</span></code></pre></div>
 <p>As we can see, the design is not perfectly balanced, as <code>choc2</code> is evaluated 11 times in the 1st, 4th, and 6th position, but only 7 times in the 5th position.</p>
 <p>To make sure that the design is well balanced in terms of carry-over effect, we need to count how often each product is tested before each of the other products. Since this information is not directly available in the data, it needs to be added.</p>
 <p>Let’s start with extracting the information available, i.e. the order of each product for each panelist and session:</p>
-<div class="sourceCode" id="cb274"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb274-1"><a href="data-prep.html#cb274-1" aria-hidden="true" tabindex="-1"></a>current <span class="ot">&lt;-</span> dataset <span class="sc">%&gt;%</span> </span>
-<span id="cb274-2"><a href="data-prep.html#cb274-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Panelist, Product, Session, Rank) <span class="sc">%&gt;%</span> </span>
-<span id="cb274-3"><a href="data-prep.html#cb274-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Rank =</span> <span class="fu">as.numeric</span>(Rank))</span></code></pre></div>
+<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="data-prep.html#cb285-1" aria-hidden="true" tabindex="-1"></a>current <span class="ot">&lt;-</span> dataset <span class="sc">%&gt;%</span> </span>
+<span id="cb285-2"><a href="data-prep.html#cb285-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Panelist, Product, Session, Rank) <span class="sc">%&gt;%</span> </span>
+<span id="cb285-3"><a href="data-prep.html#cb285-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Rank =</span> <span class="fu">as.numeric</span>(Rank))</span></code></pre></div>
 <p>An easy way to add the <code>Previous</code> product information as a new column in the data is by replacing <code>Rank</code> by <code>Rank + 1</code> in <code>current</code> (all new positions larger than the number of products are filtered).</p>
-<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="data-prep.html#cb275-1" aria-hidden="true" tabindex="-1"></a>previous <span class="ot">&lt;-</span> current <span class="sc">%&gt;%</span> </span>
-<span id="cb275-2"><a href="data-prep.html#cb275-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Previous =</span> Product) <span class="sc">%&gt;%</span> </span>
-<span id="cb275-3"><a href="data-prep.html#cb275-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Rank =</span> Rank <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb275-4"><a href="data-prep.html#cb275-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Rank <span class="sc">&lt;=</span> <span class="fu">length</span>(<span class="fu">unique</span>(dataset<span class="sc">$</span>Product)))</span></code></pre></div>
+<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb286-1"><a href="data-prep.html#cb286-1" aria-hidden="true" tabindex="-1"></a>previous <span class="ot">&lt;-</span> current <span class="sc">%&gt;%</span> </span>
+<span id="cb286-2"><a href="data-prep.html#cb286-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Previous =</span> Product) <span class="sc">%&gt;%</span> </span>
+<span id="cb286-3"><a href="data-prep.html#cb286-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Rank =</span> Rank <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb286-4"><a href="data-prep.html#cb286-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Rank <span class="sc">&lt;=</span> <span class="fu">length</span>(<span class="fu">unique</span>(dataset<span class="sc">$</span>Product)))</span></code></pre></div>
 <p>This new data is merged to <code>current</code> by <code>Panelist</code>, <code>Session</code>, and <code>Rank</code>:</p>
-<div class="sourceCode" id="cb276"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb276-1"><a href="data-prep.html#cb276-1" aria-hidden="true" tabindex="-1"></a>cur_prev <span class="ot">&lt;-</span> current <span class="sc">%&gt;%</span> </span>
-<span id="cb276-2"><a href="data-prep.html#cb276-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(previous, <span class="at">by=</span><span class="fu">c</span>(<span class="st">&quot;Panelist&quot;</span>, <span class="st">&quot;Session&quot;</span>, <span class="st">&quot;Rank&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="data-prep.html#cb287-1" aria-hidden="true" tabindex="-1"></a>cur_prev <span class="ot">&lt;-</span> current <span class="sc">%&gt;%</span> </span>
+<span id="cb287-2"><a href="data-prep.html#cb287-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(previous, <span class="at">by=</span><span class="fu">c</span>(<span class="st">&quot;Panelist&quot;</span>, <span class="st">&quot;Session&quot;</span>, <span class="st">&quot;Rank&quot;</span>))</span></code></pre></div>
 <p>As can be seen, the products that are evaluated first get <code>NA</code> in <code>Previous</code>, and for each rank r (r &gt; 1), <code>Previous</code> gets the product that was evaluated at rank r-1.</p>
 <p>To evaluate whether the carry-over effect is well balance, the only thing left to do is cross-count <code>Product</code> and <code>Previous</code> (here, the results are split per <code>Session</code>):</p>
-<div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb277-1"><a href="data-prep.html#cb277-1" aria-hidden="true" tabindex="-1"></a>cur_prev <span class="sc">%&gt;%</span> </span>
-<span id="cb277-2"><a href="data-prep.html#cb277-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Session, Product, Previous) <span class="sc">%&gt;%</span> </span>
-<span id="cb277-3"><a href="data-prep.html#cb277-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb277-4"><a href="data-prep.html#cb277-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb277-5"><a href="data-prep.html#cb277-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Product =</span> <span class="fu">factor</span>(Product, <span class="at">levels=</span><span class="fu">paste0</span>(<span class="st">&quot;choc&quot;</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)),</span>
-<span id="cb277-6"><a href="data-prep.html#cb277-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">Previous =</span> <span class="fu">factor</span>(Previous, <span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;NA&quot;</span>,<span class="fu">paste0</span>(<span class="st">&quot;choc&quot;</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)))) <span class="sc">%&gt;%</span></span>
-<span id="cb277-7"><a href="data-prep.html#cb277-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(Previous) <span class="sc">%&gt;%</span> </span>
-<span id="cb277-8"><a href="data-prep.html#cb277-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from=</span>Previous, <span class="at">values_from=</span>n, <span class="at">values_fill=</span><span class="dv">0</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb277-9"><a href="data-prep.html#cb277-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(Product) <span class="sc">%&gt;%</span> </span>
-<span id="cb277-10"><a href="data-prep.html#cb277-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">split</span>(.<span class="sc">$</span>Session)</span></code></pre></div>
+<div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb288-1"><a href="data-prep.html#cb288-1" aria-hidden="true" tabindex="-1"></a>cur_prev <span class="sc">%&gt;%</span> </span>
+<span id="cb288-2"><a href="data-prep.html#cb288-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Session, Product, Previous) <span class="sc">%&gt;%</span> </span>
+<span id="cb288-3"><a href="data-prep.html#cb288-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb288-4"><a href="data-prep.html#cb288-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb288-5"><a href="data-prep.html#cb288-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Product =</span> <span class="fu">factor</span>(Product, <span class="at">levels=</span><span class="fu">paste0</span>(<span class="st">&quot;choc&quot;</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)),</span>
+<span id="cb288-6"><a href="data-prep.html#cb288-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">Previous =</span> <span class="fu">factor</span>(Previous, <span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;NA&quot;</span>,<span class="fu">paste0</span>(<span class="st">&quot;choc&quot;</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)))) <span class="sc">%&gt;%</span></span>
+<span id="cb288-7"><a href="data-prep.html#cb288-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(Previous) <span class="sc">%&gt;%</span> </span>
+<span id="cb288-8"><a href="data-prep.html#cb288-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from=</span>Previous, <span class="at">values_from=</span>n, <span class="at">values_fill=</span><span class="dv">0</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb288-9"><a href="data-prep.html#cb288-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(Product) <span class="sc">%&gt;%</span> </span>
+<span id="cb288-10"><a href="data-prep.html#cb288-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">split</span>(.<span class="sc">$</span>Session)</span></code></pre></div>
 <pre><code>## $`1`
-## # A tibble: 6 x 9
-##   Session Product choc1 choc2 choc3 choc4 choc5 choc6  `NA`
-##   &lt;chr&gt;   &lt;fct&gt;   &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
-## 1 1       choc1       0     5     6     4     5     5     4
-## 2 1       choc2       3     0     5     6     4     5     6
-## 3 1       choc3       5     4     0     5     6     5     4
-## 4 1       choc4       5     5     5     0     4     5     5
-## 5 1       choc5       6     6     3     4     0     5     5
-## 6 1       choc6       4     4     5     5     6     0     5
+## # A tibble: 6 × 9
+##   Session Product choc1 choc2 choc3 choc4 choc5 choc6
+##   &lt;chr&gt;   &lt;fct&gt;   &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
+## 1 1       choc1       0     5     6     4     5     5
+## 2 1       choc2       3     0     5     6     4     5
+## 3 1       choc3       5     4     0     5     6     5
+## 4 1       choc4       5     5     5     0     4     5
+## 5 1       choc5       6     6     3     4     0     5
+## 6 1       choc6       4     4     5     5     6     0
+## # … with 1 more variable: `NA` &lt;int&gt;
 ## 
 ## $`2`
-## # A tibble: 6 x 9
-##   Session Product choc1 choc2 choc3 choc4 choc5 choc6  `NA`
-##   &lt;chr&gt;   &lt;fct&gt;   &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
-## 1 2       choc1       0     4     5     5     6     4     5
-## 2 2       choc2       3     0     5     5     6     5     5
-## 3 2       choc3       5     4     0     6     5     4     5
-## 4 2       choc4       5     5     5     0     4     6     4
-## 5 2       choc5       6     5     4     3     0     5     6
-## 6 2       choc6       6     5     5     5     4     0     4</code></pre>
+## # A tibble: 6 × 9
+##   Session Product choc1 choc2 choc3 choc4 choc5 choc6
+##   &lt;chr&gt;   &lt;fct&gt;   &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
+## 1 2       choc1       0     4     5     5     6     4
+## 2 2       choc2       3     0     5     5     6     5
+## 3 2       choc3       5     4     0     6     5     4
+## 4 2       choc4       5     5     5     0     4     6
+## 5 2       choc5       6     5     4     3     0     5
+## 6 2       choc6       6     5     5     5     4     0
+## # … with 1 more variable: `NA` &lt;int&gt;</code></pre>
 <p>As expected, the table shows that a product is never evaluated twice in a row (the diagonal contains 0s). Here again, the design is not optimal since <code>choc1</code> has been evaluated 3 times before <code>choc2</code> and 6 times before <code>choc5</code> in the first session.</p>
 <blockquote>
 <p>The last column defined as <code>NA</code> refers to the number of time that products did not have a product tested before, in other words that they were evaluated first.</p>
@@ -991,21 +1041,21 @@ To answer these questions, the <code>{naniar}</code> package provides an interes
 <div id="handling-data-type" class="section level3 hasAnchor" number="9.3.1">
 <h3><span class="header-section-number">9.3.1</span> Handling Data Type<a href="data-prep.html#handling-data-type" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The data used in this section is stored in <em>bisuits_traits.xlsx</em>. So let’s start with importing it in R:</p>
-<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb279-1"><a href="data-prep.html#cb279-1" aria-hidden="true" tabindex="-1"></a>file_path <span class="ot">&lt;-</span> <span class="fu">here</span>(<span class="st">&quot;Data&quot;</span>, <span class="st">&quot;biscuits_traits.xlsx&quot;</span>)</span>
-<span id="cb279-2"><a href="data-prep.html#cb279-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb279-3"><a href="data-prep.html#cb279-3" aria-hidden="true" tabindex="-1"></a>demo_var <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(file_path, <span class="at">sheet=</span><span class="st">&quot;Variables&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb279-4"><a href="data-prep.html#cb279-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Code, Name)</span>
-<span id="cb279-5"><a href="data-prep.html#cb279-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb279-6"><a href="data-prep.html#cb279-6" aria-hidden="true" tabindex="-1"></a>demo_lev <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(file_path, <span class="at">sheet=</span><span class="st">&quot;Levels&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb279-7"><a href="data-prep.html#cb279-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Question, Code, Levels) <span class="sc">%&gt;%</span> </span>
-<span id="cb279-8"><a href="data-prep.html#cb279-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(demo_var, <span class="at">by=</span><span class="fu">c</span>(<span class="st">&quot;Question&quot;</span><span class="ot">=</span><span class="st">&quot;Code&quot;</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb279-9"><a href="data-prep.html#cb279-9" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>Question)</span>
-<span id="cb279-10"><a href="data-prep.html#cb279-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb279-11"><a href="data-prep.html#cb279-11" aria-hidden="true" tabindex="-1"></a>demographic <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(file_path, <span class="at">sheet=</span><span class="st">&quot;Data&quot;</span>, <span class="at">skip=</span><span class="dv">1</span>, <span class="at">col_names=</span><span class="fu">unlist</span>(demo_var<span class="sc">$</span>Name))</span></code></pre></div>
+<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="data-prep.html#cb290-1" aria-hidden="true" tabindex="-1"></a>file_path <span class="ot">&lt;-</span> <span class="fu">here</span>(<span class="st">&quot;Data&quot;</span>, <span class="st">&quot;biscuits_traits.xlsx&quot;</span>)</span>
+<span id="cb290-2"><a href="data-prep.html#cb290-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb290-3"><a href="data-prep.html#cb290-3" aria-hidden="true" tabindex="-1"></a>demo_var <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(file_path, <span class="at">sheet=</span><span class="st">&quot;Variables&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb290-4"><a href="data-prep.html#cb290-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Code, Name)</span>
+<span id="cb290-5"><a href="data-prep.html#cb290-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb290-6"><a href="data-prep.html#cb290-6" aria-hidden="true" tabindex="-1"></a>demo_lev <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(file_path, <span class="at">sheet=</span><span class="st">&quot;Levels&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb290-7"><a href="data-prep.html#cb290-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Question, Code, Levels) <span class="sc">%&gt;%</span> </span>
+<span id="cb290-8"><a href="data-prep.html#cb290-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(demo_var, <span class="at">by=</span><span class="fu">c</span>(<span class="st">&quot;Question&quot;</span><span class="ot">=</span><span class="st">&quot;Code&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb290-9"><a href="data-prep.html#cb290-9" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>Question)</span>
+<span id="cb290-10"><a href="data-prep.html#cb290-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb290-11"><a href="data-prep.html#cb290-11" aria-hidden="true" tabindex="-1"></a>demographic <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(file_path, <span class="at">sheet=</span><span class="st">&quot;Data&quot;</span>, <span class="at">skip=</span><span class="dv">1</span>, <span class="at">col_names=</span><span class="fu">unlist</span>(demo_var<span class="sc">$</span>Name))</span></code></pre></div>
 <p>In R, the variables can be of different types, going from numerical to nominal to binary etc. This section aims in presenting the most common types (and their properties) used in sensory and consumer studies, and in showing how to transform a variable from one type to another.</p>
 <p>Remember that when your data set is stored in a tibble (as is the case here), the type of each variable is provided as sub-header when printed on screen. This eases the work of the analyst as the variables’ type can be accessed at any moment. In case the data is not in a tibble, the use of the <code>str()</code> function becomes handy as it provides this information (here we limit ourselves to the first 5 columns).</p>
-<div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb280-1"><a href="data-prep.html#cb280-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(demographic[,<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>])</span></code></pre></div>
-<pre><code>## tibble [107 x 5] (S3: tbl_df/tbl/data.frame)
+<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="data-prep.html#cb291-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(demographic[,<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>])</span></code></pre></div>
+<pre><code>## tibble [107 × 5] (S3: tbl_df/tbl/data.frame)
 ##  $ Living area: num [1:107] 1 1 2 1 1 1 1 1 3 1 ...
 ##  $ Housing    : num [1:107] 1 1 2 2 1 1 1 1 2 2 ...
 ##  $ Judge      : chr [1:107] &quot;J48&quot; &quot;J61&quot; &quot;J60&quot; &quot;J97&quot; ...
@@ -1031,16 +1081,14 @@ Binary data is data that takes two possible values (<code>TRUE</code> or <code>F
 <blockquote>
 <p>Intrinsically, binary data is <em>numerical</em>, TRUE being assimilated to 1, FALSE to 0. If multiple tests are being performed, it is possible to sum the number of tests that pass using the <code>sum()</code> function, as shown in the simple example below:</p>
 </blockquote>
-<blockquote>
-<div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb282-1"><a href="data-prep.html#cb282-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate 10 random values between 1 and 10 using the uniform distribution</span></span>
-<span id="cb282-2"><a href="data-prep.html#cb282-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">10</span>, <span class="dv">1</span>, <span class="dv">10</span>)</span>
-<span id="cb282-3"><a href="data-prep.html#cb282-3" aria-hidden="true" tabindex="-1"></a>x</span>
-<span id="cb282-4"><a href="data-prep.html#cb282-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Test whether the values generated are strictly larger than 5</span></span>
-<span id="cb282-5"><a href="data-prep.html#cb282-5" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> x<span class="sc">&gt;</span><span class="dv">5</span></span>
-<span id="cb282-6"><a href="data-prep.html#cb282-6" aria-hidden="true" tabindex="-1"></a>test</span>
-<span id="cb282-7"><a href="data-prep.html#cb282-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Counting the number of values strictly larger than 5</span></span>
-<span id="cb282-8"><a href="data-prep.html#cb282-8" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(test)</span></code></pre></div>
-</blockquote>
+<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="data-prep.html#cb293-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate 10 random values between 1 and 10 using the uniform distribution</span></span>
+<span id="cb293-2"><a href="data-prep.html#cb293-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">10</span>, <span class="dv">1</span>, <span class="dv">10</span>)</span>
+<span id="cb293-3"><a href="data-prep.html#cb293-3" aria-hidden="true" tabindex="-1"></a>x</span>
+<span id="cb293-4"><a href="data-prep.html#cb293-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Test whether the values generated are strictly larger than 5</span></span>
+<span id="cb293-5"><a href="data-prep.html#cb293-5" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> x<span class="sc">&gt;</span><span class="dv">5</span></span>
+<span id="cb293-6"><a href="data-prep.html#cb293-6" aria-hidden="true" tabindex="-1"></a>test</span>
+<span id="cb293-7"><a href="data-prep.html#cb293-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Counting the number of values strictly larger than 5</span></span>
+<span id="cb293-8"><a href="data-prep.html#cb293-8" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(test)</span></code></pre></div>
 </div>
 <div id="nominal-data" class="section level4 hasAnchor" number="9.3.1.3">
 <h4><span class="header-section-number">9.3.1.3</span> Nominal Data<a href="data-prep.html#nominal-data" class="anchor-section" aria-label="Anchor link to header"></a></h4>
@@ -1061,11 +1109,11 @@ Binary data is data that takes two possible values (<code>TRUE</code> or <code>F
 <li>For <code>factor</code>, the levels and the number of levels are directly provided by <code>levels()</code> and <code>nlevels()</code>.</li>
 </ul>
 <p>Let’s compare a variable set as <code>factor</code> and <code>character</code> by using a simple hand-made example:</p>
-<div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb283-1"><a href="data-prep.html#cb283-1" aria-hidden="true" tabindex="-1"></a>example <span class="ot">&lt;-</span> demographic <span class="sc">%&gt;%</span> </span>
-<span id="cb283-2"><a href="data-prep.html#cb283-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Judge) <span class="sc">%&gt;%</span> </span>
-<span id="cb283-3"><a href="data-prep.html#cb283-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Judge_fct =</span> <span class="fu">as.factor</span>(Judge))</span>
-<span id="cb283-4"><a href="data-prep.html#cb283-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb283-5"><a href="data-prep.html#cb283-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(example)</span></code></pre></div>
+<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb294-1"><a href="data-prep.html#cb294-1" aria-hidden="true" tabindex="-1"></a>example <span class="ot">&lt;-</span> demographic <span class="sc">%&gt;%</span> </span>
+<span id="cb294-2"><a href="data-prep.html#cb294-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Judge) <span class="sc">%&gt;%</span> </span>
+<span id="cb294-3"><a href="data-prep.html#cb294-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Judge_fct =</span> <span class="fu">as.factor</span>(Judge))</span>
+<span id="cb294-4"><a href="data-prep.html#cb294-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb294-5"><a href="data-prep.html#cb294-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(example)</span></code></pre></div>
 <pre><code>##     Judge             Judge_fct  
 ##  Length:107         J1     :  1  
 ##  Class :character   J10    :  1  
@@ -1074,33 +1122,43 @@ Binary data is data that takes two possible values (<code>TRUE</code> or <code>F
 ##                     J103   :  1  
 ##                     J105   :  1  
 ##                     (Other):101</code></pre>
-<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="data-prep.html#cb285-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(example<span class="sc">$</span>Judge)</span></code></pre></div>
-<pre><code>##   [1] &quot;J48&quot;  &quot;J61&quot;  &quot;J60&quot;  &quot;J97&quot;  &quot;J38&quot;  &quot;J26&quot;  &quot;J103&quot; &quot;J91&quot;  &quot;J13&quot;  &quot;J73&quot; 
-##  [11] &quot;J49&quot;  &quot;J62&quot;  &quot;J14&quot;  &quot;J98&quot;  &quot;J15&quot;  &quot;J39&quot;  &quot;J74&quot;  &quot;J64&quot;  &quot;J99&quot;  &quot;J75&quot; 
-##  [21] &quot;J108&quot; &quot;J76&quot;  &quot;J1&quot;   &quot;J65&quot;  &quot;J63&quot;  &quot;J2&quot;   &quot;J24&quot;  &quot;J27&quot;  &quot;J3&quot;   &quot;J50&quot; 
-##  [31] &quot;J4&quot;   &quot;J77&quot;  &quot;J66&quot;  &quot;J5&quot;   &quot;J67&quot;  &quot;J6&quot;   &quot;J100&quot; &quot;J90&quot;  &quot;J92&quot;  &quot;J7&quot;  
-##  [41] &quot;J79&quot;  &quot;J68&quot;  &quot;J69&quot;  &quot;J85&quot;  &quot;J101&quot; &quot;J70&quot;  &quot;J51&quot;  &quot;J52&quot;  &quot;J109&quot; &quot;J8&quot;  
-##  [51] &quot;J93&quot;  &quot;J53&quot;  &quot;J54&quot;  &quot;J110&quot; &quot;J94&quot;  &quot;J111&quot; &quot;J86&quot;  &quot;J16&quot;  &quot;J112&quot; &quot;J29&quot; 
-##  [61] &quot;J95&quot;  &quot;J96&quot;  &quot;J118&quot; &quot;J17&quot;  &quot;J117&quot; &quot;J55&quot;  &quot;J30&quot;  &quot;J40&quot;  &quot;J41&quot;  &quot;J9&quot;  
-##  [71] &quot;J31&quot;  &quot;J10&quot;  &quot;J56&quot;  &quot;J87&quot;  &quot;J71&quot;  &quot;J42&quot;  &quot;J43&quot;  &quot;J32&quot;  &quot;J81&quot;  &quot;J58&quot; 
-##  [81] &quot;J19&quot;  &quot;J33&quot;  &quot;J34&quot;  &quot;J44&quot;  &quot;J72&quot;  &quot;J113&quot; &quot;J45&quot;  &quot;J105&quot; &quot;J114&quot; &quot;J46&quot; 
-##  [91] &quot;J20&quot;  &quot;J82&quot;  &quot;J115&quot; &quot;J59&quot;  &quot;J116&quot; &quot;J21&quot;  &quot;J88&quot;  &quot;J83&quot;  &quot;J22&quot;  &quot;J11&quot; 
-## [101] &quot;J35&quot;  &quot;J89&quot;  &quot;J120&quot; &quot;J12&quot;  &quot;J36&quot;  &quot;J23&quot;  &quot;J119&quot;</code></pre>
-<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="data-prep.html#cb287-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(example<span class="sc">$</span>Judge))</span></code></pre></div>
+<div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb296-1"><a href="data-prep.html#cb296-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(example<span class="sc">$</span>Judge)</span></code></pre></div>
+<pre><code>##   [1] &quot;J48&quot;  &quot;J61&quot;  &quot;J60&quot;  &quot;J97&quot;  &quot;J38&quot;  &quot;J26&quot;  &quot;J103&quot;
+##   [8] &quot;J91&quot;  &quot;J13&quot;  &quot;J73&quot;  &quot;J49&quot;  &quot;J62&quot;  &quot;J14&quot;  &quot;J98&quot; 
+##  [15] &quot;J15&quot;  &quot;J39&quot;  &quot;J74&quot;  &quot;J64&quot;  &quot;J99&quot;  &quot;J75&quot;  &quot;J108&quot;
+##  [22] &quot;J76&quot;  &quot;J1&quot;   &quot;J65&quot;  &quot;J63&quot;  &quot;J2&quot;   &quot;J24&quot;  &quot;J27&quot; 
+##  [29] &quot;J3&quot;   &quot;J50&quot;  &quot;J4&quot;   &quot;J77&quot;  &quot;J66&quot;  &quot;J5&quot;   &quot;J67&quot; 
+##  [36] &quot;J6&quot;   &quot;J100&quot; &quot;J90&quot;  &quot;J92&quot;  &quot;J7&quot;   &quot;J79&quot;  &quot;J68&quot; 
+##  [43] &quot;J69&quot;  &quot;J85&quot;  &quot;J101&quot; &quot;J70&quot;  &quot;J51&quot;  &quot;J52&quot;  &quot;J109&quot;
+##  [50] &quot;J8&quot;   &quot;J93&quot;  &quot;J53&quot;  &quot;J54&quot;  &quot;J110&quot; &quot;J94&quot;  &quot;J111&quot;
+##  [57] &quot;J86&quot;  &quot;J16&quot;  &quot;J112&quot; &quot;J29&quot;  &quot;J95&quot;  &quot;J96&quot;  &quot;J118&quot;
+##  [64] &quot;J17&quot;  &quot;J117&quot; &quot;J55&quot;  &quot;J30&quot;  &quot;J40&quot;  &quot;J41&quot;  &quot;J9&quot;  
+##  [71] &quot;J31&quot;  &quot;J10&quot;  &quot;J56&quot;  &quot;J87&quot;  &quot;J71&quot;  &quot;J42&quot;  &quot;J43&quot; 
+##  [78] &quot;J32&quot;  &quot;J81&quot;  &quot;J58&quot;  &quot;J19&quot;  &quot;J33&quot;  &quot;J34&quot;  &quot;J44&quot; 
+##  [85] &quot;J72&quot;  &quot;J113&quot; &quot;J45&quot;  &quot;J105&quot; &quot;J114&quot; &quot;J46&quot;  &quot;J20&quot; 
+##  [92] &quot;J82&quot;  &quot;J115&quot; &quot;J59&quot;  &quot;J116&quot; &quot;J21&quot;  &quot;J88&quot;  &quot;J83&quot; 
+##  [99] &quot;J22&quot;  &quot;J11&quot;  &quot;J35&quot;  &quot;J89&quot;  &quot;J120&quot; &quot;J12&quot;  &quot;J36&quot; 
+## [106] &quot;J23&quot;  &quot;J119&quot;</code></pre>
+<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb298-1"><a href="data-prep.html#cb298-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(example<span class="sc">$</span>Judge))</span></code></pre></div>
 <pre><code>## [1] 107</code></pre>
-<div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="data-prep.html#cb289-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(example<span class="sc">$</span>Judge_fct)</span></code></pre></div>
-<pre><code>##   [1] &quot;J1&quot;   &quot;J10&quot;  &quot;J100&quot; &quot;J101&quot; &quot;J103&quot; &quot;J105&quot; &quot;J108&quot; &quot;J109&quot; &quot;J11&quot;  &quot;J110&quot;
-##  [11] &quot;J111&quot; &quot;J112&quot; &quot;J113&quot; &quot;J114&quot; &quot;J115&quot; &quot;J116&quot; &quot;J117&quot; &quot;J118&quot; &quot;J119&quot; &quot;J12&quot; 
-##  [21] &quot;J120&quot; &quot;J13&quot;  &quot;J14&quot;  &quot;J15&quot;  &quot;J16&quot;  &quot;J17&quot;  &quot;J19&quot;  &quot;J2&quot;   &quot;J20&quot;  &quot;J21&quot; 
-##  [31] &quot;J22&quot;  &quot;J23&quot;  &quot;J24&quot;  &quot;J26&quot;  &quot;J27&quot;  &quot;J29&quot;  &quot;J3&quot;   &quot;J30&quot;  &quot;J31&quot;  &quot;J32&quot; 
-##  [41] &quot;J33&quot;  &quot;J34&quot;  &quot;J35&quot;  &quot;J36&quot;  &quot;J38&quot;  &quot;J39&quot;  &quot;J4&quot;   &quot;J40&quot;  &quot;J41&quot;  &quot;J42&quot; 
-##  [51] &quot;J43&quot;  &quot;J44&quot;  &quot;J45&quot;  &quot;J46&quot;  &quot;J48&quot;  &quot;J49&quot;  &quot;J5&quot;   &quot;J50&quot;  &quot;J51&quot;  &quot;J52&quot; 
-##  [61] &quot;J53&quot;  &quot;J54&quot;  &quot;J55&quot;  &quot;J56&quot;  &quot;J58&quot;  &quot;J59&quot;  &quot;J6&quot;   &quot;J60&quot;  &quot;J61&quot;  &quot;J62&quot; 
-##  [71] &quot;J63&quot;  &quot;J64&quot;  &quot;J65&quot;  &quot;J66&quot;  &quot;J67&quot;  &quot;J68&quot;  &quot;J69&quot;  &quot;J7&quot;   &quot;J70&quot;  &quot;J71&quot; 
-##  [81] &quot;J72&quot;  &quot;J73&quot;  &quot;J74&quot;  &quot;J75&quot;  &quot;J76&quot;  &quot;J77&quot;  &quot;J79&quot;  &quot;J8&quot;   &quot;J81&quot;  &quot;J82&quot; 
-##  [91] &quot;J83&quot;  &quot;J85&quot;  &quot;J86&quot;  &quot;J87&quot;  &quot;J88&quot;  &quot;J89&quot;  &quot;J9&quot;   &quot;J90&quot;  &quot;J91&quot;  &quot;J92&quot; 
-## [101] &quot;J93&quot;  &quot;J94&quot;  &quot;J95&quot;  &quot;J96&quot;  &quot;J97&quot;  &quot;J98&quot;  &quot;J99&quot;</code></pre>
-<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="data-prep.html#cb291-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nlevels</span>(example<span class="sc">$</span>Judge_fct)</span></code></pre></div>
+<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="data-prep.html#cb300-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(example<span class="sc">$</span>Judge_fct)</span></code></pre></div>
+<pre><code>##   [1] &quot;J1&quot;   &quot;J10&quot;  &quot;J100&quot; &quot;J101&quot; &quot;J103&quot; &quot;J105&quot; &quot;J108&quot;
+##   [8] &quot;J109&quot; &quot;J11&quot;  &quot;J110&quot; &quot;J111&quot; &quot;J112&quot; &quot;J113&quot; &quot;J114&quot;
+##  [15] &quot;J115&quot; &quot;J116&quot; &quot;J117&quot; &quot;J118&quot; &quot;J119&quot; &quot;J12&quot;  &quot;J120&quot;
+##  [22] &quot;J13&quot;  &quot;J14&quot;  &quot;J15&quot;  &quot;J16&quot;  &quot;J17&quot;  &quot;J19&quot;  &quot;J2&quot;  
+##  [29] &quot;J20&quot;  &quot;J21&quot;  &quot;J22&quot;  &quot;J23&quot;  &quot;J24&quot;  &quot;J26&quot;  &quot;J27&quot; 
+##  [36] &quot;J29&quot;  &quot;J3&quot;   &quot;J30&quot;  &quot;J31&quot;  &quot;J32&quot;  &quot;J33&quot;  &quot;J34&quot; 
+##  [43] &quot;J35&quot;  &quot;J36&quot;  &quot;J38&quot;  &quot;J39&quot;  &quot;J4&quot;   &quot;J40&quot;  &quot;J41&quot; 
+##  [50] &quot;J42&quot;  &quot;J43&quot;  &quot;J44&quot;  &quot;J45&quot;  &quot;J46&quot;  &quot;J48&quot;  &quot;J49&quot; 
+##  [57] &quot;J5&quot;   &quot;J50&quot;  &quot;J51&quot;  &quot;J52&quot;  &quot;J53&quot;  &quot;J54&quot;  &quot;J55&quot; 
+##  [64] &quot;J56&quot;  &quot;J58&quot;  &quot;J59&quot;  &quot;J6&quot;   &quot;J60&quot;  &quot;J61&quot;  &quot;J62&quot; 
+##  [71] &quot;J63&quot;  &quot;J64&quot;  &quot;J65&quot;  &quot;J66&quot;  &quot;J67&quot;  &quot;J68&quot;  &quot;J69&quot; 
+##  [78] &quot;J7&quot;   &quot;J70&quot;  &quot;J71&quot;  &quot;J72&quot;  &quot;J73&quot;  &quot;J74&quot;  &quot;J75&quot; 
+##  [85] &quot;J76&quot;  &quot;J77&quot;  &quot;J79&quot;  &quot;J8&quot;   &quot;J81&quot;  &quot;J82&quot;  &quot;J83&quot; 
+##  [92] &quot;J85&quot;  &quot;J86&quot;  &quot;J87&quot;  &quot;J88&quot;  &quot;J89&quot;  &quot;J9&quot;   &quot;J90&quot; 
+##  [99] &quot;J91&quot;  &quot;J92&quot;  &quot;J93&quot;  &quot;J94&quot;  &quot;J95&quot;  &quot;J96&quot;  &quot;J97&quot; 
+## [106] &quot;J98&quot;  &quot;J99&quot;</code></pre>
+<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="data-prep.html#cb302-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nlevels</span>(example<span class="sc">$</span>Judge_fct)</span></code></pre></div>
 <pre><code>## [1] 107</code></pre>
 <blockquote>
 <p>Although <code>Judge</code> and <code>Judge_fct</code> look the same, they are structurally different, and those differences play an important role that one should consider when running certain analyses, or for building tables and graphs.</p>
@@ -1108,48 +1166,59 @@ Binary data is data that takes two possible values (<code>TRUE</code> or <code>F
 <p>When set as <code>character</code>, the number of levels of a variable is directly read from the data, and its levels’ order matches the way they appear in the data (or sometimes are re-arranged in alphabetical order). This means that any data collected using a structured scale will often lose its natural order.</p>
 <p>When set as <code>factor</code>, the factor levels (including their order) are informed, and does not depend necessarily on the data itself: If a level has never been selected, or if certain groups have been filtered, this information is still present in the data. In our case, the levels are read from the data and are reordered alphabetically (note that <code>J10</code> and <code>J100</code> appear before <code>J2</code> for instance.)</p>
 <p>To illustrate this, let’s re-arrange the levels from <code>Judge_fct</code> by ordering them numerically in such a way <code>J2</code> follows <code>J1</code> rather than <code>J10</code>.</p>
-<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="data-prep.html#cb293-1" aria-hidden="true" tabindex="-1"></a>example <span class="ot">&lt;-</span> demographic <span class="sc">%&gt;%</span> </span>
-<span id="cb293-2"><a href="data-prep.html#cb293-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Judge) <span class="sc">%&gt;%</span> </span>
-<span id="cb293-3"><a href="data-prep.html#cb293-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Judge_fct =</span> <span class="fu">factor</span>(Judge, <span class="fu">str_sort</span>(Judge, <span class="at">numeric=</span><span class="cn">TRUE</span>)))</span>
-<span id="cb293-4"><a href="data-prep.html#cb293-4" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(example<span class="sc">$</span>Judge_fct)</span></code></pre></div>
-<pre><code>##   [1] &quot;J1&quot;   &quot;J2&quot;   &quot;J3&quot;   &quot;J4&quot;   &quot;J5&quot;   &quot;J6&quot;   &quot;J7&quot;   &quot;J8&quot;   &quot;J9&quot;   &quot;J10&quot; 
-##  [11] &quot;J11&quot;  &quot;J12&quot;  &quot;J13&quot;  &quot;J14&quot;  &quot;J15&quot;  &quot;J16&quot;  &quot;J17&quot;  &quot;J19&quot;  &quot;J20&quot;  &quot;J21&quot; 
-##  [21] &quot;J22&quot;  &quot;J23&quot;  &quot;J24&quot;  &quot;J26&quot;  &quot;J27&quot;  &quot;J29&quot;  &quot;J30&quot;  &quot;J31&quot;  &quot;J32&quot;  &quot;J33&quot; 
-##  [31] &quot;J34&quot;  &quot;J35&quot;  &quot;J36&quot;  &quot;J38&quot;  &quot;J39&quot;  &quot;J40&quot;  &quot;J41&quot;  &quot;J42&quot;  &quot;J43&quot;  &quot;J44&quot; 
-##  [41] &quot;J45&quot;  &quot;J46&quot;  &quot;J48&quot;  &quot;J49&quot;  &quot;J50&quot;  &quot;J51&quot;  &quot;J52&quot;  &quot;J53&quot;  &quot;J54&quot;  &quot;J55&quot; 
-##  [51] &quot;J56&quot;  &quot;J58&quot;  &quot;J59&quot;  &quot;J60&quot;  &quot;J61&quot;  &quot;J62&quot;  &quot;J63&quot;  &quot;J64&quot;  &quot;J65&quot;  &quot;J66&quot; 
-##  [61] &quot;J67&quot;  &quot;J68&quot;  &quot;J69&quot;  &quot;J70&quot;  &quot;J71&quot;  &quot;J72&quot;  &quot;J73&quot;  &quot;J74&quot;  &quot;J75&quot;  &quot;J76&quot; 
-##  [71] &quot;J77&quot;  &quot;J79&quot;  &quot;J81&quot;  &quot;J82&quot;  &quot;J83&quot;  &quot;J85&quot;  &quot;J86&quot;  &quot;J87&quot;  &quot;J88&quot;  &quot;J89&quot; 
-##  [81] &quot;J90&quot;  &quot;J91&quot;  &quot;J92&quot;  &quot;J93&quot;  &quot;J94&quot;  &quot;J95&quot;  &quot;J96&quot;  &quot;J97&quot;  &quot;J98&quot;  &quot;J99&quot; 
-##  [91] &quot;J100&quot; &quot;J101&quot; &quot;J103&quot; &quot;J105&quot; &quot;J108&quot; &quot;J109&quot; &quot;J110&quot; &quot;J111&quot; &quot;J112&quot; &quot;J113&quot;
-## [101] &quot;J114&quot; &quot;J115&quot; &quot;J116&quot; &quot;J117&quot; &quot;J118&quot; &quot;J119&quot; &quot;J120&quot;</code></pre>
+<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="data-prep.html#cb304-1" aria-hidden="true" tabindex="-1"></a>example <span class="ot">&lt;-</span> demographic <span class="sc">%&gt;%</span> </span>
+<span id="cb304-2"><a href="data-prep.html#cb304-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Judge) <span class="sc">%&gt;%</span> </span>
+<span id="cb304-3"><a href="data-prep.html#cb304-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Judge_fct =</span> <span class="fu">factor</span>(Judge, <span class="fu">str_sort</span>(Judge, <span class="at">numeric=</span><span class="cn">TRUE</span>)))</span>
+<span id="cb304-4"><a href="data-prep.html#cb304-4" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(example<span class="sc">$</span>Judge_fct)</span></code></pre></div>
+<pre><code>##   [1] &quot;J1&quot;   &quot;J2&quot;   &quot;J3&quot;   &quot;J4&quot;   &quot;J5&quot;   &quot;J6&quot;   &quot;J7&quot;  
+##   [8] &quot;J8&quot;   &quot;J9&quot;   &quot;J10&quot;  &quot;J11&quot;  &quot;J12&quot;  &quot;J13&quot;  &quot;J14&quot; 
+##  [15] &quot;J15&quot;  &quot;J16&quot;  &quot;J17&quot;  &quot;J19&quot;  &quot;J20&quot;  &quot;J21&quot;  &quot;J22&quot; 
+##  [22] &quot;J23&quot;  &quot;J24&quot;  &quot;J26&quot;  &quot;J27&quot;  &quot;J29&quot;  &quot;J30&quot;  &quot;J31&quot; 
+##  [29] &quot;J32&quot;  &quot;J33&quot;  &quot;J34&quot;  &quot;J35&quot;  &quot;J36&quot;  &quot;J38&quot;  &quot;J39&quot; 
+##  [36] &quot;J40&quot;  &quot;J41&quot;  &quot;J42&quot;  &quot;J43&quot;  &quot;J44&quot;  &quot;J45&quot;  &quot;J46&quot; 
+##  [43] &quot;J48&quot;  &quot;J49&quot;  &quot;J50&quot;  &quot;J51&quot;  &quot;J52&quot;  &quot;J53&quot;  &quot;J54&quot; 
+##  [50] &quot;J55&quot;  &quot;J56&quot;  &quot;J58&quot;  &quot;J59&quot;  &quot;J60&quot;  &quot;J61&quot;  &quot;J62&quot; 
+##  [57] &quot;J63&quot;  &quot;J64&quot;  &quot;J65&quot;  &quot;J66&quot;  &quot;J67&quot;  &quot;J68&quot;  &quot;J69&quot; 
+##  [64] &quot;J70&quot;  &quot;J71&quot;  &quot;J72&quot;  &quot;J73&quot;  &quot;J74&quot;  &quot;J75&quot;  &quot;J76&quot; 
+##  [71] &quot;J77&quot;  &quot;J79&quot;  &quot;J81&quot;  &quot;J82&quot;  &quot;J83&quot;  &quot;J85&quot;  &quot;J86&quot; 
+##  [78] &quot;J87&quot;  &quot;J88&quot;  &quot;J89&quot;  &quot;J90&quot;  &quot;J91&quot;  &quot;J92&quot;  &quot;J93&quot; 
+##  [85] &quot;J94&quot;  &quot;J95&quot;  &quot;J96&quot;  &quot;J97&quot;  &quot;J98&quot;  &quot;J99&quot;  &quot;J100&quot;
+##  [92] &quot;J101&quot; &quot;J103&quot; &quot;J105&quot; &quot;J108&quot; &quot;J109&quot; &quot;J110&quot; &quot;J111&quot;
+##  [99] &quot;J112&quot; &quot;J113&quot; &quot;J114&quot; &quot;J115&quot; &quot;J116&quot; &quot;J117&quot; &quot;J118&quot;
+## [106] &quot;J119&quot; &quot;J120&quot;</code></pre>
 <p>Now the levels are sorted, let’s filter respondents by only keeping J1 to J20. We then re-run the previous code that count the number of elements in each variables:</p>
-<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="data-prep.html#cb295-1" aria-hidden="true" tabindex="-1"></a>example_reduced <span class="ot">&lt;-</span> example <span class="sc">%&gt;%</span>  </span>
-<span id="cb295-2"><a href="data-prep.html#cb295-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Judge <span class="sc">%in%</span> <span class="fu">paste0</span>(<span class="st">&quot;J&quot;</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>))</span>
-<span id="cb295-3"><a href="data-prep.html#cb295-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb295-4"><a href="data-prep.html#cb295-4" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(example_reduced<span class="sc">$</span>Judge)</span></code></pre></div>
-<pre><code>##  [1] &quot;J13&quot; &quot;J14&quot; &quot;J15&quot; &quot;J1&quot;  &quot;J2&quot;  &quot;J3&quot;  &quot;J4&quot;  &quot;J5&quot;  &quot;J6&quot;  &quot;J7&quot;  &quot;J8&quot;  &quot;J16&quot;
-## [13] &quot;J17&quot; &quot;J9&quot;  &quot;J10&quot; &quot;J19&quot; &quot;J20&quot; &quot;J11&quot; &quot;J12&quot;</code></pre>
-<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="data-prep.html#cb297-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(example_reduced<span class="sc">$</span>Judge))</span></code></pre></div>
+<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="data-prep.html#cb306-1" aria-hidden="true" tabindex="-1"></a>example_reduced <span class="ot">&lt;-</span> example <span class="sc">%&gt;%</span>  </span>
+<span id="cb306-2"><a href="data-prep.html#cb306-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Judge <span class="sc">%in%</span> <span class="fu">paste0</span>(<span class="st">&quot;J&quot;</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>))</span>
+<span id="cb306-3"><a href="data-prep.html#cb306-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb306-4"><a href="data-prep.html#cb306-4" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(example_reduced<span class="sc">$</span>Judge)</span></code></pre></div>
+<pre><code>##  [1] &quot;J13&quot; &quot;J14&quot; &quot;J15&quot; &quot;J1&quot;  &quot;J2&quot;  &quot;J3&quot;  &quot;J4&quot;  &quot;J5&quot; 
+##  [9] &quot;J6&quot;  &quot;J7&quot;  &quot;J8&quot;  &quot;J16&quot; &quot;J17&quot; &quot;J9&quot;  &quot;J10&quot; &quot;J19&quot;
+## [17] &quot;J20&quot; &quot;J11&quot; &quot;J12&quot;</code></pre>
+<div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb308-1"><a href="data-prep.html#cb308-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(example_reduced<span class="sc">$</span>Judge))</span></code></pre></div>
 <pre><code>## [1] 19</code></pre>
-<div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb299-1"><a href="data-prep.html#cb299-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(example_reduced<span class="sc">$</span>Judge_fct)</span></code></pre></div>
-<pre><code>##   [1] &quot;J1&quot;   &quot;J2&quot;   &quot;J3&quot;   &quot;J4&quot;   &quot;J5&quot;   &quot;J6&quot;   &quot;J7&quot;   &quot;J8&quot;   &quot;J9&quot;   &quot;J10&quot; 
-##  [11] &quot;J11&quot;  &quot;J12&quot;  &quot;J13&quot;  &quot;J14&quot;  &quot;J15&quot;  &quot;J16&quot;  &quot;J17&quot;  &quot;J19&quot;  &quot;J20&quot;  &quot;J21&quot; 
-##  [21] &quot;J22&quot;  &quot;J23&quot;  &quot;J24&quot;  &quot;J26&quot;  &quot;J27&quot;  &quot;J29&quot;  &quot;J30&quot;  &quot;J31&quot;  &quot;J32&quot;  &quot;J33&quot; 
-##  [31] &quot;J34&quot;  &quot;J35&quot;  &quot;J36&quot;  &quot;J38&quot;  &quot;J39&quot;  &quot;J40&quot;  &quot;J41&quot;  &quot;J42&quot;  &quot;J43&quot;  &quot;J44&quot; 
-##  [41] &quot;J45&quot;  &quot;J46&quot;  &quot;J48&quot;  &quot;J49&quot;  &quot;J50&quot;  &quot;J51&quot;  &quot;J52&quot;  &quot;J53&quot;  &quot;J54&quot;  &quot;J55&quot; 
-##  [51] &quot;J56&quot;  &quot;J58&quot;  &quot;J59&quot;  &quot;J60&quot;  &quot;J61&quot;  &quot;J62&quot;  &quot;J63&quot;  &quot;J64&quot;  &quot;J65&quot;  &quot;J66&quot; 
-##  [61] &quot;J67&quot;  &quot;J68&quot;  &quot;J69&quot;  &quot;J70&quot;  &quot;J71&quot;  &quot;J72&quot;  &quot;J73&quot;  &quot;J74&quot;  &quot;J75&quot;  &quot;J76&quot; 
-##  [71] &quot;J77&quot;  &quot;J79&quot;  &quot;J81&quot;  &quot;J82&quot;  &quot;J83&quot;  &quot;J85&quot;  &quot;J86&quot;  &quot;J87&quot;  &quot;J88&quot;  &quot;J89&quot; 
-##  [81] &quot;J90&quot;  &quot;J91&quot;  &quot;J92&quot;  &quot;J93&quot;  &quot;J94&quot;  &quot;J95&quot;  &quot;J96&quot;  &quot;J97&quot;  &quot;J98&quot;  &quot;J99&quot; 
-##  [91] &quot;J100&quot; &quot;J101&quot; &quot;J103&quot; &quot;J105&quot; &quot;J108&quot; &quot;J109&quot; &quot;J110&quot; &quot;J111&quot; &quot;J112&quot; &quot;J113&quot;
-## [101] &quot;J114&quot; &quot;J115&quot; &quot;J116&quot; &quot;J117&quot; &quot;J118&quot; &quot;J119&quot; &quot;J120&quot;</code></pre>
-<div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb301-1"><a href="data-prep.html#cb301-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nlevels</span>(example_reduced<span class="sc">$</span>Judge_fct)</span></code></pre></div>
+<div class="sourceCode" id="cb310"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb310-1"><a href="data-prep.html#cb310-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(example_reduced<span class="sc">$</span>Judge_fct)</span></code></pre></div>
+<pre><code>##   [1] &quot;J1&quot;   &quot;J2&quot;   &quot;J3&quot;   &quot;J4&quot;   &quot;J5&quot;   &quot;J6&quot;   &quot;J7&quot;  
+##   [8] &quot;J8&quot;   &quot;J9&quot;   &quot;J10&quot;  &quot;J11&quot;  &quot;J12&quot;  &quot;J13&quot;  &quot;J14&quot; 
+##  [15] &quot;J15&quot;  &quot;J16&quot;  &quot;J17&quot;  &quot;J19&quot;  &quot;J20&quot;  &quot;J21&quot;  &quot;J22&quot; 
+##  [22] &quot;J23&quot;  &quot;J24&quot;  &quot;J26&quot;  &quot;J27&quot;  &quot;J29&quot;  &quot;J30&quot;  &quot;J31&quot; 
+##  [29] &quot;J32&quot;  &quot;J33&quot;  &quot;J34&quot;  &quot;J35&quot;  &quot;J36&quot;  &quot;J38&quot;  &quot;J39&quot; 
+##  [36] &quot;J40&quot;  &quot;J41&quot;  &quot;J42&quot;  &quot;J43&quot;  &quot;J44&quot;  &quot;J45&quot;  &quot;J46&quot; 
+##  [43] &quot;J48&quot;  &quot;J49&quot;  &quot;J50&quot;  &quot;J51&quot;  &quot;J52&quot;  &quot;J53&quot;  &quot;J54&quot; 
+##  [50] &quot;J55&quot;  &quot;J56&quot;  &quot;J58&quot;  &quot;J59&quot;  &quot;J60&quot;  &quot;J61&quot;  &quot;J62&quot; 
+##  [57] &quot;J63&quot;  &quot;J64&quot;  &quot;J65&quot;  &quot;J66&quot;  &quot;J67&quot;  &quot;J68&quot;  &quot;J69&quot; 
+##  [64] &quot;J70&quot;  &quot;J71&quot;  &quot;J72&quot;  &quot;J73&quot;  &quot;J74&quot;  &quot;J75&quot;  &quot;J76&quot; 
+##  [71] &quot;J77&quot;  &quot;J79&quot;  &quot;J81&quot;  &quot;J82&quot;  &quot;J83&quot;  &quot;J85&quot;  &quot;J86&quot; 
+##  [78] &quot;J87&quot;  &quot;J88&quot;  &quot;J89&quot;  &quot;J90&quot;  &quot;J91&quot;  &quot;J92&quot;  &quot;J93&quot; 
+##  [85] &quot;J94&quot;  &quot;J95&quot;  &quot;J96&quot;  &quot;J97&quot;  &quot;J98&quot;  &quot;J99&quot;  &quot;J100&quot;
+##  [92] &quot;J101&quot; &quot;J103&quot; &quot;J105&quot; &quot;J108&quot; &quot;J109&quot; &quot;J110&quot; &quot;J111&quot;
+##  [99] &quot;J112&quot; &quot;J113&quot; &quot;J114&quot; &quot;J115&quot; &quot;J116&quot; &quot;J117&quot; &quot;J118&quot;
+## [106] &quot;J119&quot; &quot;J120&quot;</code></pre>
+<div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="data-prep.html#cb312-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nlevels</span>(example_reduced<span class="sc">$</span>Judge_fct)</span></code></pre></div>
 <pre><code>## [1] 107</code></pre>
 <p>After filtering some respondents, it can be noticed that the variable set as character only contains 19 elements (<code>J18</code> doesn’t exist in the data), whereas the column set as factor still contains the 107 entries (most of them not having any recordings).</p>
-<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="data-prep.html#cb303-1" aria-hidden="true" tabindex="-1"></a>example_reduced <span class="sc">%&gt;%</span> </span>
-<span id="cb303-2"><a href="data-prep.html#cb303-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(Judge, <span class="at">.drop=</span><span class="cn">FALSE</span>)</span></code></pre></div>
-<pre><code>## # A tibble: 19 x 2
+<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="data-prep.html#cb314-1" aria-hidden="true" tabindex="-1"></a>example_reduced <span class="sc">%&gt;%</span> </span>
+<span id="cb314-2"><a href="data-prep.html#cb314-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(Judge, <span class="at">.drop=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 19 × 2
 ##    Judge     n
 ##    &lt;chr&gt; &lt;int&gt;
 ##  1 J1        1
@@ -1171,9 +1240,9 @@ Binary data is data that takes two possible values (<code>TRUE</code> or <code>F
 ## 17 J7        1
 ## 18 J8        1
 ## 19 J9        1</code></pre>
-<div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb305-1"><a href="data-prep.html#cb305-1" aria-hidden="true" tabindex="-1"></a>example_reduced <span class="sc">%&gt;%</span> </span>
-<span id="cb305-2"><a href="data-prep.html#cb305-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(Judge_fct, <span class="at">.drop=</span><span class="cn">FALSE</span>)</span></code></pre></div>
-<pre><code>## # A tibble: 107 x 2
+<div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb316-1"><a href="data-prep.html#cb316-1" aria-hidden="true" tabindex="-1"></a>example_reduced <span class="sc">%&gt;%</span> </span>
+<span id="cb316-2"><a href="data-prep.html#cb316-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(Judge_fct, <span class="at">.drop=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 107 × 2
 ##    Judge_fct     n
 ##    &lt;fct&gt;     &lt;int&gt;
 ##  1 J1            1
@@ -1186,7 +1255,7 @@ Binary data is data that takes two possible values (<code>TRUE</code> or <code>F
 ##  8 J8            1
 ##  9 J9            1
 ## 10 J10           1
-## # ... with 97 more rows</code></pre>
+## # … with 97 more rows</code></pre>
 <p>This property can be seen as an advantage or a disadvantage depending on the situation:</p>
 <ul>
 <li>For frequencies, it may be relevant to remember all the options, including the ones that may never be selected, and to order the results logically (use of <code>factor</code>).</li>
@@ -1195,14 +1264,14 @@ Binary data is data that takes two possible values (<code>TRUE</code> or <code>F
 <p>The latter point is particularly critical since the analysis is incorrect and will either return an error or (worse!) return erroneous results!</p>
 <p>Last but not least, variables defined as factor allow having their levels being renamed (and eventually combined) very easily.
 Let’s consider the <code>Living area</code> variable from <code>demographic</code> as an example. From the original excel file, it can be seen that it has three levels, <code>1</code> corresponding to <em>urban area</em>, <code>2</code> to <em>rurban area</em>, and <code>3</code> to <em>rural area</em>. Let’s start by renaming its levels:</p>
-<div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="data-prep.html#cb307-1" aria-hidden="true" tabindex="-1"></a>example <span class="ot">=</span> demographic <span class="sc">%&gt;%</span> </span>
-<span id="cb307-2"><a href="data-prep.html#cb307-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Area =</span> <span class="fu">factor</span>(<span class="st">`</span><span class="at">Living area</span><span class="st">`</span>, <span class="at">levels=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;Urban&quot;</span>, <span class="st">&quot;Rurban&quot;</span>, <span class="st">&quot;Rural&quot;</span>)))</span>
-<span id="cb307-3"><a href="data-prep.html#cb307-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb307-4"><a href="data-prep.html#cb307-4" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(example<span class="sc">$</span>Area)</span></code></pre></div>
+<div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb318-1"><a href="data-prep.html#cb318-1" aria-hidden="true" tabindex="-1"></a>example <span class="ot">=</span> demographic <span class="sc">%&gt;%</span> </span>
+<span id="cb318-2"><a href="data-prep.html#cb318-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Area =</span> <span class="fu">factor</span>(<span class="st">`</span><span class="at">Living area</span><span class="st">`</span>, <span class="at">levels=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;Urban&quot;</span>, <span class="st">&quot;Rurban&quot;</span>, <span class="st">&quot;Rural&quot;</span>)))</span>
+<span id="cb318-3"><a href="data-prep.html#cb318-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb318-4"><a href="data-prep.html#cb318-4" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(example<span class="sc">$</span>Area)</span></code></pre></div>
 <pre><code>## [1] &quot;Urban&quot;  &quot;Rurban&quot; &quot;Rural&quot;</code></pre>
-<div class="sourceCode" id="cb309"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb309-1"><a href="data-prep.html#cb309-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nlevels</span>(example<span class="sc">$</span>Area)</span></code></pre></div>
+<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="data-prep.html#cb320-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nlevels</span>(example<span class="sc">$</span>Area)</span></code></pre></div>
 <pre><code>## [1] 3</code></pre>
-<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="data-prep.html#cb311-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(example<span class="sc">$</span><span class="st">`</span><span class="at">Living area</span><span class="st">`</span>, example<span class="sc">$</span>Area)</span></code></pre></div>
+<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="data-prep.html#cb322-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(example<span class="sc">$</span><span class="st">`</span><span class="at">Living area</span><span class="st">`</span>, example<span class="sc">$</span>Area)</span></code></pre></div>
 <pre><code>##    
 ##     Urban Rurban Rural
 ##   1    72      0     0
@@ -1210,14 +1279,14 @@ Let’s consider the <code>Living area</code> variable from <code>demographic</c
 ##   3     0      0    23</code></pre>
 <p>As can be seen, the variable <code>Area</code> is the factor version (including its labels) of <code>Living area</code>.
 Let’s now regroup <code>Rurban</code> and <code>Rural</code> together under <code>Rural</code>, and change the order by ensure that <code>Rural</code> appears before <code>Urban</code>:</p>
-<div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="data-prep.html#cb313-1" aria-hidden="true" tabindex="-1"></a>example <span class="ot">=</span> demographic <span class="sc">%&gt;%</span> </span>
-<span id="cb313-2"><a href="data-prep.html#cb313-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Area =</span> <span class="fu">factor</span>(<span class="st">`</span><span class="at">Living area</span><span class="st">`</span>, <span class="at">levels=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">1</span>), <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;Rural&quot;</span>, <span class="st">&quot;Rural&quot;</span>, <span class="st">&quot;Urban&quot;</span>)))</span>
-<span id="cb313-3"><a href="data-prep.html#cb313-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb313-4"><a href="data-prep.html#cb313-4" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(example<span class="sc">$</span>Area)</span></code></pre></div>
+<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="data-prep.html#cb324-1" aria-hidden="true" tabindex="-1"></a>example <span class="ot">=</span> demographic <span class="sc">%&gt;%</span> </span>
+<span id="cb324-2"><a href="data-prep.html#cb324-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Area =</span> <span class="fu">factor</span>(<span class="st">`</span><span class="at">Living area</span><span class="st">`</span>, <span class="at">levels=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">1</span>), <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;Rural&quot;</span>, <span class="st">&quot;Rural&quot;</span>, <span class="st">&quot;Urban&quot;</span>)))</span>
+<span id="cb324-3"><a href="data-prep.html#cb324-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb324-4"><a href="data-prep.html#cb324-4" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(example<span class="sc">$</span>Area)</span></code></pre></div>
 <pre><code>## [1] &quot;Rural&quot; &quot;Urban&quot;</code></pre>
-<div class="sourceCode" id="cb315"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb315-1"><a href="data-prep.html#cb315-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nlevels</span>(example<span class="sc">$</span>Area)</span></code></pre></div>
+<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="data-prep.html#cb326-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nlevels</span>(example<span class="sc">$</span>Area)</span></code></pre></div>
 <pre><code>## [1] 2</code></pre>
-<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="data-prep.html#cb317-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(example<span class="sc">$</span><span class="st">`</span><span class="at">Living area</span><span class="st">`</span>, example<span class="sc">$</span>Area)</span></code></pre></div>
+<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="data-prep.html#cb328-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(example<span class="sc">$</span><span class="st">`</span><span class="at">Living area</span><span class="st">`</span>, example<span class="sc">$</span>Area)</span></code></pre></div>
 <pre><code>##    
 ##     Rural Urban
 ##   1     0    72
@@ -1256,20 +1325,32 @@ Some other transformations can be applied to factors thanks to the <code>{forcat
 <p><code>as.factor()</code> only converts into factors without allowing to chose the order of the levels, nor to rename them. Instead, <code>factor()</code> should be used as it allows specifying the <code>levels</code> (and hence the order of the levels) and their corresponding <code>labels</code>.</p>
 </blockquote>
 <p>To illustrate the conversion from character to numeric, let’s start with creating a tibble with two variables, one containing strings made of numbers, and one containing strings made of text.</p>
-<div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb319-1"><a href="data-prep.html#cb319-1" aria-hidden="true" tabindex="-1"></a>example <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">Numbers =</span> <span class="fu">c</span>(<span class="st">&quot;2&quot;</span>,<span class="st">&quot;4&quot;</span>,<span class="st">&quot;9&quot;</span>,<span class="st">&quot;6&quot;</span>,<span class="st">&quot;8&quot;</span>,<span class="st">&quot;12&quot;</span>,<span class="st">&quot;10&quot;</span>),</span>
-<span id="cb319-2"><a href="data-prep.html#cb319-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Text =</span> <span class="fu">c</span>(<span class="st">&quot;Data&quot;</span>,<span class="st">&quot;Science&quot;</span>,<span class="st">&quot;4&quot;</span>,<span class="st">&quot;Sensory&quot;</span>,<span class="st">&quot;and&quot;</span>,<span class="st">&quot;Consumer&quot;</span>,<span class="st">&quot;Research&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="data-prep.html#cb330-1" aria-hidden="true" tabindex="-1"></a>example <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">Numbers =</span> <span class="fu">c</span>(<span class="st">&quot;2&quot;</span>,<span class="st">&quot;4&quot;</span>,<span class="st">&quot;9&quot;</span>,<span class="st">&quot;6&quot;</span>,<span class="st">&quot;8&quot;</span>,<span class="st">&quot;12&quot;</span>,<span class="st">&quot;10&quot;</span>),</span>
+<span id="cb330-2"><a href="data-prep.html#cb330-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Text =</span> <span class="fu">c</span>(<span class="st">&quot;Data&quot;</span>,<span class="st">&quot;Science&quot;</span>,<span class="st">&quot;4&quot;</span>,<span class="st">&quot;Sensory&quot;</span>,<span class="st">&quot;and&quot;</span>,<span class="st">&quot;Consumer&quot;</span>,<span class="st">&quot;Research&quot;</span>))</span></code></pre></div>
 <p>The conversion from character to numerical is straight forward and requires the use of the function <code>as.numeric()</code>:</p>
-<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="data-prep.html#cb320-1" aria-hidden="true" tabindex="-1"></a>example <span class="sc">%&gt;%</span> </span>
-<span id="cb320-2"><a href="data-prep.html#cb320-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">NumbersN =</span> <span class="fu">as.numeric</span>(Numbers), <span class="at">TextN =</span> <span class="fu">as.numeric</span>(Text))</span></code></pre></div>
+<div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb331-1"><a href="data-prep.html#cb331-1" aria-hidden="true" tabindex="-1"></a>example <span class="sc">%&gt;%</span> </span>
+<span id="cb331-2"><a href="data-prep.html#cb331-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">NumbersN =</span> <span class="fu">as.numeric</span>(Numbers), <span class="at">TextN =</span> <span class="fu">as.numeric</span>(Text))</span></code></pre></div>
+<pre><code>## Warning in mask$eval_all_mutate(quo): NAs introduced by
+## coercion</code></pre>
+<pre><code>## # A tibble: 7 × 4
+##   Numbers Text     NumbersN TextN
+##   &lt;chr&gt;   &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt;
+## 1 2       Data            2    NA
+## 2 4       Science         4    NA
+## 3 9       4               9     4
+## 4 6       Sensory         6    NA
+## 5 8       and             8    NA
+## 6 12      Consumer       12    NA
+## 7 10      Research       10    NA</code></pre>
 <p>As can be seen, when strings are made of numbers, the conversion works fine. However, any non-numerical string character cannot be converted and hence returns NAs.</p>
 <p>Now let’s apply the same principle to a variable of the type factor. To do so, the same example in which the variables are now defined as factor is used:</p>
-<div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb321-1"><a href="data-prep.html#cb321-1" aria-hidden="true" tabindex="-1"></a>example <span class="ot">&lt;-</span> example <span class="sc">%&gt;%</span> </span>
-<span id="cb321-2"><a href="data-prep.html#cb321-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Numbers =</span> <span class="fu">as.factor</span>(Numbers)) <span class="sc">%&gt;%</span> </span>
-<span id="cb321-3"><a href="data-prep.html#cb321-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Text =</span> <span class="fu">factor</span>(Text, <span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;Data&quot;</span>,<span class="st">&quot;Science&quot;</span>,<span class="st">&quot;4&quot;</span>,<span class="st">&quot;Sensory&quot;</span>,<span class="st">&quot;and&quot;</span>,<span class="st">&quot;Consumer&quot;</span>,<span class="st">&quot;Research&quot;</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="data-prep.html#cb334-1" aria-hidden="true" tabindex="-1"></a>example <span class="ot">&lt;-</span> example <span class="sc">%&gt;%</span> </span>
+<span id="cb334-2"><a href="data-prep.html#cb334-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Numbers =</span> <span class="fu">as.factor</span>(Numbers)) <span class="sc">%&gt;%</span> </span>
+<span id="cb334-3"><a href="data-prep.html#cb334-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Text =</span> <span class="fu">factor</span>(Text, <span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;Data&quot;</span>,<span class="st">&quot;Science&quot;</span>,<span class="st">&quot;4&quot;</span>,<span class="st">&quot;Sensory&quot;</span>,<span class="st">&quot;and&quot;</span>,<span class="st">&quot;Consumer&quot;</span>,<span class="st">&quot;Research&quot;</span>)))</span></code></pre></div>
 <p>Let’s apply as.numeric() to these variables:</p>
-<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="data-prep.html#cb322-1" aria-hidden="true" tabindex="-1"></a>example <span class="sc">%&gt;%</span> </span>
-<span id="cb322-2"><a href="data-prep.html#cb322-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">NumbersN =</span> <span class="fu">as.numeric</span>(Numbers), <span class="at">TextN =</span> <span class="fu">as.numeric</span>(Text))</span></code></pre></div>
-<pre><code>## # A tibble: 7 x 4
+<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="data-prep.html#cb335-1" aria-hidden="true" tabindex="-1"></a>example <span class="sc">%&gt;%</span> </span>
+<span id="cb335-2"><a href="data-prep.html#cb335-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">NumbersN =</span> <span class="fu">as.numeric</span>(Numbers), <span class="at">TextN =</span> <span class="fu">as.numeric</span>(Text))</span></code></pre></div>
+<pre><code>## # A tibble: 7 × 4
 ##   Numbers Text     NumbersN TextN
 ##   &lt;fct&gt;   &lt;fct&gt;       &lt;dbl&gt; &lt;dbl&gt;
 ## 1 2       Data            3     1
@@ -1281,9 +1362,9 @@ Some other transformations can be applied to factors thanks to the <code>{forcat
 ## 7 10      Research        1     7</code></pre>
 <p>We can notice here that the outcome is not really as expected as the numbers 2-4-9-6-8-12-10 becomes 3-4-7-5-6-2-1, and Data-Science-4-Sensory-and-Consumer-Research becomes 1-2-3-4-5-6-7. The rationale behind this conversion is that the numbers do not reflects the string itself, but the position of that level in the factor level order.</p>
 <p>To convert properly numerical factor levels to number, the variable should first be converted into character:</p>
-<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="data-prep.html#cb324-1" aria-hidden="true" tabindex="-1"></a>example <span class="sc">%&gt;%</span></span>
-<span id="cb324-2"><a href="data-prep.html#cb324-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Numbers =</span> <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(Numbers)))</span></code></pre></div>
-<pre><code>## # A tibble: 7 x 2
+<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb337-1"><a href="data-prep.html#cb337-1" aria-hidden="true" tabindex="-1"></a>example <span class="sc">%&gt;%</span></span>
+<span id="cb337-2"><a href="data-prep.html#cb337-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Numbers =</span> <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(Numbers)))</span></code></pre></div>
+<pre><code>## # A tibble: 7 × 2
 ##   Numbers Text    
 ##     &lt;dbl&gt; &lt;fct&gt;   
 ## 1       2 Data    
@@ -1300,9 +1381,9 @@ Some other transformations can be applied to factors thanks to the <code>{forcat
 </div>
 <div class="footnotes">
 <hr />
-<ol start="40">
-<li id="fn40"><p>Missing values do not need to be visible to exist: Incomplete designs are a good example showing that although the data do not have empty cells, it does contain a lot of missing data (the samples that were not evaluated by each panelist).<a href="data-prep.html#fnref40" class="footnote-back">↩︎</a></p></li>
-<li id="fn41"><p>It is worth noticing that the individual differences could also be included by simple adding the Judge effect in the model.<a href="data-prep.html#fnref41" class="footnote-back">↩︎</a></p></li>
+<ol start="42">
+<li id="fn42"><p>Missing values do not need to be visible to exist: Incomplete designs are a good example showing that although the data do not have empty cells, it does contain a lot of missing data (the samples that were not evaluated by each panelist).<a href="data-prep.html#fnref42" class="footnote-back">↩︎</a></p></li>
+<li id="fn43"><p>It is worth noticing that the individual differences could also be included by simple adding the Judge effect in the model.<a href="data-prep.html#fnref43" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
@@ -1314,20 +1395,20 @@ Some other transformations can be applied to factors thanks to the <code>{forcat
 <a href="data-analysis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
-<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
-<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script src="libs/gitbook/js/app.min.js"></script>
+<script src="libs/gitbook/js/clipboard.min.js"></script>
+<script src="libs/gitbook/js/plugin-search.js"></script>
+<script src="libs/gitbook/js/plugin-sharing.js"></script>
+<script src="libs/gitbook/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook/js/jquery.highlight.js"></script>
+<script src="libs/gitbook/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
-"github": false,
-"facebook": true,
+"github": true,
+"facebook": false,
 "twitter": true,
 "linkedin": false,
 "weibo": false,
@@ -1342,8 +1423,8 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": null,
-"text": null
+"link": "https://github.com/yihui/bookdown-crc/edit/master/09-data-prep.Rmd",
+"text": "Edit"
 },
 "history": {
 "link": null,
@@ -1353,13 +1434,13 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["i2ds4scc_bookdown.pdf", "i2ds4scc_bookdown.epub"],
+"download": ["bookdown.pdf", "bookdown.epub"],
 "search": {
 "engine": "fuse",
 "options": null
 },
 "toc": {
-"collapse": "section"
+"collapse": "none"
 }
 });
 });
@@ -1371,7 +1452,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

@@ -1,0 +1,494 @@
+```{r include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
+```
+# Text Analysis {#text-analysis}
+
+>In the previous chapters, most transformations and analyses were performed on *simple* data, i.e. data that represent something very specific, understandable, predictable, and stand-alone. For numerical variables (e.g. sensory attributes), one data entry is simply a number often defined within a range. For categorical variables or factors, each data entry is a pre-defined entry (e.g. product names, or a category for a given variable) chosen from a list of possible options. But there are situations where the data is intrinsically more *complex* and less structured. 
+A good illustration of such *complex* situation is text analysis. Before collecting the data, we do not know explicitely what kind of information we will get (with open-ended questions, respondents are free to say/write whatever they want!). In that case, each data entry (from words, to sentences, to paragraphs...) is more *messy* as it may contain relevant and less informative elements. The goal of the analysis is then to extract the relevant information from the data and to summarize it automatically. In this section, we will show you how such data can be processed and how infromation can be extracted.
+
+## Introduction to Natural Language Processing
+
+Humans exchange information through the use of languages. There is of course a very large number of different languages, each of them having their own specificity. The science that studies languages per se is called *linguistics*: It focuses on areas such as phonetics, phonology, morphology, syntax, semantics, and pragmatics.
+
+Natural Language Processing (NLP) is a sub-field of linguistics, computer science, and artificial intelligence. It connects computers to human language by processing, analyzing, and modeling large amounts of natural language data. One of the main goals of NLP is to *understand* the contents of documents, and to extract accurately information and insights from those documents. In Sensory and Consumer Research, we often refer to NLP when we talk about *Text Analysis* .
+
+Since the fields of linguistics and NLP are widely studied, a lot of documentations is already available online. The objective of this chapter is to provide sufficient information for you to be familiar with textual data, and to give you the keys to run the most useful analyses in Sensory and Consumer Research. 
+
+For those who would like to dive deeper into NLP, we recommend reading (@Silge2017, @Becue-Bertaut2019), and (@Hvitfeldt2021) for more advanced techniques.
+
+## Application of Text Analysis in Sensory and Consumer Science
+
+### Text analysis as way to describe products
+
+In recent years, open-ended comments have gained interest as it is the fastest, safest, most unbiased way to collect spontaneous data from participants (@Piqueras2015).
+
+Traditionally, most SCS questionnaires relied primarily on closed questions, to which open-ended questions were added to uncover the consumers' reasons for liking or disliking products. In practice, these open-ended questions were positioned right after liking questions, and aimed at providing some understanding about why a product may or may not be liked, and to give the participants a chance to reduce their frustration by explaining their responses to certain questions. As a result of such practices, these questions were usually not deeply analyzed.
+
+With the development of the so-called *rapid* and consumer-oriented descriptive methods, the benefits of open-ended questions became more apparent as they provide a new way to uncover sensory perception. In practice, respondents are asked to give any terms that describe their sensory perception in addition to their quantitative evaluation of the products by the means of intensity rating or ranking (e.g. Free Choice Profile, Flash Profile), or similarities and dissimilarities assessment (e.g. Free Sorting Task, and Ultra Flash Profile as an extension of Napping). Since the textual responses are now an integral part of the method, its analysis can no longer be ignored.
+
+The importance of open-ended questions increased further as it has been shown that respondents can reliably describe in their own words their full experience (perception, emotion, or any other sort of association) with products. Recently, Mahieu et al. [REF REF REF] showed the benefits of using open-ended questions over CATA^[CATA can be seen as a simplified version of open-comments in the sense that respondents also associate products to words, however they lose the freedom of using their own as they need to select them from a pre-defined list.]. In this study, consumers were asked to describe with their own words both the products they evaluated and what their ideal product would be like. Similarly, Luc et al. [REF REF REF] proposed an alternative to Just About Right (JAR) scale method - called free-JAR - and in which consumers describe the samples using their own words, by still following a JAR terminology (too little, too much, or JAR, etc.).
+
+The inclusion of open-ended questions as one of the primary elements of sensory and consumer tasks blurs the line with other fields, including psychology and sociology where these qualitative methods originated. More recently, advances in the technology (web-scraping, social listening, etc.) opened new doors that brought SCS closer to other fields such as marketing for instance. The amount of data that are collected with such techniques can be considerably larger, but the aim of the analysis stays the same: extracting information from text/comments.
+
+### Objectives of Text Analysis
+
+Open-ended comments, and more generally textual responses in questionnaires, are by definition qualitative. This means that the primary analysis should be qualitative. It could simply consist in reading all these comments and eventually summarizing the information gathered. But as the number of comments increases, such an approach quickly becomes too time and energy consuming for the analysts. How can we transform such qualitative data into quantitative measures? How can we digest and summarize the information contained in these comments without losing the overall meaning of the messages (context)?
+
+One easy solution is to simply count how often a certain word is being used in a given context (e.g. how often the word `sweet` is being associated to each product evaluated). However, if such a solution is a reasonable one to start with, we will show some alternatives that allow going deeper into the understanding of textual inputs. This is the objective of the textual analysis and NLP that we are going to tackle in the next sections.
+
+### Classical *text analysis* workflow
+
+In SCS, the generic notion of *text analysis* often includes any step or procedure that allows going from the raw data (e.g. consumer comments, text scrapped from website or social media, etc.) to results and insights. However, such process requires many separate steps, often defined as following:
+
+1. **Tokenization** is the step that splits the raw data into statistical units of interest, also called token^[A token can be a single word, a group of *n*-words (also know as *n-grams*), a sentence, or an entire document.].
+2. Non-informal words or **stopwords** (e.g. *and*, *I*, *you*, etc.) are then removed from the data to facilitate the extraction of the information.
+3. **Stemming** consists in reducing words to their root form, hence grouping the different variants of the same word (e.g. singular/plural, infinitive or conjugated verbs, etc.)
+4. An extra (optional) step called **lemmatization** consists in grouping words that have similar meanings under one umbrella. The advantage of such procedure is that it simplifies further the analysis and its interpretation. However, it can be time consuming and more importantly, it relies on the analyst own judgement: two different analysts performing the same task on the same data will obtain different end results.
+5. The final data is then **analyzed** and summarized (often through counts) to extract information or patterns.
+
+### Warnings
+
+Languages are complex, as many aspects can influence the meaning of a message. For instance, in spoken languages, the intonation is as important as the message itself. In written languages, non-word items (e.g. punctuation, emojis) may also completely change the meaning of a sentence (e.g.irony). Worst, some words have different meanings depending on their use (e.g. *like*), and the context of the message provides its meaning. Unfortunately, the full *context* is only available when analyzed manually (e.g. when the analyst reads all the comments), meaning that automating analyses do not always allow capturing it properly. In practice however, reading all the comments is not a realistic solution. This is why we suggest to automate the analysis to extract as much information as possible, before going back to the raw text to ensure that the conclusions drawn match the data. 
+
+## Illustration using Sorting Task Data
+
+Let's start with loading the usual packages of need:
+
+```{r, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(here)
+library(readxl)
+```
+
+The data set used for illustration was kindly shared by Dr. Jacob Lahne. It is part of a study that aimed in developing a CATA lexicon for Virginia Hard (Alcoholic) Ciders (REF REF REF.). The data can be found in *cider_text_data.xlsx*.
+
+Let's also import the data to our R session:
+
+```{r, echo=TRUE, eval=TRUE}
+file_path <- here("data","cider_text_data.xlsx") 
+cider_og <- read_xlsx(file_path) %>% 
+  mutate(sample = as.character(sample))
+```
+
+### Data Pre-processing
+
+Before starting, it is important to mention that there is a large variety of R-based solutions and R packages that handle textual data, including:
+
+* The IRaMuTeQ project (REF REF Reinert 1983) is a free software dedicated to text analysis and developed in R and Python. It includes Reinert textual clustering method (for more information, see [http://www.iramuteq.org/](http://www.iramuteq.org/))
+* `{tm}` package for text mining
+* `{tokenizers}` to transform strings into tokens
+* `{SnowballC}` for text stemming
+* `{SpacyR}` for Natural Language Processing
+* `{Xplortext}` for deep understanding and analysis of textual data. 
+
+However, to ensure a continuity with the rest of the book, we will emphasize the use of the `{stringr}` package for handling strings (here text) combined with the `{tidytext}` package. Note that `{stringr}` is part of the `{tidyverse}` and both packages fit very well within the `{tidyverse}` philosophy. 
+
+Let's load this additional package:
+
+```{r, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
+library(tidytext)
+```
+
+### Introduction to working with strings (`{stringr}`)
+
+The `{stringr}` package brings a large set of tools that allow working with strings. Most functions included in `{stringr}` start with `str_*()`. Here are some of the most convenient functions:
+
+* `str_length()` to get the length of the string;
+* `str_c()` to combine multiple strings into one;
+* `str_detect()` to search for a pattern in a string, and `str_which()` find the position of a pattern within the string;
+* `str_extract()` and `str_extract_all()` to extract the first (or all) matching pattern from a string;
+* `str_remove()` and `str_remove_all()` to remove the first (or all) matching pattern from a string;
+* `str_replace()`, `str_replace_all()`, to replace the first (or all) matching pattern with another one.
+  
+It also includes *formatting* options that can be applied to strings, including:
+
+* `str_to_upper()` and `str_to_lower()` to convert strings to uppercase or lowercase;
+* `str_trim()` and `str_squish()` to remove white spaces;
+* `str_order` to order the element of a character vector.
+  
+Examples of application of some of these functions is shown in the next sections.
+  
+### Tokenization
+
+The analysis of textual data starts with defining the statistical unit of interest, also known as *token*. This can either be a single word, a group of words, a sentence, a paragraph, a whole document etc. The procedure to transform the document into tokens is called *tokenization*. 
+
+By looking at our data (`cider_og`), we can notice that for each sample evaluated, respondents are providing a set of responses, ranging from a single word (e.g. `yeasty`) to a group of words (`like it will taste dry and acidic`). Fortunately, the data is also well structured since the responses seem to be separated by a `;` or `,`.
+
+Let's transform this text into tokens using `unnest_tokens()` from the `{tidytext}` package. The function `unnest_tokens()` proposes different options for the tokenization including by *words*, *ngrams*, or *sentences* for instance. However, let's take advantage of the data structure and use a specific character to separate the tokens (here `;`, `,` etc.). The `regex` parameter allows us to specify the patterns to consider:
+
+```{r, eval=TRUE, echo=TRUE}
+cider <- cider_og %>% 
+  unnest_tokens(tokens, comments, token="regex", pattern="[;|,|:|.|/]", to_lower=FALSE)
+```
+
+The original comments from consumers are now split into tokens, increasing the size of the file from 168 individual comments to 947 rows of tokens.
+
+This procedure already provides some interesting information as we could easily count word usage and answer questions such as "how often the word *apple* is used to describe each samples?" for instance. However, a deeper look at the data shows some inconsistencies since some words starts with a space, or have capital letters (remember that R is case-sensitive!). Further pre-processing is thus needed.
+
+### Simple Transformations
+
+To further prepare the data, let's standardize the text by removing all the white spaces (*irrelevant* spaces in the text, e.g. at  the start/end, double spaces, etc.), transforming everything to lower case (note that this could have been done earlier through the parameter `to_lower=TRUE` from `unnest_tokens()`), removing some special letters, replacing some misplaced characters etc.^[This process is done in iterations: the more you clean your document, the more you find some small things to fix...until you're set!]
+
+```{r, eval=TRUE, echo=TRUE}
+cider <- cider %>% 
+  mutate(tokens = str_to_lower(tokens)) %>% 
+  mutate(tokens = str_trim(tokens)) %>% 
+  mutate(tokens = str_squish(tokens)) %>% 
+  mutate(tokens = str_remove_all(tokens, pattern="[(|)|?|!]")) %>% 
+  mutate(tokens = str_remove_all(tokens, pattern="[ó|ò]")) %>% 
+  mutate(tokens = str_replace_all(tokens, pattern="õ", replacement="'"))
+```
+
+To ensure that the cleaning job is done (for now), let's produce the list of tokens generated here (and its corresponding frequency)^[Although not present in the text, we will use the next 3 lines of code multiple times to count the number of words present in the data.]:
+
+```{r, echo=TRUE, eval=TRUE}
+cider %>% 
+  count(tokens) %>% 
+  arrange(desc(n))
+```
+
+The most used words to describe the ciders are `sweet` (55 occurrences), `fruity` (33 occurrences), and `sour` (32 occurrences). 
+
+A closer look at this list highlights a few things that still need to get tackled: 
+
+* The same concept can be described in different ways: `spicy`, `spices`, and `spiced` may all refer to the same concept, yet they are written differently and hence are considered as different tokens. This will be handled in a later stage.
+* Multiple concepts are still joined (and hence considered separately: `sour and sweet` is currently neither associated to `sour`, nor to `sweet`, and we may want to disentangle them.
+* There could be some typos: Is `sweat` a typo and should read `sweet`? Or did that respondent really perceived the cider as `sweat`?
+* Although most tokens are made of one (or few) words, some others are defined as a whole sentence (e.g. `this has a very lovely floral and fruity smell`).
+
+Let's handle each of these different points...
+
+### Splitting further the tokens
+
+For an even deeper cleaning, let's go one step further and split the remaining tokens into single words by using the space as separator. Then, we can number each token for each assessor using `row_number()` to ensure that we can still recover which words belong to the same token, as defined previously. This information will be specially relevant later when looking at *bigrams*.
+
+```{r, eval=TRUE, echo=TRUE}
+cider <- cider %>% 
+  relocate(subject, .before=sample) %>% 
+  group_by(subject, sample) %>% 
+  mutate(num = row_number()) %>% 
+  ungroup() %>% 
+  unnest_tokens(tokens, tokens, token="regex", pattern=" |-")
+
+head(cider)
+```
+
+For `J1` and `182` for instance, the first token is now separated into three words: `hard`, `cider`, and `smell`.
+
+A quick count of words show that `sweet` appears now 96 times, and `apple` 82 times. Interestingly, terms such as `a`, `like`, `the`, `of`, `and` etc. also appear fairly frequently.
+
+### Stopwords
+
+*Stop words* refer to *common* words that do not carry much (if at all) information. In general, stop words include words (in English) such as *I*, *you*, *or*, *of*, *and*, *is*, *has*, etc. It is thus common practice to remove such stop words before any analysis as they would *pollute* the results with unnecessary information.
+
+Building lists of stop words can be tedious. Fortunately, it is possible to find some pre-defined lists, and to eventually adjust them to our own needs by adding and/or removing words. In particular, the package `{stopwords}` contains a comprehensive collection of stop word lists:
+
+```{r, echo=TRUE, eval=TRUE}
+library(stopwords)
+length(stopwords(source="snowball"))
+length(stopwords(source="stopwords-iso"))
+```
+
+The English Snowball list contains 175 words, whereas the English list from the Stopwords ISO collection contains 1298 words.
+
+A deeper look at these lists (and particularly to the *Stopwords ISO* list) shows that certain words including *like*, *not* and *don't* (just to name a few) are considered as stop words. If we would use this list blindly, we would remove these words from our comments. Although using such list on our current example would have a limited impact on the analysis (most comments are just few descriptive words), it would have a more critical impact on other studies in which consumers give their opinion on samples. Indeed, the analysis of the two following comments *I like Sample A* and *I don't like Sample B* would be lost although they provide some relevant information.
+
+It is therefore important to remember that although a lot of stop words are relevant in all cases, some of them are topic specific and should (or should not) be used in certain contexts. Hence, inspecting and adapting these lists before use is strongly recommended.
+
+Since we have a relatively small text size, let's use the *SnowBall Stopword* list as a start, and look at the terms that our list and this stopword list share:
+
+```{r, echo=TRUE, eval=TRUE}
+stopword_list <- stopwords(source="snowball")
+word_list <- cider %>% 
+  count(tokens) %>% 
+  pull(tokens)
+
+intersect(stopword_list, word_list)
+```
+
+As we can see, some words such as *off*, *not*, *no*, *too*, and *very* would automatically be removed. However, such qualifiers are useful in the interpretation of sensory perception, so we would prefer to keep them. We can thus remove them from `stopword_list`. 
+
+```{r, echo=TRUE, eval=TRUE}
+stopword_list <- stopword_list[!stopword_list %in% c("off","no","not","too","very")]
+```
+
+Conversely, we can look at the words from our data that we would not consider relevant and add them to the list. To do so, let's look at the list of words in our data that is not present in `stopword_list`:
+
+```{r, eval=TRUE, echo=TRUE}
+word_list[!word_list %in% stopword_list]
+```
+
+Words such as *like*, *sample*, *just*, *think*, or *though* do not seem to bring any relevant information here. Hence, let's add them (together with others) to our customized list of stop words^[As an exercise, you could go deeper into the list and decide by yourself whether you would want to remove more words.]:
+
+```{r, echo=TRUE, eval=TRUE}
+stopword_list <- c(stopword_list, c("accompany","amount","anything","considering","despite","expected",
+                                    "just","like","neither","one","order","others","products",
+                                    "sample","seems","something","thank","think","though","time","way"))
+```
+
+A final look at the list of stop words (here ordered alphabetically) ensures that it fits our need:
+
+```{r, eval=FALSE, echo=TRUE}
+stopword_list[order(stopword_list)]
+```
+
+Finally, the data is being cleaned by removing all the words stored in `stopword_list`. This can easily be done either using `filter()` (we keep tokens that are not contained in `stopword_list`), or by using `anti_join()`^[Note that if we were using the original list of stopwords, `anti_join()` can directly be associated to `get_stopwords(source="snowball")`.]:
+
+```{r, echo=TRUE, eval=TRUE}
+cider <- cider %>% 
+  anti_join(tibble(tokens = stopword_list), by="tokens")
+```
+
+### Stemming and Lemmatization
+
+After removing the stop words, the data contains a total of 328 different words. However a closer look at this list shows that it is still not optimal, as for instance `apple` (82 occurrences) and `apples` (24 occurrences) are considered as two separate words although they refer to the same *concept*.
+
+To further *clean* the data, two similar approaches can be considered: **stemming** and **lemmatization**. 
+
+The procedure of stemming consists in performing a step-by-step algorithm that reduces each word to its base word (or *stem*). The most used algorithm is the one introduced by REF (Porter, 1980) which is available in the `{SnowballC}` package through the `wordStem()` function:
+
+```{r, echo=TRUE, eval=TRUE, warning=FALSE, message=FALSE}
+library(SnowballC)
+
+cider <- cider %>% 
+  mutate(stem = wordStem(tokens))
+```
+
+The stemming reduced further the list to 303 words. Now, `apple` and `apples` have been combined into `appl` (106 occurrences). However, due to the way the algorithm works, the final tokens are no longer English^[Different algorithms for different languages exist, so we are not limited to stemming English words.] words.
+ 
+Alternatively, we can *lemmatize* words. Lemmatization is similar to stemming except that it does not cut words to their stems: Instead it uses knowledge about the language's structure to reduce words down to their dictionary form (also called *lemma*). This approach is implemented in the `{spacyr}` package^[spaCy is a library written in Python: for the `{spacyr}` package to work, you'll need to go through a series of steps that are described here: (https://cran.r-project.org/web/packages/spacyr/readme/README.html)[https://cran.r-project.org/web/packages/spacyr/readme/README.html]] and the `spacy_parse()` function:
+
+```{r, eval=TRUE, echo=TRUE, message=FALSE, warning=FALSE}
+library(spacyr)
+
+spacy_initialize(entity=FALSE)
+lemma <- spacy_parse(cider$tokens) %>% 
+  as_tibble() %>% 
+  dplyr::select(tokens=token, lemma) %>% 
+  unique()
+
+cider <- full_join(cider, lemma, by="tokens")
+```
+
+As can be seen, as opposed to stems, lemmas consist in *regular* words. Here, the grouping provides similar number of terms (approx 300) in both cases:
+
+```{r, eval=TRUE, echo=TRUE}
+cider %>% count(stem)
+```
+
+```{r, eval=TRUE, echo=TRUE}
+cider %>% count(lemma)
+```
+
+In the case of lemmatization, `acid`, `acidity`, and `acidic` are still considered as separate words whereas they are all grouped under `acid` with the stemming procedure. This particular example shows the advantage and disadvantage of each method, as it may (or may not) group words that are (or are not) meant to be grouped. Hence, the use of lemmatization/stemming procedures should be thought carefully. Depending on their objective, researchers may be interested in the different meanings conveyed by such words as `acid`, `acidity`, and `acidic` and decide to keep them separated, or decide to group them for a more holistic view of the main sensory attributes that could be derived from this text.
+
+It should also be said that neither the lemmatization nor the stemming procedure will combine words that are different but bear similar meanings. For instance, the words `moldy` and `rotten` have been used, and some researchers may decide to group them if they consider them equivalent. This type of grouping should be done manually on a case-by-case using `str_replace()`:
+
+```{r, echo=TRUE, eval=TRUE}
+cider %>% 
+  count(lemma) %>% 
+  filter(lemma %in% c("moldy","rotten"))
+```
+
+As can be seen here, originally, `moldy` was stated twice whereas `rotten` was stated 5 times. After re-placing `moldy` by `rotten`, the newer version contains 7 occurrences of `rotten` and none of `modly`. 
+
+```{r, echo=TRUE, eval=TRUE}
+cider %>% 
+  mutate(lemma = str_replace(lemma, "moldy", "rotten")) %>% 
+  count(lemma) %>% 
+  filter(lemma %in% c("moldy","rotten"))
+```
+
+Doing such transformation can quickly be tedious to do directly in R. As an alternative solution, we propose to export the list of words in Excel, create a new column with the new grouping names, and merge the newly acquired names to the previous file. This is the approach we used to create the file entitled *Example of word grouping.xlsx*. In this example, one can notice that we limited the grouping to a strict minimum for most words except `bubble` that we also combined to `bubbly`, `carbonate`, `champagne`, `moscato`, `fizzy`, and `sparkle`:
+
+```{r, echo=TRUE, eval=TRUE}
+new_list <- read_xlsx("data/Example of word grouping.xlsx")
+cider <- cider %>% 
+  full_join(new_list, by="lemma") %>% 
+  mutate(lemma = ifelse(is.na(`new name`), lemma, `new name`)) %>% 
+  dplyr::select(-`new name`)
+```
+
+This last *cleaning* approach reduces further the number of words to 278.
+
+## Text Analysis
+
+Now that the text has been sufficiently cleaned, some analyses can be run to compare the samples in the way they have been described by the respondents. To do so, let's start with simple analyses. 
+
+### Raw Frequencies and Visualization
+
+In the previous sections, we have already shown how to count the number of occurrences of each word. We can reproduce this and show the top 10 most used words to describe our ciders:
+
+```{r, eval=TRUE, echo=TRUE}
+cider %>% 
+  group_by(lemma) %>% 
+  count() %>% 
+  arrange(desc(n)) %>% 
+  filter(n>=10, !is.na(lemma)) %>% 
+  ggplot(aes(x=reorder(lemma, n), y=n))+
+  geom_col()+
+  theme_minimal()+
+  xlab("")+
+  ylab("")+
+  theme(axis.line = element_line(colour="grey80"))+
+  coord_flip()+
+  ggtitle("List of words mentioned at least 10 times")
+```
+
+As seen previously, the most mentioned words are `apple`, `sweet`, `fruity`, and `sour`.
+
+Let's now assess the number of time each word has been used to characterize each product.
+
+```{r, echo=TRUE, eval=TRUE}
+cider %>% 
+  filter(!is.na(lemma), !is.na(sample)) %>% 
+  group_by(sample, lemma) %>% 
+  count() %>% 
+  ungroup() %>% 
+  pivot_wider(names_from=lemma, values_from=n, values_fill=0)
+```
+
+A first look at the contingency table shows that `apple` has been used 25 times to characterize sample `365` while it has only been used 9 times to characterize sample `401`.
+
+Since the list of terms is quite large, we can visualize these frequencies in different ways: First, we could re-adapt the histogram produced previously overall but per product. This could give a good overview of which words characterize each sample (results not shown here):
+
+```{r, eval=TRUE, echo=TRUE}
+prod_term <- cider %>% 
+  filter(!is.na(lemma), !is.na(sample)) %>% 
+  group_by(sample, lemma) %>% 
+  count() %>% 
+  ungroup() %>% 
+  split(.$sample) %>% 
+  map(function(data){
+    data %>% 
+      arrange(desc(n)) %>% 
+      filter(n>=5) %>% 
+      ggplot(aes(x=reorder(lemma, n), y=n))+
+      geom_col()+
+      theme_minimal()+
+      xlab("")+
+      ylab("")+
+      theme(axis.line = element_line(colour="grey80"))+
+      coord_flip()+
+      ggtitle(paste0("List of words mentioned at least 5 times for ", 
+                     data %>% pull(sample) %>% unique()))
+  })
+```
+
+Another approach consists in visualizing the association between the samples and the words in a multiple way using Correspondence Analysis (CA). Since the CA can be sensitive to low frequencies (Add REF), we suggest to only keep terms that were at least mentioned 5 times across all samples, resulting in a shorter frequency table. We then use the `CA()` function from `{FactoMineR}` to build the CA map:
+
+```{r, eval=TRUE, echo=TRUE, warning=FALSE, message=FALSE}
+cider_ct <- cider %>% 
+  filter(!is.na(lemma), !is.na(sample)) %>% 
+  group_by(sample, lemma) %>% 
+  count() %>% 
+  ungroup() %>% 
+  filter(n >= 5) %>% 
+  pivot_wider(names_from=lemma, values_from=n, values_fill=0) %>% 
+  as.data.frame() %>% 
+  column_to_rownames(var="sample")
+
+library(FactoMineR)
+cider_CA <- CA(cider_ct)
+
+```
+
+As can be seen, sample `731` is more strongly associated to alcoholic terms such as `alcohol` or `wine`, and colors (`red`, `green`). Samples `239` and `401` are more associated to `sour` and `bitter` (and `pear` for `239`), whereas samples `519` and `182` are more frequently described by terms such as `fruity`, and `sweet` (`floral` is also used to characterize `182`).
+
+An alternative for visualizing these frequencies is through wordclouds, which can easily be done using the `{ggwordcloud}` package. This package has the advantage to build such representation in a `{ggplot2}` format. Such wordclouds (here one per product) can be obtained using the following code:
+
+```{r, eval=TRUE, echo=TRUE}
+cider_wc <- cider %>% 
+  filter(!is.na(lemma), !is.na(sample)) %>% 
+  group_by(sample, lemma) %>% 
+  count() %>% 
+  ungroup() %>% 
+  filter(n >= 5)
+
+library(ggwordcloud)
+ggplot(cider_wc, aes(x=sample, colour=sample, label=lemma, size=n))+
+  geom_text_wordcloud(eccentricity = 2.5)+
+  xlab("")+
+  theme_minimal()
+
+```
+
+In these wordclouds, we notice that `apple` and `sweet` appear in larger fonts for (almost) all the samples, which can make the comparison quite difficult between samples. Fortunately, the `geom_text_wordcloud()` function provides an interesting parameter in its aesthetics called `angle_group` which allows controlling the position of the words. To illustrate this, let's apply the following rule: for a given sample, if the proportion of association of a word is larger than 1/6 (as we have 6 samples), the word will be printed in the upper part of its wordcloud, and in the lower part otherwise. To facilitate the readability, the color code used follow the same rule:
+
+```{r, eval=TRUE, echo=TRUE}
+cider_wc %>% 
+  group_by(lemma) %>% 
+  mutate(prop = n/sum(n)) %>% 
+  ungroup() %>% 
+  ggplot(aes(colour= prop<1/2, label=lemma, size=n, angle_group = prop < 1/2))+
+  geom_text_wordcloud(eccentricity = 2.5)+
+  xlab("")+
+  theme_minimal()+
+  facet_wrap(~sample)
+```
+
+As can be seen, the term `apple` is more frequently (i.e. more than 1/6) used to characterize samples `182`, `239`, `365`, and `731`. The term `sweet` is more frequently used to characterize samples `182` and `519`. Such conclusions would have been more difficult to reach based on the previous *unstructured* wordcloud.
+
+### Bigrams, *n*-grams
+
+In the previous set of analyses, we defined each word as a token. This procedure disconnects words from each others, hence discarding the context around each word. Although this approach is common, it can lead to misinterpretation since a product that would often be associated to (say) *not sweet* would in the end be characterized as *not* and *sweet*. A comparison of samples based on the sole word *sweet* could suggest that the previous product is often characterized as sweet whereas it should be the opposite.
+
+To avoid this misinterpretation, two solutions exist:
+
+1. Replace *not sweet* by *not_sweet*, so that it is considered as one token rather than two;
+2. Look at groups of words, i.e. at words within their surroundings.
+
+The latter option leads us to introduce the notion of bi-grams (groups of 2 following words), tri-grams (groups of 3 following words), or more generally *n*-grams (groups of *n* following words). More precisely, we are applying the same frequency count as before except that we are no longer considering one word as a token, but as a sequence of 2, 3, or more generally *n* words as a token. Such grouping can be obtained by the `unnest_tokens()` from `{tidytext}` in which `token='ngrams'`, with `n` defining the number of words to consider.
+
+For simplicity, let's apply this to the original data, although it could be applied to the cleaned version (here we consider bi-grams).
+
+```{r, echo=TRUE, eval=TRUE}
+cider_2grams <- cider_og %>% 
+  unnest_tokens(bigrams, comments, token="ngrams", n=2)
+
+cider_2grams %>% 
+  count(bigrams) %>% 
+  arrange(desc(n))
+```
+
+In our example, `sweet fruity` is the strongest 2-words association. Other relevant associations are `green apple`, `sweet apple`, or `very sweet`.
+Of course, such bi-grams can also be obtained per product:
+
+```{r, echo=TRUE, eval=TRUE}
+cider_2grams %>% 
+  group_by(sample) %>% 
+  count(bigrams) %>% 
+  ungroup() %>% 
+  arrange(desc(n)) %>% 
+  filter(sample == "182")
+```
+
+For sample `182`, `not sweet` appears 3 times which can be surprising since it was one of the sample the most associated to `sweet` with 22 occurrences.
+<!-- Would perhaps be good to comment on possible interindividual differences in perception, which is one added value of NLP --> 
+
+### Word Embedding
+
+The previous section introduces the concept of context, as words are associated to their direct neighbors. Another approach called *word embedding* goes one step further by looking at connections between words within a certain window: for instance, how often are *not* and *sweet* present together within a window of 3, 5, or 7 words? Such an approach is not presented here as it is more relevant for longer text documents. 
+
+In the previous sections, we already introduced the notion of *term frequency* (*tf*), which corresponds to the number of times a word is being used in a document. When a collection of documents are analyzed and compared, it is also interesting to look at the *inverse document frequency* (*idf*), which consists in highlighting words that discriminate between documents by reducing the weight of common words and by increasing the weight of words that are specific to certain documents only. In practice, both concepts are associated (by multiplication) to compute a term's *tf-idf*, which measures the frequency of a term adjusted for its rarity in use.
+
+### Sentiment Analysis
+
+Textual analysis as we presented here is purely descriptive. In other words, the items that we analyze have no particular valence (i.e. they are neither negative, nor positive). When text data are more spontaneous (e.g. social media such as tweets, or consumers' responses to open-ended questions), they can be the charged with positive or negative connotations. A good way to measure the overall valence of a message is through *Sentiment Analysis*. 
+
+To perform *Sentiment Analysis*, we start by deconstructing the message into words (tokenization approach considered previously). Then, in a similar approach to the stop words, we can combine our list of words with a pre-defined list that defines which words should be considered as positive or negative (the rest being neutral). Ultimately, all the scores associated to each message can be summed, hence providing the overall valence score of a message. 
+
+To get examples of *sentiment* list, the `get_sentiments()` function from the `{tidytext}` package can be used. This function proposes 4 potential lists: `"bing"`, `"afinn"`, `"loughran"`, and `"nrc"` (REFERENCES). Of course, such lists can be modified and adapted to your own needs in case they do not fit perfectly.
+
+<!-- As it is becoming very common data from social media/spontaneous consumer feedback, I guess it would be nice to have an example to show, like a wordcloud for positive and negative consumer feedback, if possible -->
+
+## To go further...
+
+Text Mining and Natural Language Processing is a topic that has been (and is still being) studied for a very long time. Recently, it has made a lot of progress thanks to the advances in technology, and has gain even more interest with the abundance of text through social media, websites, blogs, etc. It is hence no surprise that a lot of machine learning models use text data (topic modelling, classification of emails to spam, etc.). Even current handy additions to simplify our life are based on text analysis (e.g. suggestions in emails, translation, etc.) 
+
+In case you would want to go further on this topic, we strongly recommend the following books:
+
+ - Text Mining with R
+ - Supervised Machine Learning for Text Analysis in R
+ - Textual Data Science with R
+ - R for Data Science (through the introduction to web-scrapping etc.)

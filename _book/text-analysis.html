@@ -5,25 +5,25 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 13 Text Analysis | Data Science for Sensory and Consumer Scientists</title>
-  <meta name="description" content="Open development of data science book for sensory and consumer scientists." />
-  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
+  <meta name="description" content="Open development of data science book for sensory and consumer scientists.." />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 13 Text Analysis | Data Science for Sensory and Consumer Scientists" />
   <meta property="og:type" content="book" />
   
-  <meta property="og:description" content="Open development of data science book for sensory and consumer scientists." />
-  
+  <meta property="og:description" content="Open development of data science book for sensory and consumer scientists.." />
+  <meta name="github-repo" content="john-aigora/i2ds4scc_bookdown" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapter 13 Text Analysis | Data Science for Sensory and Consumer Scientists" />
   
-  <meta name="twitter:description" content="Open development of data science book for sensory and consumer scientists." />
+  <meta name="twitter:description" content="Open development of data science book for sensory and consumer scientists.." />
   
 
 <meta name="author" content="Thierry Worch, Julien Delarue, Vanessa Rios de Souza, and John Ennis" />
 
 
-<meta name="date" content="2022-11-09" />
+<meta name="date" content="2022-12-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,15 +32,15 @@
   
 <link rel="prev" href="machine-learning.html"/>
 <link rel="next" href="dashboards.html"/>
-<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="libs/jquery/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
-<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+<link href="libs/gitbook/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-clipboard.css" rel="stylesheet" />
 
 
 
@@ -49,11 +49,10 @@
 
 
 
-<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
-<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet" />
-<link href="libs/tabwid-1.0.0/scrool.css" rel="stylesheet" />
+<link href="libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections/anchor-sections.js"></script>
+<link href="libs/tabwid/tabwid.css" rel="stylesheet" />
 
 
 <style type="text/css">
@@ -86,38 +85,39 @@ pre.numberSource code > span > a:first-child::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  background-color: #f8f8f8; }
+  {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ef2929; } /* Alert */
-code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #c4a000; } /* Attribute */
-code span.bn { color: #0000cf; } /* BaseN */
-code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4e9a06; } /* Char */
-code span.cn { color: #000000; } /* Constant */
-code span.co { color: #8f5902; font-style: italic; } /* Comment */
-code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
-code span.dt { color: #204a87; } /* DataType */
-code span.dv { color: #0000cf; } /* DecVal */
-code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
-code span.fl { color: #0000cf; } /* Float */
-code span.fu { color: #000000; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
-code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
-code span.ot { color: #8f5902; } /* Other */
-code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
-code span.sc { color: #000000; } /* SpecialChar */
-code span.ss { color: #4e9a06; } /* SpecialString */
-code span.st { color: #4e9a06; } /* String */
-code span.va { color: #000000; } /* Variable */
-code span.vs { color: #4e9a06; } /* VerbatimString */
-code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 <style type="text/css">
@@ -143,7 +143,7 @@ div.csl-indent {
 }
 </style>
 
-<link rel="stylesheet" href="style.css" type="text/css" />
+<link rel="stylesheet" href="css/style.css" type="text/css" />
 </head>
 
 <body>
@@ -166,16 +166,15 @@ div.csl-indent {
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-to-use-this-book"><i class="fa fa-check"></i>How To Use This Book</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i>Acknowledgements</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="preface-1.html"><a href="preface-1.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="" data-path="about-the-author.html"><a href="about-the-author.html"><i class="fa fa-check"></i>About the Author</a></li>
 <li class="chapter" data-level="1" data-path="bienvenue.html"><a href="bienvenue.html"><i class="fa fa-check"></i><b>1</b> Bienvenue!</a>
 <ul>
-<li class="chapter" data-level="" data-path="bienvenue.html"><a href="bienvenue.html#why-data-science-for-sensory-and-consumer-science"><i class="fa fa-check"></i>Why Data Science for Sensory and Consumer Science?</a>
+<li class="chapter" data-level="1.1" data-path="bienvenue.html"><a href="bienvenue.html#why-data-science-for-sensory-and-consumer-science"><i class="fa fa-check"></i><b>1.1</b> Why Data Science for Sensory and Consumer Science?</a>
 <ul>
-<li class="chapter" data-level="" data-path="bienvenue.html"><a href="bienvenue.html#core-principles-in-sensory-and-consumer-science"><i class="fa fa-check"></i>Core principles in Sensory and Consumer Science</a></li>
-<li class="chapter" data-level="" data-path="bienvenue.html"><a href="bienvenue.html#computational-sensory-science"><i class="fa fa-check"></i>Computational Sensory Science</a></li>
+<li class="chapter" data-level="1.1.1" data-path="bienvenue.html"><a href="bienvenue.html#core-principles-in-sensory-and-consumer-science"><i class="fa fa-check"></i><b>1.1.1</b> Core principles in Sensory and Consumer Science</a></li>
+<li class="chapter" data-level="1.1.2" data-path="bienvenue.html"><a href="bienvenue.html#computational-sensory-science"><i class="fa fa-check"></i><b>1.1.2</b> Computational Sensory Science</a></li>
 </ul></li>
 </ul></li>
-<li class="part"><span><b>Apéritifs</b></span></li>
 <li class="chapter" data-level="2" data-path="start-R.html"><a href="start-R.html"><i class="fa fa-check"></i><b>2</b> Getting Started</a>
 <ul>
 <li class="chapter" data-level="2.1" data-path="start-R.html"><a href="start-R.html#introduction-to-r"><i class="fa fa-check"></i><b>2.1</b> Introduction to R</a>
@@ -197,9 +196,10 @@ div.csl-indent {
 <li class="chapter" data-level="2.3" data-path="start-R.html"><a href="start-R.html#further-tips-on-how-to-read-this-book"><i class="fa fa-check"></i><b>2.3</b> Further tips on <em>how to read this book?</em></a>
 <ul>
 <li class="chapter" data-level="2.3.1" data-path="start-R.html"><a href="start-R.html#pipes"><i class="fa fa-check"></i><b>2.3.1</b> Introduction to the <code>{magrittr}</code> and the notion of <em>pipes</em></a></li>
-<li class="chapter" data-level="2.3.2" data-path="start-R.html"><a href="start-R.html#calling-variables"><i class="fa fa-check"></i><b>2.3.2</b> Calling Variables</a></li>
-<li class="chapter" data-level="2.3.3" data-path="start-R.html"><a href="start-R.html#print-save"><i class="fa fa-check"></i><b>2.3.3</b> Printing vs. Saving results</a></li>
-<li class="chapter" data-level="2.3.4" data-path="start-R.html"><a href="start-R.html#running-code-and-handling-errors"><i class="fa fa-check"></i><b>2.3.4</b> Running code and handling errors</a></li>
+<li class="chapter" data-level="2.3.2" data-path="start-R.html"><a href="start-R.html#tibbles"><i class="fa fa-check"></i><b>2.3.2</b> Tibbles</a></li>
+<li class="chapter" data-level="2.3.3" data-path="start-R.html"><a href="start-R.html#calling-variables"><i class="fa fa-check"></i><b>2.3.3</b> Calling Variables</a></li>
+<li class="chapter" data-level="2.3.4" data-path="start-R.html"><a href="start-R.html#print-save"><i class="fa fa-check"></i><b>2.3.4</b> Printing vs. Saving results</a></li>
+<li class="chapter" data-level="2.3.5" data-path="start-R.html"><a href="start-R.html#running-code-and-handling-errors"><i class="fa fa-check"></i><b>2.3.5</b> Running code and handling errors</a></li>
 </ul></li>
 <li class="chapter" data-level="2.4" data-path="start-R.html"><a href="start-R.html#git-and-github"><i class="fa fa-check"></i><b>2.4</b> Version Control / Git and GitHub</a>
 <ul>
@@ -207,7 +207,6 @@ div.csl-indent {
 <li class="chapter" data-level="2.4.2" data-path="start-R.html"><a href="start-R.html#github"><i class="fa fa-check"></i><b>2.4.2</b> GitHub</a></li>
 </ul></li>
 </ul></li>
-<li class="part"><span><b>Hors d’Oeuvres</b></span></li>
 <li class="chapter" data-level="3" data-path="data_science.html"><a href="data_science.html"><i class="fa fa-check"></i><b>3</b> Why Data Science?</a>
 <ul>
 <li class="chapter" data-level="3.1" data-path="data_science.html"><a href="data_science.html#history-and-definition"><i class="fa fa-check"></i><b>3.1</b> History and Definition</a></li>
@@ -275,7 +274,6 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="6.4" data-path="auto-report.html"><a href="auto-report.html#to-go-further"><i class="fa fa-check"></i><b>6.4</b> To go further…</a></li>
 </ul></li>
-<li class="part"><span><b>Bon Appétit</b></span></li>
 <li class="chapter" data-level="7" data-path="example-projects.html"><a href="example-projects.html"><i class="fa fa-check"></i><b>7</b> Example Project: The Biscuit Study</a>
 <ul>
 <li class="chapter" data-level="7.1" data-path="example-projects.html"><a href="example-projects.html#objective-of-the-test"><i class="fa fa-check"></i><b>7.1</b> Objective of the Test</a></li>
@@ -328,19 +326,19 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="10" data-path="data-analysis.html"><a href="data-analysis.html"><i class="fa fa-check"></i><b>10</b> Data Analysis</a>
 <ul>
-<li class="chapter" data-level="10.1" data-path="data-analysis.html"><a href="data-analysis.html#sensory-data"><i class="fa fa-check"></i><b>10.1</b> Sensory Data</a></li>
+<li class="chapter" data-level="10.1" data-path="data-analysis.html"><a href="data-analysis.html#sensory-analysis"><i class="fa fa-check"></i><b>10.1</b> Sensory Data</a></li>
 <li class="chapter" data-level="10.2" data-path="data-analysis.html"><a href="data-analysis.html#demographic-and-questionnaire-data"><i class="fa fa-check"></i><b>10.2</b> Demographic and Questionnaire Data</a>
 <ul>
 <li class="chapter" data-level="10.2.1" data-path="data-analysis.html"><a href="data-analysis.html#demographic-data-frequency-and-proportion"><i class="fa fa-check"></i><b>10.2.1</b> Demographic Data: Frequency and Proportion</a></li>
 <li class="chapter" data-level="10.2.2" data-path="data-analysis.html"><a href="data-analysis.html#eating-behavior-traits-tfeq-data"><i class="fa fa-check"></i><b>10.2.2</b> Eating behavior traits: TFEQ data</a></li>
 </ul></li>
-<li class="chapter" data-level="10.3" data-path="data-analysis.html"><a href="data-analysis.html#consumer-data"><i class="fa fa-check"></i><b>10.3</b> Consumer Data</a></li>
+<li class="chapter" data-level="10.3" data-path="data-analysis.html"><a href="data-analysis.html#tibble-use"><i class="fa fa-check"></i><b>10.3</b> Consumer Data</a></li>
 <li class="chapter" data-level="10.4" data-path="data-analysis.html"><a href="data-analysis.html#combining-sensory-and-consumer-data"><i class="fa fa-check"></i><b>10.4</b> Combining Sensory and Consumer Data</a>
 <ul>
 <li class="chapter" data-level="10.4.1" data-path="data-analysis.html"><a href="data-analysis.html#internal-preference-mapping"><i class="fa fa-check"></i><b>10.4.1</b> Internal Preference Mapping</a></li>
-<li class="chapter" data-level="10.4.2" data-path="data-analysis.html"><a href="data-analysis.html#consumers-clustering"><i class="fa fa-check"></i><b>10.4.2</b> Consumers Clustering</a></li>
+<li class="chapter" data-level="10.4.2" data-path="data-analysis.html"><a href="data-analysis.html#hac"><i class="fa fa-check"></i><b>10.4.2</b> Consumers Clustering</a></li>
 <li class="chapter" data-level="10.4.3" data-path="data-analysis.html"><a href="data-analysis.html#drivers-of-liking"><i class="fa fa-check"></i><b>10.4.3</b> Drivers of Liking</a></li>
-<li class="chapter" data-level="10.4.4" data-path="data-analysis.html"><a href="data-analysis.html#external-preference-mapping"><i class="fa fa-check"></i><b>10.4.4</b> External Preference Mapping</a></li>
+<li class="chapter" data-level="10.4.4" data-path="data-analysis.html"><a href="data-analysis.html#prefmap"><i class="fa fa-check"></i><b>10.4.4</b> External Preference Mapping</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="value-delivery.html"><a href="value-delivery.html"><i class="fa fa-check"></i><b>11</b> Value Delivery</a>
@@ -361,15 +359,33 @@ div.csl-indent {
 <li class="chapter" data-level="11.5" data-path="value-delivery.html"><a href="value-delivery.html#storytelling"><i class="fa fa-check"></i><b>11.5</b> Storytelling</a></li>
 <li class="chapter" data-level="11.6" data-path="value-delivery.html"><a href="value-delivery.html#reformulate2"><i class="fa fa-check"></i><b>11.6</b> Reformulate</a></li>
 </ul></li>
-<li class="part"><span><b>Haute Cuisine</b></span></li>
 <li class="chapter" data-level="12" data-path="machine-learning.html"><a href="machine-learning.html"><i class="fa fa-check"></i><b>12</b> Machine Learning</a>
 <ul>
 <li class="chapter" data-level="12.1" data-path="machine-learning.html"><a href="machine-learning.html#introduction-2"><i class="fa fa-check"></i><b>12.1</b> Introduction</a></li>
-<li class="chapter" data-level="12.2" data-path="machine-learning.html"><a href="machine-learning.html#machine-learning-methods"><i class="fa fa-check"></i><b>12.2</b> Machine Learning Methods</a>
+<li class="chapter" data-level="12.2" data-path="machine-learning.html"><a href="machine-learning.html#introduction-of-the-data"><i class="fa fa-check"></i><b>12.2</b> Introduction of the Data</a></li>
+<li class="chapter" data-level="12.3" data-path="machine-learning.html"><a href="machine-learning.html#machine-learning-methods"><i class="fa fa-check"></i><b>12.3</b> Machine Learning Methods</a></li>
+<li class="chapter" data-level="12.4" data-path="machine-learning.html"><a href="machine-learning.html#unsupervised-machine-learning"><i class="fa fa-check"></i><b>12.4</b> Unsupervised Machine learning</a>
 <ul>
-<li class="chapter" data-level="12.2.1" data-path="machine-learning.html"><a href="machine-learning.html#unsupervised-learning"><i class="fa fa-check"></i><b>12.2.1</b> Unsupervised learning</a></li>
-<li class="chapter" data-level="12.2.2" data-path="machine-learning.html"><a href="machine-learning.html#supervised-learning"><i class="fa fa-check"></i><b>12.2.2</b> Supervised learning</a></li>
-<li class="chapter" data-level="12.2.3" data-path="machine-learning.html"><a href="machine-learning.html#practical-guide-to-machine-learning"><i class="fa fa-check"></i><b>12.2.3</b> Practical Guide to Machine Learning</a></li>
+<li class="chapter" data-level="12.4.1" data-path="machine-learning.html"><a href="machine-learning.html#dimensionality-reduction"><i class="fa fa-check"></i><b>12.4.1</b> Dimensionality Reduction</a></li>
+<li class="chapter" data-level="12.4.2" data-path="machine-learning.html"><a href="machine-learning.html#clustering"><i class="fa fa-check"></i><b>12.4.2</b> Clustering</a></li>
+</ul></li>
+<li class="chapter" data-level="12.5" data-path="machine-learning.html"><a href="machine-learning.html#supervised-learning"><i class="fa fa-check"></i><b>12.5</b> Supervised learning</a>
+<ul>
+<li class="chapter" data-level="12.5.1" data-path="machine-learning.html"><a href="machine-learning.html#workflow"><i class="fa fa-check"></i><b>12.5.1</b> Workflow</a></li>
+<li class="chapter" data-level="12.5.2" data-path="machine-learning.html"><a href="machine-learning.html#regression"><i class="fa fa-check"></i><b>12.5.2</b> Regression</a></li>
+<li class="chapter" data-level="12.5.3" data-path="machine-learning.html"><a href="machine-learning.html#other-common-supervised-ml-algorithms"><i class="fa fa-check"></i><b>12.5.3</b> Other common Supervised ML algorithms</a></li>
+</ul></li>
+<li class="chapter" data-level="12.6" data-path="machine-learning.html"><a href="machine-learning.html#practical-guide-to-supervised-machine-learning"><i class="fa fa-check"></i><b>12.6</b> Practical Guide to Supervised Machine Learning</a>
+<ul>
+<li class="chapter" data-level="12.6.1" data-path="machine-learning.html"><a href="machine-learning.html#introduction-to-the-tidymodels-framework"><i class="fa fa-check"></i><b>12.6.1</b> Introduction to the <code>{tidymodels}</code> framework</a></li>
+<li class="chapter" data-level="12.6.2" data-path="machine-learning.html"><a href="machine-learning.html#sampling-the-data"><i class="fa fa-check"></i><b>12.6.2</b> Sampling the data</a></li>
+<li class="chapter" data-level="12.6.3" data-path="machine-learning.html"><a href="machine-learning.html#cross-validation"><i class="fa fa-check"></i><b>12.6.3</b> Cross Validation</a></li>
+<li class="chapter" data-level="12.6.4" data-path="machine-learning.html"><a href="machine-learning.html#data-preprocessing-recipes"><i class="fa fa-check"></i><b>12.6.4</b> Data Preprocessing <code>{recipes}</code></a></li>
+<li class="chapter" data-level="12.6.5" data-path="machine-learning.html"><a href="machine-learning.html#model-definition"><i class="fa fa-check"></i><b>12.6.5</b> Model definition</a></li>
+<li class="chapter" data-level="12.6.6" data-path="machine-learning.html"><a href="machine-learning.html#set-the-whole-process-into-a-workflow"><i class="fa fa-check"></i><b>12.6.6</b> Set the whole Process into a workflow</a></li>
+<li class="chapter" data-level="12.6.7" data-path="machine-learning.html"><a href="machine-learning.html#tuning-the-parameters"><i class="fa fa-check"></i><b>12.6.7</b> Tuning the parameters</a></li>
+<li class="chapter" data-level="12.6.8" data-path="machine-learning.html"><a href="machine-learning.html#model-training"><i class="fa fa-check"></i><b>12.6.8</b> Model training</a></li>
+<li class="chapter" data-level="12.6.9" data-path="machine-learning.html"><a href="machine-learning.html#model-evaluation"><i class="fa fa-check"></i><b>12.6.9</b> Model evaluation</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="13" data-path="text-analysis.html"><a href="text-analysis.html"><i class="fa fa-check"></i><b>13</b> Text Analysis</a>
@@ -421,15 +437,14 @@ div.csl-indent {
 <li class="chapter" data-level="14.3.6" data-path="dashboards.html"><a href="dashboards.html#documentation-and-books"><i class="fa fa-check"></i><b>14.3.6</b> Documentation and Books</a></li>
 </ul></li>
 </ul></li>
-<li class="part"><span><b>Digestifs</b></span></li>
 <li class="chapter" data-level="15" data-path="next-steps.html"><a href="next-steps.html"><i class="fa fa-check"></i><b>15</b> Conclusion and Next Steps</a>
 <ul>
 <li class="chapter" data-level="15.1" data-path="next-steps.html"><a href="next-steps.html#other-recommended-resources"><i class="fa fa-check"></i><b>15.1</b> Other Recommended Resources</a></li>
 <li class="chapter" data-level="15.2" data-path="next-steps.html"><a href="next-steps.html#useful-r-packages"><i class="fa fa-check"></i><b>15.2</b> Useful R Packages</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="bibliography.html"><a href="bibliography.html"><i class="fa fa-check"></i>Bibliography</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
-<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+<li><a href="https://bookdown.org" target="blank">Published with bookdown</a></li>
 
 </ul>
 
@@ -459,16 +474,16 @@ A good illustration of such <em>complex</em> situation is text analysis. Before 
 <p>Humans exchange information through the use of languages. There is of course a very large number of different languages, each of them having their own specificity. The science that studies languages per se is called <em>linguistics</em>: It focuses on areas such as phonetics, phonology, morphology, syntax, semantics, and pragmatics.</p>
 <p>Natural Language Processing (NLP) is a sub-field of linguistics, computer science, and artificial intelligence. It connects computers to human language by processing, analyzing, and modeling large amounts of natural language data. One of the main goals of NLP is to <em>understand</em> the contents of documents, and to extract accurately information and insights from those documents. In Sensory and Consumer Research, we often refer to NLP when we talk about <em>Text Analysis</em> .</p>
 <p>Since the fields of linguistics and NLP are widely studied, a lot of documentations is already available online. The objective of this chapter is to provide sufficient information for you to be familiar with textual data, and to give you the keys to run the most useful analyses in Sensory and Consumer Research.</p>
-<p>For those who would like to dive deeper into NLP, we recommend reading (<span class="citation"><a href="#ref-Silge2017" role="doc-biblioref">Silge and Robinson</a> (<a href="#ref-Silge2017" role="doc-biblioref">2017</a>)</span>, <span class="citation"><a href="#ref-Becue-Bertaut2019" role="doc-biblioref">Bécue-Bertaut</a> (<a href="#ref-Becue-Bertaut2019" role="doc-biblioref">2019</a>)</span>), and (<span class="citation"><a href="#ref-Hvitfeldt2021" role="doc-biblioref">Hvitfeldt and Silge</a> (<a href="#ref-Hvitfeldt2021" role="doc-biblioref">2021</a>)</span>) for more advanced techniques.</p>
+<p>For those who would like to dive deeper into NLP, we recommend reading (<span class="citation">Silge and Robinson (<a href="#ref-Silge2017" role="doc-biblioref">2017</a>)</span>, <span class="citation">Bécue-Bertaut (<a href="#ref-Becue-Bertaut2019" role="doc-biblioref">2019</a>)</span>), and (<span class="citation">Hvitfeldt and Silge (<a href="#ref-Hvitfeldt2021" role="doc-biblioref">2021</a>)</span>) for more advanced techniques.</p>
 </div>
 <div id="application-of-text-analysis-in-sensory-and-consumer-science" class="section level2 hasAnchor" number="13.2">
 <h2><span class="header-section-number">13.2</span> Application of Text Analysis in Sensory and Consumer Science<a href="text-analysis.html#application-of-text-analysis-in-sensory-and-consumer-science" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="text-analysis-as-way-to-describe-products" class="section level3 hasAnchor" number="13.2.1">
 <h3><span class="header-section-number">13.2.1</span> Text analysis as way to describe products<a href="text-analysis.html#text-analysis-as-way-to-describe-products" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>In recent years, open-ended comments have gained interest as it is the fastest, safest, most unbiased way to collect spontaneous data from participants (<span class="citation"><a href="#ref-Piqueras2015" role="doc-biblioref">Piqueras-fiszman</a> (<a href="#ref-Piqueras2015" role="doc-biblioref">2015</a>)</span>).</p>
+<p>In recent years, open-ended comments have gained interest as it is the fastest, safest, most unbiased way to collect spontaneous data from participants (<span class="citation">Piqueras-fiszman (<a href="#ref-Piqueras2015" role="doc-biblioref">2015</a>)</span>).</p>
 <p>Traditionally, most SCS questionnaires relied primarily on closed questions, to which open-ended questions were added to uncover the consumers’ reasons for liking or disliking products. In practice, these open-ended questions were positioned right after liking questions, and aimed at providing some understanding about why a product may or may not be liked, and to give the participants a chance to reduce their frustration by explaining their responses to certain questions. As a result of such practices, these questions were usually not deeply analyzed.</p>
 <p>With the development of the so-called <em>rapid</em> and consumer-oriented descriptive methods, the benefits of open-ended questions became more apparent as they provide a new way to uncover sensory perception. In practice, respondents are asked to give any terms that describe their sensory perception in addition to their quantitative evaluation of the products by the means of intensity rating or ranking (e.g. Free Choice Profile, Flash Profile), or similarities and dissimilarities assessment (e.g. Free Sorting Task, and Ultra Flash Profile as an extension of Napping). Since the textual responses are now an integral part of the method, its analysis can no longer be ignored.</p>
-<p>The importance of open-ended questions increased further as it has been shown that respondents can reliably describe in their own words their full experience (perception, emotion, or any other sort of association) with products. Recently, Mahieu et al. [REF REF REF] showed the benefits of using open-ended questions over CATA<a href="#fn48" class="footnote-ref" id="fnref48"><sup>48</sup></a>. In this study, consumers were asked to describe with their own words both the products they evaluated and what their ideal product would be like. Similarly, Luc et al. [REF REF REF] proposed an alternative to Just About Right (JAR) scale method - called free-JAR - and in which consumers describe the samples using their own words, by still following a JAR terminology (too little, too much, or JAR, etc.).</p>
+<p>The importance of open-ended questions increased further as it has been shown that respondents can reliably describe in their own words their full experience (perception, emotion, or any other sort of association) with products. Recently, Mahieu et al. [REF REF REF] showed the benefits of using open-ended questions over CATA<a href="#fn54" class="footnote-ref" id="fnref54"><sup>54</sup></a>. In this study, consumers were asked to describe with their own words both the products they evaluated and what their ideal product would be like. Similarly, Luc et al. [REF REF REF] proposed an alternative to Just About Right (JAR) scale method - called free-JAR - and in which consumers describe the samples using their own words, by still following a JAR terminology (too little, too much, or JAR, etc.).</p>
 <p>The inclusion of open-ended questions as one of the primary elements of sensory and consumer tasks blurs the line with other fields, including psychology and sociology where these qualitative methods originated. More recently, advances in the technology (web-scraping, social listening, etc.) opened new doors that brought SCS closer to other fields such as marketing for instance. The amount of data that are collected with such techniques can be considerably larger, but the aim of the analysis stays the same: extracting information from text/comments.</p>
 </div>
 <div id="objectives-of-text-analysis" class="section level3 hasAnchor" number="13.2.2">
@@ -480,7 +495,7 @@ A good illustration of such <em>complex</em> situation is text analysis. Before 
 <h3><span class="header-section-number">13.2.3</span> Classical <em>text analysis</em> workflow<a href="text-analysis.html#classical-text-analysis-workflow" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In SCS, the generic notion of <em>text analysis</em> often includes any step or procedure that allows going from the raw data (e.g. consumer comments, text scrapped from website or social media, etc.) to results and insights. However, such process requires many separate steps, often defined as following:</p>
 <ol style="list-style-type: decimal">
-<li><strong>Tokenization</strong> is the step that splits the raw data into statistical units of interest, also called token<a href="#fn49" class="footnote-ref" id="fnref49"><sup>49</sup></a>.</li>
+<li><strong>Tokenization</strong> is the step that splits the raw data into statistical units of interest, also called token<a href="#fn55" class="footnote-ref" id="fnref55"><sup>55</sup></a>.</li>
 <li>Non-informal words or <strong>stopwords</strong> (e.g. <em>and</em>, <em>I</em>, <em>you</em>, etc.) are then removed from the data to facilitate the extraction of the information.</li>
 <li><strong>Stemming</strong> consists in reducing words to their root form, hence grouping the different variants of the same word (e.g. singular/plural, infinitive or conjugated verbs, etc.)</li>
 <li>An extra (optional) step called <strong>lemmatization</strong> consists in grouping words that have similar meanings under one umbrella. The advantage of such procedure is that it simplifies further the analysis and its interpretation. However, it can be time consuming and more importantly, it relies on the analyst own judgement: two different analysts performing the same task on the same data will obtain different end results.</li>
@@ -495,14 +510,14 @@ A good illustration of such <em>complex</em> situation is text analysis. Before 
 <div id="illustration-using-sorting-task-data" class="section level2 hasAnchor" number="13.3">
 <h2><span class="header-section-number">13.3</span> Illustration using Sorting Task Data<a href="text-analysis.html#illustration-using-sorting-task-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Let’s start with loading the usual packages of need:</p>
-<div class="sourceCode" id="cb411"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb411-1"><a href="text-analysis.html#cb411-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb411-2"><a href="text-analysis.html#cb411-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
-<span id="cb411-3"><a href="text-analysis.html#cb411-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span></code></pre></div>
+<div class="sourceCode" id="cb433"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb433-1"><a href="text-analysis.html#cb433-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb433-2"><a href="text-analysis.html#cb433-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<span id="cb433-3"><a href="text-analysis.html#cb433-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span></code></pre></div>
 <p>The data set used for illustration was kindly shared by Dr. Jacob Lahne. It is part of a study that aimed in developing a CATA lexicon for Virginia Hard (Alcoholic) Ciders (REF REF REF.). The data can be found in <em>cider_text_data.xlsx</em>.</p>
 <p>Let’s also import the data to our R session:</p>
-<div class="sourceCode" id="cb412"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb412-1"><a href="text-analysis.html#cb412-1" aria-hidden="true" tabindex="-1"></a>file_path <span class="ot">&lt;-</span> <span class="fu">here</span>(<span class="st">&quot;data&quot;</span>,<span class="st">&quot;cider_text_data.xlsx&quot;</span>) </span>
-<span id="cb412-2"><a href="text-analysis.html#cb412-2" aria-hidden="true" tabindex="-1"></a>cider_og <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(file_path) <span class="sc">%&gt;%</span> </span>
-<span id="cb412-3"><a href="text-analysis.html#cb412-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sample =</span> <span class="fu">as.character</span>(sample))</span></code></pre></div>
+<div class="sourceCode" id="cb434"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb434-1"><a href="text-analysis.html#cb434-1" aria-hidden="true" tabindex="-1"></a>file_path <span class="ot">&lt;-</span> <span class="fu">here</span>(<span class="st">&quot;data&quot;</span>,<span class="st">&quot;cider_text_data.xlsx&quot;</span>) </span>
+<span id="cb434-2"><a href="text-analysis.html#cb434-2" aria-hidden="true" tabindex="-1"></a>cider_og <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(file_path) <span class="sc">%&gt;%</span> </span>
+<span id="cb434-3"><a href="text-analysis.html#cb434-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sample =</span> <span class="fu">as.character</span>(sample))</span></code></pre></div>
 <div id="data-pre-processing" class="section level3 hasAnchor" number="13.3.1">
 <h3><span class="header-section-number">13.3.1</span> Data Pre-processing<a href="text-analysis.html#data-pre-processing" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Before starting, it is important to mention that there is a large variety of R-based solutions and R packages that handle textual data, including:</p>
@@ -516,7 +531,7 @@ A good illustration of such <em>complex</em> situation is text analysis. Before 
 </ul>
 <p>However, to ensure a continuity with the rest of the book, we will emphasize the use of the <code>{stringr}</code> package for handling strings (here text) combined with the <code>{tidytext}</code> package. Note that <code>{stringr}</code> is part of the <code>{tidyverse}</code> and both packages fit very well within the <code>{tidyverse}</code> philosophy.</p>
 <p>Let’s load this additional package:</p>
-<div class="sourceCode" id="cb413"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb413-1"><a href="text-analysis.html#cb413-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidytext)</span></code></pre></div>
+<div class="sourceCode" id="cb435"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb435-1"><a href="text-analysis.html#cb435-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidytext)</span></code></pre></div>
 </div>
 <div id="introduction-to-working-with-strings-stringr" class="section level3 hasAnchor" number="13.3.2">
 <h3><span class="header-section-number">13.3.2</span> Introduction to working with strings (<code>{stringr}</code>)<a href="text-analysis.html#introduction-to-working-with-strings-stringr" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -542,26 +557,26 @@ A good illustration of such <em>complex</em> situation is text analysis. Before 
 <p>The analysis of textual data starts with defining the statistical unit of interest, also known as <em>token</em>. This can either be a single word, a group of words, a sentence, a paragraph, a whole document etc. The procedure to transform the document into tokens is called <em>tokenization</em>.</p>
 <p>By looking at our data (<code>cider_og</code>), we can notice that for each sample evaluated, respondents are providing a set of responses, ranging from a single word (e.g. <code>yeasty</code>) to a group of words (<code>like it will taste dry and acidic</code>). Fortunately, the data is also well structured since the responses seem to be separated by a <code>;</code> or <code>,</code>.</p>
 <p>Let’s transform this text into tokens using <code>unnest_tokens()</code> from the <code>{tidytext}</code> package. The function <code>unnest_tokens()</code> proposes different options for the tokenization including by <em>words</em>, <em>ngrams</em>, or <em>sentences</em> for instance. However, let’s take advantage of the data structure and use a specific character to separate the tokens (here <code>;</code>, <code>,</code> etc.). The <code>regex</code> parameter allows us to specify the patterns to consider:</p>
-<div class="sourceCode" id="cb414"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb414-1"><a href="text-analysis.html#cb414-1" aria-hidden="true" tabindex="-1"></a>cider <span class="ot">&lt;-</span> cider_og <span class="sc">%&gt;%</span> </span>
-<span id="cb414-2"><a href="text-analysis.html#cb414-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(tokens, comments, <span class="at">token=</span><span class="st">&quot;regex&quot;</span>, <span class="at">pattern=</span><span class="st">&quot;[;|,|:|.|/]&quot;</span>, <span class="at">to_lower=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb436"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb436-1"><a href="text-analysis.html#cb436-1" aria-hidden="true" tabindex="-1"></a>cider <span class="ot">&lt;-</span> cider_og <span class="sc">%&gt;%</span> </span>
+<span id="cb436-2"><a href="text-analysis.html#cb436-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(tokens, comments, <span class="at">token=</span><span class="st">&quot;regex&quot;</span>, <span class="at">pattern=</span><span class="st">&quot;[;|,|:|.|/]&quot;</span>, <span class="at">to_lower=</span><span class="cn">FALSE</span>)</span></code></pre></div>
 <p>The original comments from consumers are now split into tokens, increasing the size of the file from 168 individual comments to 947 rows of tokens.</p>
 <p>This procedure already provides some interesting information as we could easily count word usage and answer questions such as “how often the word <em>apple</em> is used to describe each samples?” for instance. However, a deeper look at the data shows some inconsistencies since some words starts with a space, or have capital letters (remember that R is case-sensitive!). Further pre-processing is thus needed.</p>
 </div>
 <div id="simple-transformations" class="section level3 hasAnchor" number="13.3.4">
 <h3><span class="header-section-number">13.3.4</span> Simple Transformations<a href="text-analysis.html#simple-transformations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>To further prepare the data, let’s standardize the text by removing all the white spaces (<em>irrelevant</em> spaces in the text, e.g. at the start/end, double spaces, etc.), transforming everything to lower case (note that this could have been done earlier through the parameter <code>to_lower=TRUE</code> from <code>unnest_tokens()</code>), removing some special letters, replacing some misplaced characters etc.<a href="#fn50" class="footnote-ref" id="fnref50"><sup>50</sup></a></p>
-<div class="sourceCode" id="cb415"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb415-1"><a href="text-analysis.html#cb415-1" aria-hidden="true" tabindex="-1"></a>cider <span class="ot">&lt;-</span> cider <span class="sc">%&gt;%</span> </span>
-<span id="cb415-2"><a href="text-analysis.html#cb415-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tokens =</span> <span class="fu">str_to_lower</span>(tokens)) <span class="sc">%&gt;%</span> </span>
-<span id="cb415-3"><a href="text-analysis.html#cb415-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tokens =</span> <span class="fu">str_trim</span>(tokens)) <span class="sc">%&gt;%</span> </span>
-<span id="cb415-4"><a href="text-analysis.html#cb415-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tokens =</span> <span class="fu">str_squish</span>(tokens)) <span class="sc">%&gt;%</span> </span>
-<span id="cb415-5"><a href="text-analysis.html#cb415-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tokens =</span> <span class="fu">str_remove_all</span>(tokens, <span class="at">pattern=</span><span class="st">&quot;[(|)|?|!]&quot;</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb415-6"><a href="text-analysis.html#cb415-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tokens =</span> <span class="fu">str_remove_all</span>(tokens, <span class="at">pattern=</span><span class="st">&quot;[ó|ò]&quot;</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb415-7"><a href="text-analysis.html#cb415-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tokens =</span> <span class="fu">str_replace_all</span>(tokens, <span class="at">pattern=</span><span class="st">&quot;õ&quot;</span>, <span class="at">replacement=</span><span class="st">&quot;&#39;&quot;</span>))</span></code></pre></div>
-<p>To ensure that the cleaning job is done (for now), let’s produce the list of tokens generated here (and its corresponding frequency)<a href="#fn51" class="footnote-ref" id="fnref51"><sup>51</sup></a>:</p>
-<div class="sourceCode" id="cb416"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb416-1"><a href="text-analysis.html#cb416-1" aria-hidden="true" tabindex="-1"></a>cider <span class="sc">%&gt;%</span> </span>
-<span id="cb416-2"><a href="text-analysis.html#cb416-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(tokens) <span class="sc">%&gt;%</span> </span>
-<span id="cb416-3"><a href="text-analysis.html#cb416-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span></code></pre></div>
-<pre><code>## # A tibble: 476 x 2
+<p>To further prepare the data, let’s standardize the text by removing all the white spaces (<em>irrelevant</em> spaces in the text, e.g. at the start/end, double spaces, etc.), transforming everything to lower case (note that this could have been done earlier through the parameter <code>to_lower=TRUE</code> from <code>unnest_tokens()</code>), removing some special letters, replacing some misplaced characters etc.<a href="#fn56" class="footnote-ref" id="fnref56"><sup>56</sup></a></p>
+<div class="sourceCode" id="cb437"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb437-1"><a href="text-analysis.html#cb437-1" aria-hidden="true" tabindex="-1"></a>cider <span class="ot">&lt;-</span> cider <span class="sc">%&gt;%</span> </span>
+<span id="cb437-2"><a href="text-analysis.html#cb437-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tokens =</span> <span class="fu">str_to_lower</span>(tokens)) <span class="sc">%&gt;%</span> </span>
+<span id="cb437-3"><a href="text-analysis.html#cb437-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tokens =</span> <span class="fu">str_trim</span>(tokens)) <span class="sc">%&gt;%</span> </span>
+<span id="cb437-4"><a href="text-analysis.html#cb437-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tokens =</span> <span class="fu">str_squish</span>(tokens)) <span class="sc">%&gt;%</span> </span>
+<span id="cb437-5"><a href="text-analysis.html#cb437-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tokens =</span> <span class="fu">str_remove_all</span>(tokens, <span class="at">pattern=</span><span class="st">&quot;[(|)|?|!]&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb437-6"><a href="text-analysis.html#cb437-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tokens =</span> <span class="fu">str_remove_all</span>(tokens, <span class="at">pattern=</span><span class="st">&quot;[ó|ò]&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb437-7"><a href="text-analysis.html#cb437-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tokens =</span> <span class="fu">str_replace_all</span>(tokens, <span class="at">pattern=</span><span class="st">&quot;õ&quot;</span>, <span class="at">replacement=</span><span class="st">&quot;&#39;&quot;</span>))</span></code></pre></div>
+<p>To ensure that the cleaning job is done (for now), let’s produce the list of tokens generated here (and its corresponding frequency)<a href="#fn57" class="footnote-ref" id="fnref57"><sup>57</sup></a>:</p>
+<div class="sourceCode" id="cb438"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb438-1"><a href="text-analysis.html#cb438-1" aria-hidden="true" tabindex="-1"></a>cider <span class="sc">%&gt;%</span> </span>
+<span id="cb438-2"><a href="text-analysis.html#cb438-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(tokens) <span class="sc">%&gt;%</span> </span>
+<span id="cb438-3"><a href="text-analysis.html#cb438-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span></code></pre></div>
+<pre><code>## # A tibble: 476 × 2
 ##    tokens     n
 ##    &lt;chr&gt;  &lt;int&gt;
 ##  1 sweet     55
@@ -574,7 +589,7 @@ A good illustration of such <em>complex</em> situation is text analysis. Before 
 ##  8 musty     18
 ##  9 light     17
 ## 10 floral    14
-## # ... with 466 more rows</code></pre>
+## # … with 466 more rows</code></pre>
 <p>The most used words to describe the ciders are <code>sweet</code> (55 occurrences), <code>fruity</code> (33 occurrences), and <code>sour</code> (32 occurrences).</p>
 <p>A closer look at this list highlights a few things that still need to get tackled:</p>
 <ul>
@@ -588,15 +603,15 @@ A good illustration of such <em>complex</em> situation is text analysis. Before 
 <div id="splitting-further-the-tokens" class="section level3 hasAnchor" number="13.3.5">
 <h3><span class="header-section-number">13.3.5</span> Splitting further the tokens<a href="text-analysis.html#splitting-further-the-tokens" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>For an even deeper cleaning, let’s go one step further and split the remaining tokens into single words by using the space as separator. Then, we can number each token for each assessor using <code>row_number()</code> to ensure that we can still recover which words belong to the same token, as defined previously. This information will be specially relevant later when looking at <em>bigrams</em>.</p>
-<div class="sourceCode" id="cb418"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb418-1"><a href="text-analysis.html#cb418-1" aria-hidden="true" tabindex="-1"></a>cider <span class="ot">&lt;-</span> cider <span class="sc">%&gt;%</span> </span>
-<span id="cb418-2"><a href="text-analysis.html#cb418-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(subject, <span class="at">.before=</span>sample) <span class="sc">%&gt;%</span> </span>
-<span id="cb418-3"><a href="text-analysis.html#cb418-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(subject, sample) <span class="sc">%&gt;%</span> </span>
-<span id="cb418-4"><a href="text-analysis.html#cb418-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">num =</span> <span class="fu">row_number</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb418-5"><a href="text-analysis.html#cb418-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb418-6"><a href="text-analysis.html#cb418-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(tokens, tokens, <span class="at">token=</span><span class="st">&quot;regex&quot;</span>, <span class="at">pattern=</span><span class="st">&quot; |-&quot;</span>)</span>
-<span id="cb418-7"><a href="text-analysis.html#cb418-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb418-8"><a href="text-analysis.html#cb418-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(cider)</span></code></pre></div>
-<pre><code>## # A tibble: 6 x 5
+<div class="sourceCode" id="cb440"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb440-1"><a href="text-analysis.html#cb440-1" aria-hidden="true" tabindex="-1"></a>cider <span class="ot">&lt;-</span> cider <span class="sc">%&gt;%</span> </span>
+<span id="cb440-2"><a href="text-analysis.html#cb440-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(subject, <span class="at">.before=</span>sample) <span class="sc">%&gt;%</span> </span>
+<span id="cb440-3"><a href="text-analysis.html#cb440-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(subject, sample) <span class="sc">%&gt;%</span> </span>
+<span id="cb440-4"><a href="text-analysis.html#cb440-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">num =</span> <span class="fu">row_number</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb440-5"><a href="text-analysis.html#cb440-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb440-6"><a href="text-analysis.html#cb440-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(tokens, tokens, <span class="at">token=</span><span class="st">&quot;regex&quot;</span>, <span class="at">pattern=</span><span class="st">&quot; |-&quot;</span>)</span>
+<span id="cb440-7"><a href="text-analysis.html#cb440-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb440-8"><a href="text-analysis.html#cb440-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(cider)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 5
 ##   subject sample rating tokens      num
 ##   &lt;chr&gt;   &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt;     &lt;int&gt;
 ## 1 J1      182         8 hard          1
@@ -612,135 +627,185 @@ A good illustration of such <em>complex</em> situation is text analysis. Before 
 <h3><span class="header-section-number">13.3.6</span> Stopwords<a href="text-analysis.html#stopwords" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><em>Stop words</em> refer to <em>common</em> words that do not carry much (if at all) information. In general, stop words include words (in English) such as <em>I</em>, <em>you</em>, <em>or</em>, <em>of</em>, <em>and</em>, <em>is</em>, <em>has</em>, etc. It is thus common practice to remove such stop words before any analysis as they would <em>pollute</em> the results with unnecessary information.</p>
 <p>Building lists of stop words can be tedious. Fortunately, it is possible to find some pre-defined lists, and to eventually adjust them to our own needs by adding and/or removing words. In particular, the package <code>{stopwords}</code> contains a comprehensive collection of stop word lists:</p>
-<div class="sourceCode" id="cb420"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb420-1"><a href="text-analysis.html#cb420-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stopwords)</span>
-<span id="cb420-2"><a href="text-analysis.html#cb420-2" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">stopwords</span>(<span class="at">source=</span><span class="st">&quot;snowball&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb442"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb442-1"><a href="text-analysis.html#cb442-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stopwords)</span>
+<span id="cb442-2"><a href="text-analysis.html#cb442-2" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">stopwords</span>(<span class="at">source=</span><span class="st">&quot;snowball&quot;</span>))</span></code></pre></div>
 <pre><code>## [1] 175</code></pre>
-<div class="sourceCode" id="cb422"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb422-1"><a href="text-analysis.html#cb422-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">stopwords</span>(<span class="at">source=</span><span class="st">&quot;stopwords-iso&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb444"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb444-1"><a href="text-analysis.html#cb444-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">stopwords</span>(<span class="at">source=</span><span class="st">&quot;stopwords-iso&quot;</span>))</span></code></pre></div>
 <pre><code>## [1] 1298</code></pre>
 <p>The English Snowball list contains 175 words, whereas the English list from the Stopwords ISO collection contains 1298 words.</p>
 <p>A deeper look at these lists (and particularly to the <em>Stopwords ISO</em> list) shows that certain words including <em>like</em>, <em>not</em> and <em>don’t</em> (just to name a few) are considered as stop words. If we would use this list blindly, we would remove these words from our comments. Although using such list on our current example would have a limited impact on the analysis (most comments are just few descriptive words), it would have a more critical impact on other studies in which consumers give their opinion on samples. Indeed, the analysis of the two following comments <em>I like Sample A</em> and <em>I don’t like Sample B</em> would be lost although they provide some relevant information.</p>
 <p>It is therefore important to remember that although a lot of stop words are relevant in all cases, some of them are topic specific and should (or should not) be used in certain contexts. Hence, inspecting and adapting these lists before use is strongly recommended.</p>
 <p>Since we have a relatively small text size, let’s use the <em>SnowBall Stopword</em> list as a start, and look at the terms that our list and this stopword list share:</p>
-<div class="sourceCode" id="cb424"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb424-1"><a href="text-analysis.html#cb424-1" aria-hidden="true" tabindex="-1"></a>stopword_list <span class="ot">&lt;-</span> <span class="fu">stopwords</span>(<span class="at">source=</span><span class="st">&quot;snowball&quot;</span>)</span>
-<span id="cb424-2"><a href="text-analysis.html#cb424-2" aria-hidden="true" tabindex="-1"></a>word_list <span class="ot">&lt;-</span> cider <span class="sc">%&gt;%</span> </span>
-<span id="cb424-3"><a href="text-analysis.html#cb424-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(tokens) <span class="sc">%&gt;%</span> </span>
-<span id="cb424-4"><a href="text-analysis.html#cb424-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(tokens)</span>
-<span id="cb424-5"><a href="text-analysis.html#cb424-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb424-6"><a href="text-analysis.html#cb424-6" aria-hidden="true" tabindex="-1"></a><span class="fu">intersect</span>(stopword_list, word_list)</span></code></pre></div>
-<pre><code>##  [1] &quot;i&quot;       &quot;my&quot;      &quot;you&quot;     &quot;it&quot;      &quot;its&quot;     &quot;they&quot;    &quot;what&quot;   
-##  [8] &quot;which&quot;   &quot;this&quot;    &quot;is&quot;      &quot;was&quot;     &quot;be&quot;      &quot;have&quot;    &quot;has&quot;    
-## [15] &quot;had&quot;     &quot;does&quot;    &quot;would&quot;   &quot;it&#39;s&quot;    &quot;isn&#39;t&quot;   &quot;doesn&#39;t&quot; &quot;a&quot;      
-## [22] &quot;the&quot;     &quot;and&quot;     &quot;but&quot;     &quot;or&quot;      &quot;as&quot;      &quot;of&quot;      &quot;at&quot;     
-## [29] &quot;with&quot;    &quot;before&quot;  &quot;after&quot;   &quot;to&quot;      &quot;from&quot;    &quot;up&quot;      &quot;in&quot;     
-## [36] &quot;on&quot;      &quot;off&quot;     &quot;there&quot;   &quot;when&quot;    &quot;more&quot;    &quot;some&quot;    &quot;no&quot;     
-## [43] &quot;not&quot;     &quot;same&quot;    &quot;so&quot;      &quot;than&quot;    &quot;too&quot;     &quot;very&quot;    &quot;will&quot;</code></pre>
+<div class="sourceCode" id="cb446"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb446-1"><a href="text-analysis.html#cb446-1" aria-hidden="true" tabindex="-1"></a>stopword_list <span class="ot">&lt;-</span> <span class="fu">stopwords</span>(<span class="at">source=</span><span class="st">&quot;snowball&quot;</span>)</span>
+<span id="cb446-2"><a href="text-analysis.html#cb446-2" aria-hidden="true" tabindex="-1"></a>word_list <span class="ot">&lt;-</span> cider <span class="sc">%&gt;%</span> </span>
+<span id="cb446-3"><a href="text-analysis.html#cb446-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(tokens) <span class="sc">%&gt;%</span> </span>
+<span id="cb446-4"><a href="text-analysis.html#cb446-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(tokens)</span>
+<span id="cb446-5"><a href="text-analysis.html#cb446-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb446-6"><a href="text-analysis.html#cb446-6" aria-hidden="true" tabindex="-1"></a><span class="fu">intersect</span>(stopword_list, word_list)</span></code></pre></div>
+<pre><code>##  [1] &quot;i&quot;       &quot;my&quot;      &quot;you&quot;     &quot;it&quot;      &quot;its&quot;    
+##  [6] &quot;they&quot;    &quot;what&quot;    &quot;which&quot;   &quot;this&quot;    &quot;is&quot;     
+## [11] &quot;was&quot;     &quot;be&quot;      &quot;have&quot;    &quot;has&quot;     &quot;had&quot;    
+## [16] &quot;does&quot;    &quot;would&quot;   &quot;it&#39;s&quot;    &quot;isn&#39;t&quot;   &quot;doesn&#39;t&quot;
+## [21] &quot;a&quot;       &quot;the&quot;     &quot;and&quot;     &quot;but&quot;     &quot;or&quot;     
+## [26] &quot;as&quot;      &quot;of&quot;      &quot;at&quot;      &quot;with&quot;    &quot;before&quot; 
+## [31] &quot;after&quot;   &quot;to&quot;      &quot;from&quot;    &quot;up&quot;      &quot;in&quot;     
+## [36] &quot;on&quot;      &quot;off&quot;     &quot;there&quot;   &quot;when&quot;    &quot;more&quot;   
+## [41] &quot;some&quot;    &quot;no&quot;      &quot;not&quot;     &quot;same&quot;    &quot;so&quot;     
+## [46] &quot;than&quot;    &quot;too&quot;     &quot;very&quot;    &quot;will&quot;</code></pre>
 <p>As we can see, some words such as <em>off</em>, <em>not</em>, <em>no</em>, <em>too</em>, and <em>very</em> would automatically be removed. However, such qualifiers are useful in the interpretation of sensory perception, so we would prefer to keep them. We can thus remove them from <code>stopword_list</code>.</p>
-<div class="sourceCode" id="cb426"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb426-1"><a href="text-analysis.html#cb426-1" aria-hidden="true" tabindex="-1"></a>stopword_list <span class="ot">&lt;-</span> stopword_list[<span class="sc">!</span>stopword_list <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;off&quot;</span>,<span class="st">&quot;no&quot;</span>,<span class="st">&quot;not&quot;</span>,<span class="st">&quot;too&quot;</span>,<span class="st">&quot;very&quot;</span>)]</span></code></pre></div>
+<div class="sourceCode" id="cb448"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb448-1"><a href="text-analysis.html#cb448-1" aria-hidden="true" tabindex="-1"></a>stopword_list <span class="ot">&lt;-</span> stopword_list[<span class="sc">!</span>stopword_list <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;off&quot;</span>,<span class="st">&quot;no&quot;</span>,<span class="st">&quot;not&quot;</span>,<span class="st">&quot;too&quot;</span>,<span class="st">&quot;very&quot;</span>)]</span></code></pre></div>
 <p>Conversely, we can look at the words from our data that we would not consider relevant and add them to the list. To do so, let’s look at the list of words in our data that is not present in <code>stopword_list</code>:</p>
-<div class="sourceCode" id="cb427"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb427-1"><a href="text-analysis.html#cb427-1" aria-hidden="true" tabindex="-1"></a>word_list[<span class="sc">!</span>word_list <span class="sc">%in%</span> stopword_list]</span></code></pre></div>
-<pre><code>##   [1] &quot;accompany&quot;    &quot;acid&quot;         &quot;acidic&quot;       &quot;acidity&quot;      &quot;acrid&quot;       
-##   [6] &quot;aftertaste&quot;   &quot;alcohol&quot;      &quot;alcoholic&quot;    &quot;almond&quot;       &quot;almost&quot;      
-##  [11] &quot;amount&quot;       &quot;anything&quot;     &quot;apparent&quot;     &quot;appealing&quot;    &quot;appetizing&quot;  
-##  [16] &quot;apple&quot;        &quot;apples&quot;       &quot;applesauce&quot;   &quot;apricot&quot;      &quot;aroma&quot;       
-##  [21] &quot;aromas&quot;       &quot;aromatic&quot;     &quot;artificial&quot;   &quot;astringent&quot;   &quot;bad&quot;         
-##  [26] &quot;banana&quot;       &quot;barn&quot;         &quot;barnyard&quot;     &quot;basic&quot;        &quot;beans&quot;       
-##  [31] &quot;beer&quot;         &quot;beginning&quot;    &quot;berries&quot;      &quot;berry&quot;        &quot;best&quot;        
-##  [36] &quot;better&quot;       &quot;bit&quot;          &quot;bitter&quot;       &quot;bittersweet&quot;  &quot;blackberries&quot;
-##  [41] &quot;bland&quot;        &quot;blue&quot;         &quot;bodied&quot;       &quot;body&quot;         &quot;bold&quot;        
-##  [46] &quot;bready&quot;       &quot;bright&quot;       &quot;brut&quot;         &quot;bubble&quot;       &quot;bubbly&quot;      
-##  [51] &quot;burnt&quot;        &quot;butter&quot;       &quot;candied&quot;      &quot;candy&quot;        &quot;caramel&quot;     
-##  [56] &quot;carbonated&quot;   &quot;cattle&quot;       &quot;champagne&quot;    &quot;cheese&quot;       &quot;cherries&quot;    
-##  [61] &quot;cherry&quot;       &quot;cider&quot;        &quot;cinnamon&quot;     &quot;citrus&quot;       &quot;clean&quot;       
-##  [66] &quot;clear&quot;        &quot;clinical&quot;     &quot;clove&quot;        &quot;considering&quot;  &quot;contaminated&quot;
-##  [71] &quot;cooked&quot;       &quot;cough&quot;        &quot;crisp&quot;        &quot;crisper&quot;      &quot;cut&quot;         
-##  [76] &quot;dank&quot;         &quot;dark&quot;         &quot;decent&quot;       &quot;decently&quot;     &quot;deep&quot;        
-##  [81] &quot;delicious&quot;    &quot;dentist&quot;      &quot;despite&quot;      &quot;dessert&quot;      &quot;detergent&quot;   
-##  [86] &quot;different&quot;    &quot;dirt&quot;         &quot;dish&quot;         &quot;distinct&quot;     &quot;dog&quot;         
-##  [91] &quot;dragon&quot;       &quot;drink&quot;        &quot;drop&quot;         &quot;dry&quot;          &quot;dull&quot;        
-##  [96] &quot;dusty&quot;        &quot;earthy&quot;       &quot;effervescent&quot; &quot;egg&quot;          &quot;empty&quot;       
-## [101] &quot;expected&quot;     &quot;faint&quot;        &quot;fairly&quot;       &quot;feed&quot;         &quot;feet&quot;        
-## [106] &quot;fermented&quot;    &quot;finish&quot;       &quot;fishy&quot;        &quot;fizzy&quot;        &quot;flat&quot;        
-## [111] &quot;flavor&quot;       &quot;flavorable&quot;   &quot;flavorful&quot;    &quot;flavorless&quot;   &quot;flora&quot;       
-## [116] &quot;floral&quot;       &quot;floralrose&quot;   &quot;flower&quot;       &quot;flowery&quot;      &quot;foul&quot;        
-## [121] &quot;fresh&quot;        &quot;front&quot;        &quot;fruit&quot;        &quot;fruity&quot;       &quot;fuji&quot;        
-## [126] &quot;full&quot;         &quot;funky&quot;        &quot;geranium&quot;     &quot;glass&quot;        &quot;gloves&quot;      
-## [131] &quot;go&quot;           &quot;gone&quot;         &quot;good&quot;         &quot;grape&quot;        &quot;grapes&quot;      
-## [136] &quot;grass&quot;        &quot;grassy&quot;       &quot;green&quot;        &quot;gum&quot;          &quot;gym&quot;         
-## [141] &quot;hard&quot;         &quot;harsh&quot;        &quot;heavier&quot;      &quot;heavy&quot;        &quot;hefeweizen&quot;  
-## [146] &quot;herby&quot;        &quot;hint&quot;         &quot;honey&quot;        &quot;hoppy&quot;        &quot;hybrid&quot;      
-## [151] &quot;initial&quot;      &quot;intense&quot;      &quot;irritant&quot;     &quot;jackets&quot;      &quot;jam&quot;         
-## [156] &quot;jolly&quot;        &quot;juice&quot;        &quot;just&quot;         &quot;lack&quot;         &quot;lacking&quot;     
-## [161] &quot;lacks&quot;        &quot;leaves&quot;       &quot;left&quot;         &quot;lemon&quot;        &quot;lemons&quot;      
-## [166] &quot;less&quot;         &quot;licorice&quot;     &quot;light&quot;        &quot;lightly&quot;      &quot;like&quot;        
-## [171] &quot;little&quot;       &quot;loses&quot;        &quot;lots&quot;         &quot;lovely&quot;       &quot;low&quot;         
-## [176] &quot;major&quot;        &quot;mash&quot;         &quot;mealy&quot;        &quot;medicinal&quot;    &quot;mellow&quot;      
-## [181] &quot;metal&quot;        &quot;metallic&quot;     &quot;mild&quot;         &quot;mildew&quot;       &quot;mildly&quot;      
-## [186] &quot;milk&quot;         &quot;mineral&quot;      &quot;minimal&quot;      &quot;minty&quot;        &quot;moderate&quot;    
-## [191] &quot;moldy&quot;        &quot;moonshine&quot;    &quot;moscato&quot;      &quot;mouth&quot;        &quot;mouthfeel&quot;   
-## [196] &quot;much&quot;         &quot;musky&quot;        &quot;musty&quot;        &quot;nasty&quot;        &quot;negative&quot;    
-## [201] &quot;neither&quot;      &quot;ness&quot;         &quot;no&quot;           &quot;non&quot;          &quot;nonfruity&quot;   
-## [206] &quot;not&quot;          &quot;note&quot;         &quot;notes&quot;        &quot;noticeable&quot;   &quot;oaky&quot;        
-## [211] &quot;obvious&quot;      &quot;odor&quot;         &quot;odors&quot;        &quot;off&quot;          &quot;office&quot;      
-## [216] &quot;old&quot;          &quot;older&quot;        &quot;one&quot;          &quot;onions&quot;       &quot;order&quot;       
-## [221] &quot;others&quot;       &quot;overall&quot;      &quot;overbearing&quot;  &quot;overpowering&quot; &quot;overripe&quot;    
-## [226] &quot;oxidation&quot;    &quot;paint&quot;        &quot;papery&quot;       &quot;particularly&quot; &quot;peach&quot;       
-## [231] &quot;pear&quot;         &quot;pears&quot;        &quot;pee&quot;          &quot;pepper&quot;       &quot;perfume&quot;     
-## [236] &quot;plain&quot;        &quot;plastic&quot;      &quot;pleasant&quot;     &quot;poor&quot;         &quot;powder&quot;      
-## [241] &quot;powerful&quot;     &quot;pretty&quot;       &quot;previous&quot;     &quot;products&quot;     &quot;pungent&quot;     
-## [246] &quot;putrid&quot;       &quot;putting&quot;      &quot;quite&quot;        &quot;rancher&quot;      &quot;rancid&quot;      
-## [251] &quot;raspberries&quot;  &quot;really&quot;       &quot;red&quot;          &quot;refreshing&quot;   &quot;riesling&quot;    
-## [256] &quot;right&quot;        &quot;robust&quot;       &quot;rose&quot;         &quot;rotten&quot;       &quot;rubber&quot;      
-## [261] &quot;rubbing&quot;      &quot;sample&quot;       &quot;savory&quot;       &quot;scent&quot;        &quot;seems&quot;       
-## [266] &quot;semi&quot;         &quot;sharp&quot;        &quot;sickly&quot;       &quot;silage&quot;       &quot;similar&quot;     
-## [271] &quot;similarly&quot;    &quot;single&quot;       &quot;skunky&quot;       &quot;slight&quot;       &quot;slightly&quot;    
-## [276] &quot;smell&quot;        &quot;smelling&quot;     &quot;smells&quot;       &quot;smokey&quot;       &quot;smoky&quot;       
-## [281] &quot;smooth&quot;       &quot;soapy&quot;        &quot;socks&quot;        &quot;soft&quot;         &quot;soil&quot;        
-## [286] &quot;solvent&quot;      &quot;something&quot;    &quot;somewhat&quot;     &quot;sour&quot;         &quot;sparkling&quot;   
-## [291] &quot;spiced&quot;       &quot;spices&quot;       &quot;spicy&quot;        &quot;spoiled&quot;      &quot;stale&quot;       
-## [296] &quot;stone&quot;        &quot;strong&quot;       &quot;stronger&quot;     &quot;subdued&quot;      &quot;subtle&quot;      
-## [301] &quot;sugar&quot;        &quot;sugary&quot;       &quot;sulfur&quot;       &quot;sulfuric&quot;     &quot;sweat&quot;       
-## [306] &quot;sweet&quot;        &quot;sweeter&quot;      &quot;sweetness&quot;    &quot;swiss&quot;        &quot;tangy&quot;       
-## [311] &quot;tannins&quot;      &quot;tart&quot;         &quot;taste&quot;        &quot;tastes&quot;       &quot;tasting&quot;     
-## [316] &quot;tasty&quot;        &quot;thank&quot;        &quot;think&quot;        &quot;though&quot;       &quot;time&quot;        
-## [321] &quot;tingles&quot;      &quot;too&quot;          &quot;tounge&quot;       &quot;typically&quot;    &quot;unappealing&quot; 
-## [326] &quot;unexpected&quot;   &quot;unpleasant&quot;   &quot;urine&quot;        &quot;vague&quot;        &quot;vanilla&quot;     
-## [331] &quot;vegetal&quot;      &quot;very&quot;         &quot;vinegar&quot;      &quot;vomiting&quot;     &quot;water&quot;       
-## [336] &quot;watery&quot;       &quot;way&quot;          &quot;weak&quot;         &quot;wet&quot;          &quot;white&quot;       
-## [341] &quot;wine&quot;         &quot;wood&quot;         &quot;woodsy&quot;       &quot;woody&quot;        &quot;worst&quot;       
-## [346] &quot;y&quot;            &quot;yard&quot;         &quot;yeasty&quot;       &quot;yellow&quot;</code></pre>
-<p>Words such as <em>like</em>, <em>sample</em>, <em>just</em>, <em>think</em>, or <em>though</em> do not seem to bring any relevant information here. Hence, let’s add them (together with others) to our customized list of stop words<a href="#fn52" class="footnote-ref" id="fnref52"><sup>52</sup></a>:</p>
-<div class="sourceCode" id="cb429"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb429-1"><a href="text-analysis.html#cb429-1" aria-hidden="true" tabindex="-1"></a>stopword_list <span class="ot">&lt;-</span> <span class="fu">c</span>(stopword_list, <span class="fu">c</span>(<span class="st">&quot;accompany&quot;</span>,<span class="st">&quot;amount&quot;</span>,<span class="st">&quot;anything&quot;</span>,<span class="st">&quot;considering&quot;</span>,<span class="st">&quot;despite&quot;</span>,<span class="st">&quot;expected&quot;</span>,</span>
-<span id="cb429-2"><a href="text-analysis.html#cb429-2" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">&quot;just&quot;</span>,<span class="st">&quot;like&quot;</span>,<span class="st">&quot;neither&quot;</span>,<span class="st">&quot;one&quot;</span>,<span class="st">&quot;order&quot;</span>,<span class="st">&quot;others&quot;</span>,<span class="st">&quot;products&quot;</span>,</span>
-<span id="cb429-3"><a href="text-analysis.html#cb429-3" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">&quot;sample&quot;</span>,<span class="st">&quot;seems&quot;</span>,<span class="st">&quot;something&quot;</span>,<span class="st">&quot;thank&quot;</span>,<span class="st">&quot;think&quot;</span>,<span class="st">&quot;though&quot;</span>,<span class="st">&quot;time&quot;</span>,<span class="st">&quot;way&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb449"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb449-1"><a href="text-analysis.html#cb449-1" aria-hidden="true" tabindex="-1"></a>word_list[<span class="sc">!</span>word_list <span class="sc">%in%</span> stopword_list]</span></code></pre></div>
+<pre><code>##   [1] &quot;accompany&quot;    &quot;acid&quot;         &quot;acidic&quot;      
+##   [4] &quot;acidity&quot;      &quot;acrid&quot;        &quot;aftertaste&quot;  
+##   [7] &quot;alcohol&quot;      &quot;alcoholic&quot;    &quot;almond&quot;      
+##  [10] &quot;almost&quot;       &quot;amount&quot;       &quot;anything&quot;    
+##  [13] &quot;apparent&quot;     &quot;appealing&quot;    &quot;appetizing&quot;  
+##  [16] &quot;apple&quot;        &quot;apples&quot;       &quot;applesauce&quot;  
+##  [19] &quot;apricot&quot;      &quot;aroma&quot;        &quot;aromas&quot;      
+##  [22] &quot;aromatic&quot;     &quot;artificial&quot;   &quot;astringent&quot;  
+##  [25] &quot;bad&quot;          &quot;banana&quot;       &quot;barn&quot;        
+##  [28] &quot;barnyard&quot;     &quot;basic&quot;        &quot;beans&quot;       
+##  [31] &quot;beer&quot;         &quot;beginning&quot;    &quot;berries&quot;     
+##  [34] &quot;berry&quot;        &quot;best&quot;         &quot;better&quot;      
+##  [37] &quot;bit&quot;          &quot;bitter&quot;       &quot;bittersweet&quot; 
+##  [40] &quot;blackberries&quot; &quot;bland&quot;        &quot;blue&quot;        
+##  [43] &quot;bodied&quot;       &quot;body&quot;         &quot;bold&quot;        
+##  [46] &quot;bready&quot;       &quot;bright&quot;       &quot;brut&quot;        
+##  [49] &quot;bubble&quot;       &quot;bubbly&quot;       &quot;burnt&quot;       
+##  [52] &quot;butter&quot;       &quot;candied&quot;      &quot;candy&quot;       
+##  [55] &quot;caramel&quot;      &quot;carbonated&quot;   &quot;cattle&quot;      
+##  [58] &quot;champagne&quot;    &quot;cheese&quot;       &quot;cherries&quot;    
+##  [61] &quot;cherry&quot;       &quot;cider&quot;        &quot;cinnamon&quot;    
+##  [64] &quot;citrus&quot;       &quot;clean&quot;        &quot;clear&quot;       
+##  [67] &quot;clinical&quot;     &quot;clove&quot;        &quot;considering&quot; 
+##  [70] &quot;contaminated&quot; &quot;cooked&quot;       &quot;cough&quot;       
+##  [73] &quot;crisp&quot;        &quot;crisper&quot;      &quot;cut&quot;         
+##  [76] &quot;dank&quot;         &quot;dark&quot;         &quot;decent&quot;      
+##  [79] &quot;decently&quot;     &quot;deep&quot;         &quot;delicious&quot;   
+##  [82] &quot;dentist&quot;      &quot;despite&quot;      &quot;dessert&quot;     
+##  [85] &quot;detergent&quot;    &quot;different&quot;    &quot;dirt&quot;        
+##  [88] &quot;dish&quot;         &quot;distinct&quot;     &quot;dog&quot;         
+##  [91] &quot;dragon&quot;       &quot;drink&quot;        &quot;drop&quot;        
+##  [94] &quot;dry&quot;          &quot;dull&quot;         &quot;dusty&quot;       
+##  [97] &quot;earthy&quot;       &quot;effervescent&quot; &quot;egg&quot;         
+## [100] &quot;empty&quot;        &quot;expected&quot;     &quot;faint&quot;       
+## [103] &quot;fairly&quot;       &quot;feed&quot;         &quot;feet&quot;        
+## [106] &quot;fermented&quot;    &quot;finish&quot;       &quot;fishy&quot;       
+## [109] &quot;fizzy&quot;        &quot;flat&quot;         &quot;flavor&quot;      
+## [112] &quot;flavorable&quot;   &quot;flavorful&quot;    &quot;flavorless&quot;  
+## [115] &quot;flora&quot;        &quot;floral&quot;       &quot;floralrose&quot;  
+## [118] &quot;flower&quot;       &quot;flowery&quot;      &quot;foul&quot;        
+## [121] &quot;fresh&quot;        &quot;front&quot;        &quot;fruit&quot;       
+## [124] &quot;fruity&quot;       &quot;fuji&quot;         &quot;full&quot;        
+## [127] &quot;funky&quot;        &quot;geranium&quot;     &quot;glass&quot;       
+## [130] &quot;gloves&quot;       &quot;go&quot;           &quot;gone&quot;        
+## [133] &quot;good&quot;         &quot;grape&quot;        &quot;grapes&quot;      
+## [136] &quot;grass&quot;        &quot;grassy&quot;       &quot;green&quot;       
+## [139] &quot;gum&quot;          &quot;gym&quot;          &quot;hard&quot;        
+## [142] &quot;harsh&quot;        &quot;heavier&quot;      &quot;heavy&quot;       
+## [145] &quot;hefeweizen&quot;   &quot;herby&quot;        &quot;hint&quot;        
+## [148] &quot;honey&quot;        &quot;hoppy&quot;        &quot;hybrid&quot;      
+## [151] &quot;initial&quot;      &quot;intense&quot;      &quot;irritant&quot;    
+## [154] &quot;jackets&quot;      &quot;jam&quot;          &quot;jolly&quot;       
+## [157] &quot;juice&quot;        &quot;just&quot;         &quot;lack&quot;        
+## [160] &quot;lacking&quot;      &quot;lacks&quot;        &quot;leaves&quot;      
+## [163] &quot;left&quot;         &quot;lemon&quot;        &quot;lemons&quot;      
+## [166] &quot;less&quot;         &quot;licorice&quot;     &quot;light&quot;       
+## [169] &quot;lightly&quot;      &quot;like&quot;         &quot;little&quot;      
+## [172] &quot;loses&quot;        &quot;lots&quot;         &quot;lovely&quot;      
+## [175] &quot;low&quot;          &quot;major&quot;        &quot;mash&quot;        
+## [178] &quot;mealy&quot;        &quot;medicinal&quot;    &quot;mellow&quot;      
+## [181] &quot;metal&quot;        &quot;metallic&quot;     &quot;mild&quot;        
+## [184] &quot;mildew&quot;       &quot;mildly&quot;       &quot;milk&quot;        
+## [187] &quot;mineral&quot;      &quot;minimal&quot;      &quot;minty&quot;       
+## [190] &quot;moderate&quot;     &quot;moldy&quot;        &quot;moonshine&quot;   
+## [193] &quot;moscato&quot;      &quot;mouth&quot;        &quot;mouthfeel&quot;   
+## [196] &quot;much&quot;         &quot;musky&quot;        &quot;musty&quot;       
+## [199] &quot;nasty&quot;        &quot;negative&quot;     &quot;neither&quot;     
+## [202] &quot;ness&quot;         &quot;no&quot;           &quot;non&quot;         
+## [205] &quot;nonfruity&quot;    &quot;not&quot;          &quot;note&quot;        
+## [208] &quot;notes&quot;        &quot;noticeable&quot;   &quot;oaky&quot;        
+## [211] &quot;obvious&quot;      &quot;odor&quot;         &quot;odors&quot;       
+## [214] &quot;off&quot;          &quot;office&quot;       &quot;old&quot;         
+## [217] &quot;older&quot;        &quot;one&quot;          &quot;onions&quot;      
+## [220] &quot;order&quot;        &quot;others&quot;       &quot;overall&quot;     
+## [223] &quot;overbearing&quot;  &quot;overpowering&quot; &quot;overripe&quot;    
+## [226] &quot;oxidation&quot;    &quot;paint&quot;        &quot;papery&quot;      
+## [229] &quot;particularly&quot; &quot;peach&quot;        &quot;pear&quot;        
+## [232] &quot;pears&quot;        &quot;pee&quot;          &quot;pepper&quot;      
+## [235] &quot;perfume&quot;      &quot;plain&quot;        &quot;plastic&quot;     
+## [238] &quot;pleasant&quot;     &quot;poor&quot;         &quot;powder&quot;      
+## [241] &quot;powerful&quot;     &quot;pretty&quot;       &quot;previous&quot;    
+## [244] &quot;products&quot;     &quot;pungent&quot;      &quot;putrid&quot;      
+## [247] &quot;putting&quot;      &quot;quite&quot;        &quot;rancher&quot;     
+## [250] &quot;rancid&quot;       &quot;raspberries&quot;  &quot;really&quot;      
+## [253] &quot;red&quot;          &quot;refreshing&quot;   &quot;riesling&quot;    
+## [256] &quot;right&quot;        &quot;robust&quot;       &quot;rose&quot;        
+## [259] &quot;rotten&quot;       &quot;rubber&quot;       &quot;rubbing&quot;     
+## [262] &quot;sample&quot;       &quot;savory&quot;       &quot;scent&quot;       
+## [265] &quot;seems&quot;        &quot;semi&quot;         &quot;sharp&quot;       
+## [268] &quot;sickly&quot;       &quot;silage&quot;       &quot;similar&quot;     
+## [271] &quot;similarly&quot;    &quot;single&quot;       &quot;skunky&quot;      
+## [274] &quot;slight&quot;       &quot;slightly&quot;     &quot;smell&quot;       
+## [277] &quot;smelling&quot;     &quot;smells&quot;       &quot;smokey&quot;      
+## [280] &quot;smoky&quot;        &quot;smooth&quot;       &quot;soapy&quot;       
+## [283] &quot;socks&quot;        &quot;soft&quot;         &quot;soil&quot;        
+## [286] &quot;solvent&quot;      &quot;something&quot;    &quot;somewhat&quot;    
+## [289] &quot;sour&quot;         &quot;sparkling&quot;    &quot;spiced&quot;      
+## [292] &quot;spices&quot;       &quot;spicy&quot;        &quot;spoiled&quot;     
+## [295] &quot;stale&quot;        &quot;stone&quot;        &quot;strong&quot;      
+## [298] &quot;stronger&quot;     &quot;subdued&quot;      &quot;subtle&quot;      
+## [301] &quot;sugar&quot;        &quot;sugary&quot;       &quot;sulfur&quot;      
+## [304] &quot;sulfuric&quot;     &quot;sweat&quot;        &quot;sweet&quot;       
+## [307] &quot;sweeter&quot;      &quot;sweetness&quot;    &quot;swiss&quot;       
+## [310] &quot;tangy&quot;        &quot;tannins&quot;      &quot;tart&quot;        
+## [313] &quot;taste&quot;        &quot;tastes&quot;       &quot;tasting&quot;     
+## [316] &quot;tasty&quot;        &quot;thank&quot;        &quot;think&quot;       
+## [319] &quot;though&quot;       &quot;time&quot;         &quot;tingles&quot;     
+## [322] &quot;too&quot;          &quot;tounge&quot;       &quot;typically&quot;   
+## [325] &quot;unappealing&quot;  &quot;unexpected&quot;   &quot;unpleasant&quot;  
+## [328] &quot;urine&quot;        &quot;vague&quot;        &quot;vanilla&quot;     
+## [331] &quot;vegetal&quot;      &quot;very&quot;         &quot;vinegar&quot;     
+## [334] &quot;vomiting&quot;     &quot;water&quot;        &quot;watery&quot;      
+## [337] &quot;way&quot;          &quot;weak&quot;         &quot;wet&quot;         
+## [340] &quot;white&quot;        &quot;wine&quot;         &quot;wood&quot;        
+## [343] &quot;woodsy&quot;       &quot;woody&quot;        &quot;worst&quot;       
+## [346] &quot;y&quot;            &quot;yard&quot;         &quot;yeasty&quot;      
+## [349] &quot;yellow&quot;</code></pre>
+<p>Words such as <em>like</em>, <em>sample</em>, <em>just</em>, <em>think</em>, or <em>though</em> do not seem to bring any relevant information here. Hence, let’s add them (together with others) to our customized list of stop words<a href="#fn58" class="footnote-ref" id="fnref58"><sup>58</sup></a>:</p>
+<div class="sourceCode" id="cb451"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb451-1"><a href="text-analysis.html#cb451-1" aria-hidden="true" tabindex="-1"></a>stopword_list <span class="ot">&lt;-</span> <span class="fu">c</span>(stopword_list, <span class="fu">c</span>(<span class="st">&quot;accompany&quot;</span>,<span class="st">&quot;amount&quot;</span>,<span class="st">&quot;anything&quot;</span>,<span class="st">&quot;considering&quot;</span>,<span class="st">&quot;despite&quot;</span>,<span class="st">&quot;expected&quot;</span>,</span>
+<span id="cb451-2"><a href="text-analysis.html#cb451-2" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">&quot;just&quot;</span>,<span class="st">&quot;like&quot;</span>,<span class="st">&quot;neither&quot;</span>,<span class="st">&quot;one&quot;</span>,<span class="st">&quot;order&quot;</span>,<span class="st">&quot;others&quot;</span>,<span class="st">&quot;products&quot;</span>,</span>
+<span id="cb451-3"><a href="text-analysis.html#cb451-3" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">&quot;sample&quot;</span>,<span class="st">&quot;seems&quot;</span>,<span class="st">&quot;something&quot;</span>,<span class="st">&quot;thank&quot;</span>,<span class="st">&quot;think&quot;</span>,<span class="st">&quot;though&quot;</span>,<span class="st">&quot;time&quot;</span>,<span class="st">&quot;way&quot;</span>))</span></code></pre></div>
 <p>A final look at the list of stop words (here ordered alphabetically) ensures that it fits our need:</p>
-<div class="sourceCode" id="cb430"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb430-1"><a href="text-analysis.html#cb430-1" aria-hidden="true" tabindex="-1"></a>stopword_list[<span class="fu">order</span>(stopword_list)]</span></code></pre></div>
-<p>Finally, the data is being cleaned by removing all the words stored in <code>stopword_list</code>. This can easily be done either using <code>filter()</code> (we keep tokens that are not contained in <code>stopword_list</code>), or by using <code>anti_join()</code><a href="#fn53" class="footnote-ref" id="fnref53"><sup>53</sup></a>:</p>
-<div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb431-1"><a href="text-analysis.html#cb431-1" aria-hidden="true" tabindex="-1"></a>cider <span class="ot">&lt;-</span> cider <span class="sc">%&gt;%</span> </span>
-<span id="cb431-2"><a href="text-analysis.html#cb431-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">anti_join</span>(<span class="fu">tibble</span>(<span class="at">tokens =</span> stopword_list), <span class="at">by=</span><span class="st">&quot;tokens&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb452"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb452-1"><a href="text-analysis.html#cb452-1" aria-hidden="true" tabindex="-1"></a>stopword_list[<span class="fu">order</span>(stopword_list)]</span></code></pre></div>
+<p>Finally, the data is being cleaned by removing all the words stored in <code>stopword_list</code>. This can easily be done either using <code>filter()</code> (we keep tokens that are not contained in <code>stopword_list</code>), or by using <code>anti_join()</code><a href="#fn59" class="footnote-ref" id="fnref59"><sup>59</sup></a>:</p>
+<div class="sourceCode" id="cb453"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb453-1"><a href="text-analysis.html#cb453-1" aria-hidden="true" tabindex="-1"></a>cider <span class="ot">&lt;-</span> cider <span class="sc">%&gt;%</span> </span>
+<span id="cb453-2"><a href="text-analysis.html#cb453-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">anti_join</span>(<span class="fu">tibble</span>(<span class="at">tokens =</span> stopword_list), <span class="at">by=</span><span class="st">&quot;tokens&quot;</span>)</span></code></pre></div>
 </div>
 <div id="stemming-and-lemmatization" class="section level3 hasAnchor" number="13.3.7">
 <h3><span class="header-section-number">13.3.7</span> Stemming and Lemmatization<a href="text-analysis.html#stemming-and-lemmatization" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>After removing the stop words, the data contains a total of 328 different words. However a closer look at this list shows that it is still not optimal, as for instance <code>apple</code> (82 occurrences) and <code>apples</code> (24 occurrences) are considered as two separate words although they refer to the same <em>concept</em>.</p>
 <p>To further <em>clean</em> the data, two similar approaches can be considered: <strong>stemming</strong> and <strong>lemmatization</strong>.</p>
 <p>The procedure of stemming consists in performing a step-by-step algorithm that reduces each word to its base word (or <em>stem</em>). The most used algorithm is the one introduced by REF (Porter, 1980) which is available in the <code>{SnowballC}</code> package through the <code>wordStem()</code> function:</p>
-<div class="sourceCode" id="cb432"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb432-1"><a href="text-analysis.html#cb432-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(SnowballC)</span>
-<span id="cb432-2"><a href="text-analysis.html#cb432-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb432-3"><a href="text-analysis.html#cb432-3" aria-hidden="true" tabindex="-1"></a>cider <span class="ot">&lt;-</span> cider <span class="sc">%&gt;%</span> </span>
-<span id="cb432-4"><a href="text-analysis.html#cb432-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">stem =</span> <span class="fu">wordStem</span>(tokens))</span></code></pre></div>
-<p>The stemming reduced further the list to 303 words. Now, <code>apple</code> and <code>apples</code> have been combined into <code>appl</code> (106 occurrences). However, due to the way the algorithm works, the final tokens are no longer English<a href="#fn54" class="footnote-ref" id="fnref54"><sup>54</sup></a> words.</p>
-<p>Alternatively, we can <em>lemmatize</em> words. Lemmatization is similar to stemming except that it does not cut words to their stems: Instead it uses knowledge about the language’s structure to reduce words down to their dictionary form (also called <em>lemma</em>). This approach is implemented in the <code>{spacyr}</code> package<a href="#fn55" class="footnote-ref" id="fnref55"><sup>55</sup></a> and the <code>spacy_parse()</code> function:</p>
-<div class="sourceCode" id="cb433"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb433-1"><a href="text-analysis.html#cb433-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spacyr)</span>
-<span id="cb433-2"><a href="text-analysis.html#cb433-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb433-3"><a href="text-analysis.html#cb433-3" aria-hidden="true" tabindex="-1"></a><span class="fu">spacy_initialize</span>(<span class="at">entity=</span><span class="cn">FALSE</span>)</span>
-<span id="cb433-4"><a href="text-analysis.html#cb433-4" aria-hidden="true" tabindex="-1"></a>lemma <span class="ot">&lt;-</span> <span class="fu">spacy_parse</span>(cider<span class="sc">$</span>tokens) <span class="sc">%&gt;%</span> </span>
-<span id="cb433-5"><a href="text-analysis.html#cb433-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb433-6"><a href="text-analysis.html#cb433-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="at">tokens=</span>token, lemma) <span class="sc">%&gt;%</span> </span>
-<span id="cb433-7"><a href="text-analysis.html#cb433-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unique</span>()</span>
-<span id="cb433-8"><a href="text-analysis.html#cb433-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb433-9"><a href="text-analysis.html#cb433-9" aria-hidden="true" tabindex="-1"></a>cider <span class="ot">&lt;-</span> <span class="fu">full_join</span>(cider, lemma, <span class="at">by=</span><span class="st">&quot;tokens&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb454"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb454-1"><a href="text-analysis.html#cb454-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(SnowballC)</span>
+<span id="cb454-2"><a href="text-analysis.html#cb454-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb454-3"><a href="text-analysis.html#cb454-3" aria-hidden="true" tabindex="-1"></a>cider <span class="ot">&lt;-</span> cider <span class="sc">%&gt;%</span> </span>
+<span id="cb454-4"><a href="text-analysis.html#cb454-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">stem =</span> <span class="fu">wordStem</span>(tokens))</span></code></pre></div>
+<p>The stemming reduced further the list to 303 words. Now, <code>apple</code> and <code>apples</code> have been combined into <code>appl</code> (106 occurrences). However, due to the way the algorithm works, the final tokens are no longer English<a href="#fn60" class="footnote-ref" id="fnref60"><sup>60</sup></a> words.</p>
+<p>Alternatively, we can <em>lemmatize</em> words. Lemmatization is similar to stemming except that it does not cut words to their stems: Instead it uses knowledge about the language’s structure to reduce words down to their dictionary form (also called <em>lemma</em>). This approach is implemented in the <code>{spacyr}</code> package<a href="#fn61" class="footnote-ref" id="fnref61"><sup>61</sup></a> and the <code>spacy_parse()</code> function:</p>
+<div class="sourceCode" id="cb455"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb455-1"><a href="text-analysis.html#cb455-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spacyr)</span>
+<span id="cb455-2"><a href="text-analysis.html#cb455-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb455-3"><a href="text-analysis.html#cb455-3" aria-hidden="true" tabindex="-1"></a><span class="fu">spacy_initialize</span>(<span class="at">entity=</span><span class="cn">FALSE</span>)</span>
+<span id="cb455-4"><a href="text-analysis.html#cb455-4" aria-hidden="true" tabindex="-1"></a>lemma <span class="ot">&lt;-</span> <span class="fu">spacy_parse</span>(cider<span class="sc">$</span>tokens) <span class="sc">%&gt;%</span> </span>
+<span id="cb455-5"><a href="text-analysis.html#cb455-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb455-6"><a href="text-analysis.html#cb455-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="at">tokens=</span>token, lemma) <span class="sc">%&gt;%</span> </span>
+<span id="cb455-7"><a href="text-analysis.html#cb455-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unique</span>()</span>
+<span id="cb455-8"><a href="text-analysis.html#cb455-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb455-9"><a href="text-analysis.html#cb455-9" aria-hidden="true" tabindex="-1"></a>cider <span class="ot">&lt;-</span> <span class="fu">full_join</span>(cider, lemma, <span class="at">by=</span><span class="st">&quot;tokens&quot;</span>)</span></code></pre></div>
 <p>As can be seen, as opposed to stems, lemmas consist in <em>regular</em> words. Here, the grouping provides similar number of terms (approx 300) in both cases:</p>
-<div class="sourceCode" id="cb434"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb434-1"><a href="text-analysis.html#cb434-1" aria-hidden="true" tabindex="-1"></a>cider <span class="sc">%&gt;%</span> <span class="fu">count</span>(stem)</span></code></pre></div>
-<pre><code>## # A tibble: 301 x 2
+<div class="sourceCode" id="cb456"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb456-1"><a href="text-analysis.html#cb456-1" aria-hidden="true" tabindex="-1"></a>cider <span class="sc">%&gt;%</span> <span class="fu">count</span>(stem)</span></code></pre></div>
+<pre><code>## # A tibble: 301 × 2
 ##    stem          n
 ##    &lt;chr&gt;     &lt;int&gt;
 ##  1 acid         23
@@ -753,9 +818,9 @@ A good illustration of such <em>complex</em> situation is text analysis. Before 
 ##  8 appeal        4
 ##  9 appet         2
 ## 10 appl        106
-## # ... with 291 more rows</code></pre>
-<div class="sourceCode" id="cb436"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb436-1"><a href="text-analysis.html#cb436-1" aria-hidden="true" tabindex="-1"></a>cider <span class="sc">%&gt;%</span> <span class="fu">count</span>(lemma)</span></code></pre></div>
-<pre><code>## # A tibble: 303 x 2
+## # … with 291 more rows</code></pre>
+<div class="sourceCode" id="cb458"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb458-1"><a href="text-analysis.html#cb458-1" aria-hidden="true" tabindex="-1"></a>cider <span class="sc">%&gt;%</span> <span class="fu">count</span>(lemma)</span></code></pre></div>
+<pre><code>## # A tibble: 303 × 2
 ##    lemma          n
 ##    &lt;chr&gt;      &lt;int&gt;
 ##  1 acid           3
@@ -768,32 +833,32 @@ A good illustration of such <em>complex</em> situation is text analysis. Before 
 ##  8 almond         1
 ##  9 almost         3
 ## 10 apparent       1
-## # ... with 293 more rows</code></pre>
+## # … with 293 more rows</code></pre>
 <p>In the case of lemmatization, <code>acid</code>, <code>acidity</code>, and <code>acidic</code> are still considered as separate words whereas they are all grouped under <code>acid</code> with the stemming procedure. This particular example shows the advantage and disadvantage of each method, as it may (or may not) group words that are (or are not) meant to be grouped. Hence, the use of lemmatization/stemming procedures should be thought carefully. Depending on their objective, researchers may be interested in the different meanings conveyed by such words as <code>acid</code>, <code>acidity</code>, and <code>acidic</code> and decide to keep them separated, or decide to group them for a more holistic view of the main sensory attributes that could be derived from this text.</p>
 <p>It should also be said that neither the lemmatization nor the stemming procedure will combine words that are different but bear similar meanings. For instance, the words <code>moldy</code> and <code>rotten</code> have been used, and some researchers may decide to group them if they consider them equivalent. This type of grouping should be done manually on a case-by-case using <code>str_replace()</code>:</p>
-<div class="sourceCode" id="cb438"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb438-1"><a href="text-analysis.html#cb438-1" aria-hidden="true" tabindex="-1"></a>cider <span class="sc">%&gt;%</span> </span>
-<span id="cb438-2"><a href="text-analysis.html#cb438-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(lemma) <span class="sc">%&gt;%</span> </span>
-<span id="cb438-3"><a href="text-analysis.html#cb438-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(lemma <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;moldy&quot;</span>,<span class="st">&quot;rotten&quot;</span>))</span></code></pre></div>
-<pre><code>## # A tibble: 2 x 2
+<div class="sourceCode" id="cb460"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb460-1"><a href="text-analysis.html#cb460-1" aria-hidden="true" tabindex="-1"></a>cider <span class="sc">%&gt;%</span> </span>
+<span id="cb460-2"><a href="text-analysis.html#cb460-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(lemma) <span class="sc">%&gt;%</span> </span>
+<span id="cb460-3"><a href="text-analysis.html#cb460-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(lemma <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;moldy&quot;</span>,<span class="st">&quot;rotten&quot;</span>))</span></code></pre></div>
+<pre><code>## # A tibble: 2 × 2
 ##   lemma      n
 ##   &lt;chr&gt;  &lt;int&gt;
 ## 1 moldy      2
 ## 2 rotten     5</code></pre>
 <p>As can be seen here, originally, <code>moldy</code> was stated twice whereas <code>rotten</code> was stated 5 times. After re-placing <code>moldy</code> by <code>rotten</code>, the newer version contains 7 occurrences of <code>rotten</code> and none of <code>modly</code>.</p>
-<div class="sourceCode" id="cb440"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb440-1"><a href="text-analysis.html#cb440-1" aria-hidden="true" tabindex="-1"></a>cider <span class="sc">%&gt;%</span> </span>
-<span id="cb440-2"><a href="text-analysis.html#cb440-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">lemma =</span> <span class="fu">str_replace</span>(lemma, <span class="st">&quot;moldy&quot;</span>, <span class="st">&quot;rotten&quot;</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb440-3"><a href="text-analysis.html#cb440-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(lemma) <span class="sc">%&gt;%</span> </span>
-<span id="cb440-4"><a href="text-analysis.html#cb440-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(lemma <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;moldy&quot;</span>,<span class="st">&quot;rotten&quot;</span>))</span></code></pre></div>
-<pre><code>## # A tibble: 1 x 2
+<div class="sourceCode" id="cb462"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb462-1"><a href="text-analysis.html#cb462-1" aria-hidden="true" tabindex="-1"></a>cider <span class="sc">%&gt;%</span> </span>
+<span id="cb462-2"><a href="text-analysis.html#cb462-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">lemma =</span> <span class="fu">str_replace</span>(lemma, <span class="st">&quot;moldy&quot;</span>, <span class="st">&quot;rotten&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb462-3"><a href="text-analysis.html#cb462-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(lemma) <span class="sc">%&gt;%</span> </span>
+<span id="cb462-4"><a href="text-analysis.html#cb462-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(lemma <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;moldy&quot;</span>,<span class="st">&quot;rotten&quot;</span>))</span></code></pre></div>
+<pre><code>## # A tibble: 1 × 2
 ##   lemma      n
 ##   &lt;chr&gt;  &lt;int&gt;
 ## 1 rotten     7</code></pre>
 <p>Doing such transformation can quickly be tedious to do directly in R. As an alternative solution, we propose to export the list of words in Excel, create a new column with the new grouping names, and merge the newly acquired names to the previous file. This is the approach we used to create the file entitled <em>Example of word grouping.xlsx</em>. In this example, one can notice that we limited the grouping to a strict minimum for most words except <code>bubble</code> that we also combined to <code>bubbly</code>, <code>carbonate</code>, <code>champagne</code>, <code>moscato</code>, <code>fizzy</code>, and <code>sparkle</code>:</p>
-<div class="sourceCode" id="cb442"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb442-1"><a href="text-analysis.html#cb442-1" aria-hidden="true" tabindex="-1"></a>new_list <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(<span class="st">&quot;data/Example of word grouping.xlsx&quot;</span>)</span>
-<span id="cb442-2"><a href="text-analysis.html#cb442-2" aria-hidden="true" tabindex="-1"></a>cider <span class="ot">&lt;-</span> cider <span class="sc">%&gt;%</span> </span>
-<span id="cb442-3"><a href="text-analysis.html#cb442-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">full_join</span>(new_list, <span class="at">by=</span><span class="st">&quot;lemma&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb442-4"><a href="text-analysis.html#cb442-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">lemma =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(<span class="st">`</span><span class="at">new name</span><span class="st">`</span>), lemma, <span class="st">`</span><span class="at">new name</span><span class="st">`</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb442-5"><a href="text-analysis.html#cb442-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span><span class="st">`</span><span class="at">new name</span><span class="st">`</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb464"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb464-1"><a href="text-analysis.html#cb464-1" aria-hidden="true" tabindex="-1"></a>new_list <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(<span class="st">&quot;data/Example of word grouping.xlsx&quot;</span>)</span>
+<span id="cb464-2"><a href="text-analysis.html#cb464-2" aria-hidden="true" tabindex="-1"></a>cider <span class="ot">&lt;-</span> cider <span class="sc">%&gt;%</span> </span>
+<span id="cb464-3"><a href="text-analysis.html#cb464-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">full_join</span>(new_list, <span class="at">by=</span><span class="st">&quot;lemma&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb464-4"><a href="text-analysis.html#cb464-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">lemma =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(<span class="st">`</span><span class="at">new name</span><span class="st">`</span>), lemma, <span class="st">`</span><span class="at">new name</span><span class="st">`</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb464-5"><a href="text-analysis.html#cb464-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span><span class="st">`</span><span class="at">new name</span><span class="st">`</span>)</span></code></pre></div>
 <p>This last <em>cleaning</em> approach reduces further the number of words to 278.</p>
 </div>
 </div>
@@ -803,107 +868,106 @@ A good illustration of such <em>complex</em> situation is text analysis. Before 
 <div id="raw-frequencies-and-visualization" class="section level3 hasAnchor" number="13.4.1">
 <h3><span class="header-section-number">13.4.1</span> Raw Frequencies and Visualization<a href="text-analysis.html#raw-frequencies-and-visualization" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In the previous sections, we have already shown how to count the number of occurrences of each word. We can reproduce this and show the top 10 most used words to describe our ciders:</p>
-<div class="sourceCode" id="cb443"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb443-1"><a href="text-analysis.html#cb443-1" aria-hidden="true" tabindex="-1"></a>cider <span class="sc">%&gt;%</span> </span>
-<span id="cb443-2"><a href="text-analysis.html#cb443-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(lemma) <span class="sc">%&gt;%</span> </span>
-<span id="cb443-3"><a href="text-analysis.html#cb443-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb443-4"><a href="text-analysis.html#cb443-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) <span class="sc">%&gt;%</span> </span>
-<span id="cb443-5"><a href="text-analysis.html#cb443-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(n<span class="sc">&gt;=</span><span class="dv">10</span>, <span class="sc">!</span><span class="fu">is.na</span>(lemma)) <span class="sc">%&gt;%</span> </span>
-<span id="cb443-6"><a href="text-analysis.html#cb443-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">reorder</span>(lemma, n), <span class="at">y=</span>n))<span class="sc">+</span></span>
-<span id="cb443-7"><a href="text-analysis.html#cb443-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>()<span class="sc">+</span></span>
-<span id="cb443-8"><a href="text-analysis.html#cb443-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()<span class="sc">+</span></span>
-<span id="cb443-9"><a href="text-analysis.html#cb443-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;&quot;</span>)<span class="sc">+</span></span>
-<span id="cb443-10"><a href="text-analysis.html#cb443-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;&quot;</span>)<span class="sc">+</span></span>
-<span id="cb443-11"><a href="text-analysis.html#cb443-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.line =</span> <span class="fu">element_line</span>(<span class="at">colour=</span><span class="st">&quot;grey80&quot;</span>))<span class="sc">+</span></span>
-<span id="cb443-12"><a href="text-analysis.html#cb443-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()<span class="sc">+</span></span>
-<span id="cb443-13"><a href="text-analysis.html#cb443-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;List of words mentioned at least 10 times&quot;</span>)</span></code></pre></div>
-<p><img src="i2ds4scc_bookdown_files/figure-html/unnamed-chunk-303-1.png" width="672" /></p>
+<div class="sourceCode" id="cb465"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb465-1"><a href="text-analysis.html#cb465-1" aria-hidden="true" tabindex="-1"></a>cider <span class="sc">%&gt;%</span> </span>
+<span id="cb465-2"><a href="text-analysis.html#cb465-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(lemma) <span class="sc">%&gt;%</span> </span>
+<span id="cb465-3"><a href="text-analysis.html#cb465-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb465-4"><a href="text-analysis.html#cb465-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) <span class="sc">%&gt;%</span> </span>
+<span id="cb465-5"><a href="text-analysis.html#cb465-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(n<span class="sc">&gt;=</span><span class="dv">10</span>, <span class="sc">!</span><span class="fu">is.na</span>(lemma)) <span class="sc">%&gt;%</span> </span>
+<span id="cb465-6"><a href="text-analysis.html#cb465-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">reorder</span>(lemma, n), <span class="at">y=</span>n))<span class="sc">+</span></span>
+<span id="cb465-7"><a href="text-analysis.html#cb465-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>()<span class="sc">+</span></span>
+<span id="cb465-8"><a href="text-analysis.html#cb465-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()<span class="sc">+</span></span>
+<span id="cb465-9"><a href="text-analysis.html#cb465-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;&quot;</span>)<span class="sc">+</span></span>
+<span id="cb465-10"><a href="text-analysis.html#cb465-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;&quot;</span>)<span class="sc">+</span></span>
+<span id="cb465-11"><a href="text-analysis.html#cb465-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.line =</span> <span class="fu">element_line</span>(<span class="at">colour=</span><span class="st">&quot;grey80&quot;</span>))<span class="sc">+</span></span>
+<span id="cb465-12"><a href="text-analysis.html#cb465-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()<span class="sc">+</span></span>
+<span id="cb465-13"><a href="text-analysis.html#cb465-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;List of words mentioned at least 10 times&quot;</span>)</span></code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-317-1.png" width="672" /></p>
 <p>As seen previously, the most mentioned words are <code>apple</code>, <code>sweet</code>, <code>fruity</code>, and <code>sour</code>.</p>
 <p>Let’s now assess the number of time each word has been used to characterize each product.</p>
-<div class="sourceCode" id="cb444"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb444-1"><a href="text-analysis.html#cb444-1" aria-hidden="true" tabindex="-1"></a>cider <span class="sc">%&gt;%</span> </span>
-<span id="cb444-2"><a href="text-analysis.html#cb444-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(lemma), <span class="sc">!</span><span class="fu">is.na</span>(sample)) <span class="sc">%&gt;%</span> </span>
-<span id="cb444-3"><a href="text-analysis.html#cb444-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sample, lemma) <span class="sc">%&gt;%</span> </span>
-<span id="cb444-4"><a href="text-analysis.html#cb444-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb444-5"><a href="text-analysis.html#cb444-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb444-6"><a href="text-analysis.html#cb444-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from=</span>lemma, <span class="at">values_from=</span>n, <span class="at">values_fill=</span><span class="dv">0</span>)</span></code></pre></div>
-<pre><code>## # A tibble: 6 x 276
-##   sample acidic aftertaste alcohol appeal apple aroma artificial astringent
-##   &lt;chr&gt;   &lt;int&gt;      &lt;int&gt;   &lt;int&gt;  &lt;int&gt; &lt;int&gt; &lt;int&gt;      &lt;int&gt;      &lt;int&gt;
-## 1 182         6          2       3      1    18     4          1          1
-## 2 239         5          2       2      2    19     5          0          3
-## 3 365         3          3       0      0    25     3          0          2
-## 4 401         4          2       2      0     9     5          0          1
-## 5 519         3          1       0      1    16     4          0          0
-## 6 731         2          2       6      0    21     3          0          1
-## # ... with 267 more variables: bad &lt;int&gt;, banana &lt;int&gt;, barn &lt;int&gt;,
-## #   begin &lt;int&gt;, bitter &lt;int&gt;, blackberry &lt;int&gt;, bland &lt;int&gt;, bold &lt;int&gt;,
-## #   bubble &lt;int&gt;, candy &lt;int&gt;, cider &lt;int&gt;, clean &lt;int&gt;, crisp &lt;int&gt;,
-## #   decent &lt;int&gt;, different &lt;int&gt;, dog &lt;int&gt;, dry &lt;int&gt;, dull &lt;int&gt;,
-## #   effervescent &lt;int&gt;, fairly &lt;int&gt;, ferment &lt;int&gt;, finish &lt;int&gt;, fishy &lt;int&gt;,
-## #   flavor &lt;int&gt;, floral &lt;int&gt;, fresh &lt;int&gt;, fruity &lt;int&gt;, good &lt;int&gt;,
-## #   grape &lt;int&gt;, grass &lt;int&gt;, green &lt;int&gt;, hard &lt;int&gt;, heavy &lt;int&gt;, ...</code></pre>
+<div class="sourceCode" id="cb466"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb466-1"><a href="text-analysis.html#cb466-1" aria-hidden="true" tabindex="-1"></a>cider <span class="sc">%&gt;%</span> </span>
+<span id="cb466-2"><a href="text-analysis.html#cb466-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(lemma), <span class="sc">!</span><span class="fu">is.na</span>(sample)) <span class="sc">%&gt;%</span> </span>
+<span id="cb466-3"><a href="text-analysis.html#cb466-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sample, lemma) <span class="sc">%&gt;%</span> </span>
+<span id="cb466-4"><a href="text-analysis.html#cb466-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb466-5"><a href="text-analysis.html#cb466-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb466-6"><a href="text-analysis.html#cb466-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from=</span>lemma, <span class="at">values_from=</span>n, <span class="at">values_fill=</span><span class="dv">0</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 276
+##   sample acidic aftertaste alcohol appeal apple aroma
+##   &lt;chr&gt;   &lt;int&gt;      &lt;int&gt;   &lt;int&gt;  &lt;int&gt; &lt;int&gt; &lt;int&gt;
+## 1 182         6          2       3      1    18     4
+## 2 239         5          2       2      2    19     5
+## 3 365         3          3       0      0    25     3
+## 4 401         4          2       2      0     9     5
+## 5 519         3          1       0      1    16     4
+## 6 731         2          2       6      0    21     3
+## # … with 269 more variables: artificial &lt;int&gt;,
+## #   astringent &lt;int&gt;, bad &lt;int&gt;, banana &lt;int&gt;,
+## #   barn &lt;int&gt;, begin &lt;int&gt;, bitter &lt;int&gt;,
+## #   blackberry &lt;int&gt;, bland &lt;int&gt;, bold &lt;int&gt;,
+## #   bubble &lt;int&gt;, candy &lt;int&gt;, cider &lt;int&gt;,
+## #   clean &lt;int&gt;, crisp &lt;int&gt;, decent &lt;int&gt;,
+## #   different &lt;int&gt;, dog &lt;int&gt;, dry &lt;int&gt;, …</code></pre>
 <p>A first look at the contingency table shows that <code>apple</code> has been used 25 times to characterize sample <code>365</code> while it has only been used 9 times to characterize sample <code>401</code>.</p>
 <p>Since the list of terms is quite large, we can visualize these frequencies in different ways: First, we could re-adapt the histogram produced previously overall but per product. This could give a good overview of which words characterize each sample (results not shown here):</p>
-<div class="sourceCode" id="cb446"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb446-1"><a href="text-analysis.html#cb446-1" aria-hidden="true" tabindex="-1"></a>prod_term <span class="ot">&lt;-</span> cider <span class="sc">%&gt;%</span> </span>
-<span id="cb446-2"><a href="text-analysis.html#cb446-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(lemma), <span class="sc">!</span><span class="fu">is.na</span>(sample)) <span class="sc">%&gt;%</span> </span>
-<span id="cb446-3"><a href="text-analysis.html#cb446-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sample, lemma) <span class="sc">%&gt;%</span> </span>
-<span id="cb446-4"><a href="text-analysis.html#cb446-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb446-5"><a href="text-analysis.html#cb446-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb446-6"><a href="text-analysis.html#cb446-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">split</span>(.<span class="sc">$</span>sample) <span class="sc">%&gt;%</span> </span>
-<span id="cb446-7"><a href="text-analysis.html#cb446-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="cf">function</span>(data){</span>
-<span id="cb446-8"><a href="text-analysis.html#cb446-8" aria-hidden="true" tabindex="-1"></a>    data <span class="sc">%&gt;%</span> </span>
-<span id="cb446-9"><a href="text-analysis.html#cb446-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) <span class="sc">%&gt;%</span> </span>
-<span id="cb446-10"><a href="text-analysis.html#cb446-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">filter</span>(n<span class="sc">&gt;=</span><span class="dv">5</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb446-11"><a href="text-analysis.html#cb446-11" aria-hidden="true" tabindex="-1"></a>      <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">reorder</span>(lemma, n), <span class="at">y=</span>n))<span class="sc">+</span></span>
-<span id="cb446-12"><a href="text-analysis.html#cb446-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_col</span>()<span class="sc">+</span></span>
-<span id="cb446-13"><a href="text-analysis.html#cb446-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme_minimal</span>()<span class="sc">+</span></span>
-<span id="cb446-14"><a href="text-analysis.html#cb446-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">xlab</span>(<span class="st">&quot;&quot;</span>)<span class="sc">+</span></span>
-<span id="cb446-15"><a href="text-analysis.html#cb446-15" aria-hidden="true" tabindex="-1"></a>      <span class="fu">ylab</span>(<span class="st">&quot;&quot;</span>)<span class="sc">+</span></span>
-<span id="cb446-16"><a href="text-analysis.html#cb446-16" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme</span>(<span class="at">axis.line =</span> <span class="fu">element_line</span>(<span class="at">colour=</span><span class="st">&quot;grey80&quot;</span>))<span class="sc">+</span></span>
-<span id="cb446-17"><a href="text-analysis.html#cb446-17" aria-hidden="true" tabindex="-1"></a>      <span class="fu">coord_flip</span>()<span class="sc">+</span></span>
-<span id="cb446-18"><a href="text-analysis.html#cb446-18" aria-hidden="true" tabindex="-1"></a>      <span class="fu">ggtitle</span>(<span class="fu">paste0</span>(<span class="st">&quot;List of words mentioned at least 5 times for &quot;</span>, </span>
-<span id="cb446-19"><a href="text-analysis.html#cb446-19" aria-hidden="true" tabindex="-1"></a>                     data <span class="sc">%&gt;%</span> <span class="fu">pull</span>(sample) <span class="sc">%&gt;%</span> <span class="fu">unique</span>()))</span>
-<span id="cb446-20"><a href="text-analysis.html#cb446-20" aria-hidden="true" tabindex="-1"></a>  })</span></code></pre></div>
+<div class="sourceCode" id="cb468"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb468-1"><a href="text-analysis.html#cb468-1" aria-hidden="true" tabindex="-1"></a>prod_term <span class="ot">&lt;-</span> cider <span class="sc">%&gt;%</span> </span>
+<span id="cb468-2"><a href="text-analysis.html#cb468-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(lemma), <span class="sc">!</span><span class="fu">is.na</span>(sample)) <span class="sc">%&gt;%</span> </span>
+<span id="cb468-3"><a href="text-analysis.html#cb468-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sample, lemma) <span class="sc">%&gt;%</span> </span>
+<span id="cb468-4"><a href="text-analysis.html#cb468-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb468-5"><a href="text-analysis.html#cb468-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb468-6"><a href="text-analysis.html#cb468-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">split</span>(.<span class="sc">$</span>sample) <span class="sc">%&gt;%</span> </span>
+<span id="cb468-7"><a href="text-analysis.html#cb468-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="cf">function</span>(data){</span>
+<span id="cb468-8"><a href="text-analysis.html#cb468-8" aria-hidden="true" tabindex="-1"></a>    data <span class="sc">%&gt;%</span> </span>
+<span id="cb468-9"><a href="text-analysis.html#cb468-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) <span class="sc">%&gt;%</span> </span>
+<span id="cb468-10"><a href="text-analysis.html#cb468-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">filter</span>(n<span class="sc">&gt;=</span><span class="dv">5</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb468-11"><a href="text-analysis.html#cb468-11" aria-hidden="true" tabindex="-1"></a>      <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">reorder</span>(lemma, n), <span class="at">y=</span>n))<span class="sc">+</span></span>
+<span id="cb468-12"><a href="text-analysis.html#cb468-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_col</span>()<span class="sc">+</span></span>
+<span id="cb468-13"><a href="text-analysis.html#cb468-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme_minimal</span>()<span class="sc">+</span></span>
+<span id="cb468-14"><a href="text-analysis.html#cb468-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">xlab</span>(<span class="st">&quot;&quot;</span>)<span class="sc">+</span></span>
+<span id="cb468-15"><a href="text-analysis.html#cb468-15" aria-hidden="true" tabindex="-1"></a>      <span class="fu">ylab</span>(<span class="st">&quot;&quot;</span>)<span class="sc">+</span></span>
+<span id="cb468-16"><a href="text-analysis.html#cb468-16" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme</span>(<span class="at">axis.line =</span> <span class="fu">element_line</span>(<span class="at">colour=</span><span class="st">&quot;grey80&quot;</span>))<span class="sc">+</span></span>
+<span id="cb468-17"><a href="text-analysis.html#cb468-17" aria-hidden="true" tabindex="-1"></a>      <span class="fu">coord_flip</span>()<span class="sc">+</span></span>
+<span id="cb468-18"><a href="text-analysis.html#cb468-18" aria-hidden="true" tabindex="-1"></a>      <span class="fu">ggtitle</span>(<span class="fu">paste0</span>(<span class="st">&quot;List of words mentioned at least 5 times for &quot;</span>, </span>
+<span id="cb468-19"><a href="text-analysis.html#cb468-19" aria-hidden="true" tabindex="-1"></a>                     data <span class="sc">%&gt;%</span> <span class="fu">pull</span>(sample) <span class="sc">%&gt;%</span> <span class="fu">unique</span>()))</span>
+<span id="cb468-20"><a href="text-analysis.html#cb468-20" aria-hidden="true" tabindex="-1"></a>  })</span></code></pre></div>
 <p>Another approach consists in visualizing the association between the samples and the words in a multiple way using Correspondence Analysis (CA). Since the CA can be sensitive to low frequencies (Add REF), we suggest to only keep terms that were at least mentioned 5 times across all samples, resulting in a shorter frequency table. We then use the <code>CA()</code> function from <code>{FactoMineR}</code> to build the CA map:</p>
-<div class="sourceCode" id="cb447"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb447-1"><a href="text-analysis.html#cb447-1" aria-hidden="true" tabindex="-1"></a>cider_ct <span class="ot">&lt;-</span> cider <span class="sc">%&gt;%</span> </span>
-<span id="cb447-2"><a href="text-analysis.html#cb447-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(lemma), <span class="sc">!</span><span class="fu">is.na</span>(sample)) <span class="sc">%&gt;%</span> </span>
-<span id="cb447-3"><a href="text-analysis.html#cb447-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sample, lemma) <span class="sc">%&gt;%</span> </span>
-<span id="cb447-4"><a href="text-analysis.html#cb447-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb447-5"><a href="text-analysis.html#cb447-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb447-6"><a href="text-analysis.html#cb447-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(n <span class="sc">&gt;=</span> <span class="dv">5</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb447-7"><a href="text-analysis.html#cb447-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from=</span>lemma, <span class="at">values_from=</span>n, <span class="at">values_fill=</span><span class="dv">0</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb447-8"><a href="text-analysis.html#cb447-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb447-9"><a href="text-analysis.html#cb447-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">column_to_rownames</span>(<span class="at">var=</span><span class="st">&quot;sample&quot;</span>)</span>
-<span id="cb447-10"><a href="text-analysis.html#cb447-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb447-11"><a href="text-analysis.html#cb447-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FactoMineR)</span>
-<span id="cb447-12"><a href="text-analysis.html#cb447-12" aria-hidden="true" tabindex="-1"></a>cider_CA <span class="ot">&lt;-</span> <span class="fu">CA</span>(cider_ct)</span></code></pre></div>
-<p><img src="i2ds4scc_bookdown_files/figure-html/unnamed-chunk-306-1.png" width="672" /></p>
+<div class="sourceCode" id="cb469"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb469-1"><a href="text-analysis.html#cb469-1" aria-hidden="true" tabindex="-1"></a>cider_ct <span class="ot">&lt;-</span> cider <span class="sc">%&gt;%</span> </span>
+<span id="cb469-2"><a href="text-analysis.html#cb469-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(lemma), <span class="sc">!</span><span class="fu">is.na</span>(sample)) <span class="sc">%&gt;%</span> </span>
+<span id="cb469-3"><a href="text-analysis.html#cb469-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sample, lemma) <span class="sc">%&gt;%</span> </span>
+<span id="cb469-4"><a href="text-analysis.html#cb469-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb469-5"><a href="text-analysis.html#cb469-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb469-6"><a href="text-analysis.html#cb469-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(n <span class="sc">&gt;=</span> <span class="dv">5</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb469-7"><a href="text-analysis.html#cb469-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from=</span>lemma, <span class="at">values_from=</span>n, <span class="at">values_fill=</span><span class="dv">0</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb469-8"><a href="text-analysis.html#cb469-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb469-9"><a href="text-analysis.html#cb469-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">column_to_rownames</span>(<span class="at">var=</span><span class="st">&quot;sample&quot;</span>)</span>
+<span id="cb469-10"><a href="text-analysis.html#cb469-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb469-11"><a href="text-analysis.html#cb469-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FactoMineR)</span>
+<span id="cb469-12"><a href="text-analysis.html#cb469-12" aria-hidden="true" tabindex="-1"></a>cider_CA <span class="ot">&lt;-</span> <span class="fu">CA</span>(cider_ct)</span></code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-320-1.png" width="672" /></p>
 <p>As can be seen, sample <code>731</code> is more strongly associated to alcoholic terms such as <code>alcohol</code> or <code>wine</code>, and colors (<code>red</code>, <code>green</code>). Samples <code>239</code> and <code>401</code> are more associated to <code>sour</code> and <code>bitter</code> (and <code>pear</code> for <code>239</code>), whereas samples <code>519</code> and <code>182</code> are more frequently described by terms such as <code>fruity</code>, and <code>sweet</code> (<code>floral</code> is also used to characterize <code>182</code>).</p>
 <p>An alternative for visualizing these frequencies is through wordclouds, which can easily be done using the <code>{ggwordcloud}</code> package. This package has the advantage to build such representation in a <code>{ggplot2}</code> format. Such wordclouds (here one per product) can be obtained using the following code:</p>
-<div class="sourceCode" id="cb448"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb448-1"><a href="text-analysis.html#cb448-1" aria-hidden="true" tabindex="-1"></a>cider_wc <span class="ot">&lt;-</span> cider <span class="sc">%&gt;%</span> </span>
-<span id="cb448-2"><a href="text-analysis.html#cb448-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(lemma), <span class="sc">!</span><span class="fu">is.na</span>(sample)) <span class="sc">%&gt;%</span> </span>
-<span id="cb448-3"><a href="text-analysis.html#cb448-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sample, lemma) <span class="sc">%&gt;%</span> </span>
-<span id="cb448-4"><a href="text-analysis.html#cb448-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb448-5"><a href="text-analysis.html#cb448-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb448-6"><a href="text-analysis.html#cb448-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(n <span class="sc">&gt;=</span> <span class="dv">5</span>)</span>
-<span id="cb448-7"><a href="text-analysis.html#cb448-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb448-8"><a href="text-analysis.html#cb448-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggwordcloud)</span></code></pre></div>
-<pre><code>## Warning: package &#39;ggwordcloud&#39; was built under R version 4.1.2</code></pre>
-<div class="sourceCode" id="cb450"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb450-1"><a href="text-analysis.html#cb450-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cider_wc, <span class="fu">aes</span>(<span class="at">x=</span>sample, <span class="at">colour=</span>sample, <span class="at">label=</span>lemma, <span class="at">size=</span>n))<span class="sc">+</span></span>
-<span id="cb450-2"><a href="text-analysis.html#cb450-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text_wordcloud</span>(<span class="at">eccentricity =</span> <span class="fl">2.5</span>)<span class="sc">+</span></span>
-<span id="cb450-3"><a href="text-analysis.html#cb450-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;&quot;</span>)<span class="sc">+</span></span>
-<span id="cb450-4"><a href="text-analysis.html#cb450-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
-<p><img src="i2ds4scc_bookdown_files/figure-html/unnamed-chunk-307-1.png" width="672" /></p>
+<div class="sourceCode" id="cb470"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb470-1"><a href="text-analysis.html#cb470-1" aria-hidden="true" tabindex="-1"></a>cider_wc <span class="ot">&lt;-</span> cider <span class="sc">%&gt;%</span> </span>
+<span id="cb470-2"><a href="text-analysis.html#cb470-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(lemma), <span class="sc">!</span><span class="fu">is.na</span>(sample)) <span class="sc">%&gt;%</span> </span>
+<span id="cb470-3"><a href="text-analysis.html#cb470-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sample, lemma) <span class="sc">%&gt;%</span> </span>
+<span id="cb470-4"><a href="text-analysis.html#cb470-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb470-5"><a href="text-analysis.html#cb470-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb470-6"><a href="text-analysis.html#cb470-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(n <span class="sc">&gt;=</span> <span class="dv">5</span>)</span>
+<span id="cb470-7"><a href="text-analysis.html#cb470-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb470-8"><a href="text-analysis.html#cb470-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggwordcloud)</span>
+<span id="cb470-9"><a href="text-analysis.html#cb470-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cider_wc, <span class="fu">aes</span>(<span class="at">x=</span>sample, <span class="at">colour=</span>sample, <span class="at">label=</span>lemma, <span class="at">size=</span>n))<span class="sc">+</span></span>
+<span id="cb470-10"><a href="text-analysis.html#cb470-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text_wordcloud</span>(<span class="at">eccentricity =</span> <span class="fl">2.5</span>)<span class="sc">+</span></span>
+<span id="cb470-11"><a href="text-analysis.html#cb470-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;&quot;</span>)<span class="sc">+</span></span>
+<span id="cb470-12"><a href="text-analysis.html#cb470-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-321-1.png" width="672" /></p>
 <p>In these wordclouds, we notice that <code>apple</code> and <code>sweet</code> appear in larger fonts for (almost) all the samples, which can make the comparison quite difficult between samples. Fortunately, the <code>geom_text_wordcloud()</code> function provides an interesting parameter in its aesthetics called <code>angle_group</code> which allows controlling the position of the words. To illustrate this, let’s apply the following rule: for a given sample, if the proportion of association of a word is larger than 1/6 (as we have 6 samples), the word will be printed in the upper part of its wordcloud, and in the lower part otherwise. To facilitate the readability, the color code used follow the same rule:</p>
-<div class="sourceCode" id="cb451"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb451-1"><a href="text-analysis.html#cb451-1" aria-hidden="true" tabindex="-1"></a>cider_wc <span class="sc">%&gt;%</span> </span>
-<span id="cb451-2"><a href="text-analysis.html#cb451-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(lemma) <span class="sc">%&gt;%</span> </span>
-<span id="cb451-3"><a href="text-analysis.html#cb451-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prop =</span> n<span class="sc">/</span><span class="fu">sum</span>(n)) <span class="sc">%&gt;%</span> </span>
-<span id="cb451-4"><a href="text-analysis.html#cb451-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb451-5"><a href="text-analysis.html#cb451-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">colour=</span> prop<span class="sc">&lt;</span><span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>, <span class="at">label=</span>lemma, <span class="at">size=</span>n, <span class="at">angle_group =</span> prop <span class="sc">&lt;</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>))<span class="sc">+</span></span>
-<span id="cb451-6"><a href="text-analysis.html#cb451-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text_wordcloud</span>(<span class="at">eccentricity =</span> <span class="fl">2.5</span>)<span class="sc">+</span></span>
-<span id="cb451-7"><a href="text-analysis.html#cb451-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;&quot;</span>)<span class="sc">+</span></span>
-<span id="cb451-8"><a href="text-analysis.html#cb451-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()<span class="sc">+</span></span>
-<span id="cb451-9"><a href="text-analysis.html#cb451-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>sample)</span></code></pre></div>
-<p><img src="i2ds4scc_bookdown_files/figure-html/unnamed-chunk-308-1.png" width="672" /></p>
+<div class="sourceCode" id="cb471"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb471-1"><a href="text-analysis.html#cb471-1" aria-hidden="true" tabindex="-1"></a>cider_wc <span class="sc">%&gt;%</span> </span>
+<span id="cb471-2"><a href="text-analysis.html#cb471-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(lemma) <span class="sc">%&gt;%</span> </span>
+<span id="cb471-3"><a href="text-analysis.html#cb471-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prop =</span> n<span class="sc">/</span><span class="fu">sum</span>(n)) <span class="sc">%&gt;%</span> </span>
+<span id="cb471-4"><a href="text-analysis.html#cb471-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb471-5"><a href="text-analysis.html#cb471-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">colour=</span> prop<span class="sc">&lt;</span><span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>, <span class="at">label=</span>lemma, <span class="at">size=</span>n, <span class="at">angle_group =</span> prop <span class="sc">&lt;</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>))<span class="sc">+</span></span>
+<span id="cb471-6"><a href="text-analysis.html#cb471-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text_wordcloud</span>(<span class="at">eccentricity =</span> <span class="fl">2.5</span>)<span class="sc">+</span></span>
+<span id="cb471-7"><a href="text-analysis.html#cb471-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;&quot;</span>)<span class="sc">+</span></span>
+<span id="cb471-8"><a href="text-analysis.html#cb471-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()<span class="sc">+</span></span>
+<span id="cb471-9"><a href="text-analysis.html#cb471-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>sample)</span></code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-322-1.png" width="672" /></p>
 <p>As can be seen, the term <code>apple</code> is more frequently (i.e. more than 1/6) used to characterize samples <code>182</code>, <code>239</code>, <code>365</code>, and <code>731</code>. The term <code>sweet</code> is more frequently used to characterize samples <code>182</code> and <code>519</code>. Such conclusions would have been more difficult to reach based on the previous <em>unstructured</em> wordcloud.</p>
 </div>
 <div id="bigrams-n-grams" class="section level3 hasAnchor" number="13.4.2">
@@ -916,13 +980,13 @@ A good illustration of such <em>complex</em> situation is text analysis. Before 
 </ol>
 <p>The latter option leads us to introduce the notion of bi-grams (groups of 2 following words), tri-grams (groups of 3 following words), or more generally <em>n</em>-grams (groups of <em>n</em> following words). More precisely, we are applying the same frequency count as before except that we are no longer considering one word as a token, but as a sequence of 2, 3, or more generally <em>n</em> words as a token. Such grouping can be obtained by the <code>unnest_tokens()</code> from <code>{tidytext}</code> in which <code>token='ngrams'</code>, with <code>n</code> defining the number of words to consider.</p>
 <p>For simplicity, let’s apply this to the original data, although it could be applied to the cleaned version (here we consider bi-grams).</p>
-<div class="sourceCode" id="cb452"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb452-1"><a href="text-analysis.html#cb452-1" aria-hidden="true" tabindex="-1"></a>cider_2grams <span class="ot">&lt;-</span> cider_og <span class="sc">%&gt;%</span> </span>
-<span id="cb452-2"><a href="text-analysis.html#cb452-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(bigrams, comments, <span class="at">token=</span><span class="st">&quot;ngrams&quot;</span>, <span class="at">n=</span><span class="dv">2</span>)</span>
-<span id="cb452-3"><a href="text-analysis.html#cb452-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb452-4"><a href="text-analysis.html#cb452-4" aria-hidden="true" tabindex="-1"></a>cider_2grams <span class="sc">%&gt;%</span> </span>
-<span id="cb452-5"><a href="text-analysis.html#cb452-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(bigrams) <span class="sc">%&gt;%</span> </span>
-<span id="cb452-6"><a href="text-analysis.html#cb452-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span></code></pre></div>
-<pre><code>## # A tibble: 1,230 x 2
+<div class="sourceCode" id="cb472"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb472-1"><a href="text-analysis.html#cb472-1" aria-hidden="true" tabindex="-1"></a>cider_2grams <span class="ot">&lt;-</span> cider_og <span class="sc">%&gt;%</span> </span>
+<span id="cb472-2"><a href="text-analysis.html#cb472-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(bigrams, comments, <span class="at">token=</span><span class="st">&quot;ngrams&quot;</span>, <span class="at">n=</span><span class="dv">2</span>)</span>
+<span id="cb472-3"><a href="text-analysis.html#cb472-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb472-4"><a href="text-analysis.html#cb472-4" aria-hidden="true" tabindex="-1"></a>cider_2grams <span class="sc">%&gt;%</span> </span>
+<span id="cb472-5"><a href="text-analysis.html#cb472-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(bigrams) <span class="sc">%&gt;%</span> </span>
+<span id="cb472-6"><a href="text-analysis.html#cb472-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span></code></pre></div>
+<pre><code>## # A tibble: 1,230 × 2
 ##    bigrams          n
 ##    &lt;chr&gt;        &lt;int&gt;
 ##  1 sweet fruity    11
@@ -935,16 +999,16 @@ A good illustration of such <em>complex</em> situation is text analysis. Before 
 ##  8 not too          7
 ##  9 sweet apple      7
 ## 10 very sweet       7
-## # ... with 1,220 more rows</code></pre>
+## # … with 1,220 more rows</code></pre>
 <p>In our example, <code>sweet fruity</code> is the strongest 2-words association. Other relevant associations are <code>green apple</code>, <code>sweet apple</code>, or <code>very sweet</code>.
 Of course, such bi-grams can also be obtained per product:</p>
-<div class="sourceCode" id="cb454"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb454-1"><a href="text-analysis.html#cb454-1" aria-hidden="true" tabindex="-1"></a>cider_2grams <span class="sc">%&gt;%</span> </span>
-<span id="cb454-2"><a href="text-analysis.html#cb454-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sample) <span class="sc">%&gt;%</span> </span>
-<span id="cb454-3"><a href="text-analysis.html#cb454-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(bigrams) <span class="sc">%&gt;%</span> </span>
-<span id="cb454-4"><a href="text-analysis.html#cb454-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb454-5"><a href="text-analysis.html#cb454-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) <span class="sc">%&gt;%</span> </span>
-<span id="cb454-6"><a href="text-analysis.html#cb454-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(sample <span class="sc">==</span> <span class="st">&quot;182&quot;</span>)</span></code></pre></div>
-<pre><code>## # A tibble: 255 x 3
+<div class="sourceCode" id="cb474"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb474-1"><a href="text-analysis.html#cb474-1" aria-hidden="true" tabindex="-1"></a>cider_2grams <span class="sc">%&gt;%</span> </span>
+<span id="cb474-2"><a href="text-analysis.html#cb474-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sample) <span class="sc">%&gt;%</span> </span>
+<span id="cb474-3"><a href="text-analysis.html#cb474-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(bigrams) <span class="sc">%&gt;%</span> </span>
+<span id="cb474-4"><a href="text-analysis.html#cb474-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb474-5"><a href="text-analysis.html#cb474-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) <span class="sc">%&gt;%</span> </span>
+<span id="cb474-6"><a href="text-analysis.html#cb474-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(sample <span class="sc">==</span> <span class="st">&quot;182&quot;</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 255 × 3
 ##    sample bigrams          n
 ##    &lt;chr&gt;  &lt;chr&gt;        &lt;int&gt;
 ##  1 182    hint of          3
@@ -957,7 +1021,7 @@ Of course, such bi-grams can also be obtained per product:</p>
 ##  8 182    fruity not       2
 ##  9 182    fruity sweet     2
 ## 10 182    hard cider       2
-## # ... with 245 more rows</code></pre>
+## # … with 245 more rows</code></pre>
 <p>For sample <code>182</code>, <code>not sweet</code> appears 3 times which can be surprising since it was one of the sample the most associated to <code>sweet</code> with 22 occurrences.
 <!-- Would perhaps be good to comment on possible interindividual differences in perception, which is one added value of NLP --></p>
 </div>
@@ -987,7 +1051,7 @@ Of course, such bi-grams can also be obtained per product:</p>
 
 </div>
 </div>
-<h3>Bibliography<a href="bibliography.html#bibliography" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-Becue-Bertaut2019" class="csl-entry">
 Bécue-Bertaut, Mónica. 2019. <span>“<span class="nocase">Textual Data Science with R</span>.”</span> <em>Textual Data Science with R</em>. <a href="https://doi.org/10.1201/9781315212661">https://doi.org/10.1201/9781315212661</a>.
@@ -1004,15 +1068,15 @@ Silge, Julia, and David Robinson. 2017. <em><span class="nocase">Text mining wit
 </div>
 <div class="footnotes">
 <hr />
-<ol start="48">
-<li id="fn48"><p>CATA can be seen as a simplified version of open-comments in the sense that respondents also associate products to words, however they lose the freedom of using their own as they need to select them from a pre-defined list.<a href="text-analysis.html#fnref48" class="footnote-back">↩︎</a></p></li>
-<li id="fn49"><p>A token can be a single word, a group of <em>n</em>-words (also know as <em>n-grams</em>), a sentence, or an entire document.<a href="text-analysis.html#fnref49" class="footnote-back">↩︎</a></p></li>
-<li id="fn50"><p>This process is done in iterations: the more you clean your document, the more you find some small things to fix…until you’re set!<a href="text-analysis.html#fnref50" class="footnote-back">↩︎</a></p></li>
-<li id="fn51"><p>Although not present in the text, we will use the next 3 lines of code multiple times to count the number of words present in the data.<a href="text-analysis.html#fnref51" class="footnote-back">↩︎</a></p></li>
-<li id="fn52"><p>As an exercise, you could go deeper into the list and decide by yourself whether you would want to remove more words.<a href="text-analysis.html#fnref52" class="footnote-back">↩︎</a></p></li>
-<li id="fn53"><p>Note that if we were using the original list of stopwords, <code>anti_join()</code> can directly be associated to <code>get_stopwords(source="snowball")</code>.<a href="text-analysis.html#fnref53" class="footnote-back">↩︎</a></p></li>
-<li id="fn54"><p>Different algorithms for different languages exist, so we are not limited to stemming English words.<a href="text-analysis.html#fnref54" class="footnote-back">↩︎</a></p></li>
-<li id="fn55"><p>spaCy is a library written in Python: for the <code>{spacyr}</code> package to work, you’ll need to go through a series of steps that are described here: (<a href="https://cran.r-project.org/web/packages/spacyr/readme/README.html" class="uri">https://cran.r-project.org/web/packages/spacyr/readme/README.html</a>)[<a href="https://cran.r-project.org/web/packages/spacyr/readme/README.html" class="uri">https://cran.r-project.org/web/packages/spacyr/readme/README.html</a>]<a href="text-analysis.html#fnref55" class="footnote-back">↩︎</a></p></li>
+<ol start="54">
+<li id="fn54"><p>CATA can be seen as a simplified version of open-comments in the sense that respondents also associate products to words, however they lose the freedom of using their own as they need to select them from a pre-defined list.<a href="text-analysis.html#fnref54" class="footnote-back">↩︎</a></p></li>
+<li id="fn55"><p>A token can be a single word, a group of <em>n</em>-words (also know as <em>n-grams</em>), a sentence, or an entire document.<a href="text-analysis.html#fnref55" class="footnote-back">↩︎</a></p></li>
+<li id="fn56"><p>This process is done in iterations: the more you clean your document, the more you find some small things to fix…until you’re set!<a href="text-analysis.html#fnref56" class="footnote-back">↩︎</a></p></li>
+<li id="fn57"><p>Although not present in the text, we will use the next 3 lines of code multiple times to count the number of words present in the data.<a href="text-analysis.html#fnref57" class="footnote-back">↩︎</a></p></li>
+<li id="fn58"><p>As an exercise, you could go deeper into the list and decide by yourself whether you would want to remove more words.<a href="text-analysis.html#fnref58" class="footnote-back">↩︎</a></p></li>
+<li id="fn59"><p>Note that if we were using the original list of stopwords, <code>anti_join()</code> can directly be associated to <code>get_stopwords(source="snowball")</code>.<a href="text-analysis.html#fnref59" class="footnote-back">↩︎</a></p></li>
+<li id="fn60"><p>Different algorithms for different languages exist, so we are not limited to stemming English words.<a href="text-analysis.html#fnref60" class="footnote-back">↩︎</a></p></li>
+<li id="fn61"><p>spaCy is a library written in Python: for the <code>{spacyr}</code> package to work, you’ll need to go through a series of steps that are described here: (<a href="https://cran.r-project.org/web/packages/spacyr/readme/README.html" class="uri">https://cran.r-project.org/web/packages/spacyr/readme/README.html</a>)[<a href="https://cran.r-project.org/web/packages/spacyr/readme/README.html" class="uri">https://cran.r-project.org/web/packages/spacyr/readme/README.html</a>]<a href="text-analysis.html#fnref61" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
@@ -1024,20 +1088,20 @@ Silge, Julia, and David Robinson. 2017. <em><span class="nocase">Text mining wit
 <a href="dashboards.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
-<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
-<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script src="libs/gitbook/js/app.min.js"></script>
+<script src="libs/gitbook/js/clipboard.min.js"></script>
+<script src="libs/gitbook/js/plugin-search.js"></script>
+<script src="libs/gitbook/js/plugin-sharing.js"></script>
+<script src="libs/gitbook/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook/js/jquery.highlight.js"></script>
+<script src="libs/gitbook/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
-"github": false,
-"facebook": true,
+"github": true,
+"facebook": false,
 "twitter": true,
 "linkedin": false,
 "weibo": false,
@@ -1052,8 +1116,8 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": null,
-"text": null
+"link": "https://github.com/yihui/bookdown-crc/edit/master/13-text-analysis.Rmd",
+"text": "Edit"
 },
 "history": {
 "link": null,
@@ -1063,13 +1127,13 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["i2ds4scc_bookdown.pdf", "i2ds4scc_bookdown.epub"],
+"download": ["bookdown.pdf", "bookdown.epub"],
 "search": {
 "engine": "fuse",
 "options": null
 },
 "toc": {
-"collapse": "section"
+"collapse": "none"
 }
 });
 });
@@ -1081,7 +1145,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

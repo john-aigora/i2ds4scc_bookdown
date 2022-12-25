@@ -1,0 +1,748 @@
+# Data Manipulation {#data-manip}
+
+> This chapter aims in introducing the `{tidyverse}` as you'll learn how to manipulate and transform your data by exploring simple (e.g. renaming columns, sorting tables, relocating variables, etc.) to complex transformations (e.g. transposing parts of the table, combining/merging tables, etc.)^[Note that some of the examples presented in this chapter emphasize the *how to?*, not the *why?*, and are not necessarily chosen to convey a scientific meaning.]. Such transformations are done through simple examples that are relevant to Sensory and Consumer Science. 
+
+
+## Why Manipulating Data?
+
+Before starting, for this chapter, most functions used are from the `{tidyverse}`. Also many transformations proposed are not being saved. If you want to apply these changes to your data set, please visit \@ref(print-save). Let's start with loading this package:
+  
+```{r, eval=TRUE, echo=TRUE, message=FALSE, warning=FALSE}
+library(tidyverse)
+```
+
+```{r, eval=TRUE, echo=FALSE, message=FALSE}
+library(flextable)
+```
+
+In sensory science, different data collection tools (e.g. different devices, software, methodologies, etc.) may provide the same data in different ways. Also, different statistical analyses may require having the data structured differently. 
+
+A simple example to illustrate this latter point is the analysis of liking data.
+
+Let *C* consumers provide their hedonic assessments on *P* samples. To evaluate if samples have received different mean liking scores at the population level, an ANOVA is performed on a long thin table with 3 columns (consumer, sample, and the liking scores), where the combination of *CxP* is spread in rows.
+
+```{r, eval=TRUE, echo=FALSE, message=FALSE, out.width='90%', fig.cap='Example of a table for an Analysis of Variance.'}
+tibble(
+  Consumer = c("C1", "C1", "...", "C1", "C2", "...", "c", "...", "C"),
+  Product = c("P1", "P2", "...", "P", "P1", "...", "p", "...", "P"),
+  Liking = c(6, 8, "...", 5, 8, "...", "L(c,p)", "...", "L(C,P)")
+) %>%
+  flextable()
+```
+
+However, to assess whether consumers have the same preference patterns at the individual level, internal preference mapping or cluster analysis is performed. Both these analyses require as input a short and large table with the *P* products in rows and the *C* consumers in columns. 
+
+```{r, eval=TRUE, echo=FALSE, message=FALSE, out.width='90%', fig.cap='Example of a table for Internal Preference Mapping or Clustering'}
+tibble(
+  Product = c("P1", "P2", "...", "p", "...", "P"),
+  C1 = c(6, 8, "...", 3, "...", 5),
+  C2 = c(8, 4, "...", 7, "...", 6),
+  " ..." = c(".", ".", ".", ".", ".", "."),
+  c = c(".", ".", ".", "L(p,c)", ".", "L(P,c)"),
+  "... " = c(".", ".", ".", ".", ".", "."),
+  C = c(".", ".", ".", "L(p,C)", ".", "L(P,C)")
+) %>%
+  flextable()
+```
+
+Another example of data manipulation consists in summarizing data, by for instance computing the mean by product of the liking scores, or by generating frequency tables (e.g. distribution of the liking scores by product etc.). In this case, the transformation alters the data as the individual differences are lost. Ultimately, the output table is smaller as it would contain here only *P* rows and 2 columns:
+  
+```{r, eval=TRUE, echo=FALSE, message=FALSE, out.width='90%', fig.cap='Example of Mean Table'}
+tibble(Product = c("P1", "P2", "...", "p", "...", "P"),
+       Liking = c(6.4, 8.2, "...", 7.1, "...", 6.1)) %>%
+  flextable()
+```
+
+For these reasons, it is essential to learn to manipulate data and transition from one structure to another (when possible). 
+
+## Tidying Data {#tidy-data}
+
+Hadley Wickham (@Wickham2014) defined *tidy data* as "data sets that are arranged such that each variable is a column and each observation (or case) is a row." Depending on the statistical unit to consider and the analyses to perform, data may need to be manipulated to be presented in a tidy form. 
+
+### Simple Manipulations
+
+We define here as *simple manipulations* any data transformations that can easily be performed in other software such as Excel (using copy-paste, sorting and filtering, creating a pivot table, etc.). However, we strongly recommend performing any sorts of transformation in R as this will reduce the risk of errors, typically be faster, more reliable, and will be reusable if you need to perform the same operations on similar data in the future (including updated versions of the current data set). Moreover, these operations will become easier and more natural for you to use as you get familiar with them. Most importantly, performing these transformations in R do not alter the original data, meaning that changes can be reverted (which is not possible when you alter the raw data directly).
+
+#### Handling Columns
+
+##### Renaming Variables {#renaming}
+
+Before starting transforming any data, we need data. So let's start with importing the *biscuits_sensory_profile.xlsx* file^[For more details about the data set and/or data importation, please see Section \@ref(data-import).]. For importing the data, the packages `{here}` and `{readxl}` are being used. Here, the data are being saved in the object called `sensory`:
+
+```{r, eval=TRUE, echo=TRUE, message=FALSE}
+library(here)
+library(readxl)
+file_path <- here("data", "biscuits_sensory_profile.xlsx")
+sensory <- read_xlsx(file_path, sheet = "Data")
+```
+
+The first simple transformation we consider consists of renaming one or multiple variables. This procedure can easily be done using the `rename()` function from `{dplyr}`.  In each of the examples below, we use the `names()` function to show just the names of the resulting data set.
+
+```{r, eval=FALSE, echo=TRUE}
+sensory %>%
+  names()
+```
+
+```{r, eval=TRUE, echo=FALSE}
+sensory %>%
+  names() %>%
+  .[1:5]
+```
+
+In `sensory`, let's rename `Judge` into `Panellist`, and `Product` into `Sample` (here we apply transformations without saving the results, so the original data set remains unchanged).
+
+To do so, we indicate in `rename()` that *new_name* is replacing *old_name* as following `rename(newname = oldname)`. Additionally, we can apply multiple changes by simply separating them with a `,`:
+  
+```{r, eval=FALSE, echo=TRUE}
+sensory %>%
+  rename(Panellist = Judge, Sample = Product) %>%
+  names()
+```
+
+```{r, eval=TRUE, echo=FALSE}
+sensory %>%
+  rename(Panellist = Judge, Sample = Product) %>%
+  names() %>%
+  .[1:5]
+```
+
+Alternatively, it is also possible to rename a column using its position:
+  
+```{r, eval=FALSE, echo=TRUE}
+sensory %>%
+  rename(Consumer = 1, Biscuit = 2) %>%
+  names()
+```
+
+```{r, eval=TRUE, echo=FALSE}
+sensory %>%
+  rename(Consumer = 1, Biscuit = 2) %>%
+  names() %>%
+  .[1:5]
+```
+
+If this procedure of renaming variables should be applied on many variables following a structured form (e.g. transforming names into snake_case, CamelCase, ..., see [https://en.wikipedia.org/wiki/Letter_case#Use_within_programming_languages](https://en.wikipedia.org/wiki/Letter_case#Use_within_programming_languages) for more information), the use of the `{janitor}` package comes handy thanks to its `clean_names()` function and the `case` parameter:
+
+```{r, eval=FALSE, echo=TRUE}
+library(janitor)
+
+sensory %>%
+  clean_names(case = "snake") %>%
+  names()
+```
+
+```{r, eval=TRUE, echo=FALSE, message=FALSE}
+library(janitor)
+sensory %>%
+  clean_names(case = "snake") %>%
+  names() %>%
+  .[1:5]
+```
+
+Note that the `{janitor}` package offers many options, and although the transformation is performed here on all the variables, it is possible to apply it on certain variables only.
+
+##### Re-Organizing Columns
+
+Another simple transformation consists in re-organizing the data set, either by re-ordering, adding, and/or removing columns.
+
+For re-ordering columns, `relocate()` is being used. This function allows re-positioning a (set of) variable(s) before or after another variable. By re-using the `sensory` data set, let's position all the variables starting with 'Qty' between `Product` and `Shiny`. This can be specified in two different ways, either by positioning them after `Product` or before `Shiny`:
+
+```{r, eval=FALSE, echo=TRUE}
+sensory %>%
+  relocate(starts_with("Qty"), .after = Product) %>%
+  names()
+
+sensory %>%
+  relocate(starts_with("Qty"), .before = Shiny) %>%
+  names()
+```
+
+```{r, eval=TRUE, echo=FALSE}
+sensory %>%
+  relocate(starts_with("Qty"), .after = Product) %>%
+  names() %>%
+  .[1:5]
+
+sensory %>%
+  relocate(starts_with("Qty"), .before = Shiny) %>%
+  names() %>%
+  .[1:5]
+```
+
+##### Removing/Selecting Columns
+
+Another very important function regarding columns transformation is the `select()` function from `{dplyr}` (see Section \@ref(packages) for a justification of the particular writing `dplyr::select()`) which allows selecting a set of variables, by simply informing the variables that should be kept in the data. Let's limit ourselves in selecting `Judge`, `Product`, and `Shiny`:
+
+```{r, eval=TRUE, echo=TRUE}
+sensory %>%
+  dplyr::select(Judge, Product, Shiny)
+```
+
+When a long series of variables should be kept in the same order, the use of the `:` is used.
+
+Let's keep all the variables going from `Cereal flavor` to `Dairy flavor`:
+
+```{r, eval=TRUE, echo=TRUE}
+sensory %>%
+  dplyr::select(Judge, Product, `Cereal flavor`:`Dairy flavor`)
+```
+
+However, when only one (or few) variable needs to be removed, it is easier to specify which one to remove rather than informing all the ones to keep. Such solution is then done using the `-` sign. The previous example can then be obtained using the following code:
+
+```{r, eval=FALSE, echo=TRUE}
+sensory %>%
+  dplyr::select(-c(Shiny, Melting))
+```
+
+The selection process of variables can be further informed through functions such as `starts_with()`, `ends_with()`, and `contains()`, which all select variables that either starts, ends, or contains a certain character or sequence of character. To illustrate this, let's only keep the variables that starts with 'Qty':
+
+```{r, eval=TRUE, echo=TRUE}
+sensory %>%
+  dplyr::select(starts_with("Qty"))
+```
+
+Rather than selecting variables based on their names, we can also select them based on their position (e.g. `dplyr::select(2:5)` to keep the variables that are at position 2 to 5).
+
+Selection of variables can also be done using some *rules* thanks to the `where()` function. Let's consider the situation in which we only want to keep the variables that are nominal (or *character* in R), which automatically keeps `Judge` and `Product`:
+
+```{r, eval=TRUE, echo=TRUE}
+sensory %>%
+  dplyr::select(where(is.character))
+```
+
+`dplyr::select()` is a very powerful function that facilitates the selection of complex variables through very intuitive functions. Ultimately, it can also be used to `relocate()` and even `rename()` variables, as shown in the example below:
+
+```{r, eval=FALSE, echo=TRUE}
+sensory %>%
+  dplyr::select(Panellist = Judge, Sample = Product, Shiny:Thickness, -contains("olor"))
+```
+
+More examples illustrating the use of `dplyr::select()` are provided throughout the book. In particular, in the next session, another important function called `across()` will be introduced. This function can also be associated with `dplyr::select()` to give even more freedom in our selection. An example of such application is given in ...
+
+##### Creating Columns
+
+In some cases, new variables need to be created from existing ones. Examples of such situations include taking the quadratic term of a sensory attribute to test for curvature, or simply considering a new variables as the sum or the subtraction between two (or more) others. Such creation of a variable is processed through the `mutate()` function from the `{dplyr}` package. This function takes as inputs the name of the variable to create, and the *formula* that defines that variable.
+
+Let's create two new variables, one called `Shiny2` which corresponds to `Shiny` squared up, and one called `StiMelt` which corresponds to `Sticky` + `Melting.` Since we only use these three variables, let's first reduce the data set to these three variables with `select()` to improve readability:
+
+```{r, eval=TRUE, echo=TRUE}
+sensory %>%
+  dplyr::select(Shiny, Sticky, Melting) %>%
+  mutate(
+    Shiny2 = Shiny^2,
+    StiMelt = Sticky + Melting
+  )
+```
+
+>If you want to transform a variable, say by changing its type, or re-writing its content, you can use `mutate()` and assign to the new variable the same name as the original one. This will overwrite the existing column with the new one. To illustrate this, let's transform `Product` from upper case to lower case only. This can be done by mutating `Product` into the lowercase version of `Product` (`tolower(Product)`):
+>
+```{r}
+sensory %>%
+  mutate(Product = tolower(Product))
+```
+> `mutate()` being one of the most important function from the `{dplyr}` package, more examples of its use are presented throughout this book.
+
+Since performing mathematical computations on non-numerical columns is not possible, conditions can easily be added through `mutate()` combined with `across()`. Let's imagine we want to round all variables to 0 decimal, which can only be applied to numerical variables. 
+To do so, we `mutate()` `across()` all variables that are considered `as.numeric()` (using `where()`):
+
+```{r, eval=TRUE, echo=TRUE}
+sensory %>%
+  mutate(across(where(is.numeric), round, digits = 0))
+```
+
+In case only a selection of numerical variables should be rounded, we could also replace `where(is.numeric)` by a vector (using `c()`) with the names of the variables to round.
+
+```{r, eval=FALSE, echo=TRUE}
+sensory %>%
+  dplyr::select(Shiny, Sticky, Melting) %>%
+  mutate(across(c("Shiny", "Sticky"), round, digits = 0))
+```
+
+##### Merging and Separating columns
+
+It can happen that some columns of a data set contain information (strings) that cover different types of information. For instance, we could imagine coding the name of our panelists as *FirstName_LastName* or *Gender_Name*, and we would want to separate them into two columns to make the distinction between the different information (i.e. *FirstName* and *LastName*, or *Gender* and *Name* respectively). In other situations, we may want to merge information present in multiple columns into one. 
+
+For illustration, let's consider the information stored in the *Product Info* sheet from *biscuits_sensory_profile.xlsx*. This table includes information regarding the biscuits, and more precisely their Protein and Fiber content (Low or High). 
+
+After importing the data, let's merge these two columns so that both information is stored in one column called `ProtFib`. 
+To do so, `unite()` (from `{tidyr}`) is used. This function takes as first element the name of the new variables, followed by all the columns to *unite*, and by providing the separation key to use between these elements (here *-*):
+
+```{r, eval=TRUE, echo=TRUE}
+(prod_info <- read_xlsx(file_path, sheet = "Product Info") %>%
+  unite(ProtFib, Protein, Fiber, sep = "-"))
+```
+
+By default, `unite()` removes from the data set the individual variables that have been merged. To keep these original variables, the parameter `remove = FALSE` can be used. 
+
+> Although it is not relevant for combining columns, it is interesting to mention an additional package that can be used to combine elements together. This package is called `{glue}` and provides interesting alternatives to the usual `paste()` and `paste0()` functions. 
+
+To reverse the changes (saved here in `prod_info`) and to separate a column into different variables, `separate()` (from `{tidyr}`) is used. Similarly to `unite()`, `separate()` takes as first parameter the name of the variable to split, followed by the names for the different segments generated, and of course the separator defined by `sep`. 
+
+In our example, this would be done as following:
+
+```{r, eval=TRUE, echo=TRUE}
+prod_info %>%
+  separate(ProtFib, c("Protein", "Fiber"), sep = "-")
+```
+
+##### Conditions
+
+In some cases, the new column to create depend directly on the value(s) of one or more columns present in the data. 
+An examples of such situations consists in categorizing a continuous variable into groups by converting the age (in year) of the participants into age groups. For such simple examples, some pre-existing functions (e.g. `cut()` in this situation) can be used.
+However, in other situations, pre-defined functions do not exist and the transformation should be done *manually* using conditions.
+
+Let's illustrate this by converting the `Shiny` variable (from `sensory`) from numeric to classes.
+                                                                                                                                                                       Since the scale used is a 60pt scale, let's start by creating a class called *Low* if the score is lower than 30, and *High* otherwise. 
+
+Here, pre-defined functions (e.g. `cut()`) are not being used intentionally as a manual transformation is preferred. Instead, `mutate()` is associated to `ifelse()`, which works as following: `ifelse(condition, results if condition is TRUE, results if condition is not TRUE)`
+
+```{r, eval=TRUE, echo=TRUE}
+sensory %>%
+  dplyr::select(Shiny) %>%
+  mutate(ShinyGroup = ifelse(Shiny < 30, "Low", "High"))
+```
+
+Let's imagine the same variable should now be split into three levels: *Low*, *Medium*, and *High*. Such additional group could be obtained by adding an `ifelse()` condition within the existing `ifelse()` condition (we use 48 instead of 40 for the upper limit to `Medium` so that results are displayed on screen):
+
+```{r, eval=TRUE, echo=TRUE}
+sensory %>%
+  dplyr::select(Shiny) %>%
+  mutate(ShinyGroup = ifelse(Shiny < 20, "Low",
+                             ifelse(Shiny < 48, "Medium", "High")))
+```
+
+Since there are only 3 conditions in total here, only two entangled `ifelse()` are required. This makes the code still manageable. However, in more complex situations (say 10 different conditions are required), such solution quickly becomes tedious to read, to track, and to debug if errors are being made. Instead, the use of an alternative function called `case_when()` is preferred. In the previous case, the same conditions would be written as follow:
+
+```{r, eval=TRUE, echo=TRUE}
+sensory %>%
+  dplyr::select(Shiny) %>%
+  mutate(ShinyGroup = case_when(
+    Shiny < 20 ~ "Low",
+    between(Shiny, 20, 48) ~ "Medium",
+    Shiny > 40 ~ "High"))
+```
+
+This provides the same results as previously, except for the exact value 48 which was assigned as *High* in the `ifelse()` example and to *Medium* in the `case_when()` example. This is due to the way `between()`^[By default, `between(x, value1, value2)` considers value1 <= x <= value2.] considers its borders.
+
+#### Handling Rows
+
+After manipulating columns, the next logical step is to manipulate rows. Such operations include three aspects:
+
+1. Re-arranging the rows in a logical way; 
+2. Selecting certain rows;
+3. Filtering entries based on given variables;
+4. Splitting the data in sub-groups based on the entries of a given variable.
+
+##### Re-arranging Rows
+
+The first step of re-arranging rows is done through the `arrange()` function from the `{dplyr}` package. This function allows sorting the data in the ascending order^[For numerical order, this is simply re-arranging the values from the lowest to the highest. For strings, the entries are then sorted alphabetically unless the variable is a factor in which case the order of the levels for that factor is being used.]. To arrange them in a descending order, the function `desc()` is then required.
+
+Let's re-arrange the data by `Judge` and `Product`, `Judge` being sorted in an ascending order whereas `Product` is being sorted in a descending order:
+
+```{r, eval=TRUE, echo=TRUE}
+sensory %>%
+  arrange(Judge, desc(Product))
+```
+
+##### Selecting Rows
+
+The next step is to select a subset of the data by keeping certain rows only. If the position of the rows to keep is know, this information can be used directly using the `slice()` function. Let's select from `sensory` all the data that is related to `P01`. A quick look at the data informs us that it corresponds to rows 1 to 89, with a step of 11:
+
+```{r, eval=TRUE, echo=TRUE}
+sensory %>%
+  slice(seq(1, 89, 11))
+```
+
+This is a manual way to select data. However, this procedure may generate an erroneous subset in the case that the row order in the data changes. To avoid mistakes, a more *stable* procedure of filtering data is proposed in the next section.
+
+##### Filtering Data
+
+To define sub-set of data, the `filter()` function is being used. This function requires providing an argument that is expressed as a *test*, meaning that the outcome should either be TRUE (keep the value) or FALSE (discard the value) when the condition is verified or not respectively. In R, this is expressed by the double '=' sign `==`. 
+
+Let's filter the data to only keep the data related to sample `P02`:
+
+```{r, eval=TRUE, echo=TRUE}
+sensory %>%
+  filter(Product == "P02")
+```
+
+Other relevant test characters are the following:
+
+* `!Product == "P02"` or `Product != "P02"` means different from, and will keep all samples except `P02`;
+* `%in% my_vector` keeps any value included within the vector `my_vector` (e.g. `Product %in% c("P01","P02","P03")` keeps all data from `P01`, `P02`, and `P03`)
+ 
+In some cases, the tests to perform are more complex as they require multiple conditions. 
+There are two forms of conditions:
+
+* `&` (read *and*) is multiplicative, meaning that all the conditions need to be true (`Product == "P02" & Shiny > 40`);
+* `|` (read *or*) is additive, meaning that only one of the conditions needs to be true (`Product == "P03" | Shiny > 40`)
+  
+This system of condition is particularly useful when you have missing values as you could remove all the rows that contain missing values for a given variable. Since we do not have missing values here, let's create some by replacing all the evaluations for `Shiny` that are larger than 40 by missing values. This is done here using `ifelse()`, which takes three arguments (in this order): the test to perform (here `Shiny > 40`), the instruction if the test passes (here replace with `NA`), and the instruction if the test doesn't pass (here keep the value stored in `Shiny`).
+
+```{r, eval=FALSE, echo=TRUE}
+sensory_na <- sensory %>%
+  dplyr::select(Judge, Product, Shiny) %>%
+  mutate(Shiny = ifelse(Shiny > 40, NA, Shiny))
+```
+
+In a second step, we filter out all missing values from `Shiny`. In practice, this is done by keeping all the values that are not missing:
+
+```{r, eval=FALSE, echo=TRUE}
+sensory_na %>%
+  filter(!is.na(Shiny))
+```
+
+This procedure removed 20 rows since the original table had 99 rows and 3 columns, whereas the filtered table only has 79 rows and 3 columns.
+
+##### Splitting Data
+
+After filtering data, the next logical step is to split data into subsets based on a given variable (e.g. by gender). For such purpose, one could consider using `filter()` by applying it to each subgroup. In a previous example, this is what we have done when we filtered data for sample `P02` only. Of course, the same procedure can be performed until all the other sub-groups are created. However, this solution becomes tedious as the number of samples increases. Instead, we prefer to use `split()` which takes as arguments the data and the column to split from:
+
+```{r, eval=FALSE, echo=TRUE}
+sensory %>%
+  split(.$Product)
+```
+
+This function creates a list of *n* elements (*n* being the number of samples), each element corresponding to the data related to one sample. Such list can then be used in automated analyses by performing on each sub-data through the `map()` function, as it will be illustrated in section REF. 
+
+### Reshaping Data {#pivots}
+
+Reshaping the data itself is done through pivoting which allows transitioning from a long and thin table to a short and wide table and vice-versa. 
+
+To illustrate this, let's start with a fictive example in which we have 3 consumers providing their liking scores for 2 products, This table corresponds to a long and thin format:
+
+```{r, eval=TRUE, echo=FALSE, message=FALSE}
+library(flextable)
+tibble(Consumer = c("C1", "C1", "C2", "C2", "C3", "C3"),
+       Product = c("P1", "P2", "P1", "P2", "P1", "P2"),
+       Liking = c(8, 5, 9, 6, 7, 4)) %>%
+  flextable()
+```
+
+Let's imagine we need to re-structure the data where products are displayed in rows, and consumers in columns. This corresponds to the short and wide format:
+
+```{r, eval=TRUE, echo=FALSE}
+tibble(
+  Consumer = c("C1", "C1", "C2", "C2", "C3", "C3"),
+  Product = c("P1", "P2", "P1", "P2", "P1", "P2"),
+  Liking = c(8, 5, 9, 6, 7, 4)) %>%
+  pivot_wider(names_from = Consumer, values_from = Liking) %>%
+  flextable()
+```
+
+As we will see in the following section, it is very easy to transition from one version to another thanks to `pivot_longer()` and `pivot_wider()`, both being functions from `{tidyr}`.
+
+#### Pivotting Longer
+
+Currently, our `sensory` data table is a table in which we have as many rows as Judge x Product, the different attributes being spread across multiple columns. However, in certain situations, it is relevant to have all the attributes stacked vertically, meaning that the table will have Judge x Product x Attributes rows. Such simple transformation can be done with `pivot_longer()` which takes as inputs the attributes to pivot, the name of the variables that will contain these names (`names_to`), and the name of the column that will contain their entries (`values_to`)
+
+>With `pivot_longer()` and any other function that requires selecting variables, it is often easier to deselect variables that we do not want to include rather than selecting all the variables of interest. Throughout the book, both solutions are being considered.
+
+```{r, eval=TRUE, echo=TRUE}
+sensory %>%
+  pivot_longer(Shiny:Melting, names_to = "Attribute", values_to = "Score")
+```
+
+This transformation converts a table of 99 rows and 34 columns into a table containing 3168 (99*32) rows and 4 columns.
+In the pivoted table, the names of the variables (stored here in *Attribute*) are in the same order as presented in the original table.
+
+In case the attribute names are following a standard structure, say "attribute_name modality" as is the case in `sensory` for some attributes, an additional parameter of `pivot_longer()` becomes handy as it can split the `Attribute` variable just created into say `Attribute` and `Modality`. 
+
+To illustrate this, let's reduce `sensory` to `Judge`, `Product`, and all the variables that end with odor or flavor (all other variables being discarded). After pivoting the subset of columns, we automatically split the attribute names into `Attribute` and `Modality` by informing the separator between names (here, a space):
+
+```{r, eval=TRUE, echo=TRUE}
+sensory %>%
+  dplyr::select(Judge, Product, ends_with("odor"), ends_with("flavor")) %>%
+  pivot_longer(-c(Judge, Product), names_to = c("Attribute", "Modality"), values_to = "Score", names_sep = " ")
+```
+
+This parameter combines both the power of `pivot_longer()` and `separate()` in one unique process. 
+
+Note that more complex transformations through the use of regular expressions (and the `names_pattern` option) can be considered. More information on this topic is provided in REF CHAPTER TEXTUAL (TO CHECK IF IT IS THE CASE!).
+
+> It can happen that with `pivot_longer()`, further transformation performed on the long and thin table may not maintain their original order (usually, the names are re-ordered alphabetically). If such re-ordering should not happen as it would impact the final results, there is a simple work around that ensure that the order is kept. The solution simply consists in transforming the newly created variable as a factor which takes as levels the order of the elements as they were in the original data (use `fct_inorder()` to maintain the order as shown in the data). To illustrate this, let's look at the two following results:
+>
+```{r, eval=FALSE, echo=TRUE}
+sensory %>%
+  dplyr::select(Judge, Product, Shiny, Salty, Bitter, Light) %>%
+  pivot_longer(-c("Judge", "Product"), names_to = "Variable", values_to = "Score") %>%
+  split(.$Variable) %>%
+  names(.)
+sensory %>%
+  dplyr::select(Judge, Product, Shiny, Salty, Bitter, Light) %>%
+  pivot_longer(-c("Judge", "Product"), names_to = "Variable", values_to = "Score") %>%
+  mutate(Variable = fct_inorder(Variable)) %>%
+  split(.$Variable) %>%
+  names(.)
+```
+> Other examples using this trick will be used throughout this book (e.g. see Section REF)
+
+As an alternative to  `pivot_longer()`, the package called `{reshape2}` provides a function called `melt()` which pivots automatically the entire set of numerical variables, the qualitative variables being considered as *id variables*. If performed on a matrix with row names, the new table will have two columns containing the row and column names.
+
+```{r, eval=FALSE, echo=TRUE}
+library(reshape2)
+melt(sensory)
+```
+
+#### Pivotting Wider
+
+The complementary/opposite function to `pivot_longer()` is `pivot_wider()`. This function pivots data horizontally, hence reducing the number of rows and increasing the number of columns. In this case, the two main parameters to provide is which column will provide the new columns to create (`name_from`), and what are the values to use to fill this table (`values_from`). 
+
+From the previous example, we could set `names_from = Attribute` and `values_from = Score` to return to the original format of `sensory`. However, let's reduce the data set to `Product`, `Judge`, and `Shiny` only, and let's pivot the `Judge` and `Shiny` columns:
+
+```{r, eval=TRUE, echo=TRUE}
+sensory %>%
+  dplyr::select(Judge, Product, Shiny) %>%
+  pivot_wider(names_from = Judge, values_from = Shiny)
+```
+
+This procedure creates a table with as many rows as there are products, and as many columns as there are panelists (+1 since the product information is also in a column).
+
+These procedures are particularly useful in consumer studies, since `pivot_longer()` and `pivot_wider()` allows restructuring the data for analysis such as ANOVA (`pivot_longer()` output) and preference mapping or clustering (`pivot_wider()` structure).
+
+It is important to notice that the `pivot_wider()` format potentially contains more data. Let's imagine the sensory test was performed following an incomplete design, meaning that each panelist did not evaluate all the samples. Although the long and thin structure would not show missing values (the entire rows without data being removed), the shorter and larger version would contain missing values for the products that panelists did not evaluate. If the user wants to automatically replace these missing values with a fixed value, say, it is possible through the parameter `values_fill` (e.g. `values_fill=0` would replace each missing value with a 0). Additionally, after pivoting the data, if multiple entries exist for a combination row-column, `pivot_wider()` will return a list of elements. In the next Section, an example illustrating such situation and how to present it will be presented.
+
+### Transformation that Alters the Data
+
+In some cases, the final table to generate requires altering the data, by (say) computing the mean across multiple values, or counting the number of occurrences of factor levels for instance. In other words, we summarize the information, which also tend to reduce the size of the table. It is hence no surprise that the function used for such data reduction is called `summarise()` (or `summarize()`, both notation work) and belongs to the `{dplyr}` package.
+
+#### Introduction to Summary Statistics
+
+In practice, `summarise()` applies a function (whether it is the `mean()`, or a simple count using `n()` for instance) on a set of values. Let's compute the mean on all numerical variables of `sensory`:
+
+```{r, eval=TRUE, echo=TRUE}
+sensory %>%
+  summarise(across(where(is.numeric), mean))
+```
+
+As can be seen, the grand mean is computed for each attribute. It can also be noticed that all the other variables that were not involved have been removed (e.g. `Judge` and `Product` as they are not numerical variables).
+
+If multiple functions should be applied, we could perform all the transformation simultaneously as following:
+
+```{r, eval=TRUE, echo=TRUE}
+sensory %>%
+  summarise(across(where(is.numeric), list(min = min, max = max)))
+```
+
+In this example, each attribute is duplicated with `_min` and `_max` to provide the minimum and maximum value for each attribute. 
+
+> It would be a good exercise to restructure this table using `pivot_longer()` with `names_sep` followed by `pivot_wider()` to build a new table that shows for each attribute (in rows) the minimum and the maximum in two different columns.
+
+By following the same principles, many other functions can be performed, whether they are built-in R or created by the user. 
+
+Here is a recommendation of interesting descriptive functions to consider with `summarise()`:
+
+* `mean()`, `median()` (or more generally `quantile()`) for the mean and median (or any other quantile);
+* `sd()` and `var()` for the standard deviation and the variance;
+* `min()`, `max()`, `range()` (provides both the min and max) or `diff(range())` (for the difference between min and max); 
+* `n()` and `sum()` for the number of counts and the sum respectively. 
+
+#### Introduction to *grouping*
+
+It can appear that the interest is not in the grand mean, but in the mean per product (say), or per product and panelist (for test with duplicates). In such cases, `summarize()` should aggregate set of values per product, or per product and panelist respectively. Such information can be passed on through `group_by()`^[We strongly recommend you to `ungroup()` blocks of code that includes `group_by()` once the computations are done to avoid any unexpected results. Otherwise, further computations may be done on the groups when it should be performed on the full data.]. 
+
+```{r, eval=TRUE, echo=TRUE}
+sensory %>%
+  group_by(Product) %>%
+  summarise(across(where(is.numeric), mean)) %>%
+  ungroup()
+```
+
+This procedure creates a tibble with 11 rows (product) and 33 columns (32 sensory attributes + 1 column including the product information) which contains the mean per attribute for each sample, also known as the sensory profiles of the products.
+
+> In some cases, the data should not be aggregated across rows, but by rows. In such cases, it is important to specify that each computation should be done per row by using `rowwise()` prior to performing the transformation. For instance, if we would want to extract the minimum between `Shiny`, `Salty`, and `Bitter`, we could write the following code:
+>
+```{r, eval=FALSE, echo=TRUE}
+sensory %>%
+  dplyr::select(Judge, Product, Shiny, Salty, Bitter) %>%
+  rowwise() %>%
+  mutate(Min = min(Shiny, Salty, Bitter))
+```
+
+#### Illustrations of Data Manipulation {#means}
+
+Let's review the different transformations presented here by generating the sensory profiles of the samples through different approaches^[It is important to realize that any data manipulation challenge can be tackled in many different ways, so don't be afraid to think out of the box when solving them.].
+
+In the previous example, we've seen how to obtain the sensory profile using `summarise()` `across()` all numerical variables. In case a selection of the attributes should have been done, we could use the same process by simply informing which attributes to transform:
+
+```{r, eval=FALSE, echo=TRUE}
+sensory %>%
+  group_by(Product) %>%
+  summarise(across(Shiny:Melting, mean)) %>%
+  ungroup()
+```
+
+The list of attributes to include can also be stored in an external vector:
+
+```{r, eval=FALSE, echo=TRUE}
+sensory_attr <- colnames(sensory)[5:ncol(sensory)]
+sensory %>%
+  group_by(Product) %>%
+  summarise(across(all_of(sensory_attr), mean)) %>%
+  ungroup()
+```
+
+A different approach consists in combining `summarise()` to `pivot_longer()` and `pivot_wider()`. This process requires summarizing only one column by Product and Attribute:
+
+```{r, eval=FALSE, echo=TRUE}
+sensory %>%
+  pivot_longer(Shiny:Melting, names_to = "Attribute", values_to = "Scores") %>%
+  mutate(Attribute = fct_inorder(Attribute)) %>%
+  group_by(Product, Attribute) %>%
+  summarise(Scores = mean(Scores)) %>%
+  pivot_wider(names_from = Attribute, values_from = Scores) %>%
+  ungroup()
+```
+
+Here, we transformed `Attribute` into a factor using `fct_inorder()` to ensure that the double pivoting procedure maintains the original order. Without this line of code, the final table would have the columns reordered alphabetically.
+
+> As you can see, R provides the following message: *`summarise()` has grouped output by 'Product'. You can override using the `.groups` argument.* This message is just informative, and can be hidden by adding the following code at the start of your script: `options(dplyr.summarise.inform = FALSE)`.
+
+What would happen if we would omit to `summarise()` the data in between the two pivoting functions? In that case, we also remove the column `Judge` since the means should be computed across panelists...
+
+```{r, eval=FALSE, echo=TRUE}
+sensory %>%
+  pivot_longer(Shiny:Melting, names_to = "Attribute", values_to = "Scores") %>%
+  dplyr::select(-Judge) %>%
+  pivot_wider(names_from = Attribute, values_from = Scores)
+```
+
+As can be seen, each variable is of type list in which each cell contains `dbl [9]`: This corresponds to the scores provided by the 9 panelists to that product and that attribute. Since we would ultimately want the mean of these 9 values to generate the sensory profiles, a solution comes directly within `pivot_wider()` through the parameter `values_fn` which applies the function provided here on each set of values:
+
+```{r, eval=FALSE, echo=TRUE}
+sensory %>%
+  pivot_longer(Shiny:Melting, names_to = "Attribute", values_to = "Scores") %>%
+  dplyr::select(-Judge) %>%
+  pivot_wider(names_from = Attribute, values_from = Scores, values_fn = mean)
+```
+
+Through this simple example, we've seen that the same results can be obtained through different ways. It is important to keep this in mind as you may find the solution to your own challenges by simply considering different paths.
+
+### Combining Data from Different Sources
+
+It often happens that the data to analyze is stored in different files, and need to be combined or merged. Depending on the situations, different solutions are required.
+
+#### Binding Vertically
+
+Let's start with a simple example where the tables match in terms of variables, and should be combined vertically. To illustrate this situation, the data stored in the file *excel-scrap.xlsx* is used. This file contains a fictive example in which 12 assessors evaluated 2 samples on 3 attributes in triplicate, each replication being stored in a different sheet.
+
+The goal here is to read the data stored in the different sheets, and to combine them vertically in one unique file for further analysis. Let's start with importing the data:
+
+```{r, eval=TRUE, echo=TRUE}
+path <- file.path("data", "excel_scrap.xlsx")
+session1 <- read_xlsx(path, sheet = 1)
+session2 <- read_xlsx(path, sheet = 2)
+session3 <- read_xlsx(path, sheet = 3)
+```
+
+To combine the tables vertically, we could use the basic R function `rbind()`. However, we prefer to use `bind_rows()` from `{dplyr}` since it better controls for the columns by ensuring that the order is respected. Moreover, if one of the tables contains a variable that the other don't, this variable will be kept and filled in with missing values when the information is missing. Additionally, we`bind_rows()` allows keeping track of the *origin* of the data through the parameter `.id`. This is of particular interest in this example since a new `Session` column can be created (and used) to distinguish between tables. This process is used to avoid losing such useful information especially since it is not directly available within the data: If it were, the parameter `.id` could have been ignored.
+
+```{r, eval=FALSE, echo=FALSE}
+all_data <- bind_rows(session1, session2, session3, .id = "Session")
+```
+
+This solution works fine, especially since there were only 3 files to combine. Ultimately, we would prefer to automate the reading process so that all the files are directly imported and combined. This more efficient solution is presented in \@ref(import-mult-sheet).
+
+#### Binding Horizontally
+
+In other cases, the tables to combine contain different information (variables) on the same entities (rows), and the tables should be merged horizontally. To do so, a first solution consists in using the functions `cbind()` (`{base}`) and/or `bind_cols()` (`{dplyr}`) can be used. However, some of these functions require that the tables to combine must already have the rows in the exact same order (no check is being done) and must be of the same size.
+
+If that is not the case, merging tables should be done using `merge()` (`{base}`), or preferably through the different `*_join()` functions from (`{dplyr}`). For illustration, let's consider these two tables to merge:
+
+```{r, eval=TRUE, echo=FALSE}
+tibble(
+  Product = c("A", "B", "C"),
+  Var1 = c(1, 2, 3)
+) %>%
+  flextable()
+tibble(
+  Product = c("A", "B", "D"),
+  Var2 = c(1, 2, 4)
+) %>%
+  flextable()
+```
+
+Depending on the *merging degree* to consider between tables X and Y, there are four different `*_join()` versions to consider:
+
+* `full_join()` keeps all the cases from X and Y regardless whether they are present in the other table or not (in case they are not present, missing values are introduced) [it corresponds to `merge(all=TRUE)`];
+
+```{r, eval=TRUE, echo=FALSE}
+tibble(Product = c("A", "B", "C"), Var1 = c(1, 2, 3)) %>%
+  full_join(tibble(Product = c("A", "B", "D"), Var2 = c(1, 2, 4)), by = "Product") %>%
+  flextable()
+```
+
+* `inner_join()` only keeps the common cases, i.e. cases that are present in both X and Y [corresponds to `merge(all=FALSE)`];
+
+```{r, eval=TRUE, echo=FALSE}
+tibble(Product = c("A", "B", "C"), Var1 = c(1, 2, 3)) %>%
+  inner_join(tibble(Product = c("A", "B", "D"), Var2 = c(1, 2, 4)), by = "Product") %>%
+  flextable()
+```
+
+* `left_join()` keeps all the cases from X [corresponds to `merge(all.x=TRUE, all.y=FALSE)`];
+
+```{r, eval=TRUE, echo=FALSE}
+tibble(Product = c("A", "B", "C"), Var1 = c(1, 2, 3)) %>%
+  left_join(tibble(Product = c("A", "B", "D"), Var2 = c(1, 2, 4)), by = "Product") %>%
+  flextable()
+```
+
+* `right_join()` keeps all the cases from Y [corresponds to `merge(all.x=FALSE, all.y=TRUE)`];
+
+```{r, eval=TRUE, echo=FALSE}
+tibble(Product = c("A", "B", "C"), Var1 = c(1, 2, 3)) %>%
+  right_join(tibble(Product = c("A", "B", "D"), Var2 = c(1, 2, 4)), by = "Product") %>%
+  flextable()
+```
+
+* `anti_join()` only keeps the elements from X that are not present in Y (this is particularly useful if you have a tibble Y of elements that you would like to remove from X). 
+
+```{r, eval=TRUE, echo=FALSE}
+table1 <- tibble(Product = c("A", "B", "C"), Var1 = c(1, 2, 3))
+table2 <- tibble(Product = c("A", "B", "D"), Var2 = c(1, 2, 4))
+table1 %>%
+  anti_join(table2, by = "Product") %>%
+  flextable()
+```
+
+The merging procedure requires the users to provide a *key*, i.e. a (set of) variable(s) used to combine the tables. For each unique element defined by the key, a line is being created. When needed, rows of a table are being duplicated. Within the different `*_join()` functions, the key is informed by the `by` parameter, which may contain one or more variables with the same or different names.
+
+For illustration, let's use the data set called *biscuits_consumer_test.xlsx*, which contains three tabs:
+
+```{r, eval=TRUE, echo=TRUE}
+file_path <- here("data", "biscuits_consumer_test.xlsx")
+excel_sheets(file_path)
+```
+
+The three sheets contain the following information, which need to be combined:
+
+* *Biscuits*: The consumers' evaluation of the 10 products and their assessment on liking, hunger, etc. at different moments of the test.
+* *Time Consumption*: The amount of cookies and the time required to evaluate them in each sitting.
+* *Weight*: The weight associated to each cookie.
+
+Let's start by combining *Time Consumption* and *Weight* so that we can compute the total weight of biscuits eaten by each consumer in each sitting. In this case, the joining procedure is done by `Product` since the weight is only provided for each product. The total weight eaten (`Amount`) is then computed by multiplying the number of cookies eaten (`Nb biscuits`) by `Weight`:
+
+```{r, eval=TRUE, echo=TRUE}
+time <- read_xlsx(file_path, sheet = "Time Consumption")
+weight <- read_xlsx(file_path, sheet = "Weight")
+
+consumption <- time %>%
+    full_join(weight, by = "Product") %>%
+    mutate(Amount = `Nb biscuits` * Weight)
+```
+
+As can be seen, the `Weight` information stored in the *Weight* sheet has been replicated every time each sample has been evaluated by another respondent. 
+
+The next step is then to merge this table to `Biscuits`. In this case, since both data set contain the full evaluation of the cookies (each consumer evaluating each product), the joining procedure needs to be done by `Judge` and `Product` simultaneously. A quick look at the data shows two important things:
+
+1. In *Biscuits*, the consumer names only contain the numbers whereas in `consumption`, they also contain a `J` in front of the name: This needs to be fixed as the names need to be identical to be merged, else they will be considered separately and missing values will be introduced. In practice, this will be done by mutating `Consumer` and by pasting a `J` in front of the number using the function `paste0()`.
+2. The names that contain the product (`Samples` and `Product`) and consumers (`Consumer` and `Judge`) information are different in both data set. We could rename these columns in one data set to match the other, but instead we will keep the two names and inform it within `full_join()`. This is done through the `by` parameter as following: `"name in dataset 1" = "name in dataset 2"`
+
+```{r, eval=FALSE, echo=TRUE}
+biscuits <- read_xlsx(file_path, sheet = "Biscuits") %>%
+   mutate(Consumer = str_c("J", Consumer)) %>%
+   full_join(consumption, by = c("Consumer" = "Judge", "Samples" = "Product"))
+```
+
+The three data sets are now flawlessly joined into one that can be further manipulated and/or analysed.
