@@ -144,8 +144,8 @@ library(sensR)
 num_correct <- 15  
 num_total <- 44  
   
-discrim_res <- discrim(correct = num_correct, total = num_total, method = "tetrad")  
-  
+discrim_res <- discrim(correct = num_correct, total = num_total, 
+                       method = "tetrad")
 print(discrim_res)  
 ```
 
@@ -284,19 +284,31 @@ data(chocolates)
 
 If you type `sensochoc` in your R session, the entire data set is being printed, which makes it difficult to read. Here, we opt for simpler solution by only showing the first lines using `head()`
 
-```{r, echo=TRUE, eval=TRUE}
+>Here and throughout the book, some of the outputs are being reduced and only the first results are being printed (to avoid printing too much things that may not be so relevant.). So do not panic if only a part of the outputs is shown in the book compared to your screen.
+
+```{r, echo=FALSE, eval=TRUE}
 head(sensochoc)
+```
+
+```{r, echo=TRUE, eval=FALSE}
+head(sensochoc[,1:6])
 ```
 
 This is the typical output from a `matrix()` or `data.frame()` in R. In particular, one can note that the first column does not have header, as it represents the row names.
 
 Let's convert this table into a tibble (using `as_tibble()`) and look at the output:
 
-```{r, echo=TRUE, eval=TRUE}
+```{r, echo=TRUE, eval=FALSE}
 sensochoc_tb <- sensochoc %>% 
   as_tibble()
-sensochoc_tb
 ```
+
+```{r, echo=FALSE, eval=TRUE}
+sensochoc_tb <- sensochoc[1:5,] %>% 
+  as_tibble()
+```
+
+>Due to the reduction of the output, here you'll notice that the information regarding the tibble is different in the book and on your screen. Since we limit ourselves to the 5 first rows here, R prints that `sensochoc_tb` is a `tibble: 5 x 18` while on your screen, it should be defined as `tibble: 348 x 18`. This is an inconsistency that will occur through the book as we will reduce the size of some of the outputs. If such thing should occur, do not worry as the error probably does not come from you! 
 
 The appearance of the table looks quite different, and there are some interesting things that can be noticed:
 
@@ -311,15 +323,23 @@ The appearance of the table looks quite different, and there are some interestin
 
 To go further, let's extract from `sensochoc` the 4th column (`Product`):
 
-```{r, echo=TRUE, eval=TRUE}
+```{r, echo=TRUE, eval=FALSE}
 sensochoc[,4]
+```
+
+```{r, echo=FALSE, eval=TRUE}
+sensochoc[1:5,4]
 ```
 
 By extracting a column of a data frame, the resulting output is converted into a vector.
 Let's reproduce the same extraction to `sensochoctb`:
 
-```{r, echo=TRUE, eval=TRUE}
+```{r, echo=TRUE, eval=FALSE}
 sensochoc_tb[,4]
+```
+
+```{r, echo=FALSE, eval=TRUE}
+sensochoc_tb[1:5,4]
 ```
 
 Subsetting from a tibble with `[]` always returns a tibble, which is very convenient with programming as we then know what to expect (unlike data frame which can return a data frame or a vector depending on the situation).
@@ -331,7 +351,8 @@ Let's start with converting the table in a long format:
 ```{r, echo=TRUE, eval=TRUE}
 sensochoc_tb <- sensochoc_tb %>%
   dplyr::select(-c("Session","Rank")) %>% 
-  pivot_longer(-c("Panelist","Product"), names_to="Attributes", values_to="Scores")
+  pivot_longer(-c("Panelist","Product"), names_to="Attributes", 
+               values_to="Scores")
 ```
 
 This new tibble has 4872 rows and 4 columns. Since we have 14 attributes, that means that each attribute has 348 data points. 
@@ -402,7 +423,8 @@ Let's illustrate this through a simple example involving `pivot_longer()` and `p
 
 ```{r, echo=TRUE, eval=FALSE}
 sensory %>% 
-  pivot_longer(Shiny:Melting, names_to="Variables", values_to="Scores") %>% 
+  pivot_longer(Shiny:Melting, names_to="Variables", 
+               values_to="Scores") %>% 
   pivot_wider(names_from=Variables, values_from=Scores)
 ```
 
@@ -446,6 +468,8 @@ Another (faster) way to visualize it is to put the entire block of code between 
 Note that if you run all these lines of codes in R, you will get an error stating `Column 'Judge' doesn't exist.` This is a good illustration of a potential error mentioned above: We overwrote the original `sensory` (containing `Judge` and `Product`) with another version in which these columns were already renamed as `Panellist` and `Sample`. So when you re-run this code, you are trying to apply again the same changes to columns that no longer exist, hence the error.
 
 This is something that you need to take into consideration when overwriting elements (in this case, you should initialize `sensory` to its original version before trying).
+
+>It is also worth reminding the readers that we deliberately **do not print** each and every output generated. Instead, we advise the reader to re-write the code and run it in parallel as they read the book. The outputs will then be printed on their screen. Also, in some cases, we took the liberty to reduce the outputs (e.g. only showing the first rows and/or columns) which can lead to some inconsistencies between what is printed in the book, and what is shown on your screen (e.g. the size of a tibble). So please be aware that this can (and will) happen, and when that happen, trust the results on your screen!  
 
 ### Running code and handling errors
 

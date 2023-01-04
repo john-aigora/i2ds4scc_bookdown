@@ -190,7 +190,7 @@
 
 \title{Data Science for Sensory and Consumer Scientists}
 \author{Thierry Worch, Julien Delarue, Vanessa Rios de Souza, and John Ennis}
-\date{2022-12-24}
+\date{2023-01-04}
 
 \begin{document}
 \maketitle
@@ -204,7 +204,9 @@
 
 \begin{center}
 To Luca,
+
 To Bella,
+
 ...
 %\includegraphics{images/dedication.pdf}
 \end{center}
@@ -5867,16 +5869,16 @@ Alternately, the \texttt{WilliamsDesign()} function in \texttt{\{SensoMineR\}} a
 
 \begin{verbatim}
 ##          Rank 1 Rank 2 Rank 3 Rank 4 Rank 5
-## Judge 1       5      3      2      4      1
-## Judge 2       3      4      5      1      2
-## Judge 3       4      1      3      2      5
-## Judge 4       1      2      4      5      3
-## Judge 5       2      5      1      3      4
-## Judge 6       1      4      2      3      5
-## Judge 7       2      1      5      4      3
-## Judge 8       5      2      3      1      4
-## Judge 9       3      5      4      2      1
-## Judge 10      4      3      1      5      2
+## Judge 1       5      4      1      3      2
+## Judge 2       4      3      5      2      1
+## Judge 3       3      2      4      1      5
+## Judge 4       2      1      3      5      4
+## Judge 5       1      5      2      4      3
+## Judge 6       2      3      1      4      5
+## Judge 7       1      2      5      3      4
+## Judge 8       5      1      4      2      3
+## Judge 9       4      5      3      1      2
+## Judge 10      3      4      2      5      1
 \end{verbatim}
 
 Suppose you want to include 20 judges in the experiment, you would then need to duplicate the initial design.
@@ -5890,26 +5892,26 @@ Suppose you want to include 20 judges in the experiment, you would then need to 
 
 \begin{verbatim}
 ##         Rank 1 Rank 2 Rank 3 Rank 4 Rank 5
-## judge1       5      3      2      4      1
-## judge2       3      4      5      1      2
-## judge3       4      1      3      2      5
-## judge4       1      2      4      5      3
-## judge5       2      5      1      3      4
-## judge6       1      4      2      3      5
-## judge7       2      1      5      4      3
-## judge8       5      2      3      1      4
-## judge9       3      5      4      2      1
-## judge10      4      3      1      5      2
-## judge11      5      3      2      4      1
-## judge12      3      4      5      1      2
-## judge13      4      1      3      2      5
-## judge14      1      2      4      5      3
-## judge15      2      5      1      3      4
-## judge16      1      4      2      3      5
-## judge17      2      1      5      4      3
-## judge18      5      2      3      1      4
-## judge19      3      5      4      2      1
-## judge20      4      3      1      5      2
+## judge1       5      4      1      3      2
+## judge2       4      3      5      2      1
+## judge3       3      2      4      1      5
+## judge4       2      1      3      5      4
+## judge5       1      5      2      4      3
+## judge6       2      3      1      4      5
+## judge7       1      2      5      3      4
+## judge8       5      1      4      2      3
+## judge9       4      5      3      1      2
+## judge10      3      4      2      5      1
+## judge11      5      4      1      3      2
+## judge12      4      3      5      2      1
+## judge13      3      2      4      1      5
+## judge14      2      1      3      5      4
+## judge15      1      5      2      4      3
+## judge16      2      3      1      4      5
+## judge17      1      2      5      3      4
+## judge18      5      1      4      2      3
+## judge19      4      5      3      1      2
+## judge20      3      4      2      5      1
 \end{verbatim}
 
 The downside of Williams's Latin square designs is that the number of samples (\emph{k}) to be evaluated dictates the number of judges. For an even number of samples you must have a multiple of \emph{k} judges, and a multiple of \emph{2k} judges for an odd number of samples.
@@ -5933,19 +5935,19 @@ As the total number of judges in your study may not always be exactly known in a
 \begin{verbatim}
 ##      rank
 ## judge 1 2 3 4 5
-##    1  3 2 1 4 5
-##    2  2 4 3 5 1
-##    3  4 5 2 1 3
-##    4  5 1 4 3 2
-##    5  1 3 5 2 4
-##    6  5 4 1 2 3
-##    7  1 5 3 4 2
-##    8  3 1 2 5 4
-##    9  2 3 4 1 5
-##    10 4 2 5 3 1
-##    11 3 2 1 4 5
-##    12 2 4 3 5 1
-##    13 4 5 2 1 3
+##    1  1 2 3 5 4
+##    2  2 5 1 4 3
+##    3  5 4 2 3 1
+##    4  4 3 5 1 2
+##    5  3 1 4 2 5
+##    6  4 5 3 2 1
+##    7  3 4 1 5 2
+##    8  1 3 2 4 5
+##    9  2 1 5 3 4
+##    10 5 2 4 1 3
+##    11 1 2 3 5 4
+##    12 2 5 1 4 3
+##    13 5 4 2 3 1
 \end{verbatim}
 
 In the code above, \texttt{xtabs()} is used to arrange the design in a table format that is convenient for the experimenter.
@@ -5996,16 +5998,16 @@ The \texttt{optimaldesign()} function of \texttt{\{SensoMineR\}} can be used to 
 
 \begin{verbatim}
 ##             Rank 1 Rank 2 Rank 3
-## Panelist 1       4      5      2
-## Panelist 2       1      5      3
-## Panelist 3       1      4      2
-## Panelist 4       5      4      3
-## Panelist 5       2      3      5
-## Panelist 6       3      2      4
-## Panelist 7       5      1      4
-## Panelist 8       3      2      1
-## Panelist 9       4      3      1
-## Panelist 10      2      1      5
+## Panelist 1       2      4      3
+## Panelist 2       4      2      1
+## Panelist 3       3      5      2
+## Panelist 4       1      5      2
+## Panelist 5       2      1      3
+## Panelist 6       5      2      4
+## Panelist 7       5      3      4
+## Panelist 8       1      3      5
+## Panelist 9       3      4      1
+## Panelist 10      4      1      5
 \end{verbatim}
 
 BIBD are only possible for certain combinations of numbers of treatment (products), numbers of blocks (judges), and block size (number of samples per judge). Note that \texttt{optimaldesign()} will yield a design even if it is not balanced but it will also generate contingency tables allowing you to evaluate the design's orthogonality, and how well balanced are order and carry-over effects.
@@ -9283,7 +9285,7 @@ Let's picture a situation where the R\&D team has been developing multiple trial
 \caption{PCA Biplot Biscuit Study.}\label{fig:pca}
 \end{figure}
 
-We won't go deep into the interpretation since it's not the focus of this example, but rather point out the approach we would recommend for each type of audience as shown in the Table \ref{tab:summary-table}).
+We won't go deep into the interpretation since it's not the focus of this example, but rather point out the approach we would recommend for each type of audience as shown in the Table \ref{tab:summarytable1}).
 
 \providecommand{\docline}[3]{\noalign{\global\setlength{\arrayrulewidth}{#1}}\arrayrulecolor[HTML]{#2}\cline{#3}}
 
@@ -9293,7 +9295,7 @@ We won't go deep into the interpretation since it's not the focus of this exampl
 
 \begin{longtable}[c]{|p{2.61in}|p{9.13in}|p{13.68in}|p{7.87in}}
 
-\caption{\textcolor[HTML]{000000}{\fontsize{11}{13}\selectfont{\global\setmainfont{Arial}{Exemplification\ of\ the\ approach\ for\ each\ type\ of\ audience.}}}}\label{tab:summary-table}\\
+\caption{\textcolor[HTML]{000000}{\fontsize{11}{13}\selectfont{\global\setmainfont{Arial}{Exemplification\ of\ the\ approach\ for\ each\ type\ of\ audience.}}}}\label{tab:summarytable1}\\
 
 \hhline{>{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}-}
 
