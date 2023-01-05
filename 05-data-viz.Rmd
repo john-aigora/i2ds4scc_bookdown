@@ -62,7 +62,7 @@ library(readxl)
 library(here)
 ```
 
-Let's imagine we want to communicate the sensory profiles of the 11 biscuits on the attributes related to appearance, a first step consists in transforming the data to create such results (see \@ref("means") for more details).
+Let's imagine we want to communicate the sensory profiles of the 11 biscuits on the attributes related to appearance, a first step consists in transforming the data to create such results (see \@ref(means) for more details).
 
 ```{r, echo = TRUE, eval = TRUE, message=FALSE, warning=FALSE, results='hide'}
 file_path <- here("data","biscuits_sensory_profile.xlsx") 
@@ -117,7 +117,7 @@ flex_table_design %>%
   add_header_lines(values = "Appearance Profile of 11 biscuits")
 ```
 
-Alternatively, we could decide to be more sober by applying other pre-attentive attributes. For instance, the size of the table can be adjusted, and an horizontal line can be added to delimit the optimal sample from the other. For the latter part, the customization of the line can be made using the function `fp_border()` from the `{officer}` package^[More information regarding the `{officer}` package are provided in Section REF].
+Alternatively, we could decide to be more sober by applying other pre-attentive attributes. For instance, the size of the table can be adjusted, and an horizontal line can be added to delimit the optimal sample from the other. For the latter part, the customization of the line can be made using the function `fp_border()` from the `{officer}` package^[More information regarding the `{officer}` package are provided in Section \@ref(powerpoint)].
 
 ```{r, echo=TRUE, eval=TRUE}
 library(officer)
@@ -126,9 +126,9 @@ flex_table_design %>%
   autofit()
 ```
 
-In some situations, applying some designing options might *destroy* the appearance of your table, in particular the border lines. If that should happen to you, just apply the function `fix_border_issues()` at the end of your code to solve it.
+In some situations, applying some design options might mess up the appearance of your table, in particular its border lines. If that should happen to you, just apply the function `fix_border_issues()` at the end of your code to solve it.
 
-Lastly, if the message should not be focused on `POpt`, but on some specific values (e.g. values for `Thickness` that are below 20 should be colored in blue, and above 40 in red), conditional formatting can be used:
+Lastly, you can use conditional formatting if you want to highlight some specific values (e.g. values for `Thickness` that are below 20 should be colored in blue, and above 40 in red), as in the example below:
 
 ```{r, echo=TRUE, eval=TRUE}
 color_code <- ifelse(mean_sensory$Thickness <= 20, "blue", 
@@ -246,7 +246,8 @@ In practice, there are various ways to build graphics in R. In fact, R itself co
 
 In practice, `{ggplot2}` is a multi-layer graphical tools, and graphics are built by adding layers to existing graphs. The advantage of such procedure is that `ggplot` objects are not fixed: They can be printed at any time, and can still be improved by adding other layers if needed. To read more about `{gglot2}` and its philosophy, please refer to <http://vita.had.co.nz/papers/layered-grammar.pdf>[link](http://vita.had.co.nz/papers/layered-grammar.pdf).
 
-Note that since building graphics is limited to one's imagination, it is not possible to tackle each and every possibilities offered by `{ggplot2}` (and its extensions). For that reason, we prefer to focus on how `{ggplot2}`works, and by using as illustration throughout the book examples of graphics that are useful in Sensory and Consumer research. This should be more than sufficient to get you started, and should cover 90% of your daily needs. Still, if that should not be sufficient, we invite you to look into the online documentation or to references such as [REFS].
+Note that since building graphics is limited to one's imagination, it is not possible to tackle each and every possibilities offered by `{ggplot2}` (and its extensions). For that reason, we prefer to focus on how `{ggplot2}`works, and by using as illustration throughout the book examples of graphics that are useful in Sensory and Consumer Science. This should be more than sufficient to get you started, and should cover 90% of your daily needs. Still, if that should not be sufficient, we invite you to look into the online documentation or to references such as <https://r-graph-gallery.com/>[link](https://r-graph-gallery.com/).
+<!-- JD: this is only a suggestion. Did you have any other ref in mind?-->
 
 ### Getting started with `{ggplot2}`
 
@@ -663,7 +664,7 @@ It is however possible to combine both systems one after each other, just rememb
 
 #### Ordering elements in a plot
 
-When building a graph using a categorical variables, `{ggplot2}` tends to represent the different levels in alphabetical order, especially if the variable is defined as character. Such situation can make the graph more difficult to read, as the categories may not be presented in a logical order (e.g. fall, spring, summer, winter instead of spring, summer, fall, winter).  To ensure that the elements are in the right order, either consider transforming the variables into factor (using `factor()` by indicating the levels order of your choice, or through `fct_inorder()` to keep the order from the file, see Section REF) or by using a position variable as in the `spider_plot` example. The former option also works for ordering elements in the legend.
+When building a graph using a categorical variables, `{ggplot2}` tends to represent the different levels in alphabetical order, especially if the variable is defined as character. Such situation can make the graph more difficult to read, as the categories may not be presented in a logical order (e.g. fall, spring, summer, winter instead of spring, summer, fall, winter).  To ensure that the elements are in the right order, either consider transforming the variables into factor (using `factor()` by indicating the levels order of your choice, or through `fct_inorder()` to keep the order from the file, see Section \@ref(pivot_longer)) or by using a position variable as in the `spider_plot` example. The former option also works for ordering elements in the legend.
 
 If the order of the elements should be changed *within the charts* (simple changes such as reverting the order), it can be done directly within the `geom_*()` function. This is for instance the case with stacked bar chart, in which the order may be reverted using the parameter `position = position_fill(reverse = TRUE)` for instance (suggesting here that the split was defined through `fill` in `aes()`).
 
@@ -697,7 +698,7 @@ For instance, the `spiderplot` generated earlier^[Since `spiderplot` is not the 
 ggsave(filename="spiderplot.png", plot=spiderplot, device="png")
 ```
 
-As an alternative, `ggplot()` graphs can also be exported in PowerPoint or Word through the `{rvg}` package (see Section REF).
+As an alternative, `ggplot()` graphs can also be exported in PowerPoint or Word through the `{rvg}` package (see Section \@ref(export_plots)).
 
 #### Additional libraries
 

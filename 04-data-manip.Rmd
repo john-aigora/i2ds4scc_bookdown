@@ -64,7 +64,7 @@ For these reasons, it is essential to learn to manipulate data and transition fr
 
 Hadley Wickham (@Wickham2014) defined *tidy data* as "data sets that are arranged such that each variable is a column and each observation (or case) is a row." Depending on the statistical unit to consider and the analyses to perform, data may need to be manipulated to be presented in a tidy form. 
 
-### Simple Manipulations
+### Simple Manipulations {#simple_manips}
 
 We define here as *simple manipulations* any data transformations that can easily be performed in other software such as Excel (using copy-paste, sorting and filtering, creating a pivot table, etc.). However, we strongly recommend performing any sorts of transformation in R as this will reduce the risk of errors, typically be faster, more reliable, and will be reusable if you need to perform the same operations on similar data in the future (including updated versions of the current data set). Moreover, these operations will become easier and more natural for you to use as you get familiar with them. Most importantly, performing these transformations in R do not alter the original data, meaning that changes can be reverted (which is not possible when you alter the raw data directly).
 
@@ -437,7 +437,7 @@ tibble(
 
 As we will see in the following section, it is very easy to transition from one version to another thanks to `pivot_longer()` and `pivot_wider()`, both being functions from `{tidyr}`.
 
-#### Pivoting Longer
+#### Pivoting Longer {#pivot_longer}
 
 Currently, our `sensory` data table is a table in which we have as many rows as Judge x Product, the different attributes being spread across multiple columns. However, in certain situations, it is relevant to have all the attributes stacked vertically, meaning that the table will have Judge x Product x Attributes rows. Such simple transformation can be done with `pivot_longer()` which takes as inputs the attributes to pivot, the name of the variables that will contain these names (`names_to`), and the name of the column that will contain their entries (`values_to`)
 
