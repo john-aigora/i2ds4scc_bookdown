@@ -466,7 +466,7 @@ This parameter combines both the power of `pivot_longer()` and `separate()` in o
 Note that more complex transformations through the use of regular expressions (and the `names_pattern` option) can be considered. More information on this topic is provided in REF CHAPTER TEXTUAL (TO CHECK IF IT IS THE CASE!).
 <!-- There is nothing more about names_pattern nor regular expressions in the TEXT ANALYSIS chapter -->
 
-> It can happen that with `pivot_longer()`, further transformation performed on the long and thin table may not maintain their original order (usually, the names are re-ordered alphabetically). If you don't want such re-ordering to happen because it would impact the desired outcome, there is a simple workaround that ensure that the order is kept. The solution simply consists in transforming the newly created variable as a factor which takes as levels the order of the elements as they were in the original data (use `fct_inorder()` to maintain the order as shown in the data). To illustrate this, let's look at the two following results:
+> It can happen that with `pivot_longer()`, further transformation performed on the long and thin table may not maintain their original order (usually, the names are re-ordered alphabetically). If you don't want such re-ordering to happen because it would impact the desired outcome, there is a simple workaround that ensures that the order is kept. The solution simply consists in transforming the newly created variable as a factor which takes as levels the order of the elements as they were in the original data (use `fct_inorder()` to maintain the order as shown in the data). To illustrate this, let's look at the two following results:
 >
 ```{r, eval=FALSE, echo=TRUE}
 sensory %>%
@@ -481,7 +481,7 @@ sensory %>%
   split(.$Variable) %>%
   names(.)
 ```
-> Other examples using this trick will be used throughout this book (e.g. see Section @\ref(tipsntricks))
+> Other examples using this trick will be used throughout this book (e.g. see Section \@ref(tipsntricks))
 
 As an alternative to  `pivot_longer()`, the package called `{reshape2}` provides a function called `melt()` which pivots automatically the entire set of numerical variables, the qualitative variables being considered as *id variables*. If performed on a matrix with row names, the new table will have two columns containing the row and column names.
 
