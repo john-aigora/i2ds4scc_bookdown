@@ -62,12 +62,17 @@ library(readxl)
 library(here)
 ```
 
-Let's imagine we want to communicate the sensory profiles of the 11 biscuits on the attributes related to appearance, a first step consists in transforming the data to create such results (see \@ref(means) for more details).
+```{r, eval=TRUE, echo=FALSE}
+options(tibble.print_min=4, tibble.print_max=4)
+```
+
+
+Let's imagine we want to communicate the sensory profiles of the 11 biscuits on a few attributes including `Shiny`, `Sweet`, `Sour`, `Bitter`, and `Salty`. A first step consists in transforming the data to create such results (see \@ref(means) for more details).
 
 ```{r, echo = TRUE, eval = TRUE, message=FALSE, warning=FALSE, results='hide'}
 file_path <- here("data","biscuits_sensory_profile.xlsx") 
 mean_sensory <- readxl::read_xlsx(file_path, sheet="Data") %>% 
-  select(Product, Shiny:`Color contrast`) %>%
+  select(Product, Shiny, Sweet, Sour, Bitter, Salty) %>%
   group_by(Product) %>%
   summarize(across(.cols = where(is.numeric),.fns = mean))
 ```
@@ -83,12 +88,15 @@ flex_table <- mean_sensory %>%
 ```
 
 ```{r, eval=TRUE, echo=FALSE}
-flex_table
+flex_table %>% 
+  font(fontname = "Calibri", part="all") %>% 
+  fontsize(size=8, part="all") %>% 
+  autofit()
 ```
 
 As you can see, the table is being printed in the *Viewer* section of RStudio. This table is already better designed, although it is still quite overcrowded that could benefit from some additional design work to look nicer. 
 
-A first simple improvement consists in reducing the number of decimals (`colformat_double()`), changing the font size (`fontsize()`) and type (`bold()` or `italic()`), and aligning the text (`align()`) for instance.
+A first simple improvement consists in reducing the number of decimals (`colformat_double()`), changing the font size (`fontsize()`, not visible in our output) and type (`bold()` or `italic()`), and aligning the text (`align()`) for instance.
 
 ```{r flextablebasic2, echo = TRUE, eval = TRUE, message=FALSE, warning=FALSE, tab.cap="Appearance Attributes Mean (Basic Flextable 2)"}
 flex_table_design <- flex_table %>%
@@ -100,41 +108,78 @@ flex_table_design <- flex_table %>%
 ```
 
 ```{r, eval=TRUE, echo=FALSE}
-flex_table_design
+flex_table_design %>% 
+  font(fontname = "Calibri", part="all") %>% 
+  fontsize(size=8, part="all") %>% 
+  autofit()
 ```
 
 As can be seen, the function names are very intuitive, and so are the options. In particular, it is interesting to see that most functions allows applying changes to the entire table (`part = "all"`), the header only (`part = "header"`) or the body only (`part = "body"`). And even within a part, it is possible to make a sub-selection by selecting the rows (`i`) or columns (`j`) to include or exclude: Here, all the text in the body is set in italic except for the product names, hence the option `j=-1` (read exclude the first column).
 
 After presenting some of the basic aesthetic options, let's go once step further and play around with coloring. For instance, let's imagine we would change the header background and text color, and would want to call the audience's attention by highlighting the optimized formulation. The following code could be used to do this (results are not being saved):
 
-```{r, flextabledesigned, echo = TRUE, eval = TRUE, message=FALSE, warning=FALSE, tab.cap="Appearance Attributes Mean (Improved Flextable)"}
+```{r, flextabledesigned, echo = TRUE, eval = FALSE, message=FALSE, warning=FALSE, tab.cap="Appearance Attributes Mean (Improved Flextable)"}
 flex_table_design %>%
   bg(bg = "black", part = "header") %>% 
   color(color = "white", part = "header") %>% 
   fontsize(size = 13, part = "header", i = 1) %>%
   color(i = 11, color = "orange", part = "body") %>%
   color(i = 1:10, color = "grey70", part = "body") %>% 
-  add_header_lines(values = "Appearance Profile of 11 biscuits")
+  add_header_lines(values = "Sensory Profile of 11 biscuits")
+```
+
+```{r, eval=TRUE, echo=FALSE}
+flex_table_design %>%
+  bg(bg = "black", part = "header") %>% 
+  color(color = "white", part = "header") %>% 
+  fontsize(size = 13, part = "header", i = 1) %>%
+  color(i = 11, color = "orange", part = "body") %>%
+  color(i = 1:10, color = "grey70", part = "body") %>% 
+  add_header_lines(values = "Sensory Profile of 11 biscuits") %>% 
+  font(fontname = "Calibri", part="all") %>% 
+  fontsize(size=8, part="all") %>% 
+  autofit()
+
 ```
 
 Alternatively, we could decide to be more sober by applying other pre-attentive attributes. For instance, the size of the table can be adjusted, and an horizontal line can be added to delimit the optimal sample from the other. For the latter part, the customization of the line can be made using the function `fp_border()` from the `{officer}` package^[More information regarding the `{officer}` package are provided in Section \@ref(powerpoint)].
 
-```{r, echo=TRUE, eval=TRUE}
+```{r, echo=TRUE, eval=FALSE, message=FALSE, warning=FALSE}
 library(officer)
 flex_table_design %>%
   hline(i=10, border=fp_border(color="grey70", style="dashed")) %>% 
   autofit()
 ```
 
+```{r, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
+library(officer)
+flex_table_design %>%
+  hline(i=10, border=fp_border(color="grey70", style="dashed")) %>%
+  font(fontname = "Calibri", part="all") %>% 
+  fontsize(size=8, part="all") %>% 
+  autofit()
+
+```
+
 In some situations, applying some design options might mess up the appearance of your table, in particular its border lines. If that should happen to you, just apply the function `fix_border_issues()` at the end of your code to solve it.
 
-Lastly, you can use conditional formatting if you want to highlight some specific values (e.g. values for `Thickness` that are below 20 should be colored in blue, and above 40 in red), as in the example below:
+Lastly, you can use conditional formatting if you want to highlight some specific values (e.g. values for `Sweet` that are below 20 should be colored in blue, and above 30 in red), as in the example below:
 
-```{r, echo=TRUE, eval=TRUE}
-color_code <- ifelse(mean_sensory$Thickness <= 20, "blue", 
-                     ifelse(mean_sensory$Thickness >= 40, "red", "black"))
+```{r, echo=TRUE, eval=FALSE}
+color_code <- ifelse(mean_sensory$Sweet <= 20, "blue", 
+                     ifelse(mean_sensory$Sweet >= 30, "red", "black"))
 flex_table_design %>% 
-  color(j=~Thickness, color=color_code)
+  color(j=~Sweet, color=color_code)
+```
+
+```{r, echo=FALSE, eval=TRUE}
+color_code <- ifelse(mean_sensory$Sweet <= 20, "blue", 
+                     ifelse(mean_sensory$Sweet >= 30, "red", "black"))
+flex_table_design %>% 
+  color(j=~Sweet, color=color_code)%>%
+  font(fontname = "Calibri", part="all") %>% 
+  fontsize(size=8, part="all") %>% 
+  autofit()
 ```
 
 Other illustrations of the use of `{flextable}` are provided in section \@ref(powerpoint). 
@@ -155,7 +200,8 @@ Focusing now on the consumer study (*biscuits_consumer_test.xlsx*), let's displa
 ```{r, echo = TRUE, eval = TRUE, message=FALSE, warning=FALSE, results='hide'}
 file_path <- here("data","biscuits_consumer_test.xlsx") 
 
-mean_consumer <- readxl::read_xlsx(file_path, sheet="Time Consumption") %>%
+mean_consumer <- readxl::read_xlsx(file_path, 
+                                   sheet="Time Consumption") %>%
   dplyr::select(Product, `Time (min)`, `Nb biscuits`) %>%
   separate(`Time (min)`, c("Min", "Sec"), sep="min") %>%
   mutate(across(c("Min","Sec"), as.numeric)) %>% 
@@ -172,7 +218,7 @@ mean_consumer %>%
   gt () %>%
   cols_align(align = "center", columns = everything()) %>%
   fmt_number(columns = c("Time", "Nb biscuits") , decimals = 2) %>%
-  tab_header(title = md ("**Consumption time and number of biscuits eaten**"), 
+  tab_header(title = md("**Cons. time and nb. of biscuits eaten**"), 
              subtitle = md ("*Average taken from 99 consumers*"))
 ```
 
@@ -189,7 +235,8 @@ mean_consumer_2 <- mean_consumer %>%
 Now that the data is ready, we can display using a similar style as before in which we add some color-code to accentuate products' consumption. We will also add a `note` to the table that expresses the average time used to consumer the biscuits. So let's start with creating the table:
 
 ```{r gttabledesigned, message=FALSE, warning=FALSE, results='hide', echo = TRUE, eval = TRUE}
-note <- str_c("Avg. consumption time: ", round(mean(mean_consumer$Time),2), " min")
+note <- str_c("Avg. consumption time: ", 
+              round(mean(mean_consumer$Time),2), " min")
 
 consumption <- mean_consumer_2 %>%
   gt () %>%
@@ -207,7 +254,9 @@ Now, let's color code the cells based on the average number of biscuits eaten. T
 library(scales)
 nb_range <- range(mean_consumer_2$`Nb biscuits`)
 consumption %>% 
-    data_color(columns=`Nb biscuits`, colors=col_numeric(c("#FEF0D9","#990000"), domain=nb_range, alpha=0.75))
+    data_color(columns=`Nb biscuits`, 
+               colors=col_numeric(c("#FEF0D9","#990000"), 
+                                  domain=nb_range, alpha=0.75))
 ```
 
 Applying this strategy of coloring the number of biscuits eaten according to their range makes the table nicer and easier to get insights from. In our case, we can quickly see that groups of products based on their average consumption: Product 10 is the most eaten, followed by a group that include products 5, 2, and 1. At last, samples 8 and 4 are the least consumed samples.
@@ -364,12 +413,12 @@ With this new code, you'll notice that:
 
 Since the graphics look at the relationship between two quantitative variables, let's add another layer to the previous graph that shows the regression line:
 
-```{r, eval=TRUE, echo=FALSE}
+```{r, eval=TRUE, echo=TRUE}
 line_p <- p+
   geom_smooth(method=lm, formula="y~x", se=FALSE)
 ```
 
-```{r, eval=TRUE, echo=FALSE}
+```{r, eval=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 line_p
 ```
 
@@ -392,7 +441,7 @@ bar_p <- ggplot(Nbiscuits, aes(x=N, fill=Product))+
   geom_bar(stat="count", position="dodge")
 ```
 
-```{r, eval=TRUE, echo=FALSE}
+```{r, eval=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 bar_p
 ```
 
@@ -420,7 +469,7 @@ bar_p <- bar_p+
   theme_minimal()
 ```
 
-```{r, eval=TRUE, echo=FALSE}
+```{r, eval=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 bar_p
 ```
 
@@ -437,7 +486,7 @@ bar_p <- bar_p +
   ylab("Number of Respondents")
 ```
 
-```{r, eval=TRUE, echo=FALSE}
+```{r, eval=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 bar_p
 ```
 
@@ -445,10 +494,11 @@ Last but not least, a title is being added to the graph using `ggtitle()`:
 
 ```{r, eval=TRUE, echo=TRUE}
 bar_p <- bar_p +
-  ggtitle("Distribution of the number of biscuits eaten","(Results are split per biscuit type)")
+  ggtitle("Distribution of the number of biscuits eaten",
+          "(Results are split per biscuit type)")
 ```
 
-```{r, eval=TRUE, echo=FALSE}
+```{r, eval=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 bar_p
 ```
 
@@ -460,11 +510,12 @@ line_p <- line_p +
   scale_x_continuous(breaks=seq(0,50,10), limits=c(0,60))+
   scale_y_continuous(breaks=seq(0,50,10), limits=c(0,60))+
   coord_fixed()+
-  ggtitle("Relationship between Melting and Sticky", "Biscuits perceived as more sticky tend to be less melting.")+
+  ggtitle("Relationship between Melting and Sticky",
+          "Stickier biscuits tend to be less melting.")+
   guides(colour="none")
 ```
 
-```{r, eval=TRUE, echo=FALSE}
+```{r, eval=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 line_p
 ```
 
@@ -519,7 +570,8 @@ Let's illustrate these concepts using our previous graph stored in `line_p`. Her
 line_p +
   theme(panel.grid=element_blank(), 
         panel.border=element_blank(),
-        axis.line=element_line(arrow = arrow(ends = "last", type = "closed")),
+        axis.line=element_line(arrow = arrow(ends = "last", 
+                                             type = "closed")),
         axis.title=element_text(hjust=1))
 ```
 
@@ -534,10 +586,13 @@ In the graph saved in `bar_p`, remember that we filled in the bar chart using th
 
 Such procedure can be done using `scale_fill_manual()`.
 
-```{r, eval=TRUE, echo=FALSE}
+```{r, eval=TRUE, echo=TRUE, warning=FALSE, message=FALSE}
 bar_p + 
-  scale_fill_manual(values=c("P1"="gray50", "P2"="gray50", "P3"="darkorange", "P4"="gray50", "P5"="gray50",
-                             "P6"="gray50", "P7"="gray50", "P8"="gray50", "P9"="gray50", "P10"="gray50"))
+  scale_fill_manual(values=c("P1"="gray50", "P2"="gray50", 
+                             "P3"="darkorange", "P4"="gray50", 
+                             "P5"="gray50", "P6"="gray50",
+                             "P7"="gray50", "P8"="gray50",
+                             "P9"="gray50", "P10"="gray50"))
 ```
 
 When multiple aesthetics are being used, the legend might become overwhelming or redundant. It is possible to turn off some of these visuals within the `scale_*()` functions, or by using `guides()` and by setting `nameaes='none'` as shown in the `line_p` example.
@@ -550,7 +605,7 @@ By default, `ggplot()` generates plot that fits the data and that fits within th
 
 Other transformation can be performed. For instance, the graphic can be transposed using `coord_flip()` as in the following example:
 
-```{r, eval=TRUE, echo=TRUE}
+```{r, eval=TRUE, echo=TRUE, warning=FALSE, message=FALSE}
 bar_p + coord_flip()
 ```
 
@@ -562,14 +617,16 @@ Let's start with deconstructing a spider-plot: a spider plot is a line chart pre
 
 ```{r, eval=TRUE, echo=TRUE}
 sensory_mean <- sensory %>% 
-  pivot_longer(Shiny:Melting, names_to="Variables", values_to="Scores") %>% 
+  pivot_longer(Shiny:Melting, 
+               names_to="Variables", values_to="Scores") %>% 
   mutate(Variables = fct_inorder(Variables)) %>% 
   group_by(Product, Variables) %>% 
   summarize(Mean = mean(Scores)) %>% 
   ungroup() %>% 
   filter(Product %in% c("P03", "POpt"))
 
-spider_line <- ggplot(sensory_mean, aes(x=Variables, y=Mean, colour=Product, linetype=Product))+
+spider_line <- sensory_mean %>% 
+  ggplot(aes(x=Variables, y=Mean, colour=Product, linetype=Product))+
   geom_point(pch=20, cex=3)+
   geom_line(aes(group=Product), lwd=1)+
   theme_minimal()+
@@ -581,7 +638,7 @@ spider_line <- ggplot(sensory_mean, aes(x=Variables, y=Mean, colour=Product, lin
 
 Next step is to represent this line chart in a circular way. This can be done using `coord_polar()`:
 
-```{r, eval=TRUE, echo=TRUE}
+```{r, eval=TRUE, echo=TRUE, warning=FALSE, message=FALSE}
 spider_line + coord_polar()
 ```
 
@@ -602,11 +659,13 @@ sensory_mean_pos <- tibble(Variables = c(var[length(var)], var),
 The previous graph is then rebuilt by forcing the position of the attributes on the x-axis using `Position` (`Variables` is used for the labels). Here position 0 is voluntarily omitted (`breaks = 1:length(var)` and `labels = var`), meaning that only the labels going from 1 to the last variable are being showed. However, the x-axis is forced to go from 0 to the number of attributes (`limits = c(0, length(var))`).
 
 ```{r, eval=TRUE, echo=TRUE}
-spider_plot <- ggplot(sensory_mean_pos, aes(x=Position, y=Mean, colour=Product, linetype=Product))+
+spider_plot <- sensory_mean_pos %>% 
+  ggplot(aes(x=Position, y=Mean, colour=Product, linetype=Product))+
   geom_point(pch=20, cex=2)+
   geom_line(aes(group=Product), lwd=1)+
   theme_minimal()+
-  scale_x_continuous(name="", breaks=1:length(var), labels=var, limits=c(0,length(var)))+
+  scale_x_continuous(name="", breaks=1:length(var), 
+                     labels=var, limits=c(0,length(var)))+
   scale_y_continuous(name="", labels=NULL, limits=c(0,50))+
   scale_colour_manual(values=c("P03"="darkorange", "POpt"="grey50"))+
   scale_linetype_manual(values=c("P03"="solid", "POpt"="dashed"))+
@@ -619,8 +678,6 @@ spider_plot
 ```
 
 By using this trick, the connection between the first and last attributes is established.
-
-<!-- In this version of the spider plot, the lines appear as curved. This effect is due to the use of `coord_polar()`. In case you would want to have straight lines instead, the equivalent function `coord_str` -->
 
 #### Combining plots
 
@@ -639,19 +696,16 @@ When multiple plot are being generated separately (using different data set, or 
 
 Let's illustrate this by creating a plot with on the left side `spider_plot`, and on the right side `bar_p` on top of `line_p`.
 
-```{r, eval=TRUE, echo=TRUE}
+```{r, eval=TRUE, echo=TRUE, warning=FALSE, message=FALSE}
 library(patchwork)
 p <- spider_plot + (bar_p / line_p)
 ```
 
-```{r, eval=TRUE, echo=FALSE}
-p
-```
-
 A general title can be added, as well as tag levels (handy for publications!) using `plot_annotation()`.
 
-```{r, eval=FALSE, echo=TRUE}
-p + plot_annotation(title = "Example of 'ggplots' I've learned today", tag_levels='a')
+```{r, eval=TRUE, echo=TRUE, warning=FALSE, message=FALSE}
+p + plot_annotation(title = "Example of 'ggplots' I've learned today", 
+                    tag_levels='a')
 ```
 
 ### Few Additional Tips and Tricks {#tipsntricks}

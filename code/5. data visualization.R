@@ -7,7 +7,7 @@ library(here)
 file_path <- here("data","biscuits_sensory_profile.xlsx") 
 
 mean_sensory <- read_xlsx(file_path, sheet="Data") %>% 
-  select(Product, Shiny:`Color contrast`) %>%
+  select(Product, Shiny, Sweet, Sour, Bitter, Salty, Astringent) %>%
   group_by(Product) %>%
   summarize(across(.cols = where(is.numeric),.fns = mean))
 
@@ -32,16 +32,16 @@ flex_table_design %>%
   fontsize(size = 13, part = "header", i = 1) %>%
   color(i = 11, color = "orange", part = "body") %>%
   color(i = 1:10, color = "grey70", part = "body") %>% 
-  add_header_lines(values = "Appearance Profile of 11 biscuits")
+  add_header_lines(values = "Sensory Profile of 11 biscuits")
 
 flex_table_design %>%
   hline(i=10, border=fp_border(color="grey70", style="dashed")) %>% 
   autofit()
 
-color_code <- ifelse(mean_sensory$Thickness <= 20, "blue", 
-                     ifelse(mean_sensory$Thickness >= 40, "red", "black"))
+color_code <- ifelse(mean_sensory$Sweet <= 20, "blue", 
+                     ifelse(mean_sensory$Sweet >= 30, "red", "black"))
 flex_table_design %>% 
-  color(j=~Thickness, color=color_code)
+  color(j=~Sweet, color=color_code)
 
 # gt  ---------------------------------------------------------------------
 
@@ -49,7 +49,7 @@ library(gt)
 
 file_path <- here("data","biscuits_consumer_test.xlsx") 
 
-mean_consumer <- read_xlsx(file_path, sheet="Time Consumption") %>%
+mean_consumer <- readxl::read_xlsx(file_path, sheet="Time Consumption") %>%
   dplyr::select(Product, `Time (min)`, `Nb biscuits`) %>%
   separate(`Time (min)`, c("Min", "Sec"), sep="min") %>%
   mutate(across(c("Min","Sec"), as.numeric)) %>% 
