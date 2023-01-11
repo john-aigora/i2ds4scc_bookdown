@@ -41,7 +41,8 @@ Let's illustrate this by using our *biscuits_sensory_profile.xlsx* file: Let's i
 
 ```{r, eval=TRUE, echo=TRUE}
 file_path <- file.path("data", "biscuits_sensory_profile.xlsx")
-product_info <- readxl::read_xlsx(path=file_path, sheet="Product Info", range="A1:D12", col_names=TRUE)
+product_info <- readxl::read_xlsx(path=file_path, sheet="Product Info", 
+                                  range="A1:D12", col_names=TRUE)
 
 high_prot <- product_info %>% 
   filter(Protein %in% "High") %>% 
@@ -64,11 +65,7 @@ With `{openxlsx}`, the procedure starts with creating a workbook object (e.g. `w
 
 ```{r, eval=TRUE, echo=TRUE}
 library(openxlsx)
-
-# Create workbook object
 wb <- openxlsx::createWorkbook()
-
-# Add a new worksheet
 addWorksheet(wb, sheetName = "Mean", gridLines = FALSE)
 ```
 
@@ -97,18 +94,21 @@ Let's imagine we want to compute the sensory profiles of the products, and we wa
 # Creating the Sensory Profiles with some Product Information
 p_info <- readxl::read_xlsx(file_path, sheet = "Product Info") %>% 
   dplyr::select(-Type)
-
 sensory <- readxl::read_xlsx(file_path, sheet="Data") %>% 
   inner_join(p_info, by="Product") %>% 
   relocate(Protein:Fiber, .after=Product)
-
 senso_mean <- sensory %>% 
-  pivot_longer(Shiny:Melting, names_to="Attribute", values_to="Score") %>% 
+  pivot_longer(Shiny:Melting, 
+               names_to="Attribute", values_to="Score") %>% 
   dplyr::select(-Judge) %>% 
-  pivot_wider(names_from=Attribute, values_from=Score, values_fn=mean)
+  pivot_wider(names_from=Attribute, values_from=Score, 
+              values_fn=mean)
 
-# Exporting the Results to Excel
-writeDataTable(wb, sheet="Mean", x=senso_mean, startCol=1, startRow=1, colNames=TRUE, rowNames=FALSE, tableStyle="TableStyleLight9")
+# Add the table to the Excel Sheet
+writeDataTable(wb, sheet="Mean", x=senso_mean, 
+               startCol=1, startRow=1, 
+               colNames=TRUE, rowNames=FALSE, 
+               tableStyle="TableStyleLight9")
 ```
 
 At any time, you can visualize the Excel file that is being produced without exporting it yet using `openXL()`. This function comes very handy as it allows you checking that the output looks like what you would wish for.
@@ -141,7 +141,8 @@ options("openxlsx.numFmt" = "0.0")
 modifyBaseFont(wb,fontName = "Calibri", fontSize = 10)
 
 # Header Style (blue background, top/bottom borders, text centered/bold)
-headSty <- createStyle(fgFill="#DCE6F1", border="TopBottom", halign="center", textDecoration="bold")
+headSty <- createStyle(fgFill="#DCE6F1", border="TopBottom", 
+                       halign="center", textDecoration="bold")
 ```
 
 Note that many more formatting options can be configured through:
@@ -158,11 +159,12 @@ Let's export again the sensory profiles in a second sheet after applying these f
 ```{r, echo=TRUE, eval=TRUE}
 addWorksheet(wb, sheetName = "Mean (manual formatting)", gridLines = FALSE)
 
-# Freeze first row and first column
 freezePane(wb, sheet=2, firstRow=TRUE, firstCol=TRUE)
 
-# Export the data using writeData
-writeData(wb, sheet=2, x=senso_mean, startCol=1, startRow=1, colNames=TRUE, rowNames=FALSE, headerStyle=headSty)
+writeData(wb, sheet=2, x=senso_mean, 
+          startCol=1, startRow=1, 
+          colNames=TRUE, rowNames=FALSE, 
+          headerStyle=headSty)
 ```
 
 You'll notice that the same table is now presented in a different way (use `openXL(wb)` to view it). 
@@ -173,8 +175,10 @@ Let's start with creating two pre-defined parameters called `pos_style` (red) an
 
 ```{r openxlsx, echo=TRUE, eval=TRUE}
 # Styles for conditional formatting
-pos_style <- createStyle(fontColour = "firebrick3", bgFill = "mistyrose1")
-neg_style <- createStyle(fontColour = "navy", bgFill = "lightsteelblue")
+pos_style <- createStyle(fontColour = "firebrick3", 
+                         bgFill = "mistyrose1")
+neg_style <- createStyle(fontColour = "navy", 
+                         bgFill = "lightsteelblue")
 
 # Compute the overall mean
 overall_mean <- senso_mean %>% 
@@ -185,7 +189,8 @@ Let's then create a new worksheet in which we print the data of interest:
 
 ```{r, eval=TRUE, echo=TRUE}
 addWorksheet(wb, sheetName = "Conditional Formatting", gridLines=FALSE)
-writeDataTable(wb, sheet=3, x=senso_mean, startCol=1, startRow=1, colNames=TRUE, rowNames=FALSE)
+writeDataTable(wb, sheet=3, x=senso_mean, 
+               startCol=1, startRow=1, colNames=TRUE, rowNames=FALSE)
 ```
 
 Finally, we color the cells according to the rules that was defined earlier. To do so, the decision whether `pos_style` or `neg_style` should be used is defined by the `rule` parameter from the `conditionalFormatting()`^[In `conditionalFormatting()`, you can specify to which `rows` and `cols` the formatting applies.] function.
@@ -193,8 +198,14 @@ Finally, we color the cells according to the rules that was defined earlier. To 
 ```{r, eval=TRUE, echo=TRUE}
 # Adding formatting to the second column
 for (v in 1:ncol(overall_mean)){
-  conditionalFormatting(wb, sheet=3, cols=v+3, rows=1+1:nrow(senso_mean), rule=paste0(">", overall_mean[1,v]), style=pos_style)
-  conditionalFormatting(wb, sheet=3, cols=v+3, rows=1+1:nrow(senso_mean), rule=paste0("<", overall_mean[1,v]), style=neg_style)
+  conditionalFormatting(wb, sheet=3, cols=v+3, 
+                        rows=1+1:nrow(senso_mean), 
+                        rule=paste0(">", overall_mean[1,v]), 
+                        style=pos_style)
+  conditionalFormatting(wb, sheet=3, cols=v+3, 
+                        rows=1+1:nrow(senso_mean), 
+                        rule=paste0("<", overall_mean[1,v]), 
+                        style=neg_style)
 }
 ```
 
@@ -248,7 +259,8 @@ Each of these slides present some pre-defined properties (e.g. a box for text of
 ```{r, eval=TRUE, echo=TRUE}
 pptx_obj %>% 
   layout_properties() %>% 
-  filter(name == "Title and Content")
+  filter(name == "Title and Content") %>% 
+  as_tibble()
 ```
 
 This code provides more details about the elements available in each type of slides, including their identifiers and positions on the slide. This information is required to export content in some specific elements.
@@ -302,8 +314,10 @@ To inform where to print elements on the slide, the function `ph_with()` (*ph* s
 my_data <- c("My functions are:", "ph_with", "ph_location_type")
 
 pptx_obj <- pptx_obj %>%
-  ph_with(value = "My first title", location = ph_location_type(type = "title")) %>% 
-  ph_with(value = my_data, location = ph_location_type(type = 'body'))
+  ph_with(value = "My first title", 
+          location = ph_location_type(type = "title")) %>% 
+  ph_with(value = my_data, 
+          location = ph_location_type(type = 'body'))
 ```
 
 This code adds a title ("My first title") and the text stored in `my_data` to the *body* of the slide (*Title and Content*) created previously.
@@ -321,7 +335,8 @@ my_data2 <- "My new text positioned using ph_location()"
 
 pptx_obj <- pptx_obj %>%
   add_slide(layout = "Title and Content", master = master) %>% 
-  ph_with(value = my_data2, location = ph_location(left = 2, top = 2, width = 3, height = 1))
+  ph_with(value = my_data2, 
+          location = ph_location(left=2, top=2, width=3, height=1))
 ```
 
 To visualize the different steps done so far, let's save the results on our computers in an object called *my export.pptx* stored in the folder *output*:
@@ -343,18 +358,25 @@ By default, each new text item added to a PowerPoint via `{officer}` is a paragr
 Additionally, the text itself can be formated (font, size, color, etc.) using `fp_text()`. Let's go through an example to illustrate the use of these functions:
 
 ```{r, eval=TRUE, echo=TRUE}
-my_prop <- fp_text(color = "red", font.size = 14) # Formatting option
-my_text <- ftext("First Line in Red", prop = my_prop) # First line of text, formatted
+# Formatting option
+my_prop <- fp_text(color = "red", font.size = 14) 
+# First line of text, formatted
+my_text <- ftext("First Line in Red", prop = my_prop) 
 
-my_par <- fpar(my_text) # text into a paragraph
-blank_line <- fpar("") # other empty paragraph to introduce an empty line
+# text into a paragraph
+my_par <- fpar(my_text) 
+# other empty paragraph to introduce an empty line
+blank_line <- fpar("") 
 
-my_par2 <- fpar("Second Line") # second line of text, unformatted
-my_list <- block_list(my_par, blank_line, my_par2) # Final block with the two lines of text separated by the empty line
+# second line of text, unformatted
+my_par2 <- fpar("Second Line") 
+# Final block with the two lines of text separated by the empty line
+my_list <- block_list(my_par, blank_line, my_par2) 
 
 pptx_obj <- pptx_obj %>%
   add_slide(layout = "Title and Content", master = master) %>% 
-  ph_with(value = my_list, location = ph_location_type(type = "body") )
+  ph_with(value = my_list, 
+          location = ph_location_type(type = "body"))
 ```
 
 Again, if you want to visualize the results, simply print the results as earliere:
@@ -375,7 +397,8 @@ my_data <- block_list(text1, text2, text3)
 
 pptx_obj <- pptx_obj %>%
   add_slide(layout = "Title and Content", master = master) %>% 
-  ph_with(value = my_data, level_list = c(1,2,1), location = ph_location_type(type = 'body'))
+  ph_with(value = my_data, level_list = c(1,2,1), 
+          location = ph_location_type(type = 'body'))
 ```
 
 #### Exporting Tables
@@ -437,7 +460,7 @@ ft_table <- ft_table %>%
   bg(i = 1:nrow(ft_data), bg = "#EDEDED") %>% 
   # Formatting the last row of the table
   bold(i = nrow(ft_data), j = 1:ncol(ft_data)) %>% 
-  italic(i = nrow(ft_data), j = ~Product + Salty + Sweet + Sour + Bitter) %>%
+  italic(i = nrow(ft_data), j = ~Product+Salty+Sweet+Sour+Bitter) %>%
   color(i =  nrow(ft_data), j = ~Sour, color = "red") %>%
   color(i =  nrow(ft_data), j = ~Sweet, color = "orange") %>% 
   autofit()
@@ -463,7 +486,8 @@ Finally, to export a *flextable* table to a PowerPoint deck, simply export it as
 ```{r 4.7 original example, eval=TRUE, echo=TRUE}
 pptx_obj <- pptx_obj %>%
   add_slide(layout = "Title and Content", master = master) %>%
-  ph_with(value = ft_table, ph_location(left = 2, top = 2, width = 4))
+  ph_with(value = ft_table, 
+          ph_location(left = 2, top = 2, width = 4))
 ```
 
 #### Exporting Plots {#export_plots}
@@ -474,7 +498,8 @@ The last type of R outputs to export to PowerPoint are figures. Before showing h
 chart_to_export <- senso_mean %>%
   dplyr::select(Product, Salty, Sweet, Sour, Bitter) %>% 
   arrange(Product) %>% 
-  pivot_longer(Salty:Bitter, names_to = 'Attribute', values_to = 'Value') %>% 
+  pivot_longer(Salty:Bitter, 
+               names_to = 'Attribute', values_to = 'Value') %>% 
   ggplot(aes(x = Product, y = Value, fill = Attribute)) + 
   geom_col(position = 'dodge')+
   xlab("")+
@@ -488,7 +513,8 @@ This package provides two graphics devices that produces Vector Graphics outputs
 library(rvg)
 pptx_obj <- pptx_obj %>%
   add_slide(layout = "Title and Content", master = master) %>%
-  ph_with(value = dml(ggobj = chart_to_export), location = ph_location_type(type = 'body'))
+  ph_with(value = dml(ggobj = chart_to_export), 
+          location = ph_location_type(type = 'body'))
 ```
 
 With `{rvg}`, the graphics are being *rebuilt* in PowerPoint, meaning that they are completely editable. It is hence possible to change color, re-write text, move labels, etc.
@@ -503,18 +529,22 @@ library(mschart)
 mydata <- senso_mean %>%
   dplyr::select(Product, Salty, Sweet, Sour, Bitter) %>% 
   arrange(Product) %>% 
-  pivot_longer(Salty:Bitter, names_to = 'Attribute', values_to = 'Value')
+  pivot_longer(Salty:Bitter, 
+               names_to = 'Attribute', values_to = 'Value')
 
 # Building the barchart using ms_barchart()
-my_barchart <- ms_barchart(data=mydata, x="Product", y="Value", group="Attribute")
+my_barchart <- ms_barchart(data=mydata, x="Product", y="Value", 
+                           group="Attribute")
 
-# The chart is a PowerPoint native object and can be viewed using the preview option in print
+# The chart is a PowerPoint native object 
+# It can be viewed using the preview option in print
 print(my_barchart, preview = TRUE)
 
-# To add the object to a PowerPoint slide we can use the officer's native ph_with() function
+# To add the object to a PPT slide, officer's ph_with() function is used
 pptx_obj <- pptx_obj %>%
   add_slide(layout = "Title and Content", master = "Office Theme") %>%
-  ph_with(value = my_barchart, location = ph_location_type(type = "body"))
+  ph_with(value = my_barchart, 
+          location = ph_location_type(type = "body"))
 ```
 
 Now the full deck is being created, let's save in one last time using `print()`:
@@ -549,7 +579,8 @@ print(docx_obj, target = "output/my export.docx")
 Of course, it is not required to use the default formatting options from the word document in use. Instead, we can format it directly from R using `body_add_fpar()` to add a formatted text paragraph, or apply pre-defined styles to the previous function suggested (as is the case here with `style = "heading 1"` to set the text as a title of level 1).
 
 ```{r, eval=TRUE, echo=TRUE}
-my_format <- fp_text(font.family = 'Calibri', font.size = 14, bold = TRUE, color = 'blue')
+my_format <- fp_text(font.family = 'Calibri', font.size = 14, 
+                     bold = TRUE, color = 'blue')
 my_text <- ftext('Here is another example of text', my_format)
 my_par <- fpar(my_text)
 
@@ -562,22 +593,37 @@ docx_obj <- read_docx() %>%
 To export tables or figures, additional functions including `body_add_table()` (for tables) and `body_add_gg()`^[Note that `body_add_img()` and `body_add_plot()` can also be used.]) (for `ggplot()` figures) are used. These can be combined to `body_add_caption()` to add a caption to your table/figure:
 
 ```{r, eval=TRUE, echo=TRUE}
-table_num <- run_autonum(seq_id = "tab", pre_label = "Table ", bkm = "tables")
-figure_num <- run_autonum(seq_id = "fig", pre_label = "Figure ", bkm = "figures")
+table_num <- run_autonum(seq_id = "tab", 
+                         pre_label = "Table ", bkm = "tables")
+figure_num <- run_autonum(seq_id = "fig", 
+                          pre_label = "Figure ", bkm = "figures")
 
 docx_obj <- docx_obj %>% 
-  body_add_par(value = "Exporting Tables", style = "heading 2") %>% 
-  body_add_par(value = "", style = "Normal") %>% 
-  body_add_par(value = "Here is my first table:", style = "Normal") %>% 
-  body_add_par(value = "", style = "Normal") %>% 
-  body_add_table(value = head(mtcars)[,1:4], style = "table_template") %>% 
-  body_add_caption(block_caption("My first table.", style="centered", autonum=table_num)) %>% 
-  body_add_par(value = "Exporting Figures", style = "heading 2") %>% 
-  body_add_par(value = "", style = "Normal") %>% 
-  body_add_par(value = "Here is my first figure:", style = "Normal") %>% 
-  body_add_par(value = "", style = "Normal") %>% 
+  body_add_par(value = "Exporting Tables", 
+               style = "heading 2") %>% 
+  body_add_par(value = "", 
+               style = "Normal") %>% 
+  body_add_par(value = "Here is my first table:", 
+               style = "Normal") %>% 
+  body_add_par(value = "", 
+               style = "Normal") %>% 
+  body_add_table(value = head(mtcars)[,1:4], 
+                 style = "table_template") %>% 
+  body_add_caption(block_caption("My first table.", 
+                                 style="centered", 
+                                 autonum=table_num)) %>% 
+  body_add_par(value = "Exporting Figures", 
+               style = "heading 2") %>% 
+  body_add_par(value = "", 
+               style = "Normal") %>% 
+  body_add_par(value = "Here is my first figure:", 
+               style = "Normal") %>% 
+  body_add_par(value = "", 
+               style = "Normal") %>% 
   body_add_gg(value = chart_to_export) %>% 
-  body_add_caption(block_caption("My first figure.", style="centered", autonum=figure_num))
+  body_add_caption(block_caption("My first figure.", 
+                                 style="centered", 
+                                 autonum=figure_num))
 ```
 
 As can be seen, `body_add_caption()` is combined to `block_caption()`, and can have some automated numbering, as defined previously using `table_num` for tables, and `figure_num` for figures.

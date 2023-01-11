@@ -190,7 +190,7 @@
 
 \title{Data Science for Sensory and Consumer Scientists}
 \author{Thierry Worch, Julien Delarue, Vanessa Rios de Souza, and John Ennis}
-\date{2023-01-09}
+\date{2023-01-11}
 
 \begin{document}
 \maketitle
@@ -4534,7 +4534,8 @@ Let's illustrate this by using our \emph{biscuits\_sensory\_profile.xlsx} file: 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{file\_path }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"biscuits\_sensory\_profile.xlsx"}\NormalTok{)}
-\NormalTok{product\_info }\OtherTok{\textless{}{-}}\NormalTok{ readxl}\SpecialCharTok{::}\FunctionTok{read\_xlsx}\NormalTok{(}\AttributeTok{path=}\NormalTok{file\_path, }\AttributeTok{sheet=}\StringTok{"Product Info"}\NormalTok{, }\AttributeTok{range=}\StringTok{"A1:D12"}\NormalTok{, }\AttributeTok{col\_names=}\ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{product\_info }\OtherTok{\textless{}{-}}\NormalTok{ readxl}\SpecialCharTok{::}\FunctionTok{read\_xlsx}\NormalTok{(}\AttributeTok{path=}\NormalTok{file\_path, }\AttributeTok{sheet=}\StringTok{"Product Info"}\NormalTok{, }
+                                  \AttributeTok{range=}\StringTok{"A1:D12"}\NormalTok{, }\AttributeTok{col\_names=}\ConstantTok{TRUE}\NormalTok{)}
 
 \NormalTok{high\_prot }\OtherTok{\textless{}{-}}\NormalTok{ product\_info }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{filter}\NormalTok{(Protein }\SpecialCharTok{\%in\%} \StringTok{"High"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
@@ -4561,11 +4562,7 @@ With \texttt{\{openxlsx\}}, the procedure starts with creating a workbook object
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(openxlsx)}
-
-\CommentTok{\# Create workbook object}
 \NormalTok{wb }\OtherTok{\textless{}{-}}\NormalTok{ openxlsx}\SpecialCharTok{::}\FunctionTok{createWorkbook}\NormalTok{()}
-
-\CommentTok{\# Add a new worksheet}
 \FunctionTok{addWorksheet}\NormalTok{(wb, }\AttributeTok{sheetName =} \StringTok{"Mean"}\NormalTok{, }\AttributeTok{gridLines =} \ConstantTok{FALSE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -4595,18 +4592,21 @@ Let's imagine we want to compute the sensory profiles of the products, and we wa
 \CommentTok{\# Creating the Sensory Profiles with some Product Information}
 \NormalTok{p\_info }\OtherTok{\textless{}{-}}\NormalTok{ readxl}\SpecialCharTok{::}\FunctionTok{read\_xlsx}\NormalTok{(file\_path, }\AttributeTok{sheet =} \StringTok{"Product Info"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
 \NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Type)}
-
 \NormalTok{sensory }\OtherTok{\textless{}{-}}\NormalTok{ readxl}\SpecialCharTok{::}\FunctionTok{read\_xlsx}\NormalTok{(file\_path, }\AttributeTok{sheet=}\StringTok{"Data"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{inner\_join}\NormalTok{(p\_info, }\AttributeTok{by=}\StringTok{"Product"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{relocate}\NormalTok{(Protein}\SpecialCharTok{:}\NormalTok{Fiber, }\AttributeTok{.after=}\NormalTok{Product)}
-
 \NormalTok{senso\_mean }\OtherTok{\textless{}{-}}\NormalTok{ sensory }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{pivot\_longer}\NormalTok{(Shiny}\SpecialCharTok{:}\NormalTok{Melting, }\AttributeTok{names\_to=}\StringTok{"Attribute"}\NormalTok{, }\AttributeTok{values\_to=}\StringTok{"Score"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_longer}\NormalTok{(Shiny}\SpecialCharTok{:}\NormalTok{Melting, }
+               \AttributeTok{names\_to=}\StringTok{"Attribute"}\NormalTok{, }\AttributeTok{values\_to=}\StringTok{"Score"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
 \NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Judge) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{pivot\_wider}\NormalTok{(}\AttributeTok{names\_from=}\NormalTok{Attribute, }\AttributeTok{values\_from=}\NormalTok{Score, }\AttributeTok{values\_fn=}\NormalTok{mean)}
+  \FunctionTok{pivot\_wider}\NormalTok{(}\AttributeTok{names\_from=}\NormalTok{Attribute, }\AttributeTok{values\_from=}\NormalTok{Score, }
+              \AttributeTok{values\_fn=}\NormalTok{mean)}
 
-\CommentTok{\# Exporting the Results to Excel}
-\FunctionTok{writeDataTable}\NormalTok{(wb, }\AttributeTok{sheet=}\StringTok{"Mean"}\NormalTok{, }\AttributeTok{x=}\NormalTok{senso\_mean, }\AttributeTok{startCol=}\DecValTok{1}\NormalTok{, }\AttributeTok{startRow=}\DecValTok{1}\NormalTok{, }\AttributeTok{colNames=}\ConstantTok{TRUE}\NormalTok{, }\AttributeTok{rowNames=}\ConstantTok{FALSE}\NormalTok{, }\AttributeTok{tableStyle=}\StringTok{"TableStyleLight9"}\NormalTok{)}
+\CommentTok{\# Add the table to the Excel Sheet}
+\FunctionTok{writeDataTable}\NormalTok{(wb, }\AttributeTok{sheet=}\StringTok{"Mean"}\NormalTok{, }\AttributeTok{x=}\NormalTok{senso\_mean, }
+               \AttributeTok{startCol=}\DecValTok{1}\NormalTok{, }\AttributeTok{startRow=}\DecValTok{1}\NormalTok{, }
+               \AttributeTok{colNames=}\ConstantTok{TRUE}\NormalTok{, }\AttributeTok{rowNames=}\ConstantTok{FALSE}\NormalTok{, }
+               \AttributeTok{tableStyle=}\StringTok{"TableStyleLight9"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4653,7 +4653,8 @@ Rather than using some pre-defined formatting as was the case with \texttt{table
 \FunctionTok{modifyBaseFont}\NormalTok{(wb,}\AttributeTok{fontName =} \StringTok{"Calibri"}\NormalTok{, }\AttributeTok{fontSize =} \DecValTok{10}\NormalTok{)}
 
 \CommentTok{\# Header Style (blue background, top/bottom borders, text centered/bold)}
-\NormalTok{headSty }\OtherTok{\textless{}{-}} \FunctionTok{createStyle}\NormalTok{(}\AttributeTok{fgFill=}\StringTok{"\#DCE6F1"}\NormalTok{, }\AttributeTok{border=}\StringTok{"TopBottom"}\NormalTok{, }\AttributeTok{halign=}\StringTok{"center"}\NormalTok{, }\AttributeTok{textDecoration=}\StringTok{"bold"}\NormalTok{)}
+\NormalTok{headSty }\OtherTok{\textless{}{-}} \FunctionTok{createStyle}\NormalTok{(}\AttributeTok{fgFill=}\StringTok{"\#DCE6F1"}\NormalTok{, }\AttributeTok{border=}\StringTok{"TopBottom"}\NormalTok{, }
+                       \AttributeTok{halign=}\StringTok{"center"}\NormalTok{, }\AttributeTok{textDecoration=}\StringTok{"bold"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4681,11 +4682,12 @@ Let's export again the sensory profiles in a second sheet after applying these f
 \begin{Highlighting}[]
 \FunctionTok{addWorksheet}\NormalTok{(wb, }\AttributeTok{sheetName =} \StringTok{"Mean (manual formatting)"}\NormalTok{, }\AttributeTok{gridLines =} \ConstantTok{FALSE}\NormalTok{)}
 
-\CommentTok{\# Freeze first row and first column}
 \FunctionTok{freezePane}\NormalTok{(wb, }\AttributeTok{sheet=}\DecValTok{2}\NormalTok{, }\AttributeTok{firstRow=}\ConstantTok{TRUE}\NormalTok{, }\AttributeTok{firstCol=}\ConstantTok{TRUE}\NormalTok{)}
 
-\CommentTok{\# Export the data using writeData}
-\FunctionTok{writeData}\NormalTok{(wb, }\AttributeTok{sheet=}\DecValTok{2}\NormalTok{, }\AttributeTok{x=}\NormalTok{senso\_mean, }\AttributeTok{startCol=}\DecValTok{1}\NormalTok{, }\AttributeTok{startRow=}\DecValTok{1}\NormalTok{, }\AttributeTok{colNames=}\ConstantTok{TRUE}\NormalTok{, }\AttributeTok{rowNames=}\ConstantTok{FALSE}\NormalTok{, }\AttributeTok{headerStyle=}\NormalTok{headSty)}
+\FunctionTok{writeData}\NormalTok{(wb, }\AttributeTok{sheet=}\DecValTok{2}\NormalTok{, }\AttributeTok{x=}\NormalTok{senso\_mean, }
+          \AttributeTok{startCol=}\DecValTok{1}\NormalTok{, }\AttributeTok{startRow=}\DecValTok{1}\NormalTok{, }
+          \AttributeTok{colNames=}\ConstantTok{TRUE}\NormalTok{, }\AttributeTok{rowNames=}\ConstantTok{FALSE}\NormalTok{, }
+          \AttributeTok{headerStyle=}\NormalTok{headSty)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4698,8 +4700,10 @@ Let's start with creating two pre-defined parameters called \texttt{pos\_style} 
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\# Styles for conditional formatting}
-\NormalTok{pos\_style }\OtherTok{\textless{}{-}} \FunctionTok{createStyle}\NormalTok{(}\AttributeTok{fontColour =} \StringTok{"firebrick3"}\NormalTok{, }\AttributeTok{bgFill =} \StringTok{"mistyrose1"}\NormalTok{)}
-\NormalTok{neg\_style }\OtherTok{\textless{}{-}} \FunctionTok{createStyle}\NormalTok{(}\AttributeTok{fontColour =} \StringTok{"navy"}\NormalTok{, }\AttributeTok{bgFill =} \StringTok{"lightsteelblue"}\NormalTok{)}
+\NormalTok{pos\_style }\OtherTok{\textless{}{-}} \FunctionTok{createStyle}\NormalTok{(}\AttributeTok{fontColour =} \StringTok{"firebrick3"}\NormalTok{, }
+                         \AttributeTok{bgFill =} \StringTok{"mistyrose1"}\NormalTok{)}
+\NormalTok{neg\_style }\OtherTok{\textless{}{-}} \FunctionTok{createStyle}\NormalTok{(}\AttributeTok{fontColour =} \StringTok{"navy"}\NormalTok{, }
+                         \AttributeTok{bgFill =} \StringTok{"lightsteelblue"}\NormalTok{)}
 
 \CommentTok{\# Compute the overall mean}
 \NormalTok{overall\_mean }\OtherTok{\textless{}{-}}\NormalTok{ senso\_mean }\SpecialCharTok{\%\textgreater{}\%} 
@@ -4712,7 +4716,8 @@ Let's then create a new worksheet in which we print the data of interest:
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{addWorksheet}\NormalTok{(wb, }\AttributeTok{sheetName =} \StringTok{"Conditional Formatting"}\NormalTok{, }\AttributeTok{gridLines=}\ConstantTok{FALSE}\NormalTok{)}
-\FunctionTok{writeDataTable}\NormalTok{(wb, }\AttributeTok{sheet=}\DecValTok{3}\NormalTok{, }\AttributeTok{x=}\NormalTok{senso\_mean, }\AttributeTok{startCol=}\DecValTok{1}\NormalTok{, }\AttributeTok{startRow=}\DecValTok{1}\NormalTok{, }\AttributeTok{colNames=}\ConstantTok{TRUE}\NormalTok{, }\AttributeTok{rowNames=}\ConstantTok{FALSE}\NormalTok{)}
+\FunctionTok{writeDataTable}\NormalTok{(wb, }\AttributeTok{sheet=}\DecValTok{3}\NormalTok{, }\AttributeTok{x=}\NormalTok{senso\_mean, }
+               \AttributeTok{startCol=}\DecValTok{1}\NormalTok{, }\AttributeTok{startRow=}\DecValTok{1}\NormalTok{, }\AttributeTok{colNames=}\ConstantTok{TRUE}\NormalTok{, }\AttributeTok{rowNames=}\ConstantTok{FALSE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4722,8 +4727,14 @@ Finally, we color the cells according to the rules that was defined earlier. To 
 \begin{Highlighting}[]
 \CommentTok{\# Adding formatting to the second column}
 \ControlFlowTok{for}\NormalTok{ (v }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{ncol}\NormalTok{(overall\_mean))\{}
-  \FunctionTok{conditionalFormatting}\NormalTok{(wb, }\AttributeTok{sheet=}\DecValTok{3}\NormalTok{, }\AttributeTok{cols=}\NormalTok{v}\SpecialCharTok{+}\DecValTok{3}\NormalTok{, }\AttributeTok{rows=}\DecValTok{1}\SpecialCharTok{+}\DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(senso\_mean), }\AttributeTok{rule=}\FunctionTok{paste0}\NormalTok{(}\StringTok{"\textgreater{}"}\NormalTok{, overall\_mean[}\DecValTok{1}\NormalTok{,v]), }\AttributeTok{style=}\NormalTok{pos\_style)}
-  \FunctionTok{conditionalFormatting}\NormalTok{(wb, }\AttributeTok{sheet=}\DecValTok{3}\NormalTok{, }\AttributeTok{cols=}\NormalTok{v}\SpecialCharTok{+}\DecValTok{3}\NormalTok{, }\AttributeTok{rows=}\DecValTok{1}\SpecialCharTok{+}\DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(senso\_mean), }\AttributeTok{rule=}\FunctionTok{paste0}\NormalTok{(}\StringTok{"\textless{}"}\NormalTok{, overall\_mean[}\DecValTok{1}\NormalTok{,v]), }\AttributeTok{style=}\NormalTok{neg\_style)}
+  \FunctionTok{conditionalFormatting}\NormalTok{(wb, }\AttributeTok{sheet=}\DecValTok{3}\NormalTok{, }\AttributeTok{cols=}\NormalTok{v}\SpecialCharTok{+}\DecValTok{3}\NormalTok{, }
+                        \AttributeTok{rows=}\DecValTok{1}\SpecialCharTok{+}\DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(senso\_mean), }
+                        \AttributeTok{rule=}\FunctionTok{paste0}\NormalTok{(}\StringTok{"\textgreater{}"}\NormalTok{, overall\_mean[}\DecValTok{1}\NormalTok{,v]), }
+                        \AttributeTok{style=}\NormalTok{pos\_style)}
+  \FunctionTok{conditionalFormatting}\NormalTok{(wb, }\AttributeTok{sheet=}\DecValTok{3}\NormalTok{, }\AttributeTok{cols=}\NormalTok{v}\SpecialCharTok{+}\DecValTok{3}\NormalTok{, }
+                        \AttributeTok{rows=}\DecValTok{1}\SpecialCharTok{+}\DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(senso\_mean), }
+                        \AttributeTok{rule=}\FunctionTok{paste0}\NormalTok{(}\StringTok{"\textless{}"}\NormalTok{, overall\_mean[}\DecValTok{1}\NormalTok{,v]), }
+                        \AttributeTok{style=}\NormalTok{neg\_style)}
 \NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
@@ -4809,47 +4820,23 @@ Each of these slides present some pre-defined properties (e.g.~a box for text of
 \begin{Highlighting}[]
 \NormalTok{pptx\_obj }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{layout\_properties}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{filter}\NormalTok{(name }\SpecialCharTok{==} \StringTok{"Title and Content"}\NormalTok{)}
+  \FunctionTok{filter}\NormalTok{(name }\SpecialCharTok{==} \StringTok{"Title and Content"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{as\_tibble}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-##    master_name              name   type id
-## 1 Office Theme Title and Content   body  3
-## 2 Office Theme Title and Content     dt  4
-## 3 Office Theme Title and Content    ftr  5
-## 4 Office Theme Title and Content sldNum  6
-## 5 Office Theme Title and Content  title  2
-##                     ph_label
-## 1      Content Placeholder 2
-## 2         Date Placeholder 3
-## 3       Footer Placeholder 4
-## 4 Slide Number Placeholder 5
-## 5                    Title 1
-##                                            ph  offx
-## 1                             <p:ph idx="1"/> 0.500
-## 2        <p:ph type="dt" sz="half" idx="10"/> 0.500
-## 3    <p:ph type="ftr" sz="quarter" idx="11"/> 3.417
-## 4 <p:ph type="sldNum" sz="quarter" idx="12"/> 7.167
-## 5                        <p:ph type="title"/> 0.500
-##     offy    cx     cy rotation
-## 1 1.7500 9.000 4.9497       NA
-## 2 6.9514 2.333 0.3993       NA
-## 3 6.9514 3.167 0.3993       NA
-## 4 6.9514 2.333 0.3993       NA
-## 5 0.3003 9.000 1.2500       NA
-##                                   fld_id
-## 1                                   <NA>
-## 2 {E6744CE3-0875-4B69-89C0-6F72D8139561}
-## 3                                   <NA>
-## 4 {8DADB20D-508E-4C6D-A9E4-257D5607B0F6}
-## 5                                   <NA>
-##            fld_type
-## 1              <NA>
-## 2 datetimeFigureOut
-## 3              <NA>
-## 4          slidenum
-## 5              <NA>
+## # A tibble: 5 x 13
+##   master_~1 name  type  id    ph_la~2 ph     offx  offy
+##   <chr>     <chr> <chr> <chr> <chr>   <chr> <dbl> <dbl>
+## 1 Office T~ Titl~ body  3     Conten~ "<p:~  0.5   1.75
+## 2 Office T~ Titl~ dt    4     Date P~ "<p:~  0.5   6.95
+## 3 Office T~ Titl~ ftr   5     Footer~ "<p:~  3.42  6.95
+## 4 Office T~ Titl~ sldN~ 6     Slide ~ "<p:~  7.17  6.95
+## # ... with 1 more row, 5 more variables: cx <dbl>,
+## #   cy <dbl>, rotation <dbl>, fld_id <chr>,
+## #   fld_type <chr>, and abbreviated variable names
+## #   1: master_name, 2: ph_label
 \end{verbatim}
 
 This code provides more details about the elements available in each type of slides, including their identifiers and positions on the slide. This information is required to export content in some specific elements.
@@ -4916,8 +4903,10 @@ To inform where to print elements on the slide, the function \texttt{ph\_with()}
 \NormalTok{my\_data }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"My functions are:"}\NormalTok{, }\StringTok{"ph\_with"}\NormalTok{, }\StringTok{"ph\_location\_type"}\NormalTok{)}
 
 \NormalTok{pptx\_obj }\OtherTok{\textless{}{-}}\NormalTok{ pptx\_obj }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ph\_with}\NormalTok{(}\AttributeTok{value =} \StringTok{"My first title"}\NormalTok{, }\AttributeTok{location =} \FunctionTok{ph\_location\_type}\NormalTok{(}\AttributeTok{type =} \StringTok{"title"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{ph\_with}\NormalTok{(}\AttributeTok{value =}\NormalTok{ my\_data, }\AttributeTok{location =} \FunctionTok{ph\_location\_type}\NormalTok{(}\AttributeTok{type =} \StringTok{\textquotesingle{}body\textquotesingle{}}\NormalTok{))}
+  \FunctionTok{ph\_with}\NormalTok{(}\AttributeTok{value =} \StringTok{"My first title"}\NormalTok{, }
+          \AttributeTok{location =} \FunctionTok{ph\_location\_type}\NormalTok{(}\AttributeTok{type =} \StringTok{"title"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ph\_with}\NormalTok{(}\AttributeTok{value =}\NormalTok{ my\_data, }
+          \AttributeTok{location =} \FunctionTok{ph\_location\_type}\NormalTok{(}\AttributeTok{type =} \StringTok{\textquotesingle{}body\textquotesingle{}}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4943,7 +4932,8 @@ For a full control of the position where to print your element, \texttt{ph\_loca
 
 \NormalTok{pptx\_obj }\OtherTok{\textless{}{-}}\NormalTok{ pptx\_obj }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{add\_slide}\NormalTok{(}\AttributeTok{layout =} \StringTok{"Title and Content"}\NormalTok{, }\AttributeTok{master =}\NormalTok{ master) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{ph\_with}\NormalTok{(}\AttributeTok{value =}\NormalTok{ my\_data2, }\AttributeTok{location =} \FunctionTok{ph\_location}\NormalTok{(}\AttributeTok{left =} \DecValTok{2}\NormalTok{, }\AttributeTok{top =} \DecValTok{2}\NormalTok{, }\AttributeTok{width =} \DecValTok{3}\NormalTok{, }\AttributeTok{height =} \DecValTok{1}\NormalTok{))}
+  \FunctionTok{ph\_with}\NormalTok{(}\AttributeTok{value =}\NormalTok{ my\_data2, }
+          \AttributeTok{location =} \FunctionTok{ph\_location}\NormalTok{(}\AttributeTok{left=}\DecValTok{2}\NormalTok{, }\AttributeTok{top=}\DecValTok{2}\NormalTok{, }\AttributeTok{width=}\DecValTok{3}\NormalTok{, }\AttributeTok{height=}\DecValTok{1}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4976,18 +4966,25 @@ Additionally, the text itself can be formated (font, size, color, etc.) using \t
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{my\_prop }\OtherTok{\textless{}{-}} \FunctionTok{fp\_text}\NormalTok{(}\AttributeTok{color =} \StringTok{"red"}\NormalTok{, }\AttributeTok{font.size =} \DecValTok{14}\NormalTok{) }\CommentTok{\# Formatting option}
-\NormalTok{my\_text }\OtherTok{\textless{}{-}} \FunctionTok{ftext}\NormalTok{(}\StringTok{"First Line in Red"}\NormalTok{, }\AttributeTok{prop =}\NormalTok{ my\_prop) }\CommentTok{\# First line of text, formatted}
+\CommentTok{\# Formatting option}
+\NormalTok{my\_prop }\OtherTok{\textless{}{-}} \FunctionTok{fp\_text}\NormalTok{(}\AttributeTok{color =} \StringTok{"red"}\NormalTok{, }\AttributeTok{font.size =} \DecValTok{14}\NormalTok{) }
+\CommentTok{\# First line of text, formatted}
+\NormalTok{my\_text }\OtherTok{\textless{}{-}} \FunctionTok{ftext}\NormalTok{(}\StringTok{"First Line in Red"}\NormalTok{, }\AttributeTok{prop =}\NormalTok{ my\_prop) }
 
-\NormalTok{my\_par }\OtherTok{\textless{}{-}} \FunctionTok{fpar}\NormalTok{(my\_text) }\CommentTok{\# text into a paragraph}
-\NormalTok{blank\_line }\OtherTok{\textless{}{-}} \FunctionTok{fpar}\NormalTok{(}\StringTok{""}\NormalTok{) }\CommentTok{\# other empty paragraph to introduce an empty line}
+\CommentTok{\# text into a paragraph}
+\NormalTok{my\_par }\OtherTok{\textless{}{-}} \FunctionTok{fpar}\NormalTok{(my\_text) }
+\CommentTok{\# other empty paragraph to introduce an empty line}
+\NormalTok{blank\_line }\OtherTok{\textless{}{-}} \FunctionTok{fpar}\NormalTok{(}\StringTok{""}\NormalTok{) }
 
-\NormalTok{my\_par2 }\OtherTok{\textless{}{-}} \FunctionTok{fpar}\NormalTok{(}\StringTok{"Second Line"}\NormalTok{) }\CommentTok{\# second line of text, unformatted}
-\NormalTok{my\_list }\OtherTok{\textless{}{-}} \FunctionTok{block\_list}\NormalTok{(my\_par, blank\_line, my\_par2) }\CommentTok{\# Final block with the two lines of text separated by the empty line}
+\CommentTok{\# second line of text, unformatted}
+\NormalTok{my\_par2 }\OtherTok{\textless{}{-}} \FunctionTok{fpar}\NormalTok{(}\StringTok{"Second Line"}\NormalTok{) }
+\CommentTok{\# Final block with the two lines of text separated by the empty line}
+\NormalTok{my\_list }\OtherTok{\textless{}{-}} \FunctionTok{block\_list}\NormalTok{(my\_par, blank\_line, my\_par2) }
 
 \NormalTok{pptx\_obj }\OtherTok{\textless{}{-}}\NormalTok{ pptx\_obj }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{add\_slide}\NormalTok{(}\AttributeTok{layout =} \StringTok{"Title and Content"}\NormalTok{, }\AttributeTok{master =}\NormalTok{ master) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{ph\_with}\NormalTok{(}\AttributeTok{value =}\NormalTok{ my\_list, }\AttributeTok{location =} \FunctionTok{ph\_location\_type}\NormalTok{(}\AttributeTok{type =} \StringTok{"body"}\NormalTok{) )}
+  \FunctionTok{ph\_with}\NormalTok{(}\AttributeTok{value =}\NormalTok{ my\_list, }
+          \AttributeTok{location =} \FunctionTok{ph\_location\_type}\NormalTok{(}\AttributeTok{type =} \StringTok{"body"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -5012,7 +5009,8 @@ Last element of formatting to consider is the hierarchy in bullet points. Let's 
 
 \NormalTok{pptx\_obj }\OtherTok{\textless{}{-}}\NormalTok{ pptx\_obj }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{add\_slide}\NormalTok{(}\AttributeTok{layout =} \StringTok{"Title and Content"}\NormalTok{, }\AttributeTok{master =}\NormalTok{ master) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{ph\_with}\NormalTok{(}\AttributeTok{value =}\NormalTok{ my\_data, }\AttributeTok{level\_list =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{1}\NormalTok{), }\AttributeTok{location =} \FunctionTok{ph\_location\_type}\NormalTok{(}\AttributeTok{type =} \StringTok{\textquotesingle{}body\textquotesingle{}}\NormalTok{))}
+  \FunctionTok{ph\_with}\NormalTok{(}\AttributeTok{value =}\NormalTok{ my\_data, }\AttributeTok{level\_list =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{1}\NormalTok{), }
+          \AttributeTok{location =} \FunctionTok{ph\_location\_type}\NormalTok{(}\AttributeTok{type =} \StringTok{\textquotesingle{}body\textquotesingle{}}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -5094,7 +5092,7 @@ For illustration, let's apply some of these functions to \texttt{ft\_table}:
   \FunctionTok{bg}\NormalTok{(}\AttributeTok{i =} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(ft\_data), }\AttributeTok{bg =} \StringTok{"\#EDEDED"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
   \CommentTok{\# Formatting the last row of the table}
   \FunctionTok{bold}\NormalTok{(}\AttributeTok{i =} \FunctionTok{nrow}\NormalTok{(ft\_data), }\AttributeTok{j =} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{ncol}\NormalTok{(ft\_data)) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{italic}\NormalTok{(}\AttributeTok{i =} \FunctionTok{nrow}\NormalTok{(ft\_data), }\AttributeTok{j =} \SpecialCharTok{\textasciitilde{}}\NormalTok{Product }\SpecialCharTok{+}\NormalTok{ Salty }\SpecialCharTok{+}\NormalTok{ Sweet }\SpecialCharTok{+}\NormalTok{ Sour }\SpecialCharTok{+}\NormalTok{ Bitter) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{italic}\NormalTok{(}\AttributeTok{i =} \FunctionTok{nrow}\NormalTok{(ft\_data), }\AttributeTok{j =} \SpecialCharTok{\textasciitilde{}}\NormalTok{Product}\SpecialCharTok{+}\NormalTok{Salty}\SpecialCharTok{+}\NormalTok{Sweet}\SpecialCharTok{+}\NormalTok{Sour}\SpecialCharTok{+}\NormalTok{Bitter) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{color}\NormalTok{(}\AttributeTok{i =}  \FunctionTok{nrow}\NormalTok{(ft\_data), }\AttributeTok{j =} \SpecialCharTok{\textasciitilde{}}\NormalTok{Sour, }\AttributeTok{color =} \StringTok{"red"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{color}\NormalTok{(}\AttributeTok{i =}  \FunctionTok{nrow}\NormalTok{(ft\_data), }\AttributeTok{j =} \SpecialCharTok{\textasciitilde{}}\NormalTok{Sweet, }\AttributeTok{color =} \StringTok{"orange"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{autofit}\NormalTok{()}
@@ -5128,7 +5126,8 @@ Finally, to export a \emph{flextable} table to a PowerPoint deck, simply export 
 \begin{Highlighting}[]
 \NormalTok{pptx\_obj }\OtherTok{\textless{}{-}}\NormalTok{ pptx\_obj }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{add\_slide}\NormalTok{(}\AttributeTok{layout =} \StringTok{"Title and Content"}\NormalTok{, }\AttributeTok{master =}\NormalTok{ master) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ph\_with}\NormalTok{(}\AttributeTok{value =}\NormalTok{ ft\_table, }\FunctionTok{ph\_location}\NormalTok{(}\AttributeTok{left =} \DecValTok{2}\NormalTok{, }\AttributeTok{top =} \DecValTok{2}\NormalTok{, }\AttributeTok{width =} \DecValTok{4}\NormalTok{))}
+  \FunctionTok{ph\_with}\NormalTok{(}\AttributeTok{value =}\NormalTok{ ft\_table, }
+          \FunctionTok{ph\_location}\NormalTok{(}\AttributeTok{left =} \DecValTok{2}\NormalTok{, }\AttributeTok{top =} \DecValTok{2}\NormalTok{, }\AttributeTok{width =} \DecValTok{4}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -5142,7 +5141,8 @@ The last type of R outputs to export to PowerPoint are figures. Before showing h
 \NormalTok{chart\_to\_export }\OtherTok{\textless{}{-}}\NormalTok{ senso\_mean }\SpecialCharTok{\%\textgreater{}\%}
 \NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Product, Salty, Sweet, Sour, Bitter) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{arrange}\NormalTok{(Product) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{pivot\_longer}\NormalTok{(Salty}\SpecialCharTok{:}\NormalTok{Bitter, }\AttributeTok{names\_to =} \StringTok{\textquotesingle{}Attribute\textquotesingle{}}\NormalTok{, }\AttributeTok{values\_to =} \StringTok{\textquotesingle{}Value\textquotesingle{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_longer}\NormalTok{(Salty}\SpecialCharTok{:}\NormalTok{Bitter, }
+               \AttributeTok{names\_to =} \StringTok{\textquotesingle{}Attribute\textquotesingle{}}\NormalTok{, }\AttributeTok{values\_to =} \StringTok{\textquotesingle{}Value\textquotesingle{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Product, }\AttributeTok{y =}\NormalTok{ Value, }\AttributeTok{fill =}\NormalTok{ Attribute)) }\SpecialCharTok{+} 
   \FunctionTok{geom\_col}\NormalTok{(}\AttributeTok{position =} \StringTok{\textquotesingle{}dodge\textquotesingle{}}\NormalTok{)}\SpecialCharTok{+}
   \FunctionTok{xlab}\NormalTok{(}\StringTok{""}\NormalTok{)}\SpecialCharTok{+}
@@ -5158,7 +5158,8 @@ This package provides two graphics devices that produces Vector Graphics outputs
 \FunctionTok{library}\NormalTok{(rvg)}
 \NormalTok{pptx\_obj }\OtherTok{\textless{}{-}}\NormalTok{ pptx\_obj }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{add\_slide}\NormalTok{(}\AttributeTok{layout =} \StringTok{"Title and Content"}\NormalTok{, }\AttributeTok{master =}\NormalTok{ master) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ph\_with}\NormalTok{(}\AttributeTok{value =} \FunctionTok{dml}\NormalTok{(}\AttributeTok{ggobj =}\NormalTok{ chart\_to\_export), }\AttributeTok{location =} \FunctionTok{ph\_location\_type}\NormalTok{(}\AttributeTok{type =} \StringTok{\textquotesingle{}body\textquotesingle{}}\NormalTok{))}
+  \FunctionTok{ph\_with}\NormalTok{(}\AttributeTok{value =} \FunctionTok{dml}\NormalTok{(}\AttributeTok{ggobj =}\NormalTok{ chart\_to\_export), }
+          \AttributeTok{location =} \FunctionTok{ph\_location\_type}\NormalTok{(}\AttributeTok{type =} \StringTok{\textquotesingle{}body\textquotesingle{}}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -5175,12 +5176,15 @@ To produce such interact graphs, \texttt{ggplot2} graphs are not needed. Instead
 \NormalTok{mydata }\OtherTok{\textless{}{-}}\NormalTok{ senso\_mean }\SpecialCharTok{\%\textgreater{}\%}
 \NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Product, Salty, Sweet, Sour, Bitter) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{arrange}\NormalTok{(Product) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{pivot\_longer}\NormalTok{(Salty}\SpecialCharTok{:}\NormalTok{Bitter, }\AttributeTok{names\_to =} \StringTok{\textquotesingle{}Attribute\textquotesingle{}}\NormalTok{, }\AttributeTok{values\_to =} \StringTok{\textquotesingle{}Value\textquotesingle{}}\NormalTok{)}
+  \FunctionTok{pivot\_longer}\NormalTok{(Salty}\SpecialCharTok{:}\NormalTok{Bitter, }
+               \AttributeTok{names\_to =} \StringTok{\textquotesingle{}Attribute\textquotesingle{}}\NormalTok{, }\AttributeTok{values\_to =} \StringTok{\textquotesingle{}Value\textquotesingle{}}\NormalTok{)}
 
 \CommentTok{\# Building the barchart using ms\_barchart()}
-\NormalTok{my\_barchart }\OtherTok{\textless{}{-}} \FunctionTok{ms\_barchart}\NormalTok{(}\AttributeTok{data=}\NormalTok{mydata, }\AttributeTok{x=}\StringTok{"Product"}\NormalTok{, }\AttributeTok{y=}\StringTok{"Value"}\NormalTok{, }\AttributeTok{group=}\StringTok{"Attribute"}\NormalTok{)}
+\NormalTok{my\_barchart }\OtherTok{\textless{}{-}} \FunctionTok{ms\_barchart}\NormalTok{(}\AttributeTok{data=}\NormalTok{mydata, }\AttributeTok{x=}\StringTok{"Product"}\NormalTok{, }\AttributeTok{y=}\StringTok{"Value"}\NormalTok{, }
+                           \AttributeTok{group=}\StringTok{"Attribute"}\NormalTok{)}
 
-\CommentTok{\# The chart is a PowerPoint native object and can be viewed using the preview option in print}
+\CommentTok{\# The chart is a PowerPoint native object }
+\CommentTok{\# It can be viewed using the preview option in print}
 \FunctionTok{print}\NormalTok{(my\_barchart, }\AttributeTok{preview =} \ConstantTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -5207,10 +5211,11 @@ To produce such interact graphs, \texttt{ggplot2} graphs are not needed. Instead
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# To add the object to a PowerPoint slide we can use the officer\textquotesingle{}s native ph\_with() function}
+\CommentTok{\# To add the object to a PPT slide, officer\textquotesingle{}s ph\_with() function is used}
 \NormalTok{pptx\_obj }\OtherTok{\textless{}{-}}\NormalTok{ pptx\_obj }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{add\_slide}\NormalTok{(}\AttributeTok{layout =} \StringTok{"Title and Content"}\NormalTok{, }\AttributeTok{master =} \StringTok{"Office Theme"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ph\_with}\NormalTok{(}\AttributeTok{value =}\NormalTok{ my\_barchart, }\AttributeTok{location =} \FunctionTok{ph\_location\_type}\NormalTok{(}\AttributeTok{type =} \StringTok{"body"}\NormalTok{))}
+  \FunctionTok{ph\_with}\NormalTok{(}\AttributeTok{value =}\NormalTok{ my\_barchart, }
+          \AttributeTok{location =} \FunctionTok{ph\_location\_type}\NormalTok{(}\AttributeTok{type =} \StringTok{"body"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -5254,7 +5259,8 @@ Of course, it is not required to use the default formatting options from the wor
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{my\_format }\OtherTok{\textless{}{-}} \FunctionTok{fp\_text}\NormalTok{(}\AttributeTok{font.family =} \StringTok{\textquotesingle{}Calibri\textquotesingle{}}\NormalTok{, }\AttributeTok{font.size =} \DecValTok{14}\NormalTok{, }\AttributeTok{bold =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{color =} \StringTok{\textquotesingle{}blue\textquotesingle{}}\NormalTok{)}
+\NormalTok{my\_format }\OtherTok{\textless{}{-}} \FunctionTok{fp\_text}\NormalTok{(}\AttributeTok{font.family =} \StringTok{\textquotesingle{}Calibri\textquotesingle{}}\NormalTok{, }\AttributeTok{font.size =} \DecValTok{14}\NormalTok{, }
+                     \AttributeTok{bold =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{color =} \StringTok{\textquotesingle{}blue\textquotesingle{}}\NormalTok{)}
 \NormalTok{my\_text }\OtherTok{\textless{}{-}} \FunctionTok{ftext}\NormalTok{(}\StringTok{\textquotesingle{}Here is another example of text\textquotesingle{}}\NormalTok{, my\_format)}
 \NormalTok{my\_par }\OtherTok{\textless{}{-}} \FunctionTok{fpar}\NormalTok{(my\_text)}
 
@@ -5269,22 +5275,37 @@ To export tables or figures, additional functions including \texttt{body\_add\_t
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{table\_num }\OtherTok{\textless{}{-}} \FunctionTok{run\_autonum}\NormalTok{(}\AttributeTok{seq\_id =} \StringTok{"tab"}\NormalTok{, }\AttributeTok{pre\_label =} \StringTok{"Table "}\NormalTok{, }\AttributeTok{bkm =} \StringTok{"tables"}\NormalTok{)}
-\NormalTok{figure\_num }\OtherTok{\textless{}{-}} \FunctionTok{run\_autonum}\NormalTok{(}\AttributeTok{seq\_id =} \StringTok{"fig"}\NormalTok{, }\AttributeTok{pre\_label =} \StringTok{"Figure "}\NormalTok{, }\AttributeTok{bkm =} \StringTok{"figures"}\NormalTok{)}
+\NormalTok{table\_num }\OtherTok{\textless{}{-}} \FunctionTok{run\_autonum}\NormalTok{(}\AttributeTok{seq\_id =} \StringTok{"tab"}\NormalTok{, }
+                         \AttributeTok{pre\_label =} \StringTok{"Table "}\NormalTok{, }\AttributeTok{bkm =} \StringTok{"tables"}\NormalTok{)}
+\NormalTok{figure\_num }\OtherTok{\textless{}{-}} \FunctionTok{run\_autonum}\NormalTok{(}\AttributeTok{seq\_id =} \StringTok{"fig"}\NormalTok{, }
+                          \AttributeTok{pre\_label =} \StringTok{"Figure "}\NormalTok{, }\AttributeTok{bkm =} \StringTok{"figures"}\NormalTok{)}
 
 \NormalTok{docx\_obj }\OtherTok{\textless{}{-}}\NormalTok{ docx\_obj }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{body\_add\_par}\NormalTok{(}\AttributeTok{value =} \StringTok{"Exporting Tables"}\NormalTok{, }\AttributeTok{style =} \StringTok{"heading 2"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{body\_add\_par}\NormalTok{(}\AttributeTok{value =} \StringTok{""}\NormalTok{, }\AttributeTok{style =} \StringTok{"Normal"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{body\_add\_par}\NormalTok{(}\AttributeTok{value =} \StringTok{"Here is my first table:"}\NormalTok{, }\AttributeTok{style =} \StringTok{"Normal"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{body\_add\_par}\NormalTok{(}\AttributeTok{value =} \StringTok{""}\NormalTok{, }\AttributeTok{style =} \StringTok{"Normal"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{body\_add\_table}\NormalTok{(}\AttributeTok{value =} \FunctionTok{head}\NormalTok{(mtcars)[,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{], }\AttributeTok{style =} \StringTok{"table\_template"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{body\_add\_caption}\NormalTok{(}\FunctionTok{block\_caption}\NormalTok{(}\StringTok{"My first table."}\NormalTok{, }\AttributeTok{style=}\StringTok{"centered"}\NormalTok{, }\AttributeTok{autonum=}\NormalTok{table\_num)) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{body\_add\_par}\NormalTok{(}\AttributeTok{value =} \StringTok{"Exporting Figures"}\NormalTok{, }\AttributeTok{style =} \StringTok{"heading 2"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{body\_add\_par}\NormalTok{(}\AttributeTok{value =} \StringTok{""}\NormalTok{, }\AttributeTok{style =} \StringTok{"Normal"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{body\_add\_par}\NormalTok{(}\AttributeTok{value =} \StringTok{"Here is my first figure:"}\NormalTok{, }\AttributeTok{style =} \StringTok{"Normal"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{body\_add\_par}\NormalTok{(}\AttributeTok{value =} \StringTok{""}\NormalTok{, }\AttributeTok{style =} \StringTok{"Normal"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{body\_add\_par}\NormalTok{(}\AttributeTok{value =} \StringTok{"Exporting Tables"}\NormalTok{, }
+               \AttributeTok{style =} \StringTok{"heading 2"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{body\_add\_par}\NormalTok{(}\AttributeTok{value =} \StringTok{""}\NormalTok{, }
+               \AttributeTok{style =} \StringTok{"Normal"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{body\_add\_par}\NormalTok{(}\AttributeTok{value =} \StringTok{"Here is my first table:"}\NormalTok{, }
+               \AttributeTok{style =} \StringTok{"Normal"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{body\_add\_par}\NormalTok{(}\AttributeTok{value =} \StringTok{""}\NormalTok{, }
+               \AttributeTok{style =} \StringTok{"Normal"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{body\_add\_table}\NormalTok{(}\AttributeTok{value =} \FunctionTok{head}\NormalTok{(mtcars)[,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{], }
+                 \AttributeTok{style =} \StringTok{"table\_template"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{body\_add\_caption}\NormalTok{(}\FunctionTok{block\_caption}\NormalTok{(}\StringTok{"My first table."}\NormalTok{, }
+                                 \AttributeTok{style=}\StringTok{"centered"}\NormalTok{, }
+                                 \AttributeTok{autonum=}\NormalTok{table\_num)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{body\_add\_par}\NormalTok{(}\AttributeTok{value =} \StringTok{"Exporting Figures"}\NormalTok{, }
+               \AttributeTok{style =} \StringTok{"heading 2"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{body\_add\_par}\NormalTok{(}\AttributeTok{value =} \StringTok{""}\NormalTok{, }
+               \AttributeTok{style =} \StringTok{"Normal"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{body\_add\_par}\NormalTok{(}\AttributeTok{value =} \StringTok{"Here is my first figure:"}\NormalTok{, }
+               \AttributeTok{style =} \StringTok{"Normal"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{body\_add\_par}\NormalTok{(}\AttributeTok{value =} \StringTok{""}\NormalTok{, }
+               \AttributeTok{style =} \StringTok{"Normal"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{body\_add\_gg}\NormalTok{(}\AttributeTok{value =}\NormalTok{ chart\_to\_export) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{body\_add\_caption}\NormalTok{(}\FunctionTok{block\_caption}\NormalTok{(}\StringTok{"My first figure."}\NormalTok{, }\AttributeTok{style=}\StringTok{"centered"}\NormalTok{, }\AttributeTok{autonum=}\NormalTok{figure\_num))}
+  \FunctionTok{body\_add\_caption}\NormalTok{(}\FunctionTok{block\_caption}\NormalTok{(}\StringTok{"My first figure."}\NormalTok{, }
+                                 \AttributeTok{style=}\StringTok{"centered"}\NormalTok{, }
+                                 \AttributeTok{autonum=}\NormalTok{figure\_num))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -5475,79 +5496,79 @@ In total, 11 products were considered in this study. They are all breakfast bisc
 
 \renewcommand*{\arraystretch}{1.5}
 
-\begin{longtable}[c]{|p{0.81in}|p{0.77in}|p{0.63in}|p{1.65in}}
+\begin{longtable}[c]{|p{0.69in}|p{0.66in}|p{0.54in}|p{1.32in}}
 
 \caption{\textcolor[HTML]{000000}{\fontsize{11}{13}\selectfont{\global\setmainfont{Arial}{Product\ set\ for\ the\ biscuit\ study}}}}\label{tab:biscuit-set}\\
 
 \hhline{>{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}-}
 
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.81in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Product}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.77in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Protein}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.63in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Fiber}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 1.65in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Type}}}} \\
+\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.69in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{Product}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.66in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{Protein}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.54in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{Fiber}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 1.32in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{Type}}}} \\
 
 \hhline{>{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}-}\endhead
 
 
 
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.81in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{P01}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.77in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Low}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.63in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Low}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 1.65in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Trial}}}} \\
+\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.69in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{P01}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.66in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{Low}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.54in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{Low}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 1.32in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{Trial}}}} \\
 
 
 
 
 
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.81in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{P02}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.77in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Low}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.63in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{High}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 1.65in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Trial}}}} \\
+\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.69in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{P02}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.66in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{Low}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.54in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{High}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 1.32in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{Trial}}}} \\
 
 
 
 
 
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.81in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{P03}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.77in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{High}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.63in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{High}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 1.65in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Trial}}}} \\
+\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.69in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{P03}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.66in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{High}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.54in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{High}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 1.32in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{Trial}}}} \\
 
 
 
 
 
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.81in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{P04}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.77in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{High}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.63in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{High}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 1.65in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Trial}}}} \\
+\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.69in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{P04}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.66in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{High}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.54in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{High}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 1.32in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{Trial}}}} \\
 
 
 
 
 
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.81in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{P05}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.77in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{High}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.63in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Low}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 1.65in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Trial}}}} \\
+\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.69in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{P05}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.66in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{High}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.54in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{Low}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 1.32in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{Trial}}}} \\
 
 
 
 
 
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.81in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{P06}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.77in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{High}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.63in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Low}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 1.65in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Trial}}}} \\
+\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.69in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{P06}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.66in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{High}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.54in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{Low}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 1.32in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{Trial}}}} \\
 
 
 
 
 
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.81in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{P07}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.77in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Low}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.63in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{High}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 1.65in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Trial}}}} \\
+\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.69in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{P07}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.66in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{Low}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.54in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{High}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 1.32in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{Trial}}}} \\
 
 
 
 
 
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.81in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{P08}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.77in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{High}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.63in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Low}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 1.65in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Trial}}}} \\
+\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.69in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{P08}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.66in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{High}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.54in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{Low}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 1.32in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{Trial}}}} \\
 
 
 
 
 
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.81in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{P09}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.77in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{High}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.63in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{High}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 1.65in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Trial}}}} \\
+\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.69in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{P09}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.66in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{High}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.54in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{High}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 1.32in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{Trial}}}} \\
 
 
 
 
 
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.81in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{P10}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.77in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Low}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.63in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Low}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 1.65in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Commercial\ product}}}} \\
+\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.69in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{P10}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.66in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{Low}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.54in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{Low}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 1.32in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{Commercial\ product}}}} \\
 
 
 
 
 
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.81in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{POpt}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.77in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{High}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.63in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Low}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 1.65in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Optimized\ trial}}}} \\
+\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.69in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{POpt}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.66in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{High}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.54in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{Low}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 1.32in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{Optimized\ trial}}}} \\
 
 \hhline{>{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}-}
 
@@ -5573,7 +5594,7 @@ The design of the sessions is summarized in Figure \ref{fig:test-design} with ma
 
 \begin{figure}
 
-{\centering \includegraphics[width=42.47in]{images/consumer_test_design} 
+{\centering \includegraphics[width=0.9\linewidth]{images/consumer_test_design} 
 
 }
 
@@ -5670,16 +5691,16 @@ Alternately, the \texttt{WilliamsDesign()} function in \texttt{\{SensoMineR\}} a
 
 \begin{verbatim}
 ##          Rank 1 Rank 2 Rank 3 Rank 4 Rank 5
-## Judge 1       1      4      3      5      2
-## Judge 2       4      5      1      2      3
-## Judge 3       5      2      4      3      1
-## Judge 4       2      3      5      1      4
-## Judge 5       3      1      2      4      5
-## Judge 6       2      5      3      4      1
-## Judge 7       3      2      1      5      4
-## Judge 8       1      3      4      2      5
-## Judge 9       4      1      5      3      2
-## Judge 10      5      4      2      1      3
+## Judge 1       5      3      4      2      1
+## Judge 2       3      2      5      1      4
+## Judge 3       2      1      3      4      5
+## Judge 4       1      4      2      5      3
+## Judge 5       4      5      1      3      2
+## Judge 6       1      2      4      3      5
+## Judge 7       4      1      5      2      3
+## Judge 8       5      4      3      1      2
+## Judge 9       3      5      2      4      1
+## Judge 10      2      3      1      5      4
 \end{verbatim}
 
 Suppose you want to include 20 judges in the experiment, you would then need to duplicate the initial design.
@@ -5693,26 +5714,26 @@ Suppose you want to include 20 judges in the experiment, you would then need to 
 
 \begin{verbatim}
 ##         Rank 1 Rank 2 Rank 3 Rank 4 Rank 5
-## judge1       1      4      3      5      2
-## judge2       4      5      1      2      3
-## judge3       5      2      4      3      1
-## judge4       2      3      5      1      4
-## judge5       3      1      2      4      5
-## judge6       2      5      3      4      1
-## judge7       3      2      1      5      4
-## judge8       1      3      4      2      5
-## judge9       4      1      5      3      2
-## judge10      5      4      2      1      3
-## judge11      1      4      3      5      2
-## judge12      4      5      1      2      3
-## judge13      5      2      4      3      1
-## judge14      2      3      5      1      4
-## judge15      3      1      2      4      5
-## judge16      2      5      3      4      1
-## judge17      3      2      1      5      4
-## judge18      1      3      4      2      5
-## judge19      4      1      5      3      2
-## judge20      5      4      2      1      3
+## judge1       5      3      4      2      1
+## judge2       3      2      5      1      4
+## judge3       2      1      3      4      5
+## judge4       1      4      2      5      3
+## judge5       4      5      1      3      2
+## judge6       1      2      4      3      5
+## judge7       4      1      5      2      3
+## judge8       5      4      3      1      2
+## judge9       3      5      2      4      1
+## judge10      2      3      1      5      4
+## judge11      5      3      4      2      1
+## judge12      3      2      5      1      4
+## judge13      2      1      3      4      5
+## judge14      1      4      2      5      3
+## judge15      4      5      1      3      2
+## judge16      1      2      4      3      5
+## judge17      4      1      5      2      3
+## judge18      5      4      3      1      2
+## judge19      3      5      2      4      1
+## judge20      2      3      1      5      4
 \end{verbatim}
 
 The downside of Williams's Latin square designs is that the number of samples (\emph{k}) to be evaluated dictates the number of judges. For an even number of samples you must have a multiple of \emph{k} judges, and a multiple of \emph{2k} judges for an odd number of samples.
@@ -5736,19 +5757,19 @@ As the total number of judges in your study may not always be exactly known in a
 \begin{verbatim}
 ##      rank
 ## judge 1 2 3 4 5
-##    1  4 1 3 2 5
-##    2  1 2 4 5 3
-##    3  2 5 1 3 4
-##    4  5 3 2 4 1
-##    5  3 4 5 1 2
-##    6  5 2 3 1 4
-##    7  3 5 4 2 1
-##    8  4 3 1 5 2
-##    9  1 4 2 3 5
-##    10 2 1 5 4 3
-##    11 4 1 3 2 5
-##    12 1 2 4 5 3
-##    13 2 5 1 3 4
+##    1  2 1 5 4 3
+##    2  1 4 2 3 5
+##    3  4 3 1 5 2
+##    4  3 5 4 2 1
+##    5  5 2 3 1 4
+##    6  3 4 5 1 2
+##    7  5 3 2 4 1
+##    8  2 5 1 3 4
+##    9  1 2 4 5 3
+##    10 4 1 3 2 5
+##    11 2 1 5 4 3
+##    12 1 4 2 3 5
+##    13 4 3 1 5 2
 \end{verbatim}
 
 In the code above, \texttt{xtabs()} is used to arrange the design in a table format that is convenient for the experimenter.
@@ -5799,16 +5820,16 @@ The \texttt{optimaldesign()} function of \texttt{\{SensoMineR\}} can be used to 
 
 \begin{verbatim}
 ##             Rank 1 Rank 2 Rank 3
-## Panelist 1       2      4      1
-## Panelist 2       4      2      5
-## Panelist 3       3      2      4
-## Panelist 4       4      5      1
-## Panelist 5       2      5      3
-## Panelist 6       1      3      2
-## Panelist 7       3      1      5
-## Panelist 8       5      1      2
-## Panelist 9       1      4      3
-## Panelist 10      5      3      4
+## Panelist 1       5      4      3
+## Panelist 2       1      4      2
+## Panelist 3       3      2      5
+## Panelist 4       5      2      4
+## Panelist 5       2      1      3
+## Panelist 6       2      5      1
+## Panelist 7       1      3      4
+## Panelist 8       4      1      5
+## Panelist 9       3      5      1
+## Panelist 10      4      3      2
 \end{verbatim}
 
 BIBD are only possible for certain combinations of numbers of treatment (products), numbers of blocks (judges), and block size (number of samples per judge). Note that \texttt{optimaldesign()} will yield a design even if it is not balanced but it will also generate contingency tables allowing you to evaluate the design's orthogonality, and how well balanced are order and carry-over effects.
@@ -5866,7 +5887,7 @@ The \texttt{\{mixexp\}} package offers a very convenient way to do this. In addi
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-198-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-199-1.pdf}
 
 Suppose that we want to adjust a biscuit recipe to optimize its sensory properties, we can design an experiment in which the proportion of ingredients vary. Let's play with butter, sugar, and flour. All three combined would account for 75\% of the dough recipe and the remaining 25\% would consist of other ingredients that we won't modify here (eggs, milk, chocolate, etc.). Besides, not any amount of these three ingredients would make sense (a biscuit with 75\% of butter is not a biscuit, even in Brittany). We thus need to add constraints (ex: butter varies between 15 and 30\% of this blend, sugar varies between 25 and 40\%, and flour varies between 30 and 50\%). Given this set of constraints (defined by \texttt{uc} for the upper contraints, and \texttt{lc} for the lower constraints), we can use \texttt{mixexp::Xvert} to find the extreme vertices of our design (by also including a edge centroid using \texttt{ndm=1}):
 
@@ -5893,7 +5914,7 @@ However, this design implies creating 11 mixtures, which is more than needed to 
 ## columns are ignored. Use cornerlabs and axislabs to change variable names in the plot.
 \end{verbatim}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-200-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-201-1.pdf}
 
 Once the design is built, it could be desirable to randomize the order in which each sample is being made, to avoid further biases. Suppose that we obtain average liking scores for our 9 biscuits as given in Table \ref{tab:biscuit-mixt} and stored in \texttt{Bmixt}:
 
@@ -6004,7 +6025,7 @@ Regardless of the construction of the mixture design, ternary diagrams are easy 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-202-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-203-1.pdf}
 
 From these data. the optimal biscuit would have 31\% of sugar, 27\% of butter, and 42\% of flour, and would reach a predicted liking score larger than 8.
 
@@ -6580,7 +6601,7 @@ A first approach to inspect and visualize where the missing values are is by rep
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-216-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-217-1.pdf}
 
 As can be seen, missing values are only present in few variables. However, \texttt{Sour} contains up to 10\% of missing data, which can be quite critical in some situations.
 
@@ -6609,7 +6630,7 @@ To answer these questions, the \texttt{\{naniar\}} package provides an interesti
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-218-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-219-1.pdf}
 
 It seems here that the only connection between NAs is observed between \texttt{Light} and \texttt{Color\ contrast}.
 
@@ -6622,7 +6643,7 @@ Such relational structure can also be visualized in a scatter plot using the \te
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-219-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-220-1.pdf}
 
 Here, the relationship between \texttt{Product} and \texttt{Sour} is shown. Such plot may help decide what to do with missing values, whether it is ignoring, removing, or predicting them.
 
@@ -7864,7 +7885,7 @@ Rather than showing the results in a table, let's visualize them graphically as 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-250-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-251-1.pdf}
 
 It appears that the evaluated biscuits differ the most (top 5) for \texttt{Initial\ hardness}, \texttt{Shiny}, \texttt{Dairy\ flavor}, \texttt{External\ color\ intensity}, and \texttt{Thickness}.
 
@@ -7918,7 +7939,7 @@ To illustrate this, let's reproduce the product map by coloring the products usi
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-255-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-256-1.pdf}
 
 Here, \texttt{repel=TRUE} uses \texttt{geom\_text\_repel()} from \texttt{\{ggrepel\}} (rather than \texttt{geom\_text()} from \texttt{\{ggplot2\}}) to avoid having labels overlapping.
 
@@ -8028,28 +8049,28 @@ Histograms are a nice way to visualize proportions and to compare them over seve
 ## $Housing
 \end{verbatim}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-258-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-259-1.pdf}
 
 \begin{verbatim}
 ## 
 ## $`Income range`
 \end{verbatim}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-258-2.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-259-2.pdf}
 
 \begin{verbatim}
 ## 
 ## $`Living area`
 \end{verbatim}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-258-3.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-259-3.pdf}
 
 \begin{verbatim}
 ## 
 ## $Occupation
 \end{verbatim}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-258-4.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-259-4.pdf}
 
 \hypertarget{regex}{%
 \subsection{Eating behavior traits: TFEQ data}\label{regex}}
@@ -8151,7 +8172,7 @@ From this table, histograms representing the frequency distribution for each var
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-263-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-264-1.pdf}
 
 Structured questionnaires such as the TFEQ are very frequent in sensory and consumer science. They are used to measure individual patterns as diverse as personality traits, attitudes, food choice motives, engagement, social desirability bias, etc. Ultimately, the TFEQ questionnaire consists in a set of structured questions whose respective answers combine to provide a TFEQ score (actually, three scores, one for Disinhibition, one for Restriction and one for sensitivity to Hunger). This TFEQ scores translate into certain food behavior tendencies.
 
@@ -8231,7 +8252,7 @@ Such results can then be visualized graphically, for instance by representing th
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-268-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-269-1.pdf}
 
 \hypertarget{tibble-use}{%
 \section{Consumer Data}\label{tibble-use}}
@@ -8333,7 +8354,7 @@ To further compare the liking assessment of the samples after the first bite and
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-272-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-273-1.pdf}
 
 As can be seen, the pattern of liking scores across samples is indeed very stable across the evaluation, particularly in terms of rank. At the individual level, such linear relationship is also observed (here for the first 12 consumers):
 
@@ -8352,7 +8373,7 @@ As can be seen, the pattern of liking scores across samples is indeed very stabl
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-273-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-274-1.pdf}
 
 \begin{quote}
 For your own curiosity, we invite you to re-create the same graph by comparing the Liking score at the end of the evaluation (\texttt{after\_liking}) with the liking score measured on the 9pt categorical scale (\texttt{end\_liking\ 9pt}), and to reflect on the results obtained. Are the consumers consistent in their evaluations?
@@ -8428,7 +8449,7 @@ Ultimately, the relationship between the liking score and the number of biscuits
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-277-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-278-1.pdf}
 
 \hypertarget{combining-sensory-and-consumer-data}{%
 \section{Combining Sensory and Consumer Data}\label{combining-sensory-and-consumer-data}}
@@ -8473,7 +8494,7 @@ Such analysis is split in 3 steps:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-278-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-279-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -8486,7 +8507,7 @@ Such analysis is split in 3 steps:
 ## overlaps). Consider increasing max.overlaps
 \end{verbatim}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-278-2.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-279-2.pdf}
 
 As can be seen, the consumers are quite in agreement as all the black arrows are pointing in a similar direction.
 In overall, they seem to like biscuits that are sweet, with cereal flavor, and fatty/dairy flavor and odor, and dislike biscuits defined as astringent, dry in mouth, uneven and with dark external color.
@@ -8526,7 +8547,7 @@ The AHC is performed using the \texttt{hclust()} function and the \texttt{method
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-280-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-281-1.pdf}
 
 \begin{quote}
 An interesting option to visualize clusters and proposed by \texttt{fviz\_dend()} is the \emph{phologenic} representation (\texttt{type="phylogenic"}). We invite you to give it a try to see how it represents the clusters as an alternative to the classical dendrogram tree.
@@ -8589,7 +8610,7 @@ Lastly, we compare visually the preference patterns between clusters by represen
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-282-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-283-1.pdf}
 
 It appears that cluster 1 (74 consumers) particularly likes \texttt{P10}, \texttt{P01}, and \texttt{P05}, and has a fairly flat liking pattern otherwise. On the other hand, the cluster 2 (33 consumers) expressed strong rejections towards \texttt{P04} and \texttt{P08}, and like \texttt{P10} and \texttt{P01} the most.
 
@@ -8633,7 +8654,7 @@ Various packages can be used to visualize these correlations. We opt here for \t
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-284-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-285-1.pdf}
 
 The average liking scores for cluster 1 (defined as \texttt{1\ (74)}) are positively correlated with \texttt{Overall\ odor\ intensity}, \texttt{Fatty\ odor}, \texttt{Cereal\ flavor}, \texttt{Fatty\ flavor}, \texttt{Dairy\ flavor}, \texttt{Overall\ flavor\ persistence}, \texttt{Salty}, \texttt{Sweet}, \texttt{Warming}, \texttt{Fatty\ in\ mouth}, and \texttt{Melting}. They are also negatively correlated to \texttt{External\ color\ intensity}, \texttt{Astringent}, and \texttt{Dry\ in\ mouth}.
 Finally, it can be noted that the correlation between clusters is high with a value of 0.72.
@@ -8735,7 +8756,7 @@ We apply this function to our data by applying to each attribute (here we set \t
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-290-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-291-1.pdf}
 
 All attributes except \texttt{Astringent} are linearly linked to liking. For \texttt{Astringent}, the curvature is U-shaped: this does not show an effect of saturation as it would have been represented as an inverted U-shape. Although the quadratic effect shows a better fit than the linear effect, having a linear effect would have been a good predictor as well in this situation.
 
@@ -8768,7 +8789,7 @@ Since \texttt{carto()} requires matrix or data frame with row names for the anal
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-291-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-292-1.pdf}
 
 From this map, we can see that the optimal area (dark red) is located on the positive side of dimension 1, between \texttt{P01}, \texttt{P05}, and \texttt{P10} (as expected by the liking score).
 
@@ -8828,7 +8849,7 @@ To build the plot, different layers involving different source of data (\texttt{
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-293-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-294-1.pdf}
 
 As can be seen, \texttt{POpt} is quite far from the optimal area suggested by the PrefMap. This suggests that prototypes with higher success chances could be developed.
 
@@ -9311,7 +9332,7 @@ The results of the PCA can be visualized using \texttt{\{factoextra\}}:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-296-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-297-1.pdf}
 
 The first plane of the PCA suggests that there are 3 distinct groups of wines. Let's define them mathematically using cluster analysis. For this process, we propose to reduce the full data to its first two components only. This approach is used here to illustrate how PCA can be used as a pre-processing step. Additionally, such pre-processing can help detecting clearer patterns in the data, as we will see in the next section with clustering.
 
@@ -9367,7 +9388,7 @@ Finally, the results can be visualized using \texttt{fviz\_cluster()} from \text
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-298-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-299-1.pdf}
 
 In the resulting plot, the 3 clusters are clearly separated, as can be seen by their little to no overlap.
 
@@ -9673,7 +9694,7 @@ The \texttt{autoplot()} function is called to take a quick look at the \texttt{t
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-299-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-300-1.pdf}
 
 Ultimately, the best combination of parameters is obtained using the \texttt{select\_best()} function. Such paramaters is defined based on the quality of the model, which can be estimated through a various metrics. Here we decided to use \texttt{roc\_auc} (Area Under the Receiver Operating Characteristic Curve), as it provides a reliable estimate of the quality of the model.
 
@@ -10423,7 +10444,7 @@ In the previous sections, we have already shown how to count the number of occur
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-323-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-324-1.pdf}
 
 As seen previously, the most mentioned words are \texttt{apple}, \texttt{sweet}, \texttt{fruity}, and \texttt{sour}.
 
@@ -10505,7 +10526,7 @@ Another approach consists in visualizing the association between the samples and
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-326-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-327-1.pdf}
 
 As can be seen, sample \texttt{731} is more strongly associated to alcoholic terms such as \texttt{alcohol} or \texttt{wine}, and colors (\texttt{red}, \texttt{green}). Samples \texttt{239} and \texttt{401} are more associated to \texttt{sour} and \texttt{bitter} (and \texttt{pear} for \texttt{239}), whereas samples \texttt{519} and \texttt{182} are more frequently described by terms such as \texttt{fruity}, and \texttt{sweet} (\texttt{floral} is also used to characterize \texttt{182}).
 
@@ -10528,7 +10549,7 @@ An alternative for visualizing these frequencies is through wordclouds, which ca
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-327-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-328-1.pdf}
 
 In these wordclouds, we notice that \texttt{apple} and \texttt{sweet} appear in larger fonts for (almost) all the samples, which can make the comparison quite difficult between samples. Fortunately, the \texttt{geom\_text\_wordcloud()} function provides an interesting parameter in its aesthetics called \texttt{angle\_group} which allows controlling the position of the words. To illustrate this, let's apply the following rule: for a given sample, if the proportion of association of a word is larger than 1/6 (as we have 6 samples), the word will be printed in the upper part of its wordcloud, and in the lower part otherwise. To facilitate the readability, the color code used follow the same rule:
 
@@ -10546,7 +10567,7 @@ In these wordclouds, we notice that \texttt{apple} and \texttt{sweet} appear in 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-328-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-329-1.pdf}
 
 As can be seen, the term \texttt{apple} is more frequently (i.e.~more than 1/6) used to characterize samples \texttt{182}, \texttt{239}, \texttt{365}, and \texttt{731}. The term \texttt{sweet} is more frequently used to characterize samples \texttt{182} and \texttt{519}. Such conclusions would have been more difficult to reach based on the previous \emph{unstructured} wordcloud.
 

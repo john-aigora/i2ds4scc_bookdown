@@ -20,8 +20,6 @@ Data from the biscuit study are gathered in three Excel files that can be access
 In total, 11 products were considered in this study. They are all breakfast biscuits with varying contents of proteins and fibers (Table \@ref(tab:biscuit-set)). Products *P01* to *P09* are prototypes whereas product *P10* is a standard commercial biscuit without enrichment. The eleventh product *Popt* is an additional optimized biscuit that has been evaluated only by the trained panel for descriptive analysis.
 
 ```{r biscuit_set, tab.cap="Product set for the biscuit study", label="biscuit-set", echo=FALSE, eval=TRUE}
-# Bset <- readxl::read_excel("data/Sensory Profile.xlsx", sheet = "Product Info")
-
 biscuit_names <- c("P01", "P02", "P03", "P04", "P05", "P06", "P07", "P08", "P09", "P10", "POpt")
 protein <- c("Low", "Low", "High", "High", "High", "High", "Low",  "High", "High", "Low", "High")
 fiber <- c("Low", "High", "High", "High", "Low", "Low", "High", "Low", "High", "Low", "Low")
@@ -29,17 +27,11 @@ type_prod <- c("Trial", "Trial", "Trial", "Trial", "Trial", "Trial", "Trial", "T
 
 Bset <- data.frame(biscuit_names, protein, fiber, type_prod)
 colnames(Bset) <- c("Product", "Protein", "Fiber", "Type")
-ft <- flextable::qflextable(Bset)
-#ft <- flextable::set_caption(ft, "Product set for the biscuit study", style = "Table Caption")
+ft <- flextable::qflextable(Bset)%>% 
+  font(fontname = "Calibri", part="all") %>% 
+  fontsize(size=9, part="all") %>% 
+  autofit()
 ft
-
-# ALTERNATIVE WAY TO DISPLAY THE TABLE USING KABBLE:
-#knitr::knit_print(ft)
-#knitr::kable(
-#  Bset, booktabs = TRUE,
-#  caption = 'Product set for the biscuit study'
-#)
-
 ```
 
 ## Consumer test
@@ -55,7 +47,7 @@ The presentation order of the different products was randomized across the panel
 
 The design of the sessions is summarized in Figure \@ref(fig:test-design) with main measured variables. After they first rated their appetite sensations using visual analog scales (VAS), the participants tasted and rated one biscuit for liking. They were then served with a box of the same biscuits for _ad libitum_ consumption (with a maximum of 10 biscuits), followed by a new questionnaire regarding their liking, pleasure and appetite sensations.
 
-```{r test-design, fig.cap='General design for the consumer test of the biscuit study. Participants were served with a different set of biscuits every session.', fig.align='center', echo=FALSE, eval=TRUE}
+```{r test-design, echo=FALSE, eval=TRUE, fig.cap='General design for the consumer test of the biscuit study. Participants were served with a different set of biscuits every session.', fig.align='center', out.width='90%'}
 knitr::include_graphics("images/consumer_test_design.png")
 ```
 
