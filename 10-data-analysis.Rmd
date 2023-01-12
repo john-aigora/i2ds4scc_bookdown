@@ -13,6 +13,10 @@ library(here)
 library(readxl)
 ```
 
+```{r, eval=TRUE, echo=FALSE, message=FALSE}
+options(tibble.print_min=4, tibble.print_max=4)
+```
+
 Let's start with the analysis of our sensory data stored in *biscuits_sensory_profile.xlsx*.
 
 ```{r, echo=TRUE, eval=TRUE}
@@ -42,7 +46,8 @@ For both these solutions, the data should be stored in the long and thin form, w
 
 ```{r, eval=TRUE, echo=TRUE}
 senso_aov_data <- sensory %>%
-  pivot_longer(Shiny:Melting, names_to = "Attribute", values_to = "Score")
+  pivot_longer(Shiny:Melting, 
+               names_to = "Attribute", values_to = "Score")
 ```
 
 From this structure, the first approach consists in splitting the data by attribute. Once done, we run the ANOVA for each subset (the model is then defined as `Score ~ Product + Judge`) automatically using `map()`^[The `map()` function applies the same function to each element of a list automatically: It is hence equivalent to a `for ()` loop, but in a neater and more efficient way.], and we extract the results of interest using the `{broom}` package. 
@@ -100,11 +105,15 @@ Rather than showing the results in a table, let's visualize them graphically as 
 ```{r, echo=TRUE, eval=TRUE}
 res_aov %>%
   mutate(Signif = ifelse(p.value <= 0.05, "Signif.", "Not Signif.")) %>%
-  mutate(Signif = factor(Signif, levels = c("Signif.", "Not Signif."))) %>%
-  ggplot(aes(x = reorder(Attribute, statistic), y = statistic, fill = Signif)) +
+  mutate(Signif = factor(Signif, 
+                         levels = c("Signif.", "Not Signif."))) %>%
+  ggplot(aes(x=reorder(Attribute, statistic), y=statistic, 
+             fill=Signif)) +
   geom_bar(stat = "identity") +
-  scale_fill_manual(values = c("Signif." = "forestgreen", "Not Signif." = "orangered2")) +
-  ggtitle("Sensory Attributes", "(The attributes are sorted according to product-wise F-values)") +
+  scale_fill_manual(values = c("Signif." = "forestgreen", 
+                               "Not Signif." = "orangered2")) +
+  ggtitle("Sensory Attributes", 
+          "(The attributes are sorted based on F-values (product))") +
   theme_bw() +
   xlab("") +
   ylab("F-values") +
@@ -119,9 +128,11 @@ Once the significant differences have been checked, a follow-up analysis consist
 
 ```{r, eval=TRUE, echo=TRUE}
 senso_mean <- sensory %>%
-  pivot_longer(Shiny:Melting, names_to = "Attribute", values_to = "Score") %>%
+  pivot_longer(Shiny:Melting, 
+               names_to = "Attribute", values_to = "Score") %>%
   dplyr::select(-Judge) %>%
-  pivot_wider(names_from = Attribute, values_from = Score, values_fn = mean)
+  pivot_wider(names_from = Attribute, values_from = Score, 
+              values_fn = mean)
 ```
 
 Such table is then submitted to PCA. R proposes many solutions to run such analysis, including the `prcomp()` and `princomp()` functions from the `{stats}` package. However, we prefer to use `PCA()` from the `{FactoMineR}` as it is more complete as it proposes many options that are very useful in sensory and consumer research (e.g. it generates the graphics automatically, and allows projecting supplementary individuals and/or variables). 
@@ -203,7 +214,8 @@ demo_lev <- read_xlsx(file_path, sheet = "Levels") %>%
   inner_join(demo_var, by = c("Question" = "Code")) %>%
   dplyr::select(-Question)
 
-demographic <- read_xlsx(file_path, sheet = "Data", skip = 1, col_names = unlist(demo_var$Name))
+demographic <- read_xlsx(file_path, sheet = "Data", skip = 1, 
+                         col_names = unlist(demo_var$Name))
 ```
 
 ### Demographic Data: Frequency and Proportion
@@ -220,9 +232,12 @@ Once done, we can aggregate the results by `Question` and `Levels` (since we wan
 library(formattable)
 
 demog_reduced <- demographic %>%
-  dplyr::select(Judge, `Living area`, Housing, `Income range`, `Occupation`) %>%
-  pivot_longer(-Judge, names_to = "Question", values_to = "Response") %>%
-  inner_join(demo_lev, by = c("Question" = "Name", "Response" = "Code")) %>%
+  dplyr::select(Judge, `Living area`, Housing, 
+                `Income range`, `Occupation`) %>%
+  pivot_longer(-Judge, 
+               names_to = "Question", values_to = "Response") %>%
+  inner_join(demo_lev, by = c("Question" = "Name", 
+                              "Response" = "Code")) %>%
   group_by(Question, Levels) %>%
   summarize(N = n()) %>%
   mutate(Pct = percent(N / sum(N), digits = 1L)) %>%
@@ -290,7 +305,8 @@ myfreq <- function(data, info) {
     filter(Name == var)
 
   res <- data %>%
-    mutate(Response = factor(Response, levels = info$Code, labels = info$Levels)) %>%
+    mutate(Response = factor(Response, levels = info$Code, 
+                             labels = info$Levels)) %>%
     arrange(Response) %>%
     group_by(Response) %>%
     summarize(N = n()) %>%
@@ -311,7 +327,8 @@ TFEQ_freq <- demographic %>%
   map(myfreq, info = demo_lev) %>%
   enframe(name = "TFEQ", value = "res") %>%
   unnest(res) %>%
-  mutate(TFEQ = factor(TFEQ, levels = unique(str_sort(.$TFEQ, numeric = TRUE)))) %>%
+  mutate(TFEQ = factor(TFEQ, levels = unique(
+    str_sort(.$TFEQ, numeric=TRUE)))) %>%
   arrange(TFEQ)
 ```
 
@@ -366,7 +383,9 @@ TFEQ_coded <- TFEQ %>%
   mutate(Factor = ifelse(str_starts(.$DHR, "D"), "Disinhibition",
     ifelse(str_starts(.$DHR, "H"), "Hunger", "Restriction")
   )) %>%
-  mutate(Factor = factor(Factor, levels = c("Restriction", "Disinhibition", "Hunger")))
+  mutate(Factor = factor(Factor, levels = c("Restriction", 
+                                            "Disinhibition", 
+                                            "Hunger")))
 ```
 
 Ultimately, we compute the TFEQ Score by summing across all `TFEQValue` per respondent, by maintaining the distinction between each category. Note that the final score is stored in `Total`, which corresponds to sum across categories:
@@ -375,7 +394,8 @@ Ultimately, we compute the TFEQ Score by summing across all `TFEQValue` per resp
 TFEQ_score <- TFEQ_coded %>%
   group_by(Judge, Factor) %>%
   summarize(TFEQ = sum(TFEQValue)) %>%
-  mutate(Judge = factor(Judge, levels = unique(str_sort(.$Judge, numeric = TRUE)))) %>%
+  mutate(Judge = factor(Judge, levels = unique(
+    str_sort(.$Judge, numeric = TRUE)))) %>%
   arrange(Judge) %>%
   pivot_wider(names_from = Factor, values_from = TFEQ) %>%
   mutate(Total = sum(across(where(is.numeric))))
@@ -447,17 +467,15 @@ Both at the start and at the end of the evaluation, significant differences (at 
 To further compare the liking assessment of the samples after the first bite and at the end of the tasting, the results obtained from `liking_start_hsd` and `liking_end_hsd` are combined. We then represent the results in a bar-chart:
 
 ```{r, eval=TRUE, echo=TRUE}
-list(
-  Start = liking_start_hsd %>% rename(Liking = `1stbite_liking`),
-  End = liking_end_hsd %>% rename(Liking = `after_liking`)
-) %>%
+list(Start = liking_start_hsd %>% rename(Liking = `1stbite_liking`),
+     End = liking_end_hsd %>% rename(Liking = `after_liking`)) %>%
   enframe(name = "Moment", value = "res") %>%
   unnest(res) %>%
   mutate(Moment = factor(Moment, levels = c("Start", "End"))) %>%
-  ggplot(aes(x = reorder(Product, -Liking), y = Liking, fill = Moment)) +
-  geom_bar(stat = "identity", position = "dodge") +
-  xlab("") +
-  ggtitle("Comparison of the liking scores at the start and at the end of the evaluation") +
+  ggplot(aes(x = reorder(Product, -Liking), y = Liking, fill = Moment))+
+  geom_bar(stat = "identity", position = "dodge")+
+  xlab("")+
+  ggtitle("Comparison of the liking scores (start vs. end evaluation)")+
   theme_bw()
 ```
 
@@ -465,14 +483,17 @@ As can be seen, the pattern of liking scores across samples is indeed very stabl
 
 ```{r, echo=TRUE, eval=TRUE}
 consumer %>%
-  dplyr::select(Judge, Product, Start = `1stbite_liking`, End = `after_liking`) %>%
+  dplyr::select(Judge, Product, Start = `1stbite_liking`, 
+                End = `after_liking`) %>%
   filter(Judge %in% str_c("J", 1:12)) %>%
-  mutate(Judge = factor(Judge, levels = unique(str_sort(.$Judge, numeric = TRUE)))) %>%
+  mutate(Judge = factor(Judge, levels = unique(
+    str_sort(.$Judge, numeric = TRUE)))) %>%
   ggplot(aes(x = Start, y = End)) +
   geom_point(pch = 20, cex = 2) +
   geom_smooth(method = "lm", formula = "y~x", se = FALSE) +
   theme_bw() +
-  ggtitle("Overall Liking", "(Assessment after first bite vs. end of the tasting)") +
+  ggtitle("Overall Liking", 
+          "(Assessment after first bite vs. end of the tasting)") +
   facet_wrap(~Judge)
 ```
 
@@ -528,7 +549,8 @@ ggplot(N_liking, aes(x = Liking, y = N)) +
   geom_point(pch = 20, cex = 2) +
   geom_smooth(method = "lm", formula = "y~x", se = FALSE) +
   theme_bw() +
-  ggtitle("Number of Biscuits vs. Liking", "(Consumers with a significant (5%) regression model are shown (ordered from the most to the least signif.)") +
+  ggtitle("Number of Biscuits vs. Liking", 
+          "Consumers with a signif. (5%) regression model are shown.") +
   facet_wrap(~Judge, scales = "free_y")
 ```
 
@@ -544,10 +566,11 @@ Such analysis is split in 3 steps:
 2. The sensory mean table is joined to the consumer data (make sure that the product names perfectly match in the two files);
 3. A PCA is performed on the consumer data, the sensory descriptors being projected as supplementary variables.
 
-```{r, echo=TRUE, eval=TRUE}
+```{r, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
 consumer_wide <- consumer %>%
   separate(Product, into = c("P", "Number"), sep = 1) %>%
-  mutate(Number = ifelse(nchar(Number) == 1, str_c("0", Number), Number)) %>%
+  mutate(Number = ifelse(nchar(Number) == 1, 
+                         str_c("0", Number), Number)) %>%
   unite(Product, P, Number, sep = "") %>%
   dplyr::select(Judge, Product, Liking = `end_liking 9pt`) %>%
   mutate(Liking = 10 - Liking) %>%
@@ -562,7 +585,8 @@ res_mdpref <- data_mdpref %>%
   PCA(., quali.sup = 1:2, quanti.sup = 3:34, graph = FALSE)
 
 fviz_pca_ind(res_mdpref, habillage = 1)
-fviz_pca_var(res_mdpref, label = "quanti.sup", select.var = list(cos2 = 0.5), repel = TRUE)
+fviz_pca_var(res_mdpref, label = "quanti.sup", 
+             select.var = list(cos2 = 0.5), repel = TRUE)
 ```
 
 As can be seen, the consumers are quite in agreement as all the black arrows are pointing in a similar direction.
@@ -612,10 +636,11 @@ res_clust %>%
 
 Lastly, we compare visually the preference patterns between clusters by representing in a line chart the average liking score for each product provided by each cluster.
 
-```{r, eval=TRUE, echo=TRUE}
+```{r, eval=TRUE, echo=TRUE, warning=FALSE, message=FALSE}
 mean_cluster <- consumer %>%
   separate(Product, into = c("P", "Number"), sep = 1) %>%
-  mutate(Number = ifelse(nchar(Number) == 1, str_c("0", Number), Number)) %>%
+  mutate(Number = ifelse(nchar(Number) == 1, 
+                         str_c("0", Number), Number)) %>%
   unite(Product, P, Number, sep = "") %>%
   dplyr::select(Judge, Product, Liking = `end_liking 9pt`) %>%
   mutate(Liking = 10 - Liking) %>%
@@ -625,12 +650,14 @@ mean_cluster <- consumer %>%
   mutate(Cluster = str_c(Cluster, " (", N, ")")) %>%
   ungroup()
 
-ggplot(mean_cluster, aes(x = Product, y = Liking, colour = Cluster, group = Cluster)) +
+ggplot(mean_cluster, aes(x = Product, y = Liking, 
+                         colour = Cluster, group = Cluster)) +
   geom_point(pch = 20) +
   geom_line(aes(group = Cluster), lwd = 2) +
   xlab("") +
-  scale_y_continuous(name = "Average Liking Score", limits = c(1, 9), breaks = seq(1, 9, 1)) +
-  ggtitle("Cluster differences in the appreciation of the Products (using hclust)") +
+  scale_y_continuous(name = "Average Liking Score", 
+                     limits = c(1, 9), breaks = seq(1, 9, 1)) +
+  ggtitle("Cluster differences in the appreciation of the Products") +
   theme_bw()
 ```
 
@@ -653,7 +680,8 @@ Let's start by evaluating the simplest relationship between the sensory attribut
 data_cor <- mean_cluster %>%
   dplyr::select(-N) %>%
   pivot_wider(names_from = Cluster, values_from = Liking) %>%
-  inner_join(senso_mean %>% dplyr::select(-c(Protein, Fiber)), by = "Product") %>%
+  inner_join(senso_mean %>% 
+               dplyr::select(-c(Protein,Fiber)), by="Product") %>%
   as.data.frame() %>%
   column_to_rownames(var = "Product")
 
@@ -665,7 +693,9 @@ Various packages can be used to visualize these correlations. We opt here for `g
 ```{r, eval=TRUE, echo=TRUE}
 library(ggcorrplot)
 res_cor_pmat <- cor_pmat(data_cor)
-ggcorrplot(res_cor, type = "full", p.mat = res_cor_pmat, sig.level = 0.05, insig = "blank", lab = TRUE, lab_size = 2)
+ggcorrplot(res_cor, type = "full", p.mat = res_cor_pmat, 
+           sig.level = 0.05, insig = "blank", 
+           lab = TRUE, lab_size = 1.5)
 ```
 
 The average liking scores for cluster 1 (defined as `1 (74)`) are positively correlated with `Overall odor intensity`, `Fatty odor`, `Cereal flavor`, `Fatty flavor`, `Dairy flavor`, `Overall flavor persistence`, `Salty`, `Sweet`, `Warming`, `Fatty in mouth`, and `Melting`. They are also negatively correlated to `External color intensity`, `Astringent`, and `Dry in mouth`. 
@@ -681,9 +711,13 @@ Let's start by combining the sensory data to the average liking score per produc
 data_reg <- mean_cluster %>%
   filter(Cluster == "1 (74)") %>%
   dplyr::select(-N) %>%
-  inner_join(senso_mean %>% dplyr::select(-c(Protein, Fiber)), by = "Product") %>%
-  pivot_longer(Shiny:Melting, names_to = "Attribute", values_to = "Score") %>%
-  mutate(Attribute = factor(Attribute, levels = colnames(senso_mean)[4:ncol(senso_mean)]))
+  inner_join(senso_mean %>% 
+               dplyr::select(-c(Protein, Fiber)), by = "Product") %>%
+  pivot_longer(Shiny:Melting, 
+               names_to = "Attribute", values_to = "Score") %>%
+  mutate(Attribute = 
+           factor(Attribute, 
+                  levels=colnames(senso_mean)[4:ncol(senso_mean)]))
 ```
 
 Both the linear regression and the quadratic regression are then run on `Liking` per attribute:
@@ -696,10 +730,8 @@ For its concision, we opt for the second option.
 ```{r, echo=TRUE, eval=TRUE}
 res_reg <- data_reg %>%
   nest_by(Attribute) %>%
-  mutate(
-    lin_mod = list(lm(Liking ~ Score, data = data)),
-    quad_mod = list(lm(Liking ~ poly(Score, 2), data = data))
-  )
+  mutate(lin_mod = list(lm(Liking ~ Score, data=data)),
+         quad_mod = list(lm(Liking ~ poly(Score, 2), data=data)))
 ```
 
 We extract the attributes that are significantly linked to liking (at 5%, and we accept 6% for quadratic effects). To do so, the results stored in `lin_mod` and `quad_mod` need unfolding (`summarize()`) and restructuring (`broom::tidy()`). 
@@ -748,7 +780,9 @@ We apply this function to our data by applying to each attribute (here we set `s
 ```{r, eval=TRUE, echo=TRUE, warning=FALSE, message=FALSE}
 p_smooth <- by(
   df, df$Attribute,
-  function(x) geom_smooth(data = x, method = lm, formula = lm.mod(x, quad = quad), se = FALSE)
+  function(x) geom_smooth(data = x, method = lm, 
+                          formula = lm.mod(x, quad = quad), 
+                          se = FALSE)
 )
 p + p_smooth
 ```
@@ -778,7 +812,9 @@ consu <- consumer_wide %>%
   column_to_rownames(var = "Product")
 
 library(SensoMineR)
-PrefMap <- carto(Mat = senso, MatH = consu, regmod = 1, graph.tree = FALSE, graph.corr = FALSE, graph.carto = TRUE)
+PrefMap <- carto(Mat = senso, MatH = consu, regmod = 1, 
+                 graph.tree = FALSE, graph.corr = FALSE, 
+                 graph.carto = TRUE)
 ```
 
 From this map, we can see that the optimal area (dark red) is located on the positive side of dimension 1, between `P01`, `P05`, and `P10` (as expected by the liking score).
@@ -802,10 +838,12 @@ senso <- senso %>%
 senso_sup <- senso_pca$ind.sup$coord %>%
   as_tibble(rownames = "Product")
 
-dimnames(PrefMap$nb.depasse) <- list(round(PrefMap$f1, 2), round(PrefMap$f2, 2))
+dimnames(PrefMap$nb.depasse) <- list(round(PrefMap$f1, 2), 
+                                     round(PrefMap$f2, 2))
 PrefMap_plot <- PrefMap$nb.depasse %>%
   as_tibble(rownames = "Dim1") %>%
-  pivot_longer(-Dim1, names_to = "Dim2", values_to = "Acceptance (%)") %>%
+  pivot_longer(-Dim1, 
+               names_to = "Dim2", values_to = "Acceptance (%)") %>%
   mutate(across(where(is.character), as.numeric))
 ```
 
@@ -813,19 +851,31 @@ To build the plot, different layers involving different source of data (`senso`,
 
 ```{r, echo=TRUE, eval=TRUE}
 ggplot() +
-  geom_tile(data = PrefMap_plot, aes(x = Dim1, y = Dim2, fill = `Acceptance (%)`, color = `Acceptance (%)`)) +
-  geom_contour(data = PrefMap_plot, aes(x = Dim1, y = Dim2, z = `Acceptance (%)`), breaks = seq(0, 100, 10)) +
+  geom_tile(data = PrefMap_plot, aes(x = Dim1, y = Dim2, 
+                                     fill = `Acceptance (%)`, 
+                                     color = `Acceptance (%)`)) +
+  geom_contour(data = PrefMap_plot, aes(x = Dim1, y = Dim2, 
+                                        z = `Acceptance (%)`), 
+               breaks = seq(0, 100, 10)) +
   geom_hline(yintercept = 0, lty = 2) +
   geom_vline(xintercept = 0, lty = 2) +
-  geom_point(data = senso, aes(x = Dim.1, y = Dim.2), pch = 20, cex = 3) +
-  geom_text_repel(data = senso, aes(x = Dim.1, y = Dim.2, label = Product)) +
-  geom_point(data = senso_sup, aes(x = Dim.1, y = Dim.2), pch = 20, col = "white", cex = 3) +
-  geom_text_repel(data = senso_sup, aes(x = Dim.1, y = Dim.2, label = Product), col = "white") +
-  scale_fill_gradient2(low = "blue", mid = "white", high = "red", midpoint = 50) +
-  scale_color_gradient2(low = "blue", mid = "white", high = "red", midpoint = 50) +
+  geom_point(data = senso, aes(x = Dim.1, y = Dim.2), 
+             pch = 20, cex = 3) +
+  geom_text_repel(data = senso, aes(x = Dim.1, y = Dim.2, 
+                                    label = Product)) +
+  geom_point(data = senso_sup, aes(x = Dim.1, y = Dim.2), 
+             pch = 20, col = "white", cex = 3) +
+  geom_text_repel(data = senso_sup, aes(x = Dim.1, y = Dim.2, 
+                                        label = Product), 
+                  col = "white") +
+  scale_fill_gradient2(low = "blue", mid = "white", high = "red", 
+                       midpoint = 50) +
+  scale_color_gradient2(low = "blue", mid = "white", high = "red", 
+                        midpoint = 50) +
   xlab(str_c("Dimension 1(", round(senso_pca$eig[1, 2], 1), "%)")) +
   ylab(str_c("Dimension 2(", round(senso_pca$eig[2, 2], 1), "%)")) +
-  ggtitle("External Preference Mapping applied to the biscuits data", "(The PrefMap is based on the quadratic model)") +
+  ggtitle("External Preference Mapping applied to the biscuits data", 
+          "(The PrefMap is based on the quadratic model)") +
   theme_bw()
 ```
 

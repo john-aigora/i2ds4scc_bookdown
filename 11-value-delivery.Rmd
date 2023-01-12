@@ -91,16 +91,16 @@ file_path <- file.path("data/table value delivery.xlsx")
 
 table <- read_xlsx(file_path) %>%
   flextable() %>%
-  fontsize(part = "all", size = 10) %>% 
   bold(bold = TRUE, part = "header") %>%
   bold(i = NULL, j = 1, bold = TRUE, part = "body") %>%
   autofit() %>%
   align(align = "center", part = "all") %>%
   hline(i = 5) %>%
   hline(i = 8) %>%
-  hline(i = 16)
-
-table
+  hline(i = 16) %>% 
+  font(fontname = "Calibri", part="all") %>% 
+  fontsize(size=9, part="all") %>% 
+  autofit()
 ```
 
 Following those recommendations, your PCA for the management or general audience may look like Figure \@ref(fig:pcamanagement). 

@@ -115,7 +115,8 @@ Let's transform this text into tokens using `unnest_tokens()` from the `{tidytex
 
 ```{r, eval=TRUE, echo=TRUE}
 cider <- cider_og %>% 
-  unnest_tokens(tokens, comments, token="regex", pattern="[;|,|:|.|/]", to_lower=FALSE)
+  unnest_tokens(tokens, comments, token="regex", 
+                pattern="[;|,|:|.|/]", to_lower=FALSE)
 ```
 
 The original comments from consumers are now split into tokens, increasing the size of the file from 168 individual comments to 947 rows of tokens.
@@ -194,7 +195,7 @@ It is therefore important to remember that although a lot of stop words are rele
 
 Since we have a relatively small text size, let's use the *SnowBall Stopword* list as a start, and look at the terms that our list and this stopword list share:
 
-```{r, echo=TRUE, eval=TRUE}
+```{r, echo=TRUE, eval=FALSE}
 stopword_list <- stopwords(source="snowball")
 word_list <- cider %>% 
   count(tokens) %>% 
@@ -203,24 +204,35 @@ word_list <- cider %>%
 intersect(stopword_list, word_list)
 ```
 
+```{r, echo=FALSE, eval=TRUE}
+stopword_list <- stopwords(source="snowball")
+word_list <- cider %>% 
+  count(tokens) %>% 
+  pull(tokens)
+```
+
 As we can see, some words such as *off*, *not*, *no*, *too*, and *very* would automatically be removed. However, such qualifiers are useful in the interpretation of sensory perception, so we would prefer to keep them. We can thus remove them from `stopword_list`. 
 
 ```{r, echo=TRUE, eval=TRUE}
-stopword_list <- stopword_list[!stopword_list %in% c("off","no","not","too","very")]
+stopword_list <- stopword_list[!stopword_list %in% 
+                                 c("off","no","not","too","very")]
 ```
 
 Conversely, we can look at the words from our data that we would not consider relevant and add them to the list. To do so, let's look at the list of words in our data that is not present in `stopword_list`:
 
-```{r, eval=TRUE, echo=TRUE}
+```{r, eval=FALSE, echo=TRUE}
 word_list[!word_list %in% stopword_list]
 ```
 
 Words such as *like*, *sample*, *just*, *think*, or *though* do not seem to bring any relevant information here. Hence, let's add them (together with others) to our customized list of stop words^[As an exercise, you could go deeper into the list and decide by yourself whether you would want to remove more words.]:
 
 ```{r, echo=TRUE, eval=TRUE}
-stopword_list <- c(stopword_list, c("accompany","amount","anything","considering","despite","expected",
-                                    "just","like","neither","one","order","others","products",
-                                    "sample","seems","something","thank","think","though","time","way"))
+stopword_list <- c(stopword_list, 
+                   c("accompany","amount","anything","considering",
+                     "despite","expected","just","like","neither",
+                     "one","order","others","products","sample",
+                     "seems","something","thank","think","though",
+                     "time","way"))
 ```
 
 A final look at the list of stop words (here ordered alphabetically) ensures that it fits our need:
@@ -417,7 +429,8 @@ cider_wc %>%
   group_by(lemma) %>% 
   mutate(prop = n/sum(n)) %>% 
   ungroup() %>% 
-  ggplot(aes(colour= prop<1/2, label=lemma, size=n, angle_group = prop < 1/2))+
+  ggplot(aes(colour= prop<1/2, label=lemma, size=n, 
+             angle_group = prop < 1/2))+
   geom_text_wordcloud(eccentricity = 2.5)+
   xlab("")+
   theme_minimal()+

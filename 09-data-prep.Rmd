@@ -31,6 +31,10 @@ file_path <- here("data","biscuits_sensory_profile_with_NA.xlsx")
 sensory <- read_xlsx(file_path, sheet="Data")
 ```
 
+```{r, eval=TRUE, echo=FALSE, message=FALSE}
+options(tibble.print_min=4, tibble.print_max=4)
+```
+
 ## Inspect {#inspect}
 
 ### Data Inspection {#data-inspection}
@@ -44,12 +48,20 @@ sensory
 
 Other informative solutions consists in printing a summary of the data through the `summary()` or `glimpse()`:
 
-```{r, eval=TRUE, echo=TRUE}
+```{r, eval=FALSE, echo=TRUE}
 summary(sensory)
 ```
 
-```{r, eval=TRUE, echo=TRUE}
+```{r, eval=TRUE, echo=FALSE}
+summary(sensory[,1:6])
+```
+
+```{r, eval=FALSE, echo=TRUE}
 glimpse(sensory)
+```
+
+```{r, eval=TRUE, echo=FALSE}
+glimpse(sensory[,1:10])
 ```
 
 These functions provide relevant yet basic views of each variable present in the data including their types, the range of values, means, and medians, as well as the first values of each variables. 
@@ -168,7 +180,8 @@ Using `na.rm=TRUE` is equivalent to removing the missing values from the data be
 
 ```{r, echo=TRUE, eval=TRUE}
 sensory %>% 
-  pivot_longer(Shiny:Melting, names_to="Variables", values_to="Scores") %>% 
+  pivot_longer(Shiny:Melting, 
+               names_to="Variables", values_to="Scores") %>% 
   filter(!is.na(Scores)) %>% 
   group_by(Product, Variables) %>% 
   summarize(Means = mean(Scores)) %>% 
@@ -202,12 +215,13 @@ The procedure presented below show the procedure on how to remove attributes wit
 
 ```{r, echo=TRUE, eval=TRUE}
 sensory_long <- sensory %>% 
-  pivot_longer(Shiny:Melting, names_to="Variables", values_to="Scores")
+  pivot_longer(Shiny:Melting, 
+               names_to="Variables", values_to="Scores")
 
-(attr_rmv <- sensory_long %>% 
+attr_rmv <- sensory_long %>% 
   filter(is.na(Scores)) %>% 
   pull(Variables) %>% 
-  unique())
+  unique()
 
 sensory_clean <- sensory_long %>% 
   filter(!(Variables %in% attr_rmv)) %>% 
@@ -215,7 +229,7 @@ sensory_clean <- sensory_long %>%
 
 ```
 
-This procedure removed the 7 attributes that contained missing values, leading to a table with 99 rows and 29 columns (instead of 36).
+This procedure removed the 7 attributes that contained missing values (and stored in `attr_rmv`), leading to a table with 99 rows and 29 columns (instead of 36).
 
 #### Imputing Missing Values
 
@@ -362,8 +376,10 @@ cur_prev %>%
   group_by(Session, Product, Previous) %>% 
   count() %>% 
   ungroup() %>% 
-  mutate(Product = factor(Product, levels=paste0("choc",1:6)),
-         Previous = factor(Previous, levels=c("NA",paste0("choc",1:6)))) %>%
+  mutate(Product = factor(Product, 
+                          levels=paste0("choc", 1:6)),
+         Previous = factor(Previous, 
+                           levels=c("NA",paste0("choc", 1:6)))) %>%
   arrange(Previous) %>% 
   pivot_wider(names_from=Previous, values_from=n, values_fill=0) %>% 
   arrange(Product) %>% 
@@ -394,7 +410,8 @@ demo_lev <- read_xlsx(file_path, sheet="Levels") %>%
   inner_join(demo_var, by=c("Question"="Code")) %>% 
   dplyr::select(-Question)
 
-demographic <- read_xlsx(file_path, sheet="Data", skip=1, col_names=unlist(demo_var$Name))
+demographic <- read_xlsx(file_path, sheet="Data", skip=1, 
+                         col_names=unlist(demo_var$Name))
 
 ```
 
@@ -427,16 +444,12 @@ Another common type that seems to be numerical in appearance, but that has addit
 Binary data is data that takes two possible values (`TRUE` or `FALSE`), and are often the results of a *test* (e.g. is `x>3`? Or is `MyVar` numerical?). A typical example of binary data in sensory and consumer research is data collected through Check-All-That-Apply (CATA) questionnaires.
 
 >Intrinsically, binary data is *numerical*, TRUE being assimilated to 1, FALSE to 0. If multiple tests are being performed, it is possible to sum the number of tests that pass using the `sum()` function, as shown in the simple example below:
-```{r example_logical, echo=TRUE, eval=FALSE}
-# Generate 10 random values between 1 and 10 using the uniform distribution
-x <- runif(10, 1, 10)
-x
-# Test whether the values generated are strictly larger than 5
-test <- x>5
-test
-# Counting the number of values strictly larger than 5
-sum(test)
-```
+`# Generate 10 random values between 1 and 10 (uniform distribution)`
+`x <- runif(10, 1, 10)`
+`# Test whether the values generated are strictly larger than 5`
+`test <- x>5`
+`# Counting the number of values strictly larger than 5`
+`sum(test)`
 
 #### Nominal Data
 
@@ -466,10 +479,10 @@ example <- demographic %>%
 
 summary(example)
 
-unique(example$Judge)
+#unique(example$Judge)
 length(unique(example$Judge))
 
-levels(example$Judge_fct)
+#levels(example$Judge_fct)
 nlevels(example$Judge_fct)
 ```
 
@@ -485,8 +498,7 @@ To illustrate this, let's re-arrange the levels from `Judge_fct` by ordering the
 example <- demographic %>% 
   dplyr::select(Judge) %>% 
   mutate(Judge_fct = factor(Judge, str_sort(Judge, numeric=TRUE)))
-levels(example$Judge_fct)
-
+levels(example$Judge_fct)[1:10]
 ```
 
 Now the levels are sorted, let's filter respondents by only keeping J1 to J20. We then re-run the previous code that count the number of elements in each variables:
@@ -495,10 +507,10 @@ Now the levels are sorted, let's filter respondents by only keeping J1 to J20. W
 example_reduced <- example %>%  
   filter(Judge %in% paste0("J",1:20))
 
-unique(example_reduced$Judge)
+# unique(example_reduced$Judge)
 length(unique(example_reduced$Judge))
 
-levels(example_reduced$Judge_fct)
+# levels(example_reduced$Judge_fct)
 nlevels(example_reduced$Judge_fct)
 ```
 
@@ -524,7 +536,8 @@ Let's consider the `Living area` variable from `demographic` as an example. From
 
 ```{r area_recode1, echo=TRUE, eval=TRUE}
 example = demographic %>% 
-  mutate(Area = factor(`Living area`, levels=c(1,2,3), labels=c("Urban", "Rurban", "Rural")))
+  mutate(Area = factor(`Living area`, levels=c(1,2,3), 
+                       labels=c("Urban", "Rurban", "Rural")))
 
 levels(example$Area)
 nlevels(example$Area)
@@ -537,7 +550,8 @@ Let's now regroup `Rurban` and `Rural` together under `Rural`, and change the or
 
 ```{r area_recode2, echo=TRUE, eval=TRUE}
 example = demographic %>% 
-  mutate(Area = factor(`Living area`, levels=c(2,3,1), labels=c("Rural", "Rural", "Urban")))
+  mutate(Area = factor(`Living area`, levels=c(2,3,1), 
+                       labels=c("Rural", "Rural", "Urban")))
 
 levels(example$Area)
 nlevels(example$Area)
@@ -581,7 +595,8 @@ To illustrate the conversion from character to numeric, let's start with creatin
 
 ```{r simple_example, eval=TRUE, echo=TRUE}
 example <- tibble(Numbers = c("2","4","9","6","8","12","10"),
-                  Text = c("Data","Science","4","Sensory","and","Consumer","Research"))
+                  Text = c("Data","Science","4","Sensory",
+                           "and","Consumer","Research"))
 ```
 
 The conversion from character to numerical is straight forward and requires the use of the function `as.numeric()`:

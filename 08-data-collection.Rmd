@@ -28,7 +28,8 @@ Before going any further into the design of sensory evaluation sessions, it is i
 
 ```{r, eval=TRUE, echo=TRUE}
 library(pwr)
-pwr.t.test(n=NULL, sig.level=0.05, type="paired", alternative="two.sided", power=0.8, d=0.3)
+pwr.t.test(n=NULL, sig.level=0.05, type="paired", 
+           alternative="two.sided", power=0.8, d=0.3)
 ```
 
 For discrimination tests (e.g. tetrad, 2-AFC, etc.), the reader may also refer to the `{sensR}` package and its `discrimSS()` function for the sample size calculation in both difference or similarity testing context.
@@ -81,20 +82,23 @@ In the code above, `xtabs()` is used to arrange the design in a table format tha
 
 Note that it would also be possible to start from an optimal design and expand it to add one judge at a time. The code below first builds a design for 5 products and 13 judges and then adds one judge to make the design optimal for 5 products and 14 judges.
 
-```{r, echo=TRUE, eval=TRUE}
+```{r, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
 nbJ=13
 nbP=5
 nbR=nbP
 
 optdes_5P13J <- optimaldesign(nbP, nbP, nbR)$design
-tab <- cbind(prod=as.vector(t(optdes_5P13J)),judge=rep(1:nbJ,each=nbR),rank=rep(1:nbR,nbJ))
-add <- cbind(prod=rep(1:nbP,nbR),judge=rep(nbJ+1,nbP*nbR),rank=rep(1:nbR,each=nbP))
+tab <- cbind(prod=as.vector(t(optdes_5P13J)),
+             judge=rep(1:nbJ,each=nbR),
+             rank=rep(1:nbR,nbJ))
+add <- cbind(prod=rep(1:nbP,nbR),
+             judge=rep(nbJ+1,nbP*nbR),
+             rank=rep(1:nbR,each=nbP))
 
-optdes_5P14J <- optFederov(~prod+judge+rank,data=rbind(tab,add), augment=TRUE, nTrials=(nbJ+1)*nbP,
-                          rows=1:(nbJ*nbP), nRepeats = 100)
+optdes_5P14J <- optFederov(~prod+judge+rank, data=rbind(tab,add), 
+                           augment=TRUE, nTrials=(nbJ+1)*nbP,
+                           rows=1:(nbJ*nbP), nRepeats = 100)
 ```
-
-<!-- Can we make it so that this table is visually appealing and more readable? -->
 
 ### Balanced incomplete block designs (BIBD) {#BIBD}
 
@@ -102,7 +106,7 @@ Sensory and consumer scientists may sometimes consider using incomplete designs,
 
 You might want to choose this approach for example if you want to reduce the workload for each panelist and limit sensory fatigue, boredom and inattention. It might also be useful when you cannot "afford" a complete design because of sample-related constraints (limited production capacity, very expensive samples, etc.). The challenge then, is to balance sample evaluation across the panel as well as the context (i.e. other samples) in which each sample is being evaluated. For such a design you thus want each pair of products to be evaluated together the same number of times.
 
-The `optimaldesign()` function of `{SensoMineR}` can be used to search for a Balanced Incomplete Block Design (BIBD). For instance, let's imagine that 10 panelists are evalauting 3 out of 5 possible samples. The design can be defined as following:
+The `optimaldesign()` function of `{SensoMineR}` can be used to search for a Balanced Incomplete Block Design (BIBD). For instance, let's imagine that 10 panelists are evaluating 3 out of 5 possible samples. The design can be defined as following:
 
 ```{r, eval=TRUE, echo=TRUE}
 incompDesign1 <- optimaldesign(nbPanelist=10, nbProd=5, nbProdByPanelist=3)
@@ -130,7 +134,7 @@ Suppose you are designing a consumer test of chocolate chip cookies in which a m
 
 To reduce the risks incurred by the use of BIBD, an alternative strategy is to use a sensory informed design. Its principle is to allocate each panelist a subset of products that best cover the sensory diversity of the initial product set. Pragmatically, this amounts to maximizing the sensory distance between drawn products [@Franczak2015]. Of course, this supposes that one has sensory data to rely on in the first place. 
 
-```{r fig.align='center', echo=FALSE, eval=TRUE}
+```{r fig.align='center', echo=FALSE, eval=TRUE, out.width='90%'}
 # pseudo-code for sensory informed design (Franczak et al., 2015)
 knitr::include_graphics("images/sensory_doe.png")
 ```
@@ -165,15 +169,18 @@ DesignPoints(mdes)
 Suppose that we want to adjust a biscuit recipe to optimize its sensory properties, we can design an experiment in which the proportion of ingredients vary. Let's play with butter, sugar, and flour. All three combined would account for 75% of the dough recipe and the remaining 25% would consist of other ingredients that we won't modify here (eggs, milk, chocolate, etc.). Besides, not any amount of these three ingredients would make sense (a biscuit with 75% of butter is not a biscuit, even in Brittany). We thus need to add constraints (ex: butter varies between 15 and 30% of this blend, sugar varies between 25 and 40%, and flour varies between 30 and 50%). Given this set of constraints (defined by `uc` for the upper contraints, and `lc` for the lower constraints), we can use `mixexp::Xvert` to find the extreme vertices of our design (by also including a edge centroid using `ndm=1`):
 
 ```{r, eval=TRUE, echo=TRUE}
-mdes2 <- Xvert(nfac=3, uc=c(.30, .40, .50), lc=c(.15, .25, .30), ndm = 1, plot = FALSE) %>% 
+mdes2 <- Xvert(nfac=3, uc=c(.30, .40, .50), lc=c(.15, .25, .30), 
+               ndm = 1, plot = FALSE) %>% 
       mutate(across(where(is.numeric), round, digits = 3))
 ```
 
 However, this design implies creating 11 mixtures, which is more than needed to apply a Scheffé quadratic model [@Lawson2016]. To reduce the number of mixtures and still allow fitting a quadratic model, we can use the `optFederov()` function from `{AlgDesign}` to select a D-optimal subset. Here, let's limit to 9 products (`nTrials=9`).
 
 ```{r echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
-MixBiscuits <- optFederov(~ -1+x1+x2+x3+x1:x2+x1:x3+x2:x3+x1:x2:x3, mdes2, nTrials=9)
-DesignPoints(MixBiscuits$design, axislabs = c("Butter","Sugar","Flour"), pseudo = TRUE)
+MixBiscuits <- optFederov(~ -1+x1+x2+x3+x1:x2+x1:x3+x2:x3+x1:x2:x3, 
+                          mdes2, nTrials=9)
+DesignPoints(MixBiscuits$design, axislabs = c("Butter","Sugar","Flour"), 
+             pseudo = TRUE)
 ```
 
 Once the design is built, it could be desirable to randomize the order in which each sample is being made, to avoid further biases. Suppose that we obtain average liking scores for our 9 biscuits as given in Table \@ref(tab:biscuit-mixt) and stored in `Bmixt`:
@@ -182,7 +189,7 @@ Once the design is built, it could be desirable to randomize the order in which 
 Bmixt <- MixBiscuits$design %>%
   as_tibble() %>%
   dplyr::select(-4) %>%
-  mutate(Product = c("A", "B", "C", "D", "E", "F", "G", "H", "I"), .before=x1) %>%
+  mutate(Product = LETTERS[1:9], .before=x1) %>%
   mutate(scores = c(7.5, 5.4, 5.5, 7.0, 6.0, 8.0, 5.8, 6.8, 7.9)) %>%
   rename("Butter"=x1, "Sugar"=x2, "Flour"=x3, "Liking"=scores)
 ```
@@ -191,10 +198,13 @@ Bmixt <- MixBiscuits$design %>%
 MixBiscuits$design %>%
   as_tibble() %>%
   dplyr::select(-4) %>%
-  mutate(Product = c("A", "B", "C", "D", "E", "F", "G", "H", "I"), .before=x1) %>%
+  mutate(Product = LETTERS[1:9], .before=x1) %>%
   mutate(scores = c(7.5, 5.4, 5.5, 7.0, 6.0, 8.0, 5.8, 6.8, 7.9)) %>%
   rename("Butter"=x1, "Sugar"=x2, "Flour"=x3, "Liking"=scores) %>% 
-  flextable::qflextable(.)
+  flextable::qflextable(.) %>% 
+  font(fontname = "Calibri", part="all") %>% 
+  fontsize(size=9, part="all") %>% 
+  autofit()
 ```
 
 Once the data are collected we can use the `mixexp::MixModel()` function to fit a linear model and `mixexp::ModelPlot()` to draw a contour plot. This simple code would allow to get a contour plot that shows where would be the optimal area for the biscuit formulation.
@@ -203,14 +213,13 @@ Once the data are collected we can use the `mixexp::MixModel()` function to fit 
 
 ```{r, echo=TRUE, eval=TRUE}
 invisible(
-  capture.output(
-    res <- MixModel(Bmixt, response="Liking", mixcomps=c("Butter","Sugar","Flour"), model=4)
-  )
-)
+  capture.output(res <- MixModel(Bmixt, response="Liking", 
+                                 mixcomps=c("Butter","Sugar","Flour"), 
+                                 model=4)))
 
 ModelPlot(model = res,
           dimensions = list(x1="Butter", x2="Sugar", x3="Flour"),
-          lims = c(0.15, 0.30, 0.25, 0.40, 0.30, 0.50), constraints = TRUE,
+          lims = c(0.15,0.30,0.25,0.40,0.30,0.50), constraints = TRUE,
           contour = TRUE, cuts = 12, fill = TRUE, pseudo = TRUE,
           axislabs = c("Butter", "Sugar", "Flour"))
 ```
@@ -356,7 +365,8 @@ A deeper look at the *Levels* sheet shows that only the coded names of the varia
 
 ```{r import_TFEQ_labels2, echo=TRUE, eval=TRUE, message=FALSE}
 var_labels <- readxl::read_xlsx(file_path, sheet="Levels") %>% 
-  inner_join(dplyr::select(var_names, Code, Name), by=c(Question="Code"))
+  inner_join(dplyr::select(var_names, Code, Name), 
+             by=c(Question="Code"))
 ```
 
 ```{r, eval=TRUE, echo=FALSE}

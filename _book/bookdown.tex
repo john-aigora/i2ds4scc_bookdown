@@ -190,7 +190,7 @@
 
 \title{Data Science for Sensory and Consumer Scientists}
 \author{Thierry Worch, Julien Delarue, Vanessa Rios de Souza, and John Ennis}
-\date{2023-01-11}
+\date{2023-01-12}
 
 \begin{document}
 \maketitle
@@ -5654,7 +5654,8 @@ Before going any further into the design of sensory evaluation sessions, it is i
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(pwr)}
-\FunctionTok{pwr.t.test}\NormalTok{(}\AttributeTok{n=}\ConstantTok{NULL}\NormalTok{, }\AttributeTok{sig.level=}\FloatTok{0.05}\NormalTok{, }\AttributeTok{type=}\StringTok{"paired"}\NormalTok{, }\AttributeTok{alternative=}\StringTok{"two.sided"}\NormalTok{, }\AttributeTok{power=}\FloatTok{0.8}\NormalTok{, }\AttributeTok{d=}\FloatTok{0.3}\NormalTok{)}
+\FunctionTok{pwr.t.test}\NormalTok{(}\AttributeTok{n=}\ConstantTok{NULL}\NormalTok{, }\AttributeTok{sig.level=}\FloatTok{0.05}\NormalTok{, }\AttributeTok{type=}\StringTok{"paired"}\NormalTok{, }
+           \AttributeTok{alternative=}\StringTok{"two.sided"}\NormalTok{, }\AttributeTok{power=}\FloatTok{0.8}\NormalTok{, }\AttributeTok{d=}\FloatTok{0.3}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -5691,16 +5692,16 @@ Alternately, the \texttt{WilliamsDesign()} function in \texttt{\{SensoMineR\}} a
 
 \begin{verbatim}
 ##          Rank 1 Rank 2 Rank 3 Rank 4 Rank 5
-## Judge 1       5      3      4      2      1
-## Judge 2       3      2      5      1      4
-## Judge 3       2      1      3      4      5
-## Judge 4       1      4      2      5      3
-## Judge 5       4      5      1      3      2
-## Judge 6       1      2      4      3      5
-## Judge 7       4      1      5      2      3
-## Judge 8       5      4      3      1      2
-## Judge 9       3      5      2      4      1
-## Judge 10      2      3      1      5      4
+## Judge 1       2      1      3      4      5
+## Judge 2       1      4      2      5      3
+## Judge 3       4      5      1      3      2
+## Judge 4       5      3      4      2      1
+## Judge 5       3      2      5      1      4
+## Judge 6       5      4      3      1      2
+## Judge 7       3      5      2      4      1
+## Judge 8       2      3      1      5      4
+## Judge 9       1      2      4      3      5
+## Judge 10      4      1      5      2      3
 \end{verbatim}
 
 Suppose you want to include 20 judges in the experiment, you would then need to duplicate the initial design.
@@ -5714,26 +5715,26 @@ Suppose you want to include 20 judges in the experiment, you would then need to 
 
 \begin{verbatim}
 ##         Rank 1 Rank 2 Rank 3 Rank 4 Rank 5
-## judge1       5      3      4      2      1
-## judge2       3      2      5      1      4
-## judge3       2      1      3      4      5
-## judge4       1      4      2      5      3
-## judge5       4      5      1      3      2
-## judge6       1      2      4      3      5
-## judge7       4      1      5      2      3
-## judge8       5      4      3      1      2
-## judge9       3      5      2      4      1
-## judge10      2      3      1      5      4
-## judge11      5      3      4      2      1
-## judge12      3      2      5      1      4
-## judge13      2      1      3      4      5
-## judge14      1      4      2      5      3
-## judge15      4      5      1      3      2
-## judge16      1      2      4      3      5
-## judge17      4      1      5      2      3
-## judge18      5      4      3      1      2
-## judge19      3      5      2      4      1
-## judge20      2      3      1      5      4
+## judge1       2      1      3      4      5
+## judge2       1      4      2      5      3
+## judge3       4      5      1      3      2
+## judge4       5      3      4      2      1
+## judge5       3      2      5      1      4
+## judge6       5      4      3      1      2
+## judge7       3      5      2      4      1
+## judge8       2      3      1      5      4
+## judge9       1      2      4      3      5
+## judge10      4      1      5      2      3
+## judge11      2      1      3      4      5
+## judge12      1      4      2      5      3
+## judge13      4      5      1      3      2
+## judge14      5      3      4      2      1
+## judge15      3      2      5      1      4
+## judge16      5      4      3      1      2
+## judge17      3      5      2      4      1
+## judge18      2      3      1      5      4
+## judge19      1      2      4      3      5
+## judge20      4      1      5      2      3
 \end{verbatim}
 
 The downside of Williams's Latin square designs is that the number of samples (\emph{k}) to be evaluated dictates the number of judges. For an even number of samples you must have a multiple of \emph{k} judges, and a multiple of \emph{2k} judges for an odd number of samples.
@@ -5757,19 +5758,19 @@ As the total number of judges in your study may not always be exactly known in a
 \begin{verbatim}
 ##      rank
 ## judge 1 2 3 4 5
-##    1  2 1 5 4 3
-##    2  1 4 2 3 5
-##    3  4 3 1 5 2
-##    4  3 5 4 2 1
-##    5  5 2 3 1 4
-##    6  3 4 5 1 2
-##    7  5 3 2 4 1
-##    8  2 5 1 3 4
-##    9  1 2 4 5 3
-##    10 4 1 3 2 5
-##    11 2 1 5 4 3
-##    12 1 4 2 3 5
-##    13 4 3 1 5 2
+##    1  5 1 4 3 2
+##    2  1 3 5 2 4
+##    3  3 2 1 4 5
+##    4  2 4 3 5 1
+##    5  4 5 2 1 3
+##    6  2 3 4 1 5
+##    7  4 2 5 3 1
+##    8  5 4 1 2 3
+##    9  1 5 3 4 2
+##    10 3 1 2 5 4
+##    11 5 1 4 3 2
+##    12 1 3 5 2 4
+##    13 3 2 1 4 5
 \end{verbatim}
 
 In the code above, \texttt{xtabs()} is used to arrange the design in a table format that is convenient for the experimenter.
@@ -5783,22 +5784,16 @@ Note that it would also be possible to start from an optimal design and expand i
 \NormalTok{nbR}\OtherTok{=}\NormalTok{nbP}
 
 \NormalTok{optdes\_5P13J }\OtherTok{\textless{}{-}} \FunctionTok{optimaldesign}\NormalTok{(nbP, nbP, nbR)}\SpecialCharTok{$}\NormalTok{design}
-\NormalTok{tab }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(}\AttributeTok{prod=}\FunctionTok{as.vector}\NormalTok{(}\FunctionTok{t}\NormalTok{(optdes\_5P13J)),}\AttributeTok{judge=}\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{nbJ,}\AttributeTok{each=}\NormalTok{nbR),}\AttributeTok{rank=}\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{nbR,nbJ))}
-\end{Highlighting}
-\end{Shaded}
+\NormalTok{tab }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(}\AttributeTok{prod=}\FunctionTok{as.vector}\NormalTok{(}\FunctionTok{t}\NormalTok{(optdes\_5P13J)),}
+             \AttributeTok{judge=}\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{nbJ,}\AttributeTok{each=}\NormalTok{nbR),}
+             \AttributeTok{rank=}\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{nbR,nbJ))}
+\NormalTok{add }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(}\AttributeTok{prod=}\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{nbP,nbR),}
+             \AttributeTok{judge=}\FunctionTok{rep}\NormalTok{(nbJ}\SpecialCharTok{+}\DecValTok{1}\NormalTok{,nbP}\SpecialCharTok{*}\NormalTok{nbR),}
+             \AttributeTok{rank=}\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{nbR,}\AttributeTok{each=}\NormalTok{nbP))}
 
-\begin{verbatim}
-## Warning in cbind(prod = as.vector(t(optdes_5P13J)),
-## judge = rep(1:nbJ, each = nbR), : number of rows of
-## result is not a multiple of vector length (arg 1)
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{add }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(}\AttributeTok{prod=}\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{nbP,nbR),}\AttributeTok{judge=}\FunctionTok{rep}\NormalTok{(nbJ}\SpecialCharTok{+}\DecValTok{1}\NormalTok{,nbP}\SpecialCharTok{*}\NormalTok{nbR),}\AttributeTok{rank=}\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{nbR,}\AttributeTok{each=}\NormalTok{nbP))}
-
-\NormalTok{optdes\_5P14J }\OtherTok{\textless{}{-}} \FunctionTok{optFederov}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{prod}\SpecialCharTok{+}\NormalTok{judge}\SpecialCharTok{+}\NormalTok{rank,}\AttributeTok{data=}\FunctionTok{rbind}\NormalTok{(tab,add), }\AttributeTok{augment=}\ConstantTok{TRUE}\NormalTok{, }\AttributeTok{nTrials=}\NormalTok{(nbJ}\SpecialCharTok{+}\DecValTok{1}\NormalTok{)}\SpecialCharTok{*}\NormalTok{nbP,}
-                          \AttributeTok{rows=}\DecValTok{1}\SpecialCharTok{:}\NormalTok{(nbJ}\SpecialCharTok{*}\NormalTok{nbP), }\AttributeTok{nRepeats =} \DecValTok{100}\NormalTok{)}
+\NormalTok{optdes\_5P14J }\OtherTok{\textless{}{-}} \FunctionTok{optFederov}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{prod}\SpecialCharTok{+}\NormalTok{judge}\SpecialCharTok{+}\NormalTok{rank, }\AttributeTok{data=}\FunctionTok{rbind}\NormalTok{(tab,add), }
+                           \AttributeTok{augment=}\ConstantTok{TRUE}\NormalTok{, }\AttributeTok{nTrials=}\NormalTok{(nbJ}\SpecialCharTok{+}\DecValTok{1}\NormalTok{)}\SpecialCharTok{*}\NormalTok{nbP,}
+                           \AttributeTok{rows=}\DecValTok{1}\SpecialCharTok{:}\NormalTok{(nbJ}\SpecialCharTok{*}\NormalTok{nbP), }\AttributeTok{nRepeats =} \DecValTok{100}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -5809,7 +5804,7 @@ Sensory and consumer scientists may sometimes consider using incomplete designs,
 
 You might want to choose this approach for example if you want to reduce the workload for each panelist and limit sensory fatigue, boredom and inattention. It might also be useful when you cannot ``afford'' a complete design because of sample-related constraints (limited production capacity, very expensive samples, etc.). The challenge then, is to balance sample evaluation across the panel as well as the context (i.e.~other samples) in which each sample is being evaluated. For such a design you thus want each pair of products to be evaluated together the same number of times.
 
-The \texttt{optimaldesign()} function of \texttt{\{SensoMineR\}} can be used to search for a Balanced Incomplete Block Design (BIBD). For instance, let's imagine that 10 panelists are evalauting 3 out of 5 possible samples. The design can be defined as following:
+The \texttt{optimaldesign()} function of \texttt{\{SensoMineR\}} can be used to search for a Balanced Incomplete Block Design (BIBD). For instance, let's imagine that 10 panelists are evaluating 3 out of 5 possible samples. The design can be defined as following:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5820,16 +5815,16 @@ The \texttt{optimaldesign()} function of \texttt{\{SensoMineR\}} can be used to 
 
 \begin{verbatim}
 ##             Rank 1 Rank 2 Rank 3
-## Panelist 1       5      4      3
-## Panelist 2       1      4      2
-## Panelist 3       3      2      5
-## Panelist 4       5      2      4
-## Panelist 5       2      1      3
-## Panelist 6       2      5      1
-## Panelist 7       1      3      4
-## Panelist 8       4      1      5
-## Panelist 9       3      5      1
-## Panelist 10      4      3      2
+## Panelist 1       3      5      2
+## Panelist 2       5      1      3
+## Panelist 3       1      4      3
+## Panelist 4       3      4      2
+## Panelist 5       2      3      1
+## Panelist 6       4      2      1
+## Panelist 7       5      1      4
+## Panelist 8       1      2      5
+## Panelist 9       2      5      4
+## Panelist 10      4      3      5
 \end{verbatim}
 
 BIBD are only possible for certain combinations of numbers of treatment (products), numbers of blocks (judges), and block size (number of samples per judge). Note that \texttt{optimaldesign()} will yield a design even if it is not balanced but it will also generate contingency tables allowing you to evaluate the design's orthogonality, and how well balanced are order and carry-over effects.
@@ -5856,7 +5851,7 @@ Suppose you are designing a consumer test of chocolate chip cookies in which a m
 
 To reduce the risks incurred by the use of BIBD, an alternative strategy is to use a sensory informed design. Its principle is to allocate each panelist a subset of products that best cover the sensory diversity of the initial product set. Pragmatically, this amounts to maximizing the sensory distance between drawn products \citep{Franczak2015}. Of course, this supposes that one has sensory data to rely on in the first place.
 
-\begin{center}\includegraphics[width=10.57in]{images/sensory_doe} \end{center}
+\begin{center}\includegraphics[width=0.9\linewidth]{images/sensory_doe} \end{center}
 
 \hypertarget{product-related-designs}{%
 \section{Product-related designs}\label{product-related-designs}}
@@ -5893,7 +5888,8 @@ Suppose that we want to adjust a biscuit recipe to optimize its sensory properti
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{mdes2 }\OtherTok{\textless{}{-}} \FunctionTok{Xvert}\NormalTok{(}\AttributeTok{nfac=}\DecValTok{3}\NormalTok{, }\AttributeTok{uc=}\FunctionTok{c}\NormalTok{(.}\DecValTok{30}\NormalTok{, .}\DecValTok{40}\NormalTok{, .}\DecValTok{50}\NormalTok{), }\AttributeTok{lc=}\FunctionTok{c}\NormalTok{(.}\DecValTok{15}\NormalTok{, .}\DecValTok{25}\NormalTok{, .}\DecValTok{30}\NormalTok{), }\AttributeTok{ndm =} \DecValTok{1}\NormalTok{, }\AttributeTok{plot =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{mdes2 }\OtherTok{\textless{}{-}} \FunctionTok{Xvert}\NormalTok{(}\AttributeTok{nfac=}\DecValTok{3}\NormalTok{, }\AttributeTok{uc=}\FunctionTok{c}\NormalTok{(.}\DecValTok{30}\NormalTok{, .}\DecValTok{40}\NormalTok{, .}\DecValTok{50}\NormalTok{), }\AttributeTok{lc=}\FunctionTok{c}\NormalTok{(.}\DecValTok{15}\NormalTok{, .}\DecValTok{25}\NormalTok{, .}\DecValTok{30}\NormalTok{), }
+               \AttributeTok{ndm =} \DecValTok{1}\NormalTok{, }\AttributeTok{plot =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
       \FunctionTok{mutate}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{where}\NormalTok{(is.numeric), round, }\AttributeTok{digits =} \DecValTok{3}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
@@ -5902,8 +5898,10 @@ However, this design implies creating 11 mixtures, which is more than needed to 
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{MixBiscuits }\OtherTok{\textless{}{-}} \FunctionTok{optFederov}\NormalTok{(}\SpecialCharTok{\textasciitilde{}} \SpecialCharTok{{-}}\DecValTok{1}\SpecialCharTok{+}\NormalTok{x1}\SpecialCharTok{+}\NormalTok{x2}\SpecialCharTok{+}\NormalTok{x3}\SpecialCharTok{+}\NormalTok{x1}\SpecialCharTok{:}\NormalTok{x2}\SpecialCharTok{+}\NormalTok{x1}\SpecialCharTok{:}\NormalTok{x3}\SpecialCharTok{+}\NormalTok{x2}\SpecialCharTok{:}\NormalTok{x3}\SpecialCharTok{+}\NormalTok{x1}\SpecialCharTok{:}\NormalTok{x2}\SpecialCharTok{:}\NormalTok{x3, mdes2, }\AttributeTok{nTrials=}\DecValTok{9}\NormalTok{)}
-\FunctionTok{DesignPoints}\NormalTok{(MixBiscuits}\SpecialCharTok{$}\NormalTok{design, }\AttributeTok{axislabs =} \FunctionTok{c}\NormalTok{(}\StringTok{"Butter"}\NormalTok{,}\StringTok{"Sugar"}\NormalTok{,}\StringTok{"Flour"}\NormalTok{), }\AttributeTok{pseudo =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{MixBiscuits }\OtherTok{\textless{}{-}} \FunctionTok{optFederov}\NormalTok{(}\SpecialCharTok{\textasciitilde{}} \SpecialCharTok{{-}}\DecValTok{1}\SpecialCharTok{+}\NormalTok{x1}\SpecialCharTok{+}\NormalTok{x2}\SpecialCharTok{+}\NormalTok{x3}\SpecialCharTok{+}\NormalTok{x1}\SpecialCharTok{:}\NormalTok{x2}\SpecialCharTok{+}\NormalTok{x1}\SpecialCharTok{:}\NormalTok{x3}\SpecialCharTok{+}\NormalTok{x2}\SpecialCharTok{:}\NormalTok{x3}\SpecialCharTok{+}\NormalTok{x1}\SpecialCharTok{:}\NormalTok{x2}\SpecialCharTok{:}\NormalTok{x3, }
+\NormalTok{                          mdes2, }\AttributeTok{nTrials=}\DecValTok{9}\NormalTok{)}
+\FunctionTok{DesignPoints}\NormalTok{(MixBiscuits}\SpecialCharTok{$}\NormalTok{design, }\AttributeTok{axislabs =} \FunctionTok{c}\NormalTok{(}\StringTok{"Butter"}\NormalTok{,}\StringTok{"Sugar"}\NormalTok{,}\StringTok{"Flour"}\NormalTok{), }
+             \AttributeTok{pseudo =} \ConstantTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -5923,7 +5921,7 @@ Once the design is built, it could be desirable to randomize the order in which 
 \NormalTok{Bmixt }\OtherTok{\textless{}{-}}\NormalTok{ MixBiscuits}\SpecialCharTok{$}\NormalTok{design }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{as\_tibble}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
 \NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{4}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Product =} \FunctionTok{c}\NormalTok{(}\StringTok{"A"}\NormalTok{, }\StringTok{"B"}\NormalTok{, }\StringTok{"C"}\NormalTok{, }\StringTok{"D"}\NormalTok{, }\StringTok{"E"}\NormalTok{, }\StringTok{"F"}\NormalTok{, }\StringTok{"G"}\NormalTok{, }\StringTok{"H"}\NormalTok{, }\StringTok{"I"}\NormalTok{), }\AttributeTok{.before=}\NormalTok{x1) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Product =}\NormalTok{ LETTERS[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{9}\NormalTok{], }\AttributeTok{.before=}\NormalTok{x1) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{scores =} \FunctionTok{c}\NormalTok{(}\FloatTok{7.5}\NormalTok{, }\FloatTok{5.4}\NormalTok{, }\FloatTok{5.5}\NormalTok{, }\FloatTok{7.0}\NormalTok{, }\FloatTok{6.0}\NormalTok{, }\FloatTok{8.0}\NormalTok{, }\FloatTok{5.8}\NormalTok{, }\FloatTok{6.8}\NormalTok{, }\FloatTok{7.9}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{rename}\NormalTok{(}\StringTok{"Butter"}\OtherTok{=}\NormalTok{x1, }\StringTok{"Sugar"}\OtherTok{=}\NormalTok{x2, }\StringTok{"Flour"}\OtherTok{=}\NormalTok{x3, }\StringTok{"Liking"}\OtherTok{=}\NormalTok{scores)}
 \end{Highlighting}
@@ -5935,67 +5933,67 @@ Once the design is built, it could be desirable to randomize the order in which 
 
 \renewcommand*{\arraystretch}{1.5}
 
-\begin{longtable}[c]{|p{0.81in}|p{0.69in}|p{0.69in}|p{0.67in}|p{0.68in}}
+\begin{longtable}[c]{|p{0.69in}|p{0.61in}|p{0.57in}|p{0.57in}|p{0.58in}}
 
 \caption{\textcolor[HTML]{000000}{\fontsize{11}{13}\selectfont{\global\setmainfont{Arial}{Average\ liking\ scores\ obtained\ for\ the\ biscuits\ from\ the\ mixture\ design}}}}\label{tab:biscuit-mixt}\\
 
 \hhline{>{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}-}
 
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.81in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Product}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.69in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Butter}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.69in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Sugar}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.67in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Flour}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.68in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Liking}}}} \\
+\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.69in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{Product}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.61in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{Butter}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.57in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{Sugar}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.57in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{Flour}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.58in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{Liking}}}} \\
 
 \hhline{>{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}-}\endhead
 
 
 
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.81in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{A}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.69in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{0.300}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.69in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{0.250}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.67in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{0.450}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.68in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{7.5}}}} \\
+\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.69in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{A}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.61in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{0.300}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.57in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{0.250}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.57in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{0.450}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.58in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{7.5}}}} \\
 
 
 
 
 
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.81in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{B}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.69in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{0.150}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.69in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{0.400}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.67in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{0.450}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.68in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{5.4}}}} \\
+\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.69in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{B}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.61in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{0.150}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.57in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{0.400}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.57in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{0.450}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.58in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{5.4}}}} \\
 
 
 
 
 
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.81in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{C}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.69in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{0.300}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.69in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{0.400}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.67in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{0.300}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.68in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{5.5}}}} \\
+\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.69in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{C}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.61in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{0.300}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.57in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{0.400}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.57in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{0.300}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.58in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{5.5}}}} \\
 
 
 
 
 
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.81in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{D}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.69in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{0.250}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.69in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{0.250}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.67in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{0.500}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.68in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{7.0}}}} \\
+\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.69in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{D}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.61in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{0.250}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.57in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{0.250}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.57in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{0.500}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.58in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{7.0}}}} \\
 
 
 
 
 
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.81in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{E}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.69in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{0.150}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.69in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{0.350}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.67in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{0.500}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.68in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{6.0}}}} \\
+\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.69in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{E}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.61in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{0.150}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.57in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{0.350}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.57in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{0.500}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.58in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{6.0}}}} \\
 
 
 
 
 
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.81in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{F}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.69in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{0.300}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.69in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{0.325}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.67in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{0.375}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.68in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{8.0}}}} \\
+\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.69in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{F}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.61in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{0.300}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.57in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{0.325}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.57in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{0.375}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.58in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{8.0}}}} \\
 
 
 
 
 
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.81in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{G}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.69in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{0.225}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.69in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{0.400}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.67in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{0.375}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.68in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{5.8}}}} \\
+\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.69in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{G}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.61in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{0.225}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.57in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{0.400}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.57in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{0.375}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.58in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{5.8}}}} \\
 
 
 
 
 
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.81in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{H}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.69in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{0.200}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.69in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{0.300}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.67in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{0.500}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.68in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{6.8}}}} \\
+\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.69in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{H}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.61in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{0.200}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.57in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{0.300}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.57in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{0.500}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.58in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{6.8}}}} \\
 
 
 
 
 
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.81in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{I}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.69in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{0.230}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.69in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{0.330}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.67in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{0.440}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.68in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{7.9}}}} \\
+\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 0.69in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{I}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.61in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{0.230}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.57in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{0.330}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.57in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{0.440}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedleft}p{\dimexpr 0.58in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{\global\setmainfont{Calibri}{7.9}}}} \\
 
 \hhline{>{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}-}
 
@@ -6012,14 +6010,13 @@ Regardless of the construction of the mixture design, ternary diagrams are easy 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{invisible}\NormalTok{(}
-  \FunctionTok{capture.output}\NormalTok{(}
-\NormalTok{    res }\OtherTok{\textless{}{-}} \FunctionTok{MixModel}\NormalTok{(Bmixt, }\AttributeTok{response=}\StringTok{"Liking"}\NormalTok{, }\AttributeTok{mixcomps=}\FunctionTok{c}\NormalTok{(}\StringTok{"Butter"}\NormalTok{,}\StringTok{"Sugar"}\NormalTok{,}\StringTok{"Flour"}\NormalTok{), }\AttributeTok{model=}\DecValTok{4}\NormalTok{)}
-\NormalTok{  )}
-\NormalTok{)}
+  \FunctionTok{capture.output}\NormalTok{(res }\OtherTok{\textless{}{-}} \FunctionTok{MixModel}\NormalTok{(Bmixt, }\AttributeTok{response=}\StringTok{"Liking"}\NormalTok{, }
+                                 \AttributeTok{mixcomps=}\FunctionTok{c}\NormalTok{(}\StringTok{"Butter"}\NormalTok{,}\StringTok{"Sugar"}\NormalTok{,}\StringTok{"Flour"}\NormalTok{), }
+                                 \AttributeTok{model=}\DecValTok{4}\NormalTok{)))}
 
 \FunctionTok{ModelPlot}\NormalTok{(}\AttributeTok{model =}\NormalTok{ res,}
           \AttributeTok{dimensions =} \FunctionTok{list}\NormalTok{(}\AttributeTok{x1=}\StringTok{"Butter"}\NormalTok{, }\AttributeTok{x2=}\StringTok{"Sugar"}\NormalTok{, }\AttributeTok{x3=}\StringTok{"Flour"}\NormalTok{),}
-          \AttributeTok{lims =} \FunctionTok{c}\NormalTok{(}\FloatTok{0.15}\NormalTok{, }\FloatTok{0.30}\NormalTok{, }\FloatTok{0.25}\NormalTok{, }\FloatTok{0.40}\NormalTok{, }\FloatTok{0.30}\NormalTok{, }\FloatTok{0.50}\NormalTok{), }\AttributeTok{constraints =} \ConstantTok{TRUE}\NormalTok{,}
+          \AttributeTok{lims =} \FunctionTok{c}\NormalTok{(}\FloatTok{0.15}\NormalTok{,}\FloatTok{0.30}\NormalTok{,}\FloatTok{0.25}\NormalTok{,}\FloatTok{0.40}\NormalTok{,}\FloatTok{0.30}\NormalTok{,}\FloatTok{0.50}\NormalTok{), }\AttributeTok{constraints =} \ConstantTok{TRUE}\NormalTok{,}
           \AttributeTok{contour =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{cuts =} \DecValTok{12}\NormalTok{, }\AttributeTok{fill =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{pseudo =} \ConstantTok{TRUE}\NormalTok{,}
           \AttributeTok{axislabs =} \FunctionTok{c}\NormalTok{(}\StringTok{"Butter"}\NormalTok{, }\StringTok{"Sugar"}\NormalTok{, }\StringTok{"Flour"}\NormalTok{))}
 \end{Highlighting}
@@ -6238,7 +6235,8 @@ A deeper look at the \emph{Levels} sheet shows that only the coded names of the 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{var\_labels }\OtherTok{\textless{}{-}}\NormalTok{ readxl}\SpecialCharTok{::}\FunctionTok{read\_xlsx}\NormalTok{(file\_path, }\AttributeTok{sheet=}\StringTok{"Levels"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{inner\_join}\NormalTok{(dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(var\_names, Code, Name), }\AttributeTok{by=}\FunctionTok{c}\NormalTok{(}\AttributeTok{Question=}\StringTok{"Code"}\NormalTok{))}
+  \FunctionTok{inner\_join}\NormalTok{(dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(var\_names, Code, Name), }
+             \AttributeTok{by=}\FunctionTok{c}\NormalTok{(}\AttributeTok{Question=}\StringTok{"Code"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -6411,7 +6409,6 @@ Other informative solutions consists in printing a summary of the data through t
 ##                                        Mean   :23.9  
 ##                                        3rd Qu.:38.4  
 ##                                        Max.   :54.0  
-##                                                      
 ##  External color intensity Color evenness
 ##  Min.   : 6.6             Min.   : 6.6  
 ##  1st Qu.:27.0             1st Qu.:19.5  
@@ -6419,95 +6416,13 @@ Other informative solutions consists in printing a summary of the data through t
 ##  Mean   :33.7             Mean   :28.2  
 ##  3rd Qu.:42.6             3rd Qu.:37.2  
 ##  Max.   :55.2             Max.   :53.4  
-##                                         
-##  Qty of inclusions Surface defects Print quality 
-##  Min.   : 0.0      Min.   : 4.8    Min.   :12.0  
-##  1st Qu.:13.8      1st Qu.:15.3    1st Qu.:36.3  
-##  Median :19.8      Median :21.0    Median :40.8  
-##  Mean   :20.6      Mean   :23.4    Mean   :40.7  
-##  3rd Qu.:29.1      3rd Qu.:30.6    3rd Qu.:47.1  
-##  Max.   :40.8      Max.   :51.6    Max.   :60.0  
-##                                                  
-##    Thickness    Color contrast Overall odor intensity
-##  Min.   : 7.8   Min.   : 5.4   Min.   : 0.0          
-##  1st Qu.:18.3   1st Qu.:21.0   1st Qu.:10.2          
-##  Median :25.8   Median :32.4   Median :18.0          
-##  Mean   :25.5   Mean   :29.7   Mean   :18.7          
-##  3rd Qu.:32.1   3rd Qu.:40.2   3rd Qu.:26.1          
-##  Max.   :52.8   Max.   :51.6   Max.   :40.2          
-##                 NA's   :2                            
-##    Fatty odor     Roasted odor  Cereal flavor 
-##  Min.   : 0.00   Min.   : 0.0   Min.   : 0.0  
-##  1st Qu.: 0.00   1st Qu.: 8.1   1st Qu.:18.0  
-##  Median : 5.40   Median :15.0   Median :25.2  
-##  Mean   : 6.85   Mean   :15.1   Mean   :25.0  
-##  3rd Qu.:10.65   3rd Qu.:20.7   3rd Qu.:31.2  
-##  Max.   :27.00   Max.   :42.0   Max.   :48.0  
-##  NA's   :1                                    
-##  RawDough flavor  Fatty flavor    Dairy flavor  
-##  Min.   : 0.0    Min.   : 0.00   Min.   : 0.00  
-##  1st Qu.: 3.0    1st Qu.: 0.00   1st Qu.: 0.00  
-##  Median :13.2    Median : 6.60   Median : 7.20  
-##  Mean   :14.2    Mean   : 7.53   Mean   : 9.11  
-##  3rd Qu.:24.6    3rd Qu.:13.80   3rd Qu.:13.50  
-##  Max.   :43.2    Max.   :24.00   Max.   :46.80  
-##                  NA's   :2                      
-##  Roasted flavor Overall flavor persistence
-##  Min.   : 0.0   Min.   : 0.0              
-##  1st Qu.: 9.0   1st Qu.:16.2              
-##  Median :17.4   Median :22.8              
-##  Mean   :17.7   Mean   :22.7              
-##  3rd Qu.:24.6   3rd Qu.:28.8              
-##  Max.   :51.6   Max.   :43.8              
-##                                           
-##      Salty           Sweet           Sour     
-##  Min.   : 0.00   Min.   : 0.0   Min.   : 0.0  
-##  1st Qu.: 0.00   1st Qu.: 9.9   1st Qu.: 0.0  
-##  Median : 1.20   Median :18.0   Median : 0.0  
-##  Mean   : 5.03   Mean   :17.8   Mean   : 1.6  
-##  3rd Qu.:10.05   3rd Qu.:24.3   3rd Qu.: 0.0  
-##  Max.   :19.20   Max.   :43.2   Max.   :13.8  
-##                                 NA's   :10    
-##      Bitter       Astringent      Warming    
-##  Min.   : 0.0   Min.   : 0.0   Min.   : 0.0  
-##  1st Qu.: 0.0   1st Qu.: 0.0   1st Qu.: 9.3  
-##  Median : 7.8   Median : 8.4   Median :16.8  
-##  Mean   : 8.1   Mean   :11.4   Mean   :16.8  
-##  3rd Qu.:14.1   3rd Qu.:19.5   3rd Qu.:25.2  
-##  Max.   :27.6   Max.   :34.2   Max.   :47.4  
-##                                              
-##  Initial hardness    Brittle        Crunchy    
-##  Min.   : 0.0     Min.   : 0.0   Min.   : 8.4  
-##  1st Qu.:19.5     1st Qu.:27.6   1st Qu.:23.2  
-##  Median :30.6     Median :34.8   Median :30.6  
-##  Mean   :30.1     Mean   :31.6   Mean   :29.6  
-##  3rd Qu.:39.3     3rd Qu.:39.0   3rd Qu.:36.3  
-##  Max.   :60.0     Max.   :57.0   Max.   :48.6  
-##                   NA's   :2                    
-##  Fatty in mouth      Light       Dry in mouth 
-##  Min.   : 0.00   Min.   : 5.4   Min.   :11.4  
-##  1st Qu.: 0.00   1st Qu.:22.8   1st Qu.:39.0  
-##  Median : 5.70   Median :31.2   Median :45.0  
-##  Mean   : 7.36   Mean   :30.1   Mean   :43.0  
-##  3rd Qu.:13.05   3rd Qu.:36.6   3rd Qu.:49.8  
-##  Max.   :27.00   Max.   :53.4   Max.   :58.8  
-##  NA's   :1       NA's   :1                    
-##  Qty of inclusions in mouth     Sticky    
-##  Min.   : 0.0               Min.   : 6.0  
-##  1st Qu.:15.9               1st Qu.:27.0  
-##  Median :26.4               Median :33.6  
-##  Mean   :24.9               Mean   :32.7  
-##  3rd Qu.:35.4               3rd Qu.:39.6  
-##  Max.   :45.6               Max.   :52.8  
-##                                           
-##     Melting    
-##  Min.   : 0.0  
-##  1st Qu.:13.2  
-##  Median :19.2  
-##  Mean   :20.5  
-##  3rd Qu.:27.3  
-##  Max.   :38.4  
-## 
+##  Qty of inclusions
+##  Min.   : 0.0     
+##  1st Qu.:13.8     
+##  Median :19.8     
+##  Mean   :20.6     
+##  3rd Qu.:29.1     
+##  Max.   :40.8
 \end{verbatim}
 
 \begin{Shaded}
@@ -6518,41 +6433,17 @@ Other informative solutions consists in printing a summary of the data through t
 
 \begin{verbatim}
 ## Rows: 99
-## Columns: 34
-## $ Judge                        <chr> "J01", "J01", "J~
-## $ Product                      <chr> "P01", "P02", "P~
-## $ Shiny                        <dbl> 52.8, 48.6, 48.0~
-## $ `External color intensity`   <dbl> 30.0, 30.0, 45.6~
-## $ `Color evenness`             <dbl> 22.8, 13.2, 17.4~
-## $ `Qty of inclusions`          <dbl> 9.6, 10.8, 7.8, ~
-## $ `Surface defects`            <dbl> 22.8, 13.2, 14.4~
-## $ `Print quality`              <dbl> 48.6, 54.0, 49.2~
-## $ Thickness                    <dbl> 38.4, 35.4, 25.8~
-## $ `Color contrast`             <dbl> 37.8, 40.2, 17.4~
-## $ `Overall odor intensity`     <dbl> 16.8, 24.6, 21.6~
-## $ `Fatty odor`                 <dbl> 6.6, 5.4, 0.0, 0~
-## $ `Roasted odor`               <dbl> 15.6, 20.4, 18.6~
-## $ `Cereal flavor`              <dbl> 24.6, 25.8, 30.0~
-## $ `RawDough flavor`            <dbl> 28.2, 28.8, 26.4~
-## $ `Fatty flavor`               <dbl> 13.8, 7.2, 0.0, ~
-## $ `Dairy flavor`               <dbl> 0.0, 0.0, 0.0, 0~
-## $ `Roasted flavor`             <dbl> 24.6, 19.2, 27.0~
-## $ `Overall flavor persistence` <dbl> 23.4, 24.6, 25.2~
-## $ Salty                        <dbl> 0.0, 0.0, 0.0, 0~
-## $ Sweet                        <dbl> 13.8, 19.2, 9.6,~
-## $ Sour                         <dbl> 0.0, 0.0, 0.0, 0~
-## $ Bitter                       <dbl> 19.2, 21.6, 21.0~
-## $ Astringent                   <dbl> 0.0, 0.0, 25.8, ~
-## $ Warming                      <dbl> 0.0, 0.0, 13.8, ~
-## $ `Initial hardness`           <dbl> 11.4, 17.4, 33.0~
-## $ Brittle                      <dbl> 39.6, 35.4, 27.6~
-## $ Crunchy                      <dbl> 25.8, 32.4, 25.2~
-## $ `Fatty in mouth`             <dbl> 0.0, 9.6, 6.0, 9~
-## $ Light                        <dbl> 22.8, 21.0, 20.4~
-## $ `Dry in mouth`               <dbl> 27.0, 25.8, 31.2~
-## $ `Qty of inclusions in mouth` <dbl> 27.6, 22.2, 10.2~
-## $ Sticky                       <dbl> 37.2, 35.4, 37.2~
-## $ Melting                      <dbl> 33.6, 36.0, 8.4,~
+## Columns: 10
+## $ Judge                      <chr> "J01", "J01", "J01~
+## $ Product                    <chr> "P01", "P02", "P03~
+## $ Shiny                      <dbl> 52.8, 48.6, 48.0, ~
+## $ `External color intensity` <dbl> 30.0, 30.0, 45.6, ~
+## $ `Color evenness`           <dbl> 22.8, 13.2, 17.4, ~
+## $ `Qty of inclusions`        <dbl> 9.6, 10.8, 7.8, 0.~
+## $ `Surface defects`          <dbl> 22.8, 13.2, 14.4, ~
+## $ `Print quality`            <dbl> 48.6, 54.0, 49.2, ~
+## $ Thickness                  <dbl> 38.4, 35.4, 25.8, ~
+## $ `Color contrast`           <dbl> 37.8, 40.2, 17.4, ~
 \end{verbatim}
 
 These functions provide relevant yet basic views of each variable present in the data including their types, the range of values, means, and medians, as well as the first values of each variables.
@@ -6601,7 +6492,7 @@ A first approach to inspect and visualize where the missing values are is by rep
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-217-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-220-1.pdf}
 
 As can be seen, missing values are only present in few variables. However, \texttt{Sour} contains up to 10\% of missing data, which can be quite critical in some situations.
 
@@ -6630,7 +6521,7 @@ To answer these questions, the \texttt{\{naniar\}} package provides an interesti
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-219-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-222-1.pdf}
 
 It seems here that the only connection between NAs is observed between \texttt{Light} and \texttt{Color\ contrast}.
 
@@ -6643,7 +6534,7 @@ Such relational structure can also be visualized in a scatter plot using the \te
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-220-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-223-1.pdf}
 
 Here, the relationship between \texttt{Product} and \texttt{Sour} is shown. Such plot may help decide what to do with missing values, whether it is ignoring, removing, or predicting them.
 
@@ -6751,7 +6642,8 @@ Using \texttt{na.rm=TRUE} is equivalent to removing the missing values from the 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{sensory }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{pivot\_longer}\NormalTok{(Shiny}\SpecialCharTok{:}\NormalTok{Melting, }\AttributeTok{names\_to=}\StringTok{"Variables"}\NormalTok{, }\AttributeTok{values\_to=}\StringTok{"Scores"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_longer}\NormalTok{(Shiny}\SpecialCharTok{:}\NormalTok{Melting, }
+               \AttributeTok{names\_to=}\StringTok{"Variables"}\NormalTok{, }\AttributeTok{values\_to=}\StringTok{"Scores"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(Scores)) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{group\_by}\NormalTok{(Product, Variables) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{summarize}\NormalTok{(}\AttributeTok{Means =} \FunctionTok{mean}\NormalTok{(Scores)) }\SpecialCharTok{\%\textgreater{}\%} 
@@ -6816,30 +6708,21 @@ The procedure presented below show the procedure on how to remove attributes wit
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{sensory\_long }\OtherTok{\textless{}{-}}\NormalTok{ sensory }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{pivot\_longer}\NormalTok{(Shiny}\SpecialCharTok{:}\NormalTok{Melting, }\AttributeTok{names\_to=}\StringTok{"Variables"}\NormalTok{, }\AttributeTok{values\_to=}\StringTok{"Scores"}\NormalTok{)}
+  \FunctionTok{pivot\_longer}\NormalTok{(Shiny}\SpecialCharTok{:}\NormalTok{Melting, }
+               \AttributeTok{names\_to=}\StringTok{"Variables"}\NormalTok{, }\AttributeTok{values\_to=}\StringTok{"Scores"}\NormalTok{)}
 
-\NormalTok{(attr\_rmv }\OtherTok{\textless{}{-}}\NormalTok{ sensory\_long }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{attr\_rmv }\OtherTok{\textless{}{-}}\NormalTok{ sensory\_long }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{filter}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(Scores)) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{pull}\NormalTok{(Variables) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{unique}\NormalTok{())}
-\end{Highlighting}
-\end{Shaded}
+  \FunctionTok{unique}\NormalTok{()}
 
-\begin{verbatim}
-## [1] "Color contrast" "Light"          "Sour"          
-## [4] "Fatty flavor"   "Fatty in mouth" "Fatty odor"    
-## [7] "Brittle"
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \NormalTok{sensory\_clean }\OtherTok{\textless{}{-}}\NormalTok{ sensory\_long }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\NormalTok{(Variables }\SpecialCharTok{\%in\%}\NormalTok{ attr\_rmv)) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{pivot\_wider}\NormalTok{(}\AttributeTok{names\_from=}\NormalTok{Variables, }\AttributeTok{values\_from=}\NormalTok{Scores)}
 \end{Highlighting}
 \end{Shaded}
 
-This procedure removed the 7 attributes that contained missing values, leading to a table with 99 rows and 29 columns (instead of 36).
+This procedure removed the 7 attributes that contained missing values (and stored in \texttt{attr\_rmv}), leading to a table with 99 rows and 29 columns (instead of 36).
 
 \hypertarget{imputing-missing-values}{%
 \subsubsection{Imputing Missing Values}\label{imputing-missing-values}}
@@ -7078,8 +6961,10 @@ To evaluate whether the carry-over effect is well balance, the only thing left t
   \FunctionTok{group\_by}\NormalTok{(Session, Product, Previous) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{count}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{ungroup}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Product =} \FunctionTok{factor}\NormalTok{(Product, }\AttributeTok{levels=}\FunctionTok{paste0}\NormalTok{(}\StringTok{"choc"}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{6}\NormalTok{)),}
-         \AttributeTok{Previous =} \FunctionTok{factor}\NormalTok{(Previous, }\AttributeTok{levels=}\FunctionTok{c}\NormalTok{(}\StringTok{"NA"}\NormalTok{,}\FunctionTok{paste0}\NormalTok{(}\StringTok{"choc"}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{6}\NormalTok{)))) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Product =} \FunctionTok{factor}\NormalTok{(Product, }
+                          \AttributeTok{levels=}\FunctionTok{paste0}\NormalTok{(}\StringTok{"choc"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{6}\NormalTok{)),}
+         \AttributeTok{Previous =} \FunctionTok{factor}\NormalTok{(Previous, }
+                           \AttributeTok{levels=}\FunctionTok{c}\NormalTok{(}\StringTok{"NA"}\NormalTok{,}\FunctionTok{paste0}\NormalTok{(}\StringTok{"choc"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{6}\NormalTok{)))) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{arrange}\NormalTok{(Previous) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{pivot\_wider}\NormalTok{(}\AttributeTok{names\_from=}\NormalTok{Previous, }\AttributeTok{values\_from=}\NormalTok{n, }\AttributeTok{values\_fill=}\DecValTok{0}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{arrange}\NormalTok{(Product) }\SpecialCharTok{\%\textgreater{}\%} 
@@ -7139,7 +7024,8 @@ The data used in this section is stored in \emph{bisuits\_traits.xlsx}. So let's
   \FunctionTok{inner\_join}\NormalTok{(demo\_var, }\AttributeTok{by=}\FunctionTok{c}\NormalTok{(}\StringTok{"Question"}\OtherTok{=}\StringTok{"Code"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
 \NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Question)}
 
-\NormalTok{demographic }\OtherTok{\textless{}{-}} \FunctionTok{read\_xlsx}\NormalTok{(file\_path, }\AttributeTok{sheet=}\StringTok{"Data"}\NormalTok{, }\AttributeTok{skip=}\DecValTok{1}\NormalTok{, }\AttributeTok{col\_names=}\FunctionTok{unlist}\NormalTok{(demo\_var}\SpecialCharTok{$}\NormalTok{Name))}
+\NormalTok{demographic }\OtherTok{\textless{}{-}} \FunctionTok{read\_xlsx}\NormalTok{(file\_path, }\AttributeTok{sheet=}\StringTok{"Data"}\NormalTok{, }\AttributeTok{skip=}\DecValTok{1}\NormalTok{, }
+                         \AttributeTok{col\_names=}\FunctionTok{unlist}\NormalTok{(demo\_var}\SpecialCharTok{$}\NormalTok{Name))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -7193,20 +7079,13 @@ Binary data is data that takes two possible values (\texttt{TRUE} or \texttt{FAL
 
 \begin{quote}
 Intrinsically, binary data is \emph{numerical}, TRUE being assimilated to 1, FALSE to 0. If multiple tests are being performed, it is possible to sum the number of tests that pass using the \texttt{sum()} function, as shown in the simple example below:
+\texttt{\#\ Generate\ 10\ random\ values\ between\ 1\ and\ 10\ (uniform\ distribution)}
+\texttt{x\ \textless{}-\ runif(10,\ 1,\ 10)}
+\texttt{\#\ Test\ whether\ the\ values\ generated\ are\ strictly\ larger\ than\ 5}
+\texttt{test\ \textless{}-\ x\textgreater{}5}
+\texttt{\#\ Counting\ the\ number\ of\ values\ strictly\ larger\ than\ 5}
+\texttt{sum(test)}
 \end{quote}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# Generate 10 random values between 1 and 10 using the uniform distribution}
-\NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{runif}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{10}\NormalTok{)}
-\NormalTok{x}
-\CommentTok{\# Test whether the values generated are strictly larger than 5}
-\NormalTok{test }\OtherTok{\textless{}{-}}\NormalTok{ x}\SpecialCharTok{\textgreater{}}\DecValTok{5}
-\NormalTok{test}
-\CommentTok{\# Counting the number of values strictly larger than 5}
-\FunctionTok{sum}\NormalTok{(test)}
-\end{Highlighting}
-\end{Shaded}
 
 \hypertarget{nominal-data}{%
 \subsubsection{Nominal Data}\label{nominal-data}}
@@ -7268,31 +7147,7 @@ Let's compare a variable set as \texttt{factor} and \texttt{character} by using 
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{unique}\NormalTok{(example}\SpecialCharTok{$}\NormalTok{Judge)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##   [1] "J48"  "J61"  "J60"  "J97"  "J38"  "J26"  "J103"
-##   [8] "J91"  "J13"  "J73"  "J49"  "J62"  "J14"  "J98" 
-##  [15] "J15"  "J39"  "J74"  "J64"  "J99"  "J75"  "J108"
-##  [22] "J76"  "J1"   "J65"  "J63"  "J2"   "J24"  "J27" 
-##  [29] "J3"   "J50"  "J4"   "J77"  "J66"  "J5"   "J67" 
-##  [36] "J6"   "J100" "J90"  "J92"  "J7"   "J79"  "J68" 
-##  [43] "J69"  "J85"  "J101" "J70"  "J51"  "J52"  "J109"
-##  [50] "J8"   "J93"  "J53"  "J54"  "J110" "J94"  "J111"
-##  [57] "J86"  "J16"  "J112" "J29"  "J95"  "J96"  "J118"
-##  [64] "J17"  "J117" "J55"  "J30"  "J40"  "J41"  "J9"  
-##  [71] "J31"  "J10"  "J56"  "J87"  "J71"  "J42"  "J43" 
-##  [78] "J32"  "J81"  "J58"  "J19"  "J33"  "J34"  "J44" 
-##  [85] "J72"  "J113" "J45"  "J105" "J114" "J46"  "J20" 
-##  [92] "J82"  "J115" "J59"  "J116" "J21"  "J88"  "J83" 
-##  [99] "J22"  "J11"  "J35"  "J89"  "J120" "J12"  "J36" 
-## [106] "J23"  "J119"
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
+\CommentTok{\#unique(example$Judge)}
 \FunctionTok{length}\NormalTok{(}\FunctionTok{unique}\NormalTok{(example}\SpecialCharTok{$}\NormalTok{Judge))}
 \end{Highlighting}
 \end{Shaded}
@@ -7303,31 +7158,7 @@ Let's compare a variable set as \texttt{factor} and \texttt{character} by using 
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{levels}\NormalTok{(example}\SpecialCharTok{$}\NormalTok{Judge\_fct)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##   [1] "J1"   "J10"  "J100" "J101" "J103" "J105" "J108"
-##   [8] "J109" "J11"  "J110" "J111" "J112" "J113" "J114"
-##  [15] "J115" "J116" "J117" "J118" "J119" "J12"  "J120"
-##  [22] "J13"  "J14"  "J15"  "J16"  "J17"  "J19"  "J2"  
-##  [29] "J20"  "J21"  "J22"  "J23"  "J24"  "J26"  "J27" 
-##  [36] "J29"  "J3"   "J30"  "J31"  "J32"  "J33"  "J34" 
-##  [43] "J35"  "J36"  "J38"  "J39"  "J4"   "J40"  "J41" 
-##  [50] "J42"  "J43"  "J44"  "J45"  "J46"  "J48"  "J49" 
-##  [57] "J5"   "J50"  "J51"  "J52"  "J53"  "J54"  "J55" 
-##  [64] "J56"  "J58"  "J59"  "J6"   "J60"  "J61"  "J62" 
-##  [71] "J63"  "J64"  "J65"  "J66"  "J67"  "J68"  "J69" 
-##  [78] "J7"   "J70"  "J71"  "J72"  "J73"  "J74"  "J75" 
-##  [85] "J76"  "J77"  "J79"  "J8"   "J81"  "J82"  "J83" 
-##  [92] "J85"  "J86"  "J87"  "J88"  "J89"  "J9"   "J90" 
-##  [99] "J91"  "J92"  "J93"  "J94"  "J95"  "J96"  "J97" 
-## [106] "J98"  "J99"
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
+\CommentTok{\#levels(example$Judge\_fct)}
 \FunctionTok{nlevels}\NormalTok{(example}\SpecialCharTok{$}\NormalTok{Judge\_fct)}
 \end{Highlighting}
 \end{Shaded}
@@ -7351,27 +7182,13 @@ To illustrate this, let's re-arrange the levels from \texttt{Judge\_fct} by orde
 \NormalTok{example }\OtherTok{\textless{}{-}}\NormalTok{ demographic }\SpecialCharTok{\%\textgreater{}\%} 
 \NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Judge) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Judge\_fct =} \FunctionTok{factor}\NormalTok{(Judge, }\FunctionTok{str\_sort}\NormalTok{(Judge, }\AttributeTok{numeric=}\ConstantTok{TRUE}\NormalTok{)))}
-\FunctionTok{levels}\NormalTok{(example}\SpecialCharTok{$}\NormalTok{Judge\_fct)}
+\FunctionTok{levels}\NormalTok{(example}\SpecialCharTok{$}\NormalTok{Judge\_fct)[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{]}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-##   [1] "J1"   "J2"   "J3"   "J4"   "J5"   "J6"   "J7"  
-##   [8] "J8"   "J9"   "J10"  "J11"  "J12"  "J13"  "J14" 
-##  [15] "J15"  "J16"  "J17"  "J19"  "J20"  "J21"  "J22" 
-##  [22] "J23"  "J24"  "J26"  "J27"  "J29"  "J30"  "J31" 
-##  [29] "J32"  "J33"  "J34"  "J35"  "J36"  "J38"  "J39" 
-##  [36] "J40"  "J41"  "J42"  "J43"  "J44"  "J45"  "J46" 
-##  [43] "J48"  "J49"  "J50"  "J51"  "J52"  "J53"  "J54" 
-##  [50] "J55"  "J56"  "J58"  "J59"  "J60"  "J61"  "J62" 
-##  [57] "J63"  "J64"  "J65"  "J66"  "J67"  "J68"  "J69" 
-##  [64] "J70"  "J71"  "J72"  "J73"  "J74"  "J75"  "J76" 
-##  [71] "J77"  "J79"  "J81"  "J82"  "J83"  "J85"  "J86" 
-##  [78] "J87"  "J88"  "J89"  "J90"  "J91"  "J92"  "J93" 
-##  [85] "J94"  "J95"  "J96"  "J97"  "J98"  "J99"  "J100"
-##  [92] "J101" "J103" "J105" "J108" "J109" "J110" "J111"
-##  [99] "J112" "J113" "J114" "J115" "J116" "J117" "J118"
-## [106] "J119" "J120"
+##  [1] "J1"  "J2"  "J3"  "J4"  "J5"  "J6"  "J7"  "J8" 
+##  [9] "J9"  "J10"
 \end{verbatim}
 
 Now the levels are sorted, let's filter respondents by only keeping J1 to J20. We then re-run the previous code that count the number of elements in each variables:
@@ -7381,18 +7198,7 @@ Now the levels are sorted, let's filter respondents by only keeping J1 to J20. W
 \NormalTok{example\_reduced }\OtherTok{\textless{}{-}}\NormalTok{ example }\SpecialCharTok{\%\textgreater{}\%}  
   \FunctionTok{filter}\NormalTok{(Judge }\SpecialCharTok{\%in\%} \FunctionTok{paste0}\NormalTok{(}\StringTok{"J"}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{20}\NormalTok{))}
 
-\FunctionTok{unique}\NormalTok{(example\_reduced}\SpecialCharTok{$}\NormalTok{Judge)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##  [1] "J13" "J14" "J15" "J1"  "J2"  "J3"  "J4"  "J5" 
-##  [9] "J6"  "J7"  "J8"  "J16" "J17" "J9"  "J10" "J19"
-## [17] "J20" "J11" "J12"
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
+\CommentTok{\# unique(example\_reduced$Judge)}
 \FunctionTok{length}\NormalTok{(}\FunctionTok{unique}\NormalTok{(example\_reduced}\SpecialCharTok{$}\NormalTok{Judge))}
 \end{Highlighting}
 \end{Shaded}
@@ -7403,31 +7209,7 @@ Now the levels are sorted, let's filter respondents by only keeping J1 to J20. W
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{levels}\NormalTok{(example\_reduced}\SpecialCharTok{$}\NormalTok{Judge\_fct)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##   [1] "J1"   "J2"   "J3"   "J4"   "J5"   "J6"   "J7"  
-##   [8] "J8"   "J9"   "J10"  "J11"  "J12"  "J13"  "J14" 
-##  [15] "J15"  "J16"  "J17"  "J19"  "J20"  "J21"  "J22" 
-##  [22] "J23"  "J24"  "J26"  "J27"  "J29"  "J30"  "J31" 
-##  [29] "J32"  "J33"  "J34"  "J35"  "J36"  "J38"  "J39" 
-##  [36] "J40"  "J41"  "J42"  "J43"  "J44"  "J45"  "J46" 
-##  [43] "J48"  "J49"  "J50"  "J51"  "J52"  "J53"  "J54" 
-##  [50] "J55"  "J56"  "J58"  "J59"  "J60"  "J61"  "J62" 
-##  [57] "J63"  "J64"  "J65"  "J66"  "J67"  "J68"  "J69" 
-##  [64] "J70"  "J71"  "J72"  "J73"  "J74"  "J75"  "J76" 
-##  [71] "J77"  "J79"  "J81"  "J82"  "J83"  "J85"  "J86" 
-##  [78] "J87"  "J88"  "J89"  "J90"  "J91"  "J92"  "J93" 
-##  [85] "J94"  "J95"  "J96"  "J97"  "J98"  "J99"  "J100"
-##  [92] "J101" "J103" "J105" "J108" "J109" "J110" "J111"
-##  [99] "J112" "J113" "J114" "J115" "J116" "J117" "J118"
-## [106] "J119" "J120"
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
+\CommentTok{\# levels(example\_reduced$Judge\_fct)}
 \FunctionTok{nlevels}\NormalTok{(example\_reduced}\SpecialCharTok{$}\NormalTok{Judge\_fct)}
 \end{Highlighting}
 \end{Shaded}
@@ -7492,7 +7274,8 @@ Let's consider the \texttt{Living\ area} variable from \texttt{demographic} as a
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{example }\OtherTok{=}\NormalTok{ demographic }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Area =} \FunctionTok{factor}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Living area}\StringTok{\textasciigrave{}}\NormalTok{, }\AttributeTok{levels=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{), }\AttributeTok{labels=}\FunctionTok{c}\NormalTok{(}\StringTok{"Urban"}\NormalTok{, }\StringTok{"Rurban"}\NormalTok{, }\StringTok{"Rural"}\NormalTok{)))}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Area =} \FunctionTok{factor}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Living area}\StringTok{\textasciigrave{}}\NormalTok{, }\AttributeTok{levels=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{), }
+                       \AttributeTok{labels=}\FunctionTok{c}\NormalTok{(}\StringTok{"Urban"}\NormalTok{, }\StringTok{"Rurban"}\NormalTok{, }\StringTok{"Rural"}\NormalTok{)))}
 
 \FunctionTok{levels}\NormalTok{(example}\SpecialCharTok{$}\NormalTok{Area)}
 \end{Highlighting}
@@ -7532,7 +7315,8 @@ Let's now regroup \texttt{Rurban} and \texttt{Rural} together under \texttt{Rura
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{example }\OtherTok{=}\NormalTok{ demographic }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Area =} \FunctionTok{factor}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Living area}\StringTok{\textasciigrave{}}\NormalTok{, }\AttributeTok{levels=}\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{1}\NormalTok{), }\AttributeTok{labels=}\FunctionTok{c}\NormalTok{(}\StringTok{"Rural"}\NormalTok{, }\StringTok{"Rural"}\NormalTok{, }\StringTok{"Urban"}\NormalTok{)))}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Area =} \FunctionTok{factor}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Living area}\StringTok{\textasciigrave{}}\NormalTok{, }\AttributeTok{levels=}\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{1}\NormalTok{), }
+                       \AttributeTok{labels=}\FunctionTok{c}\NormalTok{(}\StringTok{"Rural"}\NormalTok{, }\StringTok{"Rural"}\NormalTok{, }\StringTok{"Urban"}\NormalTok{)))}
 
 \FunctionTok{levels}\NormalTok{(example}\SpecialCharTok{$}\NormalTok{Area)}
 \end{Highlighting}
@@ -7627,7 +7411,8 @@ To illustrate the conversion from character to numeric, let's start with creatin
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{example }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}\AttributeTok{Numbers =} \FunctionTok{c}\NormalTok{(}\StringTok{"2"}\NormalTok{,}\StringTok{"4"}\NormalTok{,}\StringTok{"9"}\NormalTok{,}\StringTok{"6"}\NormalTok{,}\StringTok{"8"}\NormalTok{,}\StringTok{"12"}\NormalTok{,}\StringTok{"10"}\NormalTok{),}
-                  \AttributeTok{Text =} \FunctionTok{c}\NormalTok{(}\StringTok{"Data"}\NormalTok{,}\StringTok{"Science"}\NormalTok{,}\StringTok{"4"}\NormalTok{,}\StringTok{"Sensory"}\NormalTok{,}\StringTok{"and"}\NormalTok{,}\StringTok{"Consumer"}\NormalTok{,}\StringTok{"Research"}\NormalTok{))}
+                  \AttributeTok{Text =} \FunctionTok{c}\NormalTok{(}\StringTok{"Data"}\NormalTok{,}\StringTok{"Science"}\NormalTok{,}\StringTok{"4"}\NormalTok{,}\StringTok{"Sensory"}\NormalTok{,}
+                           \StringTok{"and"}\NormalTok{,}\StringTok{"Consumer"}\NormalTok{,}\StringTok{"Research"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -7782,7 +7567,8 @@ For both these solutions, the data should be stored in the long and thin form, w
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{senso\_aov\_data }\OtherTok{\textless{}{-}}\NormalTok{ sensory }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{pivot\_longer}\NormalTok{(Shiny}\SpecialCharTok{:}\NormalTok{Melting, }\AttributeTok{names\_to =} \StringTok{"Attribute"}\NormalTok{, }\AttributeTok{values\_to =} \StringTok{"Score"}\NormalTok{)}
+  \FunctionTok{pivot\_longer}\NormalTok{(Shiny}\SpecialCharTok{:}\NormalTok{Melting, }
+               \AttributeTok{names\_to =} \StringTok{"Attribute"}\NormalTok{, }\AttributeTok{values\_to =} \StringTok{"Score"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -7873,11 +7659,15 @@ Rather than showing the results in a table, let's visualize them graphically as 
 \begin{Highlighting}[]
 \NormalTok{res\_aov }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Signif =} \FunctionTok{ifelse}\NormalTok{(p.value }\SpecialCharTok{\textless{}=} \FloatTok{0.05}\NormalTok{, }\StringTok{"Signif."}\NormalTok{, }\StringTok{"Not Signif."}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Signif =} \FunctionTok{factor}\NormalTok{(Signif, }\AttributeTok{levels =} \FunctionTok{c}\NormalTok{(}\StringTok{"Signif."}\NormalTok{, }\StringTok{"Not Signif."}\NormalTok{))) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{reorder}\NormalTok{(Attribute, statistic), }\AttributeTok{y =}\NormalTok{ statistic, }\AttributeTok{fill =}\NormalTok{ Signif)) }\SpecialCharTok{+}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Signif =} \FunctionTok{factor}\NormalTok{(Signif, }
+                         \AttributeTok{levels =} \FunctionTok{c}\NormalTok{(}\StringTok{"Signif."}\NormalTok{, }\StringTok{"Not Signif."}\NormalTok{))) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\FunctionTok{reorder}\NormalTok{(Attribute, statistic), }\AttributeTok{y=}\NormalTok{statistic, }
+             \AttributeTok{fill=}\NormalTok{Signif)) }\SpecialCharTok{+}
   \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{scale\_fill\_manual}\NormalTok{(}\AttributeTok{values =} \FunctionTok{c}\NormalTok{(}\StringTok{"Signif."} \OtherTok{=} \StringTok{"forestgreen"}\NormalTok{, }\StringTok{"Not Signif."} \OtherTok{=} \StringTok{"orangered2"}\NormalTok{)) }\SpecialCharTok{+}
-  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Sensory Attributes"}\NormalTok{, }\StringTok{"(The attributes are sorted according to product{-}wise F{-}values)"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_fill\_manual}\NormalTok{(}\AttributeTok{values =} \FunctionTok{c}\NormalTok{(}\StringTok{"Signif."} \OtherTok{=} \StringTok{"forestgreen"}\NormalTok{, }
+                               \StringTok{"Not Signif."} \OtherTok{=} \StringTok{"orangered2"}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Sensory Attributes"}\NormalTok{, }
+          \StringTok{"(The attributes are sorted based on F{-}values (product))"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{theme\_bw}\NormalTok{() }\SpecialCharTok{+}
   \FunctionTok{xlab}\NormalTok{(}\StringTok{""}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{ylab}\NormalTok{(}\StringTok{"F{-}values"}\NormalTok{) }\SpecialCharTok{+}
@@ -7885,7 +7675,7 @@ Rather than showing the results in a table, let's visualize them graphically as 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-251-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-255-1.pdf}
 
 It appears that the evaluated biscuits differ the most (top 5) for \texttt{Initial\ hardness}, \texttt{Shiny}, \texttt{Dairy\ flavor}, \texttt{External\ color\ intensity}, and \texttt{Thickness}.
 
@@ -7898,9 +7688,11 @@ Once the significant differences have been checked, a follow-up analysis consist
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{senso\_mean }\OtherTok{\textless{}{-}}\NormalTok{ sensory }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{pivot\_longer}\NormalTok{(Shiny}\SpecialCharTok{:}\NormalTok{Melting, }\AttributeTok{names\_to =} \StringTok{"Attribute"}\NormalTok{, }\AttributeTok{values\_to =} \StringTok{"Score"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{pivot\_longer}\NormalTok{(Shiny}\SpecialCharTok{:}\NormalTok{Melting, }
+               \AttributeTok{names\_to =} \StringTok{"Attribute"}\NormalTok{, }\AttributeTok{values\_to =} \StringTok{"Score"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
 \NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Judge) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{pivot\_wider}\NormalTok{(}\AttributeTok{names\_from =}\NormalTok{ Attribute, }\AttributeTok{values\_from =}\NormalTok{ Score, }\AttributeTok{values\_fn =}\NormalTok{ mean)}
+  \FunctionTok{pivot\_wider}\NormalTok{(}\AttributeTok{names\_from =}\NormalTok{ Attribute, }\AttributeTok{values\_from =}\NormalTok{ Score, }
+              \AttributeTok{values\_fn =}\NormalTok{ mean)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -7939,7 +7731,7 @@ To illustrate this, let's reproduce the product map by coloring the products usi
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-256-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-260-1.pdf}
 
 Here, \texttt{repel=TRUE} uses \texttt{geom\_text\_repel()} from \texttt{\{ggrepel\}} (rather than \texttt{geom\_text()} from \texttt{\{ggplot2\}}) to avoid having labels overlapping.
 
@@ -7992,7 +7784,8 @@ Let's start with importing this data set. The importation is done in multiple st
   \FunctionTok{inner\_join}\NormalTok{(demo\_var, }\AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"Question"} \OtherTok{=} \StringTok{"Code"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
 \NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Question)}
 
-\NormalTok{demographic }\OtherTok{\textless{}{-}} \FunctionTok{read\_xlsx}\NormalTok{(file\_path, }\AttributeTok{sheet =} \StringTok{"Data"}\NormalTok{, }\AttributeTok{skip =} \DecValTok{1}\NormalTok{, }\AttributeTok{col\_names =} \FunctionTok{unlist}\NormalTok{(demo\_var}\SpecialCharTok{$}\NormalTok{Name))}
+\NormalTok{demographic }\OtherTok{\textless{}{-}} \FunctionTok{read\_xlsx}\NormalTok{(file\_path, }\AttributeTok{sheet =} \StringTok{"Data"}\NormalTok{, }\AttributeTok{skip =} \DecValTok{1}\NormalTok{, }
+                         \AttributeTok{col\_names =} \FunctionTok{unlist}\NormalTok{(demo\_var}\SpecialCharTok{$}\NormalTok{Name))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -8012,9 +7805,12 @@ Once done, we can aggregate the results by \texttt{Question} and \texttt{Levels}
 \FunctionTok{library}\NormalTok{(formattable)}
 
 \NormalTok{demog\_reduced }\OtherTok{\textless{}{-}}\NormalTok{ demographic }\SpecialCharTok{\%\textgreater{}\%}
-\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Judge, }\StringTok{\textasciigrave{}}\AttributeTok{Living area}\StringTok{\textasciigrave{}}\NormalTok{, Housing, }\StringTok{\textasciigrave{}}\AttributeTok{Income range}\StringTok{\textasciigrave{}}\NormalTok{, }\StringTok{\textasciigrave{}}\AttributeTok{Occupation}\StringTok{\textasciigrave{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{pivot\_longer}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Judge, }\AttributeTok{names\_to =} \StringTok{"Question"}\NormalTok{, }\AttributeTok{values\_to =} \StringTok{"Response"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{inner\_join}\NormalTok{(demo\_lev, }\AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"Question"} \OtherTok{=} \StringTok{"Name"}\NormalTok{, }\StringTok{"Response"} \OtherTok{=} \StringTok{"Code"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Judge, }\StringTok{\textasciigrave{}}\AttributeTok{Living area}\StringTok{\textasciigrave{}}\NormalTok{, Housing, }
+                \StringTok{\textasciigrave{}}\AttributeTok{Income range}\StringTok{\textasciigrave{}}\NormalTok{, }\StringTok{\textasciigrave{}}\AttributeTok{Occupation}\StringTok{\textasciigrave{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{pivot\_longer}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Judge, }
+               \AttributeTok{names\_to =} \StringTok{"Question"}\NormalTok{, }\AttributeTok{values\_to =} \StringTok{"Response"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{inner\_join}\NormalTok{(demo\_lev, }\AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"Question"} \OtherTok{=} \StringTok{"Name"}\NormalTok{, }
+                              \StringTok{"Response"} \OtherTok{=} \StringTok{"Code"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{group\_by}\NormalTok{(Question, Levels) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{summarize}\NormalTok{(}\AttributeTok{N =} \FunctionTok{n}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Pct =} \FunctionTok{percent}\NormalTok{(N }\SpecialCharTok{/} \FunctionTok{sum}\NormalTok{(N), }\AttributeTok{digits =}\NormalTok{ 1L)) }\SpecialCharTok{\%\textgreater{}\%}
@@ -8049,28 +7845,28 @@ Histograms are a nice way to visualize proportions and to compare them over seve
 ## $Housing
 \end{verbatim}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-259-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-263-1.pdf}
 
 \begin{verbatim}
 ## 
 ## $`Income range`
 \end{verbatim}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-259-2.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-263-2.pdf}
 
 \begin{verbatim}
 ## 
 ## $`Living area`
 \end{verbatim}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-259-3.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-263-3.pdf}
 
 \begin{verbatim}
 ## 
 ## $Occupation
 \end{verbatim}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-259-4.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-263-4.pdf}
 
 \hypertarget{regex}{%
 \subsection{Eating behavior traits: TFEQ data}\label{regex}}
@@ -8124,7 +7920,8 @@ For each variable, let's create a frequency table. Although we could use already
     \FunctionTok{filter}\NormalTok{(Name }\SpecialCharTok{==}\NormalTok{ var)}
 
 \NormalTok{  res }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{\%\textgreater{}\%}
-    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Response =} \FunctionTok{factor}\NormalTok{(Response, }\AttributeTok{levels =}\NormalTok{ info}\SpecialCharTok{$}\NormalTok{Code, }\AttributeTok{labels =}\NormalTok{ info}\SpecialCharTok{$}\NormalTok{Levels)) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Response =} \FunctionTok{factor}\NormalTok{(Response, }\AttributeTok{levels =}\NormalTok{ info}\SpecialCharTok{$}\NormalTok{Code, }
+                             \AttributeTok{labels =}\NormalTok{ info}\SpecialCharTok{$}\NormalTok{Levels)) }\SpecialCharTok{\%\textgreater{}\%}
     \FunctionTok{arrange}\NormalTok{(Response) }\SpecialCharTok{\%\textgreater{}\%}
     \FunctionTok{group\_by}\NormalTok{(Response) }\SpecialCharTok{\%\textgreater{}\%}
     \FunctionTok{summarize}\NormalTok{(}\AttributeTok{N =} \FunctionTok{n}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%}
@@ -8147,7 +7944,8 @@ We then apply this function to each variable separately using \texttt{map()} aft
   \FunctionTok{map}\NormalTok{(myfreq, }\AttributeTok{info =}\NormalTok{ demo\_lev) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{enframe}\NormalTok{(}\AttributeTok{name =} \StringTok{"TFEQ"}\NormalTok{, }\AttributeTok{value =} \StringTok{"res"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{unnest}\NormalTok{(res) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{TFEQ =} \FunctionTok{factor}\NormalTok{(TFEQ, }\AttributeTok{levels =} \FunctionTok{unique}\NormalTok{(}\FunctionTok{str\_sort}\NormalTok{(.}\SpecialCharTok{$}\NormalTok{TFEQ, }\AttributeTok{numeric =} \ConstantTok{TRUE}\NormalTok{)))) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{TFEQ =} \FunctionTok{factor}\NormalTok{(TFEQ, }\AttributeTok{levels =} \FunctionTok{unique}\NormalTok{(}
+    \FunctionTok{str\_sort}\NormalTok{(.}\SpecialCharTok{$}\NormalTok{TFEQ, }\AttributeTok{numeric=}\ConstantTok{TRUE}\NormalTok{)))) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{arrange}\NormalTok{(TFEQ)}
 \end{Highlighting}
 \end{Shaded}
@@ -8172,7 +7970,7 @@ From this table, histograms representing the frequency distribution for each var
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-264-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-268-1.pdf}
 
 Structured questionnaires such as the TFEQ are very frequent in sensory and consumer science. They are used to measure individual patterns as diverse as personality traits, attitudes, food choice motives, engagement, social desirability bias, etc. Ultimately, the TFEQ questionnaire consists in a set of structured questions whose respective answers combine to provide a TFEQ score (actually, three scores, one for Disinhibition, one for Restriction and one for sensitivity to Hunger). This TFEQ scores translate into certain food behavior tendencies.
 
@@ -8212,7 +8010,9 @@ Since we need to evaluate each assessors' answer to the TFEQ questions, we creat
   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Factor =} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{str\_starts}\NormalTok{(.}\SpecialCharTok{$}\NormalTok{DHR, }\StringTok{"D"}\NormalTok{), }\StringTok{"Disinhibition"}\NormalTok{,}
     \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{str\_starts}\NormalTok{(.}\SpecialCharTok{$}\NormalTok{DHR, }\StringTok{"H"}\NormalTok{), }\StringTok{"Hunger"}\NormalTok{, }\StringTok{"Restriction"}\NormalTok{)}
 \NormalTok{  )) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Factor =} \FunctionTok{factor}\NormalTok{(Factor, }\AttributeTok{levels =} \FunctionTok{c}\NormalTok{(}\StringTok{"Restriction"}\NormalTok{, }\StringTok{"Disinhibition"}\NormalTok{, }\StringTok{"Hunger"}\NormalTok{)))}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Factor =} \FunctionTok{factor}\NormalTok{(Factor, }\AttributeTok{levels =} \FunctionTok{c}\NormalTok{(}\StringTok{"Restriction"}\NormalTok{, }
+                                            \StringTok{"Disinhibition"}\NormalTok{, }
+                                            \StringTok{"Hunger"}\NormalTok{)))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -8223,7 +8023,8 @@ Ultimately, we compute the TFEQ Score by summing across all \texttt{TFEQValue} p
 \NormalTok{TFEQ\_score }\OtherTok{\textless{}{-}}\NormalTok{ TFEQ\_coded }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{group\_by}\NormalTok{(Judge, Factor) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{summarize}\NormalTok{(}\AttributeTok{TFEQ =} \FunctionTok{sum}\NormalTok{(TFEQValue)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Judge =} \FunctionTok{factor}\NormalTok{(Judge, }\AttributeTok{levels =} \FunctionTok{unique}\NormalTok{(}\FunctionTok{str\_sort}\NormalTok{(.}\SpecialCharTok{$}\NormalTok{Judge, }\AttributeTok{numeric =} \ConstantTok{TRUE}\NormalTok{)))) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Judge =} \FunctionTok{factor}\NormalTok{(Judge, }\AttributeTok{levels =} \FunctionTok{unique}\NormalTok{(}
+    \FunctionTok{str\_sort}\NormalTok{(.}\SpecialCharTok{$}\NormalTok{Judge, }\AttributeTok{numeric =} \ConstantTok{TRUE}\NormalTok{)))) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{arrange}\NormalTok{(Judge) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{pivot\_wider}\NormalTok{(}\AttributeTok{names\_from =}\NormalTok{ Factor, }\AttributeTok{values\_from =}\NormalTok{ TFEQ) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Total =} \FunctionTok{sum}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{where}\NormalTok{(is.numeric))))}
@@ -8252,7 +8053,7 @@ Such results can then be visualized graphically, for instance by representing th
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-269-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-273-1.pdf}
 
 \hypertarget{tibble-use}{%
 \section{Consumer Data}\label{tibble-use}}
@@ -8339,41 +8140,42 @@ To further compare the liking assessment of the samples after the first bite and
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{list}\NormalTok{(}
-  \AttributeTok{Start =}\NormalTok{ liking\_start\_hsd }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{rename}\NormalTok{(}\AttributeTok{Liking =} \StringTok{\textasciigrave{}}\AttributeTok{1stbite\_liking}\StringTok{\textasciigrave{}}\NormalTok{),}
-  \AttributeTok{End =}\NormalTok{ liking\_end\_hsd }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{rename}\NormalTok{(}\AttributeTok{Liking =} \StringTok{\textasciigrave{}}\AttributeTok{after\_liking}\StringTok{\textasciigrave{}}\NormalTok{)}
-\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{list}\NormalTok{(}\AttributeTok{Start =}\NormalTok{ liking\_start\_hsd }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{rename}\NormalTok{(}\AttributeTok{Liking =} \StringTok{\textasciigrave{}}\AttributeTok{1stbite\_liking}\StringTok{\textasciigrave{}}\NormalTok{),}
+     \AttributeTok{End =}\NormalTok{ liking\_end\_hsd }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{rename}\NormalTok{(}\AttributeTok{Liking =} \StringTok{\textasciigrave{}}\AttributeTok{after\_liking}\StringTok{\textasciigrave{}}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{enframe}\NormalTok{(}\AttributeTok{name =} \StringTok{"Moment"}\NormalTok{, }\AttributeTok{value =} \StringTok{"res"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{unnest}\NormalTok{(res) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Moment =} \FunctionTok{factor}\NormalTok{(Moment, }\AttributeTok{levels =} \FunctionTok{c}\NormalTok{(}\StringTok{"Start"}\NormalTok{, }\StringTok{"End"}\NormalTok{))) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{reorder}\NormalTok{(Product, }\SpecialCharTok{{-}}\NormalTok{Liking), }\AttributeTok{y =}\NormalTok{ Liking, }\AttributeTok{fill =}\NormalTok{ Moment)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{, }\AttributeTok{position =} \StringTok{"dodge"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{xlab}\NormalTok{(}\StringTok{""}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Comparison of the liking scores at the start and at the end of the evaluation"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{reorder}\NormalTok{(Product, }\SpecialCharTok{{-}}\NormalTok{Liking), }\AttributeTok{y =}\NormalTok{ Liking, }\AttributeTok{fill =}\NormalTok{ Moment))}\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{, }\AttributeTok{position =} \StringTok{"dodge"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{xlab}\NormalTok{(}\StringTok{""}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Comparison of the liking scores (start vs. end evaluation)"}\NormalTok{)}\SpecialCharTok{+}
   \FunctionTok{theme\_bw}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-273-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-277-1.pdf}
 
 As can be seen, the pattern of liking scores across samples is indeed very stable across the evaluation, particularly in terms of rank. At the individual level, such linear relationship is also observed (here for the first 12 consumers):
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{consumer }\SpecialCharTok{\%\textgreater{}\%}
-\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Judge, Product, }\AttributeTok{Start =} \StringTok{\textasciigrave{}}\AttributeTok{1stbite\_liking}\StringTok{\textasciigrave{}}\NormalTok{, }\AttributeTok{End =} \StringTok{\textasciigrave{}}\AttributeTok{after\_liking}\StringTok{\textasciigrave{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Judge, Product, }\AttributeTok{Start =} \StringTok{\textasciigrave{}}\AttributeTok{1stbite\_liking}\StringTok{\textasciigrave{}}\NormalTok{, }
+                \AttributeTok{End =} \StringTok{\textasciigrave{}}\AttributeTok{after\_liking}\StringTok{\textasciigrave{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{filter}\NormalTok{(Judge }\SpecialCharTok{\%in\%} \FunctionTok{str\_c}\NormalTok{(}\StringTok{"J"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{12}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Judge =} \FunctionTok{factor}\NormalTok{(Judge, }\AttributeTok{levels =} \FunctionTok{unique}\NormalTok{(}\FunctionTok{str\_sort}\NormalTok{(.}\SpecialCharTok{$}\NormalTok{Judge, }\AttributeTok{numeric =} \ConstantTok{TRUE}\NormalTok{)))) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Judge =} \FunctionTok{factor}\NormalTok{(Judge, }\AttributeTok{levels =} \FunctionTok{unique}\NormalTok{(}
+    \FunctionTok{str\_sort}\NormalTok{(.}\SpecialCharTok{$}\NormalTok{Judge, }\AttributeTok{numeric =} \ConstantTok{TRUE}\NormalTok{)))) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Start, }\AttributeTok{y =}\NormalTok{ End)) }\SpecialCharTok{+}
   \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{pch =} \DecValTok{20}\NormalTok{, }\AttributeTok{cex =} \DecValTok{2}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"lm"}\NormalTok{, }\AttributeTok{formula =} \StringTok{"y\textasciitilde{}x"}\NormalTok{, }\AttributeTok{se =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{theme\_bw}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Overall Liking"}\NormalTok{, }\StringTok{"(Assessment after first bite vs. end of the tasting)"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Overall Liking"}\NormalTok{, }
+          \StringTok{"(Assessment after first bite vs. end of the tasting)"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{Judge)}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-274-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-278-1.pdf}
 
 \begin{quote}
 For your own curiosity, we invite you to re-create the same graph by comparing the Liking score at the end of the evaluation (\texttt{after\_liking}) with the liking score measured on the 9pt categorical scale (\texttt{end\_liking\ 9pt}), and to reflect on the results obtained. Are the consumers consistent in their evaluations?
@@ -8444,12 +8246,13 @@ Ultimately, the relationship between the liking score and the number of biscuits
   \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{pch =} \DecValTok{20}\NormalTok{, }\AttributeTok{cex =} \DecValTok{2}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"lm"}\NormalTok{, }\AttributeTok{formula =} \StringTok{"y\textasciitilde{}x"}\NormalTok{, }\AttributeTok{se =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{theme\_bw}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Number of Biscuits vs. Liking"}\NormalTok{, }\StringTok{"(Consumers with a significant (5\%) regression model are shown (ordered from the most to the least signif.)"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Number of Biscuits vs. Liking"}\NormalTok{, }
+          \StringTok{"Consumers with a signif. (5\%) regression model are shown."}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{Judge, }\AttributeTok{scales =} \StringTok{"free\_y"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-278-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-282-1.pdf}
 
 \hypertarget{combining-sensory-and-consumer-data}{%
 \section{Combining Sensory and Consumer Data}\label{combining-sensory-and-consumer-data}}
@@ -8476,7 +8279,8 @@ Such analysis is split in 3 steps:
 \begin{Highlighting}[]
 \NormalTok{consumer\_wide }\OtherTok{\textless{}{-}}\NormalTok{ consumer }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{separate}\NormalTok{(Product, }\AttributeTok{into =} \FunctionTok{c}\NormalTok{(}\StringTok{"P"}\NormalTok{, }\StringTok{"Number"}\NormalTok{), }\AttributeTok{sep =} \DecValTok{1}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Number =} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{nchar}\NormalTok{(Number) }\SpecialCharTok{==} \DecValTok{1}\NormalTok{, }\FunctionTok{str\_c}\NormalTok{(}\StringTok{"0"}\NormalTok{, Number), Number)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Number =} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{nchar}\NormalTok{(Number) }\SpecialCharTok{==} \DecValTok{1}\NormalTok{, }
+                         \FunctionTok{str\_c}\NormalTok{(}\StringTok{"0"}\NormalTok{, Number), Number)) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{unite}\NormalTok{(Product, P, Number, }\AttributeTok{sep =} \StringTok{""}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
 \NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Judge, Product, }\AttributeTok{Liking =} \StringTok{\textasciigrave{}}\AttributeTok{end\_liking 9pt}\StringTok{\textasciigrave{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Liking =} \DecValTok{10} \SpecialCharTok{{-}}\NormalTok{ Liking) }\SpecialCharTok{\%\textgreater{}\%}
@@ -8494,20 +8298,16 @@ Such analysis is split in 3 steps:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-279-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-283-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{fviz\_pca\_var}\NormalTok{(res\_mdpref, }\AttributeTok{label =} \StringTok{"quanti.sup"}\NormalTok{, }\AttributeTok{select.var =} \FunctionTok{list}\NormalTok{(}\AttributeTok{cos2 =} \FloatTok{0.5}\NormalTok{), }\AttributeTok{repel =} \ConstantTok{TRUE}\NormalTok{)}
+\FunctionTok{fviz\_pca\_var}\NormalTok{(res\_mdpref, }\AttributeTok{label =} \StringTok{"quanti.sup"}\NormalTok{, }
+             \AttributeTok{select.var =} \FunctionTok{list}\NormalTok{(}\AttributeTok{cos2 =} \FloatTok{0.5}\NormalTok{), }\AttributeTok{repel =} \ConstantTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-## Warning: ggrepel: 4 unlabeled data points (too many
-## overlaps). Consider increasing max.overlaps
-\end{verbatim}
-
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-279-2.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-283-2.pdf}
 
 As can be seen, the consumers are quite in agreement as all the black arrows are pointing in a similar direction.
 In overall, they seem to like biscuits that are sweet, with cereal flavor, and fatty/dairy flavor and odor, and dislike biscuits defined as astringent, dry in mouth, uneven and with dark external color.
@@ -8547,7 +8347,7 @@ The AHC is performed using the \texttt{hclust()} function and the \texttt{method
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-281-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-285-1.pdf}
 
 \begin{quote}
 An interesting option to visualize clusters and proposed by \texttt{fviz\_dend()} is the \emph{phologenic} representation (\texttt{type="phylogenic"}). We invite you to give it a try to see how it represents the clusters as an alternative to the classical dendrogram tree.
@@ -8581,7 +8381,8 @@ Lastly, we compare visually the preference patterns between clusters by represen
 \begin{Highlighting}[]
 \NormalTok{mean\_cluster }\OtherTok{\textless{}{-}}\NormalTok{ consumer }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{separate}\NormalTok{(Product, }\AttributeTok{into =} \FunctionTok{c}\NormalTok{(}\StringTok{"P"}\NormalTok{, }\StringTok{"Number"}\NormalTok{), }\AttributeTok{sep =} \DecValTok{1}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Number =} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{nchar}\NormalTok{(Number) }\SpecialCharTok{==} \DecValTok{1}\NormalTok{, }\FunctionTok{str\_c}\NormalTok{(}\StringTok{"0"}\NormalTok{, Number), Number)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Number =} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{nchar}\NormalTok{(Number) }\SpecialCharTok{==} \DecValTok{1}\NormalTok{, }
+                         \FunctionTok{str\_c}\NormalTok{(}\StringTok{"0"}\NormalTok{, Number), Number)) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{unite}\NormalTok{(Product, P, Number, }\AttributeTok{sep =} \StringTok{""}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
 \NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Judge, Product, }\AttributeTok{Liking =} \StringTok{\textasciigrave{}}\AttributeTok{end\_liking 9pt}\StringTok{\textasciigrave{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Liking =} \DecValTok{10} \SpecialCharTok{{-}}\NormalTok{ Liking) }\SpecialCharTok{\%\textgreater{}\%}
@@ -8590,27 +8391,20 @@ Lastly, we compare visually the preference patterns between clusters by represen
   \FunctionTok{summarize}\NormalTok{(}\AttributeTok{Liking =} \FunctionTok{mean}\NormalTok{(Liking), }\AttributeTok{N =} \FunctionTok{n}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Cluster =} \FunctionTok{str\_c}\NormalTok{(Cluster, }\StringTok{" ("}\NormalTok{, N, }\StringTok{")"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{ungroup}\NormalTok{()}
-\end{Highlighting}
-\end{Shaded}
 
-\begin{verbatim}
-## `summarise()` has grouped output by 'Product'. You can
-## override using the `.groups` argument.
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{ggplot}\NormalTok{(mean\_cluster, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Product, }\AttributeTok{y =}\NormalTok{ Liking, }\AttributeTok{colour =}\NormalTok{ Cluster, }\AttributeTok{group =}\NormalTok{ Cluster)) }\SpecialCharTok{+}
+\FunctionTok{ggplot}\NormalTok{(mean\_cluster, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Product, }\AttributeTok{y =}\NormalTok{ Liking, }
+                         \AttributeTok{colour =}\NormalTok{ Cluster, }\AttributeTok{group =}\NormalTok{ Cluster)) }\SpecialCharTok{+}
   \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{pch =} \DecValTok{20}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{geom\_line}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{group =}\NormalTok{ Cluster), }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{xlab}\NormalTok{(}\StringTok{""}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{name =} \StringTok{"Average Liking Score"}\NormalTok{, }\AttributeTok{limits =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{9}\NormalTok{), }\AttributeTok{breaks =} \FunctionTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{9}\NormalTok{, }\DecValTok{1}\NormalTok{)) }\SpecialCharTok{+}
-  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Cluster differences in the appreciation of the Products (using hclust)"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{name =} \StringTok{"Average Liking Score"}\NormalTok{, }
+                     \AttributeTok{limits =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{9}\NormalTok{), }\AttributeTok{breaks =} \FunctionTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{9}\NormalTok{, }\DecValTok{1}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Cluster differences in the appreciation of the Products"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{theme\_bw}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-283-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-287-1.pdf}
 
 It appears that cluster 1 (74 consumers) particularly likes \texttt{P10}, \texttt{P01}, and \texttt{P05}, and has a fairly flat liking pattern otherwise. On the other hand, the cluster 2 (33 consumers) expressed strong rejections towards \texttt{P04} and \texttt{P08}, and like \texttt{P10} and \texttt{P01} the most.
 
@@ -8636,7 +8430,8 @@ Let's start by evaluating the simplest relationship between the sensory attribut
 \NormalTok{data\_cor }\OtherTok{\textless{}{-}}\NormalTok{ mean\_cluster }\SpecialCharTok{\%\textgreater{}\%}
 \NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{N) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{pivot\_wider}\NormalTok{(}\AttributeTok{names\_from =}\NormalTok{ Cluster, }\AttributeTok{values\_from =}\NormalTok{ Liking) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{inner\_join}\NormalTok{(senso\_mean }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(Protein, Fiber)), }\AttributeTok{by =} \StringTok{"Product"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{inner\_join}\NormalTok{(senso\_mean }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{               dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(Protein,Fiber)), }\AttributeTok{by=}\StringTok{"Product"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{as.data.frame}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{column\_to\_rownames}\NormalTok{(}\AttributeTok{var =} \StringTok{"Product"}\NormalTok{)}
 
@@ -8650,11 +8445,13 @@ Various packages can be used to visualize these correlations. We opt here for \t
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(ggcorrplot)}
 \NormalTok{res\_cor\_pmat }\OtherTok{\textless{}{-}} \FunctionTok{cor\_pmat}\NormalTok{(data\_cor)}
-\FunctionTok{ggcorrplot}\NormalTok{(res\_cor, }\AttributeTok{type =} \StringTok{"full"}\NormalTok{, }\AttributeTok{p.mat =}\NormalTok{ res\_cor\_pmat, }\AttributeTok{sig.level =} \FloatTok{0.05}\NormalTok{, }\AttributeTok{insig =} \StringTok{"blank"}\NormalTok{, }\AttributeTok{lab =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{lab\_size =} \DecValTok{2}\NormalTok{)}
+\FunctionTok{ggcorrplot}\NormalTok{(res\_cor, }\AttributeTok{type =} \StringTok{"full"}\NormalTok{, }\AttributeTok{p.mat =}\NormalTok{ res\_cor\_pmat, }
+           \AttributeTok{sig.level =} \FloatTok{0.05}\NormalTok{, }\AttributeTok{insig =} \StringTok{"blank"}\NormalTok{, }
+           \AttributeTok{lab =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{lab\_size =} \FloatTok{1.5}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-285-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-289-1.pdf}
 
 The average liking scores for cluster 1 (defined as \texttt{1\ (74)}) are positively correlated with \texttt{Overall\ odor\ intensity}, \texttt{Fatty\ odor}, \texttt{Cereal\ flavor}, \texttt{Fatty\ flavor}, \texttt{Dairy\ flavor}, \texttt{Overall\ flavor\ persistence}, \texttt{Salty}, \texttt{Sweet}, \texttt{Warming}, \texttt{Fatty\ in\ mouth}, and \texttt{Melting}. They are also negatively correlated to \texttt{External\ color\ intensity}, \texttt{Astringent}, and \texttt{Dry\ in\ mouth}.
 Finally, it can be noted that the correlation between clusters is high with a value of 0.72.
@@ -8671,9 +8468,13 @@ Let's start by combining the sensory data to the average liking score per produc
 \NormalTok{data\_reg }\OtherTok{\textless{}{-}}\NormalTok{ mean\_cluster }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{filter}\NormalTok{(Cluster }\SpecialCharTok{==} \StringTok{"1 (74)"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
 \NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{N) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{inner\_join}\NormalTok{(senso\_mean }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(Protein, Fiber)), }\AttributeTok{by =} \StringTok{"Product"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{pivot\_longer}\NormalTok{(Shiny}\SpecialCharTok{:}\NormalTok{Melting, }\AttributeTok{names\_to =} \StringTok{"Attribute"}\NormalTok{, }\AttributeTok{values\_to =} \StringTok{"Score"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Attribute =} \FunctionTok{factor}\NormalTok{(Attribute, }\AttributeTok{levels =} \FunctionTok{colnames}\NormalTok{(senso\_mean)[}\DecValTok{4}\SpecialCharTok{:}\FunctionTok{ncol}\NormalTok{(senso\_mean)]))}
+  \FunctionTok{inner\_join}\NormalTok{(senso\_mean }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{               dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(Protein, Fiber)), }\AttributeTok{by =} \StringTok{"Product"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{pivot\_longer}\NormalTok{(Shiny}\SpecialCharTok{:}\NormalTok{Melting, }
+               \AttributeTok{names\_to =} \StringTok{"Attribute"}\NormalTok{, }\AttributeTok{values\_to =} \StringTok{"Score"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Attribute =} 
+           \FunctionTok{factor}\NormalTok{(Attribute, }
+                  \AttributeTok{levels=}\FunctionTok{colnames}\NormalTok{(senso\_mean)[}\DecValTok{4}\SpecialCharTok{:}\FunctionTok{ncol}\NormalTok{(senso\_mean)]))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -8690,10 +8491,8 @@ For its concision, we opt for the second option.
 \begin{Highlighting}[]
 \NormalTok{res\_reg }\OtherTok{\textless{}{-}}\NormalTok{ data\_reg }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{nest\_by}\NormalTok{(Attribute) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}
-    \AttributeTok{lin\_mod =} \FunctionTok{list}\NormalTok{(}\FunctionTok{lm}\NormalTok{(Liking }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Score, }\AttributeTok{data =}\NormalTok{ data)),}
-    \AttributeTok{quad\_mod =} \FunctionTok{list}\NormalTok{(}\FunctionTok{lm}\NormalTok{(Liking }\SpecialCharTok{\textasciitilde{}} \FunctionTok{poly}\NormalTok{(Score, }\DecValTok{2}\NormalTok{), }\AttributeTok{data =}\NormalTok{ data))}
-\NormalTok{  )}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{lin\_mod =} \FunctionTok{list}\NormalTok{(}\FunctionTok{lm}\NormalTok{(Liking }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Score, }\AttributeTok{data=}\NormalTok{data)),}
+         \AttributeTok{quad\_mod =} \FunctionTok{list}\NormalTok{(}\FunctionTok{lm}\NormalTok{(Liking }\SpecialCharTok{\textasciitilde{}} \FunctionTok{poly}\NormalTok{(Score, }\DecValTok{2}\NormalTok{), }\AttributeTok{data=}\NormalTok{data)))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -8750,13 +8549,15 @@ We apply this function to our data by applying to each attribute (here we set \t
 \begin{Highlighting}[]
 \NormalTok{p\_smooth }\OtherTok{\textless{}{-}} \FunctionTok{by}\NormalTok{(}
 \NormalTok{  df, df}\SpecialCharTok{$}\NormalTok{Attribute,}
-  \ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{data =}\NormalTok{ x, }\AttributeTok{method =}\NormalTok{ lm, }\AttributeTok{formula =} \FunctionTok{lm.mod}\NormalTok{(x, }\AttributeTok{quad =}\NormalTok{ quad), }\AttributeTok{se =} \ConstantTok{FALSE}\NormalTok{)}
+  \ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{data =}\NormalTok{ x, }\AttributeTok{method =}\NormalTok{ lm, }
+                          \AttributeTok{formula =} \FunctionTok{lm.mod}\NormalTok{(x, }\AttributeTok{quad =}\NormalTok{ quad), }
+                          \AttributeTok{se =} \ConstantTok{FALSE}\NormalTok{)}
 \NormalTok{)}
 \NormalTok{p }\SpecialCharTok{+}\NormalTok{ p\_smooth}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-291-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-295-1.pdf}
 
 All attributes except \texttt{Astringent} are linearly linked to liking. For \texttt{Astringent}, the curvature is U-shaped: this does not show an effect of saturation as it would have been represented as an inverted U-shape. Although the quadratic effect shows a better fit than the linear effect, having a linear effect would have been a good predictor as well in this situation.
 
@@ -8785,11 +8586,13 @@ Since \texttt{carto()} requires matrix or data frame with row names for the anal
   \FunctionTok{column\_to\_rownames}\NormalTok{(}\AttributeTok{var =} \StringTok{"Product"}\NormalTok{)}
 
 \FunctionTok{library}\NormalTok{(SensoMineR)}
-\NormalTok{PrefMap }\OtherTok{\textless{}{-}} \FunctionTok{carto}\NormalTok{(}\AttributeTok{Mat =}\NormalTok{ senso, }\AttributeTok{MatH =}\NormalTok{ consu, }\AttributeTok{regmod =} \DecValTok{1}\NormalTok{, }\AttributeTok{graph.tree =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{graph.corr =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{graph.carto =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{PrefMap }\OtherTok{\textless{}{-}} \FunctionTok{carto}\NormalTok{(}\AttributeTok{Mat =}\NormalTok{ senso, }\AttributeTok{MatH =}\NormalTok{ consu, }\AttributeTok{regmod =} \DecValTok{1}\NormalTok{, }
+                 \AttributeTok{graph.tree =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{graph.corr =} \ConstantTok{FALSE}\NormalTok{, }
+                 \AttributeTok{graph.carto =} \ConstantTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-292-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-296-1.pdf}
 
 From this map, we can see that the optimal area (dark red) is located on the positive side of dimension 1, between \texttt{P01}, \texttt{P05}, and \texttt{P10} (as expected by the liking score).
 
@@ -8819,10 +8622,12 @@ Let's start with preparing the data by transforming everything back into a tibbl
 \NormalTok{senso\_sup }\OtherTok{\textless{}{-}}\NormalTok{ senso\_pca}\SpecialCharTok{$}\NormalTok{ind.sup}\SpecialCharTok{$}\NormalTok{coord }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{as\_tibble}\NormalTok{(}\AttributeTok{rownames =} \StringTok{"Product"}\NormalTok{)}
 
-\FunctionTok{dimnames}\NormalTok{(PrefMap}\SpecialCharTok{$}\NormalTok{nb.depasse) }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}\FunctionTok{round}\NormalTok{(PrefMap}\SpecialCharTok{$}\NormalTok{f1, }\DecValTok{2}\NormalTok{), }\FunctionTok{round}\NormalTok{(PrefMap}\SpecialCharTok{$}\NormalTok{f2, }\DecValTok{2}\NormalTok{))}
+\FunctionTok{dimnames}\NormalTok{(PrefMap}\SpecialCharTok{$}\NormalTok{nb.depasse) }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}\FunctionTok{round}\NormalTok{(PrefMap}\SpecialCharTok{$}\NormalTok{f1, }\DecValTok{2}\NormalTok{), }
+                                     \FunctionTok{round}\NormalTok{(PrefMap}\SpecialCharTok{$}\NormalTok{f2, }\DecValTok{2}\NormalTok{))}
 \NormalTok{PrefMap\_plot }\OtherTok{\textless{}{-}}\NormalTok{ PrefMap}\SpecialCharTok{$}\NormalTok{nb.depasse }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{as\_tibble}\NormalTok{(}\AttributeTok{rownames =} \StringTok{"Dim1"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{pivot\_longer}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Dim1, }\AttributeTok{names\_to =} \StringTok{"Dim2"}\NormalTok{, }\AttributeTok{values\_to =} \StringTok{"Acceptance (\%)"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{pivot\_longer}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Dim1, }
+               \AttributeTok{names\_to =} \StringTok{"Dim2"}\NormalTok{, }\AttributeTok{values\_to =} \StringTok{"Acceptance (\%)"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{mutate}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{where}\NormalTok{(is.character), as.numeric))}
 \end{Highlighting}
 \end{Shaded}
@@ -8832,24 +8637,36 @@ To build the plot, different layers involving different source of data (\texttt{
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{geom\_tile}\NormalTok{(}\AttributeTok{data =}\NormalTok{ PrefMap\_plot, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Dim1, }\AttributeTok{y =}\NormalTok{ Dim2, }\AttributeTok{fill =} \StringTok{\textasciigrave{}}\AttributeTok{Acceptance (\%)}\StringTok{\textasciigrave{}}\NormalTok{, }\AttributeTok{color =} \StringTok{\textasciigrave{}}\AttributeTok{Acceptance (\%)}\StringTok{\textasciigrave{}}\NormalTok{)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_contour}\NormalTok{(}\AttributeTok{data =}\NormalTok{ PrefMap\_plot, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Dim1, }\AttributeTok{y =}\NormalTok{ Dim2, }\AttributeTok{z =} \StringTok{\textasciigrave{}}\AttributeTok{Acceptance (\%)}\StringTok{\textasciigrave{}}\NormalTok{), }\AttributeTok{breaks =} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{100}\NormalTok{, }\DecValTok{10}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_tile}\NormalTok{(}\AttributeTok{data =}\NormalTok{ PrefMap\_plot, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Dim1, }\AttributeTok{y =}\NormalTok{ Dim2, }
+                                     \AttributeTok{fill =} \StringTok{\textasciigrave{}}\AttributeTok{Acceptance (\%)}\StringTok{\textasciigrave{}}\NormalTok{, }
+                                     \AttributeTok{color =} \StringTok{\textasciigrave{}}\AttributeTok{Acceptance (\%)}\StringTok{\textasciigrave{}}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_contour}\NormalTok{(}\AttributeTok{data =}\NormalTok{ PrefMap\_plot, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Dim1, }\AttributeTok{y =}\NormalTok{ Dim2, }
+                                        \AttributeTok{z =} \StringTok{\textasciigrave{}}\AttributeTok{Acceptance (\%)}\StringTok{\textasciigrave{}}\NormalTok{), }
+               \AttributeTok{breaks =} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{100}\NormalTok{, }\DecValTok{10}\NormalTok{)) }\SpecialCharTok{+}
   \FunctionTok{geom\_hline}\NormalTok{(}\AttributeTok{yintercept =} \DecValTok{0}\NormalTok{, }\AttributeTok{lty =} \DecValTok{2}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{geom\_vline}\NormalTok{(}\AttributeTok{xintercept =} \DecValTok{0}\NormalTok{, }\AttributeTok{lty =} \DecValTok{2}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{data =}\NormalTok{ senso, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Dim}\FloatTok{.1}\NormalTok{, }\AttributeTok{y =}\NormalTok{ Dim}\FloatTok{.2}\NormalTok{), }\AttributeTok{pch =} \DecValTok{20}\NormalTok{, }\AttributeTok{cex =} \DecValTok{3}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_text\_repel}\NormalTok{(}\AttributeTok{data =}\NormalTok{ senso, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Dim}\FloatTok{.1}\NormalTok{, }\AttributeTok{y =}\NormalTok{ Dim}\FloatTok{.2}\NormalTok{, }\AttributeTok{label =}\NormalTok{ Product)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{data =}\NormalTok{ senso\_sup, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Dim}\FloatTok{.1}\NormalTok{, }\AttributeTok{y =}\NormalTok{ Dim}\FloatTok{.2}\NormalTok{), }\AttributeTok{pch =} \DecValTok{20}\NormalTok{, }\AttributeTok{col =} \StringTok{"white"}\NormalTok{, }\AttributeTok{cex =} \DecValTok{3}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_text\_repel}\NormalTok{(}\AttributeTok{data =}\NormalTok{ senso\_sup, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Dim}\FloatTok{.1}\NormalTok{, }\AttributeTok{y =}\NormalTok{ Dim}\FloatTok{.2}\NormalTok{, }\AttributeTok{label =}\NormalTok{ Product), }\AttributeTok{col =} \StringTok{"white"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{scale\_fill\_gradient2}\NormalTok{(}\AttributeTok{low =} \StringTok{"blue"}\NormalTok{, }\AttributeTok{mid =} \StringTok{"white"}\NormalTok{, }\AttributeTok{high =} \StringTok{"red"}\NormalTok{, }\AttributeTok{midpoint =} \DecValTok{50}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{scale\_color\_gradient2}\NormalTok{(}\AttributeTok{low =} \StringTok{"blue"}\NormalTok{, }\AttributeTok{mid =} \StringTok{"white"}\NormalTok{, }\AttributeTok{high =} \StringTok{"red"}\NormalTok{, }\AttributeTok{midpoint =} \DecValTok{50}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{data =}\NormalTok{ senso, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Dim}\FloatTok{.1}\NormalTok{, }\AttributeTok{y =}\NormalTok{ Dim}\FloatTok{.2}\NormalTok{), }
+             \AttributeTok{pch =} \DecValTok{20}\NormalTok{, }\AttributeTok{cex =} \DecValTok{3}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_text\_repel}\NormalTok{(}\AttributeTok{data =}\NormalTok{ senso, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Dim}\FloatTok{.1}\NormalTok{, }\AttributeTok{y =}\NormalTok{ Dim}\FloatTok{.2}\NormalTok{, }
+                                    \AttributeTok{label =}\NormalTok{ Product)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{data =}\NormalTok{ senso\_sup, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Dim}\FloatTok{.1}\NormalTok{, }\AttributeTok{y =}\NormalTok{ Dim}\FloatTok{.2}\NormalTok{), }
+             \AttributeTok{pch =} \DecValTok{20}\NormalTok{, }\AttributeTok{col =} \StringTok{"white"}\NormalTok{, }\AttributeTok{cex =} \DecValTok{3}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_text\_repel}\NormalTok{(}\AttributeTok{data =}\NormalTok{ senso\_sup, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Dim}\FloatTok{.1}\NormalTok{, }\AttributeTok{y =}\NormalTok{ Dim}\FloatTok{.2}\NormalTok{, }
+                                        \AttributeTok{label =}\NormalTok{ Product), }
+                  \AttributeTok{col =} \StringTok{"white"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_fill\_gradient2}\NormalTok{(}\AttributeTok{low =} \StringTok{"blue"}\NormalTok{, }\AttributeTok{mid =} \StringTok{"white"}\NormalTok{, }\AttributeTok{high =} \StringTok{"red"}\NormalTok{, }
+                       \AttributeTok{midpoint =} \DecValTok{50}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_color\_gradient2}\NormalTok{(}\AttributeTok{low =} \StringTok{"blue"}\NormalTok{, }\AttributeTok{mid =} \StringTok{"white"}\NormalTok{, }\AttributeTok{high =} \StringTok{"red"}\NormalTok{, }
+                        \AttributeTok{midpoint =} \DecValTok{50}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{xlab}\NormalTok{(}\FunctionTok{str\_c}\NormalTok{(}\StringTok{"Dimension 1("}\NormalTok{, }\FunctionTok{round}\NormalTok{(senso\_pca}\SpecialCharTok{$}\NormalTok{eig[}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{], }\DecValTok{1}\NormalTok{), }\StringTok{"\%)"}\NormalTok{)) }\SpecialCharTok{+}
   \FunctionTok{ylab}\NormalTok{(}\FunctionTok{str\_c}\NormalTok{(}\StringTok{"Dimension 2("}\NormalTok{, }\FunctionTok{round}\NormalTok{(senso\_pca}\SpecialCharTok{$}\NormalTok{eig[}\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{], }\DecValTok{1}\NormalTok{), }\StringTok{"\%)"}\NormalTok{)) }\SpecialCharTok{+}
-  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"External Preference Mapping applied to the biscuits data"}\NormalTok{, }\StringTok{"(The PrefMap is based on the quadratic model)"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"External Preference Mapping applied to the biscuits data"}\NormalTok{, }
+          \StringTok{"(The PrefMap is based on the quadratic model)"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{theme\_bw}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-294-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-298-1.pdf}
 
 As can be seen, \texttt{POpt} is quite far from the optimal area suggested by the PrefMap. This suggests that prototypes with higher success chances could be developed.
 
@@ -8980,134 +8797,6 @@ Let's picture a situation where the R\&D team has been developing multiple trial
 \end{figure}
 
 We won't go deep into the interpretation since it's not the focus of this example, but rather point out the approach we would recommend for each type of audience as shown in the Table \ref{tab:summarytable1}).
-
-\providecommand{\docline}[3]{\noalign{\global\setlength{\arrayrulewidth}{#1}}\arrayrulecolor[HTML]{#2}\cline{#3}}
-
-\setlength{\tabcolsep}{0pt}
-
-\renewcommand*{\arraystretch}{1.5}
-
-\begin{longtable}[c]{|p{2.61in}|p{9.13in}|p{13.68in}|p{7.87in}}
-
-\caption{\textcolor[HTML]{000000}{\fontsize{11}{13}\selectfont{\global\setmainfont{Arial}{Exemplification\ of\ the\ approach\ for\ each\ type\ of\ audience.}}}}\label{tab:summarytable1}\\
-
-\hhline{>{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}-}
-
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 2.61in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{\textbf{Topics}}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 9.13in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{\textbf{Technical\ Audience}}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 13.68in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{\textbf{Management\ Audience}}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 7.87in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{\textbf{General\ Audience}}}}} \\
-
-\hhline{>{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}-}\endhead
-
-
-
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 2.61in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{\textbf{Context/Background\ Information}}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 9.13in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{The\ objective\ of\ the\ study,\ including\ general\ and\ specific\ objectives}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 13.68in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{The\ level\ of\ information\ is\ somewhere\ between\ the\ Technical\ Audience\ and\ General\ Audience.}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 7.87in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{An\ overall\ and\ succinct\ description\ of\ the\ general\ objective\ of\ the\ study,\ samples\ tested,\ and\ type\ of\ test\ performed}}}} \\
-
-
-
-
-
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 2.61in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{\textbf{}}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 9.13in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{Information\ on\ the\ design\ of\ the\ experiment}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 13.68in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{In\ the\ case\ of\ the\ management\ audience,\ it\ is\ recommended\ some\ level\ of\ details\ you\ deem\ important\ and\ the\ use\ of\ technical\ language.\ Also,\ be\ prepared\ to\ show\ or\ discuss\ a\ deeper\ level\ of\ information\ as\ requested}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 7.87in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{}}}} \\
-
-
-
-
-
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 2.61in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{\textbf{}}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 9.13in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{How\ samples\ were\ selected\ or\ screened\ for\ the\ study,\ including\ a\ detailed\ description\ of\ each\ sample}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 13.68in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{In\ the\ case\ of\ an\ executive\ audience,\ the\ level\ of\ information\ tends\ to\ be\ closer\ to\ the\ general\ audience}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 7.87in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{}}}} \\
-
-
-
-
-
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 2.61in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{\textbf{}}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 9.13in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{Details\ about\ the\ panel\ such\ as\ number\ of\ panelists,\ level\ of\ training,\ and\ how\ panelists\ were\ trained\ for\ the\ attributes\ evaluated}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 13.68in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 7.87in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{}}}} \\
-
-
-
-
-
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 2.61in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{\textbf{}}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 9.13in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{Details\ about\ the\ test,\ how\ attributes\ were\ defined,\ and\ how\ and\ where\ samples\ were\ evaluated}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 13.68in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 7.87in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{}}}} \\
-
-\hhline{>{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=1pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=1pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=1pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=1pt}-}
-
-
-
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 2.61in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{\textbf{Data\ Exploration}}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 9.13in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{It\ may\ be\ important\ to\ show/mention\ the\ panel\ performance\ evaluation}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 13.68in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 7.87in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{It\ is\ not\ recommended\ to\ share\ the\ data\ exploration\ and\ analysis\ done\ before\ the\ PCA.}}}} \\
-
-
-
-
-
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 2.61in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{\textbf{}}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 9.13in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 13.68in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 7.87in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{}}}} \\
-
-
-
-
-
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 2.61in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{\textbf{}}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 9.13in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{It\ is\ important\ to\ show\ the\ PCA\ diagnostics,\ including\ the\ Scree\ Plot\ and\ the\ plots\ displaying\ the\ contribution\ of\ each\ attribute\ in\ each\ dimension}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 13.68in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 7.87in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{The\ general\ audience\ does\ not\ need\ to\ understand\ details\ such\ as\ why\ two\ components\ were\ chosen\ for\ the\ PCA}}}} \\
-
-\hhline{>{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=1pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=1pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=1pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=1pt}-}
-
-
-
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 2.61in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{\textbf{}}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 9.13in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 13.68in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 7.87in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{}}}} \\
-
-
-
-
-
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 2.61in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{\textbf{}}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 9.13in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 13.68in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 7.87in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{}}}} \\
-
-
-
-
-
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 2.61in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{\textbf{Final\ Results\ (PCA)}}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 9.13in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{The\ PCA\ can\ be\ shown\ in\ its\ traditional\ format\ without\ much\ editing\ as\ shown\ in\ the\ picture\ above}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 13.68in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 7.87in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{Simple\ and\ clear\ explanation\ about\ PCA}}}} \\
-
-
-
-
-
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 2.61in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{\textbf{}}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 9.13in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{Provide\ a\ detailed\ interpretation,\ including\ not\ only\ the\ optimized\ sample,\ but\ all\ trials\ evaluated}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 13.68in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 7.87in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{Remove\ technical\ details\ such\ as\ the\ PC\ variance\ explanation}}}} \\
-
-
-
-
-
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 2.61in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{\textbf{}}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 9.13in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 13.68in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 7.87in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{Show\ the\ PCA\ in\ a\ format\ that\ makes\ the\ interpretation\ and\ visualization\ easier\ and\ more\ obvious,\ some\ examples\ include:}}}} \\
-
-
-
-
-
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 2.61in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{\textbf{}}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 9.13in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 13.68in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 7.87in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{-\ Use\ pictures\ instead\ of\ sample\ code}}}} \\
-
-
-
-
-
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 2.61in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{\textbf{}}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 9.13in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 13.68in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 7.87in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{-\ Use\ visual\ resources\ like\ circles\ to\ delimit\ groups\ of\ similar\ samples\ and\ attributes\ more\ relevant}}}} \\
-
-
-
-
-
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 2.61in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{\textbf{}}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 9.13in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 13.68in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 7.87in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{-\ Use\ different\ colors,\ letter\ sizes,\ or\ other\ visual\ resources\ to\ highlight\ important\ information,\ like\ an\ attribute\ or\ a\ sample}}}} \\
-
-\hhline{>{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=1pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=1pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=1pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=1pt}-}
-
-
-
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 2.61in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{\textbf{Conclusion\ and\ Recommendations}}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 9.13in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{The\ conclusion\ can\ be\ more\ detailed,\ and\ recommendations\ can\ be\ done\ for\ further\ studies}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 13.68in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 7.87in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{Very\ clear\ and\ succinct\ conclusion\ or\ recommendation.}}}} \\
-
-
-
-
-
-\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 2.61in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{\textbf{}}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 9.13in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 13.68in+0\tabcolsep+0\arrayrulewidth}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 7.87in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\textcolor[HTML]{000000}{\fontsize{10}{10}\selectfont{\global\setmainfont{Arial}{Example:\ The\ optimized\ formulation\ is\ close\ to\ the\ commercial\ but\ needs\ to\ be\ improved\ for\ some\ attribute}}}} \\
-
-\hhline{>{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}-}
-
-
-
-\end{longtable}
 
 Following those recommendations, your PCA for the management or general audience may look like Figure \ref{fig:pcamanagement}.
 
@@ -9328,11 +9017,12 @@ The results of the PCA can be visualized using \texttt{\{factoextra\}}:
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{ (factoextra)}
 \CommentTok{\# fviz\_eig(res\_pca, addlabels=TRUE, ylim=c(0,50))}
-\FunctionTok{fviz\_pca\_biplot}\NormalTok{(res\_pca, }\AttributeTok{repel=}\ConstantTok{TRUE}\NormalTok{, }\AttributeTok{label=}\StringTok{"var"}\NormalTok{, }\AttributeTok{col.var=}\StringTok{"red"}\NormalTok{, }\AttributeTok{col.ind=}\StringTok{"black"}\NormalTok{)}
+\FunctionTok{fviz\_pca\_biplot}\NormalTok{(res\_pca, }\AttributeTok{repel=}\ConstantTok{TRUE}\NormalTok{, }\AttributeTok{label=}\StringTok{"var"}\NormalTok{, }
+                \AttributeTok{col.var=}\StringTok{"red"}\NormalTok{, }\AttributeTok{col.ind=}\StringTok{"black"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-297-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-301-1.pdf}
 
 The first plane of the PCA suggests that there are 3 distinct groups of wines. Let's define them mathematically using cluster analysis. For this process, we propose to reduce the full data to its first two components only. This approach is used here to illustrate how PCA can be used as a pre-processing step. Additionally, such pre-processing can help detecting clearer patterns in the data, as we will see in the next section with clustering.
 
@@ -9388,7 +9078,7 @@ Finally, the results can be visualized using \texttt{fviz\_cluster()} from \text
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-299-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-303-1.pdf}
 
 In the resulting plot, the 3 clusters are clearly separated, as can be seen by their little to no overlap.
 
@@ -9694,7 +9384,7 @@ The \texttt{autoplot()} function is called to take a quick look at the \texttt{t
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-300-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-304-1.pdf}
 
 Ultimately, the best combination of parameters is obtained using the \texttt{select\_best()} function. Such paramaters is defined based on the quality of the model, which can be estimated through a various metrics. Here we decided to use \texttt{roc\_auc} (Area Under the Receiver Operating Characteristic Curve), as it provides a reliable estimate of the quality of the model.
 
@@ -9746,7 +9436,11 @@ There are several ways to look into the model quality, being the approach and mo
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{obs\_vs\_pred\_prob }\OtherTok{\textless{}{-}} \FunctionTok{bind\_cols}\NormalTok{(wine\_testing }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(Type), }\FunctionTok{predict}\NormalTok{(final\_model, wine\_testing, }\AttributeTok{type =} \StringTok{"prob"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{obs\_vs\_pred\_prob }\OtherTok{\textless{}{-}} \FunctionTok{bind\_cols}\NormalTok{(wine\_testing }\SpecialCharTok{\%\textgreater{}\%} 
+                                \FunctionTok{select}\NormalTok{(Type), }
+                              \FunctionTok{predict}\NormalTok{(final\_model, }
+\NormalTok{                                      wine\_testing, }
+                                      \AttributeTok{type =} \StringTok{"prob"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Type =} \FunctionTok{as.factor}\NormalTok{(Type))}
 
 \FunctionTok{accuracy}\NormalTok{(obs\_vs\_pred, }\AttributeTok{truth =} \StringTok{"Type"}\NormalTok{, }\AttributeTok{estimate =} \StringTok{".pred\_class"}\NormalTok{)}
@@ -9786,14 +9480,14 @@ The interpretation is very straightforward, in the way that variables are conven
 
 \NormalTok{data\_to\_explain }\OtherTok{\textless{}{-}}\NormalTok{ wine\_train}
 
-\NormalTok{explainer }\OtherTok{\textless{}{-}} \FunctionTok{explain\_tidymodels}\NormalTok{(}
-  \AttributeTok{model =}\NormalTok{ final\_model, }
-  \AttributeTok{data =}\NormalTok{ data\_to\_explain }\SpecialCharTok{\%\textgreater{}\%} 
-    \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Type),}
-  \AttributeTok{y =}\NormalTok{ data\_to\_explain}\SpecialCharTok{$}\NormalTok{Type}
-\NormalTok{)}
+\NormalTok{explainer }\OtherTok{\textless{}{-}} \FunctionTok{explain\_tidymodels}\NormalTok{(}\AttributeTok{model =}\NormalTok{ final\_model, }
+                                \AttributeTok{data =}\NormalTok{ data\_to\_explain }\SpecialCharTok{\%\textgreater{}\%} 
+                                  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Type),}
+                                \AttributeTok{y =}\NormalTok{ data\_to\_explain}\SpecialCharTok{$}\NormalTok{Type)}
 
-\NormalTok{var\_imp }\OtherTok{\textless{}{-}} \FunctionTok{variable\_importance}\NormalTok{(explainer, }\AttributeTok{loss\_function =}\NormalTok{ loss\_cross\_entropy, }\AttributeTok{type =} \StringTok{"ratio"}\NormalTok{)}
+\NormalTok{var\_imp }\OtherTok{\textless{}{-}} \FunctionTok{variable\_importance}\NormalTok{(explainer, }
+                               \AttributeTok{loss\_function =}\NormalTok{ loss\_cross\_entropy, }
+                               \AttributeTok{type =} \StringTok{"ratio"}\NormalTok{)}
 \FunctionTok{plot}\NormalTok{(var\_imp)}
 \end{Highlighting}
 \end{Shaded}
@@ -9972,7 +9666,8 @@ Let's transform this text into tokens using \texttt{unnest\_tokens()} from the \
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{cider }\OtherTok{\textless{}{-}}\NormalTok{ cider\_og }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{unnest\_tokens}\NormalTok{(tokens, comments, }\AttributeTok{token=}\StringTok{"regex"}\NormalTok{, }\AttributeTok{pattern=}\StringTok{"[;|,|:|.|/]"}\NormalTok{, }\AttributeTok{to\_lower=}\ConstantTok{FALSE}\NormalTok{)}
+  \FunctionTok{unnest\_tokens}\NormalTok{(tokens, comments, }\AttributeTok{token=}\StringTok{"regex"}\NormalTok{, }
+                \AttributeTok{pattern=}\StringTok{"[;|,|:|.|/]"}\NormalTok{, }\AttributeTok{to\_lower=}\ConstantTok{FALSE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -10116,24 +9811,12 @@ Since we have a relatively small text size, let's use the \emph{SnowBall Stopwor
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-##  [1] "i"       "my"      "you"     "it"      "its"    
-##  [6] "they"    "what"    "which"   "this"    "is"     
-## [11] "was"     "be"      "have"    "has"     "had"    
-## [16] "does"    "would"   "it's"    "isn't"   "doesn't"
-## [21] "a"       "the"     "and"     "but"     "or"     
-## [26] "as"      "of"      "at"      "with"    "before" 
-## [31] "after"   "to"      "from"    "up"      "in"     
-## [36] "on"      "off"     "there"   "when"    "more"   
-## [41] "some"    "no"      "not"     "same"    "so"     
-## [46] "than"    "too"     "very"    "will"
-\end{verbatim}
-
 As we can see, some words such as \emph{off}, \emph{not}, \emph{no}, \emph{too}, and \emph{very} would automatically be removed. However, such qualifiers are useful in the interpretation of sensory perception, so we would prefer to keep them. We can thus remove them from \texttt{stopword\_list}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{stopword\_list }\OtherTok{\textless{}{-}}\NormalTok{ stopword\_list[}\SpecialCharTok{!}\NormalTok{stopword\_list }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"off"}\NormalTok{,}\StringTok{"no"}\NormalTok{,}\StringTok{"not"}\NormalTok{,}\StringTok{"too"}\NormalTok{,}\StringTok{"very"}\NormalTok{)]}
+\NormalTok{stopword\_list }\OtherTok{\textless{}{-}}\NormalTok{ stopword\_list[}\SpecialCharTok{!}\NormalTok{stopword\_list }\SpecialCharTok{\%in\%} 
+                                 \FunctionTok{c}\NormalTok{(}\StringTok{"off"}\NormalTok{,}\StringTok{"no"}\NormalTok{,}\StringTok{"not"}\NormalTok{,}\StringTok{"too"}\NormalTok{,}\StringTok{"very"}\NormalTok{)]}
 \end{Highlighting}
 \end{Shaded}
 
@@ -10145,133 +9828,16 @@ Conversely, we can look at the words from our data that we would not consider re
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-##   [1] "accompany"    "acid"         "acidic"      
-##   [4] "acidity"      "acrid"        "aftertaste"  
-##   [7] "alcohol"      "alcoholic"    "almond"      
-##  [10] "almost"       "amount"       "anything"    
-##  [13] "apparent"     "appealing"    "appetizing"  
-##  [16] "apple"        "apples"       "applesauce"  
-##  [19] "apricot"      "aroma"        "aromas"      
-##  [22] "aromatic"     "artificial"   "astringent"  
-##  [25] "bad"          "banana"       "barn"        
-##  [28] "barnyard"     "basic"        "beans"       
-##  [31] "beer"         "beginning"    "berries"     
-##  [34] "berry"        "best"         "better"      
-##  [37] "bit"          "bitter"       "bittersweet" 
-##  [40] "blackberries" "bland"        "blue"        
-##  [43] "bodied"       "body"         "bold"        
-##  [46] "bready"       "bright"       "brut"        
-##  [49] "bubble"       "bubbly"       "burnt"       
-##  [52] "butter"       "candied"      "candy"       
-##  [55] "caramel"      "carbonated"   "cattle"      
-##  [58] "champagne"    "cheese"       "cherries"    
-##  [61] "cherry"       "cider"        "cinnamon"    
-##  [64] "citrus"       "clean"        "clear"       
-##  [67] "clinical"     "clove"        "considering" 
-##  [70] "contaminated" "cooked"       "cough"       
-##  [73] "crisp"        "crisper"      "cut"         
-##  [76] "dank"         "dark"         "decent"      
-##  [79] "decently"     "deep"         "delicious"   
-##  [82] "dentist"      "despite"      "dessert"     
-##  [85] "detergent"    "different"    "dirt"        
-##  [88] "dish"         "distinct"     "dog"         
-##  [91] "dragon"       "drink"        "drop"        
-##  [94] "dry"          "dull"         "dusty"       
-##  [97] "earthy"       "effervescent" "egg"         
-## [100] "empty"        "expected"     "faint"       
-## [103] "fairly"       "feed"         "feet"        
-## [106] "fermented"    "finish"       "fishy"       
-## [109] "fizzy"        "flat"         "flavor"      
-## [112] "flavorable"   "flavorful"    "flavorless"  
-## [115] "flora"        "floral"       "floralrose"  
-## [118] "flower"       "flowery"      "foul"        
-## [121] "fresh"        "front"        "fruit"       
-## [124] "fruity"       "fuji"         "full"        
-## [127] "funky"        "geranium"     "glass"       
-## [130] "gloves"       "go"           "gone"        
-## [133] "good"         "grape"        "grapes"      
-## [136] "grass"        "grassy"       "green"       
-## [139] "gum"          "gym"          "hard"        
-## [142] "harsh"        "heavier"      "heavy"       
-## [145] "hefeweizen"   "herby"        "hint"        
-## [148] "honey"        "hoppy"        "hybrid"      
-## [151] "initial"      "intense"      "irritant"    
-## [154] "jackets"      "jam"          "jolly"       
-## [157] "juice"        "just"         "lack"        
-## [160] "lacking"      "lacks"        "leaves"      
-## [163] "left"         "lemon"        "lemons"      
-## [166] "less"         "licorice"     "light"       
-## [169] "lightly"      "like"         "little"      
-## [172] "loses"        "lots"         "lovely"      
-## [175] "low"          "major"        "mash"        
-## [178] "mealy"        "medicinal"    "mellow"      
-## [181] "metal"        "metallic"     "mild"        
-## [184] "mildew"       "mildly"       "milk"        
-## [187] "mineral"      "minimal"      "minty"       
-## [190] "moderate"     "moldy"        "moonshine"   
-## [193] "moscato"      "mouth"        "mouthfeel"   
-## [196] "much"         "musky"        "musty"       
-## [199] "nasty"        "negative"     "neither"     
-## [202] "ness"         "no"           "non"         
-## [205] "nonfruity"    "not"          "note"        
-## [208] "notes"        "noticeable"   "oaky"        
-## [211] "obvious"      "odor"         "odors"       
-## [214] "off"          "office"       "old"         
-## [217] "older"        "one"          "onions"      
-## [220] "order"        "others"       "overall"     
-## [223] "overbearing"  "overpowering" "overripe"    
-## [226] "oxidation"    "paint"        "papery"      
-## [229] "particularly" "peach"        "pear"        
-## [232] "pears"        "pee"          "pepper"      
-## [235] "perfume"      "plain"        "plastic"     
-## [238] "pleasant"     "poor"         "powder"      
-## [241] "powerful"     "pretty"       "previous"    
-## [244] "products"     "pungent"      "putrid"      
-## [247] "putting"      "quite"        "rancher"     
-## [250] "rancid"       "raspberries"  "really"      
-## [253] "red"          "refreshing"   "riesling"    
-## [256] "right"        "robust"       "rose"        
-## [259] "rotten"       "rubber"       "rubbing"     
-## [262] "sample"       "savory"       "scent"       
-## [265] "seems"        "semi"         "sharp"       
-## [268] "sickly"       "silage"       "similar"     
-## [271] "similarly"    "single"       "skunky"      
-## [274] "slight"       "slightly"     "smell"       
-## [277] "smelling"     "smells"       "smokey"      
-## [280] "smoky"        "smooth"       "soapy"       
-## [283] "socks"        "soft"         "soil"        
-## [286] "solvent"      "something"    "somewhat"    
-## [289] "sour"         "sparkling"    "spiced"      
-## [292] "spices"       "spicy"        "spoiled"     
-## [295] "stale"        "stone"        "strong"      
-## [298] "stronger"     "subdued"      "subtle"      
-## [301] "sugar"        "sugary"       "sulfur"      
-## [304] "sulfuric"     "sweat"        "sweet"       
-## [307] "sweeter"      "sweetness"    "swiss"       
-## [310] "tangy"        "tannins"      "tart"        
-## [313] "taste"        "tastes"       "tasting"     
-## [316] "tasty"        "thank"        "think"       
-## [319] "though"       "time"         "tingles"     
-## [322] "too"          "tounge"       "typically"   
-## [325] "unappealing"  "unexpected"   "unpleasant"  
-## [328] "urine"        "vague"        "vanilla"     
-## [331] "vegetal"      "very"         "vinegar"     
-## [334] "vomiting"     "water"        "watery"      
-## [337] "way"          "weak"         "wet"         
-## [340] "white"        "wine"         "wood"        
-## [343] "woodsy"       "woody"        "worst"       
-## [346] "y"            "yard"         "yeasty"      
-## [349] "yellow"
-\end{verbatim}
-
 Words such as \emph{like}, \emph{sample}, \emph{just}, \emph{think}, or \emph{though} do not seem to bring any relevant information here. Hence, let's add them (together with others) to our customized list of stop words\footnote{As an exercise, you could go deeper into the list and decide by yourself whether you would want to remove more words.}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{stopword\_list }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(stopword\_list, }\FunctionTok{c}\NormalTok{(}\StringTok{"accompany"}\NormalTok{,}\StringTok{"amount"}\NormalTok{,}\StringTok{"anything"}\NormalTok{,}\StringTok{"considering"}\NormalTok{,}\StringTok{"despite"}\NormalTok{,}\StringTok{"expected"}\NormalTok{,}
-                                    \StringTok{"just"}\NormalTok{,}\StringTok{"like"}\NormalTok{,}\StringTok{"neither"}\NormalTok{,}\StringTok{"one"}\NormalTok{,}\StringTok{"order"}\NormalTok{,}\StringTok{"others"}\NormalTok{,}\StringTok{"products"}\NormalTok{,}
-                                    \StringTok{"sample"}\NormalTok{,}\StringTok{"seems"}\NormalTok{,}\StringTok{"something"}\NormalTok{,}\StringTok{"thank"}\NormalTok{,}\StringTok{"think"}\NormalTok{,}\StringTok{"though"}\NormalTok{,}\StringTok{"time"}\NormalTok{,}\StringTok{"way"}\NormalTok{))}
+\NormalTok{stopword\_list }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(stopword\_list, }
+                   \FunctionTok{c}\NormalTok{(}\StringTok{"accompany"}\NormalTok{,}\StringTok{"amount"}\NormalTok{,}\StringTok{"anything"}\NormalTok{,}\StringTok{"considering"}\NormalTok{,}
+                     \StringTok{"despite"}\NormalTok{,}\StringTok{"expected"}\NormalTok{,}\StringTok{"just"}\NormalTok{,}\StringTok{"like"}\NormalTok{,}\StringTok{"neither"}\NormalTok{,}
+                     \StringTok{"one"}\NormalTok{,}\StringTok{"order"}\NormalTok{,}\StringTok{"others"}\NormalTok{,}\StringTok{"products"}\NormalTok{,}\StringTok{"sample"}\NormalTok{,}
+                     \StringTok{"seems"}\NormalTok{,}\StringTok{"something"}\NormalTok{,}\StringTok{"thank"}\NormalTok{,}\StringTok{"think"}\NormalTok{,}\StringTok{"though"}\NormalTok{,}
+                     \StringTok{"time"}\NormalTok{,}\StringTok{"way"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -10444,7 +10010,7 @@ In the previous sections, we have already shown how to count the number of occur
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-324-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-329-1.pdf}
 
 As seen previously, the most mentioned words are \texttt{apple}, \texttt{sweet}, \texttt{fruity}, and \texttt{sour}.
 
@@ -10526,7 +10092,7 @@ Another approach consists in visualizing the association between the samples and
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-327-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-332-1.pdf}
 
 As can be seen, sample \texttt{731} is more strongly associated to alcoholic terms such as \texttt{alcohol} or \texttt{wine}, and colors (\texttt{red}, \texttt{green}). Samples \texttt{239} and \texttt{401} are more associated to \texttt{sour} and \texttt{bitter} (and \texttt{pear} for \texttt{239}), whereas samples \texttt{519} and \texttt{182} are more frequently described by terms such as \texttt{fruity}, and \texttt{sweet} (\texttt{floral} is also used to characterize \texttt{182}).
 
@@ -10549,7 +10115,7 @@ An alternative for visualizing these frequencies is through wordclouds, which ca
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-328-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-333-1.pdf}
 
 In these wordclouds, we notice that \texttt{apple} and \texttt{sweet} appear in larger fonts for (almost) all the samples, which can make the comparison quite difficult between samples. Fortunately, the \texttt{geom\_text\_wordcloud()} function provides an interesting parameter in its aesthetics called \texttt{angle\_group} which allows controlling the position of the words. To illustrate this, let's apply the following rule: for a given sample, if the proportion of association of a word is larger than 1/6 (as we have 6 samples), the word will be printed in the upper part of its wordcloud, and in the lower part otherwise. To facilitate the readability, the color code used follow the same rule:
 
@@ -10559,7 +10125,8 @@ In these wordclouds, we notice that \texttt{apple} and \texttt{sweet} appear in 
   \FunctionTok{group\_by}\NormalTok{(lemma) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{prop =}\NormalTok{ n}\SpecialCharTok{/}\FunctionTok{sum}\NormalTok{(n)) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{ungroup}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{colour=}\NormalTok{ prop}\SpecialCharTok{\textless{}}\DecValTok{1}\SpecialCharTok{/}\DecValTok{2}\NormalTok{, }\AttributeTok{label=}\NormalTok{lemma, }\AttributeTok{size=}\NormalTok{n, }\AttributeTok{angle\_group =}\NormalTok{ prop }\SpecialCharTok{\textless{}} \DecValTok{1}\SpecialCharTok{/}\DecValTok{2}\NormalTok{))}\SpecialCharTok{+}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{colour=}\NormalTok{ prop}\SpecialCharTok{\textless{}}\DecValTok{1}\SpecialCharTok{/}\DecValTok{2}\NormalTok{, }\AttributeTok{label=}\NormalTok{lemma, }\AttributeTok{size=}\NormalTok{n, }
+             \AttributeTok{angle\_group =}\NormalTok{ prop }\SpecialCharTok{\textless{}} \DecValTok{1}\SpecialCharTok{/}\DecValTok{2}\NormalTok{))}\SpecialCharTok{+}
   \FunctionTok{geom\_text\_wordcloud}\NormalTok{(}\AttributeTok{eccentricity =} \FloatTok{2.5}\NormalTok{)}\SpecialCharTok{+}
   \FunctionTok{xlab}\NormalTok{(}\StringTok{""}\NormalTok{)}\SpecialCharTok{+}
   \FunctionTok{theme\_minimal}\NormalTok{()}\SpecialCharTok{+}
@@ -10567,7 +10134,7 @@ In these wordclouds, we notice that \texttt{apple} and \texttt{sweet} appear in 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-329-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-334-1.pdf}
 
 As can be seen, the term \texttt{apple} is more frequently (i.e.~more than 1/6) used to characterize samples \texttt{182}, \texttt{239}, \texttt{365}, and \texttt{731}. The term \texttt{sweet} is more frequently used to characterize samples \texttt{182} and \texttt{519}. Such conclusions would have been more difficult to reach based on the previous \emph{unstructured} wordcloud.
 
@@ -10820,8 +10387,10 @@ In our example, the latter combination is used for the two options that require 
       \FunctionTok{as.character}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
       \FunctionTok{unique}\NormalTok{()}
     
-    \FunctionTok{selectInput}\NormalTok{(}\StringTok{"attribute"}\NormalTok{, }\StringTok{"Select the Attributes (in order) "}\NormalTok{, }\AttributeTok{choices=}\NormalTok{items, }\AttributeTok{selected=}\NormalTok{items, }\AttributeTok{multiple=}\ConstantTok{TRUE}\NormalTok{)}
-    
+    \FunctionTok{selectInput}\NormalTok{(}\StringTok{"attribute"}\NormalTok{, }
+                \StringTok{"Select the Attributes (in order) "}\NormalTok{, }
+                \AttributeTok{choices=}\NormalTok{items, }\AttributeTok{selected=}\NormalTok{items, }
+                \AttributeTok{multiple=}\ConstantTok{TRUE}\NormalTok{)}
 \NormalTok{  \})}
 
 \NormalTok{  output}\SpecialCharTok{$}\NormalTok{product }\OtherTok{\textless{}{-}} \FunctionTok{renderUI}\NormalTok{(\{}
@@ -10831,8 +10400,9 @@ In our example, the latter combination is used for the two options that require 
       \FunctionTok{pull}\NormalTok{(Product) }\SpecialCharTok{\%\textgreater{}\%} 
       \FunctionTok{unique}\NormalTok{()}
     
-    \FunctionTok{checkboxGroupInput}\NormalTok{(}\StringTok{"product"}\NormalTok{, }\StringTok{"Select the Products to Display:"}\NormalTok{, }\AttributeTok{choices=}\NormalTok{items, }\AttributeTok{selected=}\NormalTok{items)}
-    
+    \FunctionTok{checkboxGroupInput}\NormalTok{(}\StringTok{"product"}\NormalTok{, }
+                       \StringTok{"Select the Products to Display:"}\NormalTok{, }
+                       \AttributeTok{choices=}\NormalTok{items, }\AttributeTok{selected=}\NormalTok{items)}
 \NormalTok{  \})}
   
 \CommentTok{\# UI side:}
@@ -10850,17 +10420,16 @@ Let's break this down in a simple example:
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{  mydata }\OtherTok{\textless{}{-}} \FunctionTok{reactive}\NormalTok{(\{}
-    
     \FunctionTok{req}\NormalTok{(input}\SpecialCharTok{$}\NormalTok{datafile)}
 \NormalTok{    data }\OtherTok{\textless{}{-}}\NormalTok{ readxl}\SpecialCharTok{::}\FunctionTok{read\_xlsx}\NormalTok{(input}\SpecialCharTok{$}\NormalTok{datafile}\SpecialCharTok{$}\NormalTok{datapath, }\AttributeTok{sheet=}\DecValTok{1}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
-      \FunctionTok{pivot\_longer}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(Judge, Product), }\AttributeTok{names\_to=}\StringTok{"Attribute"}\NormalTok{, }\AttributeTok{values\_to=}\StringTok{"Score"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
-      \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Attribute =} \FunctionTok{fct\_inorder}\NormalTok{(Attribute), }\AttributeTok{Score =} \FunctionTok{as.numeric}\NormalTok{(Score)) }\SpecialCharTok{\%\textgreater{}\%} 
+      \FunctionTok{pivot\_longer}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(Judge, Product), }
+                   \AttributeTok{names\_to=}\StringTok{"Attribute"}\NormalTok{, }\AttributeTok{values\_to=}\StringTok{"Score"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+      \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Attribute =} \FunctionTok{fct\_inorder}\NormalTok{(Attribute), }
+             \AttributeTok{Score =} \FunctionTok{as.numeric}\NormalTok{(Score)) }\SpecialCharTok{\%\textgreater{}\%} 
       \FunctionTok{group\_by}\NormalTok{(Product, Attribute) }\SpecialCharTok{\%\textgreater{}\%} 
       \FunctionTok{summarize}\NormalTok{(}\AttributeTok{Score =} \FunctionTok{mean}\NormalTok{(Score)) }\SpecialCharTok{\%\textgreater{}\%} 
       \FunctionTok{ungroup}\NormalTok{()}
-    
     \FunctionTok{return}\NormalTok{(data)}
-    
 \NormalTok{  \})}
 \end{Highlighting}
 \end{Shaded}

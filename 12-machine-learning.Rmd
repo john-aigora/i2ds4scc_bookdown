@@ -87,7 +87,8 @@ The results of the PCA can be visualized using `{factoextra}`:
 ```{r, eval=TRUE, echo=TRUE, warning=FALSE, message=FALSE}
 library (factoextra)
 # fviz_eig(res_pca, addlabels=TRUE, ylim=c(0,50))
-fviz_pca_biplot(res_pca, repel=TRUE, label="var", col.var="red", col.ind="black")
+fviz_pca_biplot(res_pca, repel=TRUE, label="var", 
+                col.var="red", col.ind="black")
 ```
 
 The first plane of the PCA suggests that there are 3 distinct groups of wines. Let's define them mathematically using cluster analysis. For this process, we propose to reduce the full data to its first two components only. This approach is used here to illustrate how PCA can be used as a pre-processing step. Additionally, such pre-processing can help detecting clearer patterns in the data, as we will see in the next section with clustering.
@@ -370,13 +371,16 @@ autoplot(cm, type = "heatmap")
 
 There are several ways to look into the model quality, being the approach and model metrics highly dependent on the situation/type of model used. In our case, that we have a multiclass classification, we can besides the confusion matrix, check the model accuracy. Classification accuracy is a metric that summarized the fraction of predictions our model got right (somehow it brings similar information we get from the confusion matrix). We have to first organize the data to have have the model predictions. Then we directly calculate the accuracy and also kappa accuracy, using the functions `accuracy ()` and `kap ()`. Kappa (kap()) is a similar measure to accuracy(), but is normalized by the accuracy that would be expected by chance alone. It can be very useful when one or more classes have large frequency distributions.
 
-```{r, eval=TRUE, echo=TRUE}
-obs_vs_pred_prob <- bind_cols(wine_testing %>% select(Type), predict(final_model, wine_testing, type = "prob")) %>% 
+```{r, eval=TRUE, echo=TRUE, warning=FALSE, message=FALSE}
+obs_vs_pred_prob <- bind_cols(wine_testing %>% 
+                                select(Type), 
+                              predict(final_model, 
+                                      wine_testing, 
+                                      type = "prob")) %>% 
   mutate(Type = as.factor(Type))
 
 accuracy(obs_vs_pred, truth = "Type", estimate = ".pred_class")
 kap(obs_vs_pred, truth = "Type", estimate = ".pred_class")
-
 ```
 
 The accuracy and Kappa accuracy of our model is extremely high (> 0.94), emphasizing its great model performance.
@@ -391,22 +395,15 @@ library(modelStudio)
 
 data_to_explain <- wine_train
 
-explainer <- explain_tidymodels(
-  model = final_model, 
-  data = data_to_explain %>% 
-    select(-Type),
-  y = data_to_explain$Type
-)
+explainer <- explain_tidymodels(model = final_model, 
+                                data = data_to_explain %>% 
+                                  select(-Type),
+                                y = data_to_explain$Type)
 
-var_imp <- variable_importance(explainer, loss_function = loss_cross_entropy, type = "ratio")
+var_imp <- variable_importance(explainer, 
+                               loss_function = loss_cross_entropy, 
+                               type = "ratio")
 plot(var_imp)
 ```
 
 Building a machine learning model may seem complicated at first since there are many steps and important things to watch out for. Although we presented here a simple example, for one specific situation of classification, you will realize that this way of working (typical modeling approach showed), is highly applicable to other situations. Again, the main idea of this chapter is to open your mind, provide you with the basics, and ultimately motivate you to seek and learn more about machine learning! 
-
-<!-- Quick remark on the fact that although this way of working may seem complicated at first, it is very efficient as everything is tidied.
-For instance, with workflows, it is easy to try different ML algorithms by simply creating multiple models.
-Possibility to compare models...or even combine models in ensemble to improve further the results!
-
-Should we add some more results regarding the quality of the model?
-Should we add some more results regarding the interpretation of the model? Here we do not know which variables played a role in deciding to which group each wine belong to... -->
