@@ -1,3 +1,8 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
 # Data Visualization {#data-viz}
 
 > One of the main goal of data analysis is to produce results. Although informative, such results are only impactful if they can be well-communicated. It is hence of utmost importance to present them in a neat way, often through visuals. 
@@ -31,10 +36,11 @@ This appears to be a tedious task and it most likely took you a few minutes beca
 
 Let's do it again, but now using the list of numbers below:
 
-98734979027**5**1364978231649780231648741**5**113697412369846321
-1234687923164879130002366**5**698774646821397486248797964312
-12369874474**5**78962341680021364789613469174312679812439612
-12332146987412361789461230**5**0213**5**467980213648126498731203
+
+98734979027<span style="color:red">**5**</span>1364978231649780231648741<span style="color:red">**5**</span>113697412369846321
+1234687923164879130002366<span style="color:red">**5**</span>698774646821397486248797964312
+12369874474<span style="color:red">**5**</span>78962341680021364789613469174312679812439612
+12332146987412361789461230<span style="color:red">**5**</span>0213<span style="color:red">**5**</span>467980213648126498731203
 
 This time the task is much easier and you can count the number of times the number 5 appears much faster. This is because we used the **pre-attentive attribute** of color intensity to distinguish the number five, standing it out in contrast to the rest. This example shows in an easy way the power of pre-attentive attributes for effective visual communication. As stated by Cole Nussbaumer Knaflic in her book *Storytelling with Data*, when we use pre-attentive attributes strategically, we enable our audience to see what we want them to see before they even know they are seeing it!
 
@@ -71,6 +77,7 @@ Let's imagine we want to communicate the sensory profiles of the 11 biscuits on 
 
 ```{r, echo = TRUE, eval = TRUE, message=FALSE, warning=FALSE, results='hide'}
 file_path <- here("data","biscuits_sensory_profile.xlsx") 
+
 mean_sensory <- readxl::read_xlsx(file_path, sheet="Data") %>% 
   select(Product, Shiny, Sweet, Sour, Bitter, Salty) %>%
   group_by(Product) %>%
@@ -81,13 +88,14 @@ mean_sensory <- readxl::read_xlsx(file_path, sheet="Data") %>%
 
 Now the correct table has been created, let's represent it in a neater way using our first dedicated package called `{flextable}`. Before going too deep in designing the table, let's simply apply the `flextable()` function to `mean_sensory` (after loading `{flextable}` first):
   
-```{r flextablebasic, echo = TRUE, eval = TRUE, message=FALSE, warning=FALSE, tab.cap="Appearance Attributes Mean (Basic Flextable)"}
+```{r flextablebasic, echo = TRUE, eval = TRUE, message=FALSE, warning=FALSE"}
 library(flextable)  
+
 flex_table <- mean_sensory %>% 
   flextable()
 ```
 
-```{r, eval=TRUE, echo=FALSE}
+```{r, eval=TRUE, echo=FALSE, tab.cap="Appearance Attributes Mean_Basic Flextable"}
 flex_table %>% 
   font(fontname = "Calibri", part="all") %>% 
   fontsize(size=8, part="all") %>% 
@@ -98,7 +106,7 @@ As you can see, the table is being printed in the *Viewer* section of RStudio. T
 
 A first simple improvement consists in reducing the number of decimals (`colformat_double()`), changing the font size (`fontsize()`, not visible in our output) and type (`bold()` or `italic()`), and aligning the text (`align()`) for instance.
 
-```{r flextablebasic2, echo = TRUE, eval = TRUE, message=FALSE, warning=FALSE, tab.cap="Appearance Attributes Mean (Basic Flextable 2)"}
+```{r flextablebasic2, echo = TRUE, eval = TRUE, message=FALSE, warning=FALSE"}
 flex_table_design <- flex_table %>%
   colformat_double(digits = 2) %>%
   fontsize(size = 10, part = "all") %>% 
@@ -107,7 +115,7 @@ flex_table_design <- flex_table %>%
   align(align = "center", part = "all")
 ```
 
-```{r, eval=TRUE, echo=FALSE}
+```{r, eval=TRUE, echo=FALSE, tab.cap="Appearance Attributes Mean_Basic Flextable 2)"}
 flex_table_design %>% 
   font(fontname = "Calibri", part="all") %>% 
   fontsize(size=8, part="all") %>% 
@@ -118,7 +126,7 @@ As can be seen, the function names are very intuitive, and so are the options. I
 
 After presenting some of the basic aesthetic options, let's go once step further and play around with coloring. For instance, let's imagine we would change the header background and text color, and would want to call the audience's attention by highlighting the optimized formulation. The following code could be used to do this (results are not being saved):
 
-```{r, flextabledesigned, echo = TRUE, eval = FALSE, message=FALSE, warning=FALSE, tab.cap="Appearance Attributes Mean (Improved Flextable)"}
+```{r, flextabledesigned, echo = TRUE, eval = FALSE, message=FALSE, warning=FALSE"}
 flex_table_design %>%
   bg(bg = "black", part = "header") %>% 
   color(color = "white", part = "header") %>% 
@@ -128,7 +136,7 @@ flex_table_design %>%
   add_header_lines(values = "Sensory Profile of 11 biscuits")
 ```
 
-```{r, eval=TRUE, echo=FALSE}
+```{r, eval=TRUE, echo=FALSE,tab.cap="Appearance Attributes Mean_Improved Flextable"}
 flex_table_design %>%
   bg(bg = "black", part = "header") %>% 
   color(color = "white", part = "header") %>% 
@@ -151,7 +159,7 @@ flex_table_design %>%
   autofit()
 ```
 
-```{r, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
+```{r, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE, tab.cap="Appearance Attributes Mean_Improved Flextable"}
 library(officer)
 flex_table_design %>%
   hline(i=10, border=fp_border(color="grey70", style="dashed")) %>%
@@ -172,7 +180,7 @@ flex_table_design %>%
   color(j=~Sweet, color=color_code)
 ```
 
-```{r, echo=FALSE, eval=TRUE}
+```{r, echo=FALSE, eval=TRUE, tab.cap="Appearance Attributes Mean_Improved Flextable 3"}
 color_code <- ifelse(mean_sensory$Sweet <= 20, "blue", 
                      ifelse(mean_sensory$Sweet >= 30, "red", "black"))
 flex_table_design %>% 
