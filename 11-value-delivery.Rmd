@@ -1,3 +1,8 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
 # Value Delivery {#value-delivery}
 
 > Most of this book focus on handling data through the procedure of data cleaning, transformation, analyses, or representation. This makes sense since the aim is to present data science in the context of sensory and consumer research. But these steps may be irrelevant if analysts or reseachers are not able to communicate their findings efficiently. Effective communication is as much important as any other step and so, we will guide you through that, providing some valuable tips and practical examples. This chapter approaches important topics to help you reach the goal of successful communication, from understanding the distinction between different analysis and audience awareness to methods to communicate, the art of storytelling, and ultimately reformulate.
@@ -82,26 +87,31 @@ knitr::include_graphics("images/PCA.jpeg")
 
 We won’t go deep into the interpretation since it’s not the focus of this example, but rather point out the approach we would recommend for each type of audience as shown in the Table \@ref(tab:summarytable1)).
 
-```{r summarytable1, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE, tab.cap="Exemplification of the approach for each type of audience."}
-library(readxl)
-library(tidyverse)
-library(flextable)
-
-file_path <- file.path("data/table value delivery.xlsx")
-
-table <- read_xlsx(file_path) %>%
-  flextable() %>%
-  bold(bold = TRUE, part = "header") %>%
-  bold(i = NULL, j = 1, bold = TRUE, part = "body") %>%
-  autofit() %>%
-  align(align = "center", part = "all") %>%
-  hline(i = 5) %>%
-  hline(i = 8) %>%
-  hline(i = 16) %>% 
-  font(fontname = "Calibri", part="all") %>% 
-  fontsize(size=9, part="all") %>% 
-  autofit()
+```{r summarytable1, fig.cap='Exemplification of the approach for each type of audience', fig.align='center', echo=FALSE, out.width="90%", eval=TRUE}
+knitr::include_graphics("images/table_value_delivery_2.png")
 ```
+
+
+<!-- ```{r summarytable1, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE, tab.cap="Exemplification of the approach for each type of audience."} -->
+<!-- library(readxl) -->
+<!-- library(tidyverse) -->
+<!-- library(flextable) -->
+
+<!-- file_path <- file.path("data/table value delivery.xlsx") -->
+
+<!-- table <- read_xlsx(file_path) %>% -->
+<!--   flextable() %>% -->
+<!--   bold(bold = TRUE, part = "header") %>% -->
+<!--   bold(i = NULL, j = 1, bold = TRUE, part = "body") %>% -->
+<!--   autofit() %>% -->
+<!--   align(align = "center", part = "all") %>% -->
+<!--   hline(i = 5) %>% -->
+<!--   hline(i = 8) %>% -->
+<!--   hline(i = 16) %>%  -->
+<!--   font(fontname = "Calibri", part="all") %>%  -->
+<!--   fontsize(size=9, part="all") %>%  -->
+<!--   autofit() -->
+<!-- ``` -->
 
 Following those recommendations, your PCA for the management or general audience may look like Figure \@ref(fig:pcamanagement). 
 
