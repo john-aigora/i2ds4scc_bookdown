@@ -1,3 +1,8 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
 ```{r include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, eval = TRUE)
 ```
@@ -158,7 +163,30 @@ library(AlgDesign)
 Dopt_des <- optFederov(~quad(.), Prod_coord, nTrials=8, criterion="D", augment = TRUE, rows = c(7,13))
 ```
 
-The resulting selection `Dopt_des$design` can be exported as a tibble and displayed with `flextable`:
+The resulting selection is listed in `Dopt_des$rows` and can be highlighted on the PCA score plot using `{factoextra}` using the `col.ind =` argument.
+
+```{r, echo=TRUE, eval=FALSE}
+library(factoextra)
+
+Prod_coord <- Prod_coord %>%
+    as_tibble() %>%
+    rownames_to_column("Product") %>%
+    mutate(DOpt_subset = ifelse(Product %in% Dopt_des$rows,"selected", "others"))
+
+fviz_pca_ind(cocktail_pca,
+             geom.ind = c("point", "text"),
+             pointsize = 3,
+             labelsize = 4, repel = TRUE,
+             col.ind = Prod_coord$DOpt_subset,
+             palette = c("#949494", "#00AFBB"),
+             legend.title = "Subset",
+             show.legend.text = FALSE,
+             mean.point = FALSE
+)
+```
+
+
+If needed, the coordinates of the D-optimal selection `Dopt_des$design` can be exported as a tibble and displayed with `flextable`:
 
 ```{r, echo=TRUE, eval=FALSE}
 library(flextable)
