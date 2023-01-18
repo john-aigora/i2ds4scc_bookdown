@@ -132,12 +132,56 @@ One may also be tempted to use incomplete balanced block designs for hedonic tes
 
 Suppose you are designing a consumer test of chocolate chip cookies in which a majority of cookies are made with milk chocolate while a few cookies are made with dark chocolate chips. If a participant only evaluates samples that have milk chocolate chips, this participant will not know about the existence of dark chocolate and will potentially give very different scores compared to what they would have if they had a full view of the product category.
 
-To reduce the risks incurred by the use of BIBD, an alternative strategy is to use a sensory informed design. Its principle is to allocate each panelist a subset of products that best cover the sensory diversity of the initial product set. Pragmatically, this amounts to maximizing the sensory distance between drawn products [@Franczak2015]. Of course, this supposes that one has sensory data to rely on in the first place. 
+To reduce the risks incurred by the use of BIBD, an alternative strategy is to use a sensory informed design. Its principle is to allocate each panelist a subset of products that best cover the sensory diversity of the initial product set. Of course, this supposes that one has sensory data to rely on in the first place. Such data could derive from conventional descriptive analysis but rapid methods such as free sorting or napping could suffice.
+Practically, covering the sensory diversity amounts to maximizing the sensory distance between drawn products.  @Franczak2015 suggest an iterative algorithm to build such a design.
 
 ```{r fig.align='center', echo=FALSE, eval=TRUE, out.width='90%'}
 # pseudo-code for sensory informed design (Franczak et al., 2015)
 knitr::include_graphics("images/sensory_doe.png")
 ```
+
+@benslama1998 have also proposed to select D-optimal subsets of products as a way to reduce the number of products in preference mapping studies.^[See also [@riviere2006], for an interesting comparison of this approach with an adaptive sequential consumer test for preference analysis using Kano's model of satisfaction.] 
+
+Selecting a D-optimal subset of products can be easily done with the Federov algorithm. Let's take, for example, the cocktail dataset from the `{SensoMineR}` package. It contains a sensory descriptive analysis of 16 cocktails (`senso.cocktail`).
+Now, let's pretend that we want to conduct a hedonic test on these cocktails in the view of performing a preference mapping. Asking each consumer to evaluate all 16 cocktails may be considered to be too much (even if they don't contain alcohol!). We will thus use the `optFederov()` function of `{AlgDesign}` to select a D-optimal subset of, say, 8 cocktails. For that, we first need to run a PCA on the full sensory data. Then we use the coordinates of the products on the principal components (PC) to build our design. Here, we only pick the first two PC dimensions, but the analyst could select other dimensions that are deemed relevant to describe the product set (but keep in mind that increasing the number of dimensions will require a higher minimum number of products to be able to fit the corresponding models).
+
+
+```{r, echo=TRUE, eval=FALSE}
+library(SensoMineR)
+data(cocktail)
+
+cocktail_pca <- senso.cocktail %>%
+  PCA(graph = FALSE)
+
+Prod_coord <- cocktail_pca$ind$coord[,1:2]
+```
+
+Assuming a full quadratic model (for the preference mapping), we can now use `optFederov()` to select a D-optimal subset of the desired number of products (here `ntrials=8`). The resulting selection will maximize the determinant of the information matrix (X'X) corresponding to the quadratic model. However, we can also decide to specify products that we want to be kept in the selection. Here, let's impose the selection of products 7 and 13.
+
+```{r, echo=TRUE, eval=FALSE}
+library(AlgDesign)
+Dopt_des <- optFederov(~quad(.), Prod_coord, nTrials=8, criterion="D", augment = TRUE, rows = c(7,13))
+```
+
+The resulting selection `Dopt_des$design` can be exported as a tibble and displayed with `flextable`:
+
+```{r, echo=TRUE, eval=FALSE}
+library(flextable)
+
+Subset_coord <- Dopt_des$design %>%
+                as_tibble() %>%
+                mutate("Product" = factor(Dopt_des$rows), .before=1)
+
+flextable(Subset_coord) %>% colformat_double(digits = 2)
+```
+
+Finally, it could be useful to calculate the determinant of the information matrix (assuming a quadratic model):
+
+```{r, echo=TRUE, eval=FALSE}
+Xopti = model.matrix(~ quad(.), Dopt_des$design)
+det(t(Xopti)%*%Xopti)
+```
+
 
 ## Product-related designs
 
