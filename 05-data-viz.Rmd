@@ -23,7 +23,7 @@ Sometimes (if not often) you have to play with your data, and test displaying it
 
 Regardless of the way you decide to display your data, you must understand visual perception and its application to graphical communication. It is important to spend some time with the design and aesthetic aspects of your visualization. You should be able to recognize smart design by becoming familiar with some aspects and examples of great design. Inattention to the visual design such as tables with improper alignment of numbers, excessive use of lines and fill colors, can greatly diminish their effectiveness. In other words, when used adequately, design should help you communicate your results by *clarifying* it, and not distract your audience from it. 
 
-Some important pre-attentive aspects that you should be aware of will be presented in this section, but to read more about visual perception and graphical communication, as well as some examples of great design, we strongly recommend *Storytelling with Data* by Cole Nussbaumer Knaflic and *Show me the Number: Designing Table and Graphs to Enlighten* by Stephen Few. (REF)
+Some important pre-attentive aspects that you should be aware of will be presented in this section, but to read more about visual perception and graphical communication, as well as some examples of great design, we strongly recommend *Storytelling with Data* by Cole Nussbaumer Knaflic (@Knaflic2015) and *Show me the Number: Designing Table and Graphs to Enlighten* by Stephen Few (@Few2012).
 
 Since a *picture is worth a thousand words*, let's demonstrate the difference between pre-attentive and attentive processing using an example provided by Stephen Few in his book *Show me the Number: Designing Table and Graphs to Enlighten*. First, take a look at the numbers below and determine, as quickly as you can, how many times the number 5 appears:
 
@@ -42,7 +42,7 @@ Let's do it again, but now using the list of numbers below:
 12369874474<span style="color:red">**5**</span>78962341680021364789613469174312679812439612
 12332146987412361789461230<span style="color:red">**5**</span>0213<span style="color:red">**5**</span>467980213648126498731203
 
-This time the task is much easier and you can count the number of times the number 5 appears much faster. This is because we used the **pre-attentive attribute** of color intensity to distinguish the number five, standing it out in contrast to the rest. This example shows in an easy way the power of pre-attentive attributes for effective visual communication. As stated by Cole Nussbaumer Knaflic in her book *Storytelling with Data*, when we use pre-attentive attributes strategically, we enable our audience to see what we want them to see before they even know they are seeing it!
+This time the task is much easier and you can count the number of times the number 5 appears much faster. This is because we used the **pre-attentive attribute** of color to distinguish the number five, standing it out in contrast to the rest. This example shows in an easy way the power of pre-attentive attributes for effective visual communication. As stated by Cole Nussbaumer Knaflic in her book *Storytelling with Data*, when we use pre-attentive attributes strategically, we enable our audience to see what we want them to see before they even know they are seeing it!
 
 The various pre-attentive attributes that can be used to draw your audience's attention quickly and create a visual hierarchy of information include **attributes of form** such as line length, line width, orientation, shape, size, added marks, and enclosure, **attributes of color** which would be hue and intensity, also spatial position and motion. Some of the strategies for a smart design for graphical communication described by Cole Nussbaumer include:
 
@@ -88,14 +88,14 @@ mean_sensory <- readxl::read_xlsx(file_path, sheet="Data") %>%
 
 Now the correct table has been created, let's represent it in a neater way using our first dedicated package called `{flextable}`. Before going too deep in designing the table, let's simply apply the `flextable()` function to `mean_sensory` (after loading `{flextable}` first):
   
-```{r flextablebasic, echo = TRUE, eval = TRUE, message=FALSE, warning=FALSE, tab.cap="Appearance Attributes Mean_Basic Flextable"}
+```{r flextablebasic, echo = TRUE, eval = TRUE, message=FALSE, warning=FALSE}
 library(flextable)  
 
 flex_table <- mean_sensory %>% 
   flextable()
 ```
 
-```{r, eval=TRUE, echo=FALSE}
+```{r, eval=TRUE, echo=FALSE, tab.cap="Basic Flextable"}
 flex_table %>% 
   font(fontname = "Calibri", part="all") %>% 
   fontsize(size=8, part="all") %>% 
@@ -106,7 +106,7 @@ As you can see, the table is being printed in the *Viewer* section of RStudio. T
 
 A first simple improvement consists in reducing the number of decimals (`colformat_double()`), changing the font size (`fontsize()`, not visible in our output) and type (`bold()` or `italic()`), and aligning the text (`align()`) for instance.
 
-```{r flextablebasic2, echo = TRUE, eval = TRUE, message=FALSE, warning=FALSE, tab.cap="Appearance Attributes Mean_Basic Flextable 2)"}
+```{r flextablebasic2, echo = TRUE, eval = TRUE, message=FALSE, warning=FALSE}
 flex_table_design <- flex_table %>%
   colformat_double(digits = 2) %>%
   fontsize(size = 10, part = "all") %>% 
@@ -115,18 +115,18 @@ flex_table_design <- flex_table %>%
   align(align = "center", part = "all")
 ```
 
-```{r, eval=TRUE, echo=FALSE}
+```{r, eval=TRUE, echo=FALSE, tab.cap="Basic Flextable - simple aesthetics improvements"}
 flex_table_design %>% 
   font(fontname = "Calibri", part="all") %>% 
   fontsize(size=8, part="all") %>% 
   autofit()
 ```
 
-As can be seen, the function names are very intuitive, and so are the options. In particular, it is interesting to see that most functions allows applying changes to the entire table (`part = "all"`), the header only (`part = "header"`) or the body only (`part = "body"`). And even within a part, it is possible to make a sub-selection by selecting the rows (`i`) or columns (`j`) to include or exclude: Here, all the text in the body is set in italic except for the product names, hence the option `j=-1` (read exclude the first column).
+As can be seen, the function names are very intuitive, and so are the options. In particular, it is interesting to see that most functions allows applying changes to the entire table (`part = "all"`), the header only (`part = "header"`) or the body only (`part = "body"`). And even within a part, it is possible to make a sub-selection by selecting the rows (`i`) or columns (`j`) to include or exclude. Here, all the text in the body is set in italic except for the product names, hence the option `j=-1` (read exclude the first column).
 
 After presenting some of the basic aesthetic options, let's go once step further and play around with coloring. For instance, let's imagine we would change the header background and text color, and would want to call the audience's attention by highlighting the optimized formulation. The following code could be used to do this (results are not being saved):
 
-```{r, flextabledesigned, echo = TRUE, eval = FALSE, message=FALSE, warning=FALSE, tab.cap="Appearance Attributes Mean_Improved Flextable"}
+```{r, flextabledesigned, echo = TRUE, eval = FALSE, message=FALSE, warning=FALSE}
 flex_table_design %>%
   bg(bg = "black", part = "header") %>% 
   color(color = "white", part = "header") %>% 
@@ -136,7 +136,7 @@ flex_table_design %>%
   add_header_lines(values = "Sensory Profile of 11 biscuits")
 ```
 
-```{r, eval=TRUE, echo=FALSE}
+```{r, eval=TRUE, echo=FALSE, tab.cap="Flextable - coloring function"}
 flex_table_design %>%
   bg(bg = "black", part = "header") %>% 
   color(color = "white", part = "header") %>% 
@@ -152,14 +152,15 @@ flex_table_design %>%
 
 Alternatively, we could decide to be more sober by applying other pre-attentive attributes. For instance, the size of the table can be adjusted, and an horizontal line can be added to delimit the optimal sample from the other. For the latter part, the customization of the line can be made using the function `fp_border()` from the `{officer}` package^[More information regarding the `{officer}` package are provided in Section \@ref(powerpoint)].
 
-```{r, echo=TRUE, eval=FALSE, message=FALSE, warning=FALSE, tab.cap="Appearance Attributes Mean_Improved Flextable"}
+```{r, echo=TRUE, eval=FALSE, message=FALSE, warning=FALSE}
 library(officer)
+
 flex_table_design %>%
   hline(i=10, border=fp_border(color="grey70", style="dashed")) %>% 
   autofit()
 ```
 
-```{r, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
+```{r, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE, tab.cap="Flextable - lines adjustment function"}
 library(officer)
 flex_table_design %>%
   hline(i=10, border=fp_border(color="grey70", style="dashed")) %>%
@@ -173,14 +174,15 @@ In some situations, applying some design options might mess up the appearance of
 
 Lastly, you can use conditional formatting if you want to highlight some specific values (e.g. values for `Sweet` that are below 20 should be colored in blue, and above 30 in red), as in the example below:
 
-```{r, echo=TRUE, eval=FALSE, tab.cap="Appearance Attributes Mean_Improved Flextable 3"}
+```{r, echo=TRUE, eval=FALSE}
 color_code <- ifelse(mean_sensory$Sweet <= 20, "blue", 
                      ifelse(mean_sensory$Sweet >= 30, "red", "black"))
+
 flex_table_design %>% 
   color(j=~Sweet, color=color_code)
 ```
 
-```{r, echo=FALSE, eval=TRUE}
+```{r, echo=FALSE, eval=TRUE, tab.cap="Improved Flextable - conditional formatting"}
 color_code <- ifelse(mean_sensory$Sweet <= 20, "blue", 
                      ifelse(mean_sensory$Sweet >= 30, "red", "black"))
 flex_table_design %>% 
@@ -221,13 +223,17 @@ mean_consumer <- readxl::read_xlsx(file_path,
 
 Now that the data is ready, we can display it with some basics adjustments to make it look nicer.
 
-```{r gttablebasic, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE, tab.cap="Consumption time and number of biscuits eaten"}
+```{r, echo=TRUE, eval=FALSE, message=FALSE, warning=FALSE}
 mean_consumer %>%
   gt () %>%
   cols_align(align = "center", columns = everything()) %>%
   fmt_number(columns = c("Time", "Nb biscuits") , decimals = 2) %>%
   tab_header(title = md("**Cons. time and nb. of biscuits eaten**"), 
              subtitle = md ("*Average taken from 99 consumers*"))
+```
+
+```{r gttable, fig.cap='gt Table.', fig.align='center', echo=FALSE, out.width="90%", eval=TRUE}
+knitr::include_graphics("images/gt_table.jpeg")
 ```
 
 Note that we used *Markdown* to style the title and subtitle by wrapping the values passed to the title or subtitle with the `md()` function. In Markdown, `**text**` writes the text in bold, and `*text*` in italic.
@@ -242,7 +248,7 @@ mean_consumer_2 <- mean_consumer %>%
 
 Now that the data is ready, we can display using a similar style as before in which we add some color-code to accentuate products' consumption. We will also add a `note` to the table that expresses the average time used to consumer the biscuits. So let's start with creating the table:
 
-```{r gttabledesigned, message=FALSE, warning=FALSE, results='hide', echo = TRUE, eval = TRUE}
+```{r, message=FALSE, warning=FALSE, results='hide', echo = TRUE, eval = TRUE}
 note <- str_c("Avg. consumption time: ", 
               round(mean(mean_consumer$Time),2), " min")
 
@@ -257,14 +263,19 @@ consumption <- mean_consumer_2 %>%
 
 Now, let's color code the cells based on the average number of biscuits eaten. To color code, the range of average number of biscuits eaten is required. Then, we can use the `col_numeric()` function from the `{scales}` package to generate the colors of interest (in practice, we provide the colour for the minimum, maximum, and the function generates automatically all the colors in between to create the gradient).
 
-<!-- Table cap doesn't appear --> 
-```{r gttablefinal, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE, tab.cap="Number of biscuits eaten"}
+```{r, echo=TRUE, eval=FALSE, message=FALSE, warning=FALSE}
 library(scales)
+
 nb_range <- range(mean_consumer_2$`Nb biscuits`)
+
 consumption %>% 
     data_color(columns=`Nb biscuits`, 
                colors=col_numeric(c("#FEF0D9","#990000"), 
                                   domain=nb_range, alpha=0.75))
+```
+
+```{r gttabledesigned, fig.cap='gt Table - coloring function.', fig.align='center', echo=FALSE, out.width="90%", eval=TRUE}
+knitr::include_graphics("images/gt_table_2.jpeg")
 ```
 
 Applying this strategy of coloring the number of biscuits eaten according to their range makes the table nicer and easier to get insights from. In our case, we can quickly see that groups of products based on their average consumption: Product 10 is the most eaten, followed by a group that include products 5, 2, and 1. At last, samples 8 and 4 are the least consumed samples.
@@ -287,9 +298,12 @@ mean_consumer_2 %>%
   gt_plt_bar_pct(`Nb biscuits (%)`, scaled=TRUE)
 ```
 
-<!-- Tables not being generated because eval=TRUE return an error -->
+```{r gttextratable, fig.cap='gtExtra Table.', fig.align='center', echo=FALSE, out.width="90%", eval=TRUE}
+knitr::include_graphics("images/gt_table_3.jpeg")
+```
 
-In this section, due to their simplicity and flexibility, we emphasized the use of `{flextable}` and `{gt}` to build beautiful tables for your reports. However, there are other alternatives including (amongst others) `{kable}` and `{kableExtra}`, or `{huxtable}` for readers that are not yet fully satisfied.
+
+In this section, due to their simplicity and flexibility, we emphasized the use of `{flextable}` and `{gt}` to build beautiful tables for your reports. However, there are other alternatives including `{kable}` and `{kableExtra}`, or `{huxtable}` for readers that are not yet fully satisfied.
 
 ## Chart Making
 
