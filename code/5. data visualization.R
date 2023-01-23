@@ -49,7 +49,8 @@ library(gt)
 
 file_path <- here("data","biscuits_consumer_test.xlsx") 
 
-mean_consumer <- readxl::read_xlsx(file_path, sheet="Time Consumption") %>%
+mean_consumer <- readxl::read_xlsx(file_path, 
+                                   sheet="Time Consumption") %>%
   dplyr::select(Product, `Time (min)`, `Nb biscuits`) %>%
   separate(`Time (min)`, c("Min", "Sec"), sep="min") %>%
   mutate(across(c("Min","Sec"), as.numeric)) %>% 
@@ -62,14 +63,15 @@ consumer_gt_table <- mean_consumer %>%
   gt () %>%
   cols_align(align = "center", columns = everything()) %>%
   fmt_number(columns = c( "Time", "Nb biscuits") , decimals = 2) %>%
-  tab_header(title = md ("**Consumption time and number of biscuits eaten**"), 
+  tab_header(title = md ("**Cons. time and nb. of biscuits eaten**"), 
              subtitle = md ("*Average taken from 99 consumers*"))
 
 mean_consumer_2 <- mean_consumer %>%
   dplyr::select(-Time) %>%
   arrange(desc(`Nb biscuits`))
 
-note <- str_c("Avg. consumption time: ", round(mean(mean_consumer$Time),2), " min")
+note <- str_c("Avg. consumption time: ", 
+              round(mean(mean_consumer$Time),2), " min")
 
 consumption <- mean_consumer_2 %>%
   gt () %>%
@@ -79,15 +81,18 @@ consumption <- mean_consumer_2 %>%
              subtitle = md ("*Average taken from 99 consumers*")) %>%
   tab_source_note(source_note = note)
 
+library(scales)
+
 nb_range <- range(mean_consumer_2$`Nb biscuits`)
 
-library(scales)
 consumption %>% 
-  data_color(columns=`Nb biscuits`, colors=col_numeric(c("#FEF0D9","#990000"), domain=nb_range, alpha=0.75))
+  data_color(columns=`Nb biscuits`, 
+             colors=col_numeric(c("#FEF0D9","#990000"), 
+                                domain=nb_range, alpha=0.75))
 
 library(gtExtras)
 mean_consumer_2 %>%
-  mutate(`Nb biscuits (%)` = 10*`Nb biscuits`) %>% 
+  mutate(`Nb biscuits (%)` = 100*(`Nb biscuits`/10)) %>% 
   gt () %>%
   cols_align(align = "center", columns = everything()) %>%
   fmt_number(columns = "Nb biscuits" , decimals=2) %>%
@@ -100,14 +105,17 @@ mean_consumer_2 %>%
 
   ## Importing the Data
 file_path <- here("data","biscuits_sensory_profile.xlsx") 
-p_info <- read_xlsx(file_path, sheet="Product Info") %>% 
+
+p_info <- readxl::read_xlsx(file_path, sheet="Product Info") %>% 
   dplyr::select(-Type)
-sensory <- read_xlsx(file_path, sheet="Data") %>% 
+
+sensory <- readxl::read_xlsx(file_path, sheet="Data") %>% 
   inner_join(p_info, by="Product") %>% 
   relocate(Protein:Fiber, .after=Product)
 
 file_path <- here("Data","biscuits_consumer_test.xlsx")
-Nbiscuits <- read_xlsx(file_path, sheet="Time Consumption") %>% 
+
+Nbiscuits <- readxl::read_xlsx(file_path, sheet="Time Consumption") %>% 
   mutate(Product = str_c("P", Product)) %>% 
   rename(N = `Nb biscuits`)
 
@@ -152,25 +160,31 @@ bar_p <- bar_p +
   ylab("Number of Respondents")
 
 bar_p <- bar_p +
-  ggtitle("Distribution of the number of biscuits eaten","(Results are split per biscuit type)")
+  ggtitle("Distribution of the number of biscuits eaten",
+          "(Results are split per biscuit type)")
 
 line_p <- line_p +
   theme_bw()+
   scale_x_continuous(breaks=seq(0,50,10), limits=c(0,60))+
   scale_y_continuous(breaks=seq(0,50,10), limits=c(0,60))+
   coord_fixed()+
-  ggtitle("Relationship between Melting and Sticky", "Biscuits perceived as more sticky tend to be less melting.")+
+  ggtitle("Relationship between Melting and Sticky",
+          "Stickier biscuits tend to be less melting.")+
   guides(colour="none")
 
 line_p +
   theme(panel.grid=element_blank(), 
         panel.border=element_blank(),
-        axis.line=element_line(arrow = arrow(ends = "last", type = "closed")),
+        axis.line=element_line(arrow = arrow(ends = "last", 
+                                             type = "closed")),
         axis.title=element_text(hjust=1))
 
 bar_p + 
-  scale_fill_manual(values=c("P1"="gray50", "P2"="gray50", "P3"="darkorange", "P4"="gray50", "P5"="gray50",
-                             "P6"="gray50", "P7"="gray50", "P8"="gray50", "P9"="gray50", "P10"="gray50"))
+  scale_fill_manual(values=c("P1"="gray50", "P2"="gray50", 
+                             "P3"="darkorange", "P4"="gray50", 
+                             "P5"="gray50", "P6"="gray50",
+                             "P7"="gray50", "P8"="gray50",
+                             "P9"="gray50", "P10"="gray50"))
 
   ## Other modifications
 bar_p + coord_flip()
