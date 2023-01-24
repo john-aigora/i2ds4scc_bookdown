@@ -54,7 +54,7 @@ knitr::include_graphics("images/data_science_workflow2.jpg")
 
 ### Data Collection {#data-collection2}
 
-#### Design
+#### Design {.unnumbered}
 
 From the standpoint of classical statistics, experiments are conducted to test specific hypotheses and proper experimental design ensures that the data collected will allow hypotheses of interest to be tested (c.f. @Fisher1935).  Sir Ronald Fisher, the father of modern statistics, felt so strongly on this topic that he said:
 
@@ -70,11 +70,11 @@ Since Fisher's time, ideas around experimental design have relaxed somewhat, wit
 
 In this book, we take no strong opinions on this topic, as they belong more properly to the study of statistics than to data science.  However, we agree that results from an experiment explicitly designed to test a specific hypothesis should be viewed as more trustworthy than results incidentally obtained.  Moreover, as we describe in Chapter \@ref(machine-learning), well-selected sample sets support more generalizable predictions from machine learning models.
 
-#### Execute
+#### Execute {.unnumbered}
 
 Execution of the actual experiment is a crucial step in the data science workflow, although not one in which  data scientists themselves are necessarily involved.  Even so, it is imperative that data scientists communicate directly and frequently with the experimenters so that nuances of the data are properly understood for modeling and interpretation.  
 
-#### Import
+#### Import {.unnumbered}
 
 Once the data are collected, they need to find their way into a computer's working memory to be analyzed.  This importation process should be fully scripted in code, as we detail in Chapter \@ref(data-collection), and raw data files should never be directly edited.  This discipline ensures that all steps taken to import the data will be understood later and that the reasoning behind all choices will be documented.  Moreover, writing code to import raw data allows for new data to be analyzed quickly in the future as long as the data formatting is consistent.  For sensory scientists, who regularly run similar tests, a streamlined workflow for data import and analysis both saves much time and protects against errors.
 
@@ -82,11 +82,11 @@ Once the data are collected, they need to find their way into a computer's worki
 
 Preparing data for analysis typically involves two steps: data inspection and data cleaning.
 
-#### Inspect {#inspect_2}
+#### Inspect {.unnumbered #inspect_2}
 
 In this step, the main goal is to gain familiarity with the data. Under ideal circumstances, this step includes reviewing the study documentation, including the study background, sampling, design, analysis plan, screener (if any), and questionnaire.  As part of this step, the data should be inspected to ensure they have been imported properly and relevant data quality checks, such as checks for consistency and validity, should be performed.  Preliminary summary tables and charts should also be preformed at this step to help the data scientist gain familiarity with the data.  These steps are discussed in further detail in Section \@ref(inspect) of Chapter \@ref(data-prep).
 
-#### Clean {#clean_2}
+#### Clean {.unnumbered #clean_2}
 
 Data cleaning is the process of preparing data for analysis.  In this step we must identify and correct any errors, and ensure the data are formatted consistently and appropriately for analysis.  As part of this step, we will typically tidy our data, a concept that we cover in more detail in Section \@ref(tidy-data).  It is extremely important than any changes to the data are made in code with the reasons for the changes clearly documented.  This way of working ensures that, a year from now, we don't revisit our analysis to find multiple versions of the input data and not know which version was the one used for the final analysis^[Anyone working in the field for more than five years has almost certainly experienced this problem, perhaps even with their own data and reports].  We discuss data cleaning in further detail in Section \@ref(clean).  
  
@@ -103,15 +103,15 @@ Another cultural difference between the two fields is that data science, evolvin
 
 Data analysis is covered in greater detail in Chapter \@ref(data-analysis).  The typical steps of data analysis are data transformation, exploration, and modeling, which we review below.
 
-#### Transform
+#### Transform {.unnumbered}
 
 Data transformation is slightly different from data preparation.  In data preparation, we prepare the raw data for processing in a non-creative way, such as reshaping existing data or storing character strings representing dates as date formatted variables.  With data transformation, we create new data for analysis by applying functions to the raw data.  These functions can be simple transformations such as inversions or logarithms, or can be summary operations such as computing means and variances, or could be complex operations such as principle components analysis or missing value imputation.  In a machine learning context (see Chapter \@ref(machine-learning)), this step is often referred to as "feature engineering."  In any case, these functions provide the analyst an opportunity to improve the value of the analysis through skillful choices.  Data transformation is covered in more detail in Chapter \@ref(data-analysis).
 
-#### Explore
+#### Explore {.unnumbered}
 
 Just as data transformation differs slightly from data preparation, data exploration differs slightly from data inspection.  When we inspect the data, our goal is to familiarize ourselves with the data and potentially spot errors as we do so.  With data exploration, our goal is to begin to understand the results of the experiment and to allow the data to suggest hypotheses for follow-up analyses or future research.  The key steps of data exploration are graphical visualizations (covered in Chapter \@ref(data-viz)) and exploratory analyses (covered in Chapter \@ref(data-analysis)).  As we will discuss later in this book, employing automated tools for analysis requires caution; the ease with which we can conduct a wide range of analyses increases the risk that chance results will be regarded as meaningful.  In Chapter \@ref(machine-learning) we will discuss techniques, such as cross-validation, that can help mitigate this risk.
 
-#### Model
+#### Model {.unnumbered}
 
 At last we reach the modeling step of our workflow, which is the step in which we conduct formal statistical modeling.  This step may also include predicitve modeling, which we cover in Chapter \@ref(machine-learning), as mentioned above.  One difference between data science and classical statistics is that this step may feed back into the transform and explore steps, as data scientists are typically more willing to allow the data to suggest new hypotheses for testing (recall Tukey's quotation above).  This step is described in further detail in Chapter \@ref(data-analysis).
 
@@ -123,11 +123,11 @@ We now arrive at the final stage of the data science workflow, value delivery, w
 
 From this perspective, our product consists of the final results as provided to the intended audience.  Consequently, we may need to adjust both the results themselves and the way they are presented according to whether the audience consists of product developers, marketing partners, upper management, or even the general public.  Hence, in this stage, we communicate our results and potentially reformulate our outputs so that they will provide maximum value to the intended audience.  Although we describe value delivery in more detail in Chapter \@ref(value-delivery), we briefly review the two steps of value delivery, communicate and reformulate, below.
 
-#### Communicate
+#### Communicate {.unnumbered}
 
-The goal of the communication step is to exchange information stemming from our data scientific work.  Importantly, communication is a two-way street, so it is just as important to listen in this step as it is to share results.  Without feedback from our audience, we won't be able to maximize the impact of our work.  We discuss this topic in more detail in Section \@ref(communicate2), and note that automated reporting, which we cover in Chapter \@ref(auto-report) also plays a large role in this step by saving time in building slides that can later be spent in thinking about the storytelling aspects of our communications.
+The goal of the communication step is to exchange information stemming from our data scientific work.  Importantly, communication is a two-way street, so it is just as important to listen in this step as it is to share results.  Without feedback from our audience, we won't be able to maximize the impact of our work.  We discuss this topic in more detail in Section \@ref(value-delivery), and note that automated reporting, which we cover in Chapter \@ref(auto-report) also plays a large role in this step by saving time in building slides that can later be spent in thinking about the storytelling aspects of our communications.
 
-#### Reformulate
+#### Reformulate {.unnumbered}
 
 In the final step of our data scientific workflow, we incorporate feedback received during the communication step back into the workflow.  This step may involve investigating new questions and revising the way we present results.  Since we seek to work in a reproducible manner, the improvements we make to our communication can be committed to code and the lessons these improvements reflect can be leveraged again in the future.  It is also important to note that, as we reformulate, we may need to return all the way to the data cleaning step, if we learn during the communication step that some aspect of the data import or initial interpretation needs to be revised.  Reformulation is discussed in greater detail in Section \@ref(reformulate2).
 

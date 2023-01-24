@@ -22,7 +22,7 @@ A simple example to illustrate this latter point is the analysis of liking data.
 
 Let *C* consumers provide their hedonic assessments on *P* samples. To evaluate if samples have received different mean liking scores at the population level, an ANOVA is performed on a long thin table with 3 columns (consumer, sample, and the liking scores), where the combination of $C\times{P}$ is spread in rows.
 
-```{r, eval=TRUE, echo=FALSE, message=FALSE, out.width='90%', fig.cap='Example of a table for an Analysis of Variance.'}
+```{r longthin, eval=TRUE, echo=FALSE, message=FALSE, out.width='90%', tab.cap='Example of a table for an Analysis of Variance.'}
 tibble(
   Consumer = c("C1", "C1", "...", "C1", "C2", "...", "c", "...", "C"),
   Product = c("P1", "P2", "...", "P", "P1", "...", "p", "...", "P"),
@@ -35,7 +35,7 @@ tibble(
 
 However, to assess whether consumers have the same preference patterns at the individual level, internal preference mapping or cluster analysis is performed. Both these analyses require as input a short and large table with the *P* products in rows and the *C* consumers in columns. 
 
-```{r, eval=TRUE, echo=FALSE, message=FALSE, out.width='90%', fig.cap='Example of a table for Internal Preference Mapping or Clustering'}
+```{r, eval=TRUE, echo=FALSE, message=FALSE, out.width='90%', tab.cap='Example of a table for Internal Preference Mapping or Clustering'}
 tibble(
   Product = c("P1", "P2", "...", "p", "...", "P"),
   C1 = c(6, 8, "...", 3, "...", 5),
@@ -53,7 +53,7 @@ tibble(
 
 Another example of data manipulation consists in summarizing data, by for instance computing the mean by product of the liking scores, or by generating frequency tables (e.g. distribution of the liking scores by product etc.). In this case, the transformation alters the data as the individual differences are lost. Ultimately, the output table is smaller as it would contain here only *P* rows and 2 columns:
   
-```{r, eval=TRUE, echo=FALSE, message=FALSE, out.width='90%', fig.cap='Example of Mean Table'}
+```{r, eval=TRUE, echo=FALSE, message=FALSE, out.width='90%', tab.cap='Example of Mean Table'}
 tibble(Product = c("P1", "P2", "...", "p", "...", "P"),
        Liking = c(6.4, 8.2, "...", 7.1, "...", 6.1)) %>%
   flextable() %>% 
@@ -72,7 +72,7 @@ Hadley Wickham (@Wickham2014) defined *tidy data* as "data sets that are arrange
 
 We define here as *simple manipulations* any data transformations that can easily be performed in other software such as Excel (using copy-paste, sorting and filtering, creating a pivot table, etc.). However, we strongly recommend performing any sorts of transformation in R as this will reduce the risk of errors, typically be faster, more reliable, and will be reusable if you need to perform the same operations on similar data in the future (including updated versions of the current data set). Moreover, these operations will become easier and more natural for you to use as you get familiar with them. Most importantly, performing these transformations in R do not alter the original data, meaning that changes can be reverted (which is not possible when you alter the raw data directly).
 
-#### Handling Columns
+#### Handling Columns {.unnumbered}
 
 ##### Renaming Variables {.unnumbered #renaming}
 
@@ -134,7 +134,6 @@ If this procedure of renaming variables should be applied on many variables foll
 
 ```{r, eval=FALSE, echo=TRUE}
 library(janitor)
-
 sensory %>%
   clean_names(case = "snake") %>%
   names()
@@ -160,10 +159,6 @@ For re-ordering columns, `relocate()` is being used. This function allows re-pos
 sensory %>%
   relocate(starts_with("Qty"), .after = Product) %>%
   names()
-
-sensory %>%
-  relocate(starts_with("Qty"), .before = Shiny) %>%
-  names()
 ```
 
 ```{r, eval=TRUE, echo=FALSE}
@@ -171,7 +166,15 @@ sensory %>%
   relocate(starts_with("Qty"), .after = Product) %>%
   names() %>%
   .[1:5]
+```
 
+```{r, eval=FALSE, echo=TRUE}
+sensory %>%
+  relocate(starts_with("Qty"), .before = Shiny) %>%
+  names()
+```
+
+```{r, eval=TRUE, echo=FALSE}
 sensory %>%
   relocate(starts_with("Qty"), .before = Shiny) %>%
   names() %>%
@@ -227,7 +230,7 @@ sensory %>%
                 Shiny:Thickness, -contains("olor"))
 ```
 
-More examples illustrating the use of `dplyr::select()` are provided throughout the book. In particular, in the next session, another important function called `across()` will be introduced. This function can also be associated with `dplyr::select()` to give even more freedom in our selection. An example of such application is given in ...
+More examples illustrating the use of `dplyr::select()` are provided throughout the book. In particular, in the next session, another important function called `across()` will be introduced. This function can also be associated with `dplyr::select()` to give even more freedom in our selection.
 
 ##### Creating Columns {.unnumbered}
 
@@ -332,7 +335,7 @@ sensory %>%
 
 This provides the same results as previously, except for the exact value 48 which was assigned as *High* in the `ifelse()` example and to *Medium* in the `case_when()` example. This is due to the way `between()`^[By default, `between(x, value1, value2)` considers value1 <= x <= value2.] considers its borders.
 
-#### Handling Rows
+#### Handling Rows {.unnumbered}
 
 After manipulating columns, the next logical step is to manipulate rows. Such operations include three aspects:
 
@@ -419,7 +422,7 @@ Reshaping the data itself is done through pivoting which allows transitioning fr
 
 To illustrate this, let's start with a fictive example in which we have 3 consumers providing their liking scores for 2 products, This table corresponds to a long and thin format:
 
-```{r, eval=TRUE, echo=FALSE, message=FALSE}
+```{r, eval=TRUE, echo=FALSE, message=FALSE, tab.cap='Fictive example shaped in a long thin format.'}
 library(flextable)
 tibble(Consumer = c("C1", "C1", "C2", "C2", "C3", "C3"),
        Product = c("P1", "P2", "P1", "P2", "P1", "P2"),
@@ -432,7 +435,7 @@ tibble(Consumer = c("C1", "C1", "C2", "C2", "C3", "C3"),
 
 Let's imagine we need to re-structure the data where products are displayed in rows, and consumers in columns. This corresponds to the short and wide format:
 
-```{r, eval=TRUE, echo=FALSE}
+```{r, eval=TRUE, echo=FALSE, tab.cap='Fictive example restructured in a short wide format.'}
 tibble(
   Consumer = c("C1", "C1", "C2", "C2", "C3", "C3"),
   Product = c("P1", "P2", "P1", "P2", "P1", "P2"),
@@ -446,7 +449,7 @@ tibble(
 
 As we will see in the following section, it is very easy to transition from one version to another thanks to `pivot_longer()` and `pivot_wider()`, both being functions from `{tidyr}`.
 
-#### Pivoting Longer {#pivot_longer}
+#### Pivoting Longer {.unnumbered #pivot_longer}
 
 Currently, our `sensory` data table is a table in which we have as many rows as Judge x Product, the different attributes being spread across multiple columns. However, in certain situations, it is relevant to have all the attributes stacked vertically, meaning that the table will have Judge x Product x Attributes rows. Such simple transformation can be done with `pivot_longer()` which takes as inputs the attributes to pivot, the name of the variables that will contain these names (`names_to`), and the name of the column that will contain their entries (`values_to`)
 
@@ -495,7 +498,7 @@ library(reshape2)
 melt(sensory)
 ```
 
-#### Pivoting Wider
+#### Pivoting Wider {.unnumbered}
 
 The complementary/opposite function to `pivot_longer()` is `pivot_wider()`. This function pivots data horizontally, hence reducing the number of rows and increasing the number of columns. In this case, the two main parameters to provide is which column will provide the new columns to create (`name_from`), and what are the values to use to fill this table (`values_from`). 
 
@@ -517,7 +520,7 @@ It is important to notice that the `pivot_wider()` format potentially contains m
 
 In some cases, the final table to generate requires altering the data, by (say) computing the mean across multiple values, or counting the number of occurrences of factor levels for instance. In other words, we summarize the information, which also tend to reduce the size of the table. It is hence no surprise that the function used for such data reduction is called `summarise()` (or `summarize()`, both notation work) and belongs to the `{dplyr}` package.
 
-#### Introduction to Summary Statistics
+#### Introduction to Summary Statistics {.unnumbered}
 
 In practice, `summarise()` applies a function (whether it is the `mean()`, or a simple count using `n()` for instance) on a set of values. Let's compute the mean on all numerical variables of `sensory`:
 
@@ -562,15 +565,12 @@ sensory %>%
 This procedure creates a tibble with 11 rows (product) and 33 columns (32 sensory attributes + 1 column including the product information) which contains the mean per attribute for each sample, also known as the sensory profiles of the products.
 
 > In some cases, the data should not be aggregated across rows, but by rows. In such cases, it is important to specify that each computation should be done per row by using `rowwise()` prior to performing the transformation. For instance, if we would want to extract the minimum between `Shiny`, `Salty`, and `Bitter`, we could write the following code:
->
-```{r, eval=FALSE, echo=TRUE}
-sensory %>%
-  dplyr::select(Judge, Product, Shiny, Salty, Bitter) %>%
-  rowwise() %>%
-  mutate(Min = min(Shiny, Salty, Bitter))
-```
+`sensory %>%`
+  `dplyr::select(Judge, Product, Shiny, Salty, Bitter) %>%`
+  `rowwise() %>%`
+  `mutate(Min = min(Shiny, Salty, Bitter))`
 
-#### Illustrations of Data Manipulation {#means}
+#### Illustrations of Data Manipulation {.unnumbered #means}
 
 Let's review the different transformations presented here by generating the sensory profiles of the samples through different approaches^[It is important to realize that any data manipulation challenge can be tackled in many different ways, so don't be afraid to think out of the box when solving them.].
 
@@ -637,7 +637,7 @@ Through this simple example, we've seen that the same results can be obtained th
 
 It often happens that the data to analyze is stored in different files, and need to be combined or merged. Depending on the situations, different solutions are required.
 
-#### Binding Vertically
+#### Binding Vertically {.unnumbered}
 
 Let's start with a simple example where the tables match in terms of variables, and should be combined vertically. To illustrate this situation, the data stored in the file *excel-scrap.xlsx* is used. This file contains a fictive example in which 12 assessors evaluated 2 samples on 3 attributes in triplicate, each replication being stored in a different sheet.
 
@@ -658,26 +658,22 @@ all_data <- bind_rows(session1, session2, session3, .id = "Session")
 
 This solution works fine, especially since there were only 3 files to combine. Ultimately, we would prefer to automate the reading process so that all the files are directly imported and combined. This more efficient solution is presented in \@ref(import-mult-sheet).
 
-#### Binding Horizontally
+#### Binding Horizontally {.unnumbered}
 
 In other cases, the tables to combine contain different information (variables) on the same entities (rows), and the tables should be merged horizontally. To do so, a first solution consists in using the functions `cbind()` (`{base}`) and/or `bind_cols()` (`{dplyr}`) can be used. However, some of these functions require that the tables to combine must already have the rows in the exact same order (no check is being done) and must be of the same size.
 
 If that is not the case, merging tables should be done using `merge()` (`{base}`), or preferably through the different `*_join()` functions from (`{dplyr}`). For illustration, let's consider these two tables to merge:
 
-```{r, eval=TRUE, echo=FALSE}
-tibble(
-  Product = c("A", "B", "C"),
-  Var1 = c(1, 2, 3)
-) %>%
+```{r, eval=TRUE, echo=FALSE, tab.cap='Tables used to illustrate the different mergeing options.'}
+tibble(Product = c("A", "B", "C"),
+       Var1 = c(1, 2, 3)) %>%
   flextable() %>% 
   font(fontname = "Calibri", part="all") %>% 
   fontsize(size=9, part="all") %>% 
   autofit()
 
-tibble(
-  Product = c("A", "B", "D"),
-  Var2 = c(1, 2, 4)
-) %>%
+tibble(Product = c("A", "B", "D"),
+       Var2 = c(1, 2, 4)) %>%
   flextable() %>% 
   font(fontname = "Calibri", part="all") %>% 
   fontsize(size=9, part="all") %>% 
@@ -688,7 +684,7 @@ Depending on the *merging degree* to consider between tables X and Y, there are 
 
 * `full_join()` keeps all the cases from X and Y regardless whether they are present in the other table or not (in case they are not present, missing values are introduced) [it corresponds to `merge(all=TRUE)`];
 
-```{r, eval=TRUE, echo=FALSE}
+```{r, eval=TRUE, echo=FALSE, tab.cap="Illustration of the 'full_join()' option."}
 tibble(Product = c("A", "B", "C"), Var1 = c(1, 2, 3)) %>%
   full_join(tibble(Product = c("A", "B", "D"), Var2 = c(1, 2, 4)), by = "Product") %>%
   flextable() %>% 
@@ -699,7 +695,7 @@ tibble(Product = c("A", "B", "C"), Var1 = c(1, 2, 3)) %>%
 
 * `inner_join()` only keeps the common cases, i.e. cases that are present in both X and Y [corresponds to `merge(all=FALSE)`];
 
-```{r, eval=TRUE, echo=FALSE}
+```{r, eval=TRUE, echo=FALSE, tab.cap="Illustration of the 'inner_join()' option."}
 tibble(Product = c("A", "B", "C"), Var1 = c(1, 2, 3)) %>%
   inner_join(tibble(Product = c("A", "B", "D"), Var2 = c(1, 2, 4)), by = "Product") %>%
   flextable() %>% 
@@ -710,7 +706,7 @@ tibble(Product = c("A", "B", "C"), Var1 = c(1, 2, 3)) %>%
 
 * `left_join()` keeps all the cases from X [corresponds to `merge(all.x=TRUE, all.y=FALSE)`];
 
-```{r, eval=TRUE, echo=FALSE}
+```{r, eval=TRUE, echo=FALSE, tab.cap="Illustration of the 'left_join()' option."}
 tibble(Product = c("A", "B", "C"), Var1 = c(1, 2, 3)) %>%
   left_join(tibble(Product = c("A", "B", "D"), Var2 = c(1, 2, 4)), by = "Product") %>%
   flextable() %>% 
@@ -721,7 +717,7 @@ tibble(Product = c("A", "B", "C"), Var1 = c(1, 2, 3)) %>%
 
 * `right_join()` keeps all the cases from Y [corresponds to `merge(all.x=FALSE, all.y=TRUE)`];
 
-```{r, eval=TRUE, echo=FALSE}
+```{r, eval=TRUE, echo=FALSE, tab.cap="Illustration of the 'right_join()' option."}
 tibble(Product = c("A", "B", "C"), Var1 = c(1, 2, 3)) %>%
   right_join(tibble(Product = c("A", "B", "D"), Var2 = c(1, 2, 4)), by = "Product") %>%
   flextable() %>% 
@@ -732,7 +728,7 @@ tibble(Product = c("A", "B", "C"), Var1 = c(1, 2, 3)) %>%
 
 * `anti_join()` only keeps the elements from X that are not present in Y (this is particularly useful if you have a tibble Y of elements that you would like to remove from X). 
 
-```{r, eval=TRUE, echo=FALSE}
+```{r, eval=TRUE, echo=FALSE, tab.cap="Illustration of the 'anti_join()' option."}
 table1 <- tibble(Product = c("A", "B", "C"), Var1 = c(1, 2, 3))
 table2 <- tibble(Product = c("A", "B", "D"), Var2 = c(1, 2, 4))
 table1 %>%

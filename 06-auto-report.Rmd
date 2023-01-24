@@ -152,7 +152,7 @@ Note that many more formatting options can be configured through:
 * `freezePane()` to freeze the first row and/or column of the table;
 * `createStyle()` to pre-define a style, or `addStyle()` to apply the styling to selected cells;
 * `setColWidths()` to control column width;
-* `conditionalFormatting()` to format cells based on pre-defined conditions (see next for an example). 
+* `conditionalFormatting()` to format cells based on pre-defined conditions. 
   
 Let's export again the sensory profiles in a second sheet after applying these formatting options:
 
@@ -226,7 +226,7 @@ For more information regarding `{openxlsx}`, please visit (https://rdrr.io/cran/
 
 ### PowerPoint {#powerpoint}
 
-#### Creating a PowerPoint Deck
+#### Creating a PowerPoint Deck {.unnumbered}
 
 Throughout the years, PowerPoint became one of the main supports for presenting results, whether it is in academia, in conference, or in companies. It is hence important to show how reports can be generated in PowerPoint from R. Many solutions exist, however the `{officer}` package is used here as its application is vast while still remaining easy to use.
 
@@ -267,7 +267,7 @@ This code provides more details about the elements available in each type of sli
 
 >Unfortunately, `{officer}` does not provide a function similar to `openxlsx::openXL()` that allows visualizing the file that is currently being build. Instead, the document needs to be saved on the disk using the `print()` function, which takes as entries the PowerPoint file to export (here `pptx_obj`) and its output location.
 
-#### Adding/Moving/Removing Slides
+#### Adding/Moving/Removing Slides {.unnumbered}
 
 With `{officer}`, various actions can be done on the slides. The first logical action consists in adding a new slide to a presentation, in which we will later on export some text, tables, figures, etc. Such action can be done using `add_slide()`, in which the type of slide and the master^[In practice, a unique template can contain slides from different masters.] are informed:
 
@@ -302,7 +302,7 @@ pptx_obj <- pptx_obj %>%
   remove_slide(index=1)
 ```
 
-#### Positioning Information on the Slide
+#### Positioning Information on the Slide {.unnumbered}
 
 On a given slide, any type of content (text, graph, table, etc.) can be exported. To do so, we need to inform *where* to write *what*.
 
@@ -345,7 +345,7 @@ To visualize the different steps done so far, let's save the results on our comp
 print(pptx_obj, "output/my export.pptx")
 ```
 
-#### Exporting Text
+#### Exporting Text {.unnumbered}
 
 In the previous section, we already exported text to slides. Let's go a bit deeper in the process by also showing how to format the text.
 
@@ -401,7 +401,7 @@ pptx_obj <- pptx_obj %>%
           location = ph_location_type(type = 'body'))
 ```
 
-#### Exporting Tables
+#### Exporting Tables {.unnumbered}
 
 After exporting formatted text to slides, let's export tables. 
 
@@ -490,7 +490,7 @@ pptx_obj <- pptx_obj %>%
           ph_location(left = 2, top = 2, width = 4))
 ```
 
-#### Exporting Plots {#exportplots}
+#### Exporting Plots {.unnumbered #exportplots}
 
 The last type of R outputs to export to PowerPoint are figures. Before showing how to export them, let's build a simple bar chart from `senso_mean` using `{ggplot2}`:
 
@@ -742,9 +742,10 @@ Once the document is ready, you can neat it using the `knit` button. This will c
 Its application is various, and can go from report, to teaching material, publication or even books (this book has been written in `{rmarkdown}` and its extension `{bookdown}`), emails, websites, dashboards, surveys etc. Even more interestingly, `{rmarkdown}` can also be combined to `{shiny}` to build interactive reports, dashboards, or teaching materials in which users would (say) import their data set, select the variables to analyze through buttons, chose which analyses and which options to perform, and the results will automatically be generated accordingly.
 
 For more information on `{rmarkdown}` and related packages, please see:
-* (https://bookdown.org/yihui/bookdown/)<https://bookdown.org/yihui/bookdown/>
-* (https://bookdown.org/yihui/rmarkdown-cookbook/)<https://bookdown.org/yihui/rmarkdown-cookbook/>
-* (https://bookdown.org/yihui/rmarkdown/)<https://bookdown.org/yihui/rmarkdown/>
+
+* Bookdown (https://bookdown.org/yihui/bookdown/)<https://bookdown.org/yihui/bookdown/>
+* R Markdown (https://bookdown.org/yihui/rmarkdown/)<https://bookdown.org/yihui/rmarkdown/>
+* R Markdown Cookbook (https://bookdown.org/yihui/rmarkdown-cookbook/)<https://bookdown.org/yihui/rmarkdown-cookbook/>
 
 As mentioned earlier, R Markdown can also be used to generate other types of documents, including presentations. This can be done directly from the `{rmarkdown}` package using *ioslides* presentation (`output: ioslides_presentation` in the metadata), *Slidy* presentation (`output: slidy_presentation`), or *PowerPoint* presentation (`output: powerpoint_presentation` with `reference_doc: my-styles.pptx` to apply your own template) just to name a few. It can also be done using additional packages such as `{xarigan}`.
 
@@ -752,4 +753,4 @@ As mentioned earlier, R Markdown can also be used to generate other types of doc
 
 If R allows you saving time by creating your report within your R-script, or by running your analysis within your report document, it cannot communicate the presentation to your partners/clients for you. However, if the report is very standard (say only key results, tables or figures), or running routinely (say in quality control), R could automatically run the analysis as soon as new data is available, build the report, and send it automatically to you, your manager or your colleagues and partners by email. 
 
-Such process can be done thanks to the `{blastula}` package (see REF).
+Such process can be done thanks to the `{blastula}` package.

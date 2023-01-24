@@ -167,9 +167,6 @@
 \usepackage{wrapfig}
 \usepackage{array}
 \usepackage{hyperref}
-\usepackage{amsmath}
-\usepackage{booktabs}
-\usepackage{caption}
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
@@ -190,7 +187,7 @@
 
 \title{Data Science for Sensory and Consumer Scientists}
 \author{Thierry Worch, Julien Delarue, Vanessa Rios de Souza, and John Ennis}
-\date{2023-01-12}
+\date{2023-01-23}
 
 \begin{document}
 \maketitle
@@ -283,7 +280,15 @@ First and foremost we all thank our partners for their continual support. Arkadi
 \chapter*{About the Author}\label{about-the-author}}
 
 
-Frida Gomam is a famous lady. Police will always let her go.
+Dr.~Thierry Worch is a Data enthusiast who engineers Simple, Meaningful, Automated, Reproducible, Trustworthy solutions to Sensory and Consumer challenges at FrieslandCampina.
+Back in 2009, he started as a project manager at OP\&P Product Research (Utrecht, The Netherlands) before completing his PhD in 2012 on ``the Ideal Profile Analysis: from the validation to the statistical analysis of ideal profile data'' both in collaboration with Pieter Punter (OP\&P), Sébastien Lê and Jérôme Pagès (Agrocampus-Ouest). End of 2012, he joined Qi Statistics as a consultant where he ran clients' projects, participated to research projects, and gave diverse trainings. During that time, he also continued a long collaboration with Logic8 (EyeQuestion Software) where he produced all the R-routines included in the EyeOpenR software. End of 2019, he joined the Global Sensory Department of Friesland-Campina, Wageningen, The Netherlands, where he provides his expertise in Sensory and Consumer Methods, Sensometric, and Data Science.
+Besides publishing various papers related to Sensometric, and participating in many books, he is also the co-author with Sébastien Lê of the book entitled ``Analyzing sensory data with R'' (CRC Press).
+
+Dr.~Julien Delarue is an Associate Professor in Sensory and Consumer Science at UC Davis. He received his Ph.D.~in Food Science at AgroParisTech, and his research focuses on methods to measure sensory perception and preferences and on their effective use in food design.
+
+Dr.~Vanessa de Rios Souza is a Sr.~Computational Sensory Science Consultant at Aigora, and received her Ph.D.~in Food Science at the Universidade Federal de Lavras.
+
+Dr.~John Ennis is the co-founder of Aigora, and a world-renowned authority on the use of artificial intelligence within sensory and consumer science. He is a Ph.D.~mathematician who conducted his postdoctoral studies in computational neuroscience and who has more than a dozen years of experience as a sensory and consumer science consultant.
 
 \mainmatter
 
@@ -1115,7 +1120,8 @@ Git is a version control system that runs locally and automatically organizes an
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(usethis)}
-\FunctionTok{use\_git\_conf}\NormalTok{ (}\AttributeTok{user.name =} \StringTok{"your username"}\NormalTok{, }\AttributeTok{user.email =} \StringTok{"your email address"}\NormalTok{)}
+\FunctionTok{use\_git\_conf}\NormalTok{ (}\AttributeTok{user.name =} \StringTok{"your username"}\NormalTok{, }
+              \AttributeTok{user.email =} \StringTok{"your email address"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1272,7 +1278,8 @@ A schematic of a data scientific workflow is shown in Figure \ref{fig:ds-workflo
 \subsection{Data Collection}\label{data-collection2}}
 
 \hypertarget{design}{%
-\subsubsection{Design}\label{design}}
+\subsubsection*{Design}\label{design}}
+
 
 From the standpoint of classical statistics, experiments are conducted to test specific hypotheses and proper experimental design ensures that the data collected will allow hypotheses of interest to be tested (c.f. \citet{Fisher1935}). Sir Ronald Fisher, the father of modern statistics, felt so strongly on this topic that he said:
 
@@ -1293,12 +1300,14 @@ Experiments and certain planned inquires provide some exceptions and partial exc
 In this book, we take no strong opinions on this topic, as they belong more properly to the study of statistics than to data science. However, we agree that results from an experiment explicitly designed to test a specific hypothesis should be viewed as more trustworthy than results incidentally obtained. Moreover, as we describe in Chapter \ref{machine-learning}, well-selected sample sets support more generalizable predictions from machine learning models.
 
 \hypertarget{execute}{%
-\subsubsection{Execute}\label{execute}}
+\subsubsection*{Execute}\label{execute}}
+
 
 Execution of the actual experiment is a crucial step in the data science workflow, although not one in which data scientists themselves are necessarily involved. Even so, it is imperative that data scientists communicate directly and frequently with the experimenters so that nuances of the data are properly understood for modeling and interpretation.
 
 \hypertarget{import}{%
-\subsubsection{Import}\label{import}}
+\subsubsection*{Import}\label{import}}
+
 
 Once the data are collected, they need to find their way into a computer's working memory to be analyzed. This importation process should be fully scripted in code, as we detail in Chapter \ref{data-collection}, and raw data files should never be directly edited. This discipline ensures that all steps taken to import the data will be understood later and that the reasoning behind all choices will be documented. Moreover, writing code to import raw data allows for new data to be analyzed quickly in the future as long as the data formatting is consistent. For sensory scientists, who regularly run similar tests, a streamlined workflow for data import and analysis both saves much time and protects against errors.
 
@@ -1308,12 +1317,14 @@ Once the data are collected, they need to find their way into a computer's worki
 Preparing data for analysis typically involves two steps: data inspection and data cleaning.
 
 \hypertarget{inspect_2}{%
-\subsubsection{Inspect}\label{inspect_2}}
+\subsubsection*{Inspect}\label{inspect_2}}
+
 
 In this step, the main goal is to gain familiarity with the data. Under ideal circumstances, this step includes reviewing the study documentation, including the study background, sampling, design, analysis plan, screener (if any), and questionnaire. As part of this step, the data should be inspected to ensure they have been imported properly and relevant data quality checks, such as checks for consistency and validity, should be performed. Preliminary summary tables and charts should also be preformed at this step to help the data scientist gain familiarity with the data. These steps are discussed in further detail in Section \ref{inspect} of Chapter \ref{data-prep}.
 
 \hypertarget{clean_2}{%
-\subsubsection{Clean}\label{clean_2}}
+\subsubsection*{Clean}\label{clean_2}}
+
 
 Data cleaning is the process of preparing data for analysis. In this step we must identify and correct any errors, and ensure the data are formatted consistently and appropriately for analysis. As part of this step, we will typically tidy our data, a concept that we cover in more detail in Section \ref{tidy-data}. It is extremely important than any changes to the data are made in code with the reasons for the changes clearly documented. This way of working ensures that, a year from now, we don't revisit our analysis to find multiple versions of the input data and not know which version was the one used for the final analysis\footnote{Anyone working in the field for more than five years has almost certainly experienced this problem, perhaps even with their own data and reports}. We discuss data cleaning in further detail in Section \ref{clean}.
 
@@ -1337,17 +1348,20 @@ Another cultural difference between the two fields is that data science, evolvin
 Data analysis is covered in greater detail in Chapter \ref{data-analysis}. The typical steps of data analysis are data transformation, exploration, and modeling, which we review below.
 
 \hypertarget{transform}{%
-\subsubsection{Transform}\label{transform}}
+\subsubsection*{Transform}\label{transform}}
+
 
 Data transformation is slightly different from data preparation. In data preparation, we prepare the raw data for processing in a non-creative way, such as reshaping existing data or storing character strings representing dates as date formatted variables. With data transformation, we create new data for analysis by applying functions to the raw data. These functions can be simple transformations such as inversions or logarithms, or can be summary operations such as computing means and variances, or could be complex operations such as principle components analysis or missing value imputation. In a machine learning context (see Chapter \ref{machine-learning}), this step is often referred to as ``feature engineering.'' In any case, these functions provide the analyst an opportunity to improve the value of the analysis through skillful choices. Data transformation is covered in more detail in Chapter \ref{data-analysis}.
 
 \hypertarget{explore}{%
-\subsubsection{Explore}\label{explore}}
+\subsubsection*{Explore}\label{explore}}
+
 
 Just as data transformation differs slightly from data preparation, data exploration differs slightly from data inspection. When we inspect the data, our goal is to familiarize ourselves with the data and potentially spot errors as we do so. With data exploration, our goal is to begin to understand the results of the experiment and to allow the data to suggest hypotheses for follow-up analyses or future research. The key steps of data exploration are graphical visualizations (covered in Chapter \ref{data-viz}) and exploratory analyses (covered in Chapter \ref{data-analysis}). As we will discuss later in this book, employing automated tools for analysis requires caution; the ease with which we can conduct a wide range of analyses increases the risk that chance results will be regarded as meaningful. In Chapter \ref{machine-learning} we will discuss techniques, such as cross-validation, that can help mitigate this risk.
 
 \hypertarget{model}{%
-\subsubsection{Model}\label{model}}
+\subsubsection*{Model}\label{model}}
+
 
 At last we reach the modeling step of our workflow, which is the step in which we conduct formal statistical modeling. This step may also include predicitve modeling, which we cover in Chapter \ref{machine-learning}, as mentioned above. One difference between data science and classical statistics is that this step may feed back into the transform and explore steps, as data scientists are typically more willing to allow the data to suggest new hypotheses for testing (recall Tukey's quotation above). This step is described in further detail in Chapter \ref{data-analysis}.
 
@@ -1365,12 +1379,14 @@ We now arrive at the final stage of the data science workflow, value delivery, w
 From this perspective, our product consists of the final results as provided to the intended audience. Consequently, we may need to adjust both the results themselves and the way they are presented according to whether the audience consists of product developers, marketing partners, upper management, or even the general public. Hence, in this stage, we communicate our results and potentially reformulate our outputs so that they will provide maximum value to the intended audience. Although we describe value delivery in more detail in Chapter \ref{value-delivery}, we briefly review the two steps of value delivery, communicate and reformulate, below.
 
 \hypertarget{communicate}{%
-\subsubsection{Communicate}\label{communicate}}
+\subsubsection*{Communicate}\label{communicate}}
 
-The goal of the communication step is to exchange information stemming from our data scientific work. Importantly, communication is a two-way street, so it is just as important to listen in this step as it is to share results. Without feedback from our audience, we won't be able to maximize the impact of our work. We discuss this topic in more detail in Section \ref{communicate2}, and note that automated reporting, which we cover in Chapter \ref{auto-report} also plays a large role in this step by saving time in building slides that can later be spent in thinking about the storytelling aspects of our communications.
+
+The goal of the communication step is to exchange information stemming from our data scientific work. Importantly, communication is a two-way street, so it is just as important to listen in this step as it is to share results. Without feedback from our audience, we won't be able to maximize the impact of our work. We discuss this topic in more detail in Section \ref{value-delivery}, and note that automated reporting, which we cover in Chapter \ref{auto-report} also plays a large role in this step by saving time in building slides that can later be spent in thinking about the storytelling aspects of our communications.
 
 \hypertarget{reformulate}{%
-\subsubsection{Reformulate}\label{reformulate}}
+\subsubsection*{Reformulate}\label{reformulate}}
+
 
 In the final step of our data scientific workflow, we incorporate feedback received during the communication step back into the workflow. This step may involve investigating new questions and revising the way we present results. Since we seek to work in a reproducible manner, the improvements we make to our communication can be committed to code and the lessons these improvements reflect can be leveraged again in the future. It is also important to note that, as we reformulate, we may need to return all the way to the data cleaning step, if we learn during the communication step that some aspect of the data import or initial interpretation needs to be revised. Reformulation is discussed in greater detail in Section \ref{reformulate2}.
 
@@ -1428,7 +1444,7 @@ Let \emph{C} consumers provide their hedonic assessments on \emph{P} samples. To
 
 \begin{longtable}[c]{|p{0.80in}|p{0.69in}|p{0.58in}}
 
-
+\caption{\textcolor[HTML]{000000}{\fontsize{11}{13}\selectfont{\global\setmainfont{Arial}{Example\ of\ a\ table\ for\ an\ Analysis\ of\ Variance.}}}}\label{tab:longthin}\\
 
 \hhline{>{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}-}
 
@@ -1623,7 +1639,8 @@ Hadley Wickham (\citet{Wickham2014}) defined \emph{tidy data} as ``data sets tha
 We define here as \emph{simple manipulations} any data transformations that can easily be performed in other software such as Excel (using copy-paste, sorting and filtering, creating a pivot table, etc.). However, we strongly recommend performing any sorts of transformation in R as this will reduce the risk of errors, typically be faster, more reliable, and will be reusable if you need to perform the same operations on similar data in the future (including updated versions of the current data set). Moreover, these operations will become easier and more natural for you to use as you get familiar with them. Most importantly, performing these transformations in R do not alter the original data, meaning that changes can be reverted (which is not possible when you alter the raw data directly).
 
 \hypertarget{handling-columns}{%
-\subsubsection{Handling Columns}\label{handling-columns}}
+\subsubsection*{Handling Columns}\label{handling-columns}}
+
 
 \hypertarget{renaming}{%
 \paragraph*{Renaming Variables}\label{renaming}}
@@ -2073,7 +2090,8 @@ Since there are only 3 conditions in total here, only two entangled \texttt{ifel
 This provides the same results as previously, except for the exact value 48 which was assigned as \emph{High} in the \texttt{ifelse()} example and to \emph{Medium} in the \texttt{case\_when()} example. This is due to the way \texttt{between()}\footnote{By default, \texttt{between(x,\ value1,\ value2)} considers value1 \textless= x \textless= value2.} considers its borders.
 
 \hypertarget{handling-rows}{%
-\subsubsection{Handling Rows}\label{handling-rows}}
+\subsubsection*{Handling Rows}\label{handling-rows}}
+
 
 After manipulating columns, the next logical step is to manipulate rows. Such operations include three aspects:
 
@@ -2343,7 +2361,8 @@ Let's imagine we need to re-structure the data where products are displayed in r
 As we will see in the following section, it is very easy to transition from one version to another thanks to \texttt{pivot\_longer()} and \texttt{pivot\_wider()}, both being functions from \texttt{\{tidyr\}}.
 
 \hypertarget{pivot_longer}{%
-\subsubsection{Pivoting Longer}\label{pivot_longer}}
+\subsubsection*{Pivoting Longer}\label{pivot_longer}}
+
 
 Currently, our \texttt{sensory} data table is a table in which we have as many rows as Judge x Product, the different attributes being spread across multiple columns. However, in certain situations, it is relevant to have all the attributes stacked vertically, meaning that the table will have Judge x Product x Attributes rows. Such simple transformation can be done with \texttt{pivot\_longer()} which takes as inputs the attributes to pivot, the name of the variables that will contain these names (\texttt{names\_to}), and the name of the column that will contain their entries (\texttt{values\_to})
 
@@ -2429,7 +2448,8 @@ As an alternative to \texttt{pivot\_longer()}, the package called \texttt{\{resh
 \end{Shaded}
 
 \hypertarget{pivoting-wider}{%
-\subsubsection{Pivoting Wider}\label{pivoting-wider}}
+\subsubsection*{Pivoting Wider}\label{pivoting-wider}}
+
 
 The complementary/opposite function to \texttt{pivot\_longer()} is \texttt{pivot\_wider()}. This function pivots data horizontally, hence reducing the number of rows and increasing the number of columns. In this case, the two main parameters to provide is which column will provide the new columns to create (\texttt{name\_from}), and what are the values to use to fill this table (\texttt{values\_from}).
 
@@ -2467,7 +2487,8 @@ It is important to notice that the \texttt{pivot\_wider()} format potentially co
 In some cases, the final table to generate requires altering the data, by (say) computing the mean across multiple values, or counting the number of occurrences of factor levels for instance. In other words, we summarize the information, which also tend to reduce the size of the table. It is hence no surprise that the function used for such data reduction is called \texttt{summarise()} (or \texttt{summarize()}, both notation work) and belongs to the \texttt{\{dplyr\}} package.
 
 \hypertarget{introduction-to-summary-statistics}{%
-\subsubsection{Introduction to Summary Statistics}\label{introduction-to-summary-statistics}}
+\subsubsection*{Introduction to Summary Statistics}\label{introduction-to-summary-statistics}}
+
 
 In practice, \texttt{summarise()} applies a function (whether it is the \texttt{mean()}, or a simple count using \texttt{n()} for instance) on a set of values. Let's compute the mean on all numerical variables of \texttt{sensory}:
 
@@ -2586,7 +2607,8 @@ In some cases, the data should not be aggregated across rows, but by rows. In su
 \end{Shaded}
 
 \hypertarget{means}{%
-\subsubsection{Illustrations of Data Manipulation}\label{means}}
+\subsubsection*{Illustrations of Data Manipulation}\label{means}}
+
 
 Let's review the different transformations presented here by generating the sensory profiles of the samples through different approaches\footnote{It is important to realize that any data manipulation challenge can be tackled in many different ways, so don't be afraid to think out of the box when solving them.}.
 
@@ -2667,7 +2689,8 @@ Through this simple example, we've seen that the same results can be obtained th
 It often happens that the data to analyze is stored in different files, and need to be combined or merged. Depending on the situations, different solutions are required.
 
 \hypertarget{binding-vertically}{%
-\subsubsection{Binding Vertically}\label{binding-vertically}}
+\subsubsection*{Binding Vertically}\label{binding-vertically}}
+
 
 Let's start with a simple example where the tables match in terms of variables, and should be combined vertically. To illustrate this situation, the data stored in the file \emph{excel-scrap.xlsx} is used. This file contains a fictive example in which 12 assessors evaluated 2 samples on 3 attributes in triplicate, each replication being stored in a different sheet.
 
@@ -2687,7 +2710,8 @@ To combine the tables vertically, we could use the basic R function \texttt{rbin
 This solution works fine, especially since there were only 3 files to combine. Ultimately, we would prefer to automate the reading process so that all the files are directly imported and combined. This more efficient solution is presented in \ref{import-mult-sheet}.
 
 \hypertarget{binding-horizontally}{%
-\subsubsection{Binding Horizontally}\label{binding-horizontally}}
+\subsubsection*{Binding Horizontally}\label{binding-horizontally}}
+
 
 In other cases, the tables to combine contain different information (variables) on the same entities (rows), and the tables should be merged horizontally. To do so, a first solution consists in using the functions \texttt{cbind()} (\texttt{\{base\}}) and/or \texttt{bind\_cols()} (\texttt{\{dplyr\}}) can be used. However, some of these functions require that the tables to combine must already have the rows in the exact same order (no check is being done) and must be of the same size.
 
@@ -3069,7 +3093,7 @@ Sometimes (if not often) you have to play with your data, and test displaying it
 
 Regardless of the way you decide to display your data, you must understand visual perception and its application to graphical communication. It is important to spend some time with the design and aesthetic aspects of your visualization. You should be able to recognize smart design by becoming familiar with some aspects and examples of great design. Inattention to the visual design such as tables with improper alignment of numbers, excessive use of lines and fill colors, can greatly diminish their effectiveness. In other words, when used adequately, design should help you communicate your results by \emph{clarifying} it, and not distract your audience from it.
 
-Some important pre-attentive aspects that you should be aware of will be presented in this section, but to read more about visual perception and graphical communication, as well as some examples of great design, we strongly recommend \emph{Storytelling with Data} by Cole Nussbaumer Knaflic and \emph{Show me the Number: Designing Table and Graphs to Enlighten} by Stephen Few. (REF)
+Some important pre-attentive aspects that you should be aware of will be presented in this section, but to read more about visual perception and graphical communication, as well as some examples of great design, we strongly recommend \emph{Storytelling with Data} by Cole Nussbaumer Knaflic (\citet{Knaflic2015}) and \emph{Show me the Number: Designing Table and Graphs to Enlighten} by Stephen Few (\citet{Few2012}).
 
 Since a \emph{picture is worth a thousand words}, let's demonstrate the difference between pre-attentive and attentive processing using an example provided by Stephen Few in his book \emph{Show me the Number: Designing Table and Graphs to Enlighten}. First, take a look at the numbers below and determine, as quickly as you can, how many times the number 5 appears:
 
@@ -3082,12 +3106,12 @@ This appears to be a tedious task and it most likely took you a few minutes beca
 
 Let's do it again, but now using the list of numbers below:
 
-98734979027\textbf{5}1364978231649780231648741\textbf{5}113697412369846321
-1234687923164879130002366\textbf{5}698774646821397486248797964312
-12369874474\textbf{5}78962341680021364789613469174312679812439612
-12332146987412361789461230\textbf{5}0213\textbf{5}467980213648126498731203
+98734979027{\textbf{5}}1364978231649780231648741{\textbf{5}}113697412369846321
+1234687923164879130002366{\textbf{5}}698774646821397486248797964312
+12369874474{\textbf{5}}78962341680021364789613469174312679812439612
+12332146987412361789461230{\textbf{5}}0213{\textbf{5}}467980213648126498731203
 
-This time the task is much easier and you can count the number of times the number 5 appears much faster. This is because we used the \textbf{pre-attentive attribute} of color intensity to distinguish the number five, standing it out in contrast to the rest. This example shows in an easy way the power of pre-attentive attributes for effective visual communication. As stated by Cole Nussbaumer Knaflic in her book \emph{Storytelling with Data}, when we use pre-attentive attributes strategically, we enable our audience to see what we want them to see before they even know they are seeing it!
+This time the task is much easier and you can count the number of times the number 5 appears much faster. This is because we used the \textbf{pre-attentive attribute} of color to distinguish the number five, standing it out in contrast to the rest. This example shows in an easy way the power of pre-attentive attributes for effective visual communication. As stated by Cole Nussbaumer Knaflic in her book \emph{Storytelling with Data}, when we use pre-attentive attributes strategically, we enable our audience to see what we want them to see before they even know they are seeing it!
 
 The various pre-attentive attributes that can be used to draw your audience's attention quickly and create a visual hierarchy of information include \textbf{attributes of form} such as line length, line width, orientation, shape, size, added marks, and enclosure, \textbf{attributes of color} which would be hue and intensity, also spatial position and motion. Some of the strategies for a smart design for graphical communication described by Cole Nussbaumer include:
 
@@ -3101,8 +3125,8 @@ The various pre-attentive attributes that can be used to draw your audience's at
 
 Now the main stage is set, let's focus on how to build nice tables and graphs in R.
 
-\hypertarget{table_making}{%
-\section{Table Making}\label{table_making}}
+\hypertarget{tablemaking}{%
+\section{Table Making}\label{tablemaking}}
 
 By default, R allows printing matrices or data frames as tables. However, these tables cannot be customized and are only informative. An example of table can be shown here:
 
@@ -3128,6 +3152,7 @@ Let's imagine we want to communicate the sensory profiles of the 11 biscuits on 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{file\_path }\OtherTok{\textless{}{-}} \FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{,}\StringTok{"biscuits\_sensory\_profile.xlsx"}\NormalTok{) }
+
 \NormalTok{mean\_sensory }\OtherTok{\textless{}{-}}\NormalTok{ readxl}\SpecialCharTok{::}\FunctionTok{read\_xlsx}\NormalTok{(file\_path, }\AttributeTok{sheet=}\StringTok{"Data"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{select}\NormalTok{(Product, Shiny, Sweet, Sour, Bitter, Salty) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{group\_by}\NormalTok{(Product) }\SpecialCharTok{\%\textgreater{}\%}
@@ -3143,6 +3168,7 @@ Now the correct table has been created, let's represent it in a neater way using
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(flextable)  }
+
 \NormalTok{flex\_table }\OtherTok{\textless{}{-}}\NormalTok{ mean\_sensory }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{flextable}\NormalTok{()}
 \end{Highlighting}
@@ -3156,7 +3182,7 @@ Now the correct table has been created, let's represent it in a neater way using
 
 \begin{longtable}[c]{|p{0.64in}|p{0.59in}|p{0.56in}|p{0.59in}|p{0.59in}|p{0.54in}}
 
-
+\caption{\textcolor[HTML]{000000}{\fontsize{11}{13}\selectfont{\global\setmainfont{Arial}{Basic\ Flextable}}}}\label{tab:unnamed-chunk-101}\\
 
 \hhline{>{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}-}
 
@@ -3257,7 +3283,7 @@ A first simple improvement consists in reducing the number of decimals (\texttt{
 
 \begin{longtable}[c]{|p{0.65in}|p{0.54in}|p{0.57in}|p{0.50in}|p{0.55in}|p{0.51in}}
 
-
+\caption{\textcolor[HTML]{000000}{\fontsize{11}{13}\selectfont{\global\setmainfont{Arial}{Flextable\ -\ aesthetics\ improvements}}}}\label{tab:unnamed-chunk-102}\\
 
 \hhline{>{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}-}
 
@@ -3335,7 +3361,7 @@ A first simple improvement consists in reducing the number of decimals (\texttt{
 
 \end{longtable}
 
-As can be seen, the function names are very intuitive, and so are the options. In particular, it is interesting to see that most functions allows applying changes to the entire table (\texttt{part\ =\ "all"}), the header only (\texttt{part\ =\ "header"}) or the body only (\texttt{part\ =\ "body"}). And even within a part, it is possible to make a sub-selection by selecting the rows (\texttt{i}) or columns (\texttt{j}) to include or exclude: Here, all the text in the body is set in italic except for the product names, hence the option \texttt{j=-1} (read exclude the first column).
+As can be seen, the function names are very intuitive, and so are the options. In particular, it is interesting to see that most functions allows applying changes to the entire table (\texttt{part\ =\ "all"}), the header only (\texttt{part\ =\ "header"}) or the body only (\texttt{part\ =\ "body"}). And even within a part, it is possible to make a sub-selection by selecting the rows (\texttt{i}) or columns (\texttt{j}) to include or exclude. Here, all the text in the body is set in italic except for the product names, hence the option \texttt{j=-1} (read exclude the first column).
 
 After presenting some of the basic aesthetic options, let's go once step further and play around with coloring. For instance, let's imagine we would change the header background and text color, and would want to call the audience's attention by highlighting the optimized formulation. The following code could be used to do this (results are not being saved):
 
@@ -3359,7 +3385,7 @@ After presenting some of the basic aesthetic options, let's go once step further
 
 \begin{longtable}[c]{|p{0.65in}|p{0.54in}|p{0.57in}|p{0.50in}|p{0.55in}|p{0.51in}}
 
-
+\caption{\textcolor[HTML]{000000}{\fontsize{11}{13}\selectfont{\global\setmainfont{Arial}{Flextable\ -\ coloring\ function}}}}\label{tab:unnamed-chunk-103}\\
 
 \hhline{>{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}-}
 
@@ -3448,6 +3474,7 @@ Alternatively, we could decide to be more sober by applying other pre-attentive 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(officer)}
+
 \NormalTok{flex\_table\_design }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{hline}\NormalTok{(}\AttributeTok{i=}\DecValTok{10}\NormalTok{, }\AttributeTok{border=}\FunctionTok{fp\_border}\NormalTok{(}\AttributeTok{color=}\StringTok{"grey70"}\NormalTok{, }\AttributeTok{style=}\StringTok{"dashed"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{autofit}\NormalTok{()}
@@ -3462,7 +3489,7 @@ Alternatively, we could decide to be more sober by applying other pre-attentive 
 
 \begin{longtable}[c]{|p{0.65in}|p{0.54in}|p{0.57in}|p{0.50in}|p{0.55in}|p{0.51in}}
 
-
+\caption{\textcolor[HTML]{000000}{\fontsize{11}{13}\selectfont{\global\setmainfont{Arial}{Flextable\ -\ lines\ adjustment\ function}}}}\label{tab:unnamed-chunk-105}\\
 
 \hhline{>{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}-}
 
@@ -3548,6 +3575,7 @@ Lastly, you can use conditional formatting if you want to highlight some specifi
 \begin{Highlighting}[]
 \NormalTok{color\_code }\OtherTok{\textless{}{-}} \FunctionTok{ifelse}\NormalTok{(mean\_sensory}\SpecialCharTok{$}\NormalTok{Sweet }\SpecialCharTok{\textless{}=} \DecValTok{20}\NormalTok{, }\StringTok{"blue"}\NormalTok{, }
                      \FunctionTok{ifelse}\NormalTok{(mean\_sensory}\SpecialCharTok{$}\NormalTok{Sweet }\SpecialCharTok{\textgreater{}=} \DecValTok{30}\NormalTok{, }\StringTok{"red"}\NormalTok{, }\StringTok{"black"}\NormalTok{))}
+
 \NormalTok{flex\_table\_design }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{color}\NormalTok{(}\AttributeTok{j=}\SpecialCharTok{\textasciitilde{}}\NormalTok{Sweet, }\AttributeTok{color=}\NormalTok{color\_code)}
 \end{Highlighting}
@@ -3561,7 +3589,7 @@ Lastly, you can use conditional formatting if you want to highlight some specifi
 
 \begin{longtable}[c]{|p{0.65in}|p{0.54in}|p{0.57in}|p{0.50in}|p{0.55in}|p{0.51in}}
 
-
+\caption{\textcolor[HTML]{000000}{\fontsize{11}{13}\selectfont{\global\setmainfont{Arial}{Flextable\ -\ conditional\ formatting}}}}\label{tab:unnamed-chunk-107}\\
 
 \hhline{>{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}-}
 
@@ -3686,26 +3714,14 @@ Now that the data is ready, we can display it with some basics adjustments to ma
 \end{Highlighting}
 \end{Shaded}
 
-\begin{longtable}{ccc}
-\caption*{
-{\large \textbf{Cons. time and nb. of biscuits eaten}} \\ 
-{\small \emph{Average taken from 99 consumers}}
-} \\ 
-\toprule
-Product & Time & Nb biscuits \\ 
-\midrule
-1 & $6.47$ & $3.94$ \\ 
-2 & $6.74$ & $4.00$ \\ 
-3 & $6.46$ & $2.91$ \\ 
-4 & $6.48$ & $2.61$ \\ 
-5 & $6.57$ & $4.06$ \\ 
-6 & $6.45$ & $3.42$ \\ 
-7 & $6.55$ & $3.58$ \\ 
-8 & $6.23$ & $2.77$ \\ 
-9 & $6.24$ & $3.01$ \\ 
-10 & $6.95$ & $4.41$ \\ 
-\bottomrule
-\end{longtable}
+\begin{figure}
+
+{\centering \includegraphics[width=0.9\linewidth]{images/gt_table} 
+
+}
+
+\caption{gt Table.}\label{fig:gttable}
+\end{figure}
 
 Note that we used \emph{Markdown} to style the title and subtitle by wrapping the values passed to the title or subtitle with the \texttt{md()} function. In Markdown, \texttt{**text**} writes the text in bold, and \texttt{*text*} in italic.
 
@@ -3741,7 +3757,9 @@ Now, let's color code the cells based on the average number of biscuits eaten. T
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(scales)}
+
 \NormalTok{nb\_range }\OtherTok{\textless{}{-}} \FunctionTok{range}\NormalTok{(mean\_consumer\_2}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Nb biscuits}\StringTok{\textasciigrave{}}\NormalTok{)}
+
 \NormalTok{consumption }\SpecialCharTok{\%\textgreater{}\%} 
     \FunctionTok{data\_color}\NormalTok{(}\AttributeTok{columns=}\StringTok{\textasciigrave{}}\AttributeTok{Nb biscuits}\StringTok{\textasciigrave{}}\NormalTok{, }
                \AttributeTok{colors=}\FunctionTok{col\_numeric}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"\#FEF0D9"}\NormalTok{,}\StringTok{"\#990000"}\NormalTok{), }
@@ -3749,34 +3767,18 @@ Now, let's color code the cells based on the average number of biscuits eaten. T
 \end{Highlighting}
 \end{Shaded}
 
-\setlength{\LTpost}{0mm}
-\begin{longtable}{cc}
-\caption*{
-{\large \textbf{Number of biscuits eaten}} \\ 
-{\small \emph{Average taken from 99 consumers}}
-} \\ 
-\toprule
-Product & Nb biscuits \\ 
-\midrule
-10 & $4.41$ \\ 
-5 & $4.06$ \\ 
-2 & $4.00$ \\ 
-1 & $3.94$ \\ 
-7 & $3.58$ \\ 
-6 & $3.42$ \\ 
-9 & $3.01$ \\ 
-3 & $2.91$ \\ 
-8 & $2.77$ \\ 
-4 & $2.61$ \\ 
-\bottomrule
-\end{longtable}
-\begin{minipage}{\linewidth}
-Avg. consumption time: 6.52 min\\
-\end{minipage}
+\begin{figure}
+
+{\centering \includegraphics[width=0.9\linewidth]{images/gt_table_2} 
+
+}
+
+\caption{gt Table - coloring function.}\label{fig:gttabledesigned}
+\end{figure}
 
 Applying this strategy of coloring the number of biscuits eaten according to their range makes the table nicer and easier to get insights from. In our case, we can quickly see that groups of products based on their average consumption: Product 10 is the most eaten, followed by a group that include products 5, 2, and 1. At last, samples 8 and 4 are the least consumed samples.
 
-Although the package \texttt{\{gt\}} proposed some nice feature, additional options are provided by its extension package called \texttt{\{gtExtras\}} which provides additional themes, formatting capabilities, opinionated diverging color palette, extra tools for highlighting values, possibility of embed bar plots in the table etc. For more information, please check \url{https://jthomasmock.github.io/gtExtras/}.
+Although the package \texttt{\{gt\}} proposed some nice feature, additional options are provided by its extension package called \texttt{\{gtExtras\}} which provides additional themes, formatting capabilities, opinionated diverging color palette, extra tools for highlighting values, possibility of embed bar plots in the table etc. For more information, please check \href{https://jthomasmock.github.io/gtExtras/}{gtExtras}.
 
 To illustrate one of the possible use of \texttt{\{gtExtras\}} let's twist the previous table as following: Since each consumer was provided with a maximum of 10 biscuits, let's transform the average consumption into percentages. We can then re-create the previous table in which we also add a bar-chart based on the percentages:
 
@@ -3796,26 +3798,36 @@ To illustrate one of the possible use of \texttt{\{gtExtras\}} let's twist the p
 \end{Highlighting}
 \end{Shaded}
 
-In this section, due to their simplicity and flexibility, we emphasized the use of \texttt{\{flextable\}} and \texttt{\{gt\}} to build beautiful tables for your reports. However, there are other alternatives including (amongst others) \texttt{\{kable\}} and \texttt{\{kableExtra\}}, or \texttt{\{huxtable\}} for readers that are not yet fully satisfied.
+\begin{figure}
+
+{\centering \includegraphics[width=0.9\linewidth]{images/gt_table_3} 
+
+}
+
+\caption{gtExtra Table.}\label{fig:gttextratable}
+\end{figure}
+
+In this section, due to their simplicity and flexibility, we emphasized the use of \texttt{\{flextable\}} and \texttt{\{gt\}} to build beautiful tables for your reports. However, there are other alternatives including \texttt{\{kable\}} and \texttt{\{kableExtra\}}, or \texttt{\{huxtable\}} for readers that are not yet fully satisfied.
 
 \hypertarget{chart-making}{%
 \section{Chart Making}\label{chart-making}}
 
 ``A picture is worth 1000 words''. This saying definitely applies to Statistics as well, since visual representation of data often appears clearer than the values themselves stored in a table. It is hence no surprise that R is also a powerful tool for building graphics.
 
-In practice, there are various ways to build graphics in R. In fact, R itself comes with an engine for building graphs through the \texttt{plot()} function. An extensive description can be found in (\emph{R Graphics 2nd edition Paul Murrell CRC Press}). Due to its philosophy, its simplicity, and the point of view adopted in this book, we will limit ourselves to graphics built using the \texttt{\{ggplot2\}} package.
+In practice, there are various ways to build graphics in R. In fact, R itself comes with an engine for building graphs through the \texttt{plot()} function. An extensive description can be found in \emph{R Graphics} by Paul Murrell (\citet{Murrell2011}). Due to its philosophy, its simplicity, and the point of view adopted in this book, we will limit ourselves to graphics built using the \texttt{\{ggplot2\}} package.
 
 \hypertarget{philosophy-of-ggplot2}{%
 \subsection{\texorpdfstring{Philosophy of \texttt{\{ggplot2\}}}{Philosophy of \{ggplot2\}}}\label{philosophy-of-ggplot2}}
 
 \texttt{\{ggplot2\}} belongs to the \texttt{\{tidyverse\}}, and was developed by H. Wickham and colleagues at RStudio. It is hence no surprise that a lot of the procedures that we are learning throughout this book also applies to \texttt{\{ggplot2\}}. More generally, building graphics with \texttt{\{ggplot2\}} fits very well within the pipes (\texttt{\%\textgreater{}\%}) system from \texttt{\{magrittr\}}. In fact, \texttt{\{ggplot2\}} works with its own piping system that uses the \texttt{+} symbol instead of \texttt{\%\textgreater{}\%}.
 
-In practice, \texttt{\{ggplot2\}} is a multi-layer graphical tools, and graphics are built by adding layers to existing graphs. The advantage of such procedure is that \texttt{ggplot} objects are not fixed: They can be printed at any time, and can still be improved by adding other layers if needed. To read more about \texttt{\{gglot2\}} and its philosophy, please refer to \url{http://vita.had.co.nz/papers/layered-grammar.pdf}\href{http://vita.had.co.nz/papers/layered-grammar.pdf}{link}.
+In practice, \texttt{\{ggplot2\}} is a multi-layer graphical tools, and graphics are built by adding layers to existing graphs. The advantage of such procedure is that \texttt{ggplot} objects are not fixed: They can be printed at any time, and can still be improved by adding other layers if needed. To read more about \texttt{\{gglot2\}} and its philosophy, please refer to
+\href{http://vita.had.co.nz/papers/layered-grammar.pdf}{\emph{A Layered Grammar of Graphics}} by Hadley Wickham.
 
-Note that since building graphics is limited to one's imagination, it is not possible to tackle each and every possibilities offered by \texttt{\{ggplot2\}} (and its extensions). For that reason, we prefer to focus on how \texttt{\{ggplot2\}}works, and by using as illustration throughout the book examples of graphics that are useful in Sensory and Consumer Science. This should be more than sufficient to get you started, and should cover 90\% of your daily needs. Still, if that should not be sufficient, we invite you to look into the online documentation or to references such as \url{https://r-graph-gallery.com/}\href{https://r-graph-gallery.com/}{link}.
+Note that since building graphics is limited to one's imagination, it is not possible to tackle each and every possibilities offered by \texttt{\{ggplot2\}} (and its extensions). For that reason, we prefer to focus on how \texttt{\{ggplot2\}}works, and by using as illustration throughout the book examples of graphics that are useful in Sensory and Consumer Science. This should be more than sufficient to get you started, and should cover 90\% of your daily needs. Still, if that should not be sufficient, we invite you to look into the online documentation or to references such as \href{https://r-graph-gallery.com/}{\emph{The R Graph Gallery}}.
 
-\hypertarget{getting-started-with-ggplot2}{%
-\subsection{\texorpdfstring{Getting started with \texttt{\{ggplot2\}}}{Getting started with \{ggplot2\}}}\label{getting-started-with-ggplot2}}
+\hypertarget{ggplot2}{%
+\subsection{\texorpdfstring{Getting started with \texttt{\{ggplot2\}}}{Getting started with \{ggplot2\}}}\label{ggplot2}}
 
 To use \texttt{\{ggplot2\}}, it needs to be loaded. This can either be done directly using:
 
@@ -3827,11 +3839,12 @@ To use \texttt{\{ggplot2\}}, it needs to be loaded. This can either be done dire
 
 However, as said before, this step is not always needed since it is part of \texttt{\{tidyverse\}}: At the start of this chapter, when we loaded the \texttt{\{tidyverse\}} package, we also loaded \texttt{\{ggplot2\}}.
 
-To illustrate the use of \texttt{\{ggplot2\}}, both the sensory data (\emph{biscuits\_sensory\_profile.xlsx}) and the number of biscuit eaten by each respondents (\emph{biscuits\_consumer\_test.xlsx}) are used. Although these files have already been loaded in Section @ref(table\_making), let's re-load them:
+To illustrate the use of \texttt{\{ggplot2\}}, both the sensory data (\emph{biscuits\_sensory\_profile.xlsx}) and the number of biscuit eaten by each respondents (\emph{biscuits\_consumer\_test.xlsx}) are used. Although these files have already been loaded in Section \ref{tablemaking}, let's re-load them:
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{file\_path }\OtherTok{\textless{}{-}} \FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{,}\StringTok{"biscuits\_sensory\_profile.xlsx"}\NormalTok{) }
+
 \NormalTok{p\_info }\OtherTok{\textless{}{-}}\NormalTok{ readxl}\SpecialCharTok{::}\FunctionTok{read\_xlsx}\NormalTok{(file\_path, }\AttributeTok{sheet=}\StringTok{"Product Info"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
 \NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Type)}
 
@@ -3875,10 +3888,17 @@ Such information can be provided as such:
 \end{Highlighting}
 \end{Shaded}
 
+\begin{figure}
+\centering
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-118-1.pdf}
+\caption{\label{fig:unnamed-chunk-118}Scatter plot}
+\end{figure}
+
 This code adds a layer that consists of points (defined by \texttt{geom\_point()}) in which the X-axis coordinates are defined by \texttt{Sticky} and the Y-axis coordinates by \texttt{Melting}, as defined through aesthetics (or \texttt{aes()}). This layer is added to the already existing graph \texttt{p}.
 
 \hypertarget{scatter}{%
-\subsubsection{Introduction to Aesthetics}\label{scatter}}
+\subsubsection*{Introduction to Aesthetics}\label{scatter}}
+
 
 In the previous example, one can notice that many points are being printed. This surprising result is logical since \texttt{sensory} contains the raw sensory data, meaning that there are as many points as there are assessors evaluating products.
 
@@ -3890,7 +3910,11 @@ Let's color the points per products to see if we can see any patterns. Since the
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-117-1.pdf}
+\begin{figure}
+\centering
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-119-1.pdf}
+\caption{\label{fig:unnamed-chunk-119}Scatter plot with emphasis on the color through \texttt{aes()}}
+\end{figure}
 
 As you can see, any parameters provided within \texttt{aes()} may depend on a variable (e.g.~\texttt{colour} in the previous example).
 If for any reasons, a specific setting should uniformly be applied to all the elements of the graph, then it should be defined outside \texttt{aes()}.
@@ -3903,7 +3927,11 @@ Let's illustrate this by providing a simple example in which we change the type 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-118-1.pdf}
+\begin{figure}
+\centering
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-120-1.pdf}
+\caption{\label{fig:unnamed-chunk-120}Scatter plot with emphasis on the type of dots through \texttt{pch} and \texttt{cex}}
+\end{figure}
 
 Regardless of the products, all the points are now shown as large squares.
 
@@ -3926,7 +3954,8 @@ Depending on the \texttt{geom\_*()} function considered, different parameters sh
 It may not be clear yet on how those aesthetics work, but don't worry, many examples illustrating the use of these various types of aesthetics are provided throughout the book.
 
 \hypertarget{linechart}{%
-\subsubsection{\texorpdfstring{Introduction to \texttt{geom\_*()} functions}{Introduction to geom\_*() functions}}\label{linechart}}
+\subsubsection*{\texorpdfstring{Introduction to \texttt{geom\_*()} functions}{Introduction to geom\_*() functions}}\label{linechart}}
+
 
 Since \texttt{\{ggplot2\}} is a multi-layer graph, let's add another layer. For example, the name/code of the panelists associated to each point can be printed.
 
@@ -3942,7 +3971,11 @@ To avoid having the label overlapping with the point, the text is slightly shift
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-119-1.pdf}
+\begin{figure}
+\centering
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-121-1.pdf}
+\caption{\label{fig:unnamed-chunk-121}Scatter plot with emphasis on the information displayed through \texttt{geom\_point()} and \texttt{geom\_text()}}
+\end{figure}
 
 One interesting remark is that some information required in \texttt{aes()} is being repeated across the different \texttt{geom\_*()} used. Such writing can be simplified by providing the \texttt{aes()} information that applies to all \texttt{geom\_*()} to the original \texttt{ggplot()} call\footnote{Intrinsically, this is what is done with \texttt{sensory} which is only mentioned within \texttt{ggplot()} and is not repeated across the different \texttt{geom\_*()} functions.}. The previous code hence can be simplified to:
 
@@ -3953,8 +3986,6 @@ One interesting remark is that some information required in \texttt{aes()} is be
   \FunctionTok{geom\_text}\NormalTok{(}\AttributeTok{nudge\_y=}\DecValTok{1}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
-
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-121-1.pdf}
 
 With this new code, you'll notice that:
 
@@ -3974,12 +4005,16 @@ Since the graphics look at the relationship between two quantitative variables, 
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{line\_p }\OtherTok{\textless{}{-}}\NormalTok{ p}\SpecialCharTok{+}
+\NormalTok{line\_p }\OtherTok{\textless{}{-}}\NormalTok{ p }\SpecialCharTok{+}
   \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method=}\NormalTok{lm, }\AttributeTok{formula=}\StringTok{"y\textasciitilde{}x"}\NormalTok{, }\AttributeTok{se=}\ConstantTok{FALSE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-123-1.pdf}
+\begin{figure}
+\centering
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-124-1.pdf}
+\caption{\label{fig:unnamed-chunk-124}Scatter plot with regressionh line through \texttt{geom\_smooth\ ()}}
+\end{figure}
 
 This code adds a regression line to the graphic. It is built using the \texttt{lm()} engine in which the simple linear regression model \texttt{y\textasciitilde{}x} is fitted. This result is somewhat surprising since we have not run any regression yet, meaning that \texttt{geom\_smooth()} is performing this analysis in the background by itself.
 
@@ -3999,23 +4034,37 @@ To create such distribution, a first solution consists in counting for each prod
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{bar\_p }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(Nbiscuits, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{N, }\AttributeTok{fill=}\NormalTok{Product))}\SpecialCharTok{+}
+\NormalTok{bar\_p }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(Nbiscuits, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{N, }\AttributeTok{fill=}\NormalTok{Product)) }\SpecialCharTok{+}
   \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat=}\StringTok{"count"}\NormalTok{, }\AttributeTok{position=}\StringTok{"dodge"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-126-1.pdf}
+\begin{figure}
+\centering
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-127-1.pdf}
+\caption{\label{fig:unnamed-chunk-127}Bar Chart displaying the distribution using \texttt{geom\_bar}}
+\end{figure}
 
 In the background, this corresponds to grouping the data by \texttt{Product}, summarizing the results by counting \texttt{N}, and then performing \texttt{geom\_bar()} in which no transformation is required (we set \texttt{stat="identity"})\footnote{This code could even be simplified by using \texttt{geom\_col()} which corresponds to \texttt{geom\_bar()} with \texttt{stat="identity"} as default.}:
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Nbiscuits }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{count}\NormalTok{(Product, N) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{N, }\AttributeTok{y=}\NormalTok{n, }\AttributeTok{fill=}\NormalTok{Product))}\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat=}\StringTok{"identity"}\NormalTok{, }\AttributeTok{position=}\StringTok{"dodge"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
 As can be seen, these two graphics are identical.
 
-\hypertarget{making-graphs-pretty}{%
-\subsubsection{Making graphs pretty}\label{making-graphs-pretty}}
+\hypertarget{prettygrphs}{%
+\subsubsection*{Making graphs pretty}\label{prettygrphs}}
+
 
 In the two previous graphs generated (stored in \texttt{line\_p} and \texttt{bar\_p}), some features can be changed to produce clearer visualizations. Currently, the background is grey with vertical and horizontal white lines, the legend is positioned on the right side, the axis is defined based on the data itself (and so are the axis titles), there is no title, etc. All these points (and many more) can be modified, as it will be shown in this section.
 
-Let's start with a quick win by completely changing the overall appearance of the graphic. To do so, predefined \emph{themes} with pre-set background (with or without lines, axis lines, etc.) can be applied. The two themes we use the most are \texttt{theme\_minimal()} and \texttt{theme\_bw()} (see \url{https://ggplot2.tidyverse.org/reference/ggtheme.html}\href{https://ggplot2.tidyverse.org/reference/ggtheme.html}{link} for a complete list of pre-defined themes.)
+Let's start with a quick win by completely changing the overall appearance of the graphic. To do so, predefined \emph{themes} with pre-set background (with or without lines, axis lines, etc.) can be applied. The two themes we use the most are \texttt{theme\_minimal()} and \texttt{theme\_bw()} (see \href{hhttps://ggplot2.tidyverse.org/reference/ggtheme.html}{\emph{Complete themes}} for a complete list of pre-defined themes.)
 
 Let's start with improving \texttt{bar\_p} using \texttt{theme\_minimal()}:
 
@@ -4026,11 +4075,15 @@ Let's start with improving \texttt{bar\_p} using \texttt{theme\_minimal()}:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-129-1.pdf}
+\begin{figure}
+\centering
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-130-1.pdf}
+\caption{\label{fig:unnamed-chunk-130}Bar Chart with emphasis on the display through \texttt{theme()}}
+\end{figure}
 
 Rather than using pre-defined themes (or to complement pre-defined themes), the different parameters of the graph can be controlled through \texttt{theme()}.
 
-Let's modify the axes by changing their names and by applying more logical breaks. For instance, the limits of the x-axis can be extended to -1 and 11 to ensure that all the histograms are visible, else R removes some and returns a warning: \texttt{Removed\ 10\ rows\ containing\ missing\ values}.
+Let's modify the axes by changing their names and by applying more logical breaks. For instance, the limits of the x-axis can be extended to -1 and 11 to ensure that all the histograms are visible, else R removes some and returns a warning: \emph{Removed 10 rows containing missing values}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4043,7 +4096,11 @@ Let's modify the axes by changing their names and by applying more logical break
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-131-1.pdf}
+\begin{figure}
+\centering
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-132-1.pdf}
+\caption{\label{fig:unnamed-chunk-132}Bar Chart with emphasis on the display through \texttt{scale\_x\_continuous()} and \texttt{ylab()}}
+\end{figure}
 
 Last but not least, a title is being added to the graph using \texttt{ggtitle()}:
 
@@ -4055,9 +4112,13 @@ Last but not least, a title is being added to the graph using \texttt{ggtitle()}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-133-1.pdf}
+\begin{figure}
+\centering
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-134-1.pdf}
+\caption{\label{fig:unnamed-chunk-134}Bar Chart with emphasis on the display through \texttt{ggtitle()}}
+\end{figure}
 
-Let's apply a similar transformation to \texttt{line\_p}. Here, we are aiming in having a more \emph{realistic} plot using cartesian coordinates, a nice theme, no legend, and a title to the graph.
+Let's apply a similar transformation to \texttt{line\_p}. Here, we are aiming in having a more \emph{realistic} plot using Cartesian coordinates, a nice theme, no legend, and a title to the graph.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4072,7 +4133,11 @@ Let's apply a similar transformation to \texttt{line\_p}. Here, we are aiming in
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-135-1.pdf}
+\begin{figure}
+\centering
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-136-1.pdf}
+\caption{\label{fig:unnamed-chunk-136}Scatter plot with emphasis on the display through \texttt{theme()}, \texttt{scale\_continuous()}, \texttt{coord\_fixed()}, \texttt{ggtitle()} and \texttt{guides()}}
+\end{figure}
 
 \hypertarget{common-charts}{%
 \subsection{Common Charts}\label{common-charts}}
@@ -4089,7 +4154,7 @@ Since making an exhaustive list of plots that are relevant in sensory and consum
   \begin{itemize}
   \tightlist
   \item
-    \texttt{geom\_point()}: create a scatter point (see example Section \ref{scatter})
+    \texttt{geom\_point()}: create a scatter point (see example Section \ref{ggplot2})
   \end{itemize}
 \item
   Line charts:
@@ -4097,9 +4162,9 @@ Since making an exhaustive list of plots that are relevant in sensory and consum
   \begin{itemize}
   \tightlist
   \item
-    \texttt{geom\_line()}: create a line that connects points (see example Section \ref{barchart});
+    \texttt{geom\_line()}: create a line that connects points;
   \item
-    \texttt{geom\_smooth()}: add a regression line (see \ldots);
+    \texttt{geom\_smooth()}: add a regression line (see example Section \ref{ggplot2});
   \item
     \texttt{geom\_hline()} (resp. \texttt{geom\_vline()}): add a horizontal (resp. vertical) line using \texttt{yintercept} (resp. \texttt{xintercept});
   \item
@@ -4111,7 +4176,7 @@ Since making an exhaustive list of plots that are relevant in sensory and consum
   \begin{itemize}
   \tightlist
   \item
-    \texttt{geom\_col()} and \texttt{geom\_bar()}: produce bar-charts by either using the raw values, or by computing the frequencies first (see example Section \ref{barchart});
+    \texttt{geom\_col()} and \texttt{geom\_bar()}: produce bar-charts by either using the raw values, or by computing the frequencies first (see example Section \ref{ggplot2});
   \item
     \texttt{geom\_histogram()} and \texttt{geom\_freqpoly()}: work in a similar way as \texttt{geom\_bar()} except that it divides the x axis into bins before counting the number of observation in each bin and either represent it as bars (\texttt{geom\_histogram}) or lines (\texttt{geom\_freqpoly()}).
   \end{itemize}
@@ -4133,7 +4198,7 @@ Since making an exhaustive list of plots that are relevant in sensory and consum
   \begin{itemize}
   \tightlist
   \item
-    \texttt{geom\_text} and \texttt{geom\_label}: add text to the graph (see example Section \ref{linechart});
+    \texttt{geom\_text} and \texttt{geom\_label}: add text to the graph (see example Section \ref{ggplot2});
   \item
     the package \texttt{\{ggrepel\}} provides alternative functions (\texttt{geom\_text\_repel()} and \texttt{geom\_label\_repel()}) that re-position labels to avoid overlapping (\emph{repel} stands for \emph{repulsive}).
   \end{itemize}
@@ -4143,13 +4208,13 @@ Since making an exhaustive list of plots that are relevant in sensory and consum
   \begin{itemize}
   \tightlist
   \item
-    \texttt{geom\_tile()}, \texttt{geom\_rect}: create area either using its center point (\texttt{geom\_tile()}) or its four corner (\texttt{geom\_rect()}) defined by \texttt{xmin}, \texttt{xmax}, \texttt{ymin}, and \texttt{ymax} (see example\ldots);
+    \texttt{geom\_tile()}, \texttt{geom\_rect}: create area either using its center point (\texttt{geom\_tile()}) or its four corner (\texttt{geom\_rect()}) defined by \texttt{xmin}, \texttt{xmax}, \texttt{ymin}, and \texttt{ymax};
   \item
     \texttt{geom\_raster()}: high performance alternative to \texttt{geom\_tile()}/\texttt{geom\_rect} where all the tiles have the same size.
   \end{itemize}
 \end{itemize}
 
-Besides \texttt{geom*()}, a lot of graphical parameters can further be controlled. This includes of course the \texttt{theme()} and the \texttt{aes()}:
+Besides \texttt{geom\_*()}, a lot of graphical parameters can further be controlled. This includes of course the \texttt{theme()} and the \texttt{aes()}:
 
 \begin{itemize}
 \tightlist
@@ -4158,7 +4223,7 @@ Besides \texttt{geom*()}, a lot of graphical parameters can further be controlle
 \item
   \texttt{axis} parameters including its title (\texttt{axis.title}), text (\texttt{axis.text}), ticks (\texttt{axis.ticks}), line (\texttt{axis.line}), and all their sub-levels.
 \item
-  \texttt{legend} parameters including its position (\texttt{legend.position}), direction (\texttt{legend.direction}), its text (\texttt{legend.text}, \texttt{legend.title}), the design of the box (\texttt{legend.box}, \texttt{legend.background}) etc.
+  \texttt{legend} parameters including its position (\texttt{legend.position}), direction (\texttt{legend.direction}), its text (\texttt{legend.text}, \texttt{legend.title}), the design of the box (\texttt{legend.box}, \texttt{legend.background}), etc.
 \item
   \texttt{panel} parameters including its background (\texttt{panel.background}), the grid lines (\texttt{panel.grid}), the border (\texttt{panel.border}), etc.
 \item
@@ -4194,16 +4259,14 @@ Let's illustrate these concepts using our previous graph stored in \texttt{line\
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-## Warning: The following aesthetics were dropped during statistical transformation: label
-## i This can happen when ggplot fails to infer the correct grouping structure in the data.
-## i Did you forget to specify a `group` aesthetic or to convert a numerical variable into a factor?
-\end{verbatim}
-
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-136-1.pdf}
+\begin{figure}
+\centering
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-137-1.pdf}
+\caption{\label{fig:unnamed-chunk-137}Scatter plot with emphasis on the display through \texttt{theme()}}
+\end{figure}
 
 Similarly to the theme, aesthetics can also be adjusted. In previous examples, the x-axis in \texttt{bar\_p} was adjusted by setting limits, providing breaks and replacing the values by certain labels using \texttt{scale\_x\_continuous()}.
-Most aesthetics parameters can be controlled by equivalent functions for which the name is using the following structure \texttt{scale\_*nameaes*\_*typescale*}, and where:
+Most aesthetics parameters can be controlled by equivalent functions for which the name is using the following structure \texttt{scale\_*nameaes*\_*typescale*}, where:
 
 \begin{itemize}
 \tightlist
@@ -4229,15 +4292,20 @@ Such procedure can be done using \texttt{scale\_fill\_manual()}.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-137-1.pdf}
+\begin{figure}
+\centering
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-138-1.pdf}
+\caption{\label{fig:unnamed-chunk-138}Bar Chart with emphasis on the display through \texttt{scale\_fill\_manual()}}
+\end{figure}
 
 When multiple aesthetics are being used, the legend might become overwhelming or redundant. It is possible to turn off some of these visuals within the \texttt{scale\_*()} functions, or by using \texttt{guides()} and by setting \texttt{nameaes=\textquotesingle{}none\textquotesingle{}} as shown in the \texttt{line\_p} example.
 
 \hypertarget{miscealleneous}{%
 \subsection{Miscealleneous}\label{miscealleneous}}
 
-\hypertarget{structuring-the-axis}{%
-\subsubsection{Structuring the axis}\label{structuring-the-axis}}
+\hypertarget{structureaxis}{%
+\subsubsection*{Structuring the axis}\label{structureaxis}}
+
 
 By default, \texttt{ggplot()} generates plot that fits the data and that fits within the output screen. This means that some graphics might not be perfectly representing the data due to some distortion. In a previous example (\texttt{line\_p}), the dimensions were made comparable through \texttt{coord\_fixed()}.
 
@@ -4249,12 +4317,17 @@ Other transformation can be performed. For instance, the graphic can be transpos
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-138-1.pdf}
+\begin{figure}
+\centering
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-139-1.pdf}
+\caption{\label{fig:unnamed-chunk-139}Bar Chart with emphasis on the display through \texttt{coord\_flip()}}
+\end{figure}
 
-\hypertarget{summary-through-an-example-spider-plots}{%
-\subsubsection{Summary through an example: Spider Plots}\label{summary-through-an-example-spider-plots}}
+\hypertarget{spider}{%
+\subsubsection*{Summary through an example: Spider Plots}\label{spider}}
 
-To conclude this section, and summarize most concepts presented in this chapter, let's introduce the well-known spider plots. The use of such plots are quite polarizing amongst analysts and the reason of this choice here is purely educational, as 1. there are no pre-defined options in \texttt{\{ggplot2\}} that provides such charts, and 2. they present some interesting challenges.
+
+To conclude this section, and summarize most concepts presented in this chapter, let's introduce the well-known spider plots. The use of such plots are quite polarizing among analysts and the reason of this choice here is purely educational, as \textbf{1.} there are no pre-defined options in \texttt{\{ggplot2\}} that provides such charts, and \textbf{2.} they present some interesting challenges.
 
 Let's start with deconstructing a spider-plot: a spider plot is a line chart presented in a circular way. So let's start with building a line chart of our sensory profiles (the means are considered here). For more clarity, only two of the samples (\texttt{P03} and \texttt{POpt}) are represented.
 
@@ -4268,16 +4341,7 @@ Let's start with deconstructing a spider-plot: a spider plot is a line chart pre
   \FunctionTok{summarize}\NormalTok{(}\AttributeTok{Mean =} \FunctionTok{mean}\NormalTok{(Scores)) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{ungroup}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{filter}\NormalTok{(Product }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"P03"}\NormalTok{, }\StringTok{"POpt"}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
 
-\begin{verbatim}
-## `summarise()` has grouped output by 'Product'. You can
-## override using the `.groups` argument.
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \NormalTok{spider\_line }\OtherTok{\textless{}{-}}\NormalTok{ sensory\_mean }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Variables, }\AttributeTok{y=}\NormalTok{Mean, }\AttributeTok{colour=}\NormalTok{Product, }\AttributeTok{linetype=}\NormalTok{Product))}\SpecialCharTok{+}
   \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{pch=}\DecValTok{20}\NormalTok{, }\AttributeTok{cex=}\DecValTok{3}\NormalTok{)}\SpecialCharTok{+}
@@ -4290,11 +4354,6 @@ Let's start with deconstructing a spider-plot: a spider plot is a line chart pre
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
-## i Please use `linewidth` instead.
-\end{verbatim}
-
 Next step is to represent this line chart in a circular way. This can be done using \texttt{coord\_polar()}:
 
 \begin{Shaded}
@@ -4303,11 +4362,15 @@ Next step is to represent this line chart in a circular way. This can be done us
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-140-1.pdf}
+\begin{figure}
+\centering
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-141-1.pdf}
+\caption{\label{fig:unnamed-chunk-141}Line charts using \texttt{coord\_polar()}}
+\end{figure}
 
 This already looks like a spider plot! However, a closer look at it highlights a point that needs improvement: There is no connection between the last attribute (\texttt{Melting}) and the first one (\texttt{Shiny}).
 
-To counter this, the following twofold solution is proposed:
+To counter this, the following two-fold solution is proposed:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -4321,6 +4384,7 @@ To counter this, the following twofold solution is proposed:
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{var }\OtherTok{\textless{}{-}} \FunctionTok{levels}\NormalTok{(sensory\_mean}\SpecialCharTok{$}\NormalTok{Variables)}
+
 \NormalTok{sensory\_mean\_pos }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}\AttributeTok{Variables =} \FunctionTok{c}\NormalTok{(var[}\FunctionTok{length}\NormalTok{(var)], var),}
                   \AttributeTok{Position =} \DecValTok{0}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(var)) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{full\_join}\NormalTok{(sensory\_mean, var\_pos, }\AttributeTok{by=}\StringTok{"Variables"}\NormalTok{)}
@@ -4346,23 +4410,28 @@ The previous graph is then rebuilt by forcing the position of the attributes on 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-143-1.pdf}
+\begin{figure}
+\centering
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-144-1.pdf}
+\caption{\label{fig:unnamed-chunk-144}Spider Plot}
+\end{figure}
 
 By using this trick, the connection between the first and last attributes is established.
 
-\hypertarget{combining-plots}{%
-\subsubsection{Combining plots}\label{combining-plots}}
+\hypertarget{combiningplots}{%
+\subsubsection*{Combining plots}\label{combiningplots}}
 
-When multiple plots should be generated using the same pattern on subset of data, it is possible to generate them automatically using \texttt{facet\_wrap()} or \texttt{facet\_grid()}. The difference between these two functions rely in the number of variables to use for the split: In \texttt{facet\_wrap()}, the graphics are \emph{vectorized}, meaning that each element of the split is represented independently. For \texttt{facet\_grid()} however, the graphics is represented in a matrix, meaning that two blocks of split variables are required, one for the columns and one for the rows.
 
-An example of \texttt{facet\_wrap()} is provided in Section (REF DATA ANALYSIS).
+When multiple plots should be generated using the same pattern on subset of data, it is possible to generate them automatically using \texttt{facet\_wrap()} or \texttt{facet\_grid()}. The difference between these two functions rely on the number of variables to use for the split: In \texttt{facet\_wrap()}, the graphics are \emph{vectorized}, meaning that each element of the split is represented independently. For \texttt{facet\_grid()} however, the graphics is represented in a matrix, meaning that two blocks of split variables are required, one for the columns and one for the rows.
+
+An example of \texttt{facet\_wrap()} is provided in Section \ref{regex}).
 
 For these two functions, the parameter \texttt{scales} is particularly interesting as it allows each separate graph to use its own axis scales (\texttt{free} or individually using \texttt{free\_x}/\texttt{free\_y}) or not (\texttt{fixed}).
 
 To go further, consider also the function \texttt{facet\_trelliscope()} from the \texttt{\{trelliscopejs\}} package. This function generates the same type of graphs as \texttt{facet\_wrap()} or \texttt{facet\_grid()} with some powerful twists. After generating the plots, they are still editable thanks to an interactive menu that controls for the \emph{Grid}, \emph{Labels}, \emph{Filter}, and \emph{Sort}. For example, the number of plots to show per row/column can be adjusted, tables with descriptive statistics (e.g.~mean, minimum, maximum) can be added under each graph, etc. Moreover, readers that are familiar with the interactivity of \texttt{\{plotly\}} can make great use of it through the \texttt{as\_plotly\ =\ TRUE} parameter, which is then applied to each individual graph!
 
-Such procedure is very handy to produce multiple graphs all at once\ldots when the data allow it.
-When multiple plot are being generated separately (using different data set, or producing different types of plots), it can still be relevant to combine them all in one. To perform such collage, the package \texttt{\{patchwork\}} becomes handy.
+Such procedure is very handy to produce multiple graphs all at once\ldots{} when the data allow it.
+When multiple plots are being generated separately (using different data set, or producing different types of plots), it can still be relevant to combine them all in one. To perform such collage, the package \texttt{\{patchwork\}} becomes handy.
 
 \texttt{\{patchwork\}} is a package that allows combining \texttt{ggplot()} graphs using \emph{mathematical} operations. To add two elements next to each others, the \texttt{+} sign is used. To add two elements on top of each others, they should be separated using \texttt{/}. This operation can be combined with \texttt{()} to generate fancier collage.
 
@@ -4371,6 +4440,7 @@ Let's illustrate this by creating a plot with on the left side \texttt{spider\_p
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(patchwork)}
+
 \NormalTok{p }\OtherTok{\textless{}{-}}\NormalTok{ spider\_plot }\SpecialCharTok{+}\NormalTok{ (bar\_p }\SpecialCharTok{/}\NormalTok{ line\_p)}
 \end{Highlighting}
 \end{Shaded}
@@ -4384,27 +4454,37 @@ A general title can be added, as well as tag levels (handy for publications!) us
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-145-1.pdf}
+\begin{figure}
+
+{\centering \includegraphics[width=0.9\linewidth]{images/multiplePlot} 
+
+}
+
+\caption{Multiple plots Example}\label{fig:unnamed-chunk-147}
+\end{figure}
 
 \hypertarget{tipsntricks}{%
 \subsection{Few Additional Tips and Tricks}\label{tipsntricks}}
 
-\hypertarget{combining-data-transformation-and-ggplot2-grammar}{%
-\subsubsection{\texorpdfstring{Combining data transformation and \texttt{\{ggplot2\}} grammar}{Combining data transformation and \{ggplot2\} grammar}}\label{combining-data-transformation-and-ggplot2-grammar}}
+\hypertarget{combining}{%
+\subsubsection*{\texorpdfstring{Combining data transformation and \texttt{\{ggplot2\}} grammar}{Combining data transformation and \{ggplot2\} grammar}}\label{combining}}
+
 
 Both the \texttt{\{tidyverse\}} and \texttt{\{ggplot2\}} are using pipes to combine lines of code or layers.
 However, the pipes themselves are defined differently since \texttt{\{maggritr\}} uses \texttt{\%\textgreater{}\%} whereas \texttt{\{ggplot2\}} uses \texttt{+}.
-It is however possible to combine both systems one after each other, just remember to switch from \texttt{\%\textgreater{}\%} to \texttt{+} as you transition from data transformation/tidying to building your graph (see Section REF).
+It is however possible to combine both systems one after each other, just remember to switch from \texttt{\%\textgreater{}\%} to \texttt{+} as you transition from data transformation/tidying to building your graph (see Chapter \ref{data-manip}).
 
-\hypertarget{ordering-elements-in-a-plot}{%
-\subsubsection{Ordering elements in a plot}\label{ordering-elements-in-a-plot}}
+\hypertarget{ordering}{%
+\subsubsection*{Ordering elements in a plot}\label{ordering}}
 
-When building a graph using a categorical variables, \texttt{\{ggplot2\}} tends to represent the different levels in alphabetical order, especially if the variable is defined as character. Such situation can make the graph more difficult to read, as the categories may not be presented in a logical order (e.g.~fall, spring, summer, winter instead of spring, summer, fall, winter). To ensure that the elements are in the right order, either consider transforming the variables into factor (using \texttt{factor()} by indicating the levels order of your choice, or through \texttt{fct\_inorder()} to keep the order from the file, see Section @ref(pivot\_longer)) or by using a position variable as in the \texttt{spider\_plot} example. The former option also works for ordering elements in the legend.
+
+When building a graph using a categorical variables, \texttt{\{ggplot2\}} tends to represent the different levels in alphabetical order, especially if the variable is defined as character. Such situation can make the graph more difficult to read, as the categories may not be presented in a logical order (e.g.~fall, spring, summer, winter instead of spring, summer, fall, winter). To ensure that the elements are in the right order, either consider transforming the variables into factor (using \texttt{factor()} by indicating the levels order of your choice, or through \texttt{fct\_inorder()} to keep the order from the file, Chapter \ref{data-manip}) or by using a position variable as in the \texttt{spider\_plot} example. The former option also works for ordering elements in the legend.
 
 If the order of the elements should be changed \emph{within the charts} (simple changes such as reverting the order), it can be done directly within the \texttt{geom\_*()} function. This is for instance the case with stacked bar chart, in which the order may be reverted using the parameter \texttt{position\ =\ position\_fill(reverse\ =\ TRUE)} for instance (suggesting here that the split was defined through \texttt{fill} in \texttt{aes()}).
 
-\hypertarget{fixing-overlapping-axis-text}{%
-\subsubsection{Fixing overlapping axis text}\label{fixing-overlapping-axis-text}}
+\hypertarget{overlap}{%
+\subsubsection*{Fixing overlapping axis text}\label{overlap}}
+
 
 When \texttt{ggplot()} are being built using categorical variables, the labels used on the x-axis are often overlapping (some of the labels being then unreadable). A first good/easy solution consists in reducing the size of the label, and/or to shortening them as long as it does not affect its readability. However, this might not always be possible or sufficient, and other adjustments are required. Let's use \texttt{spider\_line} as illustration to show three possible solutions.
 
@@ -4417,7 +4497,11 @@ The first option consists in using \texttt{theme()} and rotating the labels (her
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-146-1.pdf}
+\begin{figure}
+\centering
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-148-1.pdf}
+\caption{\label{fig:unnamed-chunk-148}Spider Plot fixing overlapping through \texttt{theme\ ()}}
+\end{figure}
 
 A second option consists in dodging one every two labels along the X-axis. This option works fine, especially when the labels are not too long. In our example unfortunately, some overlap can still be seen. Note that this option is accessible within \texttt{scale\_x\_discrete()}, not within \texttt{theme()} as we would expect:
 
@@ -4428,12 +4512,17 @@ A second option consists in dodging one every two labels along the X-axis. This 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-147-1.pdf}
+\begin{figure}
+\centering
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-149-1.pdf}
+\caption{\label{fig:unnamed-chunk-149}Spider Plot fixing overlapping through \texttt{scale\_x\_discrete()}}
+\end{figure}
 
 Last option consists in transposing the graph using \texttt{coord\_flip()}. This solution works well since labels on the y-axis are written horizontally. However, this option is not always suitable due to conventions: if it is recommended for bar charts, it may not be for line charts for instance.
 
-\hypertarget{exporting-graphs}{%
-\subsubsection{Exporting graphs}\label{exporting-graphs}}
+\hypertarget{export}{%
+\subsubsection*{Exporting graphs}\label{export}}
+
 
 There are various ways to save or export \texttt{ggplot()} charts. To save these plots to your computer in various formats (e.g.~png, pdf, etc.), \texttt{ggsave()} is used. By default, \texttt{ggsave()} exports the last plot built and saves it in the location defined by \texttt{filename}, in the format defined by \texttt{device} (additional information regarding the width, height, dpi etc. can also be configured).
 
@@ -4445,12 +4534,13 @@ For instance, the \texttt{spiderplot} generated earlier\footnote{Since \texttt{s
 \end{Highlighting}
 \end{Shaded}
 
-As an alternative, \texttt{ggplot()} graphs can also be exported in PowerPoint or Word through the \texttt{\{rvg\}} package (see Section @ref(export\_plots)).
+As an alternative, \texttt{ggplot()} graphs can also be exported in PowerPoint or Word through the \texttt{\{rvg\}} package (see Section \ref{exportplots}).
 
-\hypertarget{additional-libraries}{%
-\subsubsection{Additional libraries}\label{additional-libraries}}
+\hypertarget{additional}{%
+\subsubsection*{Additional libraries}\label{additional}}
 
-\texttt{\{ggplot2\}} is a very powerful tool for data visualization. By default, it offers a very large variety of possibilities, which should cover most situations that you would encounter. If not, a quick internet search will most likely find extensions in alternative packages that wil provide you with solutions.
+
+\texttt{\{ggplot2\}} is a very powerful tool for data visualization. By default, it offers a very large variety of possibilities, which should cover most situations that you would encounter. If not, a quick internet search will most likely find extensions in alternative packages that will provide you with solutions.
 
 To help you further, here is a non-exhaustive list of relevant packages:
 
@@ -4465,7 +4555,7 @@ To help you further, here is a non-exhaustive list of relevant packages:
 \item
   \texttt{\{ggcorrplot\}}: There are many packages that propose to visualize graphically tables of correlations, however we particularly like this one for its simplicity.
 \item
-  \texttt{\{ggwordcloud\}}: It is a great package for building word-clouds as it provides a large degree of control. With this package, the words can either be positioned randomly, by matching a pre-defined shape, etc. But more interestingly, words can also be positioned semi-randomly, hence giving more interpretation power to the final results (for more information, please visit \url{https://lepennec.github.io/ggwordcloud/}\href{https://lepennec.github.io/ggwordcloud/}{link}).
+  \texttt{\{ggwordcloud\}}: It is a great package for building word-clouds as it provides a large degree of control. With this package, the words can either be positioned randomly, by matching a pre-defined shape, etc. But more interestingly, words can also be positioned semi-randomly, hence giving more interpretation power to the final results (for more information, please visit (see \href{https://lepennec.github.io/ggwordcloud/}{\emph{ggwordcloud}}.
 \item
   \texttt{\{ggraph\}}: This package provides neat solutions to build network visualization in \texttt{\{ggplot2\}}.
 \item
@@ -4479,7 +4569,7 @@ To learn more about \texttt{\{ggplot2\}} basics, we recommend two additional sou
 \item
   \texttt{\{esquisse\}}: After loading the package, run the function \texttt{esquisser()}. This command opens a window in which you can select your data set (the data set should be available within you R environment), the type of plot to build, and all the relevant information to build your plot (which variable to be used as X-axis, Y-axis, etc.) through an user-friendly interface. Ultimately, the graph is being generated, but more importantly, the code used to generate the plot is provided. This is hence an educational tool to learn build graphs with \texttt{\{ggplot2\}}.
 \item
-  \url{https://www.data-to-viz.com/}\href{https://www.data-to-viz.com/}{link} provides a wide gallery of graphics sorted by the type of data that you have. Each graphic proposed is illustrated with an example provided in R (often in \texttt{\{ggplot2\}}) and in Python. This website is hence inspirational and educational both at the same time!
+  \href{https://www.data-to-viz.com/}{\emph{from Data to Viz}} provides a wide gallery of graphics sorted by the type of data that you have. Each graphic proposed is illustrated with an example provided in R (often in \texttt{\{ggplot2\}}) and in Python. This website is hence inspirational and educational both at the same time!
 \end{itemize}
 
 \hypertarget{auto-report}{%
@@ -5131,8 +5221,8 @@ Finally, to export a \emph{flextable} table to a PowerPoint deck, simply export 
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{export_plots}{%
-\subsubsection{Exporting Plots}\label{export_plots}}
+\hypertarget{exportplots}{%
+\subsubsection{Exporting Plots}\label{exportplots}}
 
 The last type of R outputs to export to PowerPoint are figures. Before showing how to export them, let's build a simple bar chart from \texttt{senso\_mean} using \texttt{\{ggplot2\}}:
 
@@ -5692,16 +5782,16 @@ Alternately, the \texttt{WilliamsDesign()} function in \texttt{\{SensoMineR\}} a
 
 \begin{verbatim}
 ##          Rank 1 Rank 2 Rank 3 Rank 4 Rank 5
-## Judge 1       2      1      3      4      5
-## Judge 2       1      4      2      5      3
-## Judge 3       4      5      1      3      2
-## Judge 4       5      3      4      2      1
-## Judge 5       3      2      5      1      4
-## Judge 6       5      4      3      1      2
-## Judge 7       3      5      2      4      1
-## Judge 8       2      3      1      5      4
-## Judge 9       1      2      4      3      5
-## Judge 10      4      1      5      2      3
+## Judge 1       1      4      2      5      3
+## Judge 2       4      5      1      3      2
+## Judge 3       5      3      4      2      1
+## Judge 4       3      2      5      1      4
+## Judge 5       2      1      3      4      5
+## Judge 6       3      5      2      4      1
+## Judge 7       2      3      1      5      4
+## Judge 8       1      2      4      3      5
+## Judge 9       4      1      5      2      3
+## Judge 10      5      4      3      1      2
 \end{verbatim}
 
 Suppose you want to include 20 judges in the experiment, you would then need to duplicate the initial design.
@@ -5715,26 +5805,26 @@ Suppose you want to include 20 judges in the experiment, you would then need to 
 
 \begin{verbatim}
 ##         Rank 1 Rank 2 Rank 3 Rank 4 Rank 5
-## judge1       2      1      3      4      5
-## judge2       1      4      2      5      3
-## judge3       4      5      1      3      2
-## judge4       5      3      4      2      1
-## judge5       3      2      5      1      4
-## judge6       5      4      3      1      2
-## judge7       3      5      2      4      1
-## judge8       2      3      1      5      4
-## judge9       1      2      4      3      5
-## judge10      4      1      5      2      3
-## judge11      2      1      3      4      5
-## judge12      1      4      2      5      3
-## judge13      4      5      1      3      2
-## judge14      5      3      4      2      1
-## judge15      3      2      5      1      4
-## judge16      5      4      3      1      2
-## judge17      3      5      2      4      1
-## judge18      2      3      1      5      4
-## judge19      1      2      4      3      5
-## judge20      4      1      5      2      3
+## judge1       1      4      2      5      3
+## judge2       4      5      1      3      2
+## judge3       5      3      4      2      1
+## judge4       3      2      5      1      4
+## judge5       2      1      3      4      5
+## judge6       3      5      2      4      1
+## judge7       2      3      1      5      4
+## judge8       1      2      4      3      5
+## judge9       4      1      5      2      3
+## judge10      5      4      3      1      2
+## judge11      1      4      2      5      3
+## judge12      4      5      1      3      2
+## judge13      5      3      4      2      1
+## judge14      3      2      5      1      4
+## judge15      2      1      3      4      5
+## judge16      3      5      2      4      1
+## judge17      2      3      1      5      4
+## judge18      1      2      4      3      5
+## judge19      4      1      5      2      3
+## judge20      5      4      3      1      2
 \end{verbatim}
 
 The downside of Williams's Latin square designs is that the number of samples (\emph{k}) to be evaluated dictates the number of judges. For an even number of samples you must have a multiple of \emph{k} judges, and a multiple of \emph{2k} judges for an odd number of samples.
@@ -5758,19 +5848,19 @@ As the total number of judges in your study may not always be exactly known in a
 \begin{verbatim}
 ##      rank
 ## judge 1 2 3 4 5
-##    1  5 1 4 3 2
-##    2  1 3 5 2 4
-##    3  3 2 1 4 5
-##    4  2 4 3 5 1
-##    5  4 5 2 1 3
-##    6  2 3 4 1 5
-##    7  4 2 5 3 1
-##    8  5 4 1 2 3
-##    9  1 5 3 4 2
-##    10 3 1 2 5 4
-##    11 5 1 4 3 2
-##    12 1 3 5 2 4
-##    13 3 2 1 4 5
+##    1  1 2 3 4 5
+##    2  2 4 1 5 3
+##    3  4 5 2 3 1
+##    4  5 3 4 1 2
+##    5  3 1 5 2 4
+##    6  5 4 3 2 1
+##    7  3 5 1 4 2
+##    8  1 3 2 5 4
+##    9  2 1 4 3 5
+##    10 4 2 5 1 3
+##    11 1 2 3 4 5
+##    12 2 4 1 5 3
+##    13 4 5 2 3 1
 \end{verbatim}
 
 In the code above, \texttt{xtabs()} is used to arrange the design in a table format that is convenient for the experimenter.
@@ -5815,16 +5905,16 @@ The \texttt{optimaldesign()} function of \texttt{\{SensoMineR\}} can be used to 
 
 \begin{verbatim}
 ##             Rank 1 Rank 2 Rank 3
-## Panelist 1       3      5      2
-## Panelist 2       5      1      3
-## Panelist 3       1      4      3
-## Panelist 4       3      4      2
-## Panelist 5       2      3      1
-## Panelist 6       4      2      1
-## Panelist 7       5      1      4
-## Panelist 8       1      2      5
-## Panelist 9       2      5      4
-## Panelist 10      4      3      5
+## Panelist 1       4      2      5
+## Panelist 2       1      4      2
+## Panelist 3       2      5      3
+## Panelist 4       1      5      4
+## Panelist 5       5      2      1
+## Panelist 6       5      3      4
+## Panelist 7       3      1      5
+## Panelist 8       2      1      3
+## Panelist 9       3      4      1
+## Panelist 10      4      3      2
 \end{verbatim}
 
 BIBD are only possible for certain combinations of numbers of treatment (products), numbers of blocks (judges), and block size (number of samples per judge). Note that \texttt{optimaldesign()} will yield a design even if it is not balanced but it will also generate contingency tables allowing you to evaluate the design's orthogonality, and how well balanced are order and carry-over effects.
@@ -5849,9 +5939,81 @@ One may also be tempted to use incomplete balanced block designs for hedonic tes
 
 Suppose you are designing a consumer test of chocolate chip cookies in which a majority of cookies are made with milk chocolate while a few cookies are made with dark chocolate chips. If a participant only evaluates samples that have milk chocolate chips, this participant will not know about the existence of dark chocolate and will potentially give very different scores compared to what they would have if they had a full view of the product category.
 
-To reduce the risks incurred by the use of BIBD, an alternative strategy is to use a sensory informed design. Its principle is to allocate each panelist a subset of products that best cover the sensory diversity of the initial product set. Pragmatically, this amounts to maximizing the sensory distance between drawn products \citep{Franczak2015}. Of course, this supposes that one has sensory data to rely on in the first place.
+To reduce the risks incurred by the use of BIBD, an alternative strategy is to use a sensory informed design. Its principle is to allocate each panelist a subset of products that best cover the sensory diversity of the initial product set. Of course, this supposes that one has sensory data to rely on in the first place. Such data could derive from conventional descriptive analysis but rapid methods such as free sorting or napping could suffice.
+Practically, covering the sensory diversity amounts to maximizing the sensory distance between drawn products. \citet{Franczak2015} suggest an iterative algorithm to build such a design.
 
-\begin{center}\includegraphics[width=0.9\linewidth]{images/sensory_doe} \end{center}
+\citet{benslama1998} have also proposed to select D-optimal subsets of products as a way to reduce the number of products in preference mapping studies.\footnote{See also \citep{riviere2006}, for an interesting comparison of this approach with an adaptive sequential consumer test for preference analysis using Kano's model of satisfaction.}
+
+Selecting a D-optimal subset of products can be easily done with the Federov algorithm. Let's take, for example, the cocktail dataset from the \texttt{\{SensoMineR\}} package. It contains a sensory descriptive analysis of 16 cocktails (\texttt{senso.cocktail}).
+Now, let's pretend that we want to conduct a hedonic test on these cocktails in the view of performing a preference mapping. Asking each consumer to evaluate all 16 cocktails may be considered to be too much (even if they don't contain alcohol!). We will thus use the \texttt{optFederov()} function of \texttt{\{AlgDesign\}} to select a D-optimal subset of, say, 8 cocktails. For that, we first need to run a PCA on the full sensory data. Then we use the coordinates of the products on the principal components (PC) to build our design. Here, we only pick the first two PC dimensions, but the analyst could select other dimensions that are deemed relevant to describe the product set (but keep in mind that increasing the number of dimensions will require a higher minimum number of products to be able to fit the corresponding models).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(SensoMineR)}
+\FunctionTok{data}\NormalTok{(cocktail)}
+
+\NormalTok{cocktail\_pca }\OtherTok{\textless{}{-}}\NormalTok{ senso.cocktail }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{PCA}\NormalTok{(}\AttributeTok{graph =} \ConstantTok{FALSE}\NormalTok{)}
+
+\NormalTok{Prod\_coord }\OtherTok{\textless{}{-}}\NormalTok{ cocktail\_pca}\SpecialCharTok{$}\NormalTok{ind}\SpecialCharTok{$}\NormalTok{coord[,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+Assuming a full quadratic model (for the preference mapping), we can now use \texttt{optFederov()} to select a D-optimal subset of the desired number of products (here \texttt{ntrials=8}). The resulting selection will maximize the determinant of the information matrix (X'X) corresponding to the quadratic model. However, we can also decide to specify products that we want to be kept in the selection. Here, let's impose the selection of products 7 and 13.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(AlgDesign)}
+\NormalTok{Dopt\_des }\OtherTok{\textless{}{-}} \FunctionTok{optFederov}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\FunctionTok{quad}\NormalTok{(.), Prod\_coord, }\AttributeTok{nTrials=}\DecValTok{8}\NormalTok{, }\AttributeTok{criterion=}\StringTok{"D"}\NormalTok{, }\AttributeTok{augment =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{rows =} \FunctionTok{c}\NormalTok{(}\DecValTok{7}\NormalTok{,}\DecValTok{13}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+The resulting selection is listed in \texttt{Dopt\_des\$rows} and can be highlighted on the PCA score plot using \texttt{\{factoextra\}} using the \texttt{col.ind\ =} argument.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(factoextra)}
+
+\NormalTok{Prod\_coord }\OtherTok{\textless{}{-}}\NormalTok{ Prod\_coord }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{as\_tibble}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{rownames\_to\_column}\NormalTok{(}\StringTok{"Product"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{DOpt\_subset =} \FunctionTok{ifelse}\NormalTok{(Product }\SpecialCharTok{\%in\%}\NormalTok{ Dopt\_des}\SpecialCharTok{$}\NormalTok{rows,}\StringTok{"selected"}\NormalTok{, }\StringTok{"others"}\NormalTok{))}
+
+\FunctionTok{fviz\_pca\_ind}\NormalTok{(cocktail\_pca,}
+             \AttributeTok{geom.ind =} \FunctionTok{c}\NormalTok{(}\StringTok{"point"}\NormalTok{, }\StringTok{"text"}\NormalTok{),}
+             \AttributeTok{pointsize =} \DecValTok{3}\NormalTok{,}
+             \AttributeTok{labelsize =} \DecValTok{4}\NormalTok{, }\AttributeTok{repel =} \ConstantTok{TRUE}\NormalTok{,}
+             \AttributeTok{col.ind =}\NormalTok{ Prod\_coord}\SpecialCharTok{$}\NormalTok{DOpt\_subset,}
+             \AttributeTok{palette =} \FunctionTok{c}\NormalTok{(}\StringTok{"\#949494"}\NormalTok{, }\StringTok{"\#00AFBB"}\NormalTok{),}
+             \AttributeTok{legend.title =} \StringTok{"Subset"}\NormalTok{,}
+             \AttributeTok{show.legend.text =} \ConstantTok{FALSE}\NormalTok{,}
+             \AttributeTok{mean.point =} \ConstantTok{FALSE}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+If needed, the coordinates of the D-optimal selection \texttt{Dopt\_des\$design} can be exported as a tibble and displayed with \texttt{flextable}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(flextable)}
+
+\NormalTok{Subset\_coord }\OtherTok{\textless{}{-}}\NormalTok{ Dopt\_des}\SpecialCharTok{$}\NormalTok{design }\SpecialCharTok{\%\textgreater{}\%}
+                \FunctionTok{as\_tibble}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+                \FunctionTok{mutate}\NormalTok{(}\StringTok{"Product"} \OtherTok{=} \FunctionTok{factor}\NormalTok{(Dopt\_des}\SpecialCharTok{$}\NormalTok{rows), }\AttributeTok{.before=}\DecValTok{1}\NormalTok{)}
+
+\FunctionTok{flextable}\NormalTok{(Subset\_coord) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{colformat\_double}\NormalTok{(}\AttributeTok{digits =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Finally, it could be useful to calculate the determinant of the information matrix (assuming a quadratic model):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Xopti }\OtherTok{=} \FunctionTok{model.matrix}\NormalTok{(}\SpecialCharTok{\textasciitilde{}} \FunctionTok{quad}\NormalTok{(.), Dopt\_des}\SpecialCharTok{$}\NormalTok{design)}
+\FunctionTok{det}\NormalTok{(}\FunctionTok{t}\NormalTok{(Xopti)}\SpecialCharTok{\%*\%}\NormalTok{Xopti)}
+\end{Highlighting}
+\end{Shaded}
 
 \hypertarget{product-related-designs}{%
 \section{Product-related designs}\label{product-related-designs}}
@@ -5882,7 +6044,7 @@ The \texttt{\{mixexp\}} package offers a very convenient way to do this. In addi
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-199-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-205-1.pdf}
 
 Suppose that we want to adjust a biscuit recipe to optimize its sensory properties, we can design an experiment in which the proportion of ingredients vary. Let's play with butter, sugar, and flour. All three combined would account for 75\% of the dough recipe and the remaining 25\% would consist of other ingredients that we won't modify here (eggs, milk, chocolate, etc.). Besides, not any amount of these three ingredients would make sense (a biscuit with 75\% of butter is not a biscuit, even in Brittany). We thus need to add constraints (ex: butter varies between 15 and 30\% of this blend, sugar varies between 25 and 40\%, and flour varies between 30 and 50\%). Given this set of constraints (defined by \texttt{uc} for the upper contraints, and \texttt{lc} for the lower constraints), we can use \texttt{mixexp::Xvert} to find the extreme vertices of our design (by also including a edge centroid using \texttt{ndm=1}):
 
@@ -5912,7 +6074,7 @@ However, this design implies creating 11 mixtures, which is more than needed to 
 ## columns are ignored. Use cornerlabs and axislabs to change variable names in the plot.
 \end{verbatim}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-201-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-207-1.pdf}
 
 Once the design is built, it could be desirable to randomize the order in which each sample is being made, to avoid further biases. Suppose that we obtain average liking scores for our 9 biscuits as given in Table \ref{tab:biscuit-mixt} and stored in \texttt{Bmixt}:
 
@@ -6022,7 +6184,7 @@ Regardless of the construction of the mixture design, ternary diagrams are easy 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-203-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-209-1.pdf}
 
 From these data. the optimal biscuit would have 31\% of sugar, 27\% of butter, and 42\% of flour, and would reach a predicted liking score larger than 8.
 
@@ -6492,7 +6654,7 @@ A first approach to inspect and visualize where the missing values are is by rep
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-220-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-226-1.pdf}
 
 As can be seen, missing values are only present in few variables. However, \texttt{Sour} contains up to 10\% of missing data, which can be quite critical in some situations.
 
@@ -6521,7 +6683,7 @@ To answer these questions, the \texttt{\{naniar\}} package provides an interesti
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-222-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-228-1.pdf}
 
 It seems here that the only connection between NAs is observed between \texttt{Light} and \texttt{Color\ contrast}.
 
@@ -6534,7 +6696,7 @@ Such relational structure can also be visualized in a scatter plot using the \te
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-223-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-229-1.pdf}
 
 Here, the relationship between \texttt{Product} and \texttt{Sour} is shown. Such plot may help decide what to do with missing values, whether it is ignoring, removing, or predicting them.
 
@@ -7675,7 +7837,7 @@ Rather than showing the results in a table, let's visualize them graphically as 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-255-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-261-1.pdf}
 
 It appears that the evaluated biscuits differ the most (top 5) for \texttt{Initial\ hardness}, \texttt{Shiny}, \texttt{Dairy\ flavor}, \texttt{External\ color\ intensity}, and \texttt{Thickness}.
 
@@ -7731,7 +7893,7 @@ To illustrate this, let's reproduce the product map by coloring the products usi
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-260-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-266-1.pdf}
 
 Here, \texttt{repel=TRUE} uses \texttt{geom\_text\_repel()} from \texttt{\{ggrepel\}} (rather than \texttt{geom\_text()} from \texttt{\{ggplot2\}}) to avoid having labels overlapping.
 
@@ -7845,28 +8007,28 @@ Histograms are a nice way to visualize proportions and to compare them over seve
 ## $Housing
 \end{verbatim}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-263-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-269-1.pdf}
 
 \begin{verbatim}
 ## 
 ## $`Income range`
 \end{verbatim}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-263-2.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-269-2.pdf}
 
 \begin{verbatim}
 ## 
 ## $`Living area`
 \end{verbatim}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-263-3.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-269-3.pdf}
 
 \begin{verbatim}
 ## 
 ## $Occupation
 \end{verbatim}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-263-4.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-269-4.pdf}
 
 \hypertarget{regex}{%
 \subsection{Eating behavior traits: TFEQ data}\label{regex}}
@@ -7970,7 +8132,7 @@ From this table, histograms representing the frequency distribution for each var
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-268-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-274-1.pdf}
 
 Structured questionnaires such as the TFEQ are very frequent in sensory and consumer science. They are used to measure individual patterns as diverse as personality traits, attitudes, food choice motives, engagement, social desirability bias, etc. Ultimately, the TFEQ questionnaire consists in a set of structured questions whose respective answers combine to provide a TFEQ score (actually, three scores, one for Disinhibition, one for Restriction and one for sensitivity to Hunger). This TFEQ scores translate into certain food behavior tendencies.
 
@@ -8053,7 +8215,7 @@ Such results can then be visualized graphically, for instance by representing th
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-273-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-279-1.pdf}
 
 \hypertarget{tibble-use}{%
 \section{Consumer Data}\label{tibble-use}}
@@ -8153,7 +8315,7 @@ To further compare the liking assessment of the samples after the first bite and
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-277-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-283-1.pdf}
 
 As can be seen, the pattern of liking scores across samples is indeed very stable across the evaluation, particularly in terms of rank. At the individual level, such linear relationship is also observed (here for the first 12 consumers):
 
@@ -8175,7 +8337,7 @@ As can be seen, the pattern of liking scores across samples is indeed very stabl
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-278-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-284-1.pdf}
 
 \begin{quote}
 For your own curiosity, we invite you to re-create the same graph by comparing the Liking score at the end of the evaluation (\texttt{after\_liking}) with the liking score measured on the 9pt categorical scale (\texttt{end\_liking\ 9pt}), and to reflect on the results obtained. Are the consumers consistent in their evaluations?
@@ -8252,7 +8414,7 @@ Ultimately, the relationship between the liking score and the number of biscuits
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-282-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-288-1.pdf}
 
 \hypertarget{combining-sensory-and-consumer-data}{%
 \section{Combining Sensory and Consumer Data}\label{combining-sensory-and-consumer-data}}
@@ -8298,7 +8460,7 @@ Such analysis is split in 3 steps:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-283-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-289-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -8307,7 +8469,7 @@ Such analysis is split in 3 steps:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-283-2.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-289-2.pdf}
 
 As can be seen, the consumers are quite in agreement as all the black arrows are pointing in a similar direction.
 In overall, they seem to like biscuits that are sweet, with cereal flavor, and fatty/dairy flavor and odor, and dislike biscuits defined as astringent, dry in mouth, uneven and with dark external color.
@@ -8347,7 +8509,7 @@ The AHC is performed using the \texttt{hclust()} function and the \texttt{method
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-285-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-291-1.pdf}
 
 \begin{quote}
 An interesting option to visualize clusters and proposed by \texttt{fviz\_dend()} is the \emph{phologenic} representation (\texttt{type="phylogenic"}). We invite you to give it a try to see how it represents the clusters as an alternative to the classical dendrogram tree.
@@ -8404,7 +8566,7 @@ Lastly, we compare visually the preference patterns between clusters by represen
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-287-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-293-1.pdf}
 
 It appears that cluster 1 (74 consumers) particularly likes \texttt{P10}, \texttt{P01}, and \texttt{P05}, and has a fairly flat liking pattern otherwise. On the other hand, the cluster 2 (33 consumers) expressed strong rejections towards \texttt{P04} and \texttt{P08}, and like \texttt{P10} and \texttt{P01} the most.
 
@@ -8451,7 +8613,7 @@ Various packages can be used to visualize these correlations. We opt here for \t
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-289-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-295-1.pdf}
 
 The average liking scores for cluster 1 (defined as \texttt{1\ (74)}) are positively correlated with \texttt{Overall\ odor\ intensity}, \texttt{Fatty\ odor}, \texttt{Cereal\ flavor}, \texttt{Fatty\ flavor}, \texttt{Dairy\ flavor}, \texttt{Overall\ flavor\ persistence}, \texttt{Salty}, \texttt{Sweet}, \texttt{Warming}, \texttt{Fatty\ in\ mouth}, and \texttt{Melting}. They are also negatively correlated to \texttt{External\ color\ intensity}, \texttt{Astringent}, and \texttt{Dry\ in\ mouth}.
 Finally, it can be noted that the correlation between clusters is high with a value of 0.72.
@@ -8557,7 +8719,7 @@ We apply this function to our data by applying to each attribute (here we set \t
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-295-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-301-1.pdf}
 
 All attributes except \texttt{Astringent} are linearly linked to liking. For \texttt{Astringent}, the curvature is U-shaped: this does not show an effect of saturation as it would have been represented as an inverted U-shape. Although the quadratic effect shows a better fit than the linear effect, having a linear effect would have been a good predictor as well in this situation.
 
@@ -8592,7 +8754,7 @@ Since \texttt{carto()} requires matrix or data frame with row names for the anal
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-296-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-302-1.pdf}
 
 From this map, we can see that the optimal area (dark red) is located on the positive side of dimension 1, between \texttt{P01}, \texttt{P05}, and \texttt{P10} (as expected by the liking score).
 
@@ -8666,7 +8828,7 @@ To build the plot, different layers involving different source of data (\texttt{
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-298-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-304-1.pdf}
 
 As can be seen, \texttt{POpt} is quite far from the optimal area suggested by the PrefMap. This suggests that prototypes with higher success chances could be developed.
 
@@ -8796,7 +8958,16 @@ Let's picture a situation where the R\&D team has been developing multiple trial
 \caption{PCA Biplot Biscuit Study.}\label{fig:pca}
 \end{figure}
 
-We won't go deep into the interpretation since it's not the focus of this example, but rather point out the approach we would recommend for each type of audience as shown in the Table \ref{tab:summarytable1}).
+We won't go deep into the interpretation since it's not the focus of this example, but rather point out the approach we would recommend for each type of audience as shown in the Figure \ref{fig:summarytable1}).
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{images/table_value_delivery_2} 
+
+}
+
+\caption{Exemplification of the approach for each type of audience}\label{fig:summarytable1}
+\end{figure}
 
 Following those recommendations, your PCA for the management or general audience may look like Figure \ref{fig:pcamanagement}.
 
@@ -9022,7 +9193,7 @@ The results of the PCA can be visualized using \texttt{\{factoextra\}}:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-301-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-307-1.pdf}
 
 The first plane of the PCA suggests that there are 3 distinct groups of wines. Let's define them mathematically using cluster analysis. For this process, we propose to reduce the full data to its first two components only. This approach is used here to illustrate how PCA can be used as a pre-processing step. Additionally, such pre-processing can help detecting clearer patterns in the data, as we will see in the next section with clustering.
 
@@ -9078,7 +9249,7 @@ Finally, the results can be visualized using \texttt{fviz\_cluster()} from \text
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-303-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-309-1.pdf}
 
 In the resulting plot, the 3 clusters are clearly separated, as can be seen by their little to no overlap.
 
@@ -9384,7 +9555,7 @@ The \texttt{autoplot()} function is called to take a quick look at the \texttt{t
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-304-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-310-1.pdf}
 
 Ultimately, the best combination of parameters is obtained using the \texttt{select\_best()} function. Such paramaters is defined based on the quality of the model, which can be estimated through a various metrics. Here we decided to use \texttt{roc\_auc} (Area Under the Receiver Operating Characteristic Curve), as it provides a reliable estimate of the quality of the model.
 
@@ -10010,7 +10181,7 @@ In the previous sections, we have already shown how to count the number of occur
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-329-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-335-1.pdf}
 
 As seen previously, the most mentioned words are \texttt{apple}, \texttt{sweet}, \texttt{fruity}, and \texttt{sour}.
 
@@ -10092,7 +10263,7 @@ Another approach consists in visualizing the association between the samples and
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-332-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-338-1.pdf}
 
 As can be seen, sample \texttt{731} is more strongly associated to alcoholic terms such as \texttt{alcohol} or \texttt{wine}, and colors (\texttt{red}, \texttt{green}). Samples \texttt{239} and \texttt{401} are more associated to \texttt{sour} and \texttt{bitter} (and \texttt{pear} for \texttt{239}), whereas samples \texttt{519} and \texttt{182} are more frequently described by terms such as \texttt{fruity}, and \texttt{sweet} (\texttt{floral} is also used to characterize \texttt{182}).
 
@@ -10115,7 +10286,7 @@ An alternative for visualizing these frequencies is through wordclouds, which ca
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-333-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-339-1.pdf}
 
 In these wordclouds, we notice that \texttt{apple} and \texttt{sweet} appear in larger fonts for (almost) all the samples, which can make the comparison quite difficult between samples. Fortunately, the \texttt{geom\_text\_wordcloud()} function provides an interesting parameter in its aesthetics called \texttt{angle\_group} which allows controlling the position of the words. To illustrate this, let's apply the following rule: for a given sample, if the proportion of association of a word is larger than 1/6 (as we have 6 samples), the word will be printed in the upper part of its wordcloud, and in the lower part otherwise. To facilitate the readability, the color code used follow the same rule:
 
@@ -10134,7 +10305,7 @@ In these wordclouds, we notice that \texttt{apple} and \texttt{sweet} appear in 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-334-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-340-1.pdf}
 
 As can be seen, the term \texttt{apple} is more frequently (i.e.~more than 1/6) used to characterize samples \texttt{182}, \texttt{239}, \texttt{365}, and \texttt{731}. The term \texttt{sweet} is more frequently used to characterize samples \texttt{182} and \texttt{519}. Such conclusions would have been more difficult to reach based on the previous \emph{unstructured} wordcloud.
 
