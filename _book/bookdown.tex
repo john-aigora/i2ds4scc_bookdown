@@ -1520,7 +1520,7 @@ However, to assess whether consumers have the same preference patterns at the in
 
 \begin{longtable}[c]{|p{0.69in}|p{0.42in}|p{0.42in}|p{0.41in}|p{0.56in}|p{0.41in}|p{0.58in}}
 
-
+\caption{\textcolor[HTML]{000000}{\fontsize{11}{13}\selectfont{\global\setmainfont{Arial}{Example\ of\ a\ table\ for\ Internal\ Preference\ Mapping\ or\ Clustering}}}}\label{tab:unnamed-chunk-36}\\
 
 \hhline{>{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}-}
 
@@ -1578,7 +1578,7 @@ Another example of data manipulation consists in summarizing data, by for instan
 
 \begin{longtable}[c]{|p{0.69in}|p{0.58in}}
 
-
+\caption{\textcolor[HTML]{000000}{\fontsize{11}{13}\selectfont{\global\setmainfont{Arial}{Example\ of\ Mean\ Table}}}}\label{tab:unnamed-chunk-37}\\
 
 \hhline{>{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}-}
 
@@ -1717,7 +1717,6 @@ If this procedure of renaming variables should be applied on many variables foll
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(janitor)}
-
 \NormalTok{sensory }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{clean\_names}\NormalTok{(}\AttributeTok{case =} \StringTok{"snake"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{names}\NormalTok{()}
@@ -1747,10 +1746,6 @@ For re-ordering columns, \texttt{relocate()} is being used. This function allows
 \NormalTok{sensory }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{relocate}\NormalTok{(}\FunctionTok{starts\_with}\NormalTok{(}\StringTok{"Qty"}\NormalTok{), }\AttributeTok{.after =}\NormalTok{ Product) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{names}\NormalTok{()}
-
-\NormalTok{sensory }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{relocate}\NormalTok{(}\FunctionTok{starts\_with}\NormalTok{(}\StringTok{"Qty"}\NormalTok{), }\AttributeTok{.before =}\NormalTok{ Shiny) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{names}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1761,6 +1756,14 @@ For re-ordering columns, \texttt{relocate()} is being used. This function allows
 ## [4] "Qty of inclusions in mouth"
 ## [5] "Shiny"
 \end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sensory }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{relocate}\NormalTok{(}\FunctionTok{starts\_with}\NormalTok{(}\StringTok{"Qty"}\NormalTok{), }\AttributeTok{.before =}\NormalTok{ Shiny) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{names}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
 ## [1] "Judge"                     
@@ -1879,7 +1882,7 @@ Selection of variables can also be done using some \emph{rules} thanks to the \t
 \end{Highlighting}
 \end{Shaded}
 
-More examples illustrating the use of \texttt{dplyr::select()} are provided throughout the book. In particular, in the next session, another important function called \texttt{across()} will be introduced. This function can also be associated with \texttt{dplyr::select()} to give even more freedom in our selection. An example of such application is given in \ldots{}
+More examples illustrating the use of \texttt{dplyr::select()} are provided throughout the book. In particular, in the next session, another important function called \texttt{across()} will be introduced. This function can also be associated with \texttt{dplyr::select()} to give even more freedom in our selection.
 
 \hypertarget{creating-columns}{%
 \paragraph*{Creating Columns}\label{creating-columns}}
@@ -2276,7 +2279,7 @@ To illustrate this, let's start with a fictive example in which we have 3 consum
 
 \begin{longtable}[c]{|p{0.80in}|p{0.69in}|p{0.58in}}
 
-
+\caption{\textcolor[HTML]{000000}{\fontsize{11}{13}\selectfont{\global\setmainfont{Arial}{Fictive\ example\ shaped\ in\ a\ long\ thin\ format.}}}}\label{tab:unnamed-chunk-72}\\
 
 \hhline{>{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}-}
 
@@ -2334,7 +2337,7 @@ Let's imagine we need to re-structure the data where products are displayed in r
 
 \begin{longtable}[c]{|p{0.69in}|p{0.42in}|p{0.42in}|p{0.42in}}
 
-
+\caption{\textcolor[HTML]{000000}{\fontsize{11}{13}\selectfont{\global\setmainfont{Arial}{Fictive\ example\ restructured\ in\ a\ short\ wide\ format.}}}}\label{tab:unnamed-chunk-73}\\
 
 \hhline{>{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}-}
 
@@ -2595,16 +2598,11 @@ This procedure creates a tibble with 11 rows (product) and 33 columns (32 sensor
 
 \begin{quote}
 In some cases, the data should not be aggregated across rows, but by rows. In such cases, it is important to specify that each computation should be done per row by using \texttt{rowwise()} prior to performing the transformation. For instance, if we would want to extract the minimum between \texttt{Shiny}, \texttt{Salty}, and \texttt{Bitter}, we could write the following code:
+\texttt{sensory\ \%\textgreater{}\%}
+\texttt{dplyr::select(Judge,\ Product,\ Shiny,\ Salty,\ Bitter)\ \%\textgreater{}\%}
+\texttt{rowwise()\ \%\textgreater{}\%}
+\texttt{mutate(Min\ =\ min(Shiny,\ Salty,\ Bitter))}
 \end{quote}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{sensory }\SpecialCharTok{\%\textgreater{}\%}
-\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Judge, Product, Shiny, Salty, Bitter) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{rowwise}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Min =} \FunctionTok{min}\NormalTok{(Shiny, Salty, Bitter))}
-\end{Highlighting}
-\end{Shaded}
 
 \hypertarget{means}{%
 \subsubsection*{Illustrations of Data Manipulation}\label{means}}
@@ -2725,7 +2723,7 @@ If that is not the case, merging tables should be done using \texttt{merge()} (\
 
 \begin{longtable}[c]{|p{0.69in}|p{0.52in}}
 
-
+\caption{\textcolor[HTML]{000000}{\fontsize{11}{13}\selectfont{\global\setmainfont{Arial}{Tables\ used\ to\ illustrate\ the\ different\ mergeing\ options.}}}}\label{tab:unnamed-chunk-89}\\
 
 \hhline{>{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}-}
 
@@ -2763,7 +2761,7 @@ If that is not the case, merging tables should be done using \texttt{merge()} (\
 
 \begin{longtable}[c]{|p{0.69in}|p{0.52in}}
 
-
+\caption{\textcolor[HTML]{000000}{\fontsize{11}{13}\selectfont{\global\setmainfont{Arial}{Tables\ used\ to\ illustrate\ the\ different\ mergeing\ options.}}}}\label{tab:unnamed-chunk-89}\\
 
 \hhline{>{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}-}
 
@@ -2809,7 +2807,7 @@ Depending on the \emph{merging degree} to consider between tables X and Y, there
 
 \begin{longtable}[c]{|p{0.69in}|p{0.52in}|p{0.52in}}
 
-
+\caption{\textcolor[HTML]{000000}{\fontsize{11}{13}\selectfont{\global\setmainfont{Arial}{Illustration\ of\ the\ 'full\_join()'\ option.}}}}\label{tab:unnamed-chunk-90}\\
 
 \hhline{>{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}-}
 
@@ -2859,7 +2857,7 @@ Depending on the \emph{merging degree} to consider between tables X and Y, there
 
 \begin{longtable}[c]{|p{0.69in}|p{0.52in}|p{0.52in}}
 
-
+\caption{\textcolor[HTML]{000000}{\fontsize{11}{13}\selectfont{\global\setmainfont{Arial}{Illustration\ of\ the\ 'inner\_join()'\ option.}}}}\label{tab:unnamed-chunk-91}\\
 
 \hhline{>{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}-}
 
@@ -2897,7 +2895,7 @@ Depending on the \emph{merging degree} to consider between tables X and Y, there
 
 \begin{longtable}[c]{|p{0.69in}|p{0.52in}|p{0.52in}}
 
-
+\caption{\textcolor[HTML]{000000}{\fontsize{11}{13}\selectfont{\global\setmainfont{Arial}{Illustration\ of\ the\ 'left\_join()'\ option.}}}}\label{tab:unnamed-chunk-92}\\
 
 \hhline{>{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}-}
 
@@ -2941,7 +2939,7 @@ Depending on the \emph{merging degree} to consider between tables X and Y, there
 
 \begin{longtable}[c]{|p{0.69in}|p{0.52in}|p{0.52in}}
 
-
+\caption{\textcolor[HTML]{000000}{\fontsize{11}{13}\selectfont{\global\setmainfont{Arial}{Illustration\ of\ the\ 'right\_join()'\ option.}}}}\label{tab:unnamed-chunk-93}\\
 
 \hhline{>{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}-}
 
@@ -2985,7 +2983,7 @@ Depending on the \emph{merging degree} to consider between tables X and Y, there
 
 \begin{longtable}[c]{|p{0.69in}|p{0.52in}}
 
-
+\caption{\textcolor[HTML]{000000}{\fontsize{11}{13}\selectfont{\global\setmainfont{Arial}{Illustration\ of\ the\ 'anti\_join()'\ option.}}}}\label{tab:unnamed-chunk-94}\\
 
 \hhline{>{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}-}
 
@@ -3182,7 +3180,7 @@ Now the correct table has been created, let's represent it in a neater way using
 
 \begin{longtable}[c]{|p{0.64in}|p{0.59in}|p{0.56in}|p{0.59in}|p{0.59in}|p{0.54in}}
 
-\caption{\textcolor[HTML]{000000}{\fontsize{11}{13}\selectfont{\global\setmainfont{Arial}{Basic\ Flextable}}}}\label{tab:unnamed-chunk-101}\\
+\caption{\textcolor[HTML]{000000}{\fontsize{11}{13}\selectfont{\global\setmainfont{Arial}{Basic\ Flextable}}}}\label{tab:unnamed-chunk-102}\\
 
 \hhline{>{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}-}
 
@@ -3283,7 +3281,7 @@ A first simple improvement consists in reducing the number of decimals (\texttt{
 
 \begin{longtable}[c]{|p{0.65in}|p{0.54in}|p{0.57in}|p{0.50in}|p{0.55in}|p{0.51in}}
 
-\caption{\textcolor[HTML]{000000}{\fontsize{11}{13}\selectfont{\global\setmainfont{Arial}{Flextable\ -\ aesthetics\ improvements}}}}\label{tab:unnamed-chunk-102}\\
+\caption{\textcolor[HTML]{000000}{\fontsize{11}{13}\selectfont{\global\setmainfont{Arial}{Flextable\ -\ aesthetics\ improvements}}}}\label{tab:unnamed-chunk-103}\\
 
 \hhline{>{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}-}
 
@@ -3385,7 +3383,7 @@ After presenting some of the basic aesthetic options, let's go once step further
 
 \begin{longtable}[c]{|p{0.65in}|p{0.54in}|p{0.57in}|p{0.50in}|p{0.55in}|p{0.51in}}
 
-\caption{\textcolor[HTML]{000000}{\fontsize{11}{13}\selectfont{\global\setmainfont{Arial}{Flextable\ -\ coloring\ function}}}}\label{tab:unnamed-chunk-103}\\
+\caption{\textcolor[HTML]{000000}{\fontsize{11}{13}\selectfont{\global\setmainfont{Arial}{Flextable\ -\ coloring\ function}}}}\label{tab:unnamed-chunk-104}\\
 
 \hhline{>{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}-}
 
@@ -3489,7 +3487,7 @@ Alternatively, we could decide to be more sober by applying other pre-attentive 
 
 \begin{longtable}[c]{|p{0.65in}|p{0.54in}|p{0.57in}|p{0.50in}|p{0.55in}|p{0.51in}}
 
-\caption{\textcolor[HTML]{000000}{\fontsize{11}{13}\selectfont{\global\setmainfont{Arial}{Flextable\ -\ lines\ adjustment\ function}}}}\label{tab:unnamed-chunk-105}\\
+\caption{\textcolor[HTML]{000000}{\fontsize{11}{13}\selectfont{\global\setmainfont{Arial}{Flextable\ -\ lines\ adjustment\ function}}}}\label{tab:unnamed-chunk-106}\\
 
 \hhline{>{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}-}
 
@@ -3589,7 +3587,7 @@ Lastly, you can use conditional formatting if you want to highlight some specifi
 
 \begin{longtable}[c]{|p{0.65in}|p{0.54in}|p{0.57in}|p{0.50in}|p{0.55in}|p{0.51in}}
 
-\caption{\textcolor[HTML]{000000}{\fontsize{11}{13}\selectfont{\global\setmainfont{Arial}{Flextable\ -\ conditional\ formatting}}}}\label{tab:unnamed-chunk-107}\\
+\caption{\textcolor[HTML]{000000}{\fontsize{11}{13}\selectfont{\global\setmainfont{Arial}{Flextable\ -\ conditional\ formatting}}}}\label{tab:unnamed-chunk-108}\\
 
 \hhline{>{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}->{\arrayrulecolor[HTML]{666666}\global\arrayrulewidth=2pt}-}
 
@@ -3890,8 +3888,8 @@ Such information can be provided as such:
 
 \begin{figure}
 \centering
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-118-1.pdf}
-\caption{\label{fig:unnamed-chunk-118}Scatter plot}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-119-1.pdf}
+\caption{\label{fig:unnamed-chunk-119}Scatter plot}
 \end{figure}
 
 This code adds a layer that consists of points (defined by \texttt{geom\_point()}) in which the X-axis coordinates are defined by \texttt{Sticky} and the Y-axis coordinates by \texttt{Melting}, as defined through aesthetics (or \texttt{aes()}). This layer is added to the already existing graph \texttt{p}.
@@ -3912,8 +3910,8 @@ Let's color the points per products to see if we can see any patterns. Since the
 
 \begin{figure}
 \centering
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-119-1.pdf}
-\caption{\label{fig:unnamed-chunk-119}Scatter plot with emphasis on the color through \texttt{aes()}}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-120-1.pdf}
+\caption{\label{fig:unnamed-chunk-120}Scatter plot with emphasis on the color through \texttt{aes()}}
 \end{figure}
 
 As you can see, any parameters provided within \texttt{aes()} may depend on a variable (e.g.~\texttt{colour} in the previous example).
@@ -3929,8 +3927,8 @@ Let's illustrate this by providing a simple example in which we change the type 
 
 \begin{figure}
 \centering
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-120-1.pdf}
-\caption{\label{fig:unnamed-chunk-120}Scatter plot with emphasis on the type of dots through \texttt{pch} and \texttt{cex}}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-121-1.pdf}
+\caption{\label{fig:unnamed-chunk-121}Scatter plot with emphasis on the type of dots through \texttt{pch} and \texttt{cex}}
 \end{figure}
 
 Regardless of the products, all the points are now shown as large squares.
@@ -3973,8 +3971,8 @@ To avoid having the label overlapping with the point, the text is slightly shift
 
 \begin{figure}
 \centering
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-121-1.pdf}
-\caption{\label{fig:unnamed-chunk-121}Scatter plot with emphasis on the information displayed through \texttt{geom\_point()} and \texttt{geom\_text()}}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-122-1.pdf}
+\caption{\label{fig:unnamed-chunk-122}Scatter plot with emphasis on the information displayed through \texttt{geom\_point()} and \texttt{geom\_text()}}
 \end{figure}
 
 One interesting remark is that some information required in \texttt{aes()} is being repeated across the different \texttt{geom\_*()} used. Such writing can be simplified by providing the \texttt{aes()} information that applies to all \texttt{geom\_*()} to the original \texttt{ggplot()} call\footnote{Intrinsically, this is what is done with \texttt{sensory} which is only mentioned within \texttt{ggplot()} and is not repeated across the different \texttt{geom\_*()} functions.}. The previous code hence can be simplified to:
@@ -4012,8 +4010,8 @@ Since the graphics look at the relationship between two quantitative variables, 
 
 \begin{figure}
 \centering
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-124-1.pdf}
-\caption{\label{fig:unnamed-chunk-124}Scatter plot with regressionh line through \texttt{geom\_smooth\ ()}}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-125-1.pdf}
+\caption{\label{fig:unnamed-chunk-125}Scatter plot with regressionh line through \texttt{geom\_smooth\ ()}}
 \end{figure}
 
 This code adds a regression line to the graphic. It is built using the \texttt{lm()} engine in which the simple linear regression model \texttt{y\textasciitilde{}x} is fitted. This result is somewhat surprising since we have not run any regression yet, meaning that \texttt{geom\_smooth()} is performing this analysis in the background by itself.
@@ -4041,8 +4039,8 @@ To create such distribution, a first solution consists in counting for each prod
 
 \begin{figure}
 \centering
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-127-1.pdf}
-\caption{\label{fig:unnamed-chunk-127}Bar Chart displaying the distribution using \texttt{geom\_bar}}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-128-1.pdf}
+\caption{\label{fig:unnamed-chunk-128}Bar Chart displaying the distribution using \texttt{geom\_bar}}
 \end{figure}
 
 In the background, this corresponds to grouping the data by \texttt{Product}, summarizing the results by counting \texttt{N}, and then performing \texttt{geom\_bar()} in which no transformation is required (we set \texttt{stat="identity"})\footnote{This code could even be simplified by using \texttt{geom\_col()} which corresponds to \texttt{geom\_bar()} with \texttt{stat="identity"} as default.}:
@@ -4077,8 +4075,8 @@ Let's start with improving \texttt{bar\_p} using \texttt{theme\_minimal()}:
 
 \begin{figure}
 \centering
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-130-1.pdf}
-\caption{\label{fig:unnamed-chunk-130}Bar Chart with emphasis on the display through \texttt{theme()}}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-131-1.pdf}
+\caption{\label{fig:unnamed-chunk-131}Bar Chart with emphasis on the display through \texttt{theme()}}
 \end{figure}
 
 Rather than using pre-defined themes (or to complement pre-defined themes), the different parameters of the graph can be controlled through \texttt{theme()}.
@@ -4098,8 +4096,8 @@ Let's modify the axes by changing their names and by applying more logical break
 
 \begin{figure}
 \centering
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-132-1.pdf}
-\caption{\label{fig:unnamed-chunk-132}Bar Chart with emphasis on the display through \texttt{scale\_x\_continuous()} and \texttt{ylab()}}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-133-1.pdf}
+\caption{\label{fig:unnamed-chunk-133}Bar Chart with emphasis on the display through \texttt{scale\_x\_continuous()} and \texttt{ylab()}}
 \end{figure}
 
 Last but not least, a title is being added to the graph using \texttt{ggtitle()}:
@@ -4114,8 +4112,8 @@ Last but not least, a title is being added to the graph using \texttt{ggtitle()}
 
 \begin{figure}
 \centering
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-134-1.pdf}
-\caption{\label{fig:unnamed-chunk-134}Bar Chart with emphasis on the display through \texttt{ggtitle()}}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-135-1.pdf}
+\caption{\label{fig:unnamed-chunk-135}Bar Chart with emphasis on the display through \texttt{ggtitle()}}
 \end{figure}
 
 Let's apply a similar transformation to \texttt{line\_p}. Here, we are aiming in having a more \emph{realistic} plot using Cartesian coordinates, a nice theme, no legend, and a title to the graph.
@@ -4135,8 +4133,8 @@ Let's apply a similar transformation to \texttt{line\_p}. Here, we are aiming in
 
 \begin{figure}
 \centering
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-136-1.pdf}
-\caption{\label{fig:unnamed-chunk-136}Scatter plot with emphasis on the display through \texttt{theme()}, \texttt{scale\_continuous()}, \texttt{coord\_fixed()}, \texttt{ggtitle()} and \texttt{guides()}}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-137-1.pdf}
+\caption{\label{fig:unnamed-chunk-137}Scatter plot with emphasis on the display through \texttt{theme()}, \texttt{scale\_continuous()}, \texttt{coord\_fixed()}, \texttt{ggtitle()} and \texttt{guides()}}
 \end{figure}
 
 \hypertarget{common-charts}{%
@@ -4261,8 +4259,8 @@ Let's illustrate these concepts using our previous graph stored in \texttt{line\
 
 \begin{figure}
 \centering
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-137-1.pdf}
-\caption{\label{fig:unnamed-chunk-137}Scatter plot with emphasis on the display through \texttt{theme()}}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-138-1.pdf}
+\caption{\label{fig:unnamed-chunk-138}Scatter plot with emphasis on the display through \texttt{theme()}}
 \end{figure}
 
 Similarly to the theme, aesthetics can also be adjusted. In previous examples, the x-axis in \texttt{bar\_p} was adjusted by setting limits, providing breaks and replacing the values by certain labels using \texttt{scale\_x\_continuous()}.
@@ -4294,8 +4292,8 @@ Such procedure can be done using \texttt{scale\_fill\_manual()}.
 
 \begin{figure}
 \centering
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-138-1.pdf}
-\caption{\label{fig:unnamed-chunk-138}Bar Chart with emphasis on the display through \texttt{scale\_fill\_manual()}}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-139-1.pdf}
+\caption{\label{fig:unnamed-chunk-139}Bar Chart with emphasis on the display through \texttt{scale\_fill\_manual()}}
 \end{figure}
 
 When multiple aesthetics are being used, the legend might become overwhelming or redundant. It is possible to turn off some of these visuals within the \texttt{scale\_*()} functions, or by using \texttt{guides()} and by setting \texttt{nameaes=\textquotesingle{}none\textquotesingle{}} as shown in the \texttt{line\_p} example.
@@ -4319,8 +4317,8 @@ Other transformation can be performed. For instance, the graphic can be transpos
 
 \begin{figure}
 \centering
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-139-1.pdf}
-\caption{\label{fig:unnamed-chunk-139}Bar Chart with emphasis on the display through \texttt{coord\_flip()}}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-140-1.pdf}
+\caption{\label{fig:unnamed-chunk-140}Bar Chart with emphasis on the display through \texttt{coord\_flip()}}
 \end{figure}
 
 \hypertarget{spider}{%
@@ -4364,8 +4362,8 @@ Next step is to represent this line chart in a circular way. This can be done us
 
 \begin{figure}
 \centering
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-141-1.pdf}
-\caption{\label{fig:unnamed-chunk-141}Line charts using \texttt{coord\_polar()}}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-142-1.pdf}
+\caption{\label{fig:unnamed-chunk-142}Line charts using \texttt{coord\_polar()}}
 \end{figure}
 
 This already looks like a spider plot! However, a closer look at it highlights a point that needs improvement: There is no connection between the last attribute (\texttt{Melting}) and the first one (\texttt{Shiny}).
@@ -4412,8 +4410,8 @@ The previous graph is then rebuilt by forcing the position of the attributes on 
 
 \begin{figure}
 \centering
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-144-1.pdf}
-\caption{\label{fig:unnamed-chunk-144}Spider Plot}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-145-1.pdf}
+\caption{\label{fig:unnamed-chunk-145}Spider Plot}
 \end{figure}
 
 By using this trick, the connection between the first and last attributes is established.
@@ -4460,7 +4458,7 @@ A general title can be added, as well as tag levels (handy for publications!) us
 
 }
 
-\caption{Multiple plots Example}\label{fig:unnamed-chunk-147}
+\caption{Multiple plots Example}\label{fig:unnamed-chunk-148}
 \end{figure}
 
 \hypertarget{tipsntricks}{%
@@ -4499,8 +4497,8 @@ The first option consists in using \texttt{theme()} and rotating the labels (her
 
 \begin{figure}
 \centering
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-148-1.pdf}
-\caption{\label{fig:unnamed-chunk-148}Spider Plot fixing overlapping through \texttt{theme\ ()}}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-149-1.pdf}
+\caption{\label{fig:unnamed-chunk-149}Spider Plot fixing overlapping through \texttt{theme\ ()}}
 \end{figure}
 
 A second option consists in dodging one every two labels along the X-axis. This option works fine, especially when the labels are not too long. In our example unfortunately, some overlap can still be seen. Note that this option is accessible within \texttt{scale\_x\_discrete()}, not within \texttt{theme()} as we would expect:
@@ -4514,8 +4512,8 @@ A second option consists in dodging one every two labels along the X-axis. This 
 
 \begin{figure}
 \centering
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-149-1.pdf}
-\caption{\label{fig:unnamed-chunk-149}Spider Plot fixing overlapping through \texttt{scale\_x\_discrete()}}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-150-1.pdf}
+\caption{\label{fig:unnamed-chunk-150}Spider Plot fixing overlapping through \texttt{scale\_x\_discrete()}}
 \end{figure}
 
 Last option consists in transposing the graph using \texttt{coord\_flip()}. This solution works well since labels on the y-axis are written horizontally. However, this option is not always suitable due to conventions: if it is recommended for bar charts, it may not be for line charts for instance.
@@ -4763,7 +4761,7 @@ Note that many more formatting options can be configured through:
 \item
   \texttt{setColWidths()} to control column width;
 \item
-  \texttt{conditionalFormatting()} to format cells based on pre-defined conditions (see next for an example).
+  \texttt{conditionalFormatting()} to format cells based on pre-defined conditions.
 \end{itemize}
 
 Let's export again the sensory profiles in a second sheet after applying these formatting options:
@@ -4857,7 +4855,8 @@ For more information regarding \texttt{\{openxlsx\}}, please visit (\url{https:/
 \subsection{PowerPoint}\label{powerpoint}}
 
 \hypertarget{creating-a-powerpoint-deck}{%
-\subsubsection{Creating a PowerPoint Deck}\label{creating-a-powerpoint-deck}}
+\subsubsection*{Creating a PowerPoint Deck}\label{creating-a-powerpoint-deck}}
+
 
 Throughout the years, PowerPoint became one of the main supports for presenting results, whether it is in academia, in conference, or in companies. It is hence important to show how reports can be generated in PowerPoint from R. Many solutions exist, however the \texttt{\{officer\}} package is used here as its application is vast while still remaining easy to use.
 
@@ -4936,7 +4935,8 @@ Unfortunately, \texttt{\{officer\}} does not provide a function similar to \text
 \end{quote}
 
 \hypertarget{addingmovingremoving-slides}{%
-\subsubsection{Adding/Moving/Removing Slides}\label{addingmovingremoving-slides}}
+\subsubsection*{Adding/Moving/Removing Slides}\label{addingmovingremoving-slides}}
+
 
 With \texttt{\{officer\}}, various actions can be done on the slides. The first logical action consists in adding a new slide to a presentation, in which we will later on export some text, tables, figures, etc. Such action can be done using \texttt{add\_slide()}, in which the type of slide and the master\footnote{In practice, a unique template can contain slides from different masters.} are informed:
 
@@ -4980,7 +4980,8 @@ Ultimately, this slide (now position as first slide) can be removed (by default,
 \end{Shaded}
 
 \hypertarget{positioning-information-on-the-slide}{%
-\subsubsection{Positioning Information on the Slide}\label{positioning-information-on-the-slide}}
+\subsubsection*{Positioning Information on the Slide}\label{positioning-information-on-the-slide}}
+
 
 On a given slide, any type of content (text, graph, table, etc.) can be exported. To do so, we need to inform \emph{where} to write \emph{what}.
 
@@ -5036,7 +5037,8 @@ To visualize the different steps done so far, let's save the results on our comp
 \end{Shaded}
 
 \hypertarget{exporting-text}{%
-\subsubsection{Exporting Text}\label{exporting-text}}
+\subsubsection*{Exporting Text}\label{exporting-text}}
+
 
 In the previous section, we already exported text to slides. Let's go a bit deeper in the process by also showing how to format the text.
 
@@ -5105,7 +5107,8 @@ Last element of formatting to consider is the hierarchy in bullet points. Let's 
 \end{Shaded}
 
 \hypertarget{exporting-tables}{%
-\subsubsection{Exporting Tables}\label{exporting-tables}}
+\subsubsection*{Exporting Tables}\label{exporting-tables}}
+
 
 After exporting formatted text to slides, let's export tables.
 
@@ -5222,7 +5225,8 @@ Finally, to export a \emph{flextable} table to a PowerPoint deck, simply export 
 \end{Shaded}
 
 \hypertarget{exportplots}{%
-\subsubsection{Exporting Plots}\label{exportplots}}
+\subsubsection*{Exporting Plots}\label{exportplots}}
+
 
 The last type of R outputs to export to PowerPoint are figures. Before showing how to export them, let's build a simple bar chart from \texttt{senso\_mean} using \texttt{\{ggplot2\}}:
 
@@ -5537,9 +5541,16 @@ Once the document is ready, you can neat it using the \texttt{knit} button. This
 Its application is various, and can go from report, to teaching material, publication or even books (this book has been written in \texttt{\{rmarkdown\}} and its extension \texttt{\{bookdown\}}), emails, websites, dashboards, surveys etc. Even more interestingly, \texttt{\{rmarkdown\}} can also be combined to \texttt{\{shiny\}} to build interactive reports, dashboards, or teaching materials in which users would (say) import their data set, select the variables to analyze through buttons, chose which analyses and which options to perform, and the results will automatically be generated accordingly.
 
 For more information on \texttt{\{rmarkdown\}} and related packages, please see:
-* (\url{https://bookdown.org/yihui/bookdown/})\url{https://bookdown.org/yihui/bookdown/}
-* (\url{https://bookdown.org/yihui/rmarkdown-cookbook/})\url{https://bookdown.org/yihui/rmarkdown-cookbook/}
-* (\url{https://bookdown.org/yihui/rmarkdown/})\url{https://bookdown.org/yihui/rmarkdown/}
+
+\begin{itemize}
+\tightlist
+\item
+  Bookdown (\url{https://bookdown.org/yihui/bookdown/})\url{https://bookdown.org/yihui/bookdown/}
+\item
+  R Markdown (\url{https://bookdown.org/yihui/rmarkdown/})\url{https://bookdown.org/yihui/rmarkdown/}
+\item
+  R Markdown Cookbook (\url{https://bookdown.org/yihui/rmarkdown-cookbook/})\url{https://bookdown.org/yihui/rmarkdown-cookbook/}
+\end{itemize}
 
 As mentioned earlier, R Markdown can also be used to generate other types of documents, including presentations. This can be done directly from the \texttt{\{rmarkdown\}} package using \emph{ioslides} presentation (\texttt{output:\ ioslides\_presentation} in the metadata), \emph{Slidy} presentation (\texttt{output:\ slidy\_presentation}), or \emph{PowerPoint} presentation (\texttt{output:\ powerpoint\_presentation} with \texttt{reference\_doc:\ my-styles.pptx} to apply your own template) just to name a few. It can also be done using additional packages such as \texttt{\{xarigan\}}.
 
@@ -5548,7 +5559,7 @@ As mentioned earlier, R Markdown can also be used to generate other types of doc
 
 If R allows you saving time by creating your report within your R-script, or by running your analysis within your report document, it cannot communicate the presentation to your partners/clients for you. However, if the report is very standard (say only key results, tables or figures), or running routinely (say in quality control), R could automatically run the analysis as soon as new data is available, build the report, and send it automatically to you, your manager or your colleagues and partners by email.
 
-Such process can be done thanks to the \texttt{\{blastula\}} package (see REF).
+Such process can be done thanks to the \texttt{\{blastula\}} package.
 
 \hypertarget{example-projects}{%
 \chapter{Example Project: The Biscuit Study}\label{example-projects}}
@@ -5782,16 +5793,16 @@ Alternately, the \texttt{WilliamsDesign()} function in \texttt{\{SensoMineR\}} a
 
 \begin{verbatim}
 ##          Rank 1 Rank 2 Rank 3 Rank 4 Rank 5
-## Judge 1       1      4      2      5      3
-## Judge 2       4      5      1      3      2
-## Judge 3       5      3      4      2      1
-## Judge 4       3      2      5      1      4
-## Judge 5       2      1      3      4      5
-## Judge 6       3      5      2      4      1
-## Judge 7       2      3      1      5      4
-## Judge 8       1      2      4      3      5
-## Judge 9       4      1      5      2      3
-## Judge 10      5      4      3      1      2
+## Judge 1       2      1      4      5      3
+## Judge 2       1      5      2      3      4
+## Judge 3       5      3      1      4      2
+## Judge 4       3      4      5      2      1
+## Judge 5       4      2      3      1      5
+## Judge 6       3      5      4      1      2
+## Judge 7       4      3      2      5      1
+## Judge 8       2      4      1      3      5
+## Judge 9       1      2      5      4      3
+## Judge 10      5      1      3      2      4
 \end{verbatim}
 
 Suppose you want to include 20 judges in the experiment, you would then need to duplicate the initial design.
@@ -5805,26 +5816,26 @@ Suppose you want to include 20 judges in the experiment, you would then need to 
 
 \begin{verbatim}
 ##         Rank 1 Rank 2 Rank 3 Rank 4 Rank 5
-## judge1       1      4      2      5      3
-## judge2       4      5      1      3      2
-## judge3       5      3      4      2      1
-## judge4       3      2      5      1      4
-## judge5       2      1      3      4      5
-## judge6       3      5      2      4      1
-## judge7       2      3      1      5      4
-## judge8       1      2      4      3      5
-## judge9       4      1      5      2      3
-## judge10      5      4      3      1      2
-## judge11      1      4      2      5      3
-## judge12      4      5      1      3      2
-## judge13      5      3      4      2      1
-## judge14      3      2      5      1      4
-## judge15      2      1      3      4      5
-## judge16      3      5      2      4      1
-## judge17      2      3      1      5      4
-## judge18      1      2      4      3      5
-## judge19      4      1      5      2      3
-## judge20      5      4      3      1      2
+## judge1       2      1      4      5      3
+## judge2       1      5      2      3      4
+## judge3       5      3      1      4      2
+## judge4       3      4      5      2      1
+## judge5       4      2      3      1      5
+## judge6       3      5      4      1      2
+## judge7       4      3      2      5      1
+## judge8       2      4      1      3      5
+## judge9       1      2      5      4      3
+## judge10      5      1      3      2      4
+## judge11      2      1      4      5      3
+## judge12      1      5      2      3      4
+## judge13      5      3      1      4      2
+## judge14      3      4      5      2      1
+## judge15      4      2      3      1      5
+## judge16      3      5      4      1      2
+## judge17      4      3      2      5      1
+## judge18      2      4      1      3      5
+## judge19      1      2      5      4      3
+## judge20      5      1      3      2      4
 \end{verbatim}
 
 The downside of Williams's Latin square designs is that the number of samples (\emph{k}) to be evaluated dictates the number of judges. For an even number of samples you must have a multiple of \emph{k} judges, and a multiple of \emph{2k} judges for an odd number of samples.
@@ -5848,19 +5859,19 @@ As the total number of judges in your study may not always be exactly known in a
 \begin{verbatim}
 ##      rank
 ## judge 1 2 3 4 5
-##    1  1 2 3 4 5
-##    2  2 4 1 5 3
-##    3  4 5 2 3 1
-##    4  5 3 4 1 2
-##    5  3 1 5 2 4
-##    6  5 4 3 2 1
-##    7  3 5 1 4 2
-##    8  1 3 2 5 4
-##    9  2 1 4 3 5
-##    10 4 2 5 1 3
-##    11 1 2 3 4 5
-##    12 2 4 1 5 3
-##    13 4 5 2 3 1
+##    1  2 4 3 1 5
+##    2  4 1 2 5 3
+##    3  1 5 4 3 2
+##    4  5 3 1 2 4
+##    5  3 2 5 4 1
+##    6  5 1 3 4 2
+##    7  3 5 2 1 4
+##    8  2 3 4 5 1
+##    9  4 2 1 3 5
+##    10 1 4 5 2 3
+##    11 2 4 3 1 5
+##    12 4 1 2 5 3
+##    13 1 5 4 3 2
 \end{verbatim}
 
 In the code above, \texttt{xtabs()} is used to arrange the design in a table format that is convenient for the experimenter.
@@ -5905,16 +5916,16 @@ The \texttt{optimaldesign()} function of \texttt{\{SensoMineR\}} can be used to 
 
 \begin{verbatim}
 ##             Rank 1 Rank 2 Rank 3
-## Panelist 1       4      2      5
-## Panelist 2       1      4      2
-## Panelist 3       2      5      3
-## Panelist 4       1      5      4
-## Panelist 5       5      2      1
-## Panelist 6       5      3      4
-## Panelist 7       3      1      5
-## Panelist 8       2      1      3
-## Panelist 9       3      4      1
-## Panelist 10      4      3      2
+## Panelist 1       4      3      2
+## Panelist 2       4      5      1
+## Panelist 3       1      3      4
+## Panelist 4       5      1      3
+## Panelist 5       1      2      3
+## Panelist 6       2      1      5
+## Panelist 7       5      4      2
+## Panelist 8       2      4      1
+## Panelist 9       3      2      5
+## Panelist 10      3      5      4
 \end{verbatim}
 
 BIBD are only possible for certain combinations of numbers of treatment (products), numbers of blocks (judges), and block size (number of samples per judge). Note that \texttt{optimaldesign()} will yield a design even if it is not balanced but it will also generate contingency tables allowing you to evaluate the design's orthogonality, and how well balanced are order and carry-over effects.
@@ -6044,7 +6055,7 @@ The \texttt{\{mixexp\}} package offers a very convenient way to do this. In addi
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-205-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-206-1.pdf}
 
 Suppose that we want to adjust a biscuit recipe to optimize its sensory properties, we can design an experiment in which the proportion of ingredients vary. Let's play with butter, sugar, and flour. All three combined would account for 75\% of the dough recipe and the remaining 25\% would consist of other ingredients that we won't modify here (eggs, milk, chocolate, etc.). Besides, not any amount of these three ingredients would make sense (a biscuit with 75\% of butter is not a biscuit, even in Brittany). We thus need to add constraints (ex: butter varies between 15 and 30\% of this blend, sugar varies between 25 and 40\%, and flour varies between 30 and 50\%). Given this set of constraints (defined by \texttt{uc} for the upper contraints, and \texttt{lc} for the lower constraints), we can use \texttt{mixexp::Xvert} to find the extreme vertices of our design (by also including a edge centroid using \texttt{ndm=1}):
 
@@ -6074,7 +6085,7 @@ However, this design implies creating 11 mixtures, which is more than needed to 
 ## columns are ignored. Use cornerlabs and axislabs to change variable names in the plot.
 \end{verbatim}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-207-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-208-1.pdf}
 
 Once the design is built, it could be desirable to randomize the order in which each sample is being made, to avoid further biases. Suppose that we obtain average liking scores for our 9 biscuits as given in Table \ref{tab:biscuit-mixt} and stored in \texttt{Bmixt}:
 
@@ -6184,7 +6195,7 @@ Regardless of the construction of the mixture design, ternary diagrams are easy 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-209-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-210-1.pdf}
 
 From these data. the optimal biscuit would have 31\% of sugar, 27\% of butter, and 42\% of flour, and would reach a predicted liking score larger than 8.
 
@@ -6654,7 +6665,7 @@ A first approach to inspect and visualize where the missing values are is by rep
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-226-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-227-1.pdf}
 
 As can be seen, missing values are only present in few variables. However, \texttt{Sour} contains up to 10\% of missing data, which can be quite critical in some situations.
 
@@ -6683,7 +6694,7 @@ To answer these questions, the \texttt{\{naniar\}} package provides an interesti
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-228-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-229-1.pdf}
 
 It seems here that the only connection between NAs is observed between \texttt{Light} and \texttt{Color\ contrast}.
 
@@ -6696,7 +6707,7 @@ Such relational structure can also be visualized in a scatter plot using the \te
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-229-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-230-1.pdf}
 
 Here, the relationship between \texttt{Product} and \texttt{Sour} is shown. Such plot may help decide what to do with missing values, whether it is ignoring, removing, or predicting them.
 
@@ -7837,7 +7848,7 @@ Rather than showing the results in a table, let's visualize them graphically as 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-261-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-262-1.pdf}
 
 It appears that the evaluated biscuits differ the most (top 5) for \texttt{Initial\ hardness}, \texttt{Shiny}, \texttt{Dairy\ flavor}, \texttt{External\ color\ intensity}, and \texttt{Thickness}.
 
@@ -7893,7 +7904,7 @@ To illustrate this, let's reproduce the product map by coloring the products usi
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-266-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-267-1.pdf}
 
 Here, \texttt{repel=TRUE} uses \texttt{geom\_text\_repel()} from \texttt{\{ggrepel\}} (rather than \texttt{geom\_text()} from \texttt{\{ggplot2\}}) to avoid having labels overlapping.
 
@@ -8007,28 +8018,28 @@ Histograms are a nice way to visualize proportions and to compare them over seve
 ## $Housing
 \end{verbatim}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-269-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-270-1.pdf}
 
 \begin{verbatim}
 ## 
 ## $`Income range`
 \end{verbatim}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-269-2.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-270-2.pdf}
 
 \begin{verbatim}
 ## 
 ## $`Living area`
 \end{verbatim}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-269-3.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-270-3.pdf}
 
 \begin{verbatim}
 ## 
 ## $Occupation
 \end{verbatim}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-269-4.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-270-4.pdf}
 
 \hypertarget{regex}{%
 \subsection{Eating behavior traits: TFEQ data}\label{regex}}
@@ -8132,7 +8143,7 @@ From this table, histograms representing the frequency distribution for each var
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-274-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-275-1.pdf}
 
 Structured questionnaires such as the TFEQ are very frequent in sensory and consumer science. They are used to measure individual patterns as diverse as personality traits, attitudes, food choice motives, engagement, social desirability bias, etc. Ultimately, the TFEQ questionnaire consists in a set of structured questions whose respective answers combine to provide a TFEQ score (actually, three scores, one for Disinhibition, one for Restriction and one for sensitivity to Hunger). This TFEQ scores translate into certain food behavior tendencies.
 
@@ -8215,7 +8226,7 @@ Such results can then be visualized graphically, for instance by representing th
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-279-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-280-1.pdf}
 
 \hypertarget{tibble-use}{%
 \section{Consumer Data}\label{tibble-use}}
@@ -8315,7 +8326,7 @@ To further compare the liking assessment of the samples after the first bite and
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-283-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-284-1.pdf}
 
 As can be seen, the pattern of liking scores across samples is indeed very stable across the evaluation, particularly in terms of rank. At the individual level, such linear relationship is also observed (here for the first 12 consumers):
 
@@ -8337,7 +8348,7 @@ As can be seen, the pattern of liking scores across samples is indeed very stabl
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-284-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-285-1.pdf}
 
 \begin{quote}
 For your own curiosity, we invite you to re-create the same graph by comparing the Liking score at the end of the evaluation (\texttt{after\_liking}) with the liking score measured on the 9pt categorical scale (\texttt{end\_liking\ 9pt}), and to reflect on the results obtained. Are the consumers consistent in their evaluations?
@@ -8414,7 +8425,7 @@ Ultimately, the relationship between the liking score and the number of biscuits
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-288-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-289-1.pdf}
 
 \hypertarget{combining-sensory-and-consumer-data}{%
 \section{Combining Sensory and Consumer Data}\label{combining-sensory-and-consumer-data}}
@@ -8460,7 +8471,7 @@ Such analysis is split in 3 steps:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-289-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-290-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -8469,7 +8480,7 @@ Such analysis is split in 3 steps:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-289-2.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-290-2.pdf}
 
 As can be seen, the consumers are quite in agreement as all the black arrows are pointing in a similar direction.
 In overall, they seem to like biscuits that are sweet, with cereal flavor, and fatty/dairy flavor and odor, and dislike biscuits defined as astringent, dry in mouth, uneven and with dark external color.
@@ -8509,7 +8520,7 @@ The AHC is performed using the \texttt{hclust()} function and the \texttt{method
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-291-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-292-1.pdf}
 
 \begin{quote}
 An interesting option to visualize clusters and proposed by \texttt{fviz\_dend()} is the \emph{phologenic} representation (\texttt{type="phylogenic"}). We invite you to give it a try to see how it represents the clusters as an alternative to the classical dendrogram tree.
@@ -8566,7 +8577,7 @@ Lastly, we compare visually the preference patterns between clusters by represen
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-293-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-294-1.pdf}
 
 It appears that cluster 1 (74 consumers) particularly likes \texttt{P10}, \texttt{P01}, and \texttt{P05}, and has a fairly flat liking pattern otherwise. On the other hand, the cluster 2 (33 consumers) expressed strong rejections towards \texttt{P04} and \texttt{P08}, and like \texttt{P10} and \texttt{P01} the most.
 
@@ -8613,7 +8624,7 @@ Various packages can be used to visualize these correlations. We opt here for \t
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-295-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-296-1.pdf}
 
 The average liking scores for cluster 1 (defined as \texttt{1\ (74)}) are positively correlated with \texttt{Overall\ odor\ intensity}, \texttt{Fatty\ odor}, \texttt{Cereal\ flavor}, \texttt{Fatty\ flavor}, \texttt{Dairy\ flavor}, \texttt{Overall\ flavor\ persistence}, \texttt{Salty}, \texttt{Sweet}, \texttt{Warming}, \texttt{Fatty\ in\ mouth}, and \texttt{Melting}. They are also negatively correlated to \texttt{External\ color\ intensity}, \texttt{Astringent}, and \texttt{Dry\ in\ mouth}.
 Finally, it can be noted that the correlation between clusters is high with a value of 0.72.
@@ -8719,7 +8730,7 @@ We apply this function to our data by applying to each attribute (here we set \t
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-301-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-302-1.pdf}
 
 All attributes except \texttt{Astringent} are linearly linked to liking. For \texttt{Astringent}, the curvature is U-shaped: this does not show an effect of saturation as it would have been represented as an inverted U-shape. Although the quadratic effect shows a better fit than the linear effect, having a linear effect would have been a good predictor as well in this situation.
 
@@ -8754,7 +8765,7 @@ Since \texttt{carto()} requires matrix or data frame with row names for the anal
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-302-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-303-1.pdf}
 
 From this map, we can see that the optimal area (dark red) is located on the positive side of dimension 1, between \texttt{P01}, \texttt{P05}, and \texttt{P10} (as expected by the liking score).
 
@@ -8828,7 +8839,7 @@ To build the plot, different layers involving different source of data (\texttt{
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-304-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-305-1.pdf}
 
 As can be seen, \texttt{POpt} is quite far from the optimal area suggested by the PrefMap. This suggests that prototypes with higher success chances could be developed.
 
@@ -9193,7 +9204,7 @@ The results of the PCA can be visualized using \texttt{\{factoextra\}}:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-307-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-308-1.pdf}
 
 The first plane of the PCA suggests that there are 3 distinct groups of wines. Let's define them mathematically using cluster analysis. For this process, we propose to reduce the full data to its first two components only. This approach is used here to illustrate how PCA can be used as a pre-processing step. Additionally, such pre-processing can help detecting clearer patterns in the data, as we will see in the next section with clustering.
 
@@ -9249,7 +9260,7 @@ Finally, the results can be visualized using \texttt{fviz\_cluster()} from \text
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-309-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-310-1.pdf}
 
 In the resulting plot, the 3 clusters are clearly separated, as can be seen by their little to no overlap.
 
@@ -9555,7 +9566,7 @@ The \texttt{autoplot()} function is called to take a quick look at the \texttt{t
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-310-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-311-1.pdf}
 
 Ultimately, the best combination of parameters is obtained using the \texttt{select\_best()} function. Such paramaters is defined based on the quality of the model, which can be estimated through a various metrics. Here we decided to use \texttt{roc\_auc} (Area Under the Receiver Operating Characteristic Curve), as it provides a reliable estimate of the quality of the model.
 
@@ -10181,7 +10192,7 @@ In the previous sections, we have already shown how to count the number of occur
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-335-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-336-1.pdf}
 
 As seen previously, the most mentioned words are \texttt{apple}, \texttt{sweet}, \texttt{fruity}, and \texttt{sour}.
 
@@ -10263,7 +10274,7 @@ Another approach consists in visualizing the association between the samples and
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-338-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-339-1.pdf}
 
 As can be seen, sample \texttt{731} is more strongly associated to alcoholic terms such as \texttt{alcohol} or \texttt{wine}, and colors (\texttt{red}, \texttt{green}). Samples \texttt{239} and \texttt{401} are more associated to \texttt{sour} and \texttt{bitter} (and \texttt{pear} for \texttt{239}), whereas samples \texttt{519} and \texttt{182} are more frequently described by terms such as \texttt{fruity}, and \texttt{sweet} (\texttt{floral} is also used to characterize \texttt{182}).
 
@@ -10286,7 +10297,7 @@ An alternative for visualizing these frequencies is through wordclouds, which ca
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-339-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-340-1.pdf}
 
 In these wordclouds, we notice that \texttt{apple} and \texttt{sweet} appear in larger fonts for (almost) all the samples, which can make the comparison quite difficult between samples. Fortunately, the \texttt{geom\_text\_wordcloud()} function provides an interesting parameter in its aesthetics called \texttt{angle\_group} which allows controlling the position of the words. To illustrate this, let's apply the following rule: for a given sample, if the proportion of association of a word is larger than 1/6 (as we have 6 samples), the word will be printed in the upper part of its wordcloud, and in the lower part otherwise. To facilitate the readability, the color code used follow the same rule:
 
@@ -10305,7 +10316,7 @@ In these wordclouds, we notice that \texttt{apple} and \texttt{sweet} appear in 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-340-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-341-1.pdf}
 
 As can be seen, the term \texttt{apple} is more frequently (i.e.~more than 1/6) used to characterize samples \texttt{182}, \texttt{239}, \texttt{365}, and \texttt{731}. The term \texttt{sweet} is more frequently used to characterize samples \texttt{182} and \texttt{519}. Such conclusions would have been more difficult to reach based on the previous \emph{unstructured} wordcloud.
 
@@ -10485,7 +10496,8 @@ The code presented in the next section can be found in \texttt{app.R}. In the ne
 \end{quote}
 
 \hypertarget{user-interface}{%
-\subsubsection{User Interface}\label{user-interface}}
+\subsubsection*{User Interface}\label{user-interface}}
+
 
 The user interface (UI) is the part of the application that controls what the user sees and controls.
 In our example, the UI is separated into two parts:
@@ -10523,7 +10535,8 @@ Note the pattern in the namings of the complementary functions: The \texttt{xxxO
 \end{quote}
 
 \hypertarget{server}{%
-\subsubsection{Server}\label{server}}
+\subsubsection*{Server}\label{server}}
+
 
 The server side of the application is where all the computations are being performed, including the construction of tables, figures, etc.
 
@@ -10777,7 +10790,7 @@ To integrate \texttt{\{shiny\}} in your \texttt{\{rmarkdown\}}, simply add \text
 Thanks to its way of working and its numerous extensions, there is (almost) no limit to applications you can build (except maybe your imagination?). For inspiration, and to get a better idea of the powerful applications that you can build, have a look at the gallery on the official shiny webpage:
 \url{https://shiny.rstudio.com/gallery/}
 
-In this section, we just introduced you to the main functions available in \texttt{\{shiny\}}, but if you want to go further, there is a whole world for you to explore. Of course, a lot of material is available online, and we would not know where to start to guide you. However, we strongly recommend you to start with the book from Hadley Wickham entitled \emph{Mastering Shiny} (REF) as it is comprehensive and will give you the kick start that you need\ldots and more.
+In this section, we just introduced you to the main functions available in \texttt{\{shiny\}}, but if you want to go further, there is a whole world for you to explore. Of course, a lot of material is available online, and we would not know where to start to guide you. However, we strongly recommend you to start with the book from Hadley Wickham entitled \emph{Mastering Shiny} (\url{https://mastering-shiny.org/}) as it is comprehensive and will give you the kick start that you need\ldots and more.
 
 \hypertarget{next-steps}{%
 \chapter{Conclusion and Next Steps}\label{next-steps}}

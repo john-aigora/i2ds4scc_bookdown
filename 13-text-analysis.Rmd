@@ -11,7 +11,7 @@ Natural Language Processing (NLP) is a sub-field of linguistics, computer scienc
 
 Since the fields of linguistics and NLP are widely studied, a lot of documentations is already available online. The objective of this chapter is to provide sufficient information for you to be familiar with textual data, and to give you the keys to run the most useful analyses in Sensory and Consumer Research. 
 
-For those who would like to dive deeper into NLP, we recommend reading (@Silge2017, @Becue-Bertaut2019), and (@Hvitfeldt2021) for more advanced techniques.
+For those who would like to dive deeper into NLP, we recommend reading @Silge2017, @Becue-Bertaut2019, and @Hvitfeldt2021 for more advanced techniques.
 
 ## Application of Text Analysis in Sensory and Consumer Science
 
@@ -21,11 +21,11 @@ In recent years, open-ended comments have gained interest as it is the fastest, 
 
 Traditionally, most SCS questionnaires relied primarily on closed questions, to which open-ended questions were added to uncover the consumers' reasons for liking or disliking products. In practice, these open-ended questions were positioned right after liking questions, and aimed at providing some understanding about why a product may or may not be liked, and to give the participants a chance to reduce their frustration by explaining their responses to certain questions. As a result of such practices, these questions were usually not deeply analyzed.
 
-With the development of the so-called *rapid* and consumer-oriented descriptive methods, the benefits of open-ended questions became more apparent as they provide a new way to uncover sensory perception. In practice, respondents are asked to give any terms that describe their sensory perception in addition to their quantitative evaluation of the products by the means of intensity rating or ranking (e.g. Free Choice Profile, Flash Profile), or similarities and dissimilarities assessment (e.g. Free Sorting Task, and Ultra Flash Profile as an extension of Napping). Since the textual responses are now an integral part of the method, its analysis can no longer be ignored.
+With the development of the so-called *rapid* and consumer-oriented descriptive methods, the benefits of open-ended questions became more apparent as they provide a new way to uncover sensory perception. In practice, respondents are asked to give any terms that describe their sensory perception in addition to their quantitative evaluation of the products by the means of intensity rating or ranking (e.g. Free Choice Profile, @Williams1984; Flash Profile, @Delarue2004), or similarities and dissimilarities assessment (e.g. Free Sorting Task, @Cadoret2009; Ultra Flash Profile, @Perrin2008). Since the textual responses are now an integral part of the method, its analysis can no longer be ignored.
 
-The importance of open-ended questions increased further as it has been shown that respondents can reliably describe in their own words their full experience (perception, emotion, or any other sort of association) with products. Recently, Mahieu et al. [REF REF REF] showed the benefits of using open-ended questions over CATA^[CATA can be seen as a simplified version of open-comments in the sense that respondents also associate products to words, however they lose the freedom of using their own as they need to select them from a pre-defined list.]. In this study, consumers were asked to describe with their own words both the products they evaluated and what their ideal product would be like. Similarly, Luc et al. [REF REF REF] proposed an alternative to Just About Right (JAR) scale method - called free-JAR - and in which consumers describe the samples using their own words, by still following a JAR terminology (too little, too much, or JAR, etc.).
+The importance of open-ended questions increased further as it has been shown that respondents can reliably describe in their own words their full experience (perception, emotion, or any other sort of association) with products. Recently, Mahieu et al. (@Mahieu2020, @Mahieu2022, @Visalli2020) showed the benefits of using open-ended questions over CATA^[CATA can be seen as a simplified version of open-comments in the sense that respondents also associate products to words, however they lose the freedom of using their own as they need to select them from a pre-defined list.]. In this study, consumers were asked to describe with their own words both the products they evaluated and what their ideal product would be like. Similarly, Luc et al. (@Luc2020, Luc2022, @Luc2022a) proposed an alternative to Just About Right (JAR) scale method - called free-JAR - and in which consumers describe the samples using their own words, by still following a JAR terminology (too little, too much, or JAR, etc.).
 
-The inclusion of open-ended questions as one of the primary elements of sensory and consumer tasks blurs the line with other fields, including psychology and sociology where these qualitative methods originated. More recently, advances in the technology (web-scraping, social listening, etc.) opened new doors that brought SCS closer to other fields such as marketing for instance. The amount of data that are collected with such techniques can be considerably larger, but the aim of the analysis stays the same: extracting information from text/comments.
+The inclusion of open-ended questions as one of the primary elements of sensory and consumer tasks blurs the line with other fields, including psychology and sociology where these qualitative methods originated. More recently, advances in the technology (web-scraping, social listening, etc.) opened new doors that brought SCS closer to other fields such as marketing for instance. The amount of data that are collected with such techniques can be considerably larger, but the aim of the analysis stays the same: extracting information from text/comments. Various examples of the application of text analysis in the SCS field can be found in @BecueBertaut2008, @TenKleij2003, @Hamilton2020, @Vidal2015, or @Feldmeyer2022 just to name a few.
 
 ### Objectives of Text Analysis
 
@@ -57,7 +57,7 @@ library(here)
 library(readxl)
 ```
 
-The data set used for illustration was kindly shared by Dr. Jacob Lahne. It is part of a study that aimed in developing a CATA lexicon for Virginia Hard (Alcoholic) Ciders (REF REF REF.). The data can be found in *cider_text_data.xlsx*.
+The data set used for illustration was kindly shared by Dr. Jacob Lahne. It is part of a study that aimed in developing a CATA lexicon for Virginia Hard (Alcoholic) Ciders (@Phetxumphou2020). The data can be found in *cider_text_data.xlsx*.
 
 Let's also import the data to our R session:
 
@@ -71,7 +71,7 @@ cider_og <- read_xlsx(file_path) %>%
 
 Before starting, it is important to mention that there is a large variety of R-based solutions and R packages that handle textual data, including:
 
-* The IRaMuTeQ project (REF REF Reinert 1983) is a free software dedicated to text analysis and developed in R and Python. It includes Reinert textual clustering method (for more information, see [http://www.iramuteq.org/](http://www.iramuteq.org/))
+* The IRaMuTeQ project (CAD1983821870) is a free software dedicated to text analysis and developed in R and Python. It includes Reinert textual clustering method (for more information, see [http://www.iramuteq.org/](http://www.iramuteq.org/))
 * `{tm}` package for text mining
 * `{tokenizers}` to transform strings into tokens
 * `{SnowballC}` for text stemming
@@ -254,7 +254,7 @@ After removing the stop words, the data contains a total of 328 different words.
 
 To further *clean* the data, two similar approaches can be considered: **stemming** and **lemmatization**. 
 
-The procedure of stemming consists in performing a step-by-step algorithm that reduces each word to its base word (or *stem*). The most used algorithm is the one introduced by REF (Porter, 1980) which is available in the `{SnowballC}` package through the `wordStem()` function:
+The procedure of stemming consists in performing a step-by-step algorithm that reduces each word to its base word (or *stem*). The most used algorithm is the one introduced by @Porter1980 which is available in the `{SnowballC}` package through the `wordStem()` function:
 
 ```{r, echo=TRUE, eval=TRUE, warning=FALSE, message=FALSE}
 library(SnowballC)
@@ -384,7 +384,7 @@ prod_term <- cider %>%
   })
 ```
 
-Another approach consists in visualizing the association between the samples and the words in a multiple way using Correspondence Analysis (CA). Since the CA can be sensitive to low frequencies (Add REF), we suggest to only keep terms that were at least mentioned 5 times across all samples, resulting in a shorter frequency table. We then use the `CA()` function from `{FactoMineR}` to build the CA map:
+Another approach consists in visualizing the association between the samples and the words in a multiple way using Correspondence Analysis (CA). Since the CA can be sensitive to low frequencies (see Chapter 2 in @Husson2017), we suggest to only keep terms that were at least mentioned 5 times across all samples, resulting in a shorter frequency table. We then use the `CA()` function from `{FactoMineR}` to build the CA map:
 
 ```{r, eval=TRUE, echo=TRUE, warning=FALSE, message=FALSE}
 cider_ct <- cider %>% 
@@ -474,7 +474,6 @@ cider_2grams %>%
 ```
 
 For sample `182`, `not sweet` appears 3 times which can be surprising since it was one of the sample the most associated to `sweet` with 22 occurrences.
-<!-- Would perhaps be good to comment on possible interindividual differences in perception, which is one added value of NLP --> 
 
 ### Word Embedding
 
@@ -488,9 +487,7 @@ Textual analysis as we presented here is purely descriptive. In other words, the
 
 To perform *Sentiment Analysis*, we start by deconstructing the message into words (tokenization approach considered previously). Then, in a similar approach to the stop words, we can combine our list of words with a pre-defined list that defines which words should be considered as positive or negative (the rest being neutral). Ultimately, all the scores associated to each message can be summed, hence providing the overall valence score of a message. 
 
-To get examples of *sentiment* list, the `get_sentiments()` function from the `{tidytext}` package can be used. This function proposes 4 potential lists: `"bing"`, `"afinn"`, `"loughran"`, and `"nrc"` (REFERENCES). Of course, such lists can be modified and adapted to your own needs in case they do not fit perfectly.
-
-<!-- As it is becoming very common data from social media/spontaneous consumer feedback, I guess it would be nice to have an example to show, like a wordcloud for positive and negative consumer feedback, if possible -->
+To get examples of *sentiment* list, the `get_sentiments()` function from the `{tidytext}` package can be used. This function proposes 4 potential lists: `"bing"`, `"afinn"`, `"loughran"`, and `"nrc"` (see @Liu2015; @Mohammad13 for example). Of course, such lists can be modified and adapted to your own needs in case they do not fit perfectly.
 
 ## To go further...
 
