@@ -160,7 +160,7 @@ flex_table_design %>%
   autofit()
 ```
 
-```{r, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE, tab.cap="Flextable - lines adjustment function"}
+```{r, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE, tab.cap="Flextable - lines customization"}
 library(officer)
 flex_table_design %>%
   hline(i=10, border=fp_border(color="grey70", style="dashed")) %>%
@@ -194,7 +194,7 @@ flex_table_design %>%
 
 Other illustrations of the use of `{flextable}` are provided in section \@ref(powerpoint). 
 
-For curious readers who want to get a deeper look into all the possibilities provided by this package, we refer them to the book [*Using the flextable R package*](https://ardata-fr.github.io/flextable-book/index.html) by David Gohel and to its [gallery of tables](https://ardata.fr/en/flextable-gallery/) for inspiration.
+For curious readers who want to get a deeper look into all the possibilities provided by this package, we refer them to the book [*Using the flextable R package*](https://ardata-fr.github.io/flextable-book/index.html) by David Gohel and to [*Flextable gallery*](https://ardata.fr/en/flextable-gallery/) for inspiration.
 
 ### Introdution to `{gt}`
 
@@ -366,7 +366,7 @@ So let's imagine we want to look at the overall relationship between `Sticky` an
 
 Such information can be provided as such:
 
-```{r, eval=TRUE, echo=TRUE, warning=FALSE, message=FALSE, fig.cap="Scatter plot"}
+```{r, eval=TRUE, echo=TRUE, warning=FALSE, message=FALSE, fig.cap="Scatter plot."}
 p + geom_point(aes(x=Sticky, y=Melting))
 ```
 
@@ -378,7 +378,7 @@ In the previous example, one can notice that many points are being printed. This
 
 Let's color the points per products to see if we can see any patterns. Since the color code is specific to the data (more precisely to `Product`), it should be informed within the aesthetics by adding `colour=Product` within `aes()`:
 
-```{r, eval=TRUE, echo=TRUE, warning=FALSE, message=FALSE, fig.cap="Scatter plot with emphasis on the color through `aes()`"}
+```{r, eval=TRUE, echo=TRUE, warning=FALSE, message=FALSE, fig.cap="Scatter plot with emphasis on the color through `aes()`."}
 p + geom_point(aes(x=Sticky, y=Melting, colour=Product))
 ```
 
@@ -387,7 +387,7 @@ If for any reasons, a specific setting should uniformly be applied to all the el
 
 Let's illustrate this by providing a simple example in which we change the type of the dots from circle to square using `pch`, and by increasing their size using `cex`:
 
-```{r, eval=TRUE, echo=TRUE, warning=FALSE, message=FALSE, fig.cap="Scatter plot with emphasis on the type of dots through `pch` and `cex`"}
+```{r, eval=TRUE, echo=TRUE, warning=FALSE, message=FALSE, fig.cap="Scatter plot with emphasis on the type of dots through `pch` and `cex`."}
 p + geom_point(aes(x=Sticky, y=Melting, colour=Product), pch=15, cex=5)
 ```
 
@@ -411,7 +411,7 @@ Such procedure is done through the use of another `geom_*()` function in `geom_t
 
 To avoid having the label overlapping with the point, the text is slightly shifted vertically using `nudge_y`. For simplicity, let's rebuild the graph from the start:
 
-```{r, eval=TRUE, echo=TRUE, warning=FALSE, message=FALSE, fig.cap="Scatter plot with emphasis on the information displayed through `geom_point()` and `geom_text()`"}
+```{r, eval=TRUE, echo=TRUE, warning=FALSE, message=FALSE, fig.cap="Scatter plot with emphasis on the information displayed through `geom_point()` and `geom_text()`."}
 ggplot(sensory)+
   geom_point(aes(x=Sticky, y=Melting, colour=Product))+
   geom_text(aes(x=Sticky, y=Melting, label=Judge), nudge_y=1)
@@ -439,7 +439,7 @@ line_p <- p +
   geom_smooth(method=lm, formula="y~x", se=FALSE)
 ```
 
-```{r, eval=TRUE, echo=FALSE, warning=FALSE, message=FALSE, fig.cap="Scatter plot with regressionh line through `geom_smooth ()`"}
+```{r, eval=TRUE, echo=FALSE, warning=FALSE, message=FALSE, fig.cap="Scatter plot with regressionh line through `geom_smooth()`."}
 line_p
 ```
 
@@ -462,7 +462,7 @@ bar_p <- ggplot(Nbiscuits, aes(x=N, fill=Product)) +
   geom_bar(stat="count", position="dodge")
 ```
 
-```{r, eval=TRUE, echo=FALSE, warning=FALSE, message=FALSE, fig.cap="Bar Chart displaying the distribution using `geom_bar`"}
+```{r, eval=TRUE, echo=FALSE, warning=FALSE, message=FALSE, fig.cap="Bar Chart displaying the distribution using `geom_bar()`."}
 bar_p
 ```
 
@@ -490,7 +490,7 @@ bar_p <- bar_p+
   theme_minimal()
 ```
 
-```{r, eval=TRUE, echo=FALSE, warning=FALSE, message=FALSE, fig.cap="Bar Chart with emphasis on the display through `theme()`"}
+```{r, eval=TRUE, echo=FALSE, warning=FALSE, message=FALSE, fig.cap="Bar Chart with emphasis on the display through `theme()`."}
 bar_p
 ```
 
@@ -507,7 +507,7 @@ bar_p <- bar_p +
   ylab("Number of Respondents")
 ```
 
-```{r, eval=TRUE, echo=FALSE, warning=FALSE, message=FALSE, fig.cap="Bar Chart with emphasis on the display through `scale_x_continuous()` and `ylab()`"}
+```{r, eval=TRUE, echo=FALSE, warning=FALSE, message=FALSE, fig.cap="Bar Chart with emphasis on the display through `scale_x_continuous()` and `ylab()`."}
 bar_p
 ```
 
@@ -519,7 +519,7 @@ bar_p <- bar_p +
           "(Results are split per biscuit type)")
 ```
 
-```{r, eval=TRUE, echo=FALSE, warning=FALSE, message=FALSE, fig.cap="Bar Chart with emphasis on the display through `ggtitle()`"}
+```{r, eval=TRUE, echo=FALSE, warning=FALSE, message=FALSE, fig.cap="Bar Chart with emphasis on the display through `ggtitle()`."}
 bar_p
 ```
 
@@ -536,7 +536,7 @@ line_p <- line_p +
   guides(colour="none")
 ```
 
-```{r, eval=TRUE, echo=FALSE, warning=FALSE, message=FALSE, fig.cap="Scatter plot with emphasis on the display through `theme()`, `scale_continuous()`, `coord_fixed()`, `ggtitle()` and `guides()`"}
+```{r, eval=TRUE, echo=FALSE, warning=FALSE, message=FALSE, fig.cap="Scatter plot with emphasis on the display through `theme()`, `scale_*_continuous()`, `coord_fixed()`, `ggtitle()` and `guides()`."}
 line_p
 ```
 
@@ -587,7 +587,7 @@ Note that if some elements should be left blank, `element_blank()` can be used r
 
 Let's illustrate these concepts using our previous graph stored in `line_p`. Here, the goal is to remove the grid line, to replace the x and y axis lines by arrows, and to re-position the axis titles to the far end of the axis so that it is next to the arrow head. 
 
-```{r, eval=TRUE, echo=TRUE, warning=FALSE, message=FALSE, fig.cap="Scatter plot with emphasis on the display through `theme()`"}
+```{r, eval=TRUE, echo=TRUE, warning=FALSE, message=FALSE, fig.cap="Scatter plot with emphasis on the display through `theme()`."}
 line_p +
   theme(panel.grid=element_blank(), 
         panel.border=element_blank(),
@@ -607,7 +607,7 @@ In the graph saved in `bar_p`, remember that we filled in the bar chart using th
 
 Such procedure can be done using `scale_fill_manual()`.
 
-```{r, eval=TRUE, echo=TRUE, warning=FALSE, message=FALSE, fig.cap="Bar Chart with emphasis on the display through `scale_fill_manual()`"}
+```{r, eval=TRUE, echo=TRUE, warning=FALSE, message=FALSE, fig.cap="Bar Chart with emphasis on the display through `scale_fill_manual()`."}
 bar_p + 
   scale_fill_manual(values=c("P1"="gray50", "P2"="gray50", 
                              "P3"="darkorange", "P4"="gray50", 
@@ -626,7 +626,7 @@ By default, `ggplot()` generates plot that fits the data and that fits within th
 
 Other transformation can be performed. For instance, the graphic can be transposed using `coord_flip()` as in the following example:
 
-```{r, eval=TRUE, echo=TRUE, warning=FALSE, message=FALSE, fig.cap="Bar Chart with emphasis on the display through `coord_flip()`"}
+```{r, eval=TRUE, echo=TRUE, warning=FALSE, message=FALSE, fig.cap="Bar Chart with emphasis on the display through `coord_flip()`."}
 bar_p + coord_flip()
 ```
 
@@ -659,7 +659,7 @@ spider_line <- sensory_mean %>%
 
 Next step is to represent this line chart in a circular way. This can be done using `coord_polar()`:
 
-```{r, eval=TRUE, echo=TRUE, warning=FALSE, message=FALSE, fig.cap="Line charts using `coord_polar()`"}
+```{r, eval=TRUE, echo=TRUE, warning=FALSE, message=FALSE, fig.cap="Line charts using `coord_polar()`."}
 spider_line + coord_polar()
 ```
 
@@ -695,7 +695,7 @@ spider_plot <- sensory_mean_pos %>%
   theme(legend.position = "bottom", legend.title = element_blank())
 ```
 
-```{r, eval=TRUE, echo=FALSE, fig.cap="Spider Plot"}
+```{r, eval=TRUE, echo=FALSE, fig.cap="Spider Plot."}
 spider_plot
 ```
 
@@ -756,14 +756,14 @@ When `ggplot()` are being built using categorical variables, the labels used on 
 
 The first option consists in using `theme()` and rotating the labels (here at 45 degrees, but use 90 degrees to get the names vertically). Note that by default, `ggplot()` center the labels: to avoid having them crossing the x-axis line, they are being left-centered using `hjust=1`:
 
-```{r, eval=TRUE, echo=TRUE, warning=FALSE, message=FALSE, fig.cap = "Spider Plot fixing overlapping through `theme ()`"}
+```{r, eval=TRUE, echo=TRUE, warning=FALSE, message=FALSE, fig.cap = "Spider Plot fixing overlapping through `theme ()`."}
 spider_line + 
   theme(axis.text.x = element_text(angle=45, hjust=1))
 ```
 
 A second option consists in dodging one every two labels along the X-axis. This option works fine, especially when the labels are not too long. In our example unfortunately, some overlap can still be seen. Note that this option is accessible within `scale_x_discrete()`, not within `theme()` as we would expect:
 
-```{r, eval=TRUE, echo=TRUE, warning=FALSE, message=FALSE, fig.cap = "Spider Plot fixing overlapping through `scale_x_discrete()`"}
+```{r, eval=TRUE, echo=TRUE, warning=FALSE, message=FALSE, fig.cap = "Spider Plot fixing overlapping through `scale_x_discrete()`."}
 spider_line + 
   scale_x_discrete(guide = guide_axis(n.dodge = 2))
 ```
