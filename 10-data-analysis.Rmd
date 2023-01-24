@@ -811,6 +811,8 @@ consu <- consumer_wide %>%
   as.data.frame() %>%
   column_to_rownames(var = "Product")
 
+nconso = ncol(consu)
+
 library(SensoMineR)
 PrefMap <- carto(Mat = senso, MatH = consu, regmod = 1, 
                  graph.tree = FALSE, graph.corr = FALSE, 
@@ -825,7 +827,7 @@ The sensory space is stored in `senso`, whereas the surface response plot inform
 
 * `PrefMap$f1`: contains the coordinates on dimension 1 in which predictions have be made;
 * `PrefMap$f2`: contains the coordinates on dimension 2 in which predictions have be made;
-* `PrefMap$depasse`: contains the percentage of consumers that accept a product at each point of the space. This matrix is defined in such a way that `PrefMap$f1` links to the rows of the matrix, and `PrefMap$f2` links to the columns.
+* `PrefMap$nb.depasse`: contains the number of consumers that accept a product at each point of the space. This matrix is defined in such a way that `PrefMap$f1` links to the rows of the matrix, and `PrefMap$f2` links to the columns. Note that this counts should be transformed into percentage by dividing each count by the number of consumers who are involved in the test (defined earlier as `nconso`)
 
 Last but not least, `POpt` (which coordinates are stored in `senso_pca$ind.sup$coord`) can be projected on that space in order to see how this optimized sample is considered in terms of consumers' liking/preference.
 
@@ -834,7 +836,6 @@ Let's start with preparing the data by transforming everything back into a tibbl
 ```{r, echo=TRUE, eval=TRUE}
 senso <- senso %>%
   as_tibble(rownames = "Product")
-
 senso_sup <- senso_pca$ind.sup$coord %>%
   as_tibble(rownames = "Product")
 
@@ -843,7 +844,8 @@ dimnames(PrefMap$nb.depasse) <- list(round(PrefMap$f1, 2),
 PrefMap_plot <- PrefMap$nb.depasse %>%
   as_tibble(rownames = "Dim1") %>%
   pivot_longer(-Dim1, 
-               names_to = "Dim2", values_to = "Acceptance (%)") %>%
+               names_to = "Dim2", values_to = "Count") %>%
+  mutate("Acceptance (%)" = Count * 100 / nconso) %>% 
   mutate(across(where(is.character), as.numeric))
 ```
 

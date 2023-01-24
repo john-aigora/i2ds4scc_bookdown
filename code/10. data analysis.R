@@ -437,9 +437,12 @@ senso_sup <- senso_pca$ind.sup$coord %>%
   as_tibble(rownames="Product")
 
 dimnames(PrefMap$nb.depasse) <- list(round(PrefMap$f1,2), round(PrefMap$f2,2))
+nconso = ncol(consu)
+
 PrefMap_plot <- PrefMap$nb.depasse %>% 
   as_tibble(rownames="Dim1") %>% 
-  pivot_longer(-Dim1, names_to="Dim2", values_to="Acceptance (%)") %>% 
+  pivot_longer(-Dim1, names_to="Dim2", values_to="Count") %>%
+  mutate("Acceptance (%)" = Count * 100 / nconso) %>% 
   mutate(across(where(is.character), as.numeric))
 
 ggplot()+
