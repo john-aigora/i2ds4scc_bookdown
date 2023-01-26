@@ -36,11 +36,10 @@ This appears to be a tedious task and it most likely took you a few minutes beca
 
 Let's do it again, but now using the list of numbers below:
 
-
-98734979027<span style="color:red">**5**</span>1364978231649780231648741<span style="color:red">**5**</span>113697412369846321
-1234687923164879130002366<span style="color:red">**5**</span>698774646821397486248797964312
-12369874474<span style="color:red">**5**</span>78962341680021364789613469174312679812439612
-12332146987412361789461230<span style="color:red">**5**</span>0213<span style="color:red">**5**</span>467980213648126498731203
+98734979027\textcolor{red}{\textbf{5}}1364978231649780231648741\textcolor{red}{\textbf{5}}113697412369846321
+1234687923164879130002366\textcolor{red}{\textbf{5}}698774646821397486248797964312
+12369874474\textcolor{red}{\textbf{5}}78962341680021364789613469174312679812439612
+12332146987412361789461230\textcolor{red}{\textbf{5}}0213\textcolor{red}{\textbf{5}}467980213648126498731203
 
 This time the task is much easier and you can count the number of times the number 5 appears much faster. This is because we used the **pre-attentive attribute** of color to distinguish the number five, standing it out in contrast to the rest. This example shows in an easy way the power of pre-attentive attributes for effective visual communication. As stated by Cole Nussbaumer Knaflic in her book *Storytelling with Data*, when we use pre-attentive attributes strategically, we enable our audience to see what we want them to see before they even know they are seeing it!
 
@@ -124,7 +123,7 @@ flex_table_design %>%
 
 As can be seen, the function names are very intuitive, and so are the options. In particular, it is interesting to see that most functions allows applying changes to the entire table (`part = "all"`), the header only (`part = "header"`) or the body only (`part = "body"`). And even within a part, it is possible to make a sub-selection by selecting the rows (`i`) or columns (`j`) to include or exclude. Here, all the text in the body is set in italic except for the product names, hence the option `j=-1` (read exclude the first column).
 
-After presenting some of the basic aesthetic options, let's go once step further and play around with coloring. For instance, let's imagine we would change the header background and text color, and would want to call the audience's attention by highlighting the optimized formulation. The following code could be used to do this (results are not being saved):
+After presenting some of the basic aesthetic options, let's go once step further and play around with coloring. For instance, let's imagine we would change the header background and text color, and would want to call the audience's attention by highlighting the optimized formulation. We can also change the colour of the outer lines of the table using `fp_border()` from `{officer}`. The following code could be used to do this (results are not being saved):
 
 ```{r, flextabledesigned, echo = TRUE, eval = FALSE, message=FALSE, warning=FALSE}
 flex_table_design %>%
@@ -133,7 +132,10 @@ flex_table_design %>%
   fontsize(size = 13, part = "header", i = 1) %>%
   color(i = 11, color = "orange", part = "body") %>%
   color(i = 1:10, color = "grey70", part = "body") %>% 
-  add_header_lines(values = "Sensory Profile of 11 biscuits")
+  add_header_lines(values = "Sensory Profile of 11 biscuits") %>% 
+  border_remove() %>% 
+  border_outer(border=officer::fp_border(color="darkorange", width=2)) %>%
+  fix_border_issues()
 ```
 
 ```{r, eval=TRUE, echo=FALSE, tab.cap="Flextable - coloring function"}
@@ -146,8 +148,10 @@ flex_table_design %>%
   add_header_lines(values = "Sensory Profile of 11 biscuits") %>% 
   font(fontname = "Calibri", part="all") %>% 
   fontsize(size=8, part="all") %>% 
-  autofit()
-
+  autofit() %>% 
+  border_remove() %>% 
+  border_outer(border=officer::fp_border(color="darkorange", width=2)) %>%
+  fix_border_issues()
 ```
 
 Alternatively, we could decide to be more sober by applying other pre-attentive attributes. For instance, the size of the table can be adjusted, and an horizontal line can be added to delimit the optimal sample from the other. For the latter part, the customization of the line can be made using the function `fp_border()` from the `{officer}` package^[More information regarding the `{officer}` package are provided in Section \@ref(powerpoint)].
@@ -167,7 +171,6 @@ flex_table_design %>%
   font(fontname = "Calibri", part="all") %>% 
   fontsize(size=8, part="all") %>% 
   autofit()
-
 ```
 
 In some situations, applying some design options might mess up the appearance of your table, in particular its border lines. If that should happen to you, just apply the function `fix_border_issues()` at the end of your code to solve it.
@@ -232,7 +235,7 @@ mean_consumer %>%
              subtitle = md ("*Average taken from 99 consumers*"))
 ```
 
-```{r gttable, fig.cap='gt Table.', fig.align='center', echo=FALSE, out.width="90%", eval=TRUE}
+```{r gttable, fig.cap='gt Table.', fig.align='center', echo=FALSE, out.width="100%", eval=TRUE}
 knitr::include_graphics("images/gt_table.jpeg")
 ```
 
@@ -274,7 +277,7 @@ consumption %>%
                                   domain=nb_range, alpha=0.75))
 ```
 
-```{r gttabledesigned, fig.cap='gt Table - coloring function.', fig.align='center', echo=FALSE, out.width="90%", eval=TRUE}
+```{r gttabledesigned, fig.cap='gt Table - coloring function.', fig.align='center', echo=FALSE, out.width="100%", eval=TRUE}
 knitr::include_graphics("images/gt_table_2.jpeg")
 ```
 
@@ -302,7 +305,6 @@ mean_consumer_2 %>%
 knitr::include_graphics("images/gt_table_3.jpeg")
 ```
 
-
 In this section, due to their simplicity and flexibility, we emphasized the use of `{flextable}` and `{gt}` to build beautiful tables for your reports. However, there are other alternatives including `{kable}` and `{kableExtra}`, or `{huxtable}` for readers that are not yet fully satisfied.
 
 ## Chart Making
@@ -319,8 +321,6 @@ In practice, `{ggplot2}` is a multi-layer graphical tools, and graphics are buil
  [*A Layered Grammar of Graphics*](http://vita.had.co.nz/papers/layered-grammar.pdf) by Hadley Wickham.
 
 Note that since building graphics is limited to one's imagination, it is not possible to tackle each and every possibilities offered by `{ggplot2}` (and its extensions). For that reason, we prefer to focus on how `{ggplot2}`works, and by using as illustration throughout the book examples of graphics that are useful in Sensory and Consumer Science. This should be more than sufficient to get you started, and should cover 90% of your daily needs. Still, if that should not be sufficient, we invite you to look into the online documentation or to references such as [*The R Graph Gallery*](https://r-graph-gallery.com/).
-
-<!-- JD: this is only a suggestion. Did you have any other ref in mind?-->
 
 ### Getting started with `{ggplot2}` {#ggplot2}
 
@@ -732,9 +732,8 @@ p + plot_annotation(title = "Example of 'ggplots' I've learned today",
 ```
 
 ```{r, fig.cap='Multiple plots Example', fig.align='center', echo=FALSE, out.width="90%", eval=TRUE}
-knitr::include_graphics("images/multiplePlot.jpg")
+knitr::include_graphics("images/multiplePlot.png")
 ```
-
 
 ### Few Additional Tips and Tricks {#tipsntricks}
 

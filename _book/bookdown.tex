@@ -190,7 +190,7 @@
 
 \title{Data Science for Sensory and Consumer Scientists}
 \author{Thierry Worch, Julien Delarue, Vanessa Rios de Souza, and John Ennis}
-\date{2023-01-25}
+\date{2023-01-26}
 
 \begin{document}
 \maketitle
@@ -289,7 +289,7 @@ Besides publishing various papers related to Sensometric, and participating in m
 
 Dr.~Julien Delarue is an Associate Professor in Sensory and Consumer Science at UC Davis. He received his Ph.D.~in Food Science at AgroParisTech, and his research focuses on methods to measure sensory perception and preferences and on their effective use in food design.
 
-Dr.~Vanessa de Rios Souza is a Sr.~Computational Sensory Science Consultant at Aigora, and received her Ph.D.~in Food Science at the Universidade Federal de Lavras.
+Dr.~Vanessa de Rios Souza is a Sr.~Computational Sensory Science Consultant at Aigora, a company whose mission is to empower sensory and consumer science teams to implement artificial intelligence. Her role involves leading clients' projects related to Process Automation, Knowledge Management, New Technologies and Computational Analytics. Vanessa holds a Ph.D.~degree in Food Science and has over 10 years of experience in R\&D, consumer and sensory research across multiple food product categories and functions, with strong background in food science and food processing. She has extensive experience in industrial, academic, and research settings.
 
 Dr.~John Ennis is the co-founder of Aigora, and a world-renowned authority on the use of artificial intelligence within sensory and consumer science. He is a Ph.D.~mathematician who conducted his postdoctoral studies in computational neuroscience and who has more than a dozen years of experience as a sensory and consumer science consultant.
 
@@ -1263,7 +1263,7 @@ Related to the idea of reproducible research is that of standardized reporting. 
 \item
   \textbf{Consistent Formatting} When standardized reporting is used, outputs created by a team are formatted consistently regardless of who creates them. This consistency helps consumers of the reports - whether those consumers are executives, clients, or other team members - quickly interpret results.
 \item
-  \textbf{Upstream Data Consistency} Once a standardized workflow is put in place, consistency of data formatting gains a new importance as producers of the report can save significant time by not having to reformat new data. This fact puts pressure on the data collection procedure to become more consistent, which ultimately supports knowledge management (ADD DATABASE REFERENCES).
+  \textbf{Upstream Data Consistency} Once a standardized workflow is put in place, consistency of data formatting gains a new importance as producers of the report can save significant time by not having to reformat new data. This fact puts pressure on the data collection procedure to become more consistent, which ultimately supports knowledge management.
 \item
   \textbf{Shared Learning} Once a team combines standardized reporting with tools for online collaboration such as GitHub (see Appendix \ref{git-and-github}), any improvement to reporting (for example, to a table, chart, text output, or even to the reporting format itself) can be leveraged by all members of the team. Thus improvements compound over time, to the benefit of all team members.
 \end{itemize}
@@ -3299,10 +3299,10 @@ This appears to be a tedious task and it most likely took you a few minutes beca
 
 Let's do it again, but now using the list of numbers below:
 
-98734979027{\textbf{5}}1364978231649780231648741{\textbf{5}}113697412369846321
-1234687923164879130002366{\textbf{5}}698774646821397486248797964312
-12369874474{\textbf{5}}78962341680021364789613469174312679812439612
-12332146987412361789461230{\textbf{5}}0213{\textbf{5}}467980213648126498731203
+98734979027\textcolor{red}{\textbf{5}}1364978231649780231648741\textcolor{red}{\textbf{5}}113697412369846321
+1234687923164879130002366\textcolor{red}{\textbf{5}}698774646821397486248797964312
+12369874474\textcolor{red}{\textbf{5}}78962341680021364789613469174312679812439612
+12332146987412361789461230\textcolor{red}{\textbf{5}}0213\textcolor{red}{\textbf{5}}467980213648126498731203
 
 This time the task is much easier and you can count the number of times the number 5 appears much faster. This is because we used the \textbf{pre-attentive attribute} of color to distinguish the number five, standing it out in contrast to the rest. This example shows in an easy way the power of pre-attentive attributes for effective visual communication. As stated by Cole Nussbaumer Knaflic in her book \emph{Storytelling with Data}, when we use pre-attentive attributes strategically, we enable our audience to see what we want them to see before they even know they are seeing it!
 
@@ -3588,7 +3588,7 @@ A first simple improvement consists in reducing the number of decimals (\texttt{
 
 As can be seen, the function names are very intuitive, and so are the options. In particular, it is interesting to see that most functions allows applying changes to the entire table (\texttt{part\ =\ "all"}), the header only (\texttt{part\ =\ "header"}) or the body only (\texttt{part\ =\ "body"}). And even within a part, it is possible to make a sub-selection by selecting the rows (\texttt{i}) or columns (\texttt{j}) to include or exclude. Here, all the text in the body is set in italic except for the product names, hence the option \texttt{j=-1} (read exclude the first column).
 
-After presenting some of the basic aesthetic options, let's go once step further and play around with coloring. For instance, let's imagine we would change the header background and text color, and would want to call the audience's attention by highlighting the optimized formulation. The following code could be used to do this (results are not being saved):
+After presenting some of the basic aesthetic options, let's go once step further and play around with coloring. For instance, let's imagine we would change the header background and text color, and would want to call the audience's attention by highlighting the optimized formulation. We can also change the colour of the outer lines of the table using \texttt{fp\_border()} from \texttt{\{officer\}}. The following code could be used to do this (results are not being saved):
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3598,7 +3598,10 @@ After presenting some of the basic aesthetic options, let's go once step further
   \FunctionTok{fontsize}\NormalTok{(}\AttributeTok{size =} \DecValTok{13}\NormalTok{, }\AttributeTok{part =} \StringTok{"header"}\NormalTok{, }\AttributeTok{i =} \DecValTok{1}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{color}\NormalTok{(}\AttributeTok{i =} \DecValTok{11}\NormalTok{, }\AttributeTok{color =} \StringTok{"orange"}\NormalTok{, }\AttributeTok{part =} \StringTok{"body"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{color}\NormalTok{(}\AttributeTok{i =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{, }\AttributeTok{color =} \StringTok{"grey70"}\NormalTok{, }\AttributeTok{part =} \StringTok{"body"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{add\_header\_lines}\NormalTok{(}\AttributeTok{values =} \StringTok{"Sensory Profile of 11 biscuits"}\NormalTok{)}
+  \FunctionTok{add\_header\_lines}\NormalTok{(}\AttributeTok{values =} \StringTok{"Sensory Profile of 11 biscuits"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{border\_remove}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{border\_outer}\NormalTok{(}\AttributeTok{border=}\NormalTok{officer}\SpecialCharTok{::}\FunctionTok{fp\_border}\NormalTok{(}\AttributeTok{color=}\StringTok{"darkorange"}\NormalTok{, }\AttributeTok{width=}\DecValTok{2}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{fix\_border\_issues}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3618,83 +3621,83 @@ After presenting some of the basic aesthetic options, let's go once step further
 
 \caption{\textcolor[HTML]{000000}{\fontsize{11}{13}\selectfont{\global\setmainfont{Arial}{Flextable\ -\ coloring\ function}}}}\label{tab:unnamed-chunk-104}\\
 
-\ascline{2pt}{666666}{1-6}
+\ascline{2pt}{FF8C00}{1-6}
 
-\multicolumn{6}{>{\cellcolor[HTML]{000000}\centering}p{\dimexpr 3.31in+10\tabcolsep}}{\textcolor[HTML]{FFFFFF}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textbf{Sensory\ Profile\ of\ 11\ biscuits}}}}} \\
-
-\ascline{2pt}{666666}{1-6}
-
-
-
-\multicolumn{1}{>{\cellcolor[HTML]{000000}\centering}p{\dimexpr 0.65in+0\tabcolsep}}{\textcolor[HTML]{FFFFFF}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textbf{Product}}}}} & \multicolumn{1}{>{\cellcolor[HTML]{000000}\centering}p{\dimexpr 0.54in+0\tabcolsep}}{\textcolor[HTML]{FFFFFF}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textbf{Shiny}}}}} & \multicolumn{1}{>{\cellcolor[HTML]{000000}\centering}p{\dimexpr 0.57in+0\tabcolsep}}{\textcolor[HTML]{FFFFFF}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textbf{Sweet}}}}} & \multicolumn{1}{>{\cellcolor[HTML]{000000}\centering}p{\dimexpr 0.5in+0\tabcolsep}}{\textcolor[HTML]{FFFFFF}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textbf{Sour}}}}} & \multicolumn{1}{>{\cellcolor[HTML]{000000}\centering}p{\dimexpr 0.55in+0\tabcolsep}}{\textcolor[HTML]{FFFFFF}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textbf{Bitter}}}}} & \multicolumn{1}{>{\cellcolor[HTML]{000000}\centering}p{\dimexpr 0.51in+0\tabcolsep}}{\textcolor[HTML]{FFFFFF}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textbf{Salty}}}}} \\
-
-\ascline{2pt}{666666}{1-6}\endhead
-
-
-
-\multicolumn{1}{>{\centering}p{\dimexpr 0.65in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{P01}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.54in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{41.93}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.57in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{22.20}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.5in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{0.00}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.55in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{8.00}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.51in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{5.10}}}}} \\
+\multicolumn{6}{!{\color[HTML]{FF8C00}\vrule width 2pt}>{\cellcolor[HTML]{000000}\centering}p{\dimexpr 3.31in+10\tabcolsep}!{\color[HTML]{FF8C00}\vrule width 2pt}}{\textcolor[HTML]{FFFFFF}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textbf{Sensory\ Profile\ of\ 11\ biscuits}}}}} \\
 
 
 
 
 
-\multicolumn{1}{>{\centering}p{\dimexpr 0.65in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{P02}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.54in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{39.13}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.57in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{15.80}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.5in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{0.00}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.55in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{4.93}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.51in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{2.93}}}}} \\
+\multicolumn{1}{!{\color[HTML]{FF8C00}\vrule width 2pt}>{\cellcolor[HTML]{000000}\centering}p{\dimexpr 0.65in+0\tabcolsep}}{\textcolor[HTML]{FFFFFF}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textbf{Product}}}}} & \multicolumn{1}{>{\cellcolor[HTML]{000000}\centering}p{\dimexpr 0.54in+0\tabcolsep}}{\textcolor[HTML]{FFFFFF}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textbf{Shiny}}}}} & \multicolumn{1}{>{\cellcolor[HTML]{000000}\centering}p{\dimexpr 0.57in+0\tabcolsep}}{\textcolor[HTML]{FFFFFF}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textbf{Sweet}}}}} & \multicolumn{1}{>{\cellcolor[HTML]{000000}\centering}p{\dimexpr 0.5in+0\tabcolsep}}{\textcolor[HTML]{FFFFFF}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textbf{Sour}}}}} & \multicolumn{1}{>{\cellcolor[HTML]{000000}\centering}p{\dimexpr 0.55in+0\tabcolsep}}{\textcolor[HTML]{FFFFFF}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textbf{Bitter}}}}} & \multicolumn{1}{>{\cellcolor[HTML]{000000}\centering}p{\dimexpr 0.51in+0\tabcolsep}!{\color[HTML]{FF8C00}\vrule width 2pt}}{\textcolor[HTML]{FFFFFF}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textbf{Salty}}}}} \\
+
+\ascline{2pt}{FF8C00}{1-6}\endhead
+
+
+
+\multicolumn{1}{!{\color[HTML]{FF8C00}\vrule width 2pt}>{\centering}p{\dimexpr 0.65in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{P01}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.54in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{41.93}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.57in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{22.20}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.5in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{0.00}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.55in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{8.00}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.51in+0\tabcolsep}!{\color[HTML]{FF8C00}\vrule width 2pt}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{5.10}}}}} \\
 
 
 
 
 
-\multicolumn{1}{>{\centering}p{\dimexpr 0.65in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{P03}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.54in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{30.53}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.57in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{10.40}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.5in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{0.00}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.55in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{7.80}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.51in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{4.67}}}}} \\
+\multicolumn{1}{!{\color[HTML]{FF8C00}\vrule width 2pt}>{\centering}p{\dimexpr 0.65in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{P02}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.54in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{39.13}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.57in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{15.80}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.5in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{0.00}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.55in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{4.93}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.51in+0\tabcolsep}!{\color[HTML]{FF8C00}\vrule width 2pt}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{2.93}}}}} \\
 
 
 
 
 
-\multicolumn{1}{>{\centering}p{\dimexpr 0.65in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{P04}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.54in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{42.60}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.57in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{16.60}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.5in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{0.00}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.55in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{4.27}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.51in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{3.60}}}}} \\
+\multicolumn{1}{!{\color[HTML]{FF8C00}\vrule width 2pt}>{\centering}p{\dimexpr 0.65in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{P03}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.54in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{30.53}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.57in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{10.40}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.5in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{0.00}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.55in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{7.80}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.51in+0\tabcolsep}!{\color[HTML]{FF8C00}\vrule width 2pt}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{4.67}}}}} \\
 
 
 
 
 
-\multicolumn{1}{>{\centering}p{\dimexpr 0.65in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{P05}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.54in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{13.93}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.57in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{21.00}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.5in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{3.00}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.55in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{6.73}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.51in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{5.87}}}}} \\
+\multicolumn{1}{!{\color[HTML]{FF8C00}\vrule width 2pt}>{\centering}p{\dimexpr 0.65in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{P04}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.54in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{42.60}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.57in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{16.60}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.5in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{0.00}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.55in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{4.27}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.51in+0\tabcolsep}!{\color[HTML]{FF8C00}\vrule width 2pt}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{3.60}}}}} \\
 
 
 
 
 
-\multicolumn{1}{>{\centering}p{\dimexpr 0.65in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{P06}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.54in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{6.87}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.57in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{14.73}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.5in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{4.00}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.55in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{6.53}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.51in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{8.20}}}}} \\
+\multicolumn{1}{!{\color[HTML]{FF8C00}\vrule width 2pt}>{\centering}p{\dimexpr 0.65in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{P05}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.54in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{13.93}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.57in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{21.00}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.5in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{3.00}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.55in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{6.73}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.51in+0\tabcolsep}!{\color[HTML]{FF8C00}\vrule width 2pt}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{5.87}}}}} \\
 
 
 
 
 
-\multicolumn{1}{>{\centering}p{\dimexpr 0.65in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{P07}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.54in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{32.47}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.57in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{19.47}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.5in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{0.87}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.55in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{5.00}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.51in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{2.80}}}}} \\
+\multicolumn{1}{!{\color[HTML]{FF8C00}\vrule width 2pt}>{\centering}p{\dimexpr 0.65in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{P06}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.54in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{6.87}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.57in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{14.73}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.5in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{4.00}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.55in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{6.53}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.51in+0\tabcolsep}!{\color[HTML]{FF8C00}\vrule width 2pt}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{8.20}}}}} \\
 
 
 
 
 
-\multicolumn{1}{>{\centering}p{\dimexpr 0.65in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{P08}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.54in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{8.93}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.57in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{14.27}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.5in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{0.93}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.55in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{11.07}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.51in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{2.47}}}}} \\
+\multicolumn{1}{!{\color[HTML]{FF8C00}\vrule width 2pt}>{\centering}p{\dimexpr 0.65in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{P07}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.54in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{32.47}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.57in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{19.47}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.5in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{0.87}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.55in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{5.00}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.51in+0\tabcolsep}!{\color[HTML]{FF8C00}\vrule width 2pt}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{2.80}}}}} \\
 
 
 
 
 
-\multicolumn{1}{>{\centering}p{\dimexpr 0.65in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{P09}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.54in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{3.53}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.57in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{13.33}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.5in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{0.00}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.55in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{9.27}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.51in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{4.00}}}}} \\
+\multicolumn{1}{!{\color[HTML]{FF8C00}\vrule width 2pt}>{\centering}p{\dimexpr 0.65in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{P08}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.54in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{8.93}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.57in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{14.27}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.5in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{0.93}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.55in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{11.07}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.51in+0\tabcolsep}!{\color[HTML]{FF8C00}\vrule width 2pt}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{2.47}}}}} \\
 
 
 
 
 
-\multicolumn{1}{>{\centering}p{\dimexpr 0.65in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{P10}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.54in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{26.13}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.57in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{30.47}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.5in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{5.07}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.55in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{9.67}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.51in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{9.00}}}}} \\
+\multicolumn{1}{!{\color[HTML]{FF8C00}\vrule width 2pt}>{\centering}p{\dimexpr 0.65in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{P09}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.54in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{3.53}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.57in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{13.33}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.5in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{0.00}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.55in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{9.27}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.51in+0\tabcolsep}!{\color[HTML]{FF8C00}\vrule width 2pt}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{4.00}}}}} \\
 
 
 
 
 
-\multicolumn{1}{>{\centering}p{\dimexpr 0.65in+0\tabcolsep}}{\textcolor[HTML]{FFA500}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{POpt}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.54in+0\tabcolsep}}{\textcolor[HTML]{FFA500}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{16.87}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.57in+0\tabcolsep}}{\textcolor[HTML]{FFA500}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{17.73}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.5in+0\tabcolsep}}{\textcolor[HTML]{FFA500}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{2.20}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.55in+0\tabcolsep}}{\textcolor[HTML]{FFA500}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{15.87}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.51in+0\tabcolsep}}{\textcolor[HTML]{FFA500}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{6.67}}}}} \\
+\multicolumn{1}{!{\color[HTML]{FF8C00}\vrule width 2pt}>{\centering}p{\dimexpr 0.65in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{P10}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.54in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{26.13}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.57in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{30.47}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.5in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{5.07}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.55in+0\tabcolsep}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{9.67}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.51in+0\tabcolsep}!{\color[HTML]{FF8C00}\vrule width 2pt}}{\textcolor[HTML]{B3B3B3}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{9.00}}}}} \\
 
-\ascline{2pt}{666666}{1-6}
+
+
+
+
+\multicolumn{1}{!{\color[HTML]{FF8C00}\vrule width 2pt}>{\centering}p{\dimexpr 0.65in+0\tabcolsep}}{\textcolor[HTML]{FFA500}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{POpt}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.54in+0\tabcolsep}}{\textcolor[HTML]{FFA500}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{16.87}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.57in+0\tabcolsep}}{\textcolor[HTML]{FFA500}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{17.73}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.5in+0\tabcolsep}}{\textcolor[HTML]{FFA500}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{2.20}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.55in+0\tabcolsep}}{\textcolor[HTML]{FFA500}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{15.87}}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 0.51in+0\tabcolsep}!{\color[HTML]{FF8C00}\vrule width 2pt}}{\textcolor[HTML]{FFA500}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{\textit{6.67}}}}} \\
+
+\ascline{2pt}{FF8C00}{1-6}
 
 
 
@@ -3989,7 +3992,7 @@ Now that the data is ready, we can display it with some basics adjustments to ma
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.9\linewidth]{images/gt_table} 
+{\centering \includegraphics[width=1\linewidth]{images/gt_table} 
 
 }
 
@@ -4042,7 +4045,7 @@ Now, let's color code the cells based on the average number of biscuits eaten. T
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.9\linewidth]{images/gt_table_2} 
+{\centering \includegraphics[width=1\linewidth]{images/gt_table_2} 
 
 }
 
@@ -6084,16 +6087,16 @@ Alternately, the \texttt{WilliamsDesign()} function in \texttt{\{SensoMineR\}} a
 
 \begin{verbatim}
 ##          Rank 1 Rank 2 Rank 3 Rank 4 Rank 5
-## Judge 1       1      3      2      4      5
-## Judge 2       3      4      1      5      2
-## Judge 3       4      5      3      2      1
-## Judge 4       5      2      4      1      3
-## Judge 5       2      1      5      3      4
-## Judge 6       5      4      2      3      1
-## Judge 7       2      5      1      4      3
-## Judge 8       1      2      3      5      4
-## Judge 9       3      1      4      2      5
-## Judge 10      4      3      5      1      2
+## Judge 1       2      5      1      4      3
+## Judge 2       5      4      2      3      1
+## Judge 3       4      3      5      1      2
+## Judge 4       3      1      4      2      5
+## Judge 5       1      2      3      5      4
+## Judge 6       3      4      1      5      2
+## Judge 7       1      3      2      4      5
+## Judge 8       2      1      5      3      4
+## Judge 9       5      2      4      1      3
+## Judge 10      4      5      3      2      1
 \end{verbatim}
 
 Suppose you want to include 20 judges in the experiment, you would then need to duplicate the initial design.
@@ -6107,26 +6110,26 @@ Suppose you want to include 20 judges in the experiment, you would then need to 
 
 \begin{verbatim}
 ##         Rank 1 Rank 2 Rank 3 Rank 4 Rank 5
-## judge1       1      3      2      4      5
-## judge2       3      4      1      5      2
-## judge3       4      5      3      2      1
-## judge4       5      2      4      1      3
-## judge5       2      1      5      3      4
-## judge6       5      4      2      3      1
-## judge7       2      5      1      4      3
-## judge8       1      2      3      5      4
-## judge9       3      1      4      2      5
-## judge10      4      3      5      1      2
-## judge11      1      3      2      4      5
-## judge12      3      4      1      5      2
-## judge13      4      5      3      2      1
-## judge14      5      2      4      1      3
-## judge15      2      1      5      3      4
-## judge16      5      4      2      3      1
-## judge17      2      5      1      4      3
-## judge18      1      2      3      5      4
-## judge19      3      1      4      2      5
-## judge20      4      3      5      1      2
+## judge1       2      5      1      4      3
+## judge2       5      4      2      3      1
+## judge3       4      3      5      1      2
+## judge4       3      1      4      2      5
+## judge5       1      2      3      5      4
+## judge6       3      4      1      5      2
+## judge7       1      3      2      4      5
+## judge8       2      1      5      3      4
+## judge9       5      2      4      1      3
+## judge10      4      5      3      2      1
+## judge11      2      5      1      4      3
+## judge12      5      4      2      3      1
+## judge13      4      3      5      1      2
+## judge14      3      1      4      2      5
+## judge15      1      2      3      5      4
+## judge16      3      4      1      5      2
+## judge17      1      3      2      4      5
+## judge18      2      1      5      3      4
+## judge19      5      2      4      1      3
+## judge20      4      5      3      2      1
 \end{verbatim}
 
 The downside of Williams's Latin square designs is that the number of samples (\emph{k}) to be evaluated dictates the number of judges. For an even number of samples you must have a multiple of \emph{k} judges, and a multiple of \emph{2k} judges for an odd number of samples.
@@ -6150,19 +6153,19 @@ As the total number of judges in your study may not always be exactly known in a
 \begin{verbatim}
 ##      rank
 ## judge 1 2 3 4 5
-##    1  2 4 5 1 3
-##    2  4 1 2 3 5
-##    3  1 3 4 5 2
-##    4  3 5 1 2 4
-##    5  5 2 3 4 1
-##    6  3 1 5 4 2
-##    7  5 3 2 1 4
-##    8  2 5 4 3 1
-##    9  4 2 1 5 3
-##    10 1 4 3 2 5
-##    11 2 4 5 1 3
-##    12 4 1 2 3 5
-##    13 1 3 4 5 2
+##    1  2 4 1 3 5
+##    2  4 3 2 5 1
+##    3  3 5 4 1 2
+##    4  5 1 3 2 4
+##    5  1 2 5 4 3
+##    6  5 3 1 4 2
+##    7  1 5 2 3 4
+##    8  2 1 4 5 3
+##    9  4 2 3 1 5
+##    10 3 4 5 2 1
+##    11 2 4 1 3 5
+##    12 4 3 2 5 1
+##    13 3 5 4 1 2
 \end{verbatim}
 
 In the code above, \texttt{xtabs()} is used to arrange the design in a table format that is convenient for the experimenter.
@@ -6207,16 +6210,16 @@ The \texttt{optimaldesign()} function of \texttt{\{SensoMineR\}} can be used to 
 
 \begin{verbatim}
 ##             Rank 1 Rank 2 Rank 3
-## Panelist 1       3      5      1
-## Panelist 2       5      4      2
-## Panelist 3       2      1      4
-## Panelist 4       4      5      1
-## Panelist 5       5      3      4
-## Panelist 6       1      2      5
-## Panelist 7       2      3      5
-## Panelist 8       1      4      3
-## Panelist 9       4      2      3
-## Panelist 10      3      1      2
+## Panelist 1       3      1      5
+## Panelist 2       4      5      2
+## Panelist 3       2      1      5
+## Panelist 4       1      3      4
+## Panelist 5       1      2      3
+## Panelist 6       5      3      2
+## Panelist 7       2      4      1
+## Panelist 8       4      5      1
+## Panelist 9       5      4      3
+## Panelist 10      3      2      4
 \end{verbatim}
 
 BIBD are only possible for certain combinations of numbers of treatment (products), numbers of blocks (judges), and block size (number of samples per judge). Note that \texttt{optimaldesign()} will yield a design even if it is not balanced but it will also generate contingency tables allowing you to evaluate the design's orthogonality, and how well balanced are order and carry-over effects.
@@ -7906,8 +7909,8 @@ The conversion from character to numerical is straight forward and requires the 
 \end{Shaded}
 
 \begin{verbatim}
-## Warning in mask$eval_all_mutate(quo): NAs introduced by
-## coercion
+## Warning in mask$eval_all_mutate(quo): NAs introduced
+## by coercion
 \end{verbatim}
 
 \begin{verbatim}
@@ -9156,7 +9159,7 @@ As can be seen, \texttt{POpt} is quite far from the optimal area suggested by th
 \chapter{Value Delivery}\label{value-delivery}}
 
 \begin{quote}
-Most of this book focus on handling data through the procedure of data cleaning, transformation, analyses, or representation. This makes sense since the aim is to present data science in the context of sensory and consumer research. But these steps may be irrelevant if analysts or reseachers are not able to communicate their findings efficiently. Effective communication is as much important as any other step and so, we will guide you through that, providing some valuable tips and practical examples. This chapter approaches important topics to help you reach the goal of successful communication, from understanding the distinction between different analysis and audience awareness to methods to communicate, the art of storytelling, and ultimately reformulate.
+Most of this book focus on handling data through the procedure of data cleaning, transformation, analyses, or representation. This makes sense since the aim is to present data science in the context of sensory and consumer research. But these steps may be irrelevant if analysts or reseachers are not able to communicate their findings efficiently. Effective communication is as much important as any other step and so, we will guide you through that, providing some valuable tips and practical examples. This chapter approaches important topics to help you reach the goal of successful communication, from understanding the distinction between different analysis and audience awareness to methods to communicate, the art of storytelling, and ultimately, reformulate.
 \end{quote}
 
 \hypertarget{how-to-communicate}{%
@@ -9187,7 +9190,7 @@ The ability to communicate accurately, clearly and as intended, is definitely so
 \item
   \textbf{Passion and Enthusiasm}: Be passionate about what you do, and convinced/enthusiastic about the solution you provide. The audience can easily capture that on your vocally and non-verbally language and will be much more interested if they can see and feel your passion.
 \item
-  \textbf{Ability to be succinct}. No matter how interesting you feel about a topic, you must know that the audience will lose interest after some time, especially if there is a lot of technical and detailed information. Be aware that the attention span of your audience isn't long, so use your time wisely during the presentation, keeping it short and at the point.
+  \textbf{Ability to be succinct}. No matter how interesting you feel about a topic, you must know that the audience will lose interest after some time, especially if there is a lot of technical and detailed information. Be aware that the attention span of your audience is not long, so use your time wisely during the presentation, keeping it short and at the point.
 \item
   \textbf{Feeling}. This is a skill that definitely one needs time to master, but it is crucial that you pick what is going on with your client, if they seem to be understanding and following you, or if they seem to be confused or not sure about what you are talking about.
 \end{itemize}
@@ -9199,7 +9202,7 @@ In this chapter, we focus on four topics that we believe any successful consulta
 
 As a consultant in the field, you likely are in a position where you get data from your client and review it, do the analysis, and ultimately, convey the results. And here is where it is important to make a clear distinction between exploratory and explanatory analysis. \textbf{Exploratory analysis} is the stage where you dig into the data, get to understand them, figure out patterns and things that may be interesting or important to highlight. The \textbf{explanatory analysis} is the ability, from the learning from the previous step, to select and/or reorganize your data (by remaking your tables, plots, or charts) in a way you can easily convey the message to your audience, and ultimately make them understand and focus on the things that are worthy. Let's discuss that a little bit more.
 
-The hard work starts once you get the data. This is the time you will likely analyze it in multiple ways, make several plots, and look at the data from multiple angles. This is what we call, exploratory analysis! After understanding all the analysis, it may be tempting to show the audience everything, all the steps, decisions, different plots, and approaches you have taken, but \textbf{do not do that}. You don't want to overload your audience making them go through the same tough path you went. Instead of showing your handwork, the robustness of your analysis, and building up your credibility, you will make your audience confused, bored, and lacking interest.
+The hard work starts once you get the data. This is the time you will likely analyze it in multiple ways, make several plots, and look at the data from multiple angles. This is what we call, exploratory analysis! After understanding all the analysis, it may be tempting to show the audience everything, all the steps, decisions, different plots, and approaches you have taken, but \textbf{do not do that}. You do not want to overload your audience making them go through the same tough path you went. Instead of showing your handwork, the robustness of your analysis, and building up your credibility, you will make your audience confused, bored, and lacking interest.
 
 Once you have done all the hard work on data analysis, it is the moment to take some time to stand back and look at the key findings and the message(s) you want to convey. It is important to keep in mind that there is always a balance to find between presenting quantified, accurate, and credible information (i.e.~with sufficient details) and presenting information that makes sense, is relevant and that is easily readable and understandable. This challenging phase is what we call explanatory analysis! This is the moment you need to use your ability to translate an extensive, detailed, and complex version of your data analysis to a more concise/holistic version, to a version that will easily and clearly convey the message and highlight the main points. Keep in mind that the explanatory analysis has to be tailored according to your audience (as discussed in the next topic), which means that the way you present the data analysis and the level of details provided vary if you are presenting it to a group of experts in the field, including statisticians and mathematicians or in a lecture for a very diverse audience, as in a conference for instance. You need to find the right balance!
 
@@ -9208,7 +9211,7 @@ Some examples in the field to exemplify the two extremes (too complicated or too
 \begin{itemize}
 \tightlist
 \item
-  \emph{Factorial maps} -- The overuse of factorial maps is a common practice in the sensory and consumer science field. It's a great tool to explore data, to make or confirm hypotheses, but maybe not the best to communicate since not so many people can correctly read and interpret them. Therefore, a good approach would be to initially work with the factorial map to interpret and draw conclusions, but then, find another way through tables or alternative charts (that may be simpler to understand) to communicate the findings to your audience.
+  \emph{Factorial maps} -- The overuse of factorial maps is a common practice in the sensory and consumer science field. It is a great tool to explore data, to make or confirm hypotheses, but maybe not the best to communicate since not so many people can correctly read and interpret them. Therefore, a good approach would be to initially work with the factorial map to interpret and draw conclusions, but then, find another way through tables or alternative charts (that may be simpler to understand) to communicate the findings to your audience.
 \item
   \emph{Spider Plots} -- This is the other extreme when consultants can fail but not because they present a very complex and extensive analysis, but because they decide to show the data in such an easy way that puts at risk important information that should be captured. The use of spider plots is still a common practice that many people can easily understand, but the problem is that this analysis is so simple that it can mask sensory complexity.
 \end{itemize}
@@ -9255,9 +9258,9 @@ Another distinct type of audience that falls into the management audience would 
 \hypertarget{general-interest}{%
 \subsection{General Interest}\label{general-interest}}
 
-The general audience usually refers to the ones that are likely the final users or are somehow related, contributed, or are interested in the project. In this way, this public is usually the least interested in the details and the most interested in the whole picture. The general audience usually refers to a larger group of people with different backgrounds and distinct levels of expertise, for instance, an R\&D internship, a Chemistry Researcher, and a Senior Sensory Specialist can be all final users of a dashboard you developed. In this case, to make sure everyone follows you in a training (say), you must use less technical language and a lower level of details, otherwise you will lose part of your audience's attention. But at the same time, you may need to consider covering things that sound obvious to you, you ought to be careful about not skipping topics assuming that everyone knows about that or using certain terms and expressions considering that is evident for all. This can be the most challenging audience to deal with due to its diversity, but in a meeting, training session, or presentation, you should be very attentive and use your feeling to capture what's going on and maybe change your position to better connect with the audience
+The general audience usually refers to the ones that are likely the final users or are somehow related, contributed, or are interested in the project. In this way, this public is usually the least interested in the details and the most interested in the whole picture. The general audience usually refers to a larger group of people with different backgrounds and distinct levels of expertise, for instance, an R\&D internship, a Chemistry Researcher, and a Senior Sensory Specialist can be all final users of a dashboard you developed. In this case, to make sure everyone follows you in a training (say), you must use less technical language and a lower level of details, otherwise you will lose part of your audience's attention. But at the same time, you may need to consider covering things that sound obvious to you, you ought to be careful about not skipping topics assuming that everyone knows about that or using certain terms and expressions considering that is evident for all. This can be the most challenging audience to deal with due to its diversity, but in a meeting, training session, or presentation, you should be very attentive and use your feeling to capture what is going on and maybe change your position to better connect with the audience
 
-A valuable tip shared by Cole Nussbaumer, in her book Storytelling with data, is to avoid general audiences, such as the technical and management team at the same time, or general audience such as ``anyone related to the field that might be interested in the project''. Having a broad audience will put you in a position where you can't communicate effectively to any of them as you would be if the audience was narrowed down.
+A valuable tip shared by Cole Nussbaumer, in her book \emph{Storytelling with data} (\citet{Knaflic2015}), is to avoid general audiences, such as the technical and management team at the same time, or general audience such as ``anyone related to the field that might be interested in the project''. Having a broad audience will put you in a position where you can not communicate effectively to any of them as you would be if the audience was narrowed down.
 
 \begin{itemize}
 \tightlist
@@ -9265,9 +9268,9 @@ A valuable tip shared by Cole Nussbaumer, in her book Storytelling with data, is
   \textbf{Example}
 \end{itemize}
 
-We will use the PCA biplot from the biscuits sensory study shown in the previous chapter and point out the main differences in the approach according to the audience. As a quick reminder, 11 breakfast biscuits with varying contents of proteins and fibers were evaluated in this study. Products \texttt{P01} to \texttt{P09} are prototypes, product \texttt{P10} is a standard commercial biscuit without enrichment and the eleventh product (\texttt{Popt}) is an additionally optimized biscuit.
+We will use the PCA biplot from the biscuits sensory study shown in the Chapter \ref{data-analysis} (Figure \ref{fig:pca}) and point out the main differences in the approach according to the audience. As a quick reminder, 11 breakfast biscuits with varying contents of proteins and fibers were evaluated in this study. Products \texttt{P01} to \texttt{P09} are prototypes, product \texttt{P10} is a standard commercial biscuit without enrichment and the eleventh product (\texttt{Popt}) is an additionally optimized biscuit.
 
-Let's picture a situation where the R\&D team has been developing multiple trials for the biscuit formulation, changing the concentration/ratio of protein and fiber, with the objective to have a product with a sensory profile as close as possible to the commercial biscuit. For this exercise, your role as a consultant was to support the R\&D team designing the study and conducting the analysis and ultimately analyzing ad interpreting the results to make the final conclusion (Figure \ref{fig:pca}).
+Let's picture a situation where the R\&D team has been developing multiple trials for the biscuit formulation, changing the concentration/ratio of protein and fiber, with the objective to have a product with a sensory profile as close as possible to the commercial biscuit. For this exercise, your role as a consultant was to support the R\&D team designing the study and conducting the analysis and ultimately analyzing ad interpreting the results to make the final conclusion.
 
 \begin{figure}
 
@@ -9278,7 +9281,7 @@ Let's picture a situation where the R\&D team has been developing multiple trial
 \caption{PCA Biplot Biscuit Study.}\label{fig:pca}
 \end{figure}
 
-We won't go deep into the interpretation since it's not the focus of this example, but rather point out the approach we would recommend for each type of audience as shown in the Figure \ref{fig:summarytable1}).
+We will not go deep into the interpretation since it's not the focus of this example, but rather point out the approach we would recommend for each type of audience as shown in the Figure \ref{fig:summarytable1}).
 
 \begin{figure}
 
@@ -9292,12 +9295,12 @@ We won't go deep into the interpretation since it's not the focus of this exampl
 Following those recommendations, your PCA for the management or general audience may look like Figure \ref{fig:pcamanagement}.
 
 Note that the PCA was simplified for a more straightforward understanding:
-- the PCA variance explanation and grid lines were removed,
-- attributes were slightly moved to avoid overlap,
-- the samples and attributes with lower interest were given a lighter color
-- the attributes and samples we want our audience to focus their attention were given a different, stronger color,
-- pictures and a more appealing description were used instead of the samples codes
-- some strategies as to circle the important area/group of samples and attributes helps the audience to focus on what we deem most important to extract from this analysis were adopted.
+* the PCA variance explanation and grid lines were removed,
+* attributes were slightly moved to avoid overlap,
+* the samples and attributes with lower interest were given a lighter color
+* the attributes and samples we want our audience to focus their attention were given a different, stronger color,
+* pictures and a more appealing description were used instead of the samples codes
+* some strategies as to circle the important area/group of samples and attributes helps the audience to focus on what we deem most important to extract from this analysis were adopted.
 
 In this example, the idea may be to highlight to the audience that the optimized formulation is in fact closer to the commercial one, and to increase even more this similarity, some attributes, like sour, salty, overall flavor persistence, fatty flavor, and fatty in mouth, has to be increased.
 
@@ -9326,16 +9329,16 @@ You should be aware that the primary method or mechanism you use to communicate 
 
 In a live presentation, for instance, you are in full control. You can answer questions your audience may have, you can slow down and go into a particular detail you deem important, or you can speed up over repetitive, obvious, or not-so-important topics. In short words, you are the expert there and so, you can easily provide effective communication, and because of that, you don't need to overcrowd your slides or any other document and divert or lose your audience's attention with unnecessary information. You can for instance just show a plot or graph and a very simple interpretation or bullet points because you are covering vocally the nuances and details about that.
 
-In the case the communication si done through a written document in a non-live situation, you have much less control over your audience, on how they will take the information, on whether they will get the main point. In this situation, you need to be more careful and likely provide a higher level of details to answer or clarify potential questions or doubts your audience may have. In this situation, showing a plot or graph and just a very simple interpretation or bullet points is likely not enough.
+In the case the communication done through a written document in a non-live situation, you have much less control over your audience, on how they will take the information, on whether they will get the main point. In this situation, you need to be more careful and likely provide a higher level of details to answer or clarify potential questions or doubts your audience may have. In this situation, showing a plot or graph and just a very simple interpretation or bullet points is likely not enough.
 
 It can be a great idea to merge those two formats, when possible, where you can give time to the audience to consume the information on their own for a while and give the topic thought and a moment where you can discuss it in a live situation, not in this order necessarily. So, for example, let's pretend you have to present a proposal for a client. Instead of sending a dense document to explain all the details and just wait for the client's response, you can make a more concise document, easier to go through if you have a live moment with the client. You can for instance present the proposal initially in a live meeting, where you cover in general all the important topics and details, and then send the written document to the client.
 
 \hypertarget{pick-the-correct-format}{%
 \subsection{Pick the Correct Format}\label{pick-the-correct-format}}
 
-The second point of this topic on the method of communication is related to the correct format to pick. There are certainly many ways for you to communicate with your client - word, excel, or PowerPoint whether in pdf format or not, dashboard, or even scripts -- but surely one is the most suitable. Again, there is no universal answer for the best format to pick since it may vary according to clients' requests and the type of project you are dealing with. But there is one thing you should always follow, unless strictly necessary, do not share documents in an editable format. You may use Word to write proposals or final reports, Excel for plots or tables, and PowerPoint for live presentations, and that's totally fine, but never share that in the editable format. We always recommend saving in pdf format to share with your client or audience and this is because of two simple reasons. First, the pdf format cannot be modified! You definitely don't want to take the risks of others changing your document which can lead to misunderstanding, putting you in a delicate situation. Second, the pdf format preserves document formatting which means that it retains the intended format if the file is viewed online or printed. In short words, it is very unprofessional to share documents in editable format.
+The second point of this topic on the method of communication is related to the correct format to pick. There are certainly many ways for you to communicate with your client - word, excel, or PowerPoint whether in pdf format or not, dashboard, or even scripts -- but surely one is the most suitable. Again, there is no universal answer for the best format to pick since it may vary according to clients' requests and the type of project you are dealing with. But there is one thing you should always follow, unless strictly necessary, do not share documents in an editable format. You may use Word to write proposals or final reports, Excel for plots or tables, and PowerPoint for live presentations, and that is totally fine, but never share that in the editable format. We always recommend saving in pdf format to share with your client or audience and this is because of two simple reasons. First, the pdf format cannot be modified! You definitely do not want to take the risks of others changing your document which can lead to misunderstanding, putting you in a delicate situation. Second, the pdf format preserves document formatting which means that it retains the intended format if the file is viewed online or printed. In short words, it is very unprofessional to share documents in editable format.
 
-You may be wondering, so in what type of situation would you share an editable format? When would you share a document in Word, PowerPoint, or Excel? In the situation where you are working with a partner for instance. So, for example, a project that you are working on involves multiple partners and one unique report or presentation. In this case, it may be convenient to share the Word or PowerPoint document for each of the partners to include their inputs. After the document is ready, make sure you carefully review the formatting and save it in pdf before sending it out to the client.
+You may be wondering, so in what type of situation would you share an editable format? When would you share a document in Word, PowerPoint, or Excel? In the situation where you are working with a partner for instance. So, for example, a project that you are working on involves multiple partners in a common report or presentation. In this case, it may be convenient to share the Word or PowerPoint document for each of the partners to include their inputs. After the document is ready, make sure you carefully review the formatting and save it in pdf before sending it out to the client.
 
 There are two other formats that may be common in the sensory data science field, which are dashboards and scripts. If you are developing a graphical user interface for your client, you need to deploy the dashboard at some point to a server for your client to be able to access it. The deployment can be done in two ways: web-based, as a simple client web page, or locally, as a locally installed desktop application. The choice should be based on the client's preference.
 
@@ -9357,7 +9360,7 @@ You may be wondering. How exactly should I construct a story? What should be cov
 
 The key piece of any story is the context, the description of the situation, and surrounding details. This first step is the moment to set up the essential information or background on the topic you will be covering to get everyone on common ground. You should initially spend time to make sure your audience clearly understands the context, why this is important or necessary, and why they are there before diving into actions or results. Subsequently, you will raise the challenges or problems and propose some recommended solutions. It is at this very first step that you will first grab your audience's attention. If you fail at this moment, it is very unlikely that you will recover their interest in the subsequent steps.
 
-For live presentations, it is strongly recommended to use the first few minutes to be an icebreaker to make everyone feel more comfortable and create a more friendly environment. In order to do so, you can start introducing yourself in case you haven't met everyone yet, you can have a conversation and talk about the latest news, ask about how they and their families are doing, etc. The second piece of advice is to start the presentation by stating bullets of the main points that will be covered, so your audience will have awareness of what you will be talking about.
+For live presentations, it is strongly recommended to use the first few minutes to be an icebreaker to make everyone feel more comfortable and create a more friendly environment. In order to do so, you can start introducing yourself in case you have not met everyone yet, you can have a conversation and talk about the latest news, ask about how they and their families are doing, etc. The second piece of advice is to start the presentation by stating bullets of the main points that will be covered, so your audience will have awareness of what you will be talking about.
 
 \textbf{The middle (Action and Impact)}
 
@@ -9382,7 +9385,7 @@ Regardless of the situation, you should be motivated and be open mind to your cl
 \chapter{Machine Learning}\label{machine-learning}}
 
 \begin{quote}
-Artificial Intelligence (AI) and Machine Learning (ML) in particular have gained a lot of attention in recent years. With the increase of data availability, data storage, and computing power, many techniques that were just \emph{dreams} back then are now easily accessible, and used. And of course, the sensory and consumer science field is not an exception to this rule as we start seeing more and more ML applications\ldots although in our case, we do not have \emph{Big Data} per se, but we do have \emph{diverse data}!
+Artificial Intelligence (AI) and Machine Learning (ML) have gained a lot of attention in recent years. With the increase of data availability, data storage, and computing power, many techniques that were just \emph{dreams} back then are now easily accessible, and used. And of course, the sensory and consumer science field is not an exception to this rule as we start seeing more and more ML applications\ldots{} although in our case, we do not have \emph{Big Data} per se, but we do have \emph{diverse data}!
 For many of us, AI and ML seems to be a broad and complex topic. This assertion is true, and in fact it would deserve a whole book dedicated just to it. However, our intention in this chapter is to introduce and demistify the concept of ML, by:
 1. explaining the differences between supervised and unsupervised ML models,
 2. proving that you were already doing it long ago, perhaps whithout knowing,
@@ -9414,7 +9417,7 @@ First of all, it should be stressed that the size of the data set and its qualit
 \hypertarget{introduction-of-the-data}{%
 \section{Introduction of the Data}\label{introduction-of-the-data}}
 
-For this section, we use the wine data set from the \texttt{\{rattle\}} package (\url{https://rdrr.io/cran/rattle.data/man/wine.html}). This data consists of the results of a chemical analysis of wines grown in a specific area of Italy. In total, the results of 13 chemical analyses (e.g., alcohol, malic acid, color intensity, phenols, etc.) are provided for 178 samples that represent three types of wines.
+For this section, we use the wine data set from the \href{https://rdrr.io/cran/rattle.data/man/wine.html}{\texttt{\{rattle\}}}. This data consists of the results of a chemical analysis of wines grown in a specific area of Italy. In total, the results of 13 chemical analyses (e.g., alcohol, malic acid, color intensity, phenols, etc.) are provided for 178 samples that represent three types of wines.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -9498,6 +9501,7 @@ Since the different variables represent analytical measures that are defined usi
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(FactoMineR)}
+
 \NormalTok{res\_pca }\OtherTok{\textless{}{-}} \FunctionTok{PCA}\NormalTok{(wine, }\AttributeTok{quali.sup=}\DecValTok{1}\NormalTok{, }\AttributeTok{scale.unit=}\ConstantTok{TRUE}\NormalTok{, }\AttributeTok{graph=}\ConstantTok{FALSE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -9507,25 +9511,29 @@ The results of the PCA can be visualized using \texttt{\{factoextra\}}:
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{ (factoextra)}
-\CommentTok{\# fviz\_eig(res\_pca, addlabels=TRUE, ylim=c(0,50))}
+
 \FunctionTok{fviz\_pca\_biplot}\NormalTok{(res\_pca, }\AttributeTok{repel=}\ConstantTok{TRUE}\NormalTok{, }\AttributeTok{label=}\StringTok{"var"}\NormalTok{, }
                 \AttributeTok{col.var=}\StringTok{"red"}\NormalTok{, }\AttributeTok{col.ind=}\StringTok{"black"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
+\begin{figure}
+\centering
 \includegraphics{bookdown_files/figure-latex/unnamed-chunk-308-1.pdf}
+\caption{\label{fig:unnamed-chunk-308}PCA Biplot}
+\end{figure}
 
 The first plane of the PCA suggests that there are 3 distinct groups of wines. Let's define them mathematically using cluster analysis. For this process, we propose to reduce the full data to its first two components only. This approach is used here to illustrate how PCA can be used as a pre-processing step. Additionally, such pre-processing can help detecting clearer patterns in the data, as we will see in the next section with clustering.
-
-\begin{quote}
-Note that such use of PCA as a pre-processing step was already done earlier in Section \ref{prefmap} when the sensory space was reduced to its first 2 dimensions before performing the external preference mapping.
-\end{quote}
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{wine\_reduced }\OtherTok{\textless{}{-}} \FunctionTok{as\_tibble}\NormalTok{(res\_pca}\SpecialCharTok{$}\NormalTok{ind}\SpecialCharTok{$}\NormalTok{coord[,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{])}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{quote}
+Note that such use of PCA as a pre-processing step was already done earlier in Section \ref{prefmap} when the sensory space was reduced to its first 2 dimensions before performing the external preference mapping.
+\end{quote}
 
 \hypertarget{clustering}{%
 \subsection{Clustering}\label{clustering}}
@@ -9534,7 +9542,7 @@ Clustering is a technique used when dealing with high-dimensional data to discov
 
 Again, a very common application in S\&C Science is to segment consumers based on a variety of factors such as shopping or usage behavior, attitudes, interests, preferences. As consumers being associated in the same market segment tend to respond similarly, segmentation is a key strategy for companies to better understand their consumers, and tailor effectively their products or marketing approaches for the different target groups. Similarly, it is also used to classify products in homogeneous groups based on their analytical, sensory and/or consumer description in order to analyze the product offer and identify different segments on the market.
 
-There are any clustering approaches and algorithms. They can be categorized into a different types including \emph{exclusive} (e.g.~k-means), \emph{hierarchical} (see Section \ref{hac} for an example) and \emph{probabilistic} (e.g.~Gaussian Mixture Model). The first two are most widely used and well known in the sensory field.
+There are many clustering approaches and algorithms. They can be categorized into a different types including \emph{exclusive} (e.g.~k-means), \emph{hierarchical} (see Section \ref{hac} for an example) and \emph{probabilistic} (e.g.~Gaussian Mixture Model). The first two are most widely used and well known in the sensory field.
 
 Although agglomerative hierarchical clustering (HAC) is more common in sensory and consumer research, an example illustrating such approach was already provided in Section \ref{hac}. For that reason, here we propose to present another approach using \emph{k-means}.
 K-means clustering is a popular unsupervised machine learning algorithm for partitioning a given data set in a way that the total intra-cluster variation is minimized. Both approaches (HAC and k-means) however differ in their ways of forming clusters, For instance, the algorithm of k-means require the user to pre-specify the number of clusters to be created, whereas HAC produces a tree (called dendrogram) which helps visualizing the data hierarchical structure and deciding on the optimal number of clusters. Detailed information about clustering methods and analysis can be found in the book \emph{Practical Guide to Cluster Analysis in R: Unsupervised Machine Learning} by Alboukadel Kassambara (\citet{Kassambara2017}).
@@ -9547,7 +9555,11 @@ In order to cluster our wines, let's start with defining the optimal number of c
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/find_opt_cluster_number-1.pdf}
+\begin{figure}
+\centering
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-310-1.pdf}
+\caption{\label{fig:unnamed-chunk-310}Optimal Number of Clusters}
+\end{figure}
 
 Here, the optimal solution consists in defining 3 clusters.
 
@@ -9569,7 +9581,11 @@ Finally, the results can be visualized using \texttt{fviz\_cluster()} from \text
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-310-1.pdf}
+\begin{figure}
+\centering
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-311-1.pdf}
+\caption{\label{fig:unnamed-chunk-311}Cluster Plot}
+\end{figure}
 
 In the resulting plot, the 3 clusters are clearly separated, as can be seen by their little to no overlap.
 
@@ -9586,7 +9602,7 @@ For instance, Cariou and Wilderjans have developed an approach for clustering ar
 \hypertarget{supervised-learning}{%
 \section{Supervised learning}\label{supervised-learning}}
 
-There are many ways to carry out Supervised ML, which again would require an entire book dedicated just to it. In this section, we will introduce you to the basics, which should give you a nice kick-start for your own analysis. For those who want to learn more on this topic, we recommend reading ``Hands-On Machine Learning with R'', by Bradley Boehmke and Brandon Greewell (\url{https://bradleyboehmke.github.io/HOML}){[}\url{https://bradleyboehmke.github.io/HOML}{]}, and to ``Tidy Modeling with R'' by Max Kuhn and Sylvia Silge (\url{https://www.tmwr.org/}){[}\url{https://www.tmwr.org/}{]} for more in-depth information.
+There are many ways to carry out Supervised ML, which again would require an entire book dedicated just to it. In this section, we will introduce you to the basics, which should give you a nice kick-start for your own analysis. For those who want to learn more on this topic, we recommend reading \href{https://bradleyboehmke.github.io/HOML}{\emph{Hands-On Machine Learning with R}} by Bradley Boehmke and Brandon and \href{https://www.tmwr.org/}{\emph{Tidy Modeling with R}} by Max Kuhn and Sylvia Silge for more in-depth information.
 
 \hypertarget{workflow}{%
 \subsection{Workflow}\label{workflow}}
@@ -9681,7 +9697,7 @@ Decision tree algorithms model the data by splitting the training set in smaller
   \textbf{Black boxes}
 \end{itemize}
 
-The black boxes algorithm includes models for which the structure is too complex to directly interpret relationship between predictor variables and a value predicted by the model. The advantage of such models is their ability to model more complicated data than in case of interpretable models, but they have a greater risk of overfitting. Also, the lack of clear interpretation may not be acceptable in some business specific use cases. The later problem can be addressed by use of explanation algorithms that will be discussed in a later part of this chapter.
+The black boxes algorithm includes models for which the structure is too complex to directly interpret relationship between predictor variables and a value predicted by the model. The advantage of such models is their ability to model more complicated data than in case of interpretable models, but they have a greater risk of overfitting. Also, the lack of clear interpretation may not be acceptable in some business specific use cases.
 
 \begin{itemize}
 \tightlist
@@ -9699,9 +9715,9 @@ Now that we have a general idea of the purpose of Supervised ML approach, let's 
 \hypertarget{introduction-to-the-tidymodels-framework}{%
 \subsection{\texorpdfstring{Introduction to the \texttt{\{tidymodels\}} framework}{Introduction to the \{tidymodels\} framework}}\label{introduction-to-the-tidymodels-framework}}
 
-R contains many fantastic systems for building machine learning models. For various reasons that will be explained here, we propose to use the \texttt{\{tidymodels\}} framework (\url{https://www.tidymodels.org/}) for our analysis.
+R contains many fantastic systems for building machine learning models. For various reasons that will be explained here, we propose to use the \href{https://www.tidymodels.org/}{\texttt{\{tidymodels\}}} framework for our analysis.
 
-Similarly to the \texttt{\{tidyverse\}}, \texttt{\{tidymodels\}} is a collection of packages dedicated to modeling. It contains packages such as \texttt{\{rsample\}} (general resampling infrastructure), \texttt{\{yardstick\}} (performance metrics), \texttt{\{recipes\}} (pre-processing and feature engineering steps for modeling), \texttt{\{workflows\}} (modeling workflow), \texttt{\{broom\}} (tidy statistical objects) and \texttt{\{parsnip\}} (fitting models) just to name a few. Yet, the similarity between \texttt{\{tidymdels\}} and \texttt{\{tidyverse\}} does not end there since \texttt{\{tidymodels\}} is built (and uses) on the \texttt{\{tidyverse\}}, hence being the perfect extension for modeling data.
+Similarly to the \texttt{\{tidyverse\}}, \texttt{\{tidymodels\}} is a collection of packages dedicated to modeling. It contains packages such as \texttt{\{rsample\}} (general resampling infrastructure), \texttt{\{yardstick\}} (performance metrics), \texttt{\{recipes\}} (pre-processing and feature engineering steps for modeling), \texttt{\{workflows\}} (modeling workflow), \texttt{\{broom\}} (tidy statistical objects) and \texttt{\{parsnip\}} (fitting models) just to name a few. Yet, the similarity between \texttt{\{tidymodels\}} and \texttt{\{tidyverse\}} does not end there since \texttt{\{tidymodels\}} is built (and uses) on the \texttt{\{tidyverse\}}, hence being the perfect extension for modeling data.
 
 Besides modeling data, \texttt{\{tidymodels\}} aims in \emph{tidying} the process of modeling data. Such process is done at different levels:
 
@@ -9738,7 +9754,7 @@ Regardless of the algorithm used, the typical modeling approach used by \texttt{
   Predict new values
 \end{enumerate}
 
-For more information, we refer the readers to ``Tidy Modeling with R'' by Max Kuhn and Julia Silge (\url{https://www.tmwr.org/}){[}\url{https://www.tmwr.org/}{]}.
+For more information, we refer the readers to \href{https://www.tmwr.org/}{\emph{Tidy Modeling with R}} by Max Kuhn and Julia Silge.
 
 Let's load the \texttt{\{tidymodels\}} package:
 
@@ -9875,7 +9891,11 @@ The \texttt{autoplot()} function is called to take a quick look at the \texttt{t
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-311-1.pdf}
+\begin{figure}
+\centering
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-312-1.pdf}
+\caption{\label{fig:unnamed-chunk-312}Tuning Plot}
+\end{figure}
 
 Ultimately, the best combination of parameters is obtained using the \texttt{select\_best()} function. Such paramaters is defined based on the quality of the model, which can be estimated through a various metrics. Here we decided to use \texttt{roc\_auc} (Area Under the Receiver Operating Characteristic Curve), as it provides a reliable estimate of the quality of the model.
 
@@ -9917,13 +9937,18 @@ Here, \texttt{obs\_vs\_pred} is a data frame which contains both the actual wine
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{cm }\OtherTok{\textless{}{-}} \FunctionTok{conf\_mat}\NormalTok{(obs\_vs\_pred, Type, .pred\_class)}
+
 \FunctionTok{autoplot}\NormalTok{(cm, }\AttributeTok{type =} \StringTok{"heatmap"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
+\begin{figure}
+\centering
 \includegraphics{bookdown_files/figure-latex/cm-1.pdf}
+\caption{\label{fig:cm}Confusion Matrix}
+\end{figure}
 
-There are several ways to look into the model quality, being the approach and model metrics highly dependent on the situation/type of model used. In our case, that we have a multiclass classification, we can besides the confusion matrix, check the model accuracy. Classification accuracy is a metric that summarized the fraction of predictions our model got right (somehow it brings similar information we get from the confusion matrix). We have to first organize the data to have have the model predictions. Then we directly calculate the accuracy and also kappa accuracy, using the functions \texttt{accuracy\ ()} and \texttt{kap\ ()}. Kappa (kap()) is a similar measure to accuracy(), but is normalized by the accuracy that would be expected by chance alone. It can be very useful when one or more classes have large frequency distributions.
+There are several ways to look into the model quality, being the approach and model metrics highly dependent on the situation/type of model used. In our case, that we have a multiclass classification, we can besides the confusion matrix, check the model accuracy. Classification accuracy is a metric that summarized the fraction of predictions our model got right (somehow it brings similar information we get from the confusion matrix). We have to first organize the data to have the model predictions. Then we directly calculate the accuracy and also kappa accuracy, using the functions \texttt{accuracy\ ()} and \texttt{kap\ ()}. Kappa (kap()) is a similar measure to accuracy(), but is normalized by the accuracy that would be expected by chance alone. It can be very useful when one or more classes have large frequency distributions.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -9983,7 +10008,11 @@ The interpretation is very straightforward, in the way that variables are conven
 \end{Highlighting}
 \end{Shaded}
 
+\begin{figure}
+\centering
 \includegraphics{bookdown_files/figure-latex/fi-1.pdf}
+\caption{\label{fig:fi}Feature Importance}
+\end{figure}
 
 Building a machine learning model may seem complicated at first since there are many steps and important things to watch out for. Although we presented here a simple example, for one specific situation of classification, you will realize that this way of working (typical modeling approach showed), is highly applicable to other situations. Again, the main idea of this chapter is to open your mind, provide you with the basics, and ultimately motivate you to seek and learn more about machine learning!
 
@@ -10501,7 +10530,7 @@ In the previous sections, we have already shown how to count the number of occur
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-336-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-337-1.pdf}
 
 As seen previously, the most mentioned words are \texttt{apple}, \texttt{sweet}, \texttt{fruity}, and \texttt{sour}.
 
@@ -10583,7 +10612,7 @@ Another approach consists in visualizing the association between the samples and
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-339-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-340-1.pdf}
 
 As can be seen, sample \texttt{731} is more strongly associated to alcoholic terms such as \texttt{alcohol} or \texttt{wine}, and colors (\texttt{red}, \texttt{green}). Samples \texttt{239} and \texttt{401} are more associated to \texttt{sour} and \texttt{bitter} (and \texttt{pear} for \texttt{239}), whereas samples \texttt{519} and \texttt{182} are more frequently described by terms such as \texttt{fruity}, and \texttt{sweet} (\texttt{floral} is also used to characterize \texttt{182}).
 
@@ -10606,7 +10635,7 @@ An alternative for visualizing these frequencies is through wordclouds, which ca
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-340-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-341-1.pdf}
 
 In these wordclouds, we notice that \texttt{apple} and \texttt{sweet} appear in larger fonts for (almost) all the samples, which can make the comparison quite difficult between samples. Fortunately, the \texttt{geom\_text\_wordcloud()} function provides an interesting parameter in its aesthetics called \texttt{angle\_group} which allows controlling the position of the words. To illustrate this, let's apply the following rule: for a given sample, if the proportion of association of a word is larger than 1/6 (as we have 6 samples), the word will be printed in the upper part of its wordcloud, and in the lower part otherwise. To facilitate the readability, the color code used follow the same rule:
 
@@ -10625,7 +10654,7 @@ In these wordclouds, we notice that \texttt{apple} and \texttt{sweet} appear in 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-341-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-342-1.pdf}
 
 As can be seen, the term \texttt{apple} is more frequently (i.e.~more than 1/6) used to characterize samples \texttt{182}, \texttt{239}, \texttt{365}, and \texttt{731}. The term \texttt{sweet} is more frequently used to characterize samples \texttt{182} and \texttt{519}. Such conclusions would have been more difficult to reach based on the previous \emph{unstructured} wordcloud.
 

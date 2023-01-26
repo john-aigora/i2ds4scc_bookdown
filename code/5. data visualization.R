@@ -32,7 +32,10 @@ flex_table_design %>%
   fontsize(size = 13, part = "header", i = 1) %>%
   color(i = 11, color = "orange", part = "body") %>%
   color(i = 1:10, color = "grey70", part = "body") %>% 
-  add_header_lines(values = "Sensory Profile of 11 biscuits")
+  add_header_lines(values = "Sensory Profile of 11 biscuits") %>% 
+  border_remove() %>% 
+  border_outer(border=fp_border(color="darkorange", width=2)) %>%
+  fix_border_issues()
 
 flex_table_design %>%
   hline(i=10, border=fp_border(color="grey70", style="dashed")) %>% 
@@ -229,7 +232,7 @@ spider_plot <- ggplot(sensory_mean_pos, aes(x=Position, y=Mean, colour=Product, 
 library(patchwork)
 p <- spider_plot + (bar_p / line_p)
 
-p + plot_annotation(title = "Example of 'ggplots' I've learned today", tag_levels='a')
+p = p + plot_annotation(title = "Example of 'ggplots' I've learned today", tag_levels='a')
 
   ## Adjusting the legends
 spider_line + 
