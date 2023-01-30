@@ -865,7 +865,7 @@ PrefMap_plot <- PrefMap$nb.depasse %>%
   as_tibble(rownames = "Dim1") %>%
   pivot_longer(-Dim1, 
                names_to = "Dim2", values_to = "Count") %>%
-  mutate("Acceptance (%)" = Count * 100 / nconso) %>% 
+  mutate("Preference (%)" = Count * 100 / nconso) %>% 
   mutate(across(where(is.character), as.numeric))
 ```
 
@@ -874,10 +874,10 @@ To build the plot, different layers involving different source of data (`senso`,
 ```{r, echo=TRUE, eval=TRUE, fig.cap="Plot of the External Preference Mapping using ggplot2"}
 ggplot() +
   geom_tile(data = PrefMap_plot, aes(x = Dim1, y = Dim2, 
-                                     fill = `Acceptance (%)`, 
-                                     color = `Acceptance (%)`)) +
+                                     fill = `Preference (%)`, 
+                                     color = `Preference (%)`)) +
   geom_contour(data = PrefMap_plot, aes(x = Dim1, y = Dim2, 
-                                        z = `Acceptance (%)`), 
+                                        z = `Preference (%)`), 
                breaks = seq(0, 100, 10)) +
   geom_hline(yintercept = 0, lty = 2) +
   geom_vline(xintercept = 0, lty = 2) +
