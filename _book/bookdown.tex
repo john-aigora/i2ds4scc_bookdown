@@ -190,7 +190,7 @@
 
 \title{Data Science for Sensory and Consumer Scientists}
 \author{Thierry Worch, Julien Delarue, Vanessa Rios de Souza, and John Ennis}
-\date{2023-01-26}
+\date{2023-01-30}
 
 \begin{document}
 \maketitle
@@ -3992,7 +3992,7 @@ Now that the data is ready, we can display it with some basics adjustments to ma
 
 \begin{figure}
 
-{\centering \includegraphics[width=1\linewidth]{images/gt_table} 
+{\centering \includegraphics[width=0.5\linewidth]{images/gt_table} 
 
 }
 
@@ -4045,7 +4045,7 @@ Now, let's color code the cells based on the average number of biscuits eaten. T
 
 \begin{figure}
 
-{\centering \includegraphics[width=1\linewidth]{images/gt_table_2} 
+{\centering \includegraphics[width=0.3\linewidth]{images/gt_table_2} 
 
 }
 
@@ -4076,7 +4076,7 @@ To illustrate one of the possible use of \texttt{\{gtExtras\}} let's twist the p
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.9\linewidth]{images/gt_table_3} 
+{\centering \includegraphics[width=0.4\linewidth]{images/gt_table_3} 
 
 }
 
@@ -6087,16 +6087,16 @@ Alternately, the \texttt{WilliamsDesign()} function in \texttt{\{SensoMineR\}} a
 
 \begin{verbatim}
 ##          Rank 1 Rank 2 Rank 3 Rank 4 Rank 5
-## Judge 1       2      5      1      4      3
-## Judge 2       5      4      2      3      1
-## Judge 3       4      3      5      1      2
-## Judge 4       3      1      4      2      5
-## Judge 5       1      2      3      5      4
-## Judge 6       3      4      1      5      2
-## Judge 7       1      3      2      4      5
-## Judge 8       2      1      5      3      4
-## Judge 9       5      2      4      1      3
-## Judge 10      4      5      3      2      1
+## Judge 1       2      4      3      5      1
+## Judge 2       4      5      2      1      3
+## Judge 3       5      1      4      3      2
+## Judge 4       1      3      5      2      4
+## Judge 5       3      2      1      4      5
+## Judge 6       1      5      3      4      2
+## Judge 7       3      1      2      5      4
+## Judge 8       2      3      4      1      5
+## Judge 9       4      2      5      3      1
+## Judge 10      5      4      1      2      3
 \end{verbatim}
 
 Suppose you want to include 20 judges in the experiment, you would then need to duplicate the initial design.
@@ -6110,26 +6110,26 @@ Suppose you want to include 20 judges in the experiment, you would then need to 
 
 \begin{verbatim}
 ##         Rank 1 Rank 2 Rank 3 Rank 4 Rank 5
-## judge1       2      5      1      4      3
-## judge2       5      4      2      3      1
-## judge3       4      3      5      1      2
-## judge4       3      1      4      2      5
-## judge5       1      2      3      5      4
-## judge6       3      4      1      5      2
-## judge7       1      3      2      4      5
-## judge8       2      1      5      3      4
-## judge9       5      2      4      1      3
-## judge10      4      5      3      2      1
-## judge11      2      5      1      4      3
-## judge12      5      4      2      3      1
-## judge13      4      3      5      1      2
-## judge14      3      1      4      2      5
-## judge15      1      2      3      5      4
-## judge16      3      4      1      5      2
-## judge17      1      3      2      4      5
-## judge18      2      1      5      3      4
-## judge19      5      2      4      1      3
-## judge20      4      5      3      2      1
+## judge1       2      4      3      5      1
+## judge2       4      5      2      1      3
+## judge3       5      1      4      3      2
+## judge4       1      3      5      2      4
+## judge5       3      2      1      4      5
+## judge6       1      5      3      4      2
+## judge7       3      1      2      5      4
+## judge8       2      3      4      1      5
+## judge9       4      2      5      3      1
+## judge10      5      4      1      2      3
+## judge11      2      4      3      5      1
+## judge12      4      5      2      1      3
+## judge13      5      1      4      3      2
+## judge14      1      3      5      2      4
+## judge15      3      2      1      4      5
+## judge16      1      5      3      4      2
+## judge17      3      1      2      5      4
+## judge18      2      3      4      1      5
+## judge19      4      2      5      3      1
+## judge20      5      4      1      2      3
 \end{verbatim}
 
 The downside of Williams's Latin square designs is that the number of samples (\emph{k}) to be evaluated dictates the number of judges. For an even number of samples you must have a multiple of \emph{k} judges, and a multiple of \emph{2k} judges for an odd number of samples.
@@ -6144,8 +6144,12 @@ As the total number of judges in your study may not always be exactly known in a
 \NormalTok{nbR}\OtherTok{=}\NormalTok{nbP}
 
 \NormalTok{wdes\_5P10J }\OtherTok{\textless{}{-}} \FunctionTok{WilliamsDesign}\NormalTok{(nbP)}
-\NormalTok{tab }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(}\AttributeTok{prod=}\FunctionTok{as.vector}\NormalTok{(}\FunctionTok{t}\NormalTok{(wdes\_5P10J)), }\AttributeTok{judge=}\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{nbJ,}\AttributeTok{each=}\NormalTok{nbR), }\AttributeTok{rank=}\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{nbR,nbJ))}
-\NormalTok{optdes\_5P13J }\OtherTok{\textless{}{-}} \FunctionTok{optFederov}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{prod}\SpecialCharTok{+}\NormalTok{judge}\SpecialCharTok{+}\NormalTok{rank, }\AttributeTok{data=}\NormalTok{tab, }\AttributeTok{augment=}\ConstantTok{TRUE}\NormalTok{, }\AttributeTok{nTrials=}\NormalTok{nbJ}\SpecialCharTok{*}\NormalTok{nbP, }\AttributeTok{rows=}\DecValTok{1}\SpecialCharTok{:}\NormalTok{(nbJ}\SpecialCharTok{*}\NormalTok{nbP), }\AttributeTok{nRepeats =} \DecValTok{100}\NormalTok{)}
+\NormalTok{tab }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(}\AttributeTok{prod=}\FunctionTok{as.vector}\NormalTok{(}\FunctionTok{t}\NormalTok{(wdes\_5P10J)),}
+             \AttributeTok{judge=}\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{nbJ,}\AttributeTok{each=}\NormalTok{nbR),}
+             \AttributeTok{rank=}\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{nbR,nbJ))}
+\NormalTok{optdes\_5P13J }\OtherTok{\textless{}{-}} \FunctionTok{optFederov}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{prod}\SpecialCharTok{+}\NormalTok{judge}\SpecialCharTok{+}\NormalTok{rank, }\AttributeTok{data=}\NormalTok{tab, }\AttributeTok{augment=}\ConstantTok{TRUE}\NormalTok{,}
+                           \AttributeTok{nTrials=}\NormalTok{nbJ}\SpecialCharTok{*}\NormalTok{nbP, }\AttributeTok{rows=}\DecValTok{1}\SpecialCharTok{:}\NormalTok{(nbJ}\SpecialCharTok{*}\NormalTok{nbP),}
+                           \AttributeTok{nRepeats =} \DecValTok{100}\NormalTok{)}
 \FunctionTok{xtabs}\NormalTok{(optdes\_5P13J}\SpecialCharTok{$}\NormalTok{design)}
 \end{Highlighting}
 \end{Shaded}
@@ -6153,19 +6157,19 @@ As the total number of judges in your study may not always be exactly known in a
 \begin{verbatim}
 ##      rank
 ## judge 1 2 3 4 5
-##    1  2 4 1 3 5
-##    2  4 3 2 5 1
-##    3  3 5 4 1 2
-##    4  5 1 3 2 4
-##    5  1 2 5 4 3
-##    6  5 3 1 4 2
-##    7  1 5 2 3 4
-##    8  2 1 4 5 3
-##    9  4 2 3 1 5
-##    10 3 4 5 2 1
-##    11 2 4 1 3 5
-##    12 4 3 2 5 1
-##    13 3 5 4 1 2
+##    1  3 5 4 1 2
+##    2  5 1 3 2 4
+##    3  1 2 5 4 3
+##    4  2 4 1 3 5
+##    5  4 3 2 5 1
+##    6  2 1 4 5 3
+##    7  4 2 3 1 5
+##    8  3 4 5 2 1
+##    9  5 3 1 4 2
+##    10 1 5 2 3 4
+##    11 3 5 4 1 2
+##    12 5 1 3 2 4
+##    13 1 2 5 4 3
 \end{verbatim}
 
 In the code above, \texttt{xtabs()} is used to arrange the design in a table format that is convenient for the experimenter.
@@ -6203,23 +6207,25 @@ The \texttt{optimaldesign()} function of \texttt{\{SensoMineR\}} can be used to 
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{incompDesign1 }\OtherTok{\textless{}{-}} \FunctionTok{optimaldesign}\NormalTok{(}\AttributeTok{nbPanelist=}\DecValTok{10}\NormalTok{, }\AttributeTok{nbProd=}\DecValTok{5}\NormalTok{, }\AttributeTok{nbProdByPanelist=}\DecValTok{3}\NormalTok{)}
+\NormalTok{incompDesign1 }\OtherTok{\textless{}{-}} \FunctionTok{optimaldesign}\NormalTok{(}\AttributeTok{nbPanelist=}\DecValTok{10}\NormalTok{,}
+                               \AttributeTok{nbProd=}\DecValTok{5}\NormalTok{,}
+                               \AttributeTok{nbProdByPanelist=}\DecValTok{3}\NormalTok{)}
 \NormalTok{incompDesign1}\SpecialCharTok{$}\NormalTok{design}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
 ##             Rank 1 Rank 2 Rank 3
-## Panelist 1       3      1      5
-## Panelist 2       4      5      2
-## Panelist 3       2      1      5
-## Panelist 4       1      3      4
-## Panelist 5       1      2      3
-## Panelist 6       5      3      2
-## Panelist 7       2      4      1
-## Panelist 8       4      5      1
-## Panelist 9       5      4      3
-## Panelist 10      3      2      4
+## Panelist 1       2      5      4
+## Panelist 2       4      3      5
+## Panelist 3       1      2      5
+## Panelist 4       3      4      2
+## Panelist 5       5      2      3
+## Panelist 6       1      5      4
+## Panelist 7       5      3      1
+## Panelist 8       3      4      1
+## Panelist 9       2      1      3
+## Panelist 10      4      1      2
 \end{verbatim}
 
 BIBD are only possible for certain combinations of numbers of treatment (products), numbers of blocks (judges), and block size (number of samples per judge). Note that \texttt{optimaldesign()} will yield a design even if it is not balanced but it will also generate contingency tables allowing you to evaluate the design's orthogonality, and how well balanced are order and carry-over effects.
@@ -6237,8 +6243,8 @@ You can also use the \texttt{\{crossdes\}} package to generate a BIBD with this 
 
 Incomplete balanced designs also have drawbacks. First, from a purely statistical perspective, they are conducive to fewer observations and thus to a lower statistical power. Product and Judge effects are also partially confounded even though the confusion is usually considered as acceptable.
 
-\hypertarget{incomplete-designs-for-hedonic-tests-sensory-informed-designs}{%
-\subsection{Incomplete designs for hedonic tests: Sensory informed designs}\label{incomplete-designs-for-hedonic-tests-sensory-informed-designs}}
+\hypertarget{hedo_informdes}{%
+\subsection{Incomplete designs for hedonic tests: Sensory informed designs}\label{hedo_informdes}}
 
 One may also be tempted to use incomplete balanced block designs for hedonic tests. However, proceeding this way is likely to induce framing bias. Indeed, each participant will only see part of the product set which would affect their frame of reference if the subset of product they evaluate only covers a limited area of the sensory space.
 
@@ -6264,16 +6270,19 @@ Now, let's pretend that we want to conduct a hedonic test on these cocktails in 
 \end{Highlighting}
 \end{Shaded}
 
-Assuming a full quadratic model (for the preference mapping), we can now use \texttt{optFederov()} to select a D-optimal subset of the desired number of products (here \texttt{ntrials=8}). The resulting selection will maximize the determinant of the information matrix (X'X) corresponding to the quadratic model. However, we can also decide to specify products that we want to be kept in the selection. Here, let's impose the selection of products 7 and 13.
+Assuming a full quadratic model (for the preference mapping (see section @Ref(\#prefmap)), we can now use \texttt{optFederov()} to select a D-optimal subset of the desired number of products (here \texttt{ntrials=8}). The resulting selection will maximize the determinant of the information matrix (X'X) corresponding to the quadratic model. However, we can also decide to specify products that we want to be kept in the selection. Here, let's impose the selection of products 7 and 13.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(AlgDesign)}
-\NormalTok{Dopt\_des }\OtherTok{\textless{}{-}} \FunctionTok{optFederov}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\FunctionTok{quad}\NormalTok{(.), Prod\_coord, }\AttributeTok{nTrials=}\DecValTok{8}\NormalTok{, }\AttributeTok{criterion=}\StringTok{"D"}\NormalTok{, }\AttributeTok{augment =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{rows =} \FunctionTok{c}\NormalTok{(}\DecValTok{7}\NormalTok{,}\DecValTok{13}\NormalTok{))}
+\NormalTok{Dopt\_des }\OtherTok{\textless{}{-}} \FunctionTok{optFederov}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\FunctionTok{quad}\NormalTok{(.), Prod\_coord, }\AttributeTok{nTrials=}\DecValTok{8}\NormalTok{,}
+                       \AttributeTok{criterion=}\StringTok{"D"}\NormalTok{,}
+                       \AttributeTok{augment =} \ConstantTok{TRUE}\NormalTok{,}
+                       \AttributeTok{rows =} \FunctionTok{c}\NormalTok{(}\DecValTok{7}\NormalTok{,}\DecValTok{13}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
-The resulting selection is listed in \texttt{Dopt\_des\$rows} and can be highlighted on the PCA score plot using \texttt{\{factoextra\}} using the \texttt{col.ind\ =} argument.
+The resulting selection is listed in \texttt{Dopt\_des\$rows} and can be highlighted on the PCA score plot using \texttt{\{factoextra\}} and the \texttt{col.ind\ =} argument.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6282,7 +6291,8 @@ The resulting selection is listed in \texttt{Dopt\_des\$rows} and can be highlig
 \NormalTok{Prod\_coord }\OtherTok{\textless{}{-}}\NormalTok{ Prod\_coord }\SpecialCharTok{\%\textgreater{}\%}
     \FunctionTok{as\_tibble}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
     \FunctionTok{rownames\_to\_column}\NormalTok{(}\StringTok{"Product"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{DOpt\_subset =} \FunctionTok{ifelse}\NormalTok{(Product }\SpecialCharTok{\%in\%}\NormalTok{ Dopt\_des}\SpecialCharTok{$}\NormalTok{rows,}\StringTok{"selected"}\NormalTok{, }\StringTok{"others"}\NormalTok{))}
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{DOpt\_subset =} \FunctionTok{ifelse}\NormalTok{(Product }\SpecialCharTok{\%in\%}\NormalTok{ Dopt\_des}\SpecialCharTok{$}\NormalTok{rows,}
+                                \StringTok{"selected"}\NormalTok{, }\StringTok{"others"}\NormalTok{))}
 
 \FunctionTok{fviz\_pca\_ind}\NormalTok{(cocktail\_pca,}
              \AttributeTok{geom.ind =} \FunctionTok{c}\NormalTok{(}\StringTok{"point"}\NormalTok{, }\StringTok{"text"}\NormalTok{),}
@@ -6296,6 +6306,12 @@ The resulting selection is listed in \texttt{Dopt\_des\$rows} and can be highlig
 \NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{figure}
+\centering
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-202-1.pdf}
+\caption{\label{fig:unnamed-chunk-202}Highlighted D-optimal selection of products on the sensory map}
+\end{figure}
 
 If needed, the coordinates of the D-optimal selection \texttt{Dopt\_des\$design} can be exported as a tibble and displayed with \texttt{flextable}:
 
@@ -6311,6 +6327,90 @@ If needed, the coordinates of the D-optimal selection \texttt{Dopt\_des\$design}
 \end{Highlighting}
 \end{Shaded}
 
+\global\setlength{\Oldarrayrulewidth}{\arrayrulewidth}
+
+\global\setlength{\Oldtabcolsep}{\tabcolsep}
+
+\setlength{\tabcolsep}{0pt}
+
+\renewcommand*{\arraystretch}{1.5}
+
+
+
+\providecommand{\ascline}[3]{\noalign{\global\arrayrulewidth #1}\arrayrulecolor[HTML]{#2}\cline{#3}}
+
+\begin{longtable}[c]{|p{0.75in}|p{0.75in}|p{0.75in}}
+
+\caption{\textcolor[HTML]{000000}{\fontsize{11}{13}\selectfont{\global\setmainfont{Arial}{D-optimal\ selection\ of\ products\ and\ its\ Coordinates\ on\ the\ sensory\ map\ (i.e.,\ the\ PCA\ score\ plot)}}}}\label{tab:unnamed-chunk-203}\\
+
+\ascline{2pt}{666666}{1-3}
+
+\multicolumn{1}{>{\raggedright}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Product}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Dim.1}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Dim.2}}}} \\
+
+\ascline{2pt}{666666}{1-3}\endhead
+
+
+
+\multicolumn{1}{>{\raggedright}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{1}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{0.99}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{3.51}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{4}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{-4.63}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{1.68}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{7}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{1.49}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{1.89}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{8}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{0.08}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{0.48}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{12}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{-4.21}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{-2.72}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{13}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{3.99}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{-0.70}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{15}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{4.31}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{0.55}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{16}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{1.38}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{-3.30}}}} \\
+
+\ascline{2pt}{666666}{1-3}
+
+
+
+\end{longtable}
+
+
+
+\arrayrulecolor[HTML]{000000}
+
+\global\setlength{\arrayrulewidth}{\Oldarrayrulewidth}
+
+\global\setlength{\tabcolsep}{\Oldtabcolsep}
+
+\renewcommand*{\arraystretch}{1}
+
 Finally, it could be useful to calculate the determinant of the information matrix (assuming a quadratic model):
 
 \begin{Shaded}
@@ -6319,6 +6419,10 @@ Finally, it could be useful to calculate the determinant of the information matr
 \FunctionTok{det}\NormalTok{(}\FunctionTok{t}\NormalTok{(Xopti)}\SpecialCharTok{\%*\%}\NormalTok{Xopti)}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+## [1] 3.414e+11
+\end{verbatim}
 
 \hypertarget{product-related-designs}{%
 \section{Product-related designs}\label{product-related-designs}}
@@ -6349,7 +6453,11 @@ The \texttt{\{mixexp\}} package offers a very convenient way to do this. In addi
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-206-1.pdf}
+\begin{figure}
+\centering
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-205-1.pdf}
+\caption{\label{fig:unnamed-chunk-205}Ternary diagram of a simplex-lattice mixture design with 3 components}
+\end{figure}
 
 Suppose that we want to adjust a biscuit recipe to optimize its sensory properties, we can design an experiment in which the proportion of ingredients vary. Let's play with butter, sugar, and flour. All three combined would account for 75\% of the dough recipe and the remaining 25\% would consist of other ingredients that we won't modify here (eggs, milk, chocolate, etc.). Besides, not any amount of these three ingredients would make sense (a biscuit with 75\% of butter is not a biscuit, even in Brittany). We thus need to add constraints (ex: butter varies between 15 and 30\% of this blend, sugar varies between 25 and 40\%, and flour varies between 30 and 50\%). Given this set of constraints (defined by \texttt{uc} for the upper contraints, and \texttt{lc} for the lower constraints), we can use \texttt{mixexp::Xvert} to find the extreme vertices of our design (by also including a edge centroid using \texttt{ndm=1}):
 
@@ -6379,7 +6487,11 @@ However, this design implies creating 11 mixtures, which is more than needed to 
 ## columns are ignored. Use cornerlabs and axislabs to change variable names in the plot.
 \end{verbatim}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-208-1.pdf}
+\begin{figure}
+\centering
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-207-1.pdf}
+\caption{\label{fig:unnamed-chunk-207}D-optimal mixture design with constrained factors}
+\end{figure}
 
 Once the design is built, it could be desirable to randomize the order in which each sample is being made, to avoid further biases. Suppose that we obtain average liking scores for our 9 biscuits as given in Table \ref{tab:biscuit-mixt} and stored in \texttt{Bmixt}:
 
@@ -6505,7 +6617,11 @@ Regardless of the construction of the mixture design, ternary diagrams are easy 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-210-1.pdf}
+\begin{figure}
+\centering
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-209-1.pdf}
+\caption{\label{fig:unnamed-chunk-209}Modeled liking displayed as a contour plot on the ternary diagram}
+\end{figure}
 
 From these data. the optimal biscuit would have 31\% of sugar, 27\% of butter, and 42\% of flour, and would reach a predicted liking score larger than 8.
 
@@ -6536,9 +6652,9 @@ For higher number of factors, Plackett-Burman designs are the most commonly used
 \hypertarget{sensory-informed-designs}{%
 \subsection{Sensory informed designs}\label{sensory-informed-designs}}
 
-Eventually, it is worth mentioning that, in some cases, sensory properties themselves can be used as factors and thus be implemented in a DoE. In this line of thinking, Naes and Nyvold have suggested that working this way would leave more scope for creativity \citep{Naes2004}. Naturally, this implies that product developers have (1) access to the measure of these properties and (2) can control the level of these properties and their interactions. These requirements are rarely met in food development but can be more easily implemented in some non-food applications \citep[see for example][]{Petiot2022}.
+Eventually, it is worth mentioning that, in some cases, sensory properties themselves can be used as factors and thus be implemented in a DoE. In this line of thinking, Naes and Nyvold have suggested that working this way would leave more scope for creativity \citep{Naes2004}. Naturally, this implies that product developers (1) have access to the measure of these properties, and (2) can control the level of these properties and their interactions. These requirements are rarely met in food development but can be more easily implemented in some non-food applications \citep[see for example][]{Petiot2022}.
 
-A specific applications consists in using the sensory information available to make a selection of a subset of products, as described above.
+A specific application consists in using the sensory information available to make a selection of a subset of products, as described above (section @ref(\#hedo\_informdes)).
 
 \hypertarget{execute-1}{%
 \section{Execute}\label{execute-1}}
@@ -6613,7 +6729,7 @@ Although Excel is most likely one of the most popular way of storing data, there
 
 First, let's import the \emph{biscuits\_sensory\_profile.xlsx} workbook using \texttt{readxl::read\_xlsx()} by informing as parameter the \texttt{location} of the file and the \texttt{sheet} where it is stored. For convenience, we are using the \texttt{\{here\}}\footnote{The package \texttt{\{here\}} is very handy as it provides an easy way to retrieve your file's path (within your working directory) by simply giving the name of the file and folder in which they are stored in.} package to retrieve the path of the file (stored in \texttt{file\_path}).
 
-This file is called \emph{structured} as all the relevant information is already stored in the same sheet in a structured way. In other words, no decoding is required here, and there are no `unexpected' rows or columns (e.g.~empty lines, or lines with additional information regarding the data that is not data):
+This file is said to be \emph{structured} as all the relevant information is already stored in the same sheet in a structured way. In other words, no decoding is required here, and there are no `unexpected' rows or columns (e.g.~empty lines, or lines with additional information regarding the data that is not data):
 
 \begin{itemize}
 \tightlist
@@ -6689,7 +6805,7 @@ To import and decode this data set, multiple steps are required:
 \item
   Import the data without the first line of header, but by providing the correct names (obtained in the step 1.);
 \item
-  Decode each question (when needed) by replacing the numerical code by their corresponding labels.
+  Decode each question (when needed) by replacing the numerical code with their corresponding labels.
 \end{enumerate}
 
 Let's start with importing the variables' names from \emph{biscuits\_traits.xlsx} (sheet \emph{Variables})
@@ -6738,11 +6854,11 @@ Ultimately, the data (\emph{Data}) is imported by substituting the coded names w
 
 Alternatively, you can import the data by specifying the range in which the data is being stored (here `range=``A2:BJ108''``).
 
-The data has now the right headers, however each variable is still coded numerically. This step to convert the numerical values with their corresponding labels is described in Section \ref{data-prep}.
+The data now has the right headers, however each variable is still coded numerically. This step to convert the numerical values with their corresponding labels is described in Section \ref{data-prep}.
 
 \begin{quote}
-It can happen that the data include extra information regarding the levels of a factor as sub-header. In such case, a similar approach should be used:
-1. Start with importing the first \emph{n} rows of the data that contain this information using the parameter \texttt{n\_max} from `readxl::read\_xlsx``.
+Datasets sometimes include a sub-header with extra information regarding the levels of a factor. In such a case, a similar approach should be used:
+1. Start with importing the first \emph{n} rows of the data that contain this information using the parameter \texttt{n\_max} from \texttt{readxl::read\_xlsx}.
 2. From this subset, extract the column names.
 3. For each variable (when information is available), store the additional information as a list of tables that contains the code and their corresponding label.
 4. Re-import the data by skipping these \emph{n} rows, and by manually informing the headers.
@@ -6751,11 +6867,11 @@ It can happen that the data include extra information regarding the levels of a 
 \hypertarget{import-mult-sheet}{%
 \subsection{Importing Data Stored in Multiple Sheets}\label{import-mult-sheet}}
 
-It can happen that the data that need to be analyzed is stored in different files, or in different sheets within the same file. Such situation could happen if the same test involving the same samples is repeated over time, or has been run simultaneously in different locations, or simply for convenience for the person who manually collected the data.
+Sometimes, the data to be analyzed are stored in different files, or in different sheets within the same file. This would typically occur if a test involving the same samples is repeated over time, or has been run simultaneously in different locations, or simply for convenience for the person who manually collected the data.
 
 Since the goal here is to highlight the possibilities in R to handle such situations, we propose to use a small fake example where 12 panelists evaluated 2 samples on 3 attributes in 3 sessions, each session being stored in a different sheet in \emph{excel\_scrap.xlsx}.
 
-A first approach to tackle this problem could be to import each file separately, and to combine them together using the \texttt{bind\_rows()} function from the \texttt{\{dplyr\}} package. However, this solution is not optimal since it is very tedious when a larger number of sheets is involved, and it is not automated since the code will no longer run (or be incomplete) when the number of session changes.
+A first approach to tackle this problem could be to import each file separately, and to combine them together using the \texttt{bind\_rows()} function from the \texttt{\{dplyr\}} package. However, this solution is not optimal since it is very tedious when a larger number of sheets is involved, and it is not automated since the code will no longer run (or be incomplete) when the number of sessions changes.
 
 Instead, we prefer to fully automate the importation. To do so, let's first introduce \texttt{excel\_sheets()} from \texttt{\{readxl\}}: this function provides the name of all the sheets that are available in the file of interest in a list. Then, through \texttt{map()} from the \texttt{\{purrr\}} package, we apply \texttt{read\_xlsx()} to all the elements one by one of obtained with \texttt{excel\_sheets()}.
 
@@ -6801,8 +6917,8 @@ This procedure finally returns a tibble with 72 rows and 6 columns, ready to be 
 \begin{quote}
 Few additional remarks regarding the last set of code:
 1. Instead of \texttt{enframe()}, we could have used \texttt{reduce()} from \texttt{\{purrr\}}, or \texttt{map()} combined with \texttt{bind\_rows()}. However, both these solutions have the drawbacks that the information regarding the \texttt{Session} would be lost since it is not part of the data set itself.
-2. The functions \texttt{enframe()} and \texttt{unnest()} have their alter-ego in \texttt{deframe()} and \texttt{nest()} which aim in transforming a data frame into a list of tables, and in nesting data by creating a list-column of data frames.
-3. In case the different sets of data are stored in different excel files (rather than different sheets within a file), we could apply a similar procedure by using \texttt{list.files()} (instead of \texttt{excel\_sheets()}) from the \texttt{\{base\}} package, together with \texttt{pattern\ =\ "xlsx"} to limit the search to Excel files present in a pre-defined folder. Such solution becomes handy when many similarly structured files are stored in the same folder and need to be combined.
+2. The functions \texttt{enframe()} and \texttt{unnest()} have their alter-ego in \texttt{deframe()} and \texttt{nest()} which aim at transforming a data frame into a list of tables, and in nesting data by creating a list-column of data frames.
+3. In case the different sets of data are stored in different excel files (rather than different sheets within a file), we could apply a similar procedure by using \texttt{list.files()} (instead of \texttt{excel\_sheets()}) from the \texttt{\{base\}} package, together with \texttt{pattern\ =\ "xlsx"} to limit the search to Excel files present in a pre-defined folder. Such a solution becomes handy when many similarly structured files are stored in the same folder and need to be combined.
 \end{quote}
 
 \hypertarget{data-prep}{%
@@ -6975,7 +7091,7 @@ A first approach to inspect and visualize where the missing values are is by rep
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-227-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-226-1.pdf}
 
 As can be seen, missing values are only present in few variables. However, \texttt{Sour} contains up to 10\% of missing data, which can be quite critical in some situations.
 
@@ -7004,7 +7120,7 @@ To answer these questions, the \texttt{\{naniar\}} package provides an interesti
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-229-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-228-1.pdf}
 
 It seems here that the only connection between NAs is observed between \texttt{Light} and \texttt{Color\ contrast}.
 
@@ -7017,7 +7133,7 @@ Such relational structure can also be visualized in a scatter plot using the \te
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-230-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-229-1.pdf}
 
 Here, the relationship between \texttt{Product} and \texttt{Sour} is shown. Such plot may help decide what to do with missing values, whether it is ignoring, removing, or predicting them.
 
@@ -7984,8 +8100,8 @@ As can be seen, it is very important to verify the type of each variable (and co
 \chapter{Data Analysis}\label{data-analysis}}
 
 \begin{quote}
-Although the data-science workflow suggests a clear separation between data manipulation and data analysis, in practice such separation is not that obvious. Indeed, most analyses require data manipulation. In fact, some data transformation can be seen as a part of both data transformation and data analysis. Yet, this Section is somewhat more dedicated to the analysis of data, by 1) presenting how some of the most common analyses in sensory and consumer reserach are performed, 2) integrating the analysis part to your script, and most importantly 3) providing applications and alternatives or extension to all the procedures presented in \ref{data-manip} and in \ref{data-viz}. With that in mind, the emphasis is not on the results and interpretation of the results, but on the path to get such results.
-For practical reasons, this chapter is divided in 3 sub-sections, one dedicated to the sensory data, one to the consumer data, and one combining both.
+Although the data-science workflow suggests a clear separation between data manipulation and data analysis, in practice such separation is not that obvious. Indeed, most analyses require data manipulation. In fact, some data transformation can be seen as a part of both data transformation and data analysis. Yet, this section is somewhat more dedicated to the analysis of data, by 1) presenting how some of the most common analyses in sensory and consumer science are performed, 2) integrating the analysis part to your script, and most importantly 3) providing applications and extension (or alternatives) to all the procedures presented in \ref{data-manip} and in \ref{data-viz}. With that in mind, the emphasis is not on the results and interpretation of the results, but on the path to get such results.
+For practical reasons, this chapter is divided in three sub-sections, one dedicated to the sensory data, one to the consumer data, and one combining both.
 \end{quote}
 
 \hypertarget{sensory-analysis}{%
@@ -8017,7 +8133,7 @@ Let's start with the analysis of our sensory data stored in \emph{biscuits\_sens
 
 Typically, sensory scientists first seek to determine whether there are differences between samples for the different attributes. This is done through Analysis of Variance (ANOVA) and can be done using the \texttt{lm()} or \texttt{aov()} functions.
 
-Let's start by running the ANOVA for the attribute \texttt{Sweet}. Since the test has not been duplicated, the 2-way ANOVA (including the Product and Assessor effects) without interaction is used. This is done using the following code:
+Let's start by running the ANOVA for the attribute \texttt{Sweet}. Since the test has not been duplicated, a 2-way ANOVA (including the Product and Assessor effects) without interaction is used. This is done using the following code:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -8040,7 +8156,7 @@ Let's start by running the ANOVA for the attribute \texttt{Sweet}. Since the tes
 \end{verbatim}
 
 \begin{quote}
-The results provided here by \texttt{anova()} are not handy to manipulate as the output is not stored in a matrix or data frame. Instead, and as illustrated later, we apply the \texttt{tidy()} function from \texttt{\{broom\}} as it tidies the statistical outputs from most testing/modelling functions into a user-friendly tibble.
+The results provided here by \texttt{anova()} are not handy to manipulate as the output is not stored in a matrix or a data frame. We will illustrated later how to apply the \texttt{tidy()} function from \texttt{\{broom\}} to tidy the statistical output from most testing/modelling functions into a user-friendly tibble.
 \end{quote}
 
 We could duplicate this code for each single attribute, but this would be quite tedious for large number of attributes. Moreover, this code is sensitive to the way the variables are named, and hence might not be suitable for other data sets. Instead, we propose two solutions, one using \texttt{split()} combined with \texttt{map()} and one involving \texttt{nest\_by()} to run this analysis automatically.
@@ -8158,15 +8274,19 @@ Rather than showing the results in a table, let's visualize them graphically as 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-262-1.pdf}
+\begin{figure}
+\centering
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-261-1.pdf}
+\caption{\label{fig:unnamed-chunk-261}Sensory attributes ranked by decreasing F-values of the product effect in their respective ANOVA}
+\end{figure}
 
-It appears that the evaluated biscuits differ the most (top 5) for \texttt{Initial\ hardness}, \texttt{Shiny}, \texttt{Dairy\ flavor}, \texttt{External\ color\ intensity}, and \texttt{Thickness}.
+The evaluated biscuits appear to differ the most (top 5 attributes) for \texttt{Initial\ hardness}, \texttt{Shiny}, \texttt{Dairy\ flavor}, \texttt{External\ color\ intensity}, and \texttt{Thickness}.
 
 \begin{quote}
-As an alternative, the \texttt{decat()} function from the \texttt{\{SensoMineR\}} package would do the same job, as it automatically performs ANOVA on a set of attributes (presented in subsequent columns). Additionally, it also perform some t-tests that highlight which samples are significantly more (or less) intense than average for each attribute.
+As an alternative, the \texttt{decat()} function from the \texttt{\{SensoMineR\}} package would do the same job as it automatically performs ANOVAs on a set of attributes (presented in subsequent columns). Additionally, it also perform some t-tests that highlight which samples are significantly more (or less) intense than the average for each attribute.
 \end{quote}
 
-Once the significant differences have been checked, a follow-up analysis consists in visualizing these differences in a multivariate way. Such visualization is often done through Principal Component Analysis (PCA). In practice, PCA is performed on the sensory profiles. Let's start with building such table:
+Once the significant differences have been checked, a follow-up analysis consists in visualizing these differences in a multivariate way. Such visualization is often done through Principal Component Analysis (PCA). In practice, PCA is performed on the mean sensory profiles. Let's start with building such table:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -8179,11 +8299,11 @@ Once the significant differences have been checked, a follow-up analysis consist
 \end{Highlighting}
 \end{Shaded}
 
-Such table is then submitted to PCA. R proposes many solutions to run such analysis, including the \texttt{prcomp()} and \texttt{princomp()} functions from the \texttt{\{stats\}} package. However, we prefer to use \texttt{PCA()} from the \texttt{\{FactoMineR\}} as it is more complete as it proposes many options that are very useful in sensory and consumer research (e.g.~it generates the graphics automatically, and allows projecting supplementary individuals and/or variables).
+The resulting table is then submitted to PCA. R proposes many solutions to run such analysis, including the \texttt{prcomp()} and \texttt{princomp()} functions from the \texttt{\{stats\}} package. However, we prefer to use \texttt{PCA()} from the \texttt{\{FactoMineR\}} as it is more complete and proposes many options that are very useful in sensory and consumer science (e.g.~it generates the graphics automatically, and allows projecting supplementary individuals and/or variables).
 
-It should however be noted that the \texttt{PCA()} function does not accept tibbles. Instead, the table should be stored in a matrix or data frame which contain the individuals' names (here the product names) as row names. Fortunately, there is an easy solution that allows converting a tibble into a data frame (\texttt{as.data.frame()}) and passing the \texttt{Product} column into row names (\texttt{column\_to\_rownames(var="Product")}).
+It should however be noted that the \texttt{PCA()} function does not accept tibbles. Instead, the table should be stored in a matrix or data frame format that contains the observation names (here the product names) as row names. Fortunately, there a tibble can be easily converted into a data frame (\texttt{as.data.frame()}) and the \texttt{Product} column moved to row names (\texttt{column\_to\_rownames(var="Product")}).
 
-Since the data also contain two qualitative variables in \texttt{Protein} and \texttt{Fiber}, they should either be removed prior to running the analysis, or better be projected as supplementary through the \texttt{quali.sup} parameter from \texttt{PCA()}. Finally, since \texttt{POpt} is an optimized product, let's not include it in the analysis per se (it is not contributing to the construction of the dimensions). Instead we project it as supplementary (through \texttt{ind.sup}) to illustrate where it would be located on the space if it were.
+Note that this data also contain two qualitative variables in \texttt{Protein} and \texttt{Fiber}. They should thus either be removed prior to running the analysis, or (better!) be projected as supplementary variables through the \texttt{quali.sup} parameter from \texttt{PCA()}. Finally, since \texttt{POpt} is an optimized product whose sensory description was later added to the data set, let's not include it in the analysis per se (it is not contributing to the construction of the dimensions). Instead we recommend to project it as a supplementary observation (through \texttt{ind.sup}) to illustrate where it would be located in the initial space.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -8199,35 +8319,38 @@ Since the data also contain two qualitative variables in \texttt{Protein} and \t
 
 Since we set the option \texttt{graph=FALSE}, the PCA plots are not yet being generated. Although \texttt{PCA()} can generate the plots either in \texttt{\{base\}} R language, or in \texttt{\{ggplot2\}}, we prefer to use a complementary package called \texttt{\{factoextra\}} which re-creates most plots from \texttt{\{FactoMineR\}} (and some other packages) as a \texttt{ggplot()} object. This comes in very handy as you can benefit from the flexibility offered by \texttt{ggplot()}.
 
-The score map (the product map) from \texttt{PCA()} is created trough \texttt{fviz\_pca\_ind()}, whereas the variables' representation is created with \texttt{fviz\_pca\_var()}. \texttt{fviz\_pca\_biplot()} is used to produce the so-called \emph{biplot}.
+The score plot (i.e.~the product map) from \texttt{PCA()} is created trough \texttt{fviz\_pca\_ind()}, whereas the representation of variables loadings is created with \texttt{fviz\_pca\_var()}. Eventually, \texttt{fviz\_pca\_biplot()} is used to produce the so-called \emph{biplot}.
 
-To illustrate this, let's reproduce the product map by coloring the products using the supplementary variables (\texttt{Protein} and \texttt{Fiber} content). This can easily be done through the \texttt{habillage} parameter from \texttt{fviz\_pca\_ind()}, which can either take a numerical value (position) of the name of the qualitative variable.
+To illustrate this, let's display the product map by coloring the products using the supplementary variables (\texttt{Protein} and \texttt{Fiber} content). This can easily be done through the \texttt{habillage} parameter from \texttt{fviz\_pca\_ind()}, which can either take the name of the qualitative variable (e.g., \texttt{"Protein"}) or a numerical value indicating its position (e.g., \texttt{2}).
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(factoextra)}
 
-\FunctionTok{fviz\_pca\_ind}\NormalTok{(senso\_pca, }\AttributeTok{habillage =} \StringTok{"Protein"}\NormalTok{, }\AttributeTok{repel =} \ConstantTok{TRUE}\NormalTok{)}
-\FunctionTok{fviz\_pca\_ind}\NormalTok{(senso\_pca, }\AttributeTok{habillage =} \DecValTok{2}\NormalTok{, }\AttributeTok{repel =} \ConstantTok{TRUE}\NormalTok{)}
+\FunctionTok{fviz\_pca\_ind}\NormalTok{(senso\_pca, }\AttributeTok{habillage =} \StringTok{"Protein"}\NormalTok{, }\AttributeTok{repel =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{mean.point =} \ConstantTok{FALSE}\NormalTok{)}
+\FunctionTok{fviz\_pca\_ind}\NormalTok{(senso\_pca, }\AttributeTok{habillage =} \DecValTok{2}\NormalTok{, }\AttributeTok{repel =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{mean.point =} \ConstantTok{FALSE}\NormalTok{,}
+             \AttributeTok{palette =} \FunctionTok{c}\NormalTok{(}\StringTok{"\#FF8C00"}\NormalTok{, }\StringTok{"\#949494"}\NormalTok{))}
 \FunctionTok{fviz\_pca\_var}\NormalTok{(senso\_pca)}
 \FunctionTok{fviz\_pca\_biplot}\NormalTok{(senso\_pca)}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-267-1.pdf}
+\begin{figure}
+\includegraphics[width=15.86in]{images/PCA_patchwork} \caption{Display of PCA plots using \textit{factoextra}}\label{fig:unnamed-chunk-267}
+\end{figure}
 
 Here, \texttt{repel=TRUE} uses \texttt{geom\_text\_repel()} from \texttt{\{ggrepel\}} (rather than \texttt{geom\_text()} from \texttt{\{ggplot2\}}) to avoid having labels overlapping.
 
 On the first dimension, \texttt{P10} is opposed to \texttt{P09} and \texttt{P03} as it is more intense for attributes such as \texttt{Sweet}, and \texttt{Dairy\ flavor} for example, and less intense for attributes such as \texttt{Dry\ in\ mouth} and \texttt{External\ color\ intensity}. On the second dimension, \texttt{P08}and \texttt{P06} are opposed to \texttt{P02} and \texttt{P07} as they score higher for \texttt{Qty\ of\ inclusions}, and \texttt{Initial\ hardness}, and score lower for \texttt{RawDough\ flavor} and \texttt{Shiny}. \texttt{POpt} is located between \texttt{P05} and \texttt{P06}.
 
 \begin{quote}
-Many more visualizations can be produced. Amongst others, let's mention:
-* Scree plot showing the evolution of the eigenvalues across dimensions to help decide how many dimensions to consider;
-* The representation of the product space on other dimensions (by default, dimension 1 and dimension 2 are shown);
+Many more visualizations can be produced. Amongst others, let's mention:\\
+* Scree plot showing the evolution of the eigenvalues across dimensions to help decide how many dimensions to consider;\\
+* The representation of the product space on other dimensions (by default, dimension 1 and dimension 2 are shown);\\
 * Representations of the (product or attribute) space in which the contribution or quality of representation of the elements are showcased.
 \end{quote}
 
-For more information regarding the various options offered by \texttt{\{factoextra\}}, see (REF BOOK \texttt{\{factoextra\}}).
+For more information regarding the various options offered by \texttt{\{factoextra\}}, see \citet{kassambara2017practical}.
 
 \hypertarget{demographic-and-questionnaire-data}{%
 \section{Demographic and Questionnaire Data}\label{demographic-and-questionnaire-data}}
@@ -8301,7 +8424,7 @@ Once done, we can aggregate the results by \texttt{Question} and \texttt{Levels}
 \end{Highlighting}
 \end{Shaded}
 
-Histograms are a nice way to visualize proportions and to compare them over several variables. Such histograms can be obtained by splitting \texttt{demog\_reduced} by \texttt{Question} and by creating them using either \texttt{N} or \texttt{Pct} (we are using \texttt{Pct} here). For simplicity, let's order the levels decreasingly (\texttt{reorder}) and let's represent them horizontally (\texttt{coord\_flip()}). Of course, such graphs are automated across all questions using \texttt{map()}:
+Bar plots and histograms are a nice way to visualize proportions and to compare them over several variables. Such plots can be obtained by splitting \texttt{demog\_reduced} by \texttt{Question} and by creating them using either \texttt{N} or \texttt{Pct} (we are using \texttt{Pct} here). For simplicity, let's order the levels decreasingly (\texttt{reorder}) and let's represent them horizontally (\texttt{coord\_flip()}). Of course, such graphs are automated across all questions using \texttt{map()}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -8328,28 +8451,44 @@ Histograms are a nice way to visualize proportions and to compare them over seve
 ## $Housing
 \end{verbatim}
 
+\begin{figure}
+\centering
 \includegraphics{bookdown_files/figure-latex/unnamed-chunk-270-1.pdf}
+\caption{\label{fig:unnamed-chunk-270-1}Bar plots showing the respondent distributions for the various demographic variables}
+\end{figure}
 
 \begin{verbatim}
 ## 
 ## $`Income range`
 \end{verbatim}
 
+\begin{figure}
+\centering
 \includegraphics{bookdown_files/figure-latex/unnamed-chunk-270-2.pdf}
+\caption{\label{fig:unnamed-chunk-270-2}Bar plots showing the respondent distributions for the various demographic variables}
+\end{figure}
 
 \begin{verbatim}
 ## 
 ## $`Living area`
 \end{verbatim}
 
+\begin{figure}
+\centering
 \includegraphics{bookdown_files/figure-latex/unnamed-chunk-270-3.pdf}
+\caption{\label{fig:unnamed-chunk-270-3}Bar plots showing the respondent distributions for the various demographic variables}
+\end{figure}
 
 \begin{verbatim}
 ## 
 ## $Occupation
 \end{verbatim}
 
+\begin{figure}
+\centering
 \includegraphics{bookdown_files/figure-latex/unnamed-chunk-270-4.pdf}
+\caption{\label{fig:unnamed-chunk-270-4}Bar plots showing the respondent distributions for the various demographic variables}
+\end{figure}
 
 \hypertarget{regex}{%
 \subsection{Eating behavior traits: TFEQ data}\label{regex}}
@@ -8453,11 +8592,13 @@ From this table, histograms representing the frequency distribution for each var
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-275-1.pdf}
+\begin{figure}
+\includegraphics[width=14.76in]{images/TFEQ_barplots_facet} \caption{Frequency distributions for Disinhibition-related variables only}\label{fig:unnamed-chunk-276}
+\end{figure}
 
 Structured questionnaires such as the TFEQ are very frequent in sensory and consumer science. They are used to measure individual patterns as diverse as personality traits, attitudes, food choice motives, engagement, social desirability bias, etc. Ultimately, the TFEQ questionnaire consists in a set of structured questions whose respective answers combine to provide a TFEQ score (actually, three scores, one for Disinhibition, one for Restriction and one for sensitivity to Hunger). This TFEQ scores translate into certain food behavior tendencies.
 
-However, computing the TFEQ scores is slightly more complicated than adding the scores of all TFEQ questions together. Instead, they follow certain rules that are stored in the \emph{Variables} sheet in \emph{biscuits\_traits.xlsx}. For each TFEQ question, the rule to follow is provided by \texttt{Direction} and \texttt{Value}, and works as following: if the condition provided by \texttt{Direction} and \texttt{Value} is met, then the respondent gets a 1, else a 0. Ultimately, the TFEQ score is the sum of all these evaluations.
+However, computing the TFEQ scores is slightly more complicated than adding the scores of all TFEQ questions together. Instead, they follow certain rules that are stored in the \emph{Variables} spreadsheet in \emph{biscuits\_traits.xlsx}. For each TFEQ question, the rule to follow is provided by \texttt{Direction} and \texttt{Value}, and works as following: if the condition provided by \texttt{Direction} and \texttt{Value} is met, then the respondent gets a \emph{1}, else a \emph{0}. Ultimately, the TFEQ score is the sum of all these evaluations.
 
 Let's start by extracting this information (\texttt{Direction} and \texttt{Value}) from the \emph{Variables} sheet for all the variables involved in the computation of the TFEQ scores. We store this in \texttt{var\_drh}.
 
@@ -8536,14 +8677,18 @@ Such results can then be visualized graphically, for instance by representing th
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-280-1.pdf}
+\begin{figure}
+\centering
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-281-1.pdf}
+\caption{\label{fig:unnamed-chunk-281}Vizualisation of the distributions of the TFEQ factors for the consumer panel}
+\end{figure}
 
 \hypertarget{tibble-use}{%
 \section{Consumer Data}\label{tibble-use}}
 
-The analysis of consumer data usually involves the same type of analysis as the ones for sensory data (e.g.~ANOVA, PCA, etc.), but the way the data is being collected (absence of duplicates) and its underlying nature (affect vs.~descriptive) require some adjustments.
+The analysis of consumer data usually involves the same type of analysis as the ones for sensory data (e.g.~ANOVA, PCA, etc.), but the way the data is being collected (absence of repetitions) and its underlying nature (affect vs.~descriptive) require some adjustments.
 
-Let's start by importing the consumer data that is stored in \emph{biscuits\_consumer\_test.xlsx}. Here, we import two sheets, one with the consumption time and number of biscuits (stored in \texttt{Nbiscuit}), and one with different consumer evaluations of the samples (stored in \texttt{consumer})
+Let's start by importing the consumer data that is stored in \emph{biscuits\_consumer\_test.xlsx}. Here, we import two spreadsheets, one with the consumption time and number of biscuits (stored in \texttt{Nbiscuit}), and one with different consumer evaluations of the samples (stored in \texttt{consumer})
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -8560,7 +8705,7 @@ Let's start by importing the consumer data that is stored in \emph{biscuits\_con
 \end{Highlighting}
 \end{Shaded}
 
-Similarly to the sensory data, let's start with computing the mean liking score per product after the first bite (\texttt{1stbite\_liking}) and at the end of the evaluation (\texttt{after\_liking}).
+Similarly what we did with the sensory data, let's start with computing the mean liking scores per product after the first bite (\texttt{1stbite\_liking}) and at the end of the evaluation (\texttt{after\_liking}).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -8584,7 +8729,7 @@ Similarly to the sensory data, let's start with computing the mean liking score 
 
 A first glance at the table shows that there are clear differences between the samples (within a liking variable), but little difference between liking variables (within a sample).
 
-Of course, we want to know if differences between samples are significant. We thus need to perform an 2-way ANOVA (testing for the product effect by also taking into account the individual differences) followed up by a paired comparison test (here Tukey's HSD). For the latter, the \texttt{\{agricolae\}} package is a good solution, as it is simple to use and has all its built-in tests working in the same way.
+Of course, we want to know if differences between samples are significant. We thus need to perform a 2-way ANOVA (testing for the product effect and also taking into account the individual differences) followed up by a paired comparison test (here Tukey's HSD). For the latter, the \texttt{\{agricolae\}} package is a good solution, as it is simple to use and has all its built-in tests working in the same way.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -8617,7 +8762,7 @@ Of course, we want to know if differences between samples are significant. We th
 \end{Highlighting}
 \end{Shaded}
 
-Both at the start and at the end of the evaluation, significant differences (at 5\%) in liking between samples are observed according to Tukey's HSD test.
+At both evaluation times, the Tukey's HSD test shows significant differences in liking between samples (at a 5\% risk).
 
 To further compare the liking assessment of the samples after the first bite and at the end of the tasting, the results obtained from \texttt{liking\_start\_hsd} and \texttt{liking\_end\_hsd} are combined. We then represent the results in a bar-chart:
 
@@ -8631,12 +8776,15 @@ To further compare the liking assessment of the samples after the first bite and
   \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{reorder}\NormalTok{(Product, }\SpecialCharTok{{-}}\NormalTok{Liking), }\AttributeTok{y =}\NormalTok{ Liking, }\AttributeTok{fill =}\NormalTok{ Moment))}\SpecialCharTok{+}
   \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{, }\AttributeTok{position =} \StringTok{"dodge"}\NormalTok{)}\SpecialCharTok{+}
   \FunctionTok{xlab}\NormalTok{(}\StringTok{""}\NormalTok{)}\SpecialCharTok{+}
-  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Comparison of the liking scores (start vs. end evaluation)"}\NormalTok{)}\SpecialCharTok{+}
   \FunctionTok{theme\_bw}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-284-1.pdf}
+\begin{figure}
+\centering
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-285-1.pdf}
+\caption{\label{fig:unnamed-chunk-285}Bar chart for the the comparison of mean liking scores at the first bite and at the end of the evaluation}
+\end{figure}
 
 As can be seen, the pattern of liking scores across samples is indeed very stable across the evaluation, particularly in terms of rank. At the individual level, such linear relationship is also observed (here for the first 12 consumers):
 
@@ -8652,13 +8800,15 @@ As can be seen, the pattern of liking scores across samples is indeed very stabl
   \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{pch =} \DecValTok{20}\NormalTok{, }\AttributeTok{cex =} \DecValTok{2}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"lm"}\NormalTok{, }\AttributeTok{formula =} \StringTok{"y\textasciitilde{}x"}\NormalTok{, }\AttributeTok{se =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{theme\_bw}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Overall Liking"}\NormalTok{, }
-          \StringTok{"(Assessment after first bite vs. end of the tasting)"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{Judge)}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-285-1.pdf}
+\begin{figure}
+\centering
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-286-1.pdf}
+\caption{\label{fig:unnamed-chunk-286}Faceted scatterplots showing the linear relationship between overal liking at the first bite vs.~end of the tasting for the first 12 consumers}
+\end{figure}
 
 \begin{quote}
 For your own curiosity, we invite you to re-create the same graph by comparing the Liking score at the end of the evaluation (\texttt{after\_liking}) with the liking score measured on the 9pt categorical scale (\texttt{end\_liking\ 9pt}), and to reflect on the results obtained. Are the consumers consistent in their evaluations?
@@ -8688,11 +8838,11 @@ Here, we take advantage of the flexibility of tibbles as it allows storing resul
 \item
   \texttt{lm\_obj} corresponds to the results of the linear model (obtained with `run\_reg()``);
 \item
-  \texttt{glance} contains some general results of the model incl.~R2, the p-value, etc.
+  \texttt{glance} contains some general results of the model incl.~R\textsuperscript{2}, p-value, etc.
 \end{itemize}
 
 \begin{quote}
-These three outputs contain completely different information for the same analysis (here regressions). The fact that tibbles allow storing outputs as list is very handy since all the results are tidied in one unique R object, which can then easily be accessed by unfolding the output needed.
+These three output contain completely different information for the same analysis (here regressions). The fact that tibbles allow storing output as list is very handy since all the results are tidied in one unique R object, which can then easily be accessed by unfolding the output needed.
 \end{quote}
 
 \begin{Shaded}
@@ -8729,13 +8879,16 @@ Ultimately, the relationship between the liking score and the number of biscuits
   \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{pch =} \DecValTok{20}\NormalTok{, }\AttributeTok{cex =} \DecValTok{2}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"lm"}\NormalTok{, }\AttributeTok{formula =} \StringTok{"y\textasciitilde{}x"}\NormalTok{, }\AttributeTok{se =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{theme\_bw}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{labels =} \FunctionTok{label\_number}\NormalTok{(}\AttributeTok{accuracy =} \DecValTok{1}\NormalTok{)) }\SpecialCharTok{+}
   \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Number of Biscuits vs. Liking"}\NormalTok{, }
           \StringTok{"Consumers with a signif. (5\%) regression model are shown."}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{Judge, }\AttributeTok{scales =} \StringTok{"free\_y"}\NormalTok{)}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{Judge)}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-289-1.pdf}
+\begin{figure}
+\includegraphics[width=12.43in]{images/Scatter_eating_vs_liking} \caption{Consumers showing a significant relationship between their liking scores and the number of biscuits they ate}\label{fig:unnamed-chunk-291}
+\end{figure}
 
 \hypertarget{combining-sensory-and-consumer-data}{%
 \section{Combining Sensory and Consumer Data}\label{combining-sensory-and-consumer-data}}
@@ -8781,7 +8934,11 @@ Such analysis is split in 3 steps:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-290-1.pdf}
+\begin{figure}
+\centering
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-292-1.pdf}
+\caption{\label{fig:unnamed-chunk-292-1}Internal Preference Mapping (PCA of consumer data with sensory descriptors as supplementary variables)}
+\end{figure}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -8790,22 +8947,26 @@ Such analysis is split in 3 steps:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-290-2.pdf}
+\begin{figure}
+\centering
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-292-2.pdf}
+\caption{\label{fig:unnamed-chunk-292-2}Internal Preference Mapping (PCA of consumer data with sensory descriptors as supplementary variables)}
+\end{figure}
 
 As can be seen, the consumers are quite in agreement as all the black arrows are pointing in a similar direction.
-In overall, they seem to like biscuits that are sweet, with cereal flavor, and fatty/dairy flavor and odor, and dislike biscuits defined as astringent, dry in mouth, uneven and with dark external color.
+Overall, they seem to like biscuits that are sweet, with cereal flavor, and fatty/dairy flavor and odor, and dislike biscuits defined as astringent, dry in mouth, uneven and with dark external color.
 
 \hypertarget{hac}{%
 \subsection{Consumers Clustering}\label{hac}}
 
-Although the data show a fairly good agreement between consumers, let's cluster them in more homogeneous groups based on liking.
+Even though the data show a fairly good agreement between consumers, let's cluster them in more homogeneous groups based on liking.
 
-Various solutions for clustering exist, depending on the type of distance (similarity or dissimilarity), the linkage (single, average, Ward, etc.), and of course the algorithm itself (e.g.~AHC, k-means, etc.).
+There are various solutions for clustering depending on the type of distance (similarity or dissimilarity), the linkage (single, average, Ward, etc.), and of course the algorithm itself (e.g.~AHC, k-means, etc.).
 
 Here, we opt for the Agglomerative Hierarchical Clustering (AHC) with Euclidean distance (dissimilarity) and Ward criterion, as it is a fairly common approach in Sensory and Consumer research. Such analysis can be done using \texttt{stats::hclust()} or \texttt{cluster::agnes()}.
 
 \begin{quote}
-Before computing the distance between consumers, it is advised to at least center their liking scores (subtracting their mean liking scores to each of their individual scores) as it allows grouping consumers based on their respective preferences, rather than on their scale usage (otherwise, consumers who scored high on all samples are grouped together, and separated from consumers who scored low on all samples, which isn't so much informative). Such transformation can be done automatically using the \texttt{scale()}\footnote{\texttt{scale()} allows centering (\texttt{center=TRUE}) and standardizing (\texttt{scale=TRUE}) data automatically in columns, hence generating \emph{z-scores}.} function.
+Before computing the distance between consumers, it is advised to center their liking scores (subtracting their mean liking scores to each of their individual scores) in order to group consumers based on their respective preferences, rather than on their scale usage (otherwise, consumers who scored high on all samples are grouped together, and separated from consumers who scored low on all samples, which isn't so much informative). Some researchers recommend to also scale the likng scores. Both transformations can be done automatically using the \texttt{scale()}\footnote{\texttt{scale()} allows centering (\texttt{center=TRUE}) and standardizing (\texttt{scale=TRUE}) data automatically in columns, hence generating \emph{z-scores}.} function.
 \end{quote}
 
 Let's start with computing the euclidean distance between each pair of consumers by using the \texttt{dist()} function.
@@ -8821,7 +8982,7 @@ Let's start with computing the euclidean distance between each pair of consumers
 \end{Highlighting}
 \end{Shaded}
 
-The AHC is performed using the \texttt{hclust()} function and the \texttt{method\ =\ "ward.D2"} parameter, which is the equivalent to \texttt{method\ =\ "ward"} for \texttt{agnes()}. To visualize the dendrogram, the \texttt{factoextra::fviz\_dend()} function is used (here we propose to visualize the 2-clusters solution by setting \texttt{k=2}):
+The AHC is performed using the \texttt{hclust()} function and the \texttt{method\ =\ "ward.D2"} parameter, which is the equivalent to \texttt{method\ =\ "ward"} for \texttt{agnes()}. To visualize the resulting dendrogram, we can use the \texttt{factoextra::fviz\_dend()} function (here we propose to visualize the 2-clusters solution by setting \texttt{k=2}):
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -8830,13 +8991,17 @@ The AHC is performed using the \texttt{hclust()} function and the \texttt{method
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-292-1.pdf}
+\begin{figure}
+\centering
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-294-1.pdf}
+\caption{\label{fig:unnamed-chunk-294}Agglomerative Hierarchical Clustering of consumers' centered liking scores}
+\end{figure}
 
 \begin{quote}
-An interesting option to visualize clusters and proposed by \texttt{fviz\_dend()} is the \emph{phologenic} representation (\texttt{type="phylogenic"}). We invite you to give it a try to see how it represents the clusters as an alternative to the classical dendrogram tree.
+An interesting option to visualize clusters and proposed by \texttt{fviz\_dend()} is the \emph{phylogenic} representation (\texttt{type="phylogenic"}). We invite you to give it a try to see how it represents the clusters as an alternative to the classical dendrogram tree.
 \end{quote}
 
-Since we are satisfied with the 2 clusters solution, we cut the tree (using \texttt{cutree()}) at this level using, hence generating a group of 74 and a group of 33 consumers.
+The 2 clusters solution looks satisfactory, so we can cut the tree at this level (using \texttt{cutree()}), hence generating a group of 74 and a group of 33 consumers.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -8858,7 +9023,7 @@ Since we are satisfied with the 2 clusters solution, we cut the tree (using \tex
 ## 2 2          33
 \end{verbatim}
 
-Lastly, we compare visually the preference patterns between clusters by representing in a line chart the average liking score for each product provided by each cluster.
+Lastly, we can compare visually the preference patterns of the two clusters by representing in a line chart the average liking score for each product provided by each cluster.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -8882,26 +9047,29 @@ Lastly, we compare visually the preference patterns between clusters by represen
   \FunctionTok{xlab}\NormalTok{(}\StringTok{""}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{name =} \StringTok{"Average Liking Score"}\NormalTok{, }
                      \AttributeTok{limits =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{9}\NormalTok{), }\AttributeTok{breaks =} \FunctionTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{9}\NormalTok{, }\DecValTok{1}\NormalTok{)) }\SpecialCharTok{+}
-  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Cluster differences in the appreciation of the Products"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{theme\_bw}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-294-1.pdf}
+\begin{figure}
+\centering
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-296-1.pdf}
+\caption{\label{fig:unnamed-chunk-296}Average liking scores of the two consumer clusters}
+\end{figure}
 
-It appears that cluster 1 (74 consumers) particularly likes \texttt{P10}, \texttt{P01}, and \texttt{P05}, and has a fairly flat liking pattern otherwise. On the other hand, the cluster 2 (33 consumers) expressed strong rejections towards \texttt{P04} and \texttt{P08}, and like \texttt{P10} and \texttt{P01} the most.
+It appears that cluster 1 (74 consumers) particularly likes \texttt{P10}, \texttt{P01}, and \texttt{P05}, and has a fairly flat liking pattern otherwise. On the other hand, the cluster 2 (33 consumers) expressed strong rejections towards \texttt{P04} and \texttt{P08}, and liked \texttt{P10} and \texttt{P01} the most.
 
-The fact that both clusters agree on the best samples (\texttt{P10} and \texttt{P01}) goes with our original assumption from the Internal Preference Mapping that the panel of consumers is fairly homogeneous in terms of preferences.
+The fact that both clusters agree on the best samples (\texttt{P10} and \texttt{P01}) goes with our original observation from the Internal Preference Mapping that the panel of consumers is fairly homogeneous in terms of preferences.
 
 \begin{quote}
-In \texttt{\{FactoMineR\}}, the \texttt{HCPC()} function also performs AHC but takes as starting point the results of a multivariate analysis (HCPC stands for Hierarchical Clustering on Principal Components). This would typically be the results of the PCA performed on the Consumer (rows) \emph{x} Product (columns) matrix of liking scores, in which the scores are (at least) centered in row.
+In \texttt{\{FactoMineR\}}, the \texttt{HCPC()} function also performs AHC but takes the results of a multivariate analysis as a starting point (HCPC stands for Hierarchical Clustering on Principal Components). This would typically be the results of the PCA performed on the \(Consumer (rows)\times{Product (columns)}\) matrix of liking scores, in which the scores are (at least) centered in row.
 Although results should be identical in most cases, it can happen that results slightly diverge from \texttt{agnes()} and \texttt{hclust()} as it also depends on the number of dimensions kept in the multivariate analysis and on the treatment of in-between clusters consumers. But more interestingly, \texttt{HCPC()} offers the possibility to \emph{consolidate} the clusters by performing k-means on the solution obtained from the AHC (\texttt{consol=TRUE}).
 \end{quote}
 
 \hypertarget{drivers-of-liking}{%
 \subsection{Drivers of Liking}\label{drivers-of-liking}}
 
-When combining sensory and consumer data collected on the same product, it is also relevant to understand which sensory properties of the products drive the consumers' liking and disliking. Such evaluation can be done at the panel level, at a group level (e.g.~clusters, users vs.~non-users, gender, etc.), or even at the individual level. Unless stated otherwise, the computations will be done for cluster 1, but could easily be adapted to other groups if needed.
+Combining sensory and consumer data collected on the same products allows understanding which sensory properties of the products drive the consumers' liking and disliking. Such evaluation can be done at the panel level, at a subgroup level (e.g.~clusters, users vs.~non-users, gender, etc.), or even at the individual level. Unless stated otherwise, the computations will be done for cluster 1, but could easily be adapted to other groups if needed.
 
 \hypertarget{correlation}{%
 \subsubsection{Correlation}\label{correlation}}
@@ -8922,7 +9090,7 @@ Let's start by evaluating the simplest relationship between the sensory attribut
 \end{Highlighting}
 \end{Shaded}
 
-Various packages can be used to visualize these correlations. We opt here for \texttt{ggcorrplot()} from the \texttt{\{ggcorrplot\}} package as it provides many interesting visualization in \texttt{\{ggplot2\}}. This package also provides the function \texttt{cor\_pmat()} which compute the p-value associated to each correlation. This matrix of p-value can be used to hide correlations that are not significant at the level defined by the parameter \texttt{sig.level}.
+Various packages can be used to visualize these correlations. We opt here for \texttt{ggcorrplot()} from the \texttt{\{ggcorrplot\}} package as it provides many interesting visualization options based on \texttt{\{ggplot2\}}. This package also provides the function \texttt{cor\_pmat()} which compute the p-value associated to each correlation. This matrix of p-value can be used to hide correlations that are not significant at the level defined by the parameter \texttt{sig.level}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -8934,7 +9102,9 @@ Various packages can be used to visualize these correlations. We opt here for \t
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-296-1.pdf}
+\begin{figure}
+\includegraphics[width=16.36in]{images/Correl_matrix} \caption{Matrix of pairwise correlations between attributes}\label{fig:unnamed-chunk-299}
+\end{figure}
 
 The average liking scores for cluster 1 (defined as \texttt{1\ (74)}) are positively correlated with \texttt{Overall\ odor\ intensity}, \texttt{Fatty\ odor}, \texttt{Cereal\ flavor}, \texttt{Fatty\ flavor}, \texttt{Dairy\ flavor}, \texttt{Overall\ flavor\ persistence}, \texttt{Salty}, \texttt{Sweet}, \texttt{Warming}, \texttt{Fatty\ in\ mouth}, and \texttt{Melting}. They are also negatively correlated to \texttt{External\ color\ intensity}, \texttt{Astringent}, and \texttt{Dry\ in\ mouth}.
 Finally, it can be noted that the correlation between clusters is high with a value of 0.72.
@@ -8961,7 +9131,7 @@ Let's start by combining the sensory data to the average liking score per produc
 \end{Highlighting}
 \end{Shaded}
 
-Both the linear regression and the quadratic regression are then run on \texttt{Liking} per attribute:
+Both the simple linear regression and the quadratic regression are then run on \texttt{Liking} per attribute:
 
 \begin{quote}
 To add a quadratic model, two options are possible:
@@ -9040,20 +9210,25 @@ We apply this function to our data by applying to each attribute (here we set \t
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-302-1.pdf}
+\begin{figure}
+\centering
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-305-1.pdf}
+\caption{\label{fig:unnamed-chunk-305}Regression of liking on sensory atttributes taken separately}
+\end{figure}
 
-All attributes except \texttt{Astringent} are linearly linked to liking. For \texttt{Astringent}, the curvature is U-shaped: this does not show an effect of saturation as it would have been represented as an inverted U-shape. Although the quadratic effect shows a better fit than the linear effect, having a linear effect would have been a good predictor as well in this situation.
+All attributes except \texttt{Astringent} are linearly linked to liking. For \texttt{Astringent}, the curvature is U-shaped: this does not show an effect of saturation as it would have been represented as an inverted U-shape. Although the quadratic effect shows a better fit than the linear effect, having a linear effect would have been a good predictor as well in this situation.\\
+Such an approach to regression is quite straightforward, however it must be applied and interpreted with caution because of potential multicollinearity among predictor variables. One way round this issue is to take all the sensory attributes together and perform a regression on principal components, as described in the next section for External Preference Mapping. Another option would be to run a partial least square regression (see also @ref(\#superv\_learning)).
 
 \hypertarget{prefmap}{%
 \subsection{External Preference Mapping}\label{prefmap}}
 
-Ultimately, one of the goals of combining sensory and consumer data is to find within the sensory space the area that are liked/accepted by consumers. Since this approach is based on modeling and prediction, it may suggest area of the space with high acceptance potential which are not filled in by products yet. This would open doors to new product development.
+Ultimately, one of the goals of combining sensory and consumer data is to find areas within the sensory space that are best liked by consumers. Since this approach is based on modeling and prediction, it may suggest areas of the sensory space with high acceptance potential which are not yet filled in by existing products. This would thus open doors to new product development.
 
-To perform such analysis, the External Preference Mapping (PrefMap) could be used amongst other techniques. For more information on the principles of PrefMap, please refer to (ANALYZING SENSORY DATA WITH R or OTHER REFERENCES\ldots).
+To perform such an analysis, one option is to use External Preference Mapping (PrefMap) {[}\citet{schlich1992}; danzart1998; danzart2004{]}.\footnote{For more information on the principles of PrefMap, please refer to \citet{macfie2007}, \citet{meullenet2008}, and \citet{Le2018}.}
 
-To run the PrefMap analysis, the \texttt{carto()} function from \texttt{\{SensoMineR\}} is being used. This function takes as parameter the sensory space to consider (stored in \texttt{senso\_pca\$ind\$coord}, here we will consider dimension 1 and dimension 2), the table of liking scores (as stored in \texttt{consumer\_wider}), and the model to consider (here we consider the quadratic model, so we use \texttt{regmod=1}). For convenience, we run the analysis on the full panel since \texttt{consumer\_wider} is (almost) already structured as needed.
+To run the PrefMap analysis, the \texttt{carto()} function from \texttt{\{SensoMineR\}} is being used. This function takes as parameters the sensory space to consider (stored in \texttt{senso\_pca\$ind\$coord}, here we will consider dimension 1 and dimension 2), the table of liking scores (as stored in \texttt{consumer\_wider}), and the model to consider (here we consider the quadratic model, so we use \texttt{regmod=1}). For convenience, we run the analysis on the full panel since \texttt{consumer\_wider} is (almost) already structured as needed.
 
-Since \texttt{carto()} requires matrix or data frame with row names for the analysis, the data needs to be slightly adapted (we also need to ensure that the products are in the same order in both files).
+Note that \texttt{carto()} requires a matrix or data frame with row names for the analysis. Thus, the data needs to be slightly adapted (we also need to ensure that the products are in the same order in both files).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -9077,13 +9252,13 @@ Since \texttt{carto()} requires matrix or data frame with row names for the anal
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-303-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-306-1.pdf}
 
 From this map, we can see that the optimal area (dark red) is located on the positive side of dimension 1, between \texttt{P01}, \texttt{P05}, and \texttt{P10} (as expected by the liking score).
 
 Let's now re-build this plot using \texttt{\{ggplot2\}}.
 
-The sensory space is stored in \texttt{senso}, whereas the surface response plot information is split between:
+The sensory space is stored in \texttt{senso}, whereas the response surface plot information is split between:
 
 \begin{itemize}
 \tightlist
@@ -9092,10 +9267,10 @@ The sensory space is stored in \texttt{senso}, whereas the surface response plot
 \item
   \texttt{PrefMap\$f2}: contains the coordinates on dimension 2 in which predictions have be made;
 \item
-  \texttt{PrefMap\$nb.depasse}: contains the number of consumers that accept a product at each point of the space. This matrix is defined in such a way that \texttt{PrefMap\$f1} links to the rows of the matrix, and \texttt{PrefMap\$f2} links to the columns. Note that this counts should be transformed into percentage by dividing each count by the number of consumers who are involved in the test (defined earlier as \texttt{nconso})
+  \texttt{PrefMap\$nb.depasse}: contains the number of consumers at each point of the space that would accept a product located at that point. This matrix is defined in such a way that \texttt{PrefMap\$f1} links to the rows of the matrix, and \texttt{PrefMap\$f2} links to the columns. Note that this counts should be transformed into percentages by dividing each count by the number of consumers who are involved in the test (defined earlier as \texttt{nconso})
 \end{itemize}
 
-Last but not least, \texttt{POpt} (which coordinates are stored in \texttt{senso\_pca\$ind.sup\$coord}) can be projected on that space in order to see how this optimized sample is considered in terms of consumers' liking/preference.
+Last but not least, \texttt{POpt} (whose coordinates are stored in \texttt{senso\_pca\$ind.sup\$coord}) can be projected on that map in order to see how this optimized sample is considered in terms of consumers' liking/preference.
 
 Let's start with preparing the data by transforming everything back into a tibble:
 
@@ -9112,7 +9287,7 @@ Let's start with preparing the data by transforming everything back into a tibbl
   \FunctionTok{as\_tibble}\NormalTok{(}\AttributeTok{rownames =} \StringTok{"Dim1"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{pivot\_longer}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Dim1, }
                \AttributeTok{names\_to =} \StringTok{"Dim2"}\NormalTok{, }\AttributeTok{values\_to =} \StringTok{"Count"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\StringTok{"Acceptance (\%)"} \OtherTok{=}\NormalTok{ Count }\SpecialCharTok{*} \DecValTok{100} \SpecialCharTok{/}\NormalTok{ nconso) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\StringTok{"Preference (\%)"} \OtherTok{=}\NormalTok{ Count }\SpecialCharTok{*} \DecValTok{100} \SpecialCharTok{/}\NormalTok{ nconso) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{mutate}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{where}\NormalTok{(is.character), as.numeric))}
 \end{Highlighting}
 \end{Shaded}
@@ -9123,10 +9298,10 @@ To build the plot, different layers involving different source of data (\texttt{
 \begin{Highlighting}[]
 \FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
   \FunctionTok{geom\_tile}\NormalTok{(}\AttributeTok{data =}\NormalTok{ PrefMap\_plot, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Dim1, }\AttributeTok{y =}\NormalTok{ Dim2, }
-                                     \AttributeTok{fill =} \StringTok{\textasciigrave{}}\AttributeTok{Acceptance (\%)}\StringTok{\textasciigrave{}}\NormalTok{, }
-                                     \AttributeTok{color =} \StringTok{\textasciigrave{}}\AttributeTok{Acceptance (\%)}\StringTok{\textasciigrave{}}\NormalTok{)) }\SpecialCharTok{+}
+                                     \AttributeTok{fill =} \StringTok{\textasciigrave{}}\AttributeTok{Preference (\%)}\StringTok{\textasciigrave{}}\NormalTok{, }
+                                     \AttributeTok{color =} \StringTok{\textasciigrave{}}\AttributeTok{Preference (\%)}\StringTok{\textasciigrave{}}\NormalTok{)) }\SpecialCharTok{+}
   \FunctionTok{geom\_contour}\NormalTok{(}\AttributeTok{data =}\NormalTok{ PrefMap\_plot, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Dim1, }\AttributeTok{y =}\NormalTok{ Dim2, }
-                                        \AttributeTok{z =} \StringTok{\textasciigrave{}}\AttributeTok{Acceptance (\%)}\StringTok{\textasciigrave{}}\NormalTok{), }
+                                        \AttributeTok{z =} \StringTok{\textasciigrave{}}\AttributeTok{Preference (\%)}\StringTok{\textasciigrave{}}\NormalTok{), }
                \AttributeTok{breaks =} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{100}\NormalTok{, }\DecValTok{10}\NormalTok{)) }\SpecialCharTok{+}
   \FunctionTok{geom\_hline}\NormalTok{(}\AttributeTok{yintercept =} \DecValTok{0}\NormalTok{, }\AttributeTok{lty =} \DecValTok{2}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{geom\_vline}\NormalTok{(}\AttributeTok{xintercept =} \DecValTok{0}\NormalTok{, }\AttributeTok{lty =} \DecValTok{2}\NormalTok{) }\SpecialCharTok{+}
@@ -9151,9 +9326,13 @@ To build the plot, different layers involving different source of data (\texttt{
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-305-1.pdf}
+\begin{figure}
+\centering
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-308-1.pdf}
+\caption{\label{fig:unnamed-chunk-308}Plot of the External Preference Mapping using ggplot2}
+\end{figure}
 
-As can be seen, \texttt{POpt} is quite far from the optimal area suggested by the PrefMap. This suggests that prototypes with higher success chances could be developed.
+As can be seen, \texttt{POpt} is quite far from the optimal sensory area suggested by the PrefMap. This suggests that prototypes with higher success chances could be developed.
 
 \hypertarget{value-delivery}{%
 \chapter{Value Delivery}\label{value-delivery}}
@@ -9274,7 +9453,7 @@ Let's picture a situation where the R\&D team has been developing multiple trial
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.9\linewidth]{images/PCA} 
+{\centering \includegraphics[width=1\linewidth]{images/PCA} 
 
 }
 
@@ -9306,7 +9485,7 @@ In this example, the idea may be to highlight to the audience that the optimized
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.9\linewidth]{images/PCA_management} 
+{\centering \includegraphics[width=1\linewidth]{images/PCA_management} 
 
 }
 
@@ -9519,8 +9698,8 @@ The results of the PCA can be visualized using \texttt{\{factoextra\}}:
 
 \begin{figure}
 \centering
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-308-1.pdf}
-\caption{\label{fig:unnamed-chunk-308}PCA Biplot}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-311-1.pdf}
+\caption{\label{fig:unnamed-chunk-311}PCA Biplot}
 \end{figure}
 
 The first plane of the PCA suggests that there are 3 distinct groups of wines. Let's define them mathematically using cluster analysis. For this process, we propose to reduce the full data to its first two components only. This approach is used here to illustrate how PCA can be used as a pre-processing step. Additionally, such pre-processing can help detecting clearer patterns in the data, as we will see in the next section with clustering.
@@ -9557,8 +9736,8 @@ In order to cluster our wines, let's start with defining the optimal number of c
 
 \begin{figure}
 \centering
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-310-1.pdf}
-\caption{\label{fig:unnamed-chunk-310}Optimal Number of Clusters}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-313-1.pdf}
+\caption{\label{fig:unnamed-chunk-313}Optimal Number of Clusters}
 \end{figure}
 
 Here, the optimal solution consists in defining 3 clusters.
@@ -9583,8 +9762,8 @@ Finally, the results can be visualized using \texttt{fviz\_cluster()} from \text
 
 \begin{figure}
 \centering
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-311-1.pdf}
-\caption{\label{fig:unnamed-chunk-311}Cluster Plot}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-314-1.pdf}
+\caption{\label{fig:unnamed-chunk-314}Cluster Plot}
 \end{figure}
 
 In the resulting plot, the 3 clusters are clearly separated, as can be seen by their little to no overlap.
@@ -9599,8 +9778,8 @@ It should be noted that, in sensory and consumer science, it is increasingly mor
 
 For instance, Cariou and Wilderjans have developed an approach for clustering around latent variables for three-way data (CLV3W). This approach that is implemented in \texttt{\{ClustVarLV\}} could be used to detect panel disagreement in three-way conventional sensory profiling data \citep{wilderjans2016} or to segment consumers based on multi-attribute product evaluation, by removing the non-negativity constraint to the \texttt{CLV3W()} procedure \citep{cariou2018}. As for free sorting and projective mapping data, the CLUSTATIS partitioning algorithm could be applied using \texttt{\{ClustBlock\}} \citep[\citet{llobell2020}]{llobell2019}.
 
-\hypertarget{supervised-learning}{%
-\section{Supervised learning}\label{supervised-learning}}
+\hypertarget{superv_learning}{%
+\section{Supervised learning}\label{superv_learning}}
 
 There are many ways to carry out Supervised ML, which again would require an entire book dedicated just to it. In this section, we will introduce you to the basics, which should give you a nice kick-start for your own analysis. For those who want to learn more on this topic, we recommend reading \href{https://bradleyboehmke.github.io/HOML}{\emph{Hands-On Machine Learning with R}} by Bradley Boehmke and Brandon and \href{https://www.tmwr.org/}{\emph{Tidy Modeling with R}} by Max Kuhn and Sylvia Silge for more in-depth information.
 
@@ -9893,8 +10072,8 @@ The \texttt{autoplot()} function is called to take a quick look at the \texttt{t
 
 \begin{figure}
 \centering
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-312-1.pdf}
-\caption{\label{fig:unnamed-chunk-312}Tuning Plot}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-315-1.pdf}
+\caption{\label{fig:unnamed-chunk-315}Tuning Plot}
 \end{figure}
 
 Ultimately, the best combination of parameters is obtained using the \texttt{select\_best()} function. Such paramaters is defined based on the quality of the model, which can be estimated through a various metrics. Here we decided to use \texttt{roc\_auc} (Area Under the Receiver Operating Characteristic Curve), as it provides a reliable estimate of the quality of the model.
@@ -10530,7 +10709,7 @@ In the previous sections, we have already shown how to count the number of occur
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-337-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-340-1.pdf}
 
 As seen previously, the most mentioned words are \texttt{apple}, \texttt{sweet}, \texttt{fruity}, and \texttt{sour}.
 
@@ -10612,7 +10791,7 @@ Another approach consists in visualizing the association between the samples and
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-340-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-343-1.pdf}
 
 As can be seen, sample \texttt{731} is more strongly associated to alcoholic terms such as \texttt{alcohol} or \texttt{wine}, and colors (\texttt{red}, \texttt{green}). Samples \texttt{239} and \texttt{401} are more associated to \texttt{sour} and \texttt{bitter} (and \texttt{pear} for \texttt{239}), whereas samples \texttt{519} and \texttt{182} are more frequently described by terms such as \texttt{fruity}, and \texttt{sweet} (\texttt{floral} is also used to characterize \texttt{182}).
 
@@ -10635,7 +10814,7 @@ An alternative for visualizing these frequencies is through wordclouds, which ca
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-341-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-344-1.pdf}
 
 In these wordclouds, we notice that \texttt{apple} and \texttt{sweet} appear in larger fonts for (almost) all the samples, which can make the comparison quite difficult between samples. Fortunately, the \texttt{geom\_text\_wordcloud()} function provides an interesting parameter in its aesthetics called \texttt{angle\_group} which allows controlling the position of the words. To illustrate this, let's apply the following rule: for a given sample, if the proportion of association of a word is larger than 1/6 (as we have 6 samples), the word will be printed in the upper part of its wordcloud, and in the lower part otherwise. To facilitate the readability, the color code used follow the same rule:
 
@@ -10654,7 +10833,7 @@ In these wordclouds, we notice that \texttt{apple} and \texttt{sweet} appear in 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-342-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-345-1.pdf}
 
 As can be seen, the term \texttt{apple} is more frequently (i.e.~more than 1/6) used to characterize samples \texttt{182}, \texttt{239}, \texttt{365}, and \texttt{731}. The term \texttt{sweet} is more frequently used to characterize samples \texttt{182} and \texttt{519}. Such conclusions would have been more difficult to reach based on the previous \emph{unstructured} wordcloud.
 
