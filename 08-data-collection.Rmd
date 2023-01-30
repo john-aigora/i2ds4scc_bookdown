@@ -1,12 +1,3 @@
----
-output:
-  pdf_document: default
-  html_document: default
----
-```{r include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, eval = TRUE)
-```
-
 # Data Collection {#data-collection}
 
 > Before any statistical analysis and vizualizations, robust data need to be collected. This important step often requires a *proper* experimental design, i.e. an experimental design that would assure relevant and meaningful data are obtained with maximum efficiency to answer our research questions. This chapter approaches all the required steps to reach such goal, from setting up the test (e.g. estimation of the number of panelists, design of sensory evaluation sessions and design of experiments), to the collection of data (through valuable execution tips) and its importation in a statistical software (R, here).
@@ -78,8 +69,12 @@ nbP=5
 nbR=nbP
 
 wdes_5P10J <- WilliamsDesign(nbP)
-tab <- cbind(prod=as.vector(t(wdes_5P10J)), judge=rep(1:nbJ,each=nbR), rank=rep(1:nbR,nbJ))
-optdes_5P13J <- optFederov(~prod+judge+rank, data=tab, augment=TRUE, nTrials=nbJ*nbP, rows=1:(nbJ*nbP), nRepeats = 100)
+tab <- cbind(prod=as.vector(t(wdes_5P10J)),
+             judge=rep(1:nbJ,each=nbR),
+             rank=rep(1:nbR,nbJ))
+optdes_5P13J <- optFederov(~prod+judge+rank, data=tab, augment=TRUE,
+                           nTrials=nbJ*nbP, rows=1:(nbJ*nbP),
+                           nRepeats = 100)
 xtabs(optdes_5P13J$design)
 ```
 
@@ -114,7 +109,9 @@ You might want to choose this approach for example if you want to reduce the wor
 The `optimaldesign()` function of `{SensoMineR}` can be used to search for a Balanced Incomplete Block Design (BIBD). For instance, let's imagine that 10 panelists are evaluating 3 out of 5 possible samples. The design can be defined as following:
 
 ```{r, eval=TRUE, echo=TRUE}
-incompDesign1 <- optimaldesign(nbPanelist=10, nbProd=5, nbProdByPanelist=3)
+incompDesign1 <- optimaldesign(nbPanelist=10,
+                               nbProd=5,
+                               nbProdByPanelist=3)
 incompDesign1$design
 ```
 
@@ -131,7 +128,7 @@ williams.BIB(incompDesign2)
 
 Incomplete balanced designs also have drawbacks. First, from a purely statistical perspective, they are conducive to fewer observations and thus to a lower statistical power. Product and Judge effects are also partially confounded even though the confusion is usually considered as acceptable.
 
-### Incomplete designs for hedonic tests: Sensory informed designs
+### Incomplete designs for hedonic tests: Sensory informed designs {#hedo_informdes}
 
 One may also be tempted to use incomplete balanced block designs for hedonic tests. However, proceeding this way is likely to induce framing bias. Indeed, each participant will only see part of the product set which would affect their frame of reference if the subset of product they evaluate only covers a limited area of the sensory space. 
 
@@ -146,7 +143,7 @@ Selecting a D-optimal subset of products can be easily done with the Federov alg
 Now, let's pretend that we want to conduct a hedonic test on these cocktails in the view of performing a preference mapping. Asking each consumer to evaluate all 16 cocktails may be considered to be too much (even if they don't contain alcohol!). We will thus use the `optFederov()` function of `{AlgDesign}` to select a D-optimal subset of, say, 8 cocktails. For that, we first need to run a PCA on the full sensory data. Then we use the coordinates of the products on the principal components (PC) to build our design. Here, we only pick the first two PC dimensions, but the analyst could select other dimensions that are deemed relevant to describe the product set (but keep in mind that increasing the number of dimensions will require a higher minimum number of products to be able to fit the corresponding models).
 
 
-```{r, echo=TRUE, eval=FALSE}
+```{r, echo=TRUE, eval=TRUE}
 library(SensoMineR)
 data(cocktail)
 
@@ -156,22 +153,26 @@ cocktail_pca <- senso.cocktail %>%
 Prod_coord <- cocktail_pca$ind$coord[,1:2]
 ```
 
-Assuming a full quadratic model (for the preference mapping), we can now use `optFederov()` to select a D-optimal subset of the desired number of products (here `ntrials=8`). The resulting selection will maximize the determinant of the information matrix (X'X) corresponding to the quadratic model. However, we can also decide to specify products that we want to be kept in the selection. Here, let's impose the selection of products 7 and 13.
-
-```{r, echo=TRUE, eval=FALSE}
-library(AlgDesign)
-Dopt_des <- optFederov(~quad(.), Prod_coord, nTrials=8, criterion="D", augment = TRUE, rows = c(7,13))
-```
-
-The resulting selection is listed in `Dopt_des$rows` and can be highlighted on the PCA score plot using `{factoextra}` using the `col.ind =` argument.
+Assuming a full quadratic model (for the preference mapping (see section \@Ref(#prefmap)), we can now use `optFederov()` to select a D-optimal subset of the desired number of products (here `ntrials=8`). The resulting selection will maximize the determinant of the information matrix (X'X) corresponding to the quadratic model. However, we can also decide to specify products that we want to be kept in the selection. Here, let's impose the selection of products 7 and 13.
 
 ```{r, echo=TRUE, eval=TRUE}
+library(AlgDesign)
+Dopt_des <- optFederov(~quad(.), Prod_coord, nTrials=8,
+                       criterion="D",
+                       augment = TRUE,
+                       rows = c(7,13))
+```
+
+The resulting selection is listed in `Dopt_des$rows` and can be highlighted on the PCA score plot using `{factoextra}` and the `col.ind =` argument.
+
+```{r, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE, fig.cap="Highlighted D-optimal selection of products on the sensory map"}
 library(factoextra)
 
 Prod_coord <- Prod_coord %>%
     as_tibble() %>%
     rownames_to_column("Product") %>%
-    mutate(DOpt_subset = ifelse(Product %in% Dopt_des$rows,"selected", "others"))
+    mutate(DOpt_subset = ifelse(Product %in% Dopt_des$rows,
+                                "selected", "others"))
 
 fviz_pca_ind(cocktail_pca,
              geom.ind = c("point", "text"),
@@ -188,7 +189,7 @@ fviz_pca_ind(cocktail_pca,
 
 If needed, the coordinates of the D-optimal selection `Dopt_des$design` can be exported as a tibble and displayed with `flextable`:
 
-```{r, echo=TRUE, eval=FALSE}
+```{r, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE, tab.cap="D-optimal selection of products and its Coordinates on the sensory map (i.e., the PCA score plot)"}
 library(flextable)
 
 Subset_coord <- Dopt_des$design %>%
@@ -200,7 +201,7 @@ flextable(Subset_coord) %>% colformat_double(digits = 2)
 
 Finally, it could be useful to calculate the determinant of the information matrix (assuming a quadratic model):
 
-```{r, echo=TRUE, eval=FALSE}
+```{r, echo=TRUE, eval=TRUE}
 Xopti = model.matrix(~ quad(.), Dopt_des$design)
 det(t(Xopti)%*%Xopti)
 ```
@@ -227,7 +228,7 @@ In many projects  (e.g. in the food industry, in the personal care industry), op
 
 The `{mixexp}` package offers a very convenient way to do this. In addition to creating the design, `DesignPoints()` allows to display the corresponding ternary diagram. Below is the example of a simplex-lattice design for 3 components and 3 levels obtained thanks to function `SLD`:
 
-```{r echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
+```{r echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE, fig.cap="Ternary diagram of a simplex-lattice mixture design with 3 components"}
 library(mixexp)
 mdes <- SLD(fac=3, lev=3)
 DesignPoints(mdes)
@@ -243,7 +244,7 @@ mdes2 <- Xvert(nfac=3, uc=c(.30, .40, .50), lc=c(.15, .25, .30),
 
 However, this design implies creating 11 mixtures, which is more than needed to apply a Scheffé quadratic model [@Lawson2016]. To reduce the number of mixtures and still allow fitting a quadratic model, we can use the `optFederov()` function from `{AlgDesign}` to select a D-optimal subset. Here, let's limit to 9 products (`nTrials=9`).
 
-```{r echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
+```{r echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE, fig.cap="D-optimal mixture design with constrained factors"}
 MixBiscuits <- optFederov(~ -1+x1+x2+x3+x1:x2+x1:x3+x2:x3+x1:x2:x3, 
                           mdes2, nTrials=9)
 DesignPoints(MixBiscuits$design, axislabs = c("Butter","Sugar","Flour"), 
@@ -278,7 +279,7 @@ Once the data are collected we can use the `mixexp::MixModel()` function to fit 
 
 > Regardless of the construction of the mixture design, ternary diagrams are easy to plot with packages such as `{ggtern}` or `{Ternary}`. `{ggtern}` is particularly interesting since it builds on `{ggplot2}` and uses the same syntax.
 
-```{r, echo=TRUE, eval=TRUE}
+```{r, echo=TRUE, eval=TRUE, fig.cap="Modeled liking displayed as a contour plot on the ternary diagram"}
 invisible(
   capture.output(res <- MixModel(Bmixt, response="Liking", 
                                  mixcomps=c("Butter","Sugar","Flour"), 
@@ -314,9 +315,9 @@ For higher number of factors, Plackett-Burman designs are the most commonly used
 
 ### Sensory informed designs
 
-Eventually, it is worth mentioning that, in some cases, sensory properties themselves can be used as factors and thus be implemented in a DoE. In this line of thinking, Naes and Nyvold have suggested that working this way would leave more scope for creativity [@Naes2004]. Naturally, this implies that product developers have (1) access to the measure of these properties and (2) can control the level of these properties and their interactions. These requirements are rarely met in food development but can be more easily implemented in some non-food applications [see for example @Petiot2022].
+Eventually, it is worth mentioning that, in some cases, sensory properties themselves can be used as factors and thus be implemented in a DoE. In this line of thinking, Naes and Nyvold have suggested that working this way would leave more scope for creativity [@Naes2004]. Naturally, this implies that product developers (1) have access to the measure of these properties, and (2) can control the level of these properties and their interactions. These requirements are rarely met in food development but can be more easily implemented in some non-food applications [see for example @Petiot2022].
 
-A specific applications consists in using the sensory information available to make a selection of a subset of products, as described above.
+A specific application consists in using the sensory information available to make a selection of a subset of products, as described above (section \@ref(#hedo_informdes)).
 
 ## Execute
 
@@ -377,7 +378,7 @@ Although Excel is most likely one of the most popular way of storing data, there
 
 First, let's import the *biscuits_sensory_profile.xlsx* workbook using `readxl::read_xlsx()` by informing as parameter the `location` of the file and the `sheet` where it is stored. For convenience, we are using the `{here}`^[The package `{here}` is very handy as it provides an easy way to retrieve your file's path (within your working directory) by simply giving the name of the file and folder in which they are stored in.] package to retrieve the path of the file (stored in `file_path`).
 
-This file is called _structured_ as all the relevant information is already stored in the same sheet in a structured way. In other words, no decoding is required here, and there are no 'unexpected' rows or columns (e.g. empty lines, or lines with additional information regarding the data that is not data):
+This file is said to be _structured_ as all the relevant information is already stored in the same sheet in a structured way. In other words, no decoding is required here, and there are no 'unexpected' rows or columns (e.g. empty lines, or lines with additional information regarding the data that is not data):
 
 * The first row within the *Data* sheet of *biscuits_sensory_profile.xlsx* contains the headers;
 * From the second row onward, only data is being stored.
@@ -414,7 +415,7 @@ To import and decode this data set, multiple steps are required:
 1. Import the variables' name only;
 2. Import the information regarding the levels;
 3. Import the data without the first line of header, but by providing the correct names (obtained in the step 1.);
-4. Decode each question (when needed) by replacing the numerical code by their corresponding labels.
+4. Decode each question (when needed) by replacing the numerical code with their corresponding labels.
 
 Let's start with importing the variables' names from *biscuits_traits.xlsx* (sheet *Variables*)
 
@@ -448,21 +449,21 @@ Alternatively, you can import the data by specifying the range in which the data
 biscuits_traits_data <- readxl::read_xlsx(file_path, sheet="Data", col_names=var_names$Name, skip=1)
 ```
 
-The data has now the right headers, however each variable is still coded numerically. This step to convert the numerical values with their corresponding labels is described in Section \@ref(data-prep).
+The data now has the right headers, however each variable is still coded numerically. This step to convert the numerical values with their corresponding labels is described in Section \@ref(data-prep).
 
-> It can happen that the data include extra information regarding the levels of a factor as sub-header. In such case, a similar approach should be used: 
-1. Start with importing the first *n* rows of the data that contain this information using the parameter `n_max` from `readxl::read_xlsx``. 
-2. From this subset, extract the column names.
-3. For each variable (when information is available), store the additional information as a list of tables that contains the code and their corresponding label.
-4. Re-import the data by skipping these *n* rows, and by manually informing the headers.
+> Datasets sometimes include a sub-header with extra information regarding the levels of a factor. In such a case, a similar approach should be used: 
+> 1. Start with importing the first *n* rows of the data that contain this information using the parameter `n_max` from `readxl::read_xlsx`. 
+> 2. From this subset, extract the column names.
+> 3. For each variable (when information is available), store the additional information as a list of tables that contains the code and their corresponding label.
+> 4. Re-import the data by skipping these *n* rows, and by manually informing the headers.
 
 ### Importing Data Stored in Multiple Sheets {#import-mult-sheet}
 
-It can happen that the data that need to be analyzed is stored in different files, or in different sheets within the same file. Such situation could happen if the same test involving the same samples is repeated over time, or has been run simultaneously in different locations, or simply for convenience for the person who manually collected the data. 
+Sometimes, the data to be analyzed are stored in different files, or in different sheets within the same file. This would typically occur if a test involving the same samples is repeated over time, or has been run simultaneously in different locations, or simply for convenience for the person who manually collected the data. 
 
 Since the goal here is to highlight the possibilities in R to handle such situations, we propose to use a small fake example where 12 panelists evaluated 2 samples on 3 attributes in 3 sessions, each session being stored in a different sheet in *excel_scrap.xlsx*.
 
-A first approach to tackle this problem could be to import each file separately, and to combine them together using the `bind_rows()` function from the `{dplyr}` package. However, this solution is not optimal since it is very tedious when a larger number of sheets is involved, and it is not automated since the code will no longer run (or be incomplete) when the number of session changes.
+A first approach to tackle this problem could be to import each file separately, and to combine them together using the `bind_rows()` function from the `{dplyr}` package. However, this solution is not optimal since it is very tedious when a larger number of sheets is involved, and it is not automated since the code will no longer run (or be incomplete) when the number of sessions changes.
 
 Instead, we prefer to fully automate the importation. To do so, let's first introduce `excel_sheets()` from `{readxl}`: this function provides the name of all the sheets that are available in the file of interest in a list. Then, through `map()` from the `{purrr}` package, we apply `read_xlsx()` to all the elements one by one of obtained with `excel_sheets()`. 
 
@@ -490,5 +491,5 @@ This procedure finally returns a tibble with 72 rows and 6 columns, ready to be 
 
 >Few additional remarks regarding the last set of code: 
 1. Instead of `enframe()`, we could have used `reduce()` from `{purrr}`, or `map()` combined with `bind_rows()`. However, both these solutions have the drawbacks that the information regarding the `Session` would be lost since it is not part of the data set itself. 
-2. The functions `enframe()` and `unnest()` have their alter-ego in `deframe()` and `nest()` which aim in transforming a data frame into a list of tables, and in nesting data by creating a list-column of data frames.
-3. In case the different sets of data are stored in different excel files (rather than different sheets within a file), we could apply a similar procedure by using `list.files()` (instead of `excel_sheets()`) from the `{base}` package, together with `pattern = "xlsx"` to limit the search to Excel files present in a pre-defined folder. Such solution becomes handy when many similarly structured files are stored in the same folder and need to be combined. 
+2. The functions `enframe()` and `unnest()` have their alter-ego in `deframe()` and `nest()` which aim at transforming a data frame into a list of tables, and in nesting data by creating a list-column of data frames.
+3. In case the different sets of data are stored in different excel files (rather than different sheets within a file), we could apply a similar procedure by using `list.files()` (instead of `excel_sheets()`) from the `{base}` package, together with `pattern = "xlsx"` to limit the search to Excel files present in a pre-defined folder. Such a solution becomes handy when many similarly structured files are stored in the same folder and need to be combined. 
