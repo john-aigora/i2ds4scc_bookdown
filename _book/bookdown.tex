@@ -1271,10 +1271,10 @@ Related to the idea of reproducible research is that of standardized reporting. 
 \hypertarget{data-scientific-workflow}{%
 \section{Data Scientific Workflow}\label{data-scientific-workflow}}
 
-A schematic of a data scientific workflow is shown in Figure \ref{fig:ds-workflow}. Each section is described in greater detail below.
+A schematic of a data scientific workflow is shown in Figure \ref{fig:ds-workflow} (Diagram inspired by \citet{Wickham2016}). Each section is described in greater detail below.
 
 \begin{figure}
-\includegraphics[width=0.9\linewidth]{images/data_science_workflow2} \caption{Data scientific workflow. (Diagram inspired by hadley/r4ds)}\label{fig:ds-workflow}
+\includegraphics[width=0.9\linewidth]{images/data_science_workflow2} \caption{Data scientific workflow.}\label{fig:ds-workflow}
 \end{figure}
 
 \hypertarget{data-collection2}{%
@@ -6087,16 +6087,16 @@ Alternately, the \texttt{WilliamsDesign()} function in \texttt{\{SensoMineR\}} a
 
 \begin{verbatim}
 ##          Rank 1 Rank 2 Rank 3 Rank 4 Rank 5
-## Judge 1       2      4      3      5      1
-## Judge 2       4      5      2      1      3
-## Judge 3       5      1      4      3      2
-## Judge 4       1      3      5      2      4
-## Judge 5       3      2      1      4      5
-## Judge 6       1      5      3      4      2
-## Judge 7       3      1      2      5      4
-## Judge 8       2      3      4      1      5
-## Judge 9       4      2      5      3      1
-## Judge 10      5      4      1      2      3
+## Judge 1       3      1      2      4      5
+## Judge 2       1      4      3      5      2
+## Judge 3       4      5      1      2      3
+## Judge 4       5      2      4      3      1
+## Judge 5       2      3      5      1      4
+## Judge 6       5      4      2      1      3
+## Judge 7       2      5      3      4      1
+## Judge 8       3      2      1      5      4
+## Judge 9       1      3      4      2      5
+## Judge 10      4      1      5      3      2
 \end{verbatim}
 
 Suppose you want to include 20 judges in the experiment, you would then need to duplicate the initial design.
@@ -6110,26 +6110,26 @@ Suppose you want to include 20 judges in the experiment, you would then need to 
 
 \begin{verbatim}
 ##         Rank 1 Rank 2 Rank 3 Rank 4 Rank 5
-## judge1       2      4      3      5      1
-## judge2       4      5      2      1      3
-## judge3       5      1      4      3      2
-## judge4       1      3      5      2      4
-## judge5       3      2      1      4      5
-## judge6       1      5      3      4      2
-## judge7       3      1      2      5      4
-## judge8       2      3      4      1      5
-## judge9       4      2      5      3      1
-## judge10      5      4      1      2      3
-## judge11      2      4      3      5      1
-## judge12      4      5      2      1      3
-## judge13      5      1      4      3      2
-## judge14      1      3      5      2      4
-## judge15      3      2      1      4      5
-## judge16      1      5      3      4      2
-## judge17      3      1      2      5      4
-## judge18      2      3      4      1      5
-## judge19      4      2      5      3      1
-## judge20      5      4      1      2      3
+## judge1       3      1      2      4      5
+## judge2       1      4      3      5      2
+## judge3       4      5      1      2      3
+## judge4       5      2      4      3      1
+## judge5       2      3      5      1      4
+## judge6       5      4      2      1      3
+## judge7       2      5      3      4      1
+## judge8       3      2      1      5      4
+## judge9       1      3      4      2      5
+## judge10      4      1      5      3      2
+## judge11      3      1      2      4      5
+## judge12      1      4      3      5      2
+## judge13      4      5      1      2      3
+## judge14      5      2      4      3      1
+## judge15      2      3      5      1      4
+## judge16      5      4      2      1      3
+## judge17      2      5      3      4      1
+## judge18      3      2      1      5      4
+## judge19      1      3      4      2      5
+## judge20      4      1      5      3      2
 \end{verbatim}
 
 The downside of Williams's Latin square designs is that the number of samples (\emph{k}) to be evaluated dictates the number of judges. For an even number of samples you must have a multiple of \emph{k} judges, and a multiple of \emph{2k} judges for an odd number of samples.
@@ -6157,19 +6157,19 @@ As the total number of judges in your study may not always be exactly known in a
 \begin{verbatim}
 ##      rank
 ## judge 1 2 3 4 5
-##    1  3 5 4 1 2
-##    2  5 1 3 2 4
-##    3  1 2 5 4 3
-##    4  2 4 1 3 5
-##    5  4 3 2 5 1
-##    6  2 1 4 5 3
-##    7  4 2 3 1 5
-##    8  3 4 5 2 1
-##    9  5 3 1 4 2
-##    10 1 5 2 3 4
-##    11 3 5 4 1 2
-##    12 5 1 3 2 4
-##    13 1 2 5 4 3
+##    1  4 5 2 1 3
+##    2  5 1 4 3 2
+##    3  1 3 5 2 4
+##    4  3 2 1 4 5
+##    5  2 4 3 5 1
+##    6  3 1 2 5 4
+##    7  2 3 4 1 5
+##    8  4 2 5 3 1
+##    9  5 4 1 2 3
+##    10 1 5 3 4 2
+##    11 4 5 2 1 3
+##    12 5 1 4 3 2
+##    13 1 3 5 2 4
 \end{verbatim}
 
 In the code above, \texttt{xtabs()} is used to arrange the design in a table format that is convenient for the experimenter.
@@ -6216,16 +6216,16 @@ The \texttt{optimaldesign()} function of \texttt{\{SensoMineR\}} can be used to 
 
 \begin{verbatim}
 ##             Rank 1 Rank 2 Rank 3
-## Panelist 1       2      5      4
-## Panelist 2       4      3      5
-## Panelist 3       1      2      5
-## Panelist 4       3      4      2
-## Panelist 5       5      2      3
-## Panelist 6       1      5      4
-## Panelist 7       5      3      1
-## Panelist 8       3      4      1
-## Panelist 9       2      1      3
-## Panelist 10      4      1      2
+## Panelist 1       2      5      1
+## Panelist 2       1      4      5
+## Panelist 3       4      2      1
+## Panelist 4       5      3      2
+## Panelist 5       3      1      4
+## Panelist 6       5      1      3
+## Panelist 7       3      4      5
+## Panelist 8       2      3      4
+## Panelist 9       1      2      3
+## Panelist 10      4      5      2
 \end{verbatim}
 
 BIBD are only possible for certain combinations of numbers of treatment (products), numbers of blocks (judges), and block size (number of samples per judge). Note that \texttt{optimaldesign()} will yield a design even if it is not balanced but it will also generate contingency tables allowing you to evaluate the design's orthogonality, and how well balanced are order and carry-over effects.
@@ -6925,7 +6925,7 @@ Few additional remarks regarding the last set of code:
 \chapter{Data Preparation}\label{data-prep}}
 
 \begin{quote}
-After importing the data, the next crucial step is to ensure that the data as it is now available is of good quality and is the correct representation of reality. As an example, during importation, software (such as R) tends to guess (from reading the file) the nature of each variable. If such guess is correct in 99\% of the case, there are situations in which it is erroneous, and ignoring such error can have huge consequences on the final results and conclusions. The goal of this section is hence to perform some pre-check of the data and to prepare them for future analyses.
+After importing the data, the next crucial step is to ensure that the data as it is now available is of good quality and is the correct representation of reality. As an example, during importation, software (such as R) tends to guess (from reading the file) the nature of each variable. If such guess is correct in 99\% of cases, there are situations in which it is erroneous. Ignoring such errors can have huge consequences on the final results and conclusions. The goal of this section is hence to perform some pre-check of the data and to prepare them for future analyses.
 \end{quote}
 
 \hypertarget{introduction-1}{%
@@ -6934,18 +6934,18 @@ After importing the data, the next crucial step is to ensure that the data as it
 \emph{Data Preparation}, which consists of \emph{data inspection} and \emph{data cleaning}, is a critical step before any further \emph{Data Manipulation} or \emph{Data Analysis}. Having a good data preparation procedure ensures a good understanding of the data, and avoids what could be very critical mistakes.
 
 To illustrate the importance of the later point, let's imagine a study in which the samples are defined by their 3-digits code.
-During importation, R would recognize them as number, and hence defines the \emph{Product} column as numerical. Without inspection and correction, any ANOVA that include the product effect would be replaced by a linear regression (or analysis of covariance) which of course does not provide the results required (although the analysis would run without error). Worst, if this procedure is automated and the \emph{p-value} associated to the product effect is extracted, the conclusions would rely on the wrong analysis! A good data preparation procedure is hence important to avoid such unexpected results.
+During importation, R would recognize them as number, and hence define the \emph{Product} column as numerical. Without inspection and correction, any ANOVA that include the product effect would be replaced by a linear regression (or analysis of covariance) which of course does not provide the results required (although the analysis would run without error). Worst, if this procedure is automated and the \emph{p-value} associated to the product effect is extracted, the conclusions would rely on the wrong analysis! A good data preparation procedure is therefor essential to avoid such unexpected results.
 
-So what consists of data preparation, and how does that differ from data manipulation?
-There is clearly a thin line between data preparation (and particularly \emph{data cleaning}) and data manipulation, as both these steps share many procedures in common (same applies to data manipulation and data analysis for instance). Although multiple definitions of each step exist, we decided to follow the following rule:
+So what does data preparation consist of, and how does it differ from data manipulation?
+There is clearly a thin line between data preparation (and particularly \emph{data cleaning}) and data manipulation, as both these steps share many procedures (same applies to data manipulation and data analysis for instance). Although there are multiple definitions for each step, we decided to follow the following rule:
 
-\emph{Data Preparation} includes all the required steps to ensure that the data is matching its intrinsic nature. These steps include inspecting the data at hand (usually through simple descriptive statistics of the data as a whole) and cleaning the data by eventually correcting importation errors (including the imputation of missing data). Although some descriptive statistics are being produced for data inspection, these analyses have no interpretation value besides ensuring that the data are in the right range, or following the right distribution. For instance, with our sensory data, we would ensure that all our sensory scores are included between 0 and 100 (negative scores would not be permitted), but we would not look at the mean or the distribution of the score per product which would belong to data analyses as it would often lead to interpretation (e.g.~P01 is sweeter than P02).
+\emph{Data Preparation} includes all the steps required to ensure that the data is matching its intrinsic nature. These steps include inspecting the data at hand (usually through simple descriptive statistics of the data as a whole) and cleaning the data by eventually correcting importation errors (including the imputation of missing data). Although some descriptive statistics are being produced for data inspection, these analyses have no interpretation value besides ensuring that the data are in the right range, or following the right distribution. For instance, with our sensory data, we would ensure that all our sensory scores are included between 0 and 100 (negative scores would not be permitted), but we would not look at the mean or the distribution of the score per product which would belong to data analyses as it would often lead to interpretation (e.g.~P01 is sweeter than P02).
 
-The \emph{Data Manipulation} is an optional step that adjust or convert the data into a structure that is usable for further analysis. This of course may lead to \emph{interpretation} of the results as it may involve some analyses.
+\emph{Data Manipulation} is an optional step that adjusts or converts the data into a structure that is usable for further analysis. This, of course, may lead to \emph{interpretation} of the results as it may involve some analyses.
 
 The \emph{Data Analysis} step ultimately converts the data into results (through values, graphics, tables, etc.) that provide more insights (through interpretation) about the data.
 
-The data used in this chapter corresponds to the \emph{biscuits\_sensory\_profile.xlsx} that you already imported in Section \ref{data-collection} but with few missing values. This new data set is stored in \emph{biscuits\_sensory\_profile\_with\_NA.xlsx}.
+The data used in this chapter corresponds to the \emph{biscuits\_sensory\_profile.xlsx} that you already imported in Section \ref{data-collection} but has few missing values. This new data set is stored in \emph{biscuits\_sensory\_profile\_with\_NA.xlsx}.
 
 As usual, we start this chapter by loading the main packages we need and by importing this data set:
 
@@ -6967,7 +6967,7 @@ As usual, we start this chapter by loading the main packages we need and by impo
 \subsection{Data Inspection}\label{data-inspection}}
 
 To inspect the data, different steps can be used.
-First, since \texttt{read\_xlsx()} returns a tibble, let's take advantage of its printing properties to get a fill of the data:
+First, since \texttt{read\_xlsx()} returns a tibble, let's take advantage of its printing properties to get a feel of the data:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7045,9 +7045,9 @@ Other informative solutions consists in printing a summary of the data through t
 ## $ `Color contrast`           <dbl> 37.8, 40.2, 17.4, ~
 \end{verbatim}
 
-These functions provide relevant yet basic views of each variable present in the data including their types, the range of values, means, and medians, as well as the first values of each variables.
+These functions provide basic yet relevant views of each variable present in the data, including their types, the range of values, means, and medians, as well as the first values of each variable.
 
-Such view might be sufficient for some first conclusions (e.g.~Are my panelists considered as numerical or nominal data? Do I have missing values?), yet it is not sufficient to fully ensure that the data is ready for analysis. For the latter, more extensive analyses can be performed automatically in different ways. These analyses include looking at the distribution of some variables, or the frequencies of character levels.
+Such a view might be sufficient for some first conclusions (e.g.~Are my panelists considered as numerical or nominal data? Do I have missing values?), yet it is not sufficient to fully ensure that the data is ready for analysis. For the latter, more extensive analyses can be performed automatically in different ways. These analyses include looking at the distribution of some variables, or the frequencies of character levels.
 
 A first solution comes from the \texttt{\{skimr\}} package and its \texttt{skim()} function. By applying it to data, an automated extended summary is directly printed on screen by separating \texttt{character} type variables from \texttt{numeric} type variables:
 
@@ -7076,10 +7076,11 @@ Note that the analyses performed to build this report can be called directly wit
 \hypertarget{missing-data}{%
 \subsection{Missing Data}\label{missing-data}}
 
-In the previous section on \ref{data-inspection}, it can be seen that the data set contain missing values. It concerns for instance the attribute \texttt{Light}, for which one missing value has been detected. There are different ways in which we can handle such missing values. But first, let's try to find out where these missing values are, and which impact they may have on our analyses (are they structured or unstructured, etc.)
+From the data inspection described in the previous section (\ref{data-inspection}), it can be seen that the data set contains missing values. For instance, the attribute \texttt{Light} has one detected missing value. There are different ways in which we can handle such missing values. But first, let's try to find out where these missing values are, and which impact they may have on our analyses (are they structured or unstructured, etc.)
 
 \hypertarget{visualization-of-missing-values}{%
-\subsubsection{Visualization of Missing Values}\label{visualization-of-missing-values}}
+\subsubsection*{Visualization of Missing Values}\label{visualization-of-missing-values}}
+
 
 A first approach to inspect and visualize where the missing values are is by representing them visually. To do so, the \texttt{\{visdat\}} package provides a neat solution as it represents graphically the data by highlighting where missing values are located. Such visual representation is obtained using the \texttt{vis\_miss()} function:
 
@@ -7091,11 +7092,15 @@ A first approach to inspect and visualize where the missing values are is by rep
 \end{Highlighting}
 \end{Shaded}
 
+\begin{figure}
+\centering
 \includegraphics{bookdown_files/figure-latex/unnamed-chunk-226-1.pdf}
+\caption{\label{fig:unnamed-chunk-226}Visualization of missing values in the sensory dataset using visdat::vismiss()}
+\end{figure}
 
 As can be seen, missing values are only present in few variables. However, \texttt{Sour} contains up to 10\% of missing data, which can be quite critical in some situations.
 
-If we would want to dig deeper and assess for which products (say) data are missing, we could re-create the same plots per product. The following code would generate that for you:
+If we would want to dig deeper and assess for which (say) products data are missing, we could re-create the same plots per product. The following code would generate that for you:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7107,9 +7112,9 @@ If we would want to dig deeper and assess for which products (say) data are miss
 \end{Highlighting}
 \end{Shaded}
 
-Of course, such approach could also be applied per panelist for instance.
+Of course, this approach could also be applied per panelist for instance.
 
-Once we've investigated where the missing values are located, we can go further by understanding if there are some sorts of relationship between missing values. In other words, are the missing values random? Or are they somewhat structured?
+Once we have investigated where the missing values are located, we can go further by understanding if there are some sorts of relationship between missing values. In other words, are the missing values random? Or are they somewhat structured?
 To answer these questions, the \texttt{\{naniar\}} package provides an interesting function called \texttt{gg\_miss\_upset()} which studies the relationship between missing values:
 
 \begin{Shaded}
@@ -7120,7 +7125,11 @@ To answer these questions, the \texttt{\{naniar\}} package provides an interesti
 \end{Highlighting}
 \end{Shaded}
 
+\begin{figure}
+\centering
 \includegraphics{bookdown_files/figure-latex/unnamed-chunk-228-1.pdf}
+\caption{\label{fig:unnamed-chunk-228}Visualization of the pattern of missing values in the sensory data thanks to naniar::gg\_miss\_upset()}
+\end{figure}
 
 It seems here that the only connection between NAs is observed between \texttt{Light} and \texttt{Color\ contrast}.
 
@@ -7133,12 +7142,17 @@ Such relational structure can also be visualized in a scatter plot using the \te
 \end{Highlighting}
 \end{Shaded}
 
+\begin{figure}
+\centering
 \includegraphics{bookdown_files/figure-latex/unnamed-chunk-229-1.pdf}
+\caption{\label{fig:unnamed-chunk-229}Visualization of missing values for Sour with geom\_miss\_point()}
+\end{figure}
 
 Here, the relationship between \texttt{Product} and \texttt{Sour} is shown. Such plot may help decide what to do with missing values, whether it is ignoring, removing, or predicting them.
 
 \hypertarget{ignoring-missing-values}{%
-\subsubsection{Ignoring Missing Values}\label{ignoring-missing-values}}
+\subsubsection*{Ignoring Missing Values}\label{ignoring-missing-values}}
+
 
 A first solution to handle missing values is to simply \emph{ignore} them, as many analyses handle them well. For instance, an ANOVA could be run for such attribute, and results are being produced:
 
@@ -7157,7 +7171,7 @@ A first solution to handle missing values is to simply \emph{ignore} them, as ma
 ## 3 Residuals    79 3975.   50.3     NA    NA
 \end{verbatim}
 
-This solution may work fine when the number of missing values is small, but be aware that it can also provide erroneous results in case they are not handled the way the analyst is expecting them to be handled.
+This solution may work fine when the number of missing values is small, but be aware that it can also provide erroneous results in case they are not handled the way the analyst expects them to be handled.
 
 For some other analyses, \emph{ignoring} the presence of missing values may simply provide unwanted results. To illustrate this, let's compute the simple mean per product for \texttt{Light}
 
@@ -7181,12 +7195,13 @@ For some other analyses, \emph{ignoring} the presence of missing values may simp
 ## # ... with 7 more rows
 \end{verbatim}
 
-As can be seen, since \texttt{P04} contains the missing value, its corresponding mean is defined as \texttt{NA}.
+As can be seen, missing values for \texttt{P04} are conducive to a mean defined as \texttt{NA}.
 
 \hypertarget{removing-missing-values}{%
-\subsubsection{Removing Missing Values}\label{removing-missing-values}}
+\subsubsection*{Removing Missing Values}\label{removing-missing-values}}
 
-To enforce the mean to be computed, we need to inform R to remove any missing values beforehand. Such procedure can be done manually by simply filtering out any missing data (here for \texttt{Sour}) before running the analysis:
+
+To force the mean to be computed, we must inform R to remove any missing values beforehand. Such procedure can be done manually by simply filtering out any missing data (here for \texttt{Sour}) before running the analysis:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7212,9 +7227,9 @@ To enforce the mean to be computed, we need to inform R to remove any missing va
 ## #   `Fatty flavor` <dbl>, `Dairy flavor` <dbl>, ...
 \end{verbatim}
 
-However, this latter solution is not always satisfactory as it also deletes real data since the data set went from 99 to 89 rows. This means that for variables that did not have missing values for instance, existing data have been removed.
+However, this latter solution is not always satisfactory as it also deletes actual data. Indeed, as a result, the data set went from 99 to 89 rows. This means that existing data were removed for corresponding observations, even for variables that did not have missing values.
 
-Hence, we prefer another alternative which consists in removing missing values within the analysis procedure (here \texttt{mean()}) through the parameter \texttt{na.rm=TRUE}:
+Therefore, we prefer another alternative which consists in removing missing values within the analysis procedure (here \texttt{mean()}) through the parameter \texttt{na.rm=TRUE}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7268,9 +7283,9 @@ Using \texttt{na.rm=TRUE} is equivalent to removing the missing values from the 
 ## # ... with 7 more rows
 \end{verbatim}
 
-If this solution seems satisfactory as the means were computed without using \texttt{na.rm=TRUE} for both \texttt{Sour} and \texttt{Light} (who contained missing values), its use is limited since converting the data to its original format (i.e.~performing \texttt{pivot\_wider()} after \texttt{pivot\_longer()} without computing the mean in between) will reintroduce the missing values\footnote{Missing values do not need to be visible to exist: Incomplete designs are a good example showing that although the data do not have empty cells, it does contain a lot of missing data (the samples that were not evaluated by each panelist).}.
+This solution seems satisfactory as the means were computed without using \texttt{na.rm=TRUE} for both \texttt{Sour} and \texttt{Light} (who contained missing values). However, its use is limited since converting the data to its original format (i.e.~performing \texttt{pivot\_wider()} after \texttt{pivot\_longer()} without computing the mean in between) will reintroduce the missing values\footnote{Missing values do not need to be visible to exist: Incomplete designs are a good example showing that although the data do not have empty cells, it does contain a lot of missing data (the samples that were not evaluated by each panelist).}.
 
-It should be noted that removing missing values has the impact of unbalancing the data. By taking the example of \texttt{Light} and \texttt{Sour}, let's print the number of panelist evaluating each product:
+It should be noted that a consequence of removing missing values is data unbalance. For example, we can observe this, for example for \texttt{Light} and \texttt{Sour}, by printing the number of panelists who evaluated each product:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7324,9 +7339,10 @@ The procedure presented below show the procedure on how to remove attributes wit
 This procedure removed the 7 attributes that contained missing values (and stored in \texttt{attr\_rmv}), leading to a table with 99 rows and 29 columns (instead of 36).
 
 \hypertarget{imputing-missing-values}{%
-\subsubsection{Imputing Missing Values}\label{imputing-missing-values}}
+\subsubsection*{Imputing Missing Values}\label{imputing-missing-values}}
 
-Rather than removing missing data, another strategy consists in imputing missing values. Here again, many strategies can be considered, starting with replacing them with a fixed value. Such approach is usually not the most suitable one, yet it can be relevant in certain cases. For instance, in a CATA task, missing values are often replaced with 0s (not ticked).
+
+Rather than removing missing data, another strategy consists in imputing missing values. Here again, many strategies can be considered, starting with replacing them with a fixed value. Such an approach is usually not the most suitable one, yet it can be relevant in certain cases. For instance, in a CATA task, missing values are often replaced with 0s (not ticked).
 
 To replace missing values with a fixed value, \texttt{replace\_na()} can be used. When applied to a tibble, this function requires you defining using \texttt{list()} the columns to apply it to, and which values to use (each column being treated separately).
 
@@ -7351,9 +7367,9 @@ For convenience, let's apply it to \texttt{sensory} by replacing missing values 
 ## # ... with 95 more rows
 \end{verbatim}
 
-When dealing with intensity scale, it is more frequent to replace missing values by the mean score for that product and attribute. When the test is duplicated, the mean provided by the \emph{panelist x product x attribute} combination across the different repetitions available is even preferred as it maintains individual variability within the scores.
+When dealing with intensity scales, it is more frequent to replace missing values by the mean score for that product and attribute. When the test is duplicated, the mean provided by the \(panelist\times{product}\times{attribute}\) combination across the different repetitions available is even preferred as it maintains individual variability within the scores.
 
-Such approach is a 2-steps process:
+This approach is a 2-step process:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -7404,7 +7420,7 @@ For simplicity, \texttt{sensory\_long} is used as starting point:
 
 As can be seen, the missing value associated to \texttt{J01} for \texttt{Light} and \texttt{P04} has been replaced by \texttt{40.7}. In fact, any missing values related to \texttt{P04} and \texttt{Light} would automatically be replaced by \texttt{40.7} here. For other products (and other attributes), their respective means would be used.
 
-When the model used to impute missing values is fairly simple (here, replacing by the mean correspond to a simple 1-way ANOVA), the imputation can be done directly through the \texttt{impute\_lm()} function from the \texttt{\{simputation\}} package. To mimic the previous approach, the one-way ANOVA is being used\footnote{It is worth noticing that the individual differences could also be included by simple adding the Judge effect in the model.}. Here, missing data for both \texttt{Sour} and \texttt{Light} are being imputed independently using the same model:
+When the model used to impute missing values is fairly simple (here, replacing by the mean corresponds to a simple 1-way ANOVA), the imputation can be done directly through the \texttt{impute\_lm()} function from the \texttt{\{simputation\}} package. To mimic the previous approach, the one-way ANOVA is being used\footnote{It is worth noticing that the individual differences could also be included by simple adding the Judge effect in the model.}. Here, missing data for both \texttt{Sour} and \texttt{Light} are being imputed independently using the same model:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7427,7 +7443,7 @@ When the model used to impute missing values is fairly simple (here, replacing b
 ## # ... with 95 more rows
 \end{verbatim}
 
-As can be seen, this procedure provides the same results as before, but in less steps!
+As can be seen, this procedure provides the same results as before, but with fewer steps!
 
 In some situations, implementing missing values using such ANOVA (or regression) model can lead to aberrations. It is for instance the case when the imputed values falls outside the scale boundaries. To avoid such situations, \texttt{\{simputation\}} also provides other more advanced alternatives including (amongst others) \texttt{impute\_rf()} which uses random forest to impute the missing values.
 
@@ -7453,19 +7469,20 @@ Last but not least, imputation of missing values could also be done in a multiva
 ## # ... with 95 more rows
 \end{verbatim}
 
-In this case, it can be seen that the missing value for \texttt{J01}\emph{x}\texttt{P04}\emph{x}\texttt{Light} has been replaced by the value \texttt{33.7}.
+In this case, it can be seen that the missing value for \(J01\times{P04}\times{Light}\) has been replaced by the value \texttt{33.7}.
 
 \hypertarget{limitations}{%
-\subsubsection{Limitations}\label{limitations}}
+\subsubsection*{Limitations}\label{limitations}}
 
-As we have seen, there are different ways to implement missing values, and the different algorithms will likely impute them with different values. Hence, the overall results can be affected, and there is no way to know which solution is the most suitable for our study. Still, it is recommended to treat the missing values, and to chose the right strategy that is the most adapted to the data.
 
-However, since most imputation methods involve modeling, applying them to variables with a high missing values rate can introduce bias in the data. Let's consider a situation in which assessors are evaluating half the product set using a BIB. Hence, half of the data are missing. By imputing the missing values, each prediction is proportionally based on one unique value. And ultimately, any further analyses on this data would be based on half measured and half \emph{fictive} data.
+As we have seen, there are different ways to implement missing values, and the different algorithms will likely impute them with different values. Consequently, the overall results can be affected, and there is no way to know which solution is the most suitable for our study. Still, it is recommended to treat the missing values, and to chose the right strategy that is the most adapted to the data.
+
+However, since most imputation methods involve modeling, applying them to variables with a high missing values rate can introduce bias in the data. Let's consider a situation in which assessors are evaluating half the product set using a BIB. This miss that, by design, half of the data are missing. By imputing the missing values, each prediction is proportionally based on one unique value. And ultimately, any further analyses on this data would be based on half measured and half \emph{fictive} data.
 
 \hypertarget{design-inspection}{%
 \subsection{Design Inspection}\label{design-inspection}}
 
-The next point of interest - quite specific to sensory and consumer data - is to ensure that the design is well balanced, and handles correctly the first-order and carry-over effects. This step is particularly important for those who analyze the data but were not involved from the start in that study (and hence were not involved during the test set-up).
+The next point of interest - quite specific to sensory and consumer data - is to ensure that the design is well balanced, and correctly handles the first-order and carry-over effects. This step is particularly important for those who analyze the data but were not involved from the start in that study (and hence were not involved during the test set-up).
 
 Let's show a simple procedure that would check part of the quality of a design. Since our data set stored in \emph{biscuits\_sensory\_profile.xlsx} does not contain any information regarding the experimental design, let's use \texttt{sensochoc} from \texttt{\{SensoMineR\}} instead.
 
@@ -7504,7 +7521,7 @@ To evaluate whether the products have been equally presented at each position, a
 ##   choc6  9 11  9  9 11  9
 \end{verbatim}
 
-Such table can also be obtained using \texttt{group\_by()} and \texttt{count()} to get the results in a tibble:
+Such a table can also be obtained using \texttt{group\_by()} and \texttt{count()} to get the results in a tibble:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7552,7 +7569,7 @@ This new data is merged to \texttt{current} by \texttt{Panelist}, \texttt{Sessio
 
 As can be seen, the products that are evaluated first get \texttt{NA} in \texttt{Previous}, and for each rank r (r \textgreater{} 1), \texttt{Previous} gets the product that was evaluated at rank r-1.
 
-To evaluate whether the carry-over effect is well balance, the only thing left to do is cross-count \texttt{Product} and \texttt{Previous} (here, the results are split per \texttt{Session}):
+To evaluate whether the carry-over effect is well-balanced, the only thing left to do is cross-count \texttt{Product} and \texttt{Previous} (here, the results are split per \texttt{Session}):
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7595,16 +7612,16 @@ To evaluate whether the carry-over effect is well balance, the only thing left t
 ## #   `NA` <int>
 \end{verbatim}
 
-As expected, the table shows that a product is never evaluated twice in a row (the diagonal contains 0s). Here again, the design is not optimal since \texttt{choc1} has been evaluated 3 times before \texttt{choc2} and 6 times before \texttt{choc5} in the first session.
+As expected, the table shows that a product is never evaluated twice in a row (the diagonal contains 0s). Here again, the design is not optimal since \texttt{choc1} has been evaluated three times before \texttt{choc2} and six times before \texttt{choc5} in the first session.
 
 \begin{quote}
-The last column defined as \texttt{NA} refers to the number of time that products did not have a product tested before, in other words that they were evaluated first.
+The last column defined as \texttt{NA} refers to the number of time that products did not have a product tested before. In other words, this indicates that they were evaluated first.
 \end{quote}
 
 \hypertarget{clean}{%
 \section{Clean}\label{clean}}
 
-As mentioned in the introduction of this chapter, there is a thin line between \emph{Data Inspection} and \emph{Data Manipulation}, as both steps share many common practices. Here, we are limiting ourselves on handling variables and their type. For a full overview, we encourage the readers to look at Section \ref{data-manip} to see other practices on how to handle data.
+As mentioned in the introduction of this chapter, there is a thin line between \emph{Data Inspection} and \emph{Data Manipulation}, as both steps share many common practices. Here, we are limiting ourselves on handling variables and their type. For a full overview, we encourage the readers to look at Section \ref{data-manip} to see other ways to handle data.
 
 \hypertarget{handling-data-type}{%
 \subsection{Handling Data Type}\label{handling-data-type}}
@@ -7628,7 +7645,7 @@ The data used in this section is stored in \emph{bisuits\_traits.xlsx}. So let's
 \end{Highlighting}
 \end{Shaded}
 
-In R, the variables can be of different types, going from numerical to nominal to binary etc. This section aims in presenting the most common types (and their properties) used in sensory and consumer studies, and in showing how to transform a variable from one type to another.
+In R, the variables can be of different types, going from numerical to nominal to binary, etc. This section aims at presenting the most common types (and their properties) used in sensory and consumer studies, and at showing how to transform a variable from one type to another.
 
 Remember that when your data set is stored in a tibble (as is the case here), the type of each variable is provided as sub-header when printed on screen. This eases the work of the analyst as the variables' type can be accessed at any moment. In case the data is not in a tibble, the use of the \texttt{str()} function becomes handy as it provides this information (here we limit ourselves to the first 5 columns).
 
@@ -7664,20 +7681,22 @@ In sensory and consumer research, the four most common types are:
 R still has plenty of other types, for more information please visit: \url{https://tibble.tidyverse.org/articles/types.html}
 
 \hypertarget{numerical-data}{%
-\subsubsection{Numerical Data}\label{numerical-data}}
+\subsubsection*{Numerical Data}\label{numerical-data}}
+
 
 Since a large proportion of the research done is quantitative, it is no surprise that our data are often dominated with numerical variables. In practice, numerical data includes integer (non-fractional number, e.g.~1, 2, -16, etc.), or decimal value (or double, e.g.~1.6, 2.333333, -3.2 etc.).
 
 By default, when reading data from an external file, R converts any numerical variables to integer unless decimal points are detected, in which case it is converted into double.
 
 \hypertarget{binary-data}{%
-\subsubsection{Binary Data}\label{binary-data}}
+\subsubsection*{Binary Data}\label{binary-data}}
+
 
 Another common type that seems to be numerical in appearance, but that has additional properties is the binary type.
-Binary data is data that takes two possible values (\texttt{TRUE} or \texttt{FALSE}), and are often the results of a \emph{test} (e.g.~is \texttt{x\textgreater{}3}? Or is \texttt{MyVar} numerical?). A typical example of binary data in sensory and consumer research is data collected through Check-All-That-Apply (CATA) questionnaires.
+Binary data are data that take two possible values (\texttt{TRUE} or \texttt{FALSE}), and are often the results of a \emph{test} (e.g.~is \texttt{x\textgreater{}3}? Or is \texttt{MyVar} numerical?). A typical example of binary data in sensory and consumer research is data collected through Check-All-That-Apply (CATA) questionnaires.
 
 \begin{quote}
-Intrinsically, binary data is \emph{numerical}, TRUE being assimilated to 1, FALSE to 0. If multiple tests are being performed, it is possible to sum the number of tests that pass using the \texttt{sum()} function, as shown in the simple example below:
+Intrinsically, binary data are \emph{numerical}, TRUE being assimilated to 1, FALSE to 0. If multiple tests are being performed, it is possible to sum the number of tests that pass using the \texttt{sum()} function, as shown in the simple example below:
 \texttt{\#\ Generate\ 10\ random\ values\ between\ 1\ and\ 10\ (uniform\ distribution)}
 \texttt{x\ \textless{}-\ runif(10,\ 1,\ 10)}
 \texttt{\#\ Test\ whether\ the\ values\ generated\ are\ strictly\ larger\ than\ 5}
@@ -7687,9 +7706,10 @@ Intrinsically, binary data is \emph{numerical}, TRUE being assimilated to 1, FAL
 \end{quote}
 
 \hypertarget{nominal-data}{%
-\subsubsection{Nominal Data}\label{nominal-data}}
+\subsubsection*{Nominal Data}\label{nominal-data}}
 
-Nominal data is any data that are defined through text, or strings. It can appear in some situations that nominal variables are still defined with numbers although they do not have a numerical meaning. This is for instance the case when the respondents or samples are identified through numerical codes. But since the software cannot guess that those numbers are \emph{identifiers} rather than \emph{numbers}, the variables should be declared as nominal. The procedure explaining how to convert the type of the variables is explained in the next section.
+
+Nominal data are any data that are defined through text, or strings. Note that nominal data would occur when variables are defined with numbers although they do not have a numerical meaning. This is for instance the case when the respondents or samples are identified through numerical codes. But since the software cannot guess that those numbers are \emph{identifiers} rather than \emph{numbers}, the variables should be declared as nominal. The procedure explaining how to convert the type of the variables is detailed in the next section.
 
 For nominal data, two particular types of data are of interest:
 
@@ -7721,7 +7741,7 @@ To evaluate the number of levels, different procedures are required:
   For \texttt{factor}, the levels and the number of levels are directly provided by \texttt{levels()} and \texttt{nlevels()}.
 \end{itemize}
 
-Let's compare a variable set as \texttt{factor} and \texttt{character} by using a simple hand-made example:
+Let's compare a variable set as \texttt{factor} and \texttt{character} by using a simple made-up example:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7770,9 +7790,9 @@ Let's compare a variable set as \texttt{factor} and \texttt{character} by using 
 Although \texttt{Judge} and \texttt{Judge\_fct} look the same, they are structurally different, and those differences play an important role that one should consider when running certain analyses, or for building tables and graphs.
 \end{quote}
 
-When set as \texttt{character}, the number of levels of a variable is directly read from the data, and its levels' order matches the way they appear in the data (or sometimes are re-arranged in alphabetical order). This means that any data collected using a structured scale will often lose its natural order.
+The number of levels of a variable is directly read from the data when set as \texttt{character}, and its levels' order matches the way they appear in the data (or sometimes are re-arranged in alphabetical order). This means that any data collected using a structured scale will often lose its natural order.
 
-When set as \texttt{factor}, the factor levels (including their order) are informed, and does not depend necessarily on the data itself: If a level has never been selected, or if certain groups have been filtered, this information is still present in the data. In our case, the levels are read from the data and are reordered alphabetically (note that \texttt{J10} and \texttt{J100} appear before \texttt{J2} for instance.)
+When set as \texttt{factor}, the factor levels (including their order) are informed, and do not depend necessarily on the data itself: If a level has never been selected, or if certain groups have been filtered, this information is still present in the data. In our case, the levels are read from the data and are reordered alphabetically (note that \texttt{J10} and \texttt{J100} appear before \texttt{J2} for instance.)
 
 To illustrate this, let's re-arrange the levels from \texttt{Judge\_fct} by ordering them numerically in such a way \texttt{J2} follows \texttt{J1} rather than \texttt{J10}.
 
@@ -7790,7 +7810,7 @@ To illustrate this, let's re-arrange the levels from \texttt{Judge\_fct} by orde
 ##  [9] "J9"  "J10"
 \end{verbatim}
 
-Now the levels are sorted, let's filter respondents by only keeping J1 to J20. We then re-run the previous code that count the number of elements in each variables:
+Now the levels are sorted. Let's then filter respondents by only keeping J1 to J20. We then re-run the previous code that count the number of elements in each variables:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7862,7 +7882,7 @@ This property can be seen as an advantage or a disadvantage depending on the sit
 \item
   For frequencies, it may be relevant to remember all the options, including the ones that may never be selected, and to order the results logically (use of \texttt{factor}).
 \item
-  For hypothesis testing (e.g.~ANOVA) on subset of data, the \texttt{Judge} variable set as \texttt{character} would have the correct number of degrees of freedom (18 in our example) whereas the variable set as factor would still use the original count (so 106 here)!
+  For hypothesis testing (e.g.~ANOVA) on a subset of data, the \texttt{Judge} variable set as \texttt{character} would have the correct number of degrees of freedom (18 in our example) whereas the variable set as factor would still use the original count (so 106 here)!
 \end{itemize}
 
 The latter point is particularly critical since the analysis is incorrect and will either return an error or (worse!) return erroneous results!
@@ -8015,7 +8035,7 @@ To illustrate the conversion from character to numeric, let's start with creatin
 \end{Highlighting}
 \end{Shaded}
 
-The conversion from character to numerical is straight forward and requires the use of the function \texttt{as.numeric()}:
+The conversion from character to numerical is straightforward and requires the use of the function \texttt{as.numeric()}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -8048,7 +8068,8 @@ Now let's apply the same principle to a variable of the type factor. To do so, t
 \begin{Highlighting}[]
 \NormalTok{example }\OtherTok{\textless{}{-}}\NormalTok{ example }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Numbers =} \FunctionTok{as.factor}\NormalTok{(Numbers)) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Text =} \FunctionTok{factor}\NormalTok{(Text, }\AttributeTok{levels=}\FunctionTok{c}\NormalTok{(}\StringTok{"Data"}\NormalTok{,}\StringTok{"Science"}\NormalTok{,}\StringTok{"4"}\NormalTok{,}\StringTok{"Sensory"}\NormalTok{,}\StringTok{"and"}\NormalTok{,}\StringTok{"Consumer"}\NormalTok{,}\StringTok{"Research"}\NormalTok{)))}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Text =} \FunctionTok{factor}\NormalTok{(Text, }\AttributeTok{levels=}\FunctionTok{c}\NormalTok{(}\StringTok{"Data"}\NormalTok{,}\StringTok{"Science"}\NormalTok{,}\StringTok{"4"}\NormalTok{,}\StringTok{"Sensory"}\NormalTok{,}
+                                      \StringTok{"and"}\NormalTok{,}\StringTok{"Consumer"}\NormalTok{,}\StringTok{"Research"}\NormalTok{)))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -8072,7 +8093,7 @@ Let's apply as.numeric() to these variables:
 ## # ... with 3 more rows
 \end{verbatim}
 
-We can notice here that the outcome is not really as expected as the numbers 2-4-9-6-8-12-10 becomes 3-4-7-5-6-2-1, and Data-Science-4-Sensory-and-Consumer-Research becomes 1-2-3-4-5-6-7. The rationale behind this conversion is that the numbers do not reflects the string itself, but the position of that level in the factor level order.
+We can notice here that the outcome is not really what was expected. The numbers 2-4-9-6-8-12-10 become 3-4-7-5-6-2-1, and Data-Science-4-Sensory-and-Consumer-Research becomes 1-2-3-4-5-6-7. The rationale behind this conversion is that the numbers do not reflects the string itself, but the position of that level in the factor level order.
 
 To convert properly numerical factor levels to number, the variable should first be converted into character:
 
@@ -8094,7 +8115,7 @@ To convert properly numerical factor levels to number, the variable should first
 ## # ... with 3 more rows
 \end{verbatim}
 
-As can be seen, it is very important to verify the type of each variable (and convert if needed) to ensure that the data is processed as it should be. Since each type has its own advantages and drawbacks, it is convenient to regularly transit from one to another. Don't worry, you will get quickly familiarized with this as we will be doing such conversions regularly in the next sections.
+As can be seen, it is very important to verify the type of each variable (and convert it if needed) to ensure that the data are processed as they should be. Since each type has its own advantages and drawbacks, it is convenient to regularly switch from one to another. Don't worry, you will quickly familiarize with this as we will be doing such conversions regularly in the next sections.
 
 \hypertarget{data-analysis}{%
 \chapter{Data Analysis}\label{data-analysis}}
