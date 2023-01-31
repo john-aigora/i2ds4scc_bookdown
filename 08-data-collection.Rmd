@@ -128,7 +128,7 @@ williams.BIB(incompDesign2)
 
 Incomplete balanced designs also have drawbacks. First, from a purely statistical perspective, they are conducive to fewer observations and thus to a lower statistical power. Product and Judge effects are also partially confounded even though the confusion is usually considered as acceptable.
 
-### Incomplete designs for hedonic tests: Sensory informed designs {#hedo_informdes}
+### Incomplete designs and Sensory informed designs for hedonic tests  {#hedo_informdes}
 
 One may also be tempted to use incomplete balanced block designs for hedonic tests. However, proceeding this way is likely to induce framing bias. Indeed, each participant will only see part of the product set which would affect their frame of reference if the subset of product they evaluate only covers a limited area of the sensory space. 
 
@@ -153,7 +153,7 @@ cocktail_pca <- senso.cocktail %>%
 Prod_coord <- cocktail_pca$ind$coord[,1:2]
 ```
 
-Assuming a full quadratic model (for the preference mapping (see section \@Ref(#prefmap)), we can now use `optFederov()` to select a D-optimal subset of the desired number of products (here `ntrials=8`). The resulting selection will maximize the determinant of the information matrix (X'X) corresponding to the quadratic model. However, we can also decide to specify products that we want to be kept in the selection. Here, let's impose the selection of products 7 and 13.
+Assuming a full quadratic model (for the preference mapping (see section \@ref(prefmap)), we can now use `optFederov()` to select a D-optimal subset of the desired number of products (here `ntrials=8`). The resulting selection will maximize the determinant of the information matrix (X'X) corresponding to the quadratic model. However, we can also decide to specify products that we want to be kept in the selection. Here, let's impose the selection of products 7 and 13.
 
 ```{r, echo=TRUE, eval=TRUE}
 library(AlgDesign)
@@ -196,7 +196,15 @@ Subset_coord <- Dopt_des$design %>%
                 as_tibble() %>%
                 mutate("Product" = factor(Dopt_des$rows), .before=1)
 
-flextable(Subset_coord) %>% colformat_double(digits = 2)
+Subset_table <- flextable(Subset_coord) %>%
+                colformat_double(digits = 2)
+```
+
+```{r, eval=TRUE, echo=FALSE, tab.cap="Basic Flextable"}
+Subset_table %>% 
+  font(fontname = "Calibri", part="all") %>% 
+  fontsize(size=8, part="all") %>% 
+  autofit()
 ```
 
 Finally, it could be useful to calculate the determinant of the information matrix (assuming a quadratic model):
@@ -206,6 +214,7 @@ Xopti = model.matrix(~ quad(.), Dopt_des$design)
 det(t(Xopti)%*%Xopti)
 ```
 
+In itself, this value is not really telling. However, it can be compared to the determinant of the information matrix (X'X) for another subset (e.g., without the forced selection of two products, or a subset of different size) and see by how much it has improved or deteriorated. The determinant could also be used in an optimization loop to define complementary subsets to be allocated to different consumers or groups of consumers.
 
 ## Product-related designs
 
@@ -313,11 +322,11 @@ Although fractional designs are only scarcely used, studies have shown that they
 
 For higher number of factors, Plackett-Burman designs are the most commonly used fractional factorial designs. They can be easily obtained with the `pb()` function of the `{FrF2}` package. For example, `FrF2::pb(12)` yields a 12 trials design that allows to test the effects of 11 factors.
 
-### Sensory informed designs
+### Sensory informed designs for product development
 
 Eventually, it is worth mentioning that, in some cases, sensory properties themselves can be used as factors and thus be implemented in a DoE. In this line of thinking, Naes and Nyvold have suggested that working this way would leave more scope for creativity [@Naes2004]. Naturally, this implies that product developers (1) have access to the measure of these properties, and (2) can control the level of these properties and their interactions. These requirements are rarely met in food development but can be more easily implemented in some non-food applications [see for example @Petiot2022].
 
-A specific application consists in using the sensory information available to make a selection of a subset of products, as described above (section \@ref(#hedo_informdes)).
+A specific application consists in using the sensory information available to make a selection of a subset of products, as described above (section \@ref(hedo_informdes)).
 
 ## Execute
 
