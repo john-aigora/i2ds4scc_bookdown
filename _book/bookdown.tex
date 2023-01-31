@@ -162,14 +162,13 @@
 \usepackage{multicol}
 \usepackage{colortbl}
 \usepackage{hhline}
+\newlength\Oldarrayrulewidth
+\newlength\Oldtabcolsep
 \usepackage{longtable}
 \usepackage{float}
 \usepackage{wrapfig}
 \usepackage{array}
 \usepackage{hyperref}
-\usepackage{hhline}
-\newlength\Oldarrayrulewidth
-\newlength\Oldtabcolsep
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
@@ -190,7 +189,7 @@
 
 \title{Data Science for Sensory and Consumer Scientists}
 \author{Thierry Worch, Julien Delarue, Vanessa Rios de Souza, and John Ennis}
-\date{2023-01-30}
+\date{2023-01-31}
 
 \begin{document}
 \maketitle
@@ -287,7 +286,7 @@ Dr.~Thierry Worch is a Data enthusiast who engineers Simple, Meaningful, Automat
 Back in 2009, he started as a project manager at OP\&P Product Research (Utrecht, The Netherlands) before completing his PhD in 2012 on ``the Ideal Profile Analysis: from the validation to the statistical analysis of ideal profile data'' both in collaboration with Pieter Punter (OP\&P), Sébastien Lê and Jérôme Pagès (Agrocampus-Ouest). End of 2012, he joined Qi Statistics as a consultant where he ran clients' projects, participated to research projects, and gave diverse trainings. During that time, he also continued a long collaboration with Logic8 (EyeQuestion Software) where he produced all the R-routines included in the EyeOpenR software. End of 2019, he joined the Global Sensory Department of Friesland-Campina, Wageningen, The Netherlands, where he provides his expertise in Sensory and Consumer Methods, Sensometric, and Data Science.
 Besides publishing various papers related to Sensometric, and participating in many books, he is also the co-author with Sébastien Lê of the book entitled ``Analyzing sensory data with R'' (CRC Press).
 
-Dr.~Julien Delarue is an Associate Professor in Sensory and Consumer Science at UC Davis. He received his Ph.D.~in Food Science at AgroParisTech, and his research focuses on methods to measure sensory perception and preferences and on their effective use in food design.
+Dr.~Julien Delarue is Associate Professor at the University of California Davis. He received his Ph.D.~in Food Science at AgroParisTech, and his research focuses on methods to measure sensory perception and preferences and on their effective use in food design. He explores the role of context in hedonic measures using immersive environments and digital technologies. He also works to develop and validate rapid and flexible descriptive analysis methods with application to new product development and consumer research. Formerly a Professor at AgroParisTech, France in the food science and technology joint research unit with INRAE and Université Paris-Saclay, he has served as the Chair of the French Society for Sensory Analysis (SFAS) and of the European Sensory Science Society (E3S).
 
 Dr.~Vanessa de Rios Souza is a Sr.~Computational Sensory Science Consultant at Aigora, a company whose mission is to empower sensory and consumer science teams to implement artificial intelligence. Her role involves leading clients' projects related to Process Automation, Knowledge Management, New Technologies and Computational Analytics. Vanessa holds a Ph.D.~degree in Food Science and has over 10 years of experience in R\&D, consumer and sensory research across multiple food product categories and functions, with strong background in food science and food processing. She has extensive experience in industrial, academic, and research settings.
 
@@ -934,6 +933,13 @@ Let's imagine we're interested in \texttt{Acidity}, we could extract the results
   \FunctionTok{summarize}\NormalTok{(broom}\SpecialCharTok{::}\FunctionTok{tidy}\NormalTok{(ANOVA))}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+## Warning: Returning more (or less) than 1 row per `summarise()` group was deprecated in dplyr 1.1.0.
+## i Please use `reframe()` instead.
+## i When switching from `summarise()` to `reframe()`, remember that `reframe()` always returns an
+##   ungrouped data frame and adjust accordingly.
+\end{verbatim}
 
 \begin{verbatim}
 ## `summarise()` has grouped output by 'Attributes'. You
@@ -1978,6 +1984,20 @@ To do so, we \texttt{mutate()} \texttt{across()} all variables that are consider
   \FunctionTok{mutate}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{where}\NormalTok{(is.numeric), round, }\AttributeTok{digits =} \DecValTok{0}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+## Warning: There was 1 warning in `mutate()`.
+## i In argument: `across(where(is.numeric), round, digits = 0)`.
+## Caused by warning:
+## ! The `...` argument of `across()` is deprecated as of dplyr 1.1.0.
+## Supply arguments directly to `.fns` through an anonymous function instead.
+## 
+##   # Previously
+##   across(a:b, mean, na.rm = TRUE)
+## 
+##   # Now
+##   across(a:b, \(x) mean(x, na.rm = TRUE))
+\end{verbatim}
 
 \begin{verbatim}
 ## # A tibble: 99 x 34
@@ -5852,7 +5872,7 @@ The study was conducted in France with one hundred and seven consumers who teste
 The study aimed to measure the liking for these biscuits, its link with eaten quantities and the evolution of hunger sensations over ad libitum consumption. All the volunteers therefore participated to ten morning sessions in order to test every product (one biscuit type per session). After they completed all the sessions, they also filled a questionnaire about food-related personality traits such as cognitive restraint and sensitivity to hunger.\\
 Parallel to this, a panel of nine trained judges performed a quantitative descriptive analysis of the biscuits. They evaluated the same 10 products as well as an additional product whose recipe was optimized for liking and satiating properties.
 
-Data from the biscuit study are gathered in three Excel files that can be accessed here {[}ADD LINK HERE{]}:
+Data from the biscuit study are gathered in three Excel files that can be accessed here {[}ADD LINK TO REPOSITORY HERE{]}:
 
 \begin{itemize}
 \tightlist
@@ -5971,6 +5991,19 @@ In total, 11 products were considered in this study. They are all breakfast bisc
 
 \renewcommand*{\arraystretch}{1}
 
+\hypertarget{sensory-descriptive-analysis}{%
+\section{Sensory descriptive analysis}\label{sensory-descriptive-analysis}}
+
+A panel of 9 trained judges evaluated the 11 products on 32 sensory attributes (8 attributes for aspect, 3 for odor, 12 for flavor, 9 for texture).
+
+Judges had received thorough training for the wider biscuit product category over more than 6 months on common vocabulary following conventional descriptive analysis standards \citep{iso1995sensory, iso2012sensory}. Evaluation was performed in sensory booths in triplicates, although only individual means are available in this data set.
+
+For each product, the judges reported the perceived intensity of each attribute using unstructured linear scales on a computer screen. Intensities were automatically converted by the acquisition system into a score ranging from 0 to 60. These data are stored in \emph{biscuits\_sensory\_profile.xlsx}.
+
+\begin{quote}
+In summary, the sensory data has 99 observations (\(11 Products\times{9 Judges}\)) and 34 variables (\emph{Judge} and \emph{Product} identifiers + 32 attributes).
+\end{quote}
+
 \hypertarget{consumer-test}{%
 \section{Consumer test}\label{consumer-test}}
 
@@ -5978,7 +6011,11 @@ In total, 11 products were considered in this study. They are all breakfast bisc
 \subsection{Participants}\label{participants}}
 
 107 women who were all regular consumers of breakfast biscuits participated to the test. The \emph{biscuits\_traits.xlsx} file gives information about their Body Mass Index (BMI) (Q4-Q6) and their socio-demographics (Q7-Q11: marital status, household, income, occupation, highest degree).\\
-This file also gives participants' answers to a self-assessment questionnaire (Q12-62) that evaluates eating behavioral traits with emphasis on the tendency to control food intake cognitively. The questionnaire comprises a series of assertions about various eating situations in the respondent's daily life (e.g.~``How\ldots.'' answer Y/N''). Resulting scores are loaded into three factors: cognitive restraint (conscious restriction of food intake in order to control body weight or to promote weight loss), disinhibition (or emotional eating), and susceptibility to hunger (or uncontrolled eating, i.e.~tendency to eat more than usual due to a loss of control over intake accompanied by feelings of hunger). This questionnaire is thus known as the Three-Factor Eating Questionnaire (TFEQ) \citep{stunkard1985} and is one of the most commonly used questionnaires to evaluate eating behaviors in relation to overweight or obesity \citep{blundell2010}. Calculation of these factors is detailed in chapter {[}\ref{data-analysis}{]}.
+This file also gives participants' answers to a self-assessment questionnaire (Q12-62) that evaluates eating behavioral traits with emphasis on the tendency to control food intake cognitively. The questionnaire comprises a series of assertions about various eating situations in the respondent's daily life (e.g.~``How\ldots.'' answer Y/N''). Resulting scores are loaded into three factors: cognitive restraint (conscious restriction of food intake in order to control body weight or to promote weight loss), disinhibition (or emotional eating), and susceptibility to hunger (or uncontrolled eating, i.e.~tendency to eat more than usual due to a loss of control over intake accompanied by feelings of hunger). This questionnaire is thus known as the Three-Factor Eating Questionnaire (TFEQ) \citep{stunkard1985} and is one of the most commonly used questionnaires to evaluate eating behaviors in relation to overweight or obesity \citep{blundell2010}. Calculation of these factors is detailed in chapter \ref{data-analysis}.
+
+\begin{quote}
+In summary, the data stored in \emph{biscuits\_traits.xlsx} have 107 observations and 62 variables giving multiple information about the consumers, including their sociodemographics, BMI and TFEQ answers. Variable codes, names, and meaning are listed in the second sheet ``Variables'', with their corresponding levels in the third sheet ``Levels''.
+\end{quote}
 
 \hypertarget{test-design}{%
 \subsection{Test design}\label{test-design}}
@@ -5996,6 +6033,9 @@ The design of the sessions is summarized in Figure \ref{fig:test-design} with ma
 \caption{General design for the consumer test of the biscuit study. Participants were served with a different set of biscuits every session.}\label{fig:test-design}
 \end{figure}
 
+\hypertarget{evaluation}{%
+\subsection{Evaluation}\label{evaluation}}
+
 The liking was measured with two different scales:
 
 \begin{enumerate}
@@ -6005,19 +6045,17 @@ The liking was measured with two different scales:
   with a horizontally oriented unstructured linear scale (i.e.~VAS) anchored with \emph{`I don't like this biscuit at all'} (left end) and \emph{`I like this biscuit a lot'} (right end) at two different times: after the first bite and at the end of their consumption.
 \item
   with a vertically oriented semantic nine-point hedonic scale when stopping their consumption.
-  VAS scales are frequently used in nutrition studies \citep{stubbs2000}, whereas the nine-point hedonic scale is more popular in sensory and consumer science \citep{peryam1957, wichchukit2015}.
 \end{enumerate}
+
+VAS scales are frequently used in nutrition studies \citep{stubbs2000}, whereas the nine-point hedonic scale is more popular in sensory and consumer science \citep{peryam1957, wichchukit2015}.
 
 Once done, participants were asked about the reason(s) why they stopped eating (6 potential reasons rated with \emph{Likert} scales ranging from \emph{strongly disagree} to \emph{strongly agree}). They were also asked how much they would like to eat other types of foods (11 food items rated using a VAS).
 
 The time spent in the booth and the number of biscuits eaten by each participant was recorded by the experimenters, as well as the type of drink they selected and the approximate volume they drank during each session. These data are stored in \emph{biscuits\_consumer\_test.xlsx}, in the second tab named \emph{Time Consumption}.
 
-\hypertarget{sensory-descriptive-analysis-data}{%
-\section{Sensory descriptive analysis data}\label{sensory-descriptive-analysis-data}}
-
-A panel of 9 trained judges evaluated the 11 products on 32 sensory attributes (8 attributes for aspect, 3 for odor, 12 for flavor, 9 for texture).
-
-For each product, the judges individually reported the perceived intensity of each attribute on an unstructured linear scale. Intensities were automatically converted by the acquisition system into a score ranging from 0 to 60. These data are stored in \emph{biscuits\_sensory\_profile.xlsx}.
+\begin{quote}
+In summary, the consumer test data has 1070 observations (\(10 Products\times{107 Consumers}\)) and 32 variables (including \emph{Consumer} and \emph{Product} identifiers). The \emph{biscuits\_consumer\_test.xlsx} file also include one sheet with consumption time and number of biscuits that consumers ate, and a sheet indicated the average weight for each product.
+\end{quote}
 
 \hypertarget{data-collection}{%
 \chapter{Data Collection}\label{data-collection}}
@@ -6087,16 +6125,16 @@ Alternately, the \texttt{WilliamsDesign()} function in \texttt{\{SensoMineR\}} a
 
 \begin{verbatim}
 ##          Rank 1 Rank 2 Rank 3 Rank 4 Rank 5
-## Judge 1       3      1      2      4      5
-## Judge 2       1      4      3      5      2
-## Judge 3       4      5      1      2      3
-## Judge 4       5      2      4      3      1
-## Judge 5       2      3      5      1      4
-## Judge 6       5      4      2      1      3
-## Judge 7       2      5      3      4      1
-## Judge 8       3      2      1      5      4
-## Judge 9       1      3      4      2      5
-## Judge 10      4      1      5      3      2
+## Judge 1       3      2      5      4      1
+## Judge 2       2      4      3      1      5
+## Judge 3       4      1      2      5      3
+## Judge 4       1      5      4      3      2
+## Judge 5       5      3      1      2      4
+## Judge 6       1      4      5      2      3
+## Judge 7       5      1      3      4      2
+## Judge 8       3      5      2      1      4
+## Judge 9       2      3      4      5      1
+## Judge 10      4      2      1      3      5
 \end{verbatim}
 
 Suppose you want to include 20 judges in the experiment, you would then need to duplicate the initial design.
@@ -6110,26 +6148,26 @@ Suppose you want to include 20 judges in the experiment, you would then need to 
 
 \begin{verbatim}
 ##         Rank 1 Rank 2 Rank 3 Rank 4 Rank 5
-## judge1       3      1      2      4      5
-## judge2       1      4      3      5      2
-## judge3       4      5      1      2      3
-## judge4       5      2      4      3      1
-## judge5       2      3      5      1      4
-## judge6       5      4      2      1      3
-## judge7       2      5      3      4      1
-## judge8       3      2      1      5      4
-## judge9       1      3      4      2      5
-## judge10      4      1      5      3      2
-## judge11      3      1      2      4      5
-## judge12      1      4      3      5      2
-## judge13      4      5      1      2      3
-## judge14      5      2      4      3      1
-## judge15      2      3      5      1      4
-## judge16      5      4      2      1      3
-## judge17      2      5      3      4      1
-## judge18      3      2      1      5      4
-## judge19      1      3      4      2      5
-## judge20      4      1      5      3      2
+## judge1       3      2      5      4      1
+## judge2       2      4      3      1      5
+## judge3       4      1      2      5      3
+## judge4       1      5      4      3      2
+## judge5       5      3      1      2      4
+## judge6       1      4      5      2      3
+## judge7       5      1      3      4      2
+## judge8       3      5      2      1      4
+## judge9       2      3      4      5      1
+## judge10      4      2      1      3      5
+## judge11      3      2      5      4      1
+## judge12      2      4      3      1      5
+## judge13      4      1      2      5      3
+## judge14      1      5      4      3      2
+## judge15      5      3      1      2      4
+## judge16      1      4      5      2      3
+## judge17      5      1      3      4      2
+## judge18      3      5      2      1      4
+## judge19      2      3      4      5      1
+## judge20      4      2      1      3      5
 \end{verbatim}
 
 The downside of Williams's Latin square designs is that the number of samples (\emph{k}) to be evaluated dictates the number of judges. For an even number of samples you must have a multiple of \emph{k} judges, and a multiple of \emph{2k} judges for an odd number of samples.
@@ -6157,19 +6195,19 @@ As the total number of judges in your study may not always be exactly known in a
 \begin{verbatim}
 ##      rank
 ## judge 1 2 3 4 5
-##    1  4 5 2 1 3
-##    2  5 1 4 3 2
-##    3  1 3 5 2 4
-##    4  3 2 1 4 5
-##    5  2 4 3 5 1
-##    6  3 1 2 5 4
-##    7  2 3 4 1 5
-##    8  4 2 5 3 1
-##    9  5 4 1 2 3
-##    10 1 5 3 4 2
-##    11 4 5 2 1 3
-##    12 5 1 4 3 2
-##    13 1 3 5 2 4
+##    1  1 3 4 2 5
+##    2  3 2 1 5 4
+##    3  2 5 3 4 1
+##    4  5 4 2 1 3
+##    5  4 1 5 3 2
+##    6  5 2 4 3 1
+##    7  4 5 1 2 3
+##    8  1 4 3 5 2
+##    9  3 1 2 4 5
+##    10 2 3 5 1 4
+##    11 1 3 4 2 5
+##    12 3 2 1 5 4
+##    13 2 5 3 4 1
 \end{verbatim}
 
 In the code above, \texttt{xtabs()} is used to arrange the design in a table format that is convenient for the experimenter.
@@ -6216,16 +6254,16 @@ The \texttt{optimaldesign()} function of \texttt{\{SensoMineR\}} can be used to 
 
 \begin{verbatim}
 ##             Rank 1 Rank 2 Rank 3
-## Panelist 1       2      5      1
-## Panelist 2       1      4      5
-## Panelist 3       4      2      1
-## Panelist 4       5      3      2
-## Panelist 5       3      1      4
-## Panelist 6       5      1      3
-## Panelist 7       3      4      5
-## Panelist 8       2      3      4
-## Panelist 9       1      2      3
-## Panelist 10      4      5      2
+## Panelist 1       4      1      5
+## Panelist 2       3      2      5
+## Panelist 3       3      5      4
+## Panelist 4       5      4      2
+## Panelist 5       5      3      1
+## Panelist 6       1      2      3
+## Panelist 7       1      4      2
+## Panelist 8       4      1      3
+## Panelist 9       2      3      4
+## Panelist 10      2      5      1
 \end{verbatim}
 
 BIBD are only possible for certain combinations of numbers of treatment (products), numbers of blocks (judges), and block size (number of samples per judge). Note that \texttt{optimaldesign()} will yield a design even if it is not balanced but it will also generate contingency tables allowing you to evaluate the design's orthogonality, and how well balanced are order and carry-over effects.
@@ -6244,7 +6282,7 @@ You can also use the \texttt{\{crossdes\}} package to generate a BIBD with this 
 Incomplete balanced designs also have drawbacks. First, from a purely statistical perspective, they are conducive to fewer observations and thus to a lower statistical power. Product and Judge effects are also partially confounded even though the confusion is usually considered as acceptable.
 
 \hypertarget{hedo_informdes}{%
-\subsection{Incomplete designs for hedonic tests: Sensory informed designs}\label{hedo_informdes}}
+\subsection{Incomplete designs and Sensory informed designs for hedonic tests}\label{hedo_informdes}}
 
 One may also be tempted to use incomplete balanced block designs for hedonic tests. However, proceeding this way is likely to induce framing bias. Indeed, each participant will only see part of the product set which would affect their frame of reference if the subset of product they evaluate only covers a limited area of the sensory space.
 
@@ -6270,7 +6308,7 @@ Now, let's pretend that we want to conduct a hedonic test on these cocktails in 
 \end{Highlighting}
 \end{Shaded}
 
-Assuming a full quadratic model (for the preference mapping (see section @Ref(\#prefmap)), we can now use \texttt{optFederov()} to select a D-optimal subset of the desired number of products (here \texttt{ntrials=8}). The resulting selection will maximize the determinant of the information matrix (X'X) corresponding to the quadratic model. However, we can also decide to specify products that we want to be kept in the selection. Here, let's impose the selection of products 7 and 13.
+Assuming a full quadratic model (for the preference mapping (see section \ref{prefmap}), we can now use \texttt{optFederov()} to select a D-optimal subset of the desired number of products (here \texttt{ntrials=8}). The resulting selection will maximize the determinant of the information matrix (X'X) corresponding to the quadratic model. However, we can also decide to specify products that we want to be kept in the selection. Here, let's impose the selection of products 7 and 13.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6323,7 +6361,8 @@ If needed, the coordinates of the D-optimal selection \texttt{Dopt\_des\$design}
                 \FunctionTok{as\_tibble}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
                 \FunctionTok{mutate}\NormalTok{(}\StringTok{"Product"} \OtherTok{=} \FunctionTok{factor}\NormalTok{(Dopt\_des}\SpecialCharTok{$}\NormalTok{rows), }\AttributeTok{.before=}\DecValTok{1}\NormalTok{)}
 
-\FunctionTok{flextable}\NormalTok{(Subset\_coord) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{colformat\_double}\NormalTok{(}\AttributeTok{digits =} \DecValTok{2}\NormalTok{)}
+\NormalTok{Subset\_table }\OtherTok{\textless{}{-}} \FunctionTok{flextable}\NormalTok{(Subset\_coord) }\SpecialCharTok{\%\textgreater{}\%}
+                \FunctionTok{colformat\_double}\NormalTok{(}\AttributeTok{digits =} \DecValTok{2}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -6339,61 +6378,61 @@ If needed, the coordinates of the D-optimal selection \texttt{Dopt\_des\$design}
 
 \providecommand{\ascline}[3]{\noalign{\global\arrayrulewidth #1}\arrayrulecolor[HTML]{#2}\cline{#3}}
 
-\begin{longtable}[c]{|p{0.75in}|p{0.75in}|p{0.75in}}
+\begin{longtable}[c]{|p{0.64in}|p{0.55in}|p{0.55in}}
 
-\caption{\textcolor[HTML]{000000}{\fontsize{11}{13}\selectfont{\global\setmainfont{Arial}{D-optimal\ selection\ of\ products\ and\ its\ Coordinates\ on\ the\ sensory\ map\ (i.e.,\ the\ PCA\ score\ plot)}}}}\label{tab:unnamed-chunk-203}\\
+\caption{\textcolor[HTML]{000000}{\fontsize{11}{13}\selectfont{\global\setmainfont{Arial}{Basic\ Flextable}}}}\label{tab:unnamed-chunk-204}\\
 
 \ascline{2pt}{666666}{1-3}
 
-\multicolumn{1}{>{\raggedright}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Product}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Dim.1}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Dim.2}}}} \\
+\multicolumn{1}{>{\raggedright}p{\dimexpr 0.64in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{Product}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.55in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{Dim.1}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.55in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{Dim.2}}}} \\
 
 \ascline{2pt}{666666}{1-3}\endhead
 
 
 
-\multicolumn{1}{>{\raggedright}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{1}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{0.99}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{3.51}}}} \\
+\multicolumn{1}{>{\raggedright}p{\dimexpr 0.64in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{1}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.55in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{0.99}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.55in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{3.51}}}} \\
 
 
 
 
 
-\multicolumn{1}{>{\raggedright}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{4}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{-4.63}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{1.68}}}} \\
+\multicolumn{1}{>{\raggedright}p{\dimexpr 0.64in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{4}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.55in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{-4.63}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.55in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{1.68}}}} \\
 
 
 
 
 
-\multicolumn{1}{>{\raggedright}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{7}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{1.49}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{1.89}}}} \\
+\multicolumn{1}{>{\raggedright}p{\dimexpr 0.64in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{7}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.55in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{1.49}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.55in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{1.89}}}} \\
 
 
 
 
 
-\multicolumn{1}{>{\raggedright}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{8}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{0.08}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{0.48}}}} \\
+\multicolumn{1}{>{\raggedright}p{\dimexpr 0.64in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{8}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.55in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{0.08}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.55in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{0.48}}}} \\
 
 
 
 
 
-\multicolumn{1}{>{\raggedright}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{12}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{-4.21}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{-2.72}}}} \\
+\multicolumn{1}{>{\raggedright}p{\dimexpr 0.64in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{12}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.55in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{-4.21}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.55in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{-2.72}}}} \\
 
 
 
 
 
-\multicolumn{1}{>{\raggedright}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{13}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{3.99}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{-0.70}}}} \\
+\multicolumn{1}{>{\raggedright}p{\dimexpr 0.64in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{13}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.55in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{3.99}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.55in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{-0.70}}}} \\
 
 
 
 
 
-\multicolumn{1}{>{\raggedright}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{15}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{4.31}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{0.55}}}} \\
+\multicolumn{1}{>{\raggedright}p{\dimexpr 0.64in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{15}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.55in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{4.31}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.55in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{0.55}}}} \\
 
 
 
 
 
-\multicolumn{1}{>{\raggedright}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{16}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{1.38}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{-3.30}}}} \\
+\multicolumn{1}{>{\raggedright}p{\dimexpr 0.64in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{16}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.55in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{1.38}}}} & \multicolumn{1}{>{\raggedleft}p{\dimexpr 0.55in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{8}{8}\selectfont{\global\setmainfont{Calibri}{-3.30}}}} \\
 
 \ascline{2pt}{666666}{1-3}
 
@@ -6423,6 +6462,8 @@ Finally, it could be useful to calculate the determinant of the information matr
 \begin{verbatim}
 ## [1] 3.414e+11
 \end{verbatim}
+
+In itself, this value is not really telling. However, it can be compared to the determinant of the information matrix (X'X) for another subset (e.g., without the forced selection of two products, or a subset of different size) and see by how much it has improved or deteriorated. The determinant could also be used in an optimization loop to define complementary subsets to be allocated to different consumers or groups of consumers.
 
 \hypertarget{product-related-designs}{%
 \section{Product-related designs}\label{product-related-designs}}
@@ -6455,8 +6496,8 @@ The \texttt{\{mixexp\}} package offers a very convenient way to do this. In addi
 
 \begin{figure}
 \centering
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-205-1.pdf}
-\caption{\label{fig:unnamed-chunk-205}Ternary diagram of a simplex-lattice mixture design with 3 components}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-206-1.pdf}
+\caption{\label{fig:unnamed-chunk-206}Ternary diagram of a simplex-lattice mixture design with 3 components}
 \end{figure}
 
 Suppose that we want to adjust a biscuit recipe to optimize its sensory properties, we can design an experiment in which the proportion of ingredients vary. Let's play with butter, sugar, and flour. All three combined would account for 75\% of the dough recipe and the remaining 25\% would consist of other ingredients that we won't modify here (eggs, milk, chocolate, etc.). Besides, not any amount of these three ingredients would make sense (a biscuit with 75\% of butter is not a biscuit, even in Brittany). We thus need to add constraints (ex: butter varies between 15 and 30\% of this blend, sugar varies between 25 and 40\%, and flour varies between 30 and 50\%). Given this set of constraints (defined by \texttt{uc} for the upper contraints, and \texttt{lc} for the lower constraints), we can use \texttt{mixexp::Xvert} to find the extreme vertices of our design (by also including a edge centroid using \texttt{ndm=1}):
@@ -6489,8 +6530,8 @@ However, this design implies creating 11 mixtures, which is more than needed to 
 
 \begin{figure}
 \centering
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-207-1.pdf}
-\caption{\label{fig:unnamed-chunk-207}D-optimal mixture design with constrained factors}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-208-1.pdf}
+\caption{\label{fig:unnamed-chunk-208}D-optimal mixture design with constrained factors}
 \end{figure}
 
 Once the design is built, it could be desirable to randomize the order in which each sample is being made, to avoid further biases. Suppose that we obtain average liking scores for our 9 biscuits as given in Table \ref{tab:biscuit-mixt} and stored in \texttt{Bmixt}:
@@ -6619,8 +6660,8 @@ Regardless of the construction of the mixture design, ternary diagrams are easy 
 
 \begin{figure}
 \centering
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-209-1.pdf}
-\caption{\label{fig:unnamed-chunk-209}Modeled liking displayed as a contour plot on the ternary diagram}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-210-1.pdf}
+\caption{\label{fig:unnamed-chunk-210}Modeled liking displayed as a contour plot on the ternary diagram}
 \end{figure}
 
 From these data. the optimal biscuit would have 31\% of sugar, 27\% of butter, and 42\% of flour, and would reach a predicted liking score larger than 8.
@@ -6649,12 +6690,12 @@ Although fractional designs are only scarcely used, studies have shown that they
 
 For higher number of factors, Plackett-Burman designs are the most commonly used fractional factorial designs. They can be easily obtained with the \texttt{pb()} function of the \texttt{\{FrF2\}} package. For example, \texttt{FrF2::pb(12)} yields a 12 trials design that allows to test the effects of 11 factors.
 
-\hypertarget{sensory-informed-designs}{%
-\subsection{Sensory informed designs}\label{sensory-informed-designs}}
+\hypertarget{sensory-informed-designs-for-product-development}{%
+\subsection{Sensory informed designs for product development}\label{sensory-informed-designs-for-product-development}}
 
 Eventually, it is worth mentioning that, in some cases, sensory properties themselves can be used as factors and thus be implemented in a DoE. In this line of thinking, Naes and Nyvold have suggested that working this way would leave more scope for creativity \citep{Naes2004}. Naturally, this implies that product developers (1) have access to the measure of these properties, and (2) can control the level of these properties and their interactions. These requirements are rarely met in food development but can be more easily implemented in some non-food applications \citep[see for example][]{Petiot2022}.
 
-A specific application consists in using the sensory information available to make a selection of a subset of products, as described above (section @ref(\#hedo\_informdes)).
+A specific application consists in using the sensory information available to make a selection of a subset of products, as described above (section @ref(hedo\_informdes)).
 
 \hypertarget{execute-1}{%
 \section{Execute}\label{execute-1}}
@@ -7094,8 +7135,8 @@ A first approach to inspect and visualize where the missing values are is by rep
 
 \begin{figure}
 \centering
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-226-1.pdf}
-\caption{\label{fig:unnamed-chunk-226}Visualization of missing values in the sensory dataset using visdat::vismiss()}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-227-1.pdf}
+\caption{\label{fig:unnamed-chunk-227}Visualization of missing values in the sensory dataset using visdat::vismiss()}
 \end{figure}
 
 As can be seen, missing values are only present in few variables. However, \texttt{Sour} contains up to 10\% of missing data, which can be quite critical in some situations.
@@ -7127,8 +7168,8 @@ To answer these questions, the \texttt{\{naniar\}} package provides an interesti
 
 \begin{figure}
 \centering
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-228-1.pdf}
-\caption{\label{fig:unnamed-chunk-228}Visualization of the pattern of missing values in the sensory data thanks to naniar::gg\_miss\_upset()}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-229-1.pdf}
+\caption{\label{fig:unnamed-chunk-229}Visualization of the pattern of missing values in the sensory data thanks to naniar::gg\_miss\_upset()}
 \end{figure}
 
 It seems here that the only connection between NAs is observed between \texttt{Light} and \texttt{Color\ contrast}.
@@ -7144,8 +7185,8 @@ Such relational structure can also be visualized in a scatter plot using the \te
 
 \begin{figure}
 \centering
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-229-1.pdf}
-\caption{\label{fig:unnamed-chunk-229}Visualization of missing values for Sour with geom\_miss\_point()}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-230-1.pdf}
+\caption{\label{fig:unnamed-chunk-230}Visualization of missing values for Sour with geom\_miss\_point()}
 \end{figure}
 
 Here, the relationship between \texttt{Product} and \texttt{Sour} is shown. Such plot may help decide what to do with missing values, whether it is ignoring, removing, or predicting them.
@@ -8045,8 +8086,10 @@ The conversion from character to numerical is straightforward and requires the u
 \end{Shaded}
 
 \begin{verbatim}
-## Warning in mask$eval_all_mutate(quo): NAs introduced
-## by coercion
+## Warning: There was 1 warning in `mutate()`.
+## i In argument: `TextN = as.numeric(Text)`.
+## Caused by warning:
+## ! NAs introduced by coercion
 \end{verbatim}
 
 \begin{verbatim}
@@ -8224,6 +8267,13 @@ Once the analysis is done, we summarize the info stored in \texttt{mod} by conve
 \end{Shaded}
 
 \begin{verbatim}
+## Warning: Returning more (or less) than 1 row per `summarise()` group was deprecated in dplyr 1.1.0.
+## i Please use `reframe()` instead.
+## i When switching from `summarise()` to `reframe()`, remember that `reframe()` always returns an
+##   ungrouped data frame and adjust accordingly.
+\end{verbatim}
+
+\begin{verbatim}
 ## `summarise()` has grouped output by 'Attribute'. You
 ## can override using the `.groups` argument.
 \end{verbatim}
@@ -8297,8 +8347,8 @@ Rather than showing the results in a table, let's visualize them graphically as 
 
 \begin{figure}
 \centering
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-261-1.pdf}
-\caption{\label{fig:unnamed-chunk-261}Sensory attributes ranked by decreasing F-values of the product effect in their respective ANOVA}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-262-1.pdf}
+\caption{\label{fig:unnamed-chunk-262}Sensory attributes ranked by decreasing F-values of the product effect in their respective ANOVA}
 \end{figure}
 
 The evaluated biscuits appear to differ the most (top 5 attributes) for \texttt{Initial\ hardness}, \texttt{Shiny}, \texttt{Dairy\ flavor}, \texttt{External\ color\ intensity}, and \texttt{Thickness}.
@@ -8357,7 +8407,7 @@ To illustrate this, let's display the product map by coloring the products using
 \end{Shaded}
 
 \begin{figure}
-\includegraphics[width=15.86in]{images/PCA_patchwork} \caption{Display of PCA plots using \textit{factoextra}}\label{fig:unnamed-chunk-267}
+\includegraphics[width=15.86in]{images/PCA_patchwork} \caption{Display of PCA plots using \textit{factoextra}}\label{fig:unnamed-chunk-268}
 \end{figure}
 
 Here, \texttt{repel=TRUE} uses \texttt{geom\_text\_repel()} from \texttt{\{ggrepel\}} (rather than \texttt{geom\_text()} from \texttt{\{ggplot2\}}) to avoid having labels overlapping.
@@ -8474,8 +8524,8 @@ Bar plots and histograms are a nice way to visualize proportions and to compare 
 
 \begin{figure}
 \centering
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-270-1.pdf}
-\caption{\label{fig:unnamed-chunk-270-1}Bar plots showing the respondent distributions for the various demographic variables}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-271-1.pdf}
+\caption{\label{fig:unnamed-chunk-271-1}Bar plots showing the respondent distributions for the various demographic variables}
 \end{figure}
 
 \begin{verbatim}
@@ -8485,8 +8535,8 @@ Bar plots and histograms are a nice way to visualize proportions and to compare 
 
 \begin{figure}
 \centering
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-270-2.pdf}
-\caption{\label{fig:unnamed-chunk-270-2}Bar plots showing the respondent distributions for the various demographic variables}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-271-2.pdf}
+\caption{\label{fig:unnamed-chunk-271-2}Bar plots showing the respondent distributions for the various demographic variables}
 \end{figure}
 
 \begin{verbatim}
@@ -8496,8 +8546,8 @@ Bar plots and histograms are a nice way to visualize proportions and to compare 
 
 \begin{figure}
 \centering
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-270-3.pdf}
-\caption{\label{fig:unnamed-chunk-270-3}Bar plots showing the respondent distributions for the various demographic variables}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-271-3.pdf}
+\caption{\label{fig:unnamed-chunk-271-3}Bar plots showing the respondent distributions for the various demographic variables}
 \end{figure}
 
 \begin{verbatim}
@@ -8507,8 +8557,8 @@ Bar plots and histograms are a nice way to visualize proportions and to compare 
 
 \begin{figure}
 \centering
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-270-4.pdf}
-\caption{\label{fig:unnamed-chunk-270-4}Bar plots showing the respondent distributions for the various demographic variables}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-271-4.pdf}
+\caption{\label{fig:unnamed-chunk-271-4}Bar plots showing the respondent distributions for the various demographic variables}
 \end{figure}
 
 \hypertarget{regex}{%
@@ -8614,7 +8664,7 @@ From this table, histograms representing the frequency distribution for each var
 \end{Shaded}
 
 \begin{figure}
-\includegraphics[width=14.76in]{images/TFEQ_barplots_facet} \caption{Frequency distributions for Disinhibition-related variables only}\label{fig:unnamed-chunk-276}
+\includegraphics[width=14.76in]{images/TFEQ_barplots_facet} \caption{Frequency distributions for Disinhibition-related variables only}\label{fig:unnamed-chunk-277}
 \end{figure}
 
 Structured questionnaires such as the TFEQ are very frequent in sensory and consumer science. They are used to measure individual patterns as diverse as personality traits, attitudes, food choice motives, engagement, social desirability bias, etc. Ultimately, the TFEQ questionnaire consists in a set of structured questions whose respective answers combine to provide a TFEQ score (actually, three scores, one for Disinhibition, one for Restriction and one for sensitivity to Hunger). This TFEQ scores translate into certain food behavior tendencies.
@@ -8700,8 +8750,8 @@ Such results can then be visualized graphically, for instance by representing th
 
 \begin{figure}
 \centering
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-281-1.pdf}
-\caption{\label{fig:unnamed-chunk-281}Vizualisation of the distributions of the TFEQ factors for the consumer panel}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-282-1.pdf}
+\caption{\label{fig:unnamed-chunk-282}Vizualisation of the distributions of the TFEQ factors for the consumer panel}
 \end{figure}
 
 \hypertarget{tibble-use}{%
@@ -8803,8 +8853,8 @@ To further compare the liking assessment of the samples after the first bite and
 
 \begin{figure}
 \centering
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-285-1.pdf}
-\caption{\label{fig:unnamed-chunk-285}Bar chart for the the comparison of mean liking scores at the first bite and at the end of the evaluation}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-286-1.pdf}
+\caption{\label{fig:unnamed-chunk-286}Bar chart for the the comparison of mean liking scores at the first bite and at the end of the evaluation}
 \end{figure}
 
 As can be seen, the pattern of liking scores across samples is indeed very stable across the evaluation, particularly in terms of rank. At the individual level, such linear relationship is also observed (here for the first 12 consumers):
@@ -8827,8 +8877,8 @@ As can be seen, the pattern of liking scores across samples is indeed very stabl
 
 \begin{figure}
 \centering
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-286-1.pdf}
-\caption{\label{fig:unnamed-chunk-286}Faceted scatterplots showing the linear relationship between overal liking at the first bite vs.~end of the tasting for the first 12 consumers}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-287-1.pdf}
+\caption{\label{fig:unnamed-chunk-287}Faceted scatterplots showing the linear relationship between overal liking at the first bite vs.~end of the tasting for the first 12 consumers}
 \end{figure}
 
 \begin{quote}
@@ -8908,7 +8958,7 @@ Ultimately, the relationship between the liking score and the number of biscuits
 \end{Shaded}
 
 \begin{figure}
-\includegraphics[width=12.43in]{images/Scatter_eating_vs_liking} \caption{Consumers showing a significant relationship between their liking scores and the number of biscuits they ate}\label{fig:unnamed-chunk-291}
+\includegraphics[width=12.43in]{images/Scatter_eating_vs_liking} \caption{Consumers showing a significant relationship between their liking scores and the number of biscuits they ate}\label{fig:unnamed-chunk-292}
 \end{figure}
 
 \hypertarget{combining-sensory-and-consumer-data}{%
@@ -8957,8 +9007,8 @@ Such analysis is split in 3 steps:
 
 \begin{figure}
 \centering
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-292-1.pdf}
-\caption{\label{fig:unnamed-chunk-292-1}Internal Preference Mapping (PCA of consumer data with sensory descriptors as supplementary variables)}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-293-1.pdf}
+\caption{\label{fig:unnamed-chunk-293-1}Internal Preference Mapping (PCA of consumer data with sensory descriptors as supplementary variables)}
 \end{figure}
 
 \begin{Shaded}
@@ -8970,8 +9020,8 @@ Such analysis is split in 3 steps:
 
 \begin{figure}
 \centering
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-292-2.pdf}
-\caption{\label{fig:unnamed-chunk-292-2}Internal Preference Mapping (PCA of consumer data with sensory descriptors as supplementary variables)}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-293-2.pdf}
+\caption{\label{fig:unnamed-chunk-293-2}Internal Preference Mapping (PCA of consumer data with sensory descriptors as supplementary variables)}
 \end{figure}
 
 As can be seen, the consumers are quite in agreement as all the black arrows are pointing in a similar direction.
@@ -9014,8 +9064,8 @@ The AHC is performed using the \texttt{hclust()} function and the \texttt{method
 
 \begin{figure}
 \centering
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-294-1.pdf}
-\caption{\label{fig:unnamed-chunk-294}Agglomerative Hierarchical Clustering of consumers' centered liking scores}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-295-1.pdf}
+\caption{\label{fig:unnamed-chunk-295}Agglomerative Hierarchical Clustering of consumers' centered liking scores}
 \end{figure}
 
 \begin{quote}
@@ -9074,8 +9124,8 @@ Lastly, we can compare visually the preference patterns of the two clusters by r
 
 \begin{figure}
 \centering
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-296-1.pdf}
-\caption{\label{fig:unnamed-chunk-296}Average liking scores of the two consumer clusters}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-297-1.pdf}
+\caption{\label{fig:unnamed-chunk-297}Average liking scores of the two consumer clusters}
 \end{figure}
 
 It appears that cluster 1 (74 consumers) particularly likes \texttt{P10}, \texttt{P01}, and \texttt{P05}, and has a fairly flat liking pattern otherwise. On the other hand, the cluster 2 (33 consumers) expressed strong rejections towards \texttt{P04} and \texttt{P08}, and liked \texttt{P10} and \texttt{P01} the most.
@@ -9124,7 +9174,7 @@ Various packages can be used to visualize these correlations. We opt here for \t
 \end{Shaded}
 
 \begin{figure}
-\includegraphics[width=16.36in]{images/Correl_matrix} \caption{Matrix of pairwise correlations between attributes}\label{fig:unnamed-chunk-299}
+\includegraphics[width=16.36in]{images/Correl_matrix} \caption{Matrix of pairwise correlations between attributes}\label{fig:unnamed-chunk-300}
 \end{figure}
 
 The average liking scores for cluster 1 (defined as \texttt{1\ (74)}) are positively correlated with \texttt{Overall\ odor\ intensity}, \texttt{Fatty\ odor}, \texttt{Cereal\ flavor}, \texttt{Fatty\ flavor}, \texttt{Dairy\ flavor}, \texttt{Overall\ flavor\ persistence}, \texttt{Salty}, \texttt{Sweet}, \texttt{Warming}, \texttt{Fatty\ in\ mouth}, and \texttt{Melting}. They are also negatively correlated to \texttt{External\ color\ intensity}, \texttt{Astringent}, and \texttt{Dry\ in\ mouth}.
@@ -9233,8 +9283,8 @@ We apply this function to our data by applying to each attribute (here we set \t
 
 \begin{figure}
 \centering
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-305-1.pdf}
-\caption{\label{fig:unnamed-chunk-305}Regression of liking on sensory atttributes taken separately}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-306-1.pdf}
+\caption{\label{fig:unnamed-chunk-306}Regression of liking on sensory atttributes taken separately}
 \end{figure}
 
 All attributes except \texttt{Astringent} are linearly linked to liking. For \texttt{Astringent}, the curvature is U-shaped: this does not show an effect of saturation as it would have been represented as an inverted U-shape. Although the quadratic effect shows a better fit than the linear effect, having a linear effect would have been a good predictor as well in this situation.\\
@@ -9273,7 +9323,7 @@ Note that \texttt{carto()} requires a matrix or data frame with row names for th
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-306-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-307-1.pdf}
 
 From this map, we can see that the optimal area (dark red) is located on the positive side of dimension 1, between \texttt{P01}, \texttt{P05}, and \texttt{P10} (as expected by the liking score).
 
@@ -9349,8 +9399,8 @@ To build the plot, different layers involving different source of data (\texttt{
 
 \begin{figure}
 \centering
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-308-1.pdf}
-\caption{\label{fig:unnamed-chunk-308}Plot of the External Preference Mapping using ggplot2}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-309-1.pdf}
+\caption{\label{fig:unnamed-chunk-309}Plot of the External Preference Mapping using ggplot2}
 \end{figure}
 
 As can be seen, \texttt{POpt} is quite far from the optimal sensory area suggested by the PrefMap. This suggests that prototypes with higher success chances could be developed.
@@ -9719,8 +9769,8 @@ The results of the PCA can be visualized using \texttt{\{factoextra\}}:
 
 \begin{figure}
 \centering
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-311-1.pdf}
-\caption{\label{fig:unnamed-chunk-311}PCA Biplot}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-312-1.pdf}
+\caption{\label{fig:unnamed-chunk-312}PCA Biplot}
 \end{figure}
 
 The first plane of the PCA suggests that there are 3 distinct groups of wines. Let's define them mathematically using cluster analysis. For this process, we propose to reduce the full data to its first two components only. This approach is used here to illustrate how PCA can be used as a pre-processing step. Additionally, such pre-processing can help detecting clearer patterns in the data, as we will see in the next section with clustering.
@@ -9757,8 +9807,8 @@ In order to cluster our wines, let's start with defining the optimal number of c
 
 \begin{figure}
 \centering
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-313-1.pdf}
-\caption{\label{fig:unnamed-chunk-313}Optimal Number of Clusters}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-314-1.pdf}
+\caption{\label{fig:unnamed-chunk-314}Optimal Number of Clusters}
 \end{figure}
 
 Here, the optimal solution consists in defining 3 clusters.
@@ -9783,8 +9833,8 @@ Finally, the results can be visualized using \texttt{fviz\_cluster()} from \text
 
 \begin{figure}
 \centering
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-314-1.pdf}
-\caption{\label{fig:unnamed-chunk-314}Cluster Plot}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-315-1.pdf}
+\caption{\label{fig:unnamed-chunk-315}Cluster Plot}
 \end{figure}
 
 In the resulting plot, the 3 clusters are clearly separated, as can be seen by their little to no overlap.
@@ -10093,8 +10143,8 @@ The \texttt{autoplot()} function is called to take a quick look at the \texttt{t
 
 \begin{figure}
 \centering
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-315-1.pdf}
-\caption{\label{fig:unnamed-chunk-315}Tuning Plot}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-316-1.pdf}
+\caption{\label{fig:unnamed-chunk-316}Tuning Plot}
 \end{figure}
 
 Ultimately, the best combination of parameters is obtained using the \texttt{select\_best()} function. Such paramaters is defined based on the quality of the model, which can be estimated through a various metrics. Here we decided to use \texttt{roc\_auc} (Area Under the Receiver Operating Characteristic Curve), as it provides a reliable estimate of the quality of the model.
@@ -10730,7 +10780,7 @@ In the previous sections, we have already shown how to count the number of occur
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-340-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-341-1.pdf}
 
 As seen previously, the most mentioned words are \texttt{apple}, \texttt{sweet}, \texttt{fruity}, and \texttt{sour}.
 
@@ -10812,7 +10862,7 @@ Another approach consists in visualizing the association between the samples and
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-343-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-344-1.pdf}
 
 As can be seen, sample \texttt{731} is more strongly associated to alcoholic terms such as \texttt{alcohol} or \texttt{wine}, and colors (\texttt{red}, \texttt{green}). Samples \texttt{239} and \texttt{401} are more associated to \texttt{sour} and \texttt{bitter} (and \texttt{pear} for \texttt{239}), whereas samples \texttt{519} and \texttt{182} are more frequently described by terms such as \texttt{fruity}, and \texttt{sweet} (\texttt{floral} is also used to characterize \texttt{182}).
 
@@ -10835,7 +10885,7 @@ An alternative for visualizing these frequencies is through wordclouds, which ca
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-344-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-345-1.pdf}
 
 In these wordclouds, we notice that \texttt{apple} and \texttt{sweet} appear in larger fonts for (almost) all the samples, which can make the comparison quite difficult between samples. Fortunately, the \texttt{geom\_text\_wordcloud()} function provides an interesting parameter in its aesthetics called \texttt{angle\_group} which allows controlling the position of the words. To illustrate this, let's apply the following rule: for a given sample, if the proportion of association of a word is larger than 1/6 (as we have 6 samples), the word will be printed in the upper part of its wordcloud, and in the lower part otherwise. To facilitate the readability, the color code used follow the same rule:
 
@@ -10854,7 +10904,7 @@ In these wordclouds, we notice that \texttt{apple} and \texttt{sweet} appear in 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-345-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-346-1.pdf}
 
 As can be seen, the term \texttt{apple} is more frequently (i.e.~more than 1/6) used to characterize samples \texttt{182}, \texttt{239}, \texttt{365}, and \texttt{731}. The term \texttt{sweet} is more frequently used to characterize samples \texttt{182} and \texttt{519}. Such conclusions would have been more difficult to reach based on the previous \emph{unstructured} wordcloud.
 
@@ -11335,7 +11385,7 @@ In this section, we just introduced you to the main functions available in \text
 
 Congratulations, you've reached the end of this book!
 
-We hope we have motivated you to continue your amazing journey into the emerging computational sensory science field. To give you a little hand, we are listing here some other resources we would recommend and a summary of the main useful packages for sensory and consumer data analysis/visualization, including the ones we used throughout this book.
+We hope we have motivated you to continue your amazing journey into the emerging field of computational sensory science. To give you a little hand, we are listing here some other resources we would recommend and a summary of the main useful packages for sensory and consumer data analysis/visualization, including the ones we used throughout this book.
 
 \hypertarget{other-recommended-resources}{%
 \section{Other Recommended Resources}\label{other-recommended-resources}}
@@ -11347,7 +11397,7 @@ We hope we have motivated you to continue your amazing journey into the emerging
 \item
   \emph{Analyzing Sensory Data with R} by Sebastien Le and Thierry Worch
 \item
-  \emph{Rapid Sensory Profiling Techniques and Related Methods} by Julien Delarue, J. Ben Lawlor, and Michel Rogeaux
+  \emph{Rapid Sensory Profiling Techniques (2nd Edition)} by Julien Delarue and J. Ben Lawlor
 \item
   \emph{Practical Guide to Cluster Analysis in R} by Alboukadel Kassambara
 \item
@@ -11396,21 +11446,29 @@ Some interesting book related to story telling, graphical design and data visual
 \begin{itemize}
 \tightlist
 \item
-  \texttt{FactoMineR}: package dedicated to multivariate Exploratory Data Analysis including Principal Components Analysis (PCA), Correspondence analysis (CA), Multiple Correspondence Analysis (MCA), clustering.
+  \texttt{ClustBlock}: hierarchical and partitioning algorithms of blocks of variables. Includes functions for clustering subjects and multivariate analysis of multiblock sensory data, such as Check-All-that-Apply (CLUSCATA), or Free Sorting (CLUSTATIS).
 \item
-  \texttt{FactoExtra}: package that makes easy to extract and visualize the output of exploratory multivariate data analyses, including Principal Component Analysis (PCA), Correspondence Analysis (CA), Multiple Correspondence Analysis (MCA), Multiple Factor Analysis (MFA), Hierarchical Clustering (HCKUST) and partioning Clustering (E.g. k-means, PAM,CLARA, etc.)
+  \texttt{ClustVarLV}: functions for the clustering of variables around Latent Variables, for 2-way or 3-way data.
 \item
-  \texttt{SensR}: package for Thurstonian Models for sensory discrimination methods, including duotrio, tetrad, triangle, 2-AFC, 3-AFC, A-not A, same-different, 2-AC and degree-of-difference. This package enables the calculation of d-primes, standard errors of d-primes, sample size and power computations, and comparisons of different d-primes.
+  \texttt{corrplot}: provides a visual exploratory tool on correlation matrix that supports automatic variable reordering to help detect hidden patterns among variables.
 \item
-  \texttt{SensoMineR}: package dedicated to the statistical analysis of sensory data. It tackles the characterization of the products, panel performance assessment, links between sensory and instrumental data, consumer's preferences, napping evaluation, optimal designs.
+  \texttt{DistatisR}: implements three-way multidimensional scaling. DiSTATIS is used to analyze multiple distance matrices collected on the same set of observation (e.g., by free sorting).
 \item
-  \texttt{tempR}: package for Analysis and visualization of data from temporal sensory methods, including temporal check-all-that-apply (TCATA) and temporal dominance of sensation.
+  \texttt{FactoExtra}: makes easy to extract and visualize the output of exploratory multivariate data analyses, including Principal Component Analysis (PCA), Correspondence Analysis (CA), Multiple Correspondence Analysis (MCA), Multiple Factor Analysis (MFA), Hierarchical Clustering (HCKUST) and partioning Clustering (E.g. k-means, PAM,CLARA, etc.)
 \item
-  \texttt{sensmixed}: package to analyze sensory and consumer data within mixed effects model framework.
+  \texttt{FactoMineR}: dedicated to multivariate Exploratory Data Analysis including Principal Components Analysis (PCA), Correspondence analysis (CA), Multiple Correspondence Analysis (MCA), clustering.
 \item
-  \texttt{corrplot}: package that provides a visual exploratory tool on correlation matrix that supports automatic variable reordering to help detect hidden patterns among variables.
+  \texttt{rstatix}: a pipe-friendly framework, coherent with the `tidyverse' design philosophy, for performing basic statistical tests.
 \item
-  \texttt{stats}: this This package contains functions for statistical calculations and random number generation. The analysis include ANOVA, posthoc tests, Clustering, Correlation, multivariate analysis, among many others.
+  \texttt{sensmixed}: to analyze sensory and consumer data within mixed effects model framework.
+\item
+  \texttt{SensoMineR}: dedicated to the statistical analysis of sensory data. It tackles the characterization of the products, panel performance assessment, links between sensory and instrumental data, consumer's preferences, napping evaluation, optimal designs.
+\item
+  \texttt{SensR}: for Thurstonian Models for sensory discrimination methods, including duotrio, tetrad, triangle, 2-AFC, 3-AFC, A-not A, same-different, 2-AC and degree-of-difference. This package enables the calculation of d-primes, standard errors of d-primes, sample size and power computations, and comparisons of different d-primes.
+\item
+  \texttt{stats}: contains functions for statistical calculations and random number generation. The analysis include ANOVA, posthoc tests, Clustering, Correlation, multivariate analysis, among many others.
+\item
+  \texttt{tempR}: for Analysis and visualization of data from temporal sensory methods, including temporal check-all-that-apply (TCATA) and temporal dominance of sensation.
 \end{itemize}
 
   \bibliography{references.bib}
