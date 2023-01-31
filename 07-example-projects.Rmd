@@ -9,7 +9,7 @@ The study was conducted in France with one hundred and seven consumers who teste
 The study aimed to measure the liking for these biscuits, its link with eaten quantities and the evolution of hunger sensations over ad libitum consumption. All the volunteers therefore participated to ten morning sessions in order to test every product (one biscuit type per session). After they completed all the sessions, they also filled a questionnaire about food-related personality traits such as cognitive restraint and sensitivity to hunger.  
 Parallel to this, a panel of nine trained judges performed a quantitative descriptive analysis of the biscuits. They evaluated the same 10 products as well as an additional product whose recipe was optimized for liking and satiating properties.
 
-Data from the biscuit study are gathered in three Excel files that can be accessed here [ADD LINK HERE]: 
+Data from the biscuit study are gathered in three Excel files that can be accessed here [ADD LINK TO REPOSITORY HERE]: 
 
 * biscuits_consumer_test.xlsx  
 * biscuits_sensory_profile.xlsx  
@@ -19,7 +19,9 @@ Data from the biscuit study are gathered in three Excel files that can be access
 
 In total, 11 products were considered in this study. They are all breakfast biscuits with varying contents of proteins and fibers (Table \@ref(tab:biscuit-set)). Products *P01* to *P09* are prototypes whereas product *P10* is a standard commercial biscuit without enrichment. The eleventh product *Popt* is an additional optimized biscuit that has been evaluated only by the trained panel for descriptive analysis.
 
-```{r biscuit_set, tab.cap="Product set for the biscuit study", label="biscuit-set", echo=FALSE, eval=TRUE}
+```{r biscuit_set, tab.cap="Product set for the biscuit study", label="biscuit-set", echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(flextable)
 biscuit_names <- c("P01", "P02", "P03", "P04", "P05", "P06", "P07", "P08", "P09", "P10", "POpt")
 protein <- c("Low", "Low", "High", "High", "High", "High", "Low",  "High", "High", "Low", "High")
 fiber <- c("Low", "High", "High", "High", "Low", "Low", "High", "Low", "High", "Low", "Low")
@@ -34,12 +36,24 @@ ft <- flextable::qflextable(Bset)%>%
 ft
 ```
 
+## Sensory descriptive analysis
+
+A panel of 9 trained judges evaluated the 11 products on 32 sensory attributes (8 attributes for aspect, 3 for odor, 12 for flavor, 9 for texture).  
+
+Judges had received thorough training for the wider biscuit product category over more than 6 months on common vocabulary following conventional descriptive analysis standards [@iso1995sensory; @iso2012sensory]. Evaluation was performed in sensory booths in triplicates, although only individual means are available in this data set.
+
+For each product, the judges reported the perceived intensity of each attribute using unstructured linear scales on a computer screen. Intensities were automatically converted by the acquisition system into a score ranging from 0 to 60. These data are stored in *biscuits_sensory_profile.xlsx*.
+
+> In summary, the sensory data has 99 observations ($11 Products\times{9 Judges}$) and 34 variables (*Judge* and *Product* identifiers + 32 attributes).
+
 ## Consumer test
 
 ### Participants
 
 107 women who were all regular consumers of breakfast biscuits participated to the test. The *biscuits_traits.xlsx* file gives information about their Body Mass Index (BMI) (Q4-Q6) and their socio-demographics (Q7-Q11: marital status, household, income, occupation, highest degree).  
-This file also gives participants' answers to a self-assessment questionnaire (Q12-62) that evaluates eating behavioral traits with emphasis on the tendency to control food intake cognitively. The questionnaire comprises a series of assertions about various eating situations in the respondent's daily life (e.g. "How...." answer Y/N"). Resulting scores are loaded into three factors: cognitive restraint (conscious restriction of food intake in order to control body weight or to promote weight loss), disinhibition (or emotional eating), and susceptibility to hunger (or uncontrolled eating, i.e. tendency to eat more than usual due to a loss of control over intake accompanied by feelings of hunger). This questionnaire is thus known as the Three-Factor Eating Questionnaire (TFEQ) [@stunkard1985] and is one of the most commonly used questionnaires to evaluate eating behaviors in relation to overweight or obesity [@blundell2010]. Calculation of these factors is detailed in chapter [\@ref(data-analysis)].
+This file also gives participants' answers to a self-assessment questionnaire (Q12-62) that evaluates eating behavioral traits with emphasis on the tendency to control food intake cognitively. The questionnaire comprises a series of assertions about various eating situations in the respondent's daily life (e.g. "How...." answer Y/N"). Resulting scores are loaded into three factors: cognitive restraint (conscious restriction of food intake in order to control body weight or to promote weight loss), disinhibition (or emotional eating), and susceptibility to hunger (or uncontrolled eating, i.e. tendency to eat more than usual due to a loss of control over intake accompanied by feelings of hunger). This questionnaire is thus known as the Three-Factor Eating Questionnaire (TFEQ) [@stunkard1985] and is one of the most commonly used questionnaires to evaluate eating behaviors in relation to overweight or obesity [@blundell2010]. Calculation of these factors is detailed in chapter \@ref(data-analysis).
+
+> In summary, the data stored in *biscuits_traits.xlsx* have 107 observations and 62 variables giving multiple information about the consumers, including their sociodemographics, BMI and TFEQ answers. Variable codes, names, and meaning are listed in the second sheet "Variables", with their corresponding levels in the third sheet "Levels".
 
 ### Test design
 
@@ -51,22 +65,18 @@ The design of the sessions is summarized in Figure \@ref(fig:test-design) with m
 knitr::include_graphics("images/consumer_test_design.png")
 ```
 
+### Evaluation
+
 The liking was measured with two different scales:  
 
 1. with a horizontally oriented unstructured linear scale (i.e. VAS) anchored with *‘I don’t like this biscuit at all’* (left end) and *‘I like this biscuit a lot’* (right end) at two different times: after the first bite and at the end of their consumption.
-2. with a vertically oriented semantic nine-point hedonic scale when stopping their consumption.
+2. with a vertically oriented semantic nine-point hedonic scale when stopping their consumption.  
+
 VAS scales are frequently used in nutrition studies [@stubbs2000], whereas the nine-point hedonic scale is more popular in sensory and consumer science [@peryam1957; @wichchukit2015].  
 
 Once done, participants were asked about the reason(s) why they stopped eating (6 potential reasons rated with *Likert* scales ranging from *strongly disagree* to *strongly agree*). They were also asked how much they would like to eat other types of foods (11 food items rated using a VAS).
 
 The time spent in the booth and the number of biscuits eaten by each participant was recorded by the experimenters, as well as the type of drink they selected and the approximate volume they drank during each session. These data are stored in *biscuits_consumer_test.xlsx*, in the second tab named *Time Consumption*.
 
-## Sensory descriptive analysis data
+> In summary, the consumer test data has 1070 observations ($10 Products\times{107 Consumers}$) and 32 variables (including *Consumer* and *Product* identifiers). The *biscuits_consumer_test.xlsx* file also include one sheet with consumption time and number of biscuits that consumers ate, and a sheet indicated the average weight for each product.
 
-A panel of 9 trained judges evaluated the 11 products on 32 sensory attributes (8 attributes for aspect, 3 for odor, 12 for flavor, 9 for texture).  
-
-For each product, the judges individually reported the perceived intensity of each attribute on an unstructured linear scale. Intensities were automatically converted by the acquisition system into a score ranging from 0 to 60. These data are stored in *biscuits_sensory_profile.xlsx*.
-
-<!-- ## Summary of the datasets
-
-List of the variables in each data sets (or just the size of each data set?). -->
